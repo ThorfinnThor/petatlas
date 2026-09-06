@@ -56,6 +56,7 @@ Keine Mail, Bewerbung für Partnerprogramme oder rechtsverbindliche Zustimmung i
 Keine echte öffentliche Produktionsfreigabe ohne erfüllte und dokumentierte Launch-Gates.
 Kein pauschales --dangerously-skip-permissions als Standard; arbeite mit minimal nötigen Rechten.
 Untrusted PRs/Forks dürfen keine Produktions-/Affiliate-Secrets erhalten.
+Die konkrete Liste erlaubter, freigabepflichtiger und verbotener Aktionen steht in docs/SECURITY_SCOPE.md.
 
 ## Inhalt und Recht
 Keine erfundenen Tierarztpreise, Bewertungen, Tests, Partnerverträge, Zulassungen oder Autoren.

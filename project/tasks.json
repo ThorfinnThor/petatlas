@@ -217,8 +217,16 @@
         "M00-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Autonomierechte konkretisiert: erlaubte lokale Aktionen, freigabepflichtige externe Schreibzugriffe und verbotene destruktive Befehle; vorgefundene GitHub-CLI-Identitaet dokumentiert ohne Repo-Zuweisung.",
+          "reference": "docs/SECURITY_SCOPE.md; CLAUDE.md Abschnitt 'Sicherheit und Außenwirkung'",
+          "verified_at": "2026-09-06",
+          "command": "gh auth status",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
