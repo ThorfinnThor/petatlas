@@ -7,7 +7,13 @@
  * gibt — und kein Navigationseintrag auf eine leere Ankündigungsseite zeigen.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { allMarkets, requireMarket, type MarketConfig } from '../domain/market.ts';
+import {
+  allMarkets,
+  requireMarket,
+  withEnabledFeatures,
+  type MarketConfig,
+} from '../domain/market.ts';
+import { devFeatureOverrides } from '../../config/build.ts';
 import { translate, type LocaleId } from '../domain/i18n.ts';
 import { ROUTES, routeExists, routePath, type RouteKey } from '../lib/routes.ts';
 
@@ -24,8 +30,12 @@ import Toys from '../components/pages/Toys.astro';
 import Travel from '../components/pages/Travel.astro';
 
 export function getStaticPaths() {
+  // In einem Entwicklungsbuild dürfen zusätzliche Funktionen sichtbar sein;
+  // die versionierte Marktkonfiguration bleibt davon unberührt.
+  const overrides = devFeatureOverrides();
   return allMarkets()
     .filter((market) => market.enabled)
+    .map((market) => withEnabledFeatures(market, overrides))
     .flatMap((market) =>
       ROUTES.filter((route) => routeExists(market, route.key)).map((route) => ({
         // Astro erwartet den Pfad ohne führenden und abschließenden Schrägstrich.
@@ -41,7 +51,7 @@ interface Props {
 }
 
 const { marketId, routeKey } = Astro.props as Props;
-const market: MarketConfig = requireMarket(marketId);
+const market: MarketConfig = withEnabledFeatures(requireMarket(marketId), devFeatureOverrides());
 const locale = market.locale as LocaleId;
 const titel = translate(locale, `nav.${routeKey}`);
 ---

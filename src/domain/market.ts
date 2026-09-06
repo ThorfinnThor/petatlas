@@ -98,6 +98,21 @@ export function routablePathPrefixes(): readonly string[] {
   return enabledMarkets().map((market) => market.pathPrefix);
 }
 
+/**
+ * Markt mit zusätzlich eingeschalteten Funktionen. Wird nur mit den
+ * Overrides aus einem Entwicklungsbuild aufgerufen; die versionierte
+ * Konfiguration bleibt unverändert.
+ */
+export function withEnabledFeatures(
+  market: MarketConfig,
+  features: readonly string[],
+): MarketConfig {
+  if (features.length === 0) return market;
+  const flags = { ...market.featureFlags };
+  for (const feature of features) flags[feature] = true;
+  return { ...market, featureFlags: flags };
+}
+
 export function isFeatureEnabled(market: MarketConfig, feature: string): boolean {
   // Unbekannt ist nicht aktiviert.
   return market.featureFlags[feature] === true;

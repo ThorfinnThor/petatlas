@@ -1755,8 +1755,16 @@
         "M08-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Rechner unter /de-de/tierarztkosten/, hinter dem Feature Flag costs. Gerechnet wird im Browser mit derselben importierten Engine wie im Build, nicht mit einer nachgebauten Kopie. Die Gebuehrendaten kommen als statische Datei ueber das Manifest: data-snapshots/got/got-2022.json wird zu einem Chunk unter /data/v1/fees/de/ mit Inhalts-Hash im Dateinamen; ein E2E-Test protokolliert alle Netzwerkanfragen und belegt, dass Besucher keine Anfrage an gesetze-im-internet.de ausloesen. 20 E2E-Tests ueber Desktop und mobiles Profil: 1006 Positionen geladen, Position 1 mit Faktor 2 und Menge 3 ergibt 80,40 EUR brutto und im Notdienst 139,90 EUR (beide von Hand nachgerechnet), jede Zeile nennt Basissatz, Faktor, Menge und Fundstelle mit Teil und laufender Nummer, die Notdienstgebuehr steht getrennt und faellt einmal an, ein im Kontext unzulaessiger Faktor meldet statt zu rechnen, dieselbe Position wird nicht zweimal aufgenommen, leere Auswahl und leere Treffer sind sauber behandelt, Bedienung ohne Maus moeglich. Die Seite nennt Quelle, Fassung, Rechtsgrundlage und was nicht enthalten ist, und sagt ausdruecklich, dass sie kein amtlicher Rechner ist.",
+          "reference": "src/components/pages/Costs.astro; src/features/costs/ui.ts; scripts/publish/fees.ts; scripts/ingest/snapshot-got.ts; tests/e2e-features/costs.spec.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

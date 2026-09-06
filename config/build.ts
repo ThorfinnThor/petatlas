@@ -107,6 +107,22 @@ export function resolveBuildConfig(
   };
 }
 
+/**
+ * Feature Flags, die für einen Entwicklungsbuild zusätzlich eingeschaltet
+ * werden. Nur in `development` und nur über `ENABLE_FEATURES`: eine Funktion
+ * lässt sich damit lokal ansehen, ohne dass sie öffentlich wird. In
+ * `preview` und `production` wird der Wert ignoriert.
+ */
+export function devFeatureOverrides(
+  env: Record<string, string | undefined> = process.env,
+): readonly string[] {
+  if (readBuildMode(env) !== 'development') return [];
+  return (env.ENABLE_FEATURES ?? '')
+    .split(',')
+    .map((eintrag) => eintrag.trim())
+    .filter((eintrag) => eintrag !== '');
+}
+
 /** Meta-robots-Wert für eine Seite. Nicht indexierbar heißt immer `noindex`. */
 export function robotsDirective(config: BuildConfig): string {
   return config.indexable ? 'index, follow' : 'noindex, nofollow';

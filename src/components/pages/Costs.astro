@@ -1,20 +1,238 @@
 ---
 /**
- * M04-03 — Template "Tierarztkosten".
+ * M08-04 — Tierarztkosten-Rechner.
  *
- * Diese Seite wird nur erzeugt, wenn ihr Feature Flag im Markt eingeschaltet
- * ist. Ohne freigegebene Daten existiert weder Route noch Navigationseintrag;
- * es entsteht ausdrücklich keine leere Ankündigungsseite.
+ * Die Rechnung ist aus den Einzelpositionen nachvollziehbar: jede Zeile
+ * nennt Basisbetrag, Faktor, Menge und die Fundstelle in der Verordnung.
  *
- * Die Fachlogik folgt im zuständigen Meilenstein.
+ * Die Gebührendaten kommen als statische JSON-Datei über das Manifest; es
+ * gibt keinen Server und keine Anfrage an Dritte. Gerechnet wird im Browser
+ * mit **derselben** Engine wie im Build — sie wird importiert, nicht
+ * nachgebaut, damit die Regeln nicht auseinanderlaufen können.
  */
 import Notice from '../Notice.astro';
+import DataStatus from '../DataStatus.astro';
+import ErrorSummary from '../forms/ErrorSummary.astro';
+import Field from '../forms/Field.astro';
+import { COST_CONFIG, NICHT_ENTHALTEN } from '../../features/costs/engine.ts';
+import { defaultMarket } from '../../domain/market.ts';
+import snapshot from '../../../data-snapshots/got/got-2022.json' with { type: 'json' };
+
+const market = defaultMarket();
+const quelle = snapshot.source as {
+  name: string;
+  url: string;
+  retrievalDate: string;
+  sourceVersion: string;
+  effectiveFrom: string | null;
+  amendmentNote: string | null;
+  legalBasis: string;
+};
 ---
 
-<h1>Tierarztkosten</h1>
-<Notice variante="hinweis" titel="Fachlogik folgt">
+<h1>Tierarztkosten berechnen</h1>
+
+<p>
+  Der Rechner setzt Positionen der Gebührenordnung für Tierärztinnen und Tierärzte zusammen und
+  zeigt, wie sich ein Betrag ergibt. Er ist <strong>kein amtlicher Rechner</strong> und kein Kostenvoranschlag:
+  eine echte Rechnung kann Positionen enthalten, die hier niemand ausgewählt hat.
+</p>
+
+<DataStatus
+  stand={quelle.effectiveFrom}
+  quelle={`${quelle.sourceVersion} · ${quelle.legalBasis}`}
+  locale={market.locale}
+/>
+
+<ErrorSummary id="rechner-fehler" />
+
+<form id="rechner" data-validierung data-fehlerliste="rechner-fehler" novalidate>
+  <fieldset>
+    <legend>Behandlungskontext</legend>
+    <p class="hilfe">
+      Der Kontext wird nicht aus der Uhrzeit abgeleitet. Wählen Sie, was tatsächlich zutrifft; im
+      Zweifel fragen Sie in der Praxis nach.
+    </p>
+    <label class="wahl">
+      <input type="radio" name="kontext" value="regular" checked />
+      Regulär — Faktor {COST_CONFIG.standardFactorMin} bis {COST_CONFIG.standardFactorMax}
+    </label>
+    <label class="wahl">
+      <input type="radio" name="kontext" value="emergency" />
+      Notdienst — Faktor {COST_CONFIG.emergencyFactorMin} bis {COST_CONFIG.emergencyFactorMax},
+      zuzüglich Notdienstgebühr
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Tier</legend>
+    <label for="tierart">Tierart</label>
+    <select id="tierart" name="tierart">
+      <option value="">keine Angabe</option>
+      <option value="dog">Hund</option>
+      <option value="cat">Katze</option>
+    </select>
+    <p class="hilfe">
+      Die Verordnung ordnet die meisten Positionen keiner Tierart zu. Eine Angabe schließt hier nur
+      Positionen aus, die im Originaltext ausdrücklich eine andere Tierart nennen.
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Position hinzufügen</legend>
+    <label for="suche">Leistung suchen</label>
+    <input id="suche" type="search" autocomplete="off" placeholder="z. B. Untersuchung" />
+    <p id="suche-hinweis" class="hilfe" role="status" aria-live="polite"></p>
+    <ul id="treffer" class="treffer"></ul>
+
+    <Field
+      id="menge"
+      name="menge"
+      label="Menge"
+      hilfe="Ganze Zahl, mindestens 1."
+      fehlertext="Die Menge muss eine ganze Zahl größer als 0 sein."
+      regel="zahl-positiv"
+      inputmode="numeric"
+      pflicht
+    />
+    <Field
+      id="faktor"
+      name="faktor"
+      label="Faktor"
+      hilfe="Höchstens zwei Nachkommastellen. Der zulässige Bereich hängt vom Kontext ab."
+      fehlertext="Der Faktor liegt außerhalb des für diesen Kontext zulässigen Bereichs."
+      regel="zahl-bereich"
+      inputmode="decimal"
+      min={1}
+      max={4}
+      pflicht
+    />
+    <p>
+      <button type="submit">Position übernehmen</button>
+    </p>
+  </fieldset>
+</form>
+
+<section aria-labelledby="ergebnis-titel">
+  <h2 id="ergebnis-titel">Rechnung</h2>
+  <p id="rechner-status" role="status" aria-live="polite">Noch keine Position ausgewählt.</p>
+  <div id="ergebnis" data-testid="rechner-ergebnis"></div>
+</section>
+
+<Notice variante="warnung" titel="Was der Rechner nicht kann">
+  <p>Nicht enthalten sind:</p>
+  <ul>
+    {NICHT_ENTHALTEN.map((eintrag) => <li>{eintrag}</li>)}
+  </ul>
   <p>
-    Das Grundgerüst dieser Seite steht. Die eigentliche Funktion wird in ihrem Meilenstein ergänzt,
-    zusammen mit geprüften Daten, Quellenangabe und Datenstand.
+    Die Zusammenstellung der Positionen ist Ihre Auswahl. Ob sie zu einer Behandlung passt, kann nur
+    die behandelnde Praxis beurteilen.
   </p>
 </Notice>
+
+<h2>Quelle</h2>
+<p>
+  {quelle.name}, Fassung {quelle.sourceVersion}{
+    quelle.amendmentNote !== null && <> — {quelle.amendmentNote}</>
+  }. Bezogen am {quelle.retrievalDate.slice(0, 10)} von <a href={quelle.url}>{quelle.url}</a>.
+  Rechtsgrundlage der Übernahme: {quelle.legalBasis}.
+</p>
+
+<style>
+  fieldset {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-4);
+  }
+
+  legend {
+    font-weight: 600;
+    padding-inline: var(--abstand-2);
+  }
+
+  .hilfe {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+    margin-block: var(--abstand-1);
+  }
+
+  .wahl {
+    display: block;
+    margin-block: var(--abstand-2);
+    font-weight: 400;
+  }
+
+  select,
+  input[type='search'] {
+    width: 100%;
+    max-width: 28rem;
+    padding: var(--abstand-2);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    background: var(--farbe-grund);
+  }
+
+  .treffer {
+    list-style: none;
+    padding: 0;
+    margin: var(--abstand-2) 0;
+    max-height: 18rem;
+    overflow-y: auto;
+  }
+
+  .treffer li {
+    border-bottom: var(--linie) solid var(--farbe-linie);
+    padding-block: var(--abstand-2);
+  }
+
+  .treffer button {
+    text-align: start;
+    width: 100%;
+    background: none;
+    border: 0;
+    padding: var(--abstand-1);
+    cursor: pointer;
+    color: inherit;
+  }
+
+  .treffer button:hover {
+    background: var(--farbe-flaeche);
+  }
+
+  :global(#ergebnis table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-block: var(--abstand-4);
+  }
+
+  :global(#ergebnis th),
+  :global(#ergebnis td) {
+    border-bottom: var(--linie) solid var(--farbe-linie);
+    padding: var(--abstand-2);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  :global(#ergebnis td.zahl),
+  :global(#ergebnis th.zahl) {
+    text-align: end;
+    white-space: nowrap;
+  }
+
+  :global(#ergebnis tfoot td) {
+    font-weight: 600;
+  }
+
+  :global(#ergebnis .fundstelle) {
+    display: block;
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+</style>
+
+<script>
+  import { rechnerStarten } from '../../features/costs/ui.ts';
+
+  rechnerStarten();
+</script>

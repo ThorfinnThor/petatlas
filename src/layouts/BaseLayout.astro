@@ -6,9 +6,9 @@
  * Tokens ein und rahmt den Inhalt mit Kopf- und Fußbereich. Fachliche
  * Inhalte stehen in den Seiten, nicht hier.
  */
-import { resolveBuildConfig, robotsDirective } from '../../config/build.ts';
+import { devFeatureOverrides, resolveBuildConfig, robotsDirective } from '../../config/build.ts';
 import { createSiteConfig } from '../../config/site.ts';
-import { defaultMarket } from '../domain/market.ts';
+import { defaultMarket, withEnabledFeatures } from '../domain/market.ts';
 import { canonicalUrl, type RouteKey } from '../lib/routes.ts';
 import Notice from '../components/Notice.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -27,7 +27,7 @@ const { title, route, neverIndex = false } = Astro.props;
 
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
-const market = defaultMarket();
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const robots = neverIndex ? 'noindex, nofollow' : robotsDirective(build);
 const canonical = route ? canonicalUrl(build.baseUrl, market, route) : null;
 ---

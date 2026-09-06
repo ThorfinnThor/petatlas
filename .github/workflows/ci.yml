@@ -63,8 +63,16 @@ jobs:
       - name: Aufgabenstand und Handoff stimmen überein
         run: npm run check:handoff
 
+      - name: GOT-Snapshot ist aktuell zur Quelldatei
+        run: |
+          npm run snapshot:got
+          git diff --exit-code -- data-snapshots/
+
       - name: Fixture-Build
         run: npm run build:fixture
+
+      - name: Gebührendaten
+        run: npm run build:fees
 
       - name: Suchindex
         run: npm run build:search
@@ -110,3 +118,8 @@ jobs:
 
       - name: End-to-End gegen den gebauten Output
         run: npm run test:e2e
+
+      # Eigener Lauf: der reguläre Build prüft, dass eine abgeschaltete
+      # Funktion keine Seite hat. Der Rechner braucht sein Flag.
+      - name: End-to-End für Funktionen hinter ihrem Feature Flag
+        run: npm run test:e2e:features
