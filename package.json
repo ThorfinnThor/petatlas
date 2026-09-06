@@ -16,6 +16,7 @@
     "build:site": "npm run build && npm run build:search && npm run build:headers",
     "build:fixture": "BUILD_MODE=development USE_FIXTURES=true astro build",
     "build:production": "BUILD_MODE=production astro build",
+    "build:cloudflare": "node scripts/build-cloudflare.ts",
     "preview": "astro preview",
     "lint": "eslint .",
     "typecheck": "astro check",

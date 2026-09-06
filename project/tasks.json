@@ -1556,8 +1556,16 @@
         "M07-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/build-cloudflare.ts arbeitet die acht Schritte aus OPERATIONS in fester Reihenfolge ab und bricht bei jedem Fehlschlag mit Exitcode 1 ab, sodass Cloudflare nichts ausliefert. Drei Abbruchfaelle nachgewiesen: production ohne dokumentierte Launch-Freigabe, ein Nicht-Entwicklungsbuild mit Fixtures, und ein gesetztes AWIN_FEED_URL ohne freigegebenen Partnervertrag - der Wert des Secrets erscheint dabei nicht in der Ausgabe. dist/build-info.json nennt die exakten Eingaben: Git-Commit (40 Hex), Node-Version, Build-Modus, Datenstand und je Quelle Rechtestand, Lizenz und termsHash. Ein Test prueft die Datei mit demselben Secret-Audit, der ueber dist laeuft. 14 Tests.",
+          "reference": "scripts/build-cloudflare.ts; dist/build-info.json; tests/build-security.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run build:cloudflare (Erfolg und drei Abbruchfaelle)",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

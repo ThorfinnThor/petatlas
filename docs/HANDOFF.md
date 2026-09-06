@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M06 vollständig, M07 bei 3/6 (45 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M06 vollständig, M07 bei 4/6 (46 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,7 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M07-04 — Cloudflare-Buildskript umsetzen.** `scripts/build-cloudflare.ts`: fixierter Open-Data-Commit, Rechteprüfung, statischer Build, Pagefind, Header und Output-Audit in fester Reihenfolge. Das Deployment darf nicht vor den lokalen Prüfungen laufen.
-
-Danach M07-05 (Preview-/Produktionsisolation) und M07-06 (Cloudflare tatsächlich verbinden).
+**M07-05 — Preview-/Produktionsisolation testen.** `docs/CLOUDFLARE_SETUP.md` beschreiben; `tests/build-security.test.ts` liegt bereits vor. Danach M07-06: das Cloudflare-Projekt `petatlas-de` tatsächlich anlegen und verbinden.
 
 **Reihenfolge beim Abschluss einer Aufgabe:** erst `docs/HANDOFF.md` auf die *nächste* Aufgabe fortschreiben, dann den Status setzen und beides gemeinsam committen. Sonst schlägt `npm run check:handoff` in der CI fehl — genau das ist beim ersten CI-Lauf passiert.
 
