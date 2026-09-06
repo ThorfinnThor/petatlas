@@ -241,6 +241,10 @@ export function rechnerStarten(): void {
   suche.addEventListener('input', trefferZeigen);
   form.addEventListener('formular:gueltig', trefferZeigen);
 
+  element<HTMLButtonElement>('#drucken')?.addEventListener('click', () => {
+    window.print();
+  });
+
   faktorGrenzenSetzen();
 
   void ladeKatalog()

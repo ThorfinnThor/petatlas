@@ -1,0 +1,68 @@
+/*
+ * M08-05 — Druckansicht.
+ *
+ * Wer eine Rechnung ausdruckt, nimmt sie mit in die Praxis. Deshalb muss auf
+ * dem Papier alles stehen, was den Betrag erklärt: Quelle, Fassung, Stand,
+ * Fundstelle je Position und die Einschränkungen. Bedienelemente, die auf
+ * Papier nichts nützen, verschwinden.
+ */
+
+@media print {
+  /* Navigation, Suche und Formulare sind auf Papier ohne Funktion. */
+  header nav,
+  .suche,
+  #rechner fieldset,
+  #treffer,
+  .fehlerliste,
+  #suche-hinweis {
+    display: none !important;
+  }
+
+  body {
+    padding: 0;
+    font-size: 11pt;
+    color: #000;
+    background: #fff;
+  }
+
+  main,
+  header,
+  footer {
+    max-width: none;
+  }
+
+  /* Die Fundstelle je Position ist der Kern der Nachvollziehbarkeit. */
+  #ergebnis .fundstelle {
+    color: #000;
+    font-size: 9pt;
+  }
+
+  #ergebnis table {
+    page-break-inside: auto;
+  }
+
+  #ergebnis tr {
+    page-break-inside: avoid;
+  }
+
+  #ergebnis thead {
+    display: table-header-group;
+  }
+
+  /* Links sollen auf Papier lesbar bleiben. */
+  main a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    word-break: break-all;
+  }
+
+  /* Warn- und Hinweisboxen bleiben, aber ohne Farbflächen. */
+  .notiz {
+    border: 1pt solid #000;
+    background: none !important;
+  }
+
+  .drucken {
+    display: none !important;
+  }
+}

@@ -115,6 +115,12 @@ const quelle = snapshot.source as {
 
 <section aria-labelledby="ergebnis-titel">
   <h2 id="ergebnis-titel">Rechnung</h2>
+  <p class="drucken">
+    <button type="button" id="drucken">Rechnung drucken</button>
+    <span class="hilfe">
+      Auf dem Ausdruck stehen Quelle, Fassung und die Fundstelle jeder Position.
+    </span>
+  </p>
   <p id="rechner-status" role="status" aria-live="polite">Noch keine Position ausgewählt.</p>
   <div id="ergebnis" data-testid="rechner-ergebnis"></div>
 </section>

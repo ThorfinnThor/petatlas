@@ -1,0 +1,65 @@
+---
+/**
+ * M08-05 — Leistungsseiten mit Rechner-Einstieg.
+ *
+ * Erzeugt wird **nur** für Szenarien mit tatsächlicher fachlicher Freigabe.
+ * Solange keines freigegeben ist, entsteht keine einzige Seite. Das ist die
+ * Absicht: eine Seite je denkbarer Kombination wäre Massenerzeugung ohne
+ * eigenständigen Inhalt, und eine Seite zu einer ungeprüften Vorlage würde
+ * eine Genauigkeit vortäuschen, die es nicht gibt.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Notice from '../../../components/Notice.astro';
+import DataStatus from '../../../components/DataStatus.astro';
+import { approvedScenarios } from '../../../features/costs/scenarios.ts';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../config/build.ts';
+import snapshot from '../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
+import type { CostScenario } from '../../../domain/schemas/index.ts';
+
+export function getStaticPaths() {
+  const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  // Ohne freigeschaltete Funktion und ohne fachliche Freigabe: keine Seite.
+  if (!isFeatureEnabled(market, 'costs')) return [];
+
+  return approvedScenarios().map((scenario) => ({
+    params: { slug: scenario.scenarioId },
+    props: { scenario },
+  }));
+}
+
+const { scenario } = Astro.props as { scenario: CostScenario };
+const market = defaultMarket();
+const quelle = snapshot.source as { sourceVersion: string; effectiveFrom: string | null };
+---
+
+<BaseLayout title={scenario.title} route="costs">
+  <h1>{scenario.title}</h1>
+
+  <DataStatus stand={quelle.effectiveFrom} quelle={quelle.sourceVersion} locale={market.locale} />
+
+  <p>
+    Diese Zusammenstellung wurde am {scenario.reviewedAt?.slice(0, 10)} von {scenario.reviewedBy}
+    fachlich geprüft. Sie bleibt eine Orientierung: welche Leistungen im Einzelfall nötig sind, entscheidet
+    die behandelnde Praxis.
+  </p>
+
+  <h2>Enthaltene Positionen</h2>
+  <ul>
+    {
+      scenario.lines.map((zeile) => (
+        <li>
+          Position {zeile.officialItemId}, Menge {zeile.quantity}, Faktor {zeile.factor}
+        </li>
+      ))
+    }
+  </ul>
+
+  <Notice variante="warnung" titel="Nicht enthalten">
+    <ul>
+      {scenario.exclusions.map((eintrag) => <li>{eintrag}</li>)}
+    </ul>
+  </Notice>
+
+  <p><a href="/de-de/tierarztkosten/">Eigene Rechnung zusammenstellen</a></p>
+</BaseLayout>

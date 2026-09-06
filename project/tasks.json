@@ -1789,8 +1789,16 @@
         "M08-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "src/styles/print.css blendet im Druck aus, was auf Papier keine Funktion hat (Navigation, Suche, Formularfelder, Trefferliste, Druckknopf) und behaelt alles, was den Betrag erklaert: Rechnungstabelle, Fundstelle je Position, Bruttosumme, Quelle, Fassung und die Liste der nicht enthaltenen Kosten; Links bekommen ihre Adresse als Klammerzusatz. src/pages/de-de/tierarztkosten/[slug].astro erzeugt Leistungsseiten ausschliesslich fuer fachlich freigegebene Szenarien - ohne Freigabe entsteht keine einzige Seite. Nachgewiesen: mit eingeschaltetem Flag und ohne Freigabe wird nur die Rechnerseite gebaut; nach Simulation einer Freigabe kommt genau eine Leistungsseite hinzu; nach dem Zuruecksetzen ist sie wieder weg. 10 zusaetzliche E2E-Tests, darunter der Nachweis, dass weder die vorhandenen Szenario-Slugs noch erfundene Kombinationen eine Seite haben. 153 regulaere und 30 Feature-E2E-Tests gruen.",
+          "reference": "src/styles/print.css; src/pages/de-de/tierarztkosten/[slug].astro; tests/e2e-features/costs-print.spec.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:e2e && npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
