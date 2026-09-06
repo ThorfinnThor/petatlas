@@ -711,8 +711,16 @@
         "M03-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "money.ts speichert ganzzahlige Untereinheiten und multipliziert Dezimalfaktoren exakt ueber Zaehler/Nenner statt in Gleitkomma; Waehrungen werden nicht vermischt. units.ts haelt Gewichte in Gramm und Laengen in Metern und rechnet erst bei der Ausgabe in das Marktsystem um. dates.ts trennt Kalenderdatum und UTC-Zeitpunkt; Zonenumrechnung nur mit ausdruecklicher Zone. 51 neue Tests, darunter 10,00 EUR x Faktor 2 x Menge 3 = 60,00 EUR, halbe Untereinheit kaufmaennisch aufgerundet, Schalttag, Zeitumstellung Berlin und Mitternachtsfaelle ueber drei Zonen. Zwei Erwartungswerte in domain-units waren falsch formuliert (Ganzzahlspeicherung uebersehen) und wurden mit Begruendung korrigiert; die Implementierung blieb unveraendert.",
+          "reference": "src/domain/money.ts; src/domain/units.ts; src/domain/dates.ts; tests/domain-money.test.ts; tests/domain-units.test.ts; tests/domain-dates.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
