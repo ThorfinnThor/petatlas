@@ -42,9 +42,7 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 **Rechner ansehen:** `ENABLE_FEATURES=costs npm run build:site && npx astro preview` — der Override wirkt nur in `development`.
 
-Alternativ unabhängig: M09-01 (Partnervertragsschema), M10-01 (OSM-Pilot), M12-01 (Reisekontext).
-
-**Live erreichbar:** https://petatlas-de-preview.shuu9599.workers.dev — technische Vorschau mit Fixtures, `noindex`. Nachweise in `docs/DEPLOYMENT_EVIDENCE.md`.
+**Live erreichbar:** https://petatlas-de-preview.shuu9599.workers.dev — technische Vorschau, `noindex`, mit freigeschaltetem Rechner. Nachweise in `docs/DEPLOYMENT_EVIDENCE.md`.
 
 **Reihenfolge beim Abschluss einer Aufgabe:** erst `docs/HANDOFF.md` auf die *nächste* Aufgabe fortschreiben, dann den Status setzen und beides gemeinsam committen. Sonst schlägt `npm run check:handoff` in der CI fehl — genau das ist beim ersten CI-Lauf passiert.
 
