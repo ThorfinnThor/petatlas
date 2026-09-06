@@ -1,39 +1,42 @@
 {
   "sourceId": "got-2022-gesetze-im-internet",
   "publisher": "Bundesministerium der Justiz / juris GmbH",
-  "resourceName": "Gebührenordnung für Tierärzte (GOT 2022), konsolidierte Fassung",
-  "distributionUrl": "https://www.gesetze-im-internet.de/got_2022/BJNR140100022.html",
+  "resourceName": "Gebührenordnung für Tierärzte (GOT 2022), amtliche XML-Fassung im ZIP-Download",
+  "distributionUrl": "https://www.gesetze-im-internet.de/got_2022/xml.zip",
   "primaryTermsUrl": "https://www.gesetze-im-internet.de/urhg/__5.html",
-  "format": "html",
+  "format": "zip",
   "coverage": {
     "spatial": "DE",
-    "temporal": "seit 2022, konsolidierte Fassung"
+    "temporal": "konsolidierte Fassung, Stand der Datei 2023-04-07"
   },
-  "updateCadence": "bei Änderung der Verordnung",
+  "updateCadence": "bei Änderung der Verordnung; Abruf höchstens wöchentlich",
   "role": "Gebührenkatalog für den Kostenrechner",
   "rights": {
     "sourceId": "got-2022-gesetze-im-internet",
-    "status": "pending",
-    "licenseId": null,
-    "licenseUrl": null,
-    "commercialUse": null,
-    "publicRedistribution": null,
-    "websiteDisplay": null,
-    "publicJsonDelivery": null,
-    "publicRepository": null,
+    "status": "verified",
+    "licenseId": "amtliches Werk, § 5 Abs. 1 UrhG",
+    "licenseUrl": "https://www.gesetze-im-internet.de/urhg/__5.html",
+    "commercialUse": true,
+    "publicRedistribution": true,
+    "websiteDisplay": true,
+    "publicJsonDelivery": true,
+    "publicRepository": true,
     "attributionRequired": true,
     "shareAlike": false,
-    "imagesAllowed": null,
-    "mayStoreHistory": null,
-    "mayCacheOriginals": null,
+    "imagesAllowed": false,
+    "mayStoreHistory": true,
+    "mayCacheOriginals": true,
     "termsHash": "0d1230ebb389ebdfdd0cb265ac74ee91345d19787520507c4db51cf85e375524",
     "checkedAt": "2026-09-06T00:00:00+00:00",
-    "approvalEvidence": null
+    "approvalEvidence": "docs/DECISIONS.md#adr-018 und docs/SOURCE_REVIEWS.md#got-2022-gesetze-im-internet"
   },
   "notes": [
-    "Geprüft am 2026-09-06: Der Verordnungstext selbst genießt nach § 5 Abs. 1 UrhG keinen urheberrechtlichen Schutz; Gesetze und Verordnungen sind ausdrücklich genannt.",
-    "Offen ist nicht der Inhalt, sondern der Bezugsweg: gesetze-im-internet.de nennt im Impressum keine Nutzungs- oder Weiterverwendungsbedingungen für den systematischen Abruf seiner HTML-/XML-Fassung.",
-    "Deshalb bleibt der Eintrag pending. Entscheidung des Betreibers erforderlich, siehe docs/SOURCE_REVIEWS.md.",
-    "Fremde Kommentierungen und die redaktionelle Aufbereitung der Website werden ohnehin nicht übernommen."
-  ]
+    "Bezugsweg ist ausschließlich der offiziell angebotene XML-ZIP-Download, kein Crawler und keine Spiegelung des Angebots.",
+    "Der Verordnungstext genießt nach § 5 Abs. 1 UrhG keinen urheberrechtlichen Schutz; das ist eine Rechtsgrundlage, keine Lizenz. Die Daten werden nicht als CC0, MIT oder unter einer erfundenen Lizenz gekennzeichnet.",
+    "Der Website-Build verwendet ausschließlich einen validierten lokalen Snapshot. Besucher lösen keine Anfragen an gesetze-im-internet.de aus.",
+    "Fremde Kommentierungen und die redaktionelle Aufbereitung der Website werden nicht übernommen.",
+    "Entscheidung des Betreibers vom 2026-09-06, siehe ADR-018."
+  ],
+  "attributionText": "Gebührenordnung für Tierärzte (GOT), amtlicher Text nach § 5 Abs. 1 UrhG, bezogen über gesetze-im-internet.de",
+  "attributionUrl": "https://www.gesetze-im-internet.de/got_2022/"
 }

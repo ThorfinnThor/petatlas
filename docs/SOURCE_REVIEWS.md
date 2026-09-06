@@ -43,31 +43,36 @@ Der `termsHash` im Registryeintrag ist der Hash des ODbL-Lizenztextes. Ändert e
 
 ## got-2022-gesetze-im-internet
 
-**Geprüft am:** 2026-09-06 · **Ergebnis:** bleibt `pending` — Entscheidung des Betreibers erforderlich
+**Geprüft am:** 2026-09-06 · **Ergebnis:** `verified` nach Entscheidung des Betreibers (ADR-018)
 
 ### Was geprüft wurde
 
-| Primärquelle | Fundstelle | sha256 des Abrufs |
+| Primärquelle | Fundstelle | Befund |
 |---|---|---|
-| § 5 UrhG, Amtliche Werke | `https://www.gesetze-im-internet.de/urhg/__5.html` | `0d1230eb…5524` |
-| Impressum gesetze-im-internet.de | `https://www.gesetze-im-internet.de/impressum.html` | — |
+| § 5 UrhG, Amtliche Werke | `https://www.gesetze-im-internet.de/urhg/__5.html` | sha256 `0d1230eb…5524` |
+| Impressum gesetze-im-internet.de | `https://www.gesetze-im-internet.de/impressum.html` | keine Aussage zu Nutzungsbedingungen |
+| XML-Download | `https://www.gesetze-im-internet.de/got_2022/xml.zip` | HTTP 200, 32.110 Byte, `content-type: application/zip`, `etag` und `last-modified` vorhanden, enthält `BJNR140100022.xml` (301.818 Byte) |
+| robots.txt | `https://www.gesetze-im-internet.de/robots.txt` | `User-agent: *` / `Disallow:` — kein Pfad ausgeschlossen |
 
 ### Feststellungen
 
-1. **Der Inhalt ist frei.** § 5 Abs. 1 UrhG nennt ausdrücklich „Gesetze, Verordnungen, amtliche Erlasse und Bekanntmachungen“ als Werke, die keinen urheberrechtlichen Schutz genießen. Die Gebührenordnung für Tierärzte ist eine Rechtsverordnung. Ihre Positionen und Regeln als solche dürfen also wiedergegeben werden.
-2. **Der Bezugsweg ist nicht geregelt.** Das Impressum von gesetze-im-internet.de nennt als Anbieter die Bundesrepublik Deutschland, vertreten durch das Bundesministerium der Justiz, und die juris GmbH als technischen Dienstleister. Es enthält **keine** Aussage zu Nutzungsbedingungen, zur Weiterverwendung oder zum systematischen Abruf der HTML- beziehungsweise XML-Fassung.
-3. **Daraus folgt eine offene Frage, nicht eine Freigabe.** „Der Text ist gemeinfrei“ und „diese Website darf systematisch abgerufen und gespiegelt werden“ sind zwei verschiedene Aussagen. Die zweite lässt sich aus den veröffentlichten Angaben nicht belegen.
+1. **Der Inhalt ist frei.** § 5 Abs. 1 UrhG nennt ausdrücklich „Gesetze, Verordnungen, amtliche Erlasse und Bekanntmachungen“ als Werke ohne urheberrechtlichen Schutz. Die Gebührenordnung für Tierärzte ist eine Rechtsverordnung.
+2. **Der Bezugsweg ist der offiziell angebotene XML-Download**, nicht die HTML-Ansicht und kein Crawler. Der Anbieter stellt diese Datei zum Abruf bereit; `robots.txt` schließt keinen Pfad aus.
+3. **Der Download liefert brauchbare Abrufmetadaten.** `ETag` und `Last-Modified` erlauben einen bedingten Abruf, sodass ein Aktualisierungsjob nicht bei jedem Lauf die volle Datei ziehen muss.
+4. **Rechtsgrundlage ist keine Lizenz.** § 5 Abs. 1 UrhG ist der Grund, warum der Text übernommen werden darf. Die Daten werden deshalb nicht als CC0, MIT oder unter einer erfundenen Lizenz gekennzeichnet.
+5. **Die redaktionelle Aufbereitung der Website wird nicht übernommen**, ebenso wenig fremde Kommentierungen.
 
-### Was fehlt und wer entscheidet
+### Freigegebene Ausgabeformen
 
-**Offene Frage:** Auf welchem Weg wird der Verordnungstext bezogen?
+| Ausgabeform | Ergebnis |
+|---|---|
+| Anzeige im HTML | erlaubt, mit Quellenangabe und Fassungsstand |
+| Öffentliche JSON-Auslieferung | erlaubt, mit vollständiger Provenienz |
+| Öffentliches Repository | erlaubt (Snapshot mit Provenienz) |
+| Bilder | nicht anwendbar |
 
-Mögliche Wege, ohne Empfehlung aufgeführt:
+### Was damit **nicht** freigegeben ist
 
-- Abruf der XML-Fassung von gesetze-im-internet.de nach Klärung der Bedingungen mit dem Anbieter,
-- Nutzung einer anderen Distribution derselben Verordnung mit ausdrücklichen Nutzungsbedingungen,
-- einmalige manuelle Erfassung der benötigten Positionen aus der amtlichen Verkündung, ohne systematischen Abruf der Website.
-
-**Zuständig:** Betreiber, gegebenenfalls mit rechtlicher Prüfung. Bis zur Entscheidung bleibt der Eintrag `pending`; der Kostenrechner wird gegen eindeutig synthetische Fixtures entwickelt und liefert keine echten Gebührenwerte aus.
-
-**Davon unberührt** bleibt die fachliche Freigabe der Rechenregeln (M08-06). Sie ist ein eigenes Gate: selbst mit geklärtem Bezugsweg dürfen ungeprüfte Rechenregeln nicht live gehen.
+- Die **fachliche Prüfung der Rechenregeln** (M08-06) ist ein eigenes Gate. Ein geklärter Bezugsweg macht ungeprüfte Rechenregeln nicht veröffentlichungsfähig.
+- Der **zeitgesteuerte automatische Abruf** wird erst nach der Betriebsprüfung M17-07 aktiviert.
+- Der Rechner wird **nicht als amtlicher Rechner** dargestellt (ADR-018).

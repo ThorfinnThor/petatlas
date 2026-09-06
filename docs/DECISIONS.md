@@ -43,3 +43,31 @@ Die ADRs ADR-001 bis ADR-016 sind gelesen und als verbindlich übernommen. Der d
 **Begründung:** Das Repository enthält absehbar ODbL-Daten, optionale OPFF-Inhalte, vertragliche Partnerfelder und Herstellerbilder. Eine pauschale Projektlizenz würde Rechte einräumen, über die der Betreiber nicht verfügt. Repo-Publicity ist keine Weiterverwendungserlaubnis (ADR-014).
 
 **Konsequenz:** Rechtehinweise werden pro Datenklasse in `licenses/README.md` geführt. Vor jedem Live-Import sind Lizenz, Publikationsrecht und Attributionspflicht der Quelle geprüft und der tatsächliche Datenfluss dokumentiert. Die spätere Codelizenzentscheidung erhält eine eigene ADR und betrifft ausschließlich eigenen Code.
+
+## ADR-018 — Bezugsweg für den Gebührenkatalog (B-001, entschieden am 2026-09-06)
+
+**Entscheidung des Betreibers:** Der GOT-Gebührenkatalog wird über den offiziell angebotenen XML-Download bezogen: `https://www.gesetze-im-internet.de/got_2022/xml.zip`. B-001 gilt damit als entschieden und ist kein externer Freigabe-Blocker mehr.
+
+**Begründung des Betreibers:** Der Verordnungstext ist nach § 5 Abs. 1 UrhG nicht urheberrechtlich geschützt. „Gesetze im Internet“ stellt die Normen ausdrücklich auch als XML zur automatisierten Weiterverarbeitung bereit. Verwendet wird ausschließlich dieser Download; es entsteht kein allgemeiner Website-Crawler. Eine individuelle Genehmigung des Anbieters ist keine Voraussetzung der Implementierung.
+
+### Verbindliche Vorgaben für die Umsetzung
+
+**Bezug und Verarbeitung.** Der Importer lädt das ZIP, extrahiert die enthaltene XML sicher, parst den Katalog, normalisiert die Positionen und erzeugt deterministisches statisches JSON.
+
+**Provenienz.** Jede erzeugte Ausgabe führt mindestens: Quellname, Quell-URL, Abrufzeitpunkt, SHA-256 der Originaldatei, Parser-Version und den erkannten Fassungsstand, soweit aus der Quelle zuverlässig bestimmbar.
+
+**Snapshots statt Live-Abruf.** Entwicklung, Tests und Website-Builds hängen niemals von einem Live-Abruf ab. Grundlage ist ein versionierter, validierter lokaler Snapshot. Besucher der Website lösen keine Anfragen an gesetze-im-internet.de aus.
+
+**Kein Crawling.** Kein Abruf des Gesamtangebots, keine parallelen Massendownloads, keine aggressiven Retry-Schleifen, keine Umgehung von Limits oder Sperren, keine unnötig häufigen Abrufe.
+
+**Aktualisierung.** Höchstens einmal pro Woche: abrufen, Hash mit dem vorhandenen Snapshot vergleichen, bei Gleichstand nichts tun, sonst neuen Snapshot erzeugen, Schema und Inhalt validieren, Diff erzeugen, Tests laufen lassen und erst danach übernehmen.
+
+**Fehlerverhalten.** Ein fehlgeschlagener Abruf löscht oder überschreibt den letzten validierten Snapshot nicht. Stattdessen: alten Snapshot weiterverwenden, Fehler protokollieren, Datenstand als nicht aktualisiert kennzeichnen, keine falschen oder leeren GOT-Daten veröffentlichen.
+
+**Strukturänderung.** Kann der Parser nach einer Änderung der XML-Struktur nicht mehr sicher arbeiten, wird der Import abgebrochen, der bisherige Snapshot weiterverwendet und ein Blocker mit konkretem Fehler angelegt. Keine stillen Heuristiken, die falsche Gebühren erzeugen könnten.
+
+**Rechtekennzeichnung.** Die GOT-Daten werden nicht als CC0, MIT oder unter einer selbst erfundenen Lizenz gekennzeichnet. Dokumentiert wird die Rechtsgrundlage des übernommenen Normtexts: § 5 Abs. 1 UrhG.
+
+**Darstellung im Produkt.** Der Rechner wird nicht als amtlicher Rechner dargestellt. Die Oberfläche macht deutlich: Grundlage ist die GOT, die Berechnung ist eine eigene Orientierung, tatsächliche Kosten können zusätzliche Positionen enthalten, und der Fassungsstand der verwendeten Daten wird angezeigt.
+
+**Verbleibende technische Prüfung.** Vor Aktivierung eines zeitgesteuerten Abrufs werden robots.txt, offizielle Hinweise zur automatisierten Weiterverarbeitung, HTTP-Verhalten, ETag/Last-Modified und etwaige Limits geprüft und dokumentiert. Das ist eine Betriebsprüfung und kein Blocker für die Implementierung: Aufgabe **M17-07**. Findet sich dabei ein ausdrücklicher Hinweis, der den automatisierten Abruf einschränkt, wird nur das Scheduling gestoppt, der Fund mit Quelle dokumentiert und mit dem vorhandenen Snapshot weitergearbeitet.

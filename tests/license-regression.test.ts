@@ -133,15 +133,21 @@ describe('Fehlender Pflichthinweis in der Ausgabe', () => {
   });
 });
 
-describe('Der gesperrte Gebührenkatalog bleibt gesperrt', () => {
-  it('erlaubt keine Ausgabeform', () => {
-    const got = requireSource('got-2022-gesetze-im-internet');
-    expect(allowedChannels('public_open', got.rights)).toEqual([]);
+describe('Eine zurückgezogene Freigabe stoppt auch den Gebührenkatalog', () => {
+  const got = requireSource('got-2022-gesetze-im-internet');
+
+  it('ist nach ADR-018 freigegeben', () => {
+    expect(got.rights.status).toBe('verified');
+    expect(allowedChannels('public_open', got.rights)).toContain('publicJsonDelivery');
   });
 
-  it('stoppt eine versehentlich gebaute Datendatei', () => {
-    const got = requireSource('got-2022-gesetze-im-internet');
+  it('stoppt die Ausgabe, sobald die Freigabe zurückgezogen wird', () => {
+    const zurueckgezogen = SourceEntrySchema.parse({
+      ...got,
+      rights: SourceRightsSchema.parse({ ...got.rights, status: 'rejected' }),
+    });
+    expect(allowedChannels('public_open', zurueckgezogen.rights)).toEqual([]);
     const wurzel = schreibeAusgabe({ sourceId: got.sourceId, items: [] });
-    expect(pruefeAusgabe(wurzel, [got])).not.toEqual([]);
+    expect(pruefeAusgabe(wurzel, [zurueckgezogen])).not.toEqual([]);
   });
 });

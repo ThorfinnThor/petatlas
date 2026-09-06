@@ -47,7 +47,8 @@ describe('Einträge sind konkrete Distributionen', () => {
 
 describe('Ungeprüfte Quellen dürfen nichts', () => {
   it('erlaubt für eine pending-Quelle keine einzige Ausgabeform', () => {
-    expect(pendingSources().length).toBeGreaterThan(0);
+    // Derzeit ist keine Quelle pending; die Schleife bleibt als Regression,
+    // sobald eine neue Quelle hinzukommt.
     for (const eintrag of pendingSources()) {
       for (const kanal of [
         'websiteDisplay',
@@ -62,9 +63,8 @@ describe('Ungeprüfte Quellen dürfen nichts', () => {
     }
   });
 
-  it('hält den Gebührenkatalog weiterhin zurück', () => {
-    // Der Bezugsweg ist nicht geklärt, siehe docs/SOURCE_REVIEWS.md.
-    expect(requireSource('got-2022-gesetze-im-internet').rights.status).toBe('pending');
+  it('kennt nach ADR-018 keine ungeprüfte Quelle mehr', () => {
+    expect(pendingSources()).toEqual([]);
   });
 
   it('trägt für jede Quelle die Attributionspflicht bereits ein', () => {
@@ -79,14 +79,22 @@ describe('Ungeprüfte Quellen dürfen nichts', () => {
 });
 
 describe('Verifizierte Quellen tragen ihren Nachweis', () => {
-  it('hat für das OSM-Extrakt Lizenz, Prüfdatum, Nachweis und Wortlaut', () => {
-    const [erste] = verifiedSources();
-    expect(erste?.sourceId).toBe('osm-geofabrik-germany-pbf');
-    expect(erste?.rights.licenseId).toBe('ODbL-1.0');
-    expect(erste?.rights.checkedAt).not.toBeNull();
-    expect(erste?.rights.approvalEvidence).toContain('SOURCE_REVIEWS');
-    expect(erste?.rights.termsHash).toMatch(/^[a-f0-9]{64}$/);
-    expect(erste?.attributionText).toContain('OpenStreetMap');
+  it('hat für jede freigegebene Quelle Lizenz, Prüfdatum, Nachweis und Wortlaut', () => {
+    expect(verifiedSources().length).toBe(allSources().length);
+    for (const eintrag of verifiedSources()) {
+      expect(eintrag.rights.licenseId, eintrag.sourceId).not.toBeNull();
+      expect(eintrag.rights.checkedAt, eintrag.sourceId).not.toBeNull();
+      expect(eintrag.rights.approvalEvidence, eintrag.sourceId).toBeTruthy();
+      expect(eintrag.rights.termsHash, eintrag.sourceId).toMatch(/^[a-f0-9]{64}$/);
+      expect(eintrag.attributionText, eintrag.sourceId).toBeTruthy();
+    }
+  });
+
+  it('kennzeichnet die GOT nicht als freie Lizenz, sondern als amtliches Werk', () => {
+    const got = requireSource('got-2022-gesetze-im-internet');
+    expect(got.rights.licenseId).toContain('§ 5 Abs. 1 UrhG');
+    expect(got.rights.licenseId).not.toMatch(/CC0|MIT|ODbL/);
+    expect(got.distributionUrl).toBe('https://www.gesetze-im-internet.de/got_2022/xml.zip');
   });
 
   it('erlaubt für das OSM-Extrakt Anzeige, JSON und Repository, aber keine Bilder', () => {

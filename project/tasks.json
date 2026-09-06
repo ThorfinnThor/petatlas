@@ -1160,6 +1160,13 @@
           "verified_at": "2026-09-06",
           "command": "npm run test:unit && npx playwright test",
           "exit_code": 0
+        },
+        {
+          "description": "B-001 durch Betreiberentscheidung aufgeloest (ADR-018): Bezug ueber den offiziellen XML-ZIP-Download. Nachgeprueft am 2026-09-06: HTTP 200, 32.110 Byte, content-type application/zip, ETag und Last-Modified vorhanden, Archiv enthaelt genau BJNR140100022.xml (301.818 Byte); robots.txt schliesst keinen Pfad aus. Die Quelle steht jetzt auf verified mit der Rechtsgrundlage '§ 5 Abs. 1 UrhG' statt einer erfundenen Lizenz; Tests belegen, dass sie nicht als CC0, MIT oder ODbL gekennzeichnet ist. Die Betriebspruefung vor dem zeitgesteuerten Abruf ist als neue Aufgabe M17-07 angelegt.",
+          "reference": "docs/DECISIONS.md ADR-018; docs/SOURCE_REVIEWS.md; docs/BLOCKERS.md; config/sources/got.json; project/tasks.json M17-07",
+          "verified_at": "2026-09-06",
+          "command": "curl -sSI https://www.gesetze-im-internet.de/got_2022/xml.zip; npm run test:unit; npx playwright test",
+          "exit_code": 0
         }
       ],
       "blocker": null,
@@ -2988,6 +2995,31 @@
       "evidence": [],
       "blocker": null,
       "notes": []
+    },
+    {
+      "id": "M17-07",
+      "milestone": "M17",
+      "title": "Abrufbedingungen der GOT-Quelle vor dem Schedule dokumentieren",
+      "implementation": "Vor Aktivierung des zeitgesteuerten GOT-Abrufs robots.txt, offizielle Hinweise zur automatisierten Weiterverarbeitung, HTTP-Verhalten, ETag-/Last-Modified-Unterstützung und etwaige Limits prüfen und dokumentieren. Konservativer Job: höchstens wöchentlich, bedingter Abruf, Hashvergleich, Validierung und Diff vor Übernahme. Findet sich ein ausdrücklicher Hinweis gegen automatisierten Abruf, nur das Scheduling stoppen, den Fund mit Quelle dokumentieren und mit dem vorhandenen Snapshot weiterarbeiten.",
+      "deliverables": [
+        "docs/SOURCE_REVIEWS.md",
+        ".github/workflows/ingest-open.yml"
+      ],
+      "acceptance": [
+        "Abrufbedingungen sind mit Fundstelle und Datum dokumentiert; der Job läuft höchstens wöchentlich und bricht ohne gültigen Snapshot nicht die Auslieferung."
+      ],
+      "depends_on": [
+        "M08-01",
+        "M17-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": [
+        "Neu angelegt am 2026-09-06 aus ADR-018. Betriebsprüfung, kein Blocker für die Implementierung des Rechners.",
+        "Erster Befund vom 2026-09-06 steht bereits in docs/SOURCE_REVIEWS.md: robots.txt schließt keinen Pfad aus, der Download liefert ETag und Last-Modified."
+      ]
     },
     {
       "id": "M18-01",

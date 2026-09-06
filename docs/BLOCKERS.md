@@ -1,14 +1,27 @@
 # Blockerregister
 
-Stand 2026-09-06. **Ein offener Punkt**, keine blockierte Aufgabe.
+Stand 2026-09-06. **Keine blockierte Aufgabe.**
 
 | Blocker-ID | Aufgabe | Ursache | Benötigte Handlung | Zuständig | Unabhängige Folgearbeit |
 |---|---|---|---|---|---|
-| B-001 | M08-01 (GOT-Importer) | Der Verordnungstext selbst ist nach § 5 Abs. 1 UrhG nicht urheberrechtlich geschützt, aber gesetze-im-internet.de nennt keine Bedingungen für den systematischen Abruf seiner HTML-/XML-Fassung. Der Bezugsweg ist damit ungeklärt, nicht der Inhalt. | Bezugsweg festlegen: Bedingungen mit dem Anbieter klären, eine andere Distribution mit ausdrücklichen Nutzungsbedingungen wählen oder die benötigten Positionen einmalig manuell aus der amtlichen Verkündung erfassen. | Betreiber, gegebenenfalls mit rechtlicher Prüfung | Kostenrechner gegen eindeutig synthetische Fixtures entwickeln (M08-02 bis M08-05); alle übrigen Meilensteine sind unberührt. |
 
-Die Quelle `got-2022-gesetze-im-internet` bleibt bis dahin auf `pending` und darf nichts ausliefern. Die Prüfung mit Fundstellen steht in `docs/SOURCE_REVIEWS.md`.
+## Erledigte Punkte
 
-M08-01 ist noch nicht begonnen und daher noch nicht auf `blocked` gesetzt; der Punkt ist hier vorab erfasst, weil er in M05-04 aufgefallen ist.
+### B-001 — Bezugsweg für den Gebührenkatalog · **entschieden am 2026-09-06**
+
+**Ursprünglicher Befund (M05-04):** Der Verordnungstext ist nach § 5 Abs. 1 UrhG nicht urheberrechtlich geschützt, aber gesetze-im-internet.de nannte im Impressum keine Bedingungen für den systematischen Abruf seiner HTML-Fassung. Der Bezugsweg war damit ungeklärt, nicht der Inhalt.
+
+**Entscheidung des Betreibers:** Bezug ausschließlich über den offiziell angebotenen XML-Download `https://www.gesetze-im-internet.de/got_2022/xml.zip`. Kein Crawler, keine Spiegelung. Der Punkt ist damit kein externer Freigabe-Blocker mehr.
+
+**Nachgeprüft am 2026-09-06:** Der Download antwortet mit HTTP 200, liefert `ETag` und `Last-Modified` und enthält genau eine XML-Datei. `robots.txt` schließt keinen Pfad aus.
+
+**Vollständige Vorgaben:** `docs/DECISIONS.md`, ADR-018. **Quellenprüfung:** `docs/SOURCE_REVIEWS.md`.
+
+**Verbleibend, aber kein Blocker:** Aufgabe **M17-07** dokumentiert die Abrufbedingungen, bevor ein zeitgesteuerter Job aktiviert wird. Die Implementierung des Rechners wartet nicht darauf.
+
+Der Eintrag bleibt hier stehen, damit die Entscheidung nachvollziehbar bleibt. Ein Blocker wird nicht gelöscht, sondern aufgelöst.
+
+---
 
 Weitere noch offene externe Voraussetzungen stehen mit Status, Entscheider und zuerst betroffener Aufgabe im Register in `docs/EXTERNAL_SETUP.md`. Eine offene Voraussetzung ist noch kein Blocker.
 

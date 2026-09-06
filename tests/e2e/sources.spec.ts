@@ -14,15 +14,11 @@ test('listet jede erfasste Quelle mit Distribution und Bedingungen', async ({ pa
   await expect(page.getByRole('link', { name: /opendatacommons\.org/ }).first()).toBeVisible();
 });
 
-test('weist ungeprüfte Quellen als ungeprüft aus, statt sie zu verstecken', async ({ page }) => {
-  await page.goto('/de-de/quellen/');
-  await expect(page.getByText('Rechte noch nicht geprüft').first()).toBeVisible();
-  await expect(page.getByText('1 von 2 Quellen sind noch ungeprüft')).toBeVisible();
-});
-
-test('nennt für die geprüfte Quelle Lizenz und Prüfdatum', async ({ page }) => {
+test('nennt für jede Quelle Rechtestand, Lizenz und Prüfdatum', async ({ page }) => {
   await page.goto('/de-de/quellen/');
   await expect(page.getByText(/Rechte geprüft und bestätigt.*ODbL-1\.0.*2026-09-06/)).toBeVisible();
+  await expect(page.getByText(/Rechte geprüft und bestätigt.*§ 5 Abs. 1 UrhG/)).toBeVisible();
+  await expect(page.getByText('0 von 2 Quellen sind noch ungeprüft')).toBeVisible();
 });
 
 test('nennt die Attributions- und Share-Alike-Pflicht', async ({ page }) => {
@@ -33,9 +29,17 @@ test('nennt die Attributions- und Share-Alike-Pflicht', async ({ page }) => {
   ).toBeVisible();
 });
 
-test('behauptet für den Gebührenkatalog keine Freigabe', async ({ page }) => {
+test('kennzeichnet den Gebührenkatalog als amtliches Werk, nicht als freie Lizenz', async ({
+  page,
+}) => {
   await page.goto('/de-de/quellen/');
   const eintrag = page.locator('.quellen > li', { hasText: 'Gebührenordnung für Tierärzte' });
-  await expect(eintrag).toContainText('Rechte noch nicht geprüft');
-  await expect(eintrag).not.toContainText('Rechte geprüft und bestätigt');
+  await expect(eintrag).toContainText('xml.zip');
+
+  // Nur die Zeile mit dem Rechtestand prüfen: der erläuternde Hinweis darunter
+  // nennt CC0 und MIT absichtlich, um sie auszuschließen.
+  const rechtestand = eintrag.locator('dd').filter({ hasText: 'Rechte geprüft und bestätigt' });
+  await expect(rechtestand).toContainText('§ 5 Abs. 1 UrhG');
+  await expect(rechtestand).not.toContainText('CC0');
+  await expect(rechtestand).not.toContainText('MIT');
 });

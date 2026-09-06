@@ -73,3 +73,11 @@ Vier Hindernisse, die echte Arbeit gekostet haben:
 Korrigierte Testerwartungen, jeweils ohne Änderung an der Implementierung: zwei Einheitenrundungen (Ganzzahlspeicherung übersehen), zwei Suchtests (Pagefind arbeitet mit Wortstämmen, „keine Treffer“ war die falsche Prüfung) und drei Erwartungen an Texte, die sich durch spätere Aufgaben geändert haben.
 
 Ergebnis der Quellenprüfung M05-04: OSM-Extrakt freigegeben, Gebührenkatalog bleibt gesperrt (B-001).
+
+## 2026-09-06 — Entscheidung B-001
+
+Der Betreiber hat den Bezugsweg für den Gebührenkatalog festgelegt: ausschließlich der offizielle XML-ZIP-Download von gesetze-im-internet.de, kein Crawler. Festgehalten als ADR-018 mit den Vorgaben zu Snapshots, Fehlerverhalten, Provenienzfeldern, Rechtekennzeichnung und Darstellung im Produkt.
+
+Nachgeprüft: Download antwortet mit HTTP 200 (32.110 Byte, `application/zip`, `ETag` und `Last-Modified` vorhanden), Archiv enthält genau `BJNR140100022.xml`; `robots.txt` schließt keinen Pfad aus.
+
+B-001 ist aufgelöst und bleibt zur Nachvollziehbarkeit im Register stehen. Die verbleibende Betriebsprüfung vor dem zeitgesteuerten Abruf ist als neue Aufgabe **M17-07** angelegt — 121 Aufgaben statt 120.

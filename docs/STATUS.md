@@ -2,7 +2,7 @@
 
 Stand: 2026-09-06, Ende Sitzung 4.
 
-**Erledigt:** 36 von 120 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine Aufgabe; ein offener Punkt (B-001) wartet auf eine Entscheidung des Betreibers.
+**Erledigt:** 36 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine. B-001 ist entschieden (ADR-018); die neue Aufgabe M17-07 hält die verbleibende Betriebsprüfung fest.
 **Meilensteine vollständig:** M00, M01, M02, M03, M04, M05 (je 6/6).
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
@@ -31,8 +31,7 @@ Stand: 2026-09-06, Ende Sitzung 4.
 
 ## Offene Entscheidungen des Betreibers
 
-1. **B-001 — Bezugsweg für den Gebührenkatalog.** Betrifft M08. Siehe `docs/BLOCKERS.md` und `docs/SOURCE_REVIEWS.md`.
-2. **Cloudflare-Account und Repo-Anbindung.** Erstmals nötig für M07-03.
+1. **Cloudflare-Zugang.** Erstmals nötig für M07-03. Der Betreiber hat Zugang zugesagt; er ist im Projektkontext noch nicht eingerichtet.
 
 **Nächster Schritt:** M06-01 (Adapter-API). M06 und M07 bis einschließlich M07-02 sind ohne beide Entscheidungen ausführbar.
 
