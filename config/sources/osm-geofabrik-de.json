@@ -1,0 +1,35 @@
+{
+  "sourceId": "osm-geofabrik-germany-pbf",
+  "publisher": "Geofabrik GmbH (Extrakt) / OpenStreetMap-Mitwirkende (Daten)",
+  "resourceName": "OpenStreetMap-Extrakt Deutschland, Format .osm.pbf",
+  "distributionUrl": "https://download.geofabrik.de/europe/germany.html",
+  "primaryTermsUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "format": "pbf",
+  "coverage": { "spatial": "DE", "temporal": "tägliches Extrakt" },
+  "updateCadence": "täglich",
+  "role": "Ortsdaten für Karte und lokale Seiten",
+  "rights": {
+    "sourceId": "osm-geofabrik-germany-pbf",
+    "status": "pending",
+    "licenseId": null,
+    "licenseUrl": null,
+    "commercialUse": null,
+    "publicRedistribution": null,
+    "websiteDisplay": null,
+    "publicJsonDelivery": null,
+    "publicRepository": null,
+    "attributionRequired": true,
+    "shareAlike": true,
+    "imagesAllowed": null,
+    "mayStoreHistory": null,
+    "mayCacheOriginals": null,
+    "termsHash": null,
+    "checkedAt": null,
+    "approvalEvidence": null
+  },
+  "notes": [
+    "Das Extrakt ist eine konkrete Distribution, nicht „OpenStreetMap“ als Ganzes.",
+    "Kartenkacheln sind ein getrennter Dienst mit eigener Nutzungspolitik und bekommen einen eigenen Registryeintrag, sobald die Karte gebaut wird.",
+    "Ob eigene Verarbeitung eine abgeleitete Datenbank erzeugt, wird in M05-05 beschrieben."
+  ]
+}

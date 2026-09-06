@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "sourceId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "publisher": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resourceName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "distributionUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "primaryTermsUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "format": {
+      "type": "string",
+      "enum": ["html", "xml", "json", "csv", "pbf", "zip"]
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "spatial": {
+          "type": "string",
+          "minLength": 1
+        },
+        "temporal": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["spatial", "temporal"],
+      "additionalProperties": false
+    },
+    "updateCadence": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rights": {
+      "type": "object",
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "verified", "rejected", "expired"]
+        },
+        "licenseId": {
+          "type": ["string", "null"]
+        },
+        "licenseUrl": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commercialUse": {
+          "type": ["boolean", "null"]
+        },
+        "publicRedistribution": {
+          "type": ["boolean", "null"]
+        },
+        "websiteDisplay": {
+          "type": ["boolean", "null"]
+        },
+        "publicJsonDelivery": {
+          "type": ["boolean", "null"]
+        },
+        "publicRepository": {
+          "type": ["boolean", "null"]
+        },
+        "attributionRequired": {
+          "type": "boolean"
+        },
+        "shareAlike": {
+          "type": "boolean"
+        },
+        "imagesAllowed": {
+          "type": ["boolean", "null"]
+        },
+        "mayStoreHistory": {
+          "type": ["boolean", "null"]
+        },
+        "mayCacheOriginals": {
+          "type": ["boolean", "null"]
+        },
+        "termsHash": {
+          "type": ["string", "null"]
+        },
+        "checkedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "approvalEvidence": {
+          "type": ["string", "null"]
+        }
+      },
+      "required": [
+        "sourceId",
+        "status",
+        "licenseId",
+        "licenseUrl",
+        "commercialUse",
+        "publicRedistribution",
+        "websiteDisplay",
+        "publicJsonDelivery",
+        "publicRepository",
+        "attributionRequired",
+        "shareAlike",
+        "imagesAllowed",
+        "mayStoreHistory",
+        "mayCacheOriginals",
+        "termsHash",
+        "checkedAt",
+        "approvalEvidence"
+      ],
+      "additionalProperties": false
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "sourceId",
+    "publisher",
+    "resourceName",
+    "distributionUrl",
+    "primaryTermsUrl",
+    "format",
+    "coverage",
+    "updateCadence",
+    "role",
+    "rights",
+    "notes"
+  ],
+  "additionalProperties": false,
+  "$id": "https://petatlas.invalid/schemas/source.schema.json",
+  "title": "Source Registry Eintrag",
+  "description": "Eine konkrete Distribution mit ihren Publikationsrechten. Ein Anbietername allein ist kein gültiger Eintrag."
+}

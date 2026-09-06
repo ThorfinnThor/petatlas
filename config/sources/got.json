@@ -1,0 +1,34 @@
+{
+  "sourceId": "got-2022-gesetze-im-internet",
+  "publisher": "Bundesministerium der Justiz / juris GmbH",
+  "resourceName": "Gebührenordnung für Tierärzte (GOT 2022), konsolidierte Fassung",
+  "distributionUrl": "https://www.gesetze-im-internet.de/got_2022/BJNR140100022.html",
+  "primaryTermsUrl": "https://www.gesetze-im-internet.de/urhg/__5.html",
+  "format": "html",
+  "coverage": { "spatial": "DE", "temporal": "seit 2022, konsolidierte Fassung" },
+  "updateCadence": "bei Änderung der Verordnung",
+  "role": "Gebührenkatalog für den Kostenrechner",
+  "rights": {
+    "sourceId": "got-2022-gesetze-im-internet",
+    "status": "pending",
+    "licenseId": null,
+    "licenseUrl": null,
+    "commercialUse": null,
+    "publicRedistribution": null,
+    "websiteDisplay": null,
+    "publicJsonDelivery": null,
+    "publicRepository": null,
+    "attributionRequired": true,
+    "shareAlike": false,
+    "imagesAllowed": null,
+    "mayStoreHistory": null,
+    "mayCacheOriginals": null,
+    "termsHash": null,
+    "checkedAt": null,
+    "approvalEvidence": null
+  },
+  "notes": [
+    "Amtliche Werke und redaktionelle Aufbereitung einer Website sind zwei verschiedene Dinge; die Rechtelage wird in M05-04 an der Primärquelle geprüft.",
+    "Fremde Kommentierungen werden nicht übernommen."
+  ]
+}

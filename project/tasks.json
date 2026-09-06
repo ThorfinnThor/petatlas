@@ -1058,8 +1058,16 @@
         "M03-03"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "config/sources/ enthaelt zwei konkrete Distributionen (GOT-Fassung auf gesetze-im-internet.de, OSM-Deutschland-Extrakt als .osm.pbf bei Geofabrik), nicht Anbieternamen. Das Schema erzwingt das: ein resourceName aus einem Wort wie 'GovData' wird abgelehnt, ebenso ein fehlender Verweis auf die geltenden Bedingungen und ein Rechteeintrag, der zu einer anderen Quelle gehoert. Beide Eintraege stehen auf pending; 11 Tests belegen, dass damit keine einzige Ausgabeform erlaubt ist. schemas/source.schema.json wird aus dem Zod-Schema erzeugt statt von Hand gepflegt.",
+          "reference": "config/sources/; schemas/source.schema.json; src/domain/source-registry.ts; tests/source-registry.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run schema:sources && npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
