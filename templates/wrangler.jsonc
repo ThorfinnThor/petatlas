@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Vorlage: Name bei Einrichtung an das echte Cloudflare-Projekt anpassen.
+  // Kein Worker-main, kein SSR-Adapter und keine Datenbank-Bindings.
+  "name": "petatlas-de",
+  "compatibility_date": "2026-09-06",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

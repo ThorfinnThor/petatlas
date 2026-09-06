@@ -1,0 +1,125 @@
+# Build, Deployment, Ingestion und Betrieb
+
+## 1. Verantwortlichkeiten
+
+GitHub enthält den öffentlichen Code und zulässige Daten. GitHub Actions führt Tests und geplante Datenarbeiten aus. Cloudflare baut und veröffentlicht die eigentliche Website. Es gibt im MVP genau einen Produktions-Deploymentpfad: Cloudflare Builds -> statische Assets. [S04–S05]
+
+GitHub- und Cloudflare-Konten, gewünschter Repository-Inhaber, Domain und Rechtefreigaben sind echte externe Voraussetzungen. Fehlen sie, werden lokale Implementierung und Test-Build fortgesetzt; ein Cloud-Deployment wird nicht als erledigt markiert.
+
+## 2. Branch-Modell
+
+`main`: geprüfter Code, Konfiguration, redaktionell/fachlich freigegebene Regeln. Änderungen über kleine Feature-Branches und Prüfungen. Der Agent darf kein vorhandenes Repo löschen, keine unbeteiligten Änderungen zurücksetzen und keine fremde Historie überschreiben.
+
+`data-live`: nur zur öffentlichen Weitergabe freigegebene normalisierte Open-Data-Snapshots mit Manifest. Keine ausführbaren Skripte, Markdown-Programme, Affiliate-Rohfeeds oder Nutzerdaten. Automatik darf diesen Branch in engen Pfaden aktualisieren, nicht `main` oder Workflow-Dateien.
+
+`feat/Mxx-...`: laufende Umsetzung. Claude kann nach erfolgreicher Teilabnahme lokale Commits erstellen. Automatischer Push in das eindeutig zugewiesene Projekt ist zulässig, sobald Repository und Rechte geklärt sind. Die erste öffentliche Produktionsfreigabe bleibt an die Launch-Checkliste gebunden.
+
+Ein `GITHUB_TOKEN` besitzt keine magische Dateipfad-Beschränkung. `contents: write` ist breiter als „nur Daten schreiben“. Deshalb Laufzeitvalidierung des Diffs plus Branch-/Ruleset-Schutz für `main` und `.github` konfigurieren. Ein separater Daten-Repository- oder GitHub-App-Pfad ist eine spätere Sicherheitsoption, kein still eingeführtes zweites Pflichtsystem.
+
+## 3. Drei Build-Modi
+
+### development
+
+Kleine eindeutig synthetische Fixtures, lokale URLs, keine echten Partner-Secrets. Alle Kernabläufe müssen damit reproduzierbar funktionieren. Der Modus enthält einen sichtbaren Testdaten-Hinweis und darf nicht als öffentliche Produktseite ausgegeben werden.
+
+### preview
+
+Öffentliche freigegebene Daten erlaubt; Affiliate-Funktionen standardmäßig aus. Keine Produktions-Secrets für beliebige Pull Requests oder externe Forks. `noindex`, keine Aufnahme in die Produktions-Sitemap. `noindex` ist keine Zugriffssperre: Ein öffentlich erreichbares Preview darf ebenfalls keine vertraulichen Inhalte enthalten.
+
+### production
+
+Pflichtdaten und Review-Freigaben strikt prüfen. Platzhalter-Partner, Fake-Bewertungen, `example.invalid`, Testpreise und ungeprüfte Rechts-/Medizinaussagen sperren den jeweiligen Veröffentlichungsweg. Unabhängige geprüfte Funktionen dürfen ohne gesperrte Funktionen veröffentlicht werden, wenn der Launch-Modus dies ausdrücklich erlaubt.
+
+## 4. Cloudflare-Konfiguration
+
+Workers Static Assets als assets-only Projekt einrichten. Kein `main`-Worker-Script, kein `run_worker_first`, kein SSR-Adapter, keine D1-/KV-/R2-Bindings. Astro erzeugt `dist/`; Wrangler lädt diese Dateien hoch. [S02–S04, S08]
+
+Produktionsbranch `main`. Im Produktionsprojekt mit Partner-Secrets sind automatische Builds anderer Branches deaktiviert. Eine Cloudflare-Testvorschau läuft bei Bedarf in einem getrennten Preview-Projekt ohne Partner-Secrets und ohne Produktionsrechte; dieses ist kein zweiter Produktions-Deploymentpfad. Eine `if (branch === "main")`-Abfrage in Repository-Code ist keine Secret-Isolation, weil unvertrauenswürdiger Build-Code diese Abfrage verändern könnte. Build-Befehl des zu implementierenden Projekts: `npm run build:cloudflare`. Deployment: `npx --no-install wrangler deploy`. Wrangler als fixierte Entwicklungsabhängigkeit, nicht bei jedem Build aus einer ungebundenen latest-Version nachladen.
+
+`build:cloudflare` muss in dieser Reihenfolge arbeiten:
+
+1. Konfiguration, Freigabestatus und zulässige Quellen prüfen.
+2. Den aktuellen `data-live`-Commit einmal auflösen und ausschließlich Dateien genau dieses Commits abrufen. In einem Build nicht mehrfach „latest“ auflösen.
+3. Hashes, Schemas, Größen und Ausgabe-Rechte prüfen; den Daten-Commit im Build-Manifest festhalten.
+4. Nur im vertrauenswürdigen Produktionskontext zugelassene Produktfeeds abrufen. Secret-URLs nie ausgeben.
+5. Normalisieren, öffentliche Projektion erstellen und Fach-/Rechtechecks ausführen.
+6. Astro bauen, Pagefind erzeugen, Sitemaps/Headers schreiben.
+7. Fertiges `dist/` auf Secrets, private Felder, Platzhalter, Größe, URLs und ungültige Abhängigkeiten prüfen.
+8. Deployment erst nach erfolgreicher lokaler Build-Prüfkette freigeben.
+
+Cloudflare muss vor dem Deploy dieselben relevanten Prüfungen ausführen; ein eventuell noch laufender grüner GitHub-Check ist kein Deployment-Gate. Teure vollständige Browsermatrizen laufen in GitHub CI, Kernprüfungen und Output-Audit zusätzlich im Cloudflare-Build.
+
+## 5. Geplante offene Datenimporte
+
+Workflow `ingest-open.yml`: `workflow_dispatch` und ein wöchentlicher Zeitplan außerhalb der vollen Stunde. Beispiel `17 3 * * 1` in UTC; Zeitzone dokumentieren. Ingestion läuft von einer vertrauenswürdigen Fassung des Default-Branches. [S11]
+
+Ablauf:
+
+- Source Registry laden; fällige und freigegebene Sources ermitteln.
+- Quelle unter definierten Timeout-, Redirect-, Größen- und Rate-Limits abrufen.
+- Ein Source-Job schreibt nur in ein temporäres Arbeitsverzeichnis.
+- Eingänge validieren, normalisieren, deterministisch sortieren und Differenz zum letzten freigegebenen Stand prüfen.
+- Auffälligkeiten quarantänisieren; keine komplette Karte durch einen fehlerhaften leeren Feed ersetzen.
+- Erfolgreiche Sources mit bestehenden weiterhin zulässigen Snapshots anderer Sources zu einem Manifest zusammenfügen.
+- Bei Änderung einen atomaren Daten-Commit erstellen. Bei unveränderten Inhalten keine reinen Zeitstempel-Commits erzeugen.
+- Erst danach den Cloudflare-Deploy-Hook für `main` auslösen. Der Hook ist ein Secret. Antwort auf Erfolg prüfen; Hook-Aufruf ist noch kein erfolgreicher Build. [S05]
+
+Der Importer führt niemals Code aus dem Daten-Branch oder der Fremdquelle aus. HTML, CSV und JSON gelten als nicht vertrauenswürdige Daten. Markdown/MDX wird nicht aus Feeds ausgeführt. Source-URLs sind konfiguriert; Benutzer können den Importer nicht als allgemeinen URL-Fetcher steuern.
+
+## 6. Rebuilds für Produktpreise
+
+Zusätzlicher Workflow `rebuild-commerce.yml`: täglich, beispielsweise `43 4 * * *` UTC. Er enthält keine Händler-Secrets; er löst lediglich den vertrauenswürdigen Cloudflare-Build aus. Dort erfolgt der Feedabruf. Der Workflow wird erst aktiv, wenn mindestens ein Partner und seine Ausgaberechte freigegeben sind.
+
+Nicht für jeden Artikel, jede Quelle oder jedes Produkt einen Build auslösen. Pro geplanten Lauf aggregieren. Überschneidungen über `concurrency` bzw. einen kontrollierten Build-Takt begrenzen. Builds im Normalbetrieb auf ein überschaubares tägliches Budget begrenzen; häufig aktualisiertes Wetter bekommt später einen separaten kleinen Daten-Build statt die gesamte Website stündlich neu zu bauen.
+
+## 7. Letzter funktionierender Stand und Ablauf von Angeboten
+
+Offene Snapshots können aus dem `data-live`-Branch wiederverwendet werden. Für geschützte Affiliate-Rohfeeds gibt es im MVP bewusst keinen garantiert dauerhaften Cache. Ein flüchtiger Build-Cache ist keine Datenbank und kein Recovery-Vertrag.
+
+Fällt ein Händler aus, werden nur dessen Preise/Angebote weggelassen, sofern die restliche Website korrekt gebaut werden kann. Keine leeren Preise als 0 Euro veröffentlichen. Ist der komplette Build ungültig, bleibt das letzte Cloudflare-Deployment bestehen.
+
+Weil ein stehen gebliebenes Deployment alte Preise enthalten kann, braucht jeder Preis `fetchedAt`/`expiresAt`, eine sichtbare Standangabe und eine Browserprüfung, die nach Ablauf die Zahl ausblendet und „Aktuellen Preis beim Anbieter prüfen“ zeigt. Statische HTML-/strukturierte Daten können ohne erfolgreichen Neu-Build nicht rückwirkend aktualisiert werden. Deshalb im Startumfang keine Preis-Offers als JSON-LD, kein angeblich aktueller Preis im SEO-Titel, kurze Browser-Revalidierung und ein Alarm bei fehlendem Tagesbuild. Bei strengeren Vertragsfristen ist entweder ein nachweislich zulässiger engerer Betriebsprozess oder ein später freigegebener dynamischer Ansatz nötig; Static-only nicht als universelle Lösung behaupten.
+
+## 8. Fehlerpolitik und Schwellenwerte
+
+Je Source maximal drei Abrufversuche mit Backoff/Jitter; `Retry-After` respektieren. Timeouts für Anfrage und Gesamtlauf. Redirect-Ziele erneut gegen Domain-Allowlist prüfen, Größenlimits auch nach Dekompression. Keine Umgehung von Captchas oder Zugangsbeschränkungen.
+
+Projektstandard für strukturierte POIs: unerwarteter Rückgang um mehr als 20 Prozent oder Verlust einer ganzen bereits unterstützten Region -> Quarantäne statt Veröffentlichung. Diese Schwelle ist ein Startwert und wird anhand realer Daten justiert, nicht als Qualitätsgesetz behandelt. Bei Gebühren und Reiseregeln jede semantische Änderung in fachliches Review geben, selbst wenn sich nur eine Zahl ändert.
+
+Fehlschlag eines optionalen Sources darf nicht sämtliche anderen Features abschalten. Fehlschlag der Rechteprüfung darf nicht mit „letzter bekannter Stand“ umgangen werden, wenn die Rechte erloschen sind.
+
+## 9. Sicherheitsregeln für öffentliches CI
+
+Standard `permissions: contents: read`; Schreibberechtigungen nur im konkreten Publish-Job. Actions auf überprüfte volle Commit-SHAs pinnen. Fork-PRs erhalten keine Produktions-/Affiliate-Secrets; kein untrusted Checkout in privilegierten `pull_request_target`- oder `workflow_run`-Kontexten. Keine vertraulichen Rohdaten oder kompletten Environment-Dumps in Logs. [S12–S13]
+
+Ausschließlich freigegebene öffentliche Dateien als Actions-Artefakte hochladen. Artefakte, Logs, Caches, Screenshots und Fehlerreporter eines öffentlichen Projekts nicht als Geheimnisspeicher betrachten. Artefaktname oder ZIP-Passwort ersetzen keine Prüfung der Vertraulichkeit. Keine Secrets in clientseitige `PUBLIC_*`-Variablen.
+
+CSV-Formeln und HTML aus Quellen als Text behandeln. URL-Schemes `javascript:`, `data:` und nicht freigegebene Hosts sperren. Keine Tracking-URL automatisch besuchen, um „den Affiliate-Link zu testen“; das kann Attribution auslösen. Strukturvalidierung und freigegebene Testlinks genügen.
+
+## 10. Header und Cache
+
+`_headers` bei jedem Build erzeugen. HTML und veränderliche Manifeste revalidieren; gehashte nicht kurzfristig zu widerrufende Assets langfristig cachen. Sicherheitsheader mindestens `X-Content-Type-Options`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`, CSP sowie `frame-ancestors`/X-Frame-Options passend zur tatsächlichen Website. [S09]
+
+CSP nicht blind auf `unsafe-inline` erweitern. Inline-Skripte möglichst vermeiden oder mit Build-Hashes erlauben; tatsächliche Map-/Style-Anforderungen testen. Bei vielen Inline-Hashes das Headerlängenlimit beachten. JSON erhält richtigen Content-Type und `nosniff`. Kein pauschales CORS-* auf allen Daten, insbesondere keine Behauptung, CORS würde Kopieren verhindern.
+
+404 muss HTTP 404 sein, keine SPA-200-Fallback-Seite. URL-Normalisierung und trailing slashes einmal konfigurieren. Preview-Domains `noindex` und Produktionscanonical ohne Fehlweiterleitung.
+
+## 11. Monitoring
+
+`/data/v1/health.json` bzw. `/datenstand/` enthält nur öffentliche Statusdaten: Code-Commit, Daten-Commit, Builddatum, Source-Alter, aktive Features und Zähler. Keine Tokens, privaten Partnerkonditionen oder personenbezogenen Inhalte.
+
+GitHub-Smoke-Workflow prüft Status, definierte Seiten, Ablauf wichtiger Quellen und Schema-Konsistenz. Öffentliche Issues enthalten nur bereinigte Fehlerberichte. GitHub-Zeitpläne sind keine Alarm-SLA und können bei Inaktivität deaktiviert werden; denselben Scheduler sich selbst überwachen zu lassen deckt diesen Ausfall nicht ab. Betreiber prüft Actions-/Build-Benachrichtigungen und `/datenstand/` regelmäßig. Ein unabhängiger Monitoringdienst oder späterer kleiner Cloudflare-Zeitgeber ist eine separat freizugebende Betriebsverbesserung. [S11]
+
+## 12. Budgets und Eskalation
+
+Am Quellenprüftag nennt Cloudflare im Free-Tarif 3.000 Build-Minuten monatlich, 20 Minuten pro Build, 20.000 Static Assets und 25 MiB je Asset. Maßgeblich sind die Bedingungen bei Einrichtung. Reine Static-Asset-Auslieferung und Build-Ressourcen sind getrennt zu betrachten. [S03, S06–S07]
+
+Eigene Startbudgets: Warnung ab 12.000 veröffentlichten Dateien; harter Projektstopp vor 18.000. Ein normaler JSON-Chunk bleibt deutlich unter dem Plattform-Dateilimit. Repository-Snapshot maximal 50 MiB; Git-Datenhistorie monatlich messen, ab 250 MiB einen Kompressions-/Archivierungsplan vorlegen. Keine großen PBF-Rohdateien in Git oder Cloudflare Assets. Kein automatischer Wechsel zu kostenpflichtigen Tarifen.
+
+Diese Budgets sind Designgrenzen, keine laufenden Kostenschätzungen oder Kapazitätsgarantien. Domain, Kartendienst, fachliche Prüfung und Partnerdienstleistungen können Kosten verursachen.
+
+## 13. Rollback
+
+Code-Commit und Daten-Commit im Releaseprotokoll festhalten. Einen bekannten guten Cloudflare-Stand wiederherstellen und danach Smoke-Tests durchführen. Ein Code-Rollback darf keine inzwischen widerrufenen Datenrechte oder abgelaufenen Reiseregeln reaktivieren. Rollback-Entscheidung gegen aktuelle Sperrliste prüfen.
+
+Daten-Rollback verändert den freigegebenen Snapshot nachvollziehbar; keine erzwungene Historienüberschreibung. Die tatsächlichen Provider-Rollback-Befehle beim Einrichten aus aktueller Dokumentation prüfen und als getestetes Runbook festhalten.

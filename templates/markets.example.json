@@ -1,0 +1,48 @@
+{
+  "markets": [
+    {
+      "id": "DE",
+      "enabled": true,
+      "primaryCountry": "DE",
+      "locale": "de-DE",
+      "pathPrefix": "/de-de",
+      "currency": "EUR",
+      "timeZone": "Europe/Berlin",
+      "measurementSystem": "metric",
+      "featureFlags": {
+        "costs": false,
+        "map": false,
+        "travel": false,
+        "commerce": false,
+        "care": false,
+        "toys": false,
+        "food": false,
+        "profile": false,
+        "ads": false
+      }
+    },
+    {
+      "id": "US",
+      "enabled": false,
+      "primaryCountry": "US",
+      "locale": "en-US",
+      "pathPrefix": "/en-us",
+      "currency": "USD",
+      "timeZone": "America/New_York",
+      "measurementSystem": "us",
+      "featureFlags": {}
+    },
+    {
+      "id": "NL",
+      "enabled": false,
+      "primaryCountry": "NL",
+      "locale": "nl-NL",
+      "pathPrefix": "/nl-nl",
+      "currency": "EUR",
+      "timeZone": "Europe/Amsterdam",
+      "measurementSystem": "metric",
+      "featureFlags": {}
+    }
+  ],
+  "note": "Features erst nach technischer und fachlicher Freigabe aktivieren. Dies ist Konfiguration, keine behauptete bestehende Live-Abdeckung."
+}

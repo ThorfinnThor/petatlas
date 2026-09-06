@@ -1,0 +1,3027 @@
+{
+  "schema_version": 1,
+  "project": "PetAtlas — Arbeitstitel",
+  "plan_date": "2026-09-06",
+  "implementation_state": "not_started",
+  "current_task": null,
+  "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
+  "status_values": [
+    "todo",
+    "in_progress",
+    "blocked",
+    "done",
+    "deferred"
+  ],
+  "milestones": [
+    {
+      "id": "M00",
+      "title": "Projektvertrag und sichere Ausgangslage",
+      "goal": "Projektgrenzen festhalten, bevor ein Agent Repository- oder Infrastrukturentscheidungen trifft."
+    },
+    {
+      "id": "M01",
+      "title": "Repository und technische Grundausstattung",
+      "goal": "Ein schlankes, lokal reproduzierbares Astro-Projekt erstellen und den öffentlichen Git-Pfad sicher vorbereiten."
+    },
+    {
+      "id": "M02",
+      "title": "Statussteuerung und Fortsetzungsprotokoll",
+      "goal": "Den Arbeitsstand unabhängig vom Chatfenster nachvollziehbar und nach Unterbrechungen fortsetzbar machen."
+    },
+    {
+      "id": "M03",
+      "title": "Domänenmodelle und Internationalisierung",
+      "goal": "Fachlogik von Markt, Darstellung und Datenlieferanten entkoppeln."
+    },
+    {
+      "id": "M04",
+      "title": "Informationsarchitektur und Bedienoberfläche",
+      "goal": "Das gemeinsame Layout für Rechner, Karte, Reise und Produkte erstellen, bevor viele Seiten entstehen."
+    },
+    {
+      "id": "M05",
+      "title": "Quellenregister und Publikationsrechte",
+      "goal": "Vor echten Importen maschinenlesbar festlegen, was gelesen, gespeichert und veröffentlicht werden darf."
+    },
+    {
+      "id": "M06",
+      "title": "Generisches Import- und Snapshot-System",
+      "goal": "Datenabruf, Normalisierung und atomare Veröffentlichung robust machen."
+    },
+    {
+      "id": "M07",
+      "title": "GitHub CI und Cloudflare-Deployment",
+      "goal": "Früh einen überprüfbaren Static-Hosting-Pfad aufbauen, ohne sofort kommerzielle Daten live zu schalten."
+    },
+    {
+      "id": "M08",
+      "title": "Tierarztkosten-Rechner",
+      "goal": "Den ersten fachlich belastbaren Nutzenpfad bauen: transparente Gebührenrechnung statt erfundener Pauschalpreise."
+    },
+    {
+      "id": "M09",
+      "title": "Versicherungs-Affiliate ohne Scheinberatung",
+      "goal": "Versicherungswerbung technisch integrierbar machen, ohne unzulässige individuelle Beratung zu automatisieren."
+    },
+    {
+      "id": "M10",
+      "title": "Deutschlandweite Ortsdaten",
+      "goal": "Bundesweite relevante POIs effizient importieren und die Abdeckung ehrlich ausweisen."
+    },
+    {
+      "id": "M11",
+      "title": "Hunde-Karte und lokale Landingpages",
+      "goal": "Die Ortsdaten für Nutzer und Suchmaschinen sinnvoll erschließen, ohne dünne Ortsseiten zu produzieren."
+    },
+    {
+      "id": "M12",
+      "title": "Haustier-Reisecheck für deutsche Nutzer",
+      "goal": "Einen bewusst begrenzten, versionierten Reisecheck statt einer unzuverlässigen weltweiten Regelsammlung bauen."
+    },
+    {
+      "id": "M13",
+      "title": "Affiliate-Produktfeeds und Angebotskatalog",
+      "goal": "Einen belastbaren Produkt-/Angebotslayer aufbauen, der auch bei fehlenden Partnerzugängen technisch testbar bleibt."
+    },
+    {
+      "id": "M14",
+      "title": "Health-/Pflegeprodukte und Spielzeug-Finder",
+      "goal": "Die gewünschten kommerziellen Kategorien durch belegte Eigenschaften statt unbelegte Gesundheitsversprechen differenzieren."
+    },
+    {
+      "id": "M15",
+      "title": "Futtervergleich und optionale offene Anreicherung",
+      "goal": "Einen transparenten Mengen-/Preisvergleich bauen, ohne aus lückenhaften Labeldaten medizinische Ernährungsscores abzuleiten."
+    },
+    {
+      "id": "M16",
+      "title": "Lokales Tierprofil, Merkliste und Packliste",
+      "goal": "Wiederkehrenden Nutzwert schaffen, ohne Konten oder zentrale Nutzerdatenbank einzuführen."
+    },
+    {
+      "id": "M17",
+      "title": "Geplante Ingestion und Datenbetrieb",
+      "goal": "Aktualisierung und Fehlersignale so aufbauen, dass die Website nicht unbemerkt mit kaputten Daten weiterläuft."
+    },
+    {
+      "id": "M18",
+      "title": "SEO, Sicherheit, Zugänglichkeit und Freigaben",
+      "goal": "Die Plattform als überprüftes Produkt statt nur als funktionierende Sammlung von Komponenten abnehmen."
+    },
+    {
+      "id": "M19",
+      "title": "Endabnahme, Betriebshandbuch und Ausbauprobe",
+      "goal": "Einen klaren Zustand mit getesteter Übergabe erreichen, statt das Projekt pauschal für fertig zu erklären."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "M00-01",
+      "milestone": "M00",
+      "title": "Arbeitsverzeichnis prüfen",
+      "implementation": "Bestehende Dateien, git status, vorhandene Remotes und fremde Änderungen inventarisieren. Bei bestehendem Produkt nur additiv arbeiten; kein neues Scaffold darüberkopieren.",
+      "deliverables": [
+        "docs/BASELINE.md"
+      ],
+      "acceptance": [
+        "Ein dokumentierter Ausgangszustand existiert; keine fremden Änderungen wurden gelöscht."
+      ],
+      "depends_on": [],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M00-02",
+      "milestone": "M00",
+      "title": "Festgelegten Umfang übernehmen",
+      "implementation": "ADR-001 bis ADR-016 lesen und Startumfang, aktive Märkte und ausdrücklich ausgeschlossene Funktionen festhalten.",
+      "deliverables": [
+        "docs/DECISIONS.md",
+        "config/launch.json"
+      ],
+      "acceptance": [
+        "Deutschland ist der einzige aktive Markt; kein ungeplantes Backend und keine Zusatzprodukte sind in der Roadmap."
+      ],
+      "depends_on": [
+        "M00-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M00-03",
+      "milestone": "M00",
+      "title": "Benennung zentralisieren",
+      "implementation": "Arbeitstitel PetAtlas ausschließlich als austauschbaren internen Namen verwenden; Branding, Basisdomain und Betreiberangaben zentral konfigurieren. Keine Markenverfügbarkeit behaupten.",
+      "deliverables": [
+        "config/site.ts",
+        "docs/EXTERNAL_SETUP.md"
+      ],
+      "acceptance": [
+        "Namenswechsel ist ohne Suchen/Ersetzen in Fachlogik möglich; fehlende echte Domain sperrt production, nicht development."
+      ],
+      "depends_on": [
+        "M00-02",
+        "M00-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M00-04",
+      "milestone": "M00",
+      "title": "Autonomierechte festlegen",
+      "implementation": "Lesen, Codeänderungen, lokale Tests und kleine lokale Commits erlauben. Öffentliche Repo-Erstellung nur im eindeutig zugeordneten Account; kein bestehendes privates Repo ungeprüft umstellen.",
+      "deliverables": [
+        "CLAUDE.md",
+        "docs/SECURITY_SCOPE.md"
+      ],
+      "acceptance": [
+        "Erlaubte Aktionen, externe Schreibgrenzen und verbotene destruktive Befehle sind konkret dokumentiert."
+      ],
+      "depends_on": [
+        "M00-03",
+        "M00-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M00-05",
+      "milestone": "M00",
+      "title": "Kosten- und Lizenzgrenzen festlegen",
+      "implementation": "Kein kostenpflichtiger Tarif, keine Domainbestellung und keine blanket Open-Source-Lizenz ohne Entscheidung. Rechtehinweise für eigene und fremde Inhalte trennen.",
+      "deliverables": [
+        "licenses/README.md",
+        "docs/DECISIONS.md"
+      ],
+      "acceptance": [
+        "Repo-Publicity wird nicht mit MIT oder pauschaler Weiterverwendungserlaubnis gleichgesetzt."
+      ],
+      "depends_on": [
+        "M00-04",
+        "M00-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M00-06",
+      "milestone": "M00",
+      "title": "Externe Voraussetzungen erfassen",
+      "implementation": "GitHub-Inhaber, Cloudflare-Projekt, Domain, Betreiberangaben, Partneraccounts und Fachreviews in einer Liste mit Status und zuständigem Entscheider erfassen. Nur Secret-Namen, niemals Werte.",
+      "deliverables": [
+        "docs/EXTERNAL_SETUP.md",
+        "docs/BLOCKERS.md"
+      ],
+      "acceptance": [
+        "Fehlende Angaben sind sichtbar, aber lokale Entwicklung ist nicht blockiert."
+      ],
+      "depends_on": [
+        "M00-05",
+        "M00-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M01-01",
+      "milestone": "M01",
+      "title": "Astro-Scaffold anlegen",
+      "implementation": "Astro static, TypeScript strict, npm-Lockfile und Node-24-LTS-Linie einrichten. Bestehende kompatible Struktur erhalten.",
+      "deliverables": [
+        "package.json",
+        "package-lock.json",
+        "astro.config.mjs",
+        ".nvmrc"
+      ],
+      "acceptance": [
+        "Ein sauberer Clone lässt sich reproduzierbar installieren; Startseite wird rein statisch gebaut."
+      ],
+      "depends_on": [
+        "M00-01",
+        "M00-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M01-02",
+      "milestone": "M01",
+      "title": "Öffentliches Repo einrichten",
+      "implementation": "Nach Secret-/Historienprüfung ein neues public Repo im autorisierten GitHub-Account erstellen oder das explizit zugewiesene Repo verwenden. Origin und Default-Branch dokumentieren.",
+      "deliverables": [
+        "docs/REPOSITORY.md",
+        "GitHub repository"
+      ],
+      "acceptance": [
+        "Echte Remote-URL und Public-Status geprüft; wenn Zugriff fehlt, Integration blocked statt behauptetem Erfolg."
+      ],
+      "depends_on": [
+        "M00-01",
+        "M00-02",
+        "M01-01"
+      ],
+      "kind": "external_gate",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M01-03",
+      "milestone": "M01",
+      "title": "Basisqualität installieren",
+      "implementation": "Linting, Typecheck, Vitest, Playwright und Formatierung konfigurieren. Abhängigkeiten pinnen und Versionsbegründung festhalten.",
+      "deliverables": [
+        "eslint config",
+        "tsconfig",
+        "vitest config",
+        "playwright config"
+      ],
+      "acceptance": [
+        "Ein absichtlich eingeführter Typ-/Lintfehler würde die Pipeline scheitern lassen; Testsample läuft."
+      ],
+      "depends_on": [
+        "M00-01",
+        "M00-02",
+        "M01-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M01-04",
+      "milestone": "M01",
+      "title": "Geheimnisse und Buildreste ausschließen",
+      "implementation": ".gitignore für .work, .generated, dist, echte .env-Dateien und Reports; .env.example ausschließlich mit leeren oder sicheren Beispielwerten anlegen.",
+      "deliverables": [
+        ".gitignore",
+        ".env.example",
+        "scripts/checks/secrets.ts"
+      ],
+      "acceptance": [
+        "Canary-Secret wird im Repo-/dist-Audit erkannt; Fixtures bleiben eindeutig bezeichnet."
+      ],
+      "depends_on": [
+        "M00-01",
+        "M00-02",
+        "M01-03",
+        "M01-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M01-05",
+      "milestone": "M01",
+      "title": "Test- und Produktionsmodus trennen",
+      "implementation": "development, preview und production als explizite Build-Modi implementieren. Fixture-Daten dürfen nicht durch eine fehlende Umgebungsvariable versehentlich live werden.",
+      "deliverables": [
+        "config/build.ts",
+        "fixtures/",
+        "tests/build-mode.test.ts"
+      ],
+      "acceptance": [
+        "Fixture-Build funktioniert ohne Netz; production verweigert ungeklärte Pflichtkonfiguration."
+      ],
+      "depends_on": [
+        "M00-01",
+        "M00-02",
+        "M01-04",
+        "M01-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M01-06",
+      "milestone": "M01",
+      "title": "Grundlegenden Browser-Smoke ausführen",
+      "implementation": "Startseite, 404 und ein Formular unter lokalem statischem Preview im Browser öffnen, Konsolenfehler und Mobilansicht prüfen.",
+      "deliverables": [
+        "tests/e2e/smoke.spec.ts",
+        "docs/TOOLCHAIN.md"
+      ],
+      "acceptance": [
+        "Tatsächliche Browserprüfung mit Screenshot und Testlog; keine nur angenommene Funktionsfähigkeit."
+      ],
+      "depends_on": [
+        "M00-01",
+        "M00-02",
+        "M01-05",
+        "M01-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M02-01",
+      "milestone": "M02",
+      "title": "Aufgabenmanifest übernehmen",
+      "implementation": "project/tasks.json aus dem Paket als alleinige maschinenlesbare Statusquelle übernehmen. IDs erhalten; neue Aufgaben bekommen neue IDs.",
+      "deliverables": [
+        "project/tasks.json"
+      ],
+      "acceptance": [
+        "Alle 120 Aufgaben sind eindeutig; vorhandene Nachweise werden beim Aktualisieren nicht überschrieben."
+      ],
+      "depends_on": [
+        "M00-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M02-02",
+      "milestone": "M02",
+      "title": "Statuswerkzeug integrieren",
+      "implementation": "Mitgelieferten Python-Statushelfer behalten; optional npm-Alias status ergänzen. Filter pro Meilenstein und JSON-Ausgabe unterstützen.",
+      "deliverables": [
+        "scripts/project_status.py",
+        "package.json"
+      ],
+      "acceptance": [
+        "Statusgesamtübersicht und Status M08 funktionieren ohne laufende Website."
+      ],
+      "depends_on": [
+        "M00-02",
+        "M02-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M02-03",
+      "milestone": "M02",
+      "title": "Statusartefakte pflegen",
+      "implementation": "STATUS, WORKLOG, BLOCKERS und HANDOFF als knappe menschliche Ansichten festlegen; task manifest bleibt autoritativ.",
+      "deliverables": [
+        "docs/STATUS.md",
+        "docs/WORKLOG.md",
+        "docs/HANDOFF.md"
+      ],
+      "acceptance": [
+        "Ein Beispielübergang todo -> in_progress -> done aktualisiert die Ansichten konsistent."
+      ],
+      "depends_on": [
+        "M00-02",
+        "M02-02",
+        "M02-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M02-04",
+      "milestone": "M02",
+      "title": "Done-Nachweise validieren",
+      "implementation": "Automatische Prüfung auf Abhängigkeiten, Nachweise bei done, begründete Blocker und höchstens eine koordinierende Hauptaufgabe in Arbeit anlegen.",
+      "deliverables": [
+        "scripts/checks/task-state.ts oder Statushelfer-Erweiterung",
+        "Tests"
+      ],
+      "acceptance": [
+        "Eine done-Aufgabe ohne Nachweis oder ein unbekannter Dependency-Key führt zu Fehler."
+      ],
+      "depends_on": [
+        "M00-02",
+        "M02-03",
+        "M02-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M02-05",
+      "milestone": "M02",
+      "title": "Arbeits- und Fehlerloop definieren",
+      "implementation": "Je Aufgabe lesen, prüfen, implementieren, testen, dokumentieren, committen. Bei drei erfolglosen Korrekturansätzen Ursache/Blocker erfassen und unabhängige Aufgabe wählen.",
+      "deliverables": [
+        "CLAUDE.md",
+        "docs/AUTONOMY.md"
+      ],
+      "acceptance": [
+        "Protokoll verhindert Endlosschleifen und das künstliche Grünmachen von Tests."
+      ],
+      "depends_on": [
+        "M00-02",
+        "M02-04",
+        "M02-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M02-06",
+      "milestone": "M02",
+      "title": "Wiederaufnahme proben",
+      "implementation": "Kontextwechsel simulieren: neue Sitzung liest nur CLAUDE.md, Status, Handoff und betroffene Spezifikation, identifiziert korrekten nächsten Schritt.",
+      "deliverables": [
+        "docs/HANDOFF.md",
+        "docs/WORKLOG.md"
+      ],
+      "acceptance": [
+        "Der Arbeitsstand ist ohne frühere Chatnachrichten rekonstruierbar."
+      ],
+      "depends_on": [
+        "M00-02",
+        "M02-05",
+        "M02-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M03-01",
+      "milestone": "M03",
+      "title": "Markt- und Locale-Schemas bauen",
+      "implementation": "DE aktiv, US und ein EU-Testmarkt inaktiv; Markt, Sprache, Währung, Zeitzone und Reiseziel als getrennte Konzepte.",
+      "deliverables": [
+        "src/domain/market.ts",
+        "config/markets/",
+        "tests/markets.test.ts"
+      ],
+      "acceptance": [
+        "Ein DE-Nutzer mit Reiseziel IT bleibt im Markt DE; keine US-Seite wird generiert."
+      ],
+      "depends_on": [
+        "M01-01",
+        "M02-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M03-02",
+      "milestone": "M03",
+      "title": "Geld, Einheiten und Datum implementieren",
+      "implementation": "Integer-Geld, kontrollierte Dezimalfaktoren, Gramm/Meter und locale-spezifische Ausgabe; Kalenderdaten von UTC-Zeitstempeln trennen.",
+      "deliverables": [
+        "src/domain/money.ts",
+        "units.ts",
+        "dates.ts"
+      ],
+      "acceptance": [
+        "Rundungs-, Währungs-, Einheiten- und Zeitzonengrenzfälle sind getestet."
+      ],
+      "depends_on": [
+        "M01-01",
+        "M02-01",
+        "M03-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M03-03",
+      "milestone": "M03",
+      "title": "Provenienz und Rechte typisieren",
+      "implementation": "Schemas aus ARCHITECTURE umsetzen; null ist unbekannt. Source-ID, Inhaltshash, Lizenz, Geltung und Review separat.",
+      "deliverables": [
+        "src/domain/source.ts",
+        "rights.ts",
+        "schemas/"
+      ],
+      "acceptance": [
+        "Unbekannte Rechte oder fehlende Pflichtprovenienz verhindern öffentliche Ausgabe."
+      ],
+      "depends_on": [
+        "M01-01",
+        "M02-01",
+        "M03-02",
+        "M03-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M03-04",
+      "milestone": "M03",
+      "title": "Fachschemas implementieren",
+      "implementation": "Product, Offer, Place, FeeItem, CostScenario, TravelRule, PetProfile und OutputManifest mit Zod validieren.",
+      "deliverables": [
+        "src/domain/schemas/",
+        "tests/contracts/"
+      ],
+      "acceptance": [
+        "Ungültige GTIN, negative Geldwerte, fehlerhafte Koordinaten und ungültige Perioden werden erkannt."
+      ],
+      "depends_on": [
+        "M01-01",
+        "M02-01",
+        "M03-03",
+        "M03-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M03-05",
+      "milestone": "M03",
+      "title": "Provider-Schnittstellen definieren",
+      "implementation": "Kosten-, Orts-, Reise- und Commerce-Provider erhalten marktbezogene IDs; unsupported ist ein definierter Rückgabewert.",
+      "deliverables": [
+        "src/domain/providers.ts",
+        "config/markets/DE.json"
+      ],
+      "acceptance": [
+        "Kein deutsches Gebührenfallback für unbekannten Markt; keine Providerwahl über verstreute if country-Blöcke."
+      ],
+      "depends_on": [
+        "M01-01",
+        "M02-01",
+        "M03-04",
+        "M03-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M03-06",
+      "milestone": "M03",
+      "title": "Internationale Isolation testen",
+      "implementation": "Synthetischen US-Anbieter mit USD und Imperial-Anzeige durch dieselben Fachschnittstellen führen; keine echten US-Inhalte abrufen.",
+      "deliverables": [
+        "tests/international-contracts.test.ts"
+      ],
+      "acceptance": [
+        "US-Angebote erscheinen nicht in DE und eine englische Testansicht überschreibt keine deutschen Texte."
+      ],
+      "depends_on": [
+        "M01-01",
+        "M02-01",
+        "M03-05",
+        "M03-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M04-01",
+      "milestone": "M04",
+      "title": "Route Registry anlegen",
+      "implementation": "Einheitliche Pfade /de-de/ mit zentralen Slugs, canonical-Regeln und market-aware Link-Helfern definieren.",
+      "deliverables": [
+        "src/lib/routes.ts",
+        "config/locales/de-DE.json"
+      ],
+      "acceptance": [
+        "Keine hart codierten Domains; Slugänderungen lassen sich mit gezielten Redirects abbilden."
+      ],
+      "depends_on": [
+        "M03-01",
+        "M01-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M04-02",
+      "milestone": "M04",
+      "title": "Designsystem implementieren",
+      "implementation": "Mobile-first Layout, lesbare Formulare, Ergebnisboxen, Warnungen, Datenstand, Quellen und Werbekennzeichnung als wiederverwendbare Komponenten.",
+      "deliverables": [
+        "src/components/",
+        "src/styles/tokens.css",
+        "layouts/"
+      ],
+      "acceptance": [
+        "Desktop/mobile ohne Layoutbruch; Informations- und Werbebereiche sind erkennbar verschieden."
+      ],
+      "depends_on": [
+        "M03-01",
+        "M01-01",
+        "M04-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M04-03",
+      "milestone": "M04",
+      "title": "Navigation und Kernseiten bauen",
+      "implementation": "Home, Rechner, Karte, Reisecheck, Pflege, Spielzeug, Futter, Quellen und Datenstand als echte Templates anlegen. Nicht verfügbare Features aus Navigation entfernen.",
+      "deliverables": [
+        "src/pages/",
+        "src/layouts/"
+      ],
+      "acceptance": [
+        "Kein Navigationseintrag führt auf leere Coming-soon- oder Fixture-Produktionsseiten."
+      ],
+      "depends_on": [
+        "M03-01",
+        "M01-01",
+        "M04-02",
+        "M04-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M04-04",
+      "milestone": "M04",
+      "title": "Statische Suche integrieren",
+      "implementation": "Pagefind nach HTML-Build ausführen; Sprache, Kategorien und Ausschluss privater-/Filterseiten konfigurieren.",
+      "deliverables": [
+        "scripts/build-search.ts",
+        "src/components/Search.astro"
+      ],
+      "acceptance": [
+        "Suche arbeitet ohne Backend und findet nur freigegebenen statischen Inhalt."
+      ],
+      "depends_on": [
+        "M03-01",
+        "M01-01",
+        "M04-03",
+        "M04-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M04-05",
+      "milestone": "M04",
+      "title": "Zugängliche Formulare erstellen",
+      "implementation": "Labels, Tastaturbedienung, Validierungszusammenfassung, Fokusführung und Screenreader-Ankündigung für Ergebnisse implementieren.",
+      "deliverables": [
+        "src/components/forms/",
+        "tests/e2e/forms.spec.ts"
+      ],
+      "acceptance": [
+        "Rechner- und Filterformulare sind ohne Maus bedienbar; Errors haben programmatische Zuordnung."
+      ],
+      "depends_on": [
+        "M03-01",
+        "M01-01",
+        "M04-04",
+        "M04-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M04-06",
+      "milestone": "M04",
+      "title": "Visuellen Baseline-Review durchführen",
+      "implementation": "Reale Browser-Screenshots von Home, Tool und Produktliste auf mehreren Breiten erstellen und offensichtliche Bedienmängel korrigieren.",
+      "deliverables": [
+        "docs/UI_BASELINE.md",
+        "E2E-Nachweise"
+      ],
+      "acceptance": [
+        "Kein abgeschnittener Text, sichtbarer Fokus und keine ungeklärten Konsolenfehler."
+      ],
+      "depends_on": [
+        "M03-01",
+        "M01-01",
+        "M04-05",
+        "M04-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M05-01",
+      "milestone": "M05",
+      "title": "Source Registry anlegen",
+      "implementation": "Konkrete Sources samt Ressource, Publisher, Format, Geltung, Quelle und Lizenzstatus konfigurieren. Kandidaten standardmäßig pending.",
+      "deliverables": [
+        "config/sources/",
+        "schemas/source.schema.json"
+      ],
+      "acceptance": [
+        "Ein Registryeintrag ist eine konkrete Distribution, kein pauschaler Name wie GovData."
+      ],
+      "depends_on": [
+        "M03-03"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M05-02",
+      "milestone": "M05",
+      "title": "Publikationsklassen umsetzen",
+      "implementation": "public_open, public_display, restricted_raw und local_user trennen; Rechteprüfung je Ziel wie Repo, HTML, JSON, Bild oder Historie.",
+      "deliverables": [
+        "src/domain/publication-policy.ts",
+        "tests/rights.test.ts"
+      ],
+      "acceptance": [
+        "Ein kommerziell nutzbarer, aber nicht weiterverteilbarer Feed wird für Repo/JSON zuverlässig gesperrt."
+      ],
+      "depends_on": [
+        "M03-03",
+        "M05-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M05-03",
+      "milestone": "M05",
+      "title": "Attribution und Lizenzseiten bauen",
+      "implementation": "Quellen-/Lizenzhinweise aus derselben Registry erzeugen; OSM-Hinweis direkt in Karte und Datenexporten.",
+      "deliverables": [
+        "src/pages/de-de/quellen/",
+        "licenses/",
+        "components/Attribution.astro"
+      ],
+      "acceptance": [
+        "Veröffentlichte Datensätze besitzen korrekte Zuordnung zu Quell- und Lizenzhinweisen."
+      ],
+      "depends_on": [
+        "M03-03",
+        "M05-02",
+        "M05-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M05-04",
+      "milestone": "M05",
+      "title": "Erste offene Quellen verifizieren",
+      "implementation": "GOT und konkrete OSM-Distribution anhand aktueller Primärbedingungen prüfen; Nachweis, Hash und erlaubte Ausgabeformen erfassen.",
+      "deliverables": [
+        "config/sources/got.json",
+        "osm.json",
+        "docs/SOURCE_REVIEWS.md"
+      ],
+      "acceptance": [
+        "Echte Fundstellen dokumentiert; keine rückwirkend erfundene pauschale Freigabe."
+      ],
+      "depends_on": [
+        "M03-03",
+        "M05-03",
+        "M05-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M05-05",
+      "milestone": "M05",
+      "title": "ODbL-Datenfluss dokumentieren",
+      "implementation": "Normalisierung, räumliche Filterung und spätere Joins beschreiben; abgeleitete offene Ausgaben und Lizenztexte gezielt bereitstellen.",
+      "deliverables": [
+        "docs/ODBL_DATAFLOW.md",
+        "licenses/ODbL-notice.md"
+      ],
+      "acceptance": [
+        "Keine Behauptung, getrennte Dateien allein befreiten eigene Joins von ODbL-Pflichten."
+      ],
+      "depends_on": [
+        "M03-03",
+        "M05-04",
+        "M05-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M05-06",
+      "milestone": "M05",
+      "title": "Lizenzänderung und Sperren testen",
+      "implementation": "termsHash-Wechsel, abgelaufene Vertragsrechte und verweigerte Bilderlaubnis simulieren. Betroffene Ausgabe stoppen, übrige Module erhalten.",
+      "deliverables": [
+        "tests/license-regression.test.ts",
+        "scripts/checks/licenses.ts"
+      ],
+      "acceptance": [
+        "Rechteverlust wird nicht durch alten Cache oder letzten Datenstand umgangen."
+      ],
+      "depends_on": [
+        "M03-03",
+        "M05-05",
+        "M05-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M06-01",
+      "milestone": "M06",
+      "title": "Adapter-API implementieren",
+      "implementation": "fetch, parse, normalize, validate, diff und publish trennen. Adapter mit kleinen Fixtures testen.",
+      "deliverables": [
+        "scripts/ingest/types.ts",
+        "adapters/",
+        "tests/ingest/"
+      ],
+      "acceptance": [
+        "Neuer Source erfordert keine Änderung an allen Feature-Modulen."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-01",
+        "M05-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M06-02",
+      "milestone": "M06",
+      "title": "Sicheren Fetcher implementieren",
+      "implementation": "HTTPS/Domain-Allowlist, Timeouts, Redirect-Validierung, Retry-After, Größenlimits und bereinigte Logs. Keine User-URL als Source.",
+      "deliverables": [
+        "scripts/ingest/fetch.ts",
+        "tests/fetch.test.ts"
+      ],
+      "acceptance": [
+        "Tests erkennen schädliche URL-Schemes, zu große/kaputte Dateien und unerlaubte Weiterleitung."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-01",
+        "M05-02",
+        "M06-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M06-03",
+      "milestone": "M06",
+      "title": "Deterministische Normalisierung bauen",
+      "implementation": "Stable IDs, sortierte Arrays, einheitliche Einheiten und Inhalts-Hashes; null-Werte und Provenienz erhalten.",
+      "deliverables": [
+        "scripts/normalize/",
+        "tests/determinism.test.ts"
+      ],
+      "acceptance": [
+        "Gleicher Eingang erzeugt gleiche Fachdaten/Hashes, abgesehen von ausdrücklich getrennten Laufmetadaten."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-01",
+        "M05-02",
+        "M06-02",
+        "M06-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M06-04",
+      "milestone": "M06",
+      "title": "Differenzprüfung und Quarantäne einbauen",
+      "implementation": "Leere Feeds, unerwartete Zählerrückgänge, neue Gebührenfassungen und schema-breaking Änderungen getrennt behandeln.",
+      "deliverables": [
+        "scripts/ingest/diff.ts",
+        "quarantine.ts"
+      ],
+      "acceptance": [
+        "Ein absichtlich leerer Source überschreibt den letzten gültigen Snapshot nicht."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-01",
+        "M05-02",
+        "M06-03",
+        "M06-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M06-05",
+      "milestone": "M06",
+      "title": "Manifest und JSON-Sharding erstellen",
+      "implementation": "Hashes, BBox/Index, Größen, Source-Versionen und Dateiverweise erzeugen; Filecount-/Shard-Budgets prüfen.",
+      "deliverables": [
+        "scripts/publish/manifest.ts",
+        "shards.ts"
+      ],
+      "acceptance": [
+        "Keine all-data.json; Manifest referenziert nur vorhandene schema-valide Dateien."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-01",
+        "M05-02",
+        "M06-04",
+        "M06-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M06-06",
+      "milestone": "M06",
+      "title": "Atomaren Offline-Pipeline-Test ausführen",
+      "implementation": "Zwei erfolgreiche Sources und einen fehlerhaften Source zusammenführen; neuer Snapshot wird erst vollständig freigegeben.",
+      "deliverables": [
+        "tests/snapshot-integration.test.ts"
+      ],
+      "acceptance": [
+        "Teilfehler erzeugt weder halbe Datensätze noch inkonsistente HTML/JSON-Abhängigkeiten."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-01",
+        "M05-02",
+        "M06-05",
+        "M06-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M07-01",
+      "milestone": "M07",
+      "title": "PR- und Main-CI konfigurieren",
+      "implementation": "Installation mit Lockfile, lint, typecheck, Unit-/Vertragstests, Fixture-Build und dist-Audit. Forks ohne Secrets.",
+      "deliverables": [
+        ".github/workflows/ci.yml"
+      ],
+      "acceptance": [
+        "Fehlerhafte Inputs stoppen CI; Workflow benötigt keine Partneraccounts."
+      ],
+      "depends_on": [
+        "M01-03",
+        "M01-05",
+        "M06-05"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M07-02",
+      "milestone": "M07",
+      "title": "Supply-Chain-Schutz konfigurieren",
+      "implementation": "Actions auf volle überprüfte SHAs, minimale Berechtigungen, Dependencyupdates über PR; keine gefährliche privilege escalation.",
+      "deliverables": [
+        ".github/workflows/security.yml",
+        "docs/CI_SECURITY.md"
+      ],
+      "acceptance": [
+        "Workflow-Sicherheitsreview dokumentiert; untrusted PR-Code kann keine Produktions-Secrets lesen."
+      ],
+      "depends_on": [
+        "M01-03",
+        "M01-05",
+        "M06-05",
+        "M07-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M07-03",
+      "milestone": "M07",
+      "title": "Assets-only Wrangler-Konfiguration erstellen",
+      "implementation": "dist-Verzeichnis, HTML-Routing und 404; kein Worker main/SSR/DB-Binding. Statische Header generieren.",
+      "deliverables": [
+        "wrangler.jsonc",
+        "scripts/build-headers.ts"
+      ],
+      "acceptance": [
+        "Lokale Wrangler-Konfigprüfung und dist-Routingtest erfolgreich."
+      ],
+      "depends_on": [
+        "M01-03",
+        "M01-05",
+        "M06-05",
+        "M07-02",
+        "M07-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M07-04",
+      "milestone": "M07",
+      "title": "Cloudflare-Buildskript umsetzen",
+      "implementation": "Fixierter Open-Data-Commit, Rechteprüfung, optionaler vertrauenswürdiger Feedabruf, statischer Build, Pagefind und Output-Audit.",
+      "deliverables": [
+        "scripts/build-cloudflare.ts",
+        "package.json"
+      ],
+      "acceptance": [
+        "Deployment kann nicht vor erforderlichen lokalen Checks laufen; Build-Metadaten referenzieren exakte Inputs."
+      ],
+      "depends_on": [
+        "M01-03",
+        "M01-05",
+        "M06-05",
+        "M07-03",
+        "M07-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M07-05",
+      "milestone": "M07",
+      "title": "Preview-/Produktionsisolation testen",
+      "implementation": "Produktionsprojekt mit Secrets baut nur main; getrenntes Preview-Projekt ohne Partner-Secrets. Repository-interne Branch-Abfragen sind keine Secret-Grenze. production fail-closed; noindex kein Ersatz für Vertraulichkeit.",
+      "deliverables": [
+        "tests/build-security.test.ts",
+        "docs/CLOUDFLARE_SETUP.md"
+      ],
+      "acceptance": [
+        "Ein Fork-/Preview-Build kann keine echten Feed-Secrets beziehen oder vertrauliche Rohdaten ausgeben."
+      ],
+      "depends_on": [
+        "M01-03",
+        "M01-05",
+        "M06-05",
+        "M07-04",
+        "M07-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M07-06",
+      "milestone": "M07",
+      "title": "Cloudflare wirklich verbinden und Smoke testen",
+      "implementation": "Autorisiertes GitHub-Repo mit Cloudflare Builds verbinden, Preview deployen, echte URL/Build-ID und Konfiguration prüfen.",
+      "deliverables": [
+        "Cloudflare project",
+        "docs/DEPLOYMENT_EVIDENCE.md"
+      ],
+      "acceptance": [
+        "Öffentliches oder geschütztes Preview tatsächlich erreichbar; ohne Accountzugang ausdrücklich blocked."
+      ],
+      "depends_on": [
+        "M01-03",
+        "M01-05",
+        "M06-05",
+        "M07-05",
+        "M07-01"
+      ],
+      "kind": "external_gate",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M08-01",
+      "milestone": "M08",
+      "title": "GOT-Importer erstellen",
+      "implementation": "Vollständigen Katalog aus verifizierter XML-/HTML-Quelle importieren; Positions-IDs, Originaltext, Mengenbezug und Version erhalten.",
+      "deliverables": [
+        "scripts/ingest/adapters/got.ts",
+        "tests/fixtures/got/"
+      ],
+      "acceptance": [
+        "Repräsentative Stichprobe inklusive Tierart-/Mengeneinheiten entspricht der Quelle; Parserfehler sind sichtbar."
+      ],
+      "depends_on": [
+        "M03-02",
+        "M04-05",
+        "M05-04",
+        "M06-03"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M08-02",
+      "milestone": "M08",
+      "title": "Kostenengine implementieren",
+      "implementation": "Reguläre und Notdienstkontexte, Mengen, Faktoren, separate Zuschläge, Steuern und Rundung deterministisch rechnen.",
+      "deliverables": [
+        "src/features/costs/engine.ts",
+        "tests/costs/"
+      ],
+      "acceptance": [
+        "Unit- und unabhängige Golden Tests einschließlich Notdienstpauschale und Ausschlüssen bestanden."
+      ],
+      "depends_on": [
+        "M03-02",
+        "M04-05",
+        "M05-04",
+        "M06-03",
+        "M08-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M08-03",
+      "milestone": "M08",
+      "title": "Szenariomodell und Reviewpfad bauen",
+      "implementation": "Nur klar definierte einfache Vorlagen vorbereiten; Behandlungsbestandteile, nicht enthaltene Kosten und Clinical-Reviewstatus speichern.",
+      "deliverables": [
+        "content-data/cost-scenarios/",
+        "schemas/cost-scenario.ts"
+      ],
+      "acceptance": [
+        "Ungeprüfte komplexe OP-Vorlage kann nicht als vollständige Kostenschätzung veröffentlicht werden."
+      ],
+      "depends_on": [
+        "M03-02",
+        "M04-05",
+        "M05-04",
+        "M06-03",
+        "M08-02",
+        "M08-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M08-04",
+      "milestone": "M08",
+      "title": "Rechneroberfläche integrieren",
+      "implementation": "Tierart, Positionssuche, Mengen, Kontext und Faktor; Ergebnistabelle mit Netto/Brutto, Quelle, Stand und Einschränkungen.",
+      "deliverables": [
+        "src/pages/de-de/tierarztkosten/",
+        "costs UI"
+      ],
+      "acceptance": [
+        "Rechnung ist aus Einzelpositionen nachvollziehbar; leer/ungültig/unsupported sauber behandelt."
+      ],
+      "depends_on": [
+        "M03-02",
+        "M04-05",
+        "M05-04",
+        "M06-03",
+        "M08-03",
+        "M08-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M08-05",
+      "milestone": "M08",
+      "title": "Druck- und Informationsseiten erstellen",
+      "implementation": "Browserdruck mit Quellen/Version; wenige freigegebene Leistungsseiten mit Rechner-Einstieg. Keine automatische Massenerzeugung jeder Kombination.",
+      "deliverables": [
+        "src/pages/de-de/tierarztkosten/[slug].astro",
+        "print.css"
+      ],
+      "acceptance": [
+        "Druckansicht vollständig; nur überprüfte Inhalte indexierbar."
+      ],
+      "depends_on": [
+        "M03-02",
+        "M04-05",
+        "M05-04",
+        "M06-03",
+        "M08-04",
+        "M08-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M08-06",
+      "milestone": "M08",
+      "title": "Fachliche Rechenabnahme dokumentieren",
+      "implementation": "Quellenstand und relevante Rechenannahmen fachlich prüfen lassen oder nachvollziehbar vorhandene qualifizierte Freigabe erfassen. Keine Autorität erfinden.",
+      "deliverables": [
+        "docs/reviews/costs.md",
+        "config/launch.json"
+      ],
+      "acceptance": [
+        "Live-Szenarien haben echte Freigabe; fehlendes Review blockiert nur deren öffentliche Aktivierung."
+      ],
+      "depends_on": [
+        "M03-02",
+        "M04-05",
+        "M05-04",
+        "M06-03",
+        "M08-05",
+        "M08-01"
+      ],
+      "kind": "external_gate",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M09-01",
+      "milestone": "M09",
+      "title": "Partnervertragsschema bauen",
+      "implementation": "Programmanbieter, Netzwerk, Geltung, erlaubte Website-/Platzierungsarten und Nachweise erfassen. Provisionen nicht clientseitig ausliefern.",
+      "deliverables": [
+        "config/publishers/insurance/",
+        "schemas/partner.ts"
+      ],
+      "acceptance": [
+        "Fehlende Vertragsfreigabe lässt keine aktive Versicherungs-CTA entstehen."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-02",
+        "M05-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M09-02",
+      "milestone": "M09",
+      "title": "Neutralen CTA-Baustein implementieren",
+      "implementation": "Explizit gekennzeichnete Information/Weiterleitung zum Anbieter, vom Kostenresultat getrennt. Keine ranglistenbasierte Auswahl nach Tierprofil.",
+      "deliverables": [
+        "src/components/InsuranceDisclosure.astro",
+        "PartnerCta.astro"
+      ],
+      "acceptance": [
+        "Aufruf überträgt keine Diagnose, Profilwerte oder eingegebenen Kosten."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-02",
+        "M05-02",
+        "M09-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M09-03",
+      "milestone": "M09",
+      "title": "Zulässige Links validieren",
+      "implementation": "Nur genehmigte Host-/Programmzuordnung und erlaubte statische Kampagnenkennungen; rel sponsored, keine verdeckten Redirects.",
+      "deliverables": [
+        "src/features/commerce/links.ts",
+        "tests/affiliate-links.test.ts"
+      ],
+      "acceptance": [
+        "Ungültiger oder inaktiver Link wird ausgeblendet; keine Tracking-Requests in automatischen Live-Linktests."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-02",
+        "M05-02",
+        "M09-02",
+        "M09-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M09-04",
+      "milestone": "M09",
+      "title": "Redaktion und Erlöslogik trennen",
+      "implementation": "Keine Aussagen zu garantierter Kostenerstattung oder Versicherbarkeit bestehender Beschwerden. Keine Akutnotfallseite mit aggressiver CTA.",
+      "deliverables": [
+        "content-data/insurance-disclosures/",
+        "tests/content-policy.test.ts"
+      ],
+      "acceptance": [
+        "Kein personalisiertes bestes Versicherungsprodukt und keine erfundenen Tarifdaten im UI."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-02",
+        "M05-02",
+        "M09-03",
+        "M09-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M09-05",
+      "milestone": "M09",
+      "title": "Leere/gesperrte Partnerzustände testen",
+      "implementation": "Noch keine Zulassung, Programm beendet, falscher Markt, fehlende Werbekennzeichnung und erlaubte neutrale Shopalternative abdecken.",
+      "deliverables": [
+        "tests/insurance-integration.test.ts"
+      ],
+      "acceptance": [
+        "Seite bleibt informativ ohne aktiven Versicherungspartner; keine fake Provision/Angebote."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-02",
+        "M05-02",
+        "M09-04",
+        "M09-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M09-06",
+      "milestone": "M09",
+      "title": "Vertragliche und rechtliche Freigabe einholen",
+      "implementation": "Tatsächliche Partnerzulassung plus Prüfung der konkreten Ausgestaltung unter §34d dokumentieren. Ein Disclaimer ersetzt diese Prüfung nicht.",
+      "deliverables": [
+        "docs/reviews/insurance.md",
+        "partner approval reference"
+      ],
+      "acceptance": [
+        "Versicherungs-Modul erst nach echter Freigabe live; sonst blocked und Feature aus."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-02",
+        "M05-02",
+        "M09-05",
+        "M09-01"
+      ],
+      "kind": "external_gate",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M10-01",
+      "milestone": "M10",
+      "title": "OSM-Pilot regional importieren",
+      "implementation": "Mit kleinem Deutschland-Extrakt beginnen; tierärztliche Einrichtungen, Hundewiesen, Tierheime und weitere ausgewählte Tags extrahieren.",
+      "deliverables": [
+        "scripts/ingest/adapters/osm/",
+        "config/osm-tags.json"
+      ],
+      "acceptance": [
+        "Kleiner realer Pilot und reproduzierbarer Fixture-Test vorhanden; keine Browser-Overpass-Abfrage nötig."
+      ],
+      "depends_on": [
+        "M05-04",
+        "M05-05",
+        "M06-06"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M10-02",
+      "milestone": "M10",
+      "title": "Geometrie und Kontakte normalisieren",
+      "implementation": "Nodes, Ways und Relations angemessen behandeln; stabile IDs, berechnete repräsentative Punkte und dokumentierte Koordinatenqualität.",
+      "deliverables": [
+        "scripts/normalize/places.ts",
+        "geometry tests"
+      ],
+      "acceptance": [
+        "Grenzen/Überlappungen erzeugen keine Doppelzählungen; defekte Geometrien werden nicht still nach Berlin verschoben."
+      ],
+      "depends_on": [
+        "M05-04",
+        "M05-05",
+        "M06-06",
+        "M10-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M10-03",
+      "milestone": "M10",
+      "title": "Ortsindex und räumliche Suche vorbereiten",
+      "implementation": "Suchbare Ortsnamen und Koordinaten aus freigegebener Quelle erzeugen; keine proprietäre PLZ-Datenbank voraussetzen. Distanz vs Gemeindegrenze kennzeichnen.",
+      "deliverables": [
+        "data place index generator",
+        "src/features/map/place-search.ts"
+      ],
+      "acceptance": [
+        "Autocomplete läuft lokal auf kleinen Daten; Ortsnamenambiguïtat wird aufgelöst."
+      ],
+      "depends_on": [
+        "M05-04",
+        "M05-05",
+        "M06-06",
+        "M10-02",
+        "M10-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M10-04",
+      "milestone": "M10",
+      "title": "Bundesweiten Import skalieren",
+      "implementation": "Alle nötigen Deutschland-Regionen streamend/sequenziell oder kontrolliert parallel verarbeiten; Rohdaten vor dem Build entsorgen.",
+      "deliverables": [
+        "scripts/ingest/osm-country.ts",
+        "docs/OSM_BENCHMARK.md"
+      ],
+      "acceptance": [
+        "Alle vorgesehenen Regionen haben überprüften Snapshotstatus; Speicher-/Laufzeitbudget gemessen."
+      ],
+      "depends_on": [
+        "M05-04",
+        "M05-05",
+        "M06-06",
+        "M10-03",
+        "M10-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M10-05",
+      "milestone": "M10",
+      "title": "POIs sharden und Coverage ausgeben",
+      "implementation": "Räumliche Chunks, Kategorienzähler, Source-Alter, fehlende Regionen und sichere Exportprojektion erstellen.",
+      "deliverables": [
+        "public data generator",
+        "docs/COVERAGE.md"
+      ],
+      "acceptance": [
+        "Kartenindex klein; keine deutschlandweite Megadatei im initialen Browserpfad."
+      ],
+      "depends_on": [
+        "M05-04",
+        "M05-05",
+        "M06-06",
+        "M10-04",
+        "M10-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M10-06",
+      "milestone": "M10",
+      "title": "Echte Datenqualität abnehmen",
+      "implementation": "Stichproben verschiedener Kategorien/Regionen, Aktualitätsanzeige, Lizenzdownload und keine falsche Notdienst-Zusicherung prüfen.",
+      "deliverables": [
+        "docs/reviews/places.md",
+        "real-data test report"
+      ],
+      "acceptance": [
+        "Bundesweite erfasste Daten belegt, ohne Vollständigkeit aller realen Einrichtungen zu behaupten."
+      ],
+      "depends_on": [
+        "M05-04",
+        "M05-05",
+        "M06-06",
+        "M10-05",
+        "M10-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M11-01",
+      "milestone": "M11",
+      "title": "Zugängliche Listenansicht bauen",
+      "implementation": "Ort, Kategorie und Radius als Filter; Trefferliste mit Quelle und sinnvollen Kontakthinweisen. Serverlos und mit statischen Standardergebnissen.",
+      "deliverables": [
+        "src/features/map/list/",
+        "map page"
+      ],
+      "acceptance": [
+        "Liste bleibt ohne Karte nutzbar; keine Treffer bedeutet nur keine erfassten Treffer."
+      ],
+      "depends_on": [
+        "M04-03",
+        "M10-05"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M11-02",
+      "milestone": "M11",
+      "title": "Karte lazy integrieren",
+      "implementation": "Leaflet nach Klick, konfigurierte Tile-Quelle und Attribution; nur sichtbare/nähere Daten nachladen.",
+      "deliverables": [
+        "src/features/map/map.ts",
+        "tile config"
+      ],
+      "acceptance": [
+        "Initial kein Tile-Request; Providerfehler beeinträchtigt Liste nicht; kein Prefetch/Bulk-Download."
+      ],
+      "depends_on": [
+        "M04-03",
+        "M10-05",
+        "M11-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M11-03",
+      "milestone": "M11",
+      "title": "Marker und Geolocation behandeln",
+      "implementation": "Cluster/Rendergrenzen, Standortabfrage nur durch Nutzeraktion, Ablehnungs-/Timeoutpfade und klare Standortdatenhaltung.",
+      "deliverables": [
+        "tests/e2e/map.spec.ts",
+        "map controls"
+      ],
+      "acceptance": [
+        "Dichter Ausschnitt bleibt bedienbar; Standort wird nicht gespeichert/versendet ohne passende Aktion."
+      ],
+      "depends_on": [
+        "M04-03",
+        "M10-05",
+        "M11-02",
+        "M11-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M11-04",
+      "milestone": "M11",
+      "title": "Lokale Seite aus Qualitäts-Allowlist generieren",
+      "implementation": "Bis zu 25 geeignete Städte als Startziel, ausschließlich bei genügend echten Daten. Kein garantierter Mindestbestand erfinden.",
+      "deliverables": [
+        "content-data/city-allowlist.json",
+        "local page template"
+      ],
+      "acceptance": [
+        "Indexierte Stadtseite besitzt echten lokalen Mehrwert und keine leeren Kategorien."
+      ],
+      "depends_on": [
+        "M04-03",
+        "M10-05",
+        "M11-03",
+        "M11-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M11-05",
+      "milestone": "M11",
+      "title": "Kommunalen Pilot anbinden",
+      "implementation": "Eine konkret lizenzierte kommunale Zusatzquelle integrieren; Priorität/Konflikt zu OSM sichtbar behandeln. Nicht alle Kommunalregeln voraussetzen.",
+      "deliverables": [
+        "scripts/ingest/adapters/municipal/",
+        "local-source tests"
+      ],
+      "acceptance": [
+        "Quelle, Lizenz, Geltung und Konflikte nachvollziehbar; keine abgeleitete Hundeerlaubnis ohne Beleg."
+      ],
+      "depends_on": [
+        "M04-03",
+        "M10-05",
+        "M11-04",
+        "M11-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M11-06",
+      "milestone": "M11",
+      "title": "Mobil-/SEO-/Ausfallabnahme durchführen",
+      "implementation": "Mobilkarte, Tastatur-Alternative, Provider-Ausfall, Nachbar-Shards, Ortswechsel und interne Links im echten Browser testen.",
+      "deliverables": [
+        "docs/reviews/map-ui.md",
+        "E2E reports"
+      ],
+      "acceptance": [
+        "Kein horizontaler Bedienbruch, keine fehlerhaften 200-Fallbacks und vollständige Attribution."
+      ],
+      "depends_on": [
+        "M04-03",
+        "M10-05",
+        "M11-05",
+        "M11-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M12-01",
+      "milestone": "M12",
+      "title": "Unterstützten Reisekontext definieren",
+      "implementation": "V1: privater Standardfall für erwachsene Hunde/Katzen, begleitete Reise ab Deutschland in zunächst AT, NL, FR, IT; Transit und Rückreise erfassen. Andere Fälle explizit unsupported.",
+      "deliverables": [
+        "content-data/travel/scope.json",
+        "docs/TRAVEL_SCOPE.md"
+      ],
+      "acceptance": [
+        "UI sagt klar, welche Fälle geprüft werden; keine scheinbar globale Abdeckung."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M05-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M12-02",
+      "milestone": "M12",
+      "title": "Deklarative Rules Engine implementieren",
+      "implementation": "Feste Prädikate, gültige Zeiträume, Prioritäten und vier Ergebniszustände; keine ausführbaren Regeln aus Fremdtexten.",
+      "deliverables": [
+        "src/features/travel/engine.ts",
+        "tests/travel/"
+      ],
+      "acceptance": [
+        "Einheiten-, Kalender-, unbekannt-/nicht-anwendbar- und Versionsgrenztests bestanden."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M05-02",
+        "M12-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M12-03",
+      "milestone": "M12",
+      "title": "Offizielle Regelquellen modellieren",
+      "implementation": "Aktuelle EU-Regeln und Ziel-/Transitstaatquellen lesen, fachliche Felder und Fundstellen erfassen. Keine alten Chat-Angaben blind übernehmen.",
+      "deliverables": [
+        "content-data/travel/rules/",
+        "docs/reviews/travel-sources.md"
+      ],
+      "acceptance": [
+        "Jede vorbereitete Regel hat Quelle, Anwendungsbereich, Inkrafttreten und Reviewstatus."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M05-02",
+        "M12-02",
+        "M12-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M12-04",
+      "milestone": "M12",
+      "title": "Wizard und Ergebnisse integrieren",
+      "implementation": "Auswahl von Tier, Zeitraum, Dokumentstatus, Herkunft/Ziel/Transit; Checkliste mit unbekannten Punkten und offiziellen Links, keine Garantie.",
+      "deliverables": [
+        "src/pages/de-de/reisecheck/",
+        "travel UI"
+      ],
+      "acceptance": [
+        "Unvollständige oder nicht unterstützte Route erhält kein grünes Gesamtergebnis."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M05-02",
+        "M12-03",
+        "M12-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M12-05",
+      "milestone": "M12",
+      "title": "Packliste und Zielseiten erstellen",
+      "implementation": "Druckbare regelbezogene Aufgaben und nichtmedizinische Reiseausrüstung; nur unterstützte Ziele erhalten indexierbare Seiten. Airline-/Fährbedingungen getrennt ausweisen.",
+      "deliverables": [
+        "travel destination template",
+        "print rules",
+        "packing list"
+      ],
+      "acceptance": [
+        "Packliste ohne Backend, keine automatische Empfehlung von Medikamenten."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M05-02",
+        "M12-04",
+        "M12-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M12-06",
+      "milestone": "M12",
+      "title": "Reiseregeln fachlich freigeben und Regression testen",
+      "implementation": "Alle Live-Regeln mit kompetenter Prüfung und vollständiger Testmatrix bestätigen. Quelländerung sperrt positive automatische Gesamtentscheidung.",
+      "deliverables": [
+        "docs/reviews/travel.md",
+        "config/launch.json"
+      ],
+      "acceptance": [
+        "Freigabe echt dokumentiert; ohne Review funktionsfähiger Preview, aber keine unüberprüfte Live-Reiseberatung."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M05-02",
+        "M12-05",
+        "M12-01"
+      ],
+      "kind": "external_gate",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M13-01",
+      "milestone": "M13",
+      "title": "Netzwerkadapter mit Fixtures erstellen",
+      "implementation": "Generische Schnittstelle plus Awin-CSV-Adapter; weitere Netzwerke nur nach realem Bedarf. Fixtures synthetisch statt veröffentlichter echter Rohfeeds.",
+      "deliverables": [
+        "scripts/ingest/adapters/awin.ts",
+        "fixtures/commerce/"
+      ],
+      "acceptance": [
+        "Parser arbeitet ohne Zugangsdaten; quoted CSV, Encoding, fehlende Felder und große Feeds getestet."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-02",
+        "M06-02",
+        "M07-04"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M13-02",
+      "milestone": "M13",
+      "title": "Produkte und Varianten normalisieren",
+      "implementation": "Product und Offer trennen, GTIN/Packung/Größe/Mengenbasis prüfen, potenzielle Dubletten quarantänisieren.",
+      "deliverables": [
+        "scripts/normalize/products.ts",
+        "offers.ts",
+        "tests/product-match/"
+      ],
+      "acceptance": [
+        "Falsche Multipack-/Größenmatches werden nicht als Preisvergleich veröffentlicht."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-02",
+        "M06-02",
+        "M07-04",
+        "M13-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M13-03",
+      "milestone": "M13",
+      "title": "Vertrauenswürdigen Cloudflare-Abruf implementieren",
+      "implementation": "Secrets ausschließlich Build-Time, Domain-Allowlist, Streaming, TTL und erlaubte öffentliche Felder. Nichts Vertrauliches ins Repo, Artifact oder Browserbundle.",
+      "deliverables": [
+        "scripts/build/commerce.ts",
+        "tests/feed-secrecy.test.ts"
+      ],
+      "acceptance": [
+        "Canary und private Felder fehlen in sämtlichen öffentlichen Outputs; fehlende Secret-Namen werden ohne Wert protokolliert."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-02",
+        "M06-02",
+        "M07-04",
+        "M13-02",
+        "M13-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M13-04",
+      "milestone": "M13",
+      "title": "Angebotsausgabe und Preislogik erstellen",
+      "implementation": "Klare Preise, Versand unbekannt/null, Grundpreis falls sinnvoll, Stand, Verfügbarkeit und abgelaufene Angebote. Kundenabhängige Rabatte separat.",
+      "deliverables": [
+        "src/features/commerce/pricing.ts",
+        "OfferCard.astro"
+      ],
+      "acceptance": [
+        "Keine falsche Kostenlos-/Bestpreisbehauptung; gleiche Variante und Markt für Vergleich Pflicht."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-02",
+        "M06-02",
+        "M07-04",
+        "M13-03",
+        "M13-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M13-05",
+      "milestone": "M13",
+      "title": "Katalogansichten und Filter bauen",
+      "implementation": "Kategorien, Eigenschaften, erklärbare Sortierung und Affiliatekennzeichnung; nur erlaubte öffentliche Projektion in JSON.",
+      "deliverables": [
+        "catalog pages",
+        "filters.ts",
+        "tests/e2e/catalog.spec.ts"
+      ],
+      "acceptance": [
+        "Sortierung ist provisionunabhängig; aktive Filter finden nur zulässige Angebote."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-02",
+        "M06-02",
+        "M07-04",
+        "M13-04",
+        "M13-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M13-06",
+      "milestone": "M13",
+      "title": "Mindestens einen echten Partner integrieren",
+      "implementation": "Tatsächliche Programmfreigabe, Bilder-/Anzeige-/JSON-Rechte, echte Feedfelder und erlaubter Linkmodus verifizieren. Ohne Freigabe Slot deaktiviert lassen.",
+      "deliverables": [
+        "docs/reviews/commerce-partner.md",
+        "config/publishers/"
+      ],
+      "acceptance": [
+        "Echte zugelassene Integration nachgewiesen; keine alten Chat-Provisionswerte als Vertragsbeleg."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M05-02",
+        "M06-02",
+        "M07-04",
+        "M13-05",
+        "M13-01"
+      ],
+      "kind": "external_gate",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M14-01",
+      "milestone": "M14",
+      "title": "Startkategorien und Grenzen festlegen",
+      "implementation": "Pflege-/Zahnpflege-/Mobilitätszubehör und Spielzeug auswählen. Medikamente, medizinische Tests und Supplements nur als spätere gesondert freizugebende Erweiterung.",
+      "deliverables": [
+        "content-data/taxonomy/care.json",
+        "toys.json"
+      ],
+      "acceptance": [
+        "Gesundheitsbereich erfüllt den Produktwunsch, ohne automatische Behandlungsvorschläge zu veröffentlichen."
+      ],
+      "depends_on": [
+        "M04-05",
+        "M13-02",
+        "M13-04"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M14-02",
+      "milestone": "M14",
+      "title": "Attributschema und Herkunft erfassen",
+      "implementation": "Tierart, Abmessung, Herstellergrößenbereich, Material, Spieltyp, Waschbarkeit und belastbare Einschränkungen speichern; unbekannt explizit.",
+      "deliverables": [
+        "schemas/product-attributes.ts",
+        "attribute review data"
+      ],
+      "acceptance": [
+        "Jedes für Matching verwendete Attribut besitzt Quelle und Verifikationsstatus."
+      ],
+      "depends_on": [
+        "M04-05",
+        "M13-02",
+        "M13-04",
+        "M14-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M14-03",
+      "milestone": "M14",
+      "title": "Deterministisches Matching umsetzen",
+      "implementation": "Hard-Filter auf Tierart/Größe/Herstellergrenzen; weiche Sortierung nur nach erklärbaren Bedürfnissen wie Indoor oder Apportieren.",
+      "deliverables": [
+        "src/features/toys/matching.ts",
+        "care/matching.ts"
+      ],
+      "acceptance": [
+        "Rasse allein löst keine medizinische Empfehlung aus; unbekannte Eigenschaften werden nicht als passend behauptet."
+      ],
+      "depends_on": [
+        "M04-05",
+        "M13-02",
+        "M13-04",
+        "M14-02",
+        "M14-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M14-04",
+      "milestone": "M14",
+      "title": "Finder-Oberfläche und Erklärungen bauen",
+      "implementation": "Kurzer Fragebogen, Ergebnisbegründung und verlinkte Herstellerangaben. Kein erfundener Sicherheits- oder Haltbarkeitsscore.",
+      "deliverables": [
+        "toys finder",
+        "care category pages"
+      ],
+      "acceptance": [
+        "Nutzer erkennt, warum ein Produkt erscheint und welche Eigenschaften nicht geprüft sind."
+      ],
+      "depends_on": [
+        "M04-05",
+        "M13-02",
+        "M13-04",
+        "M14-03",
+        "M14-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M14-05",
+      "milestone": "M14",
+      "title": "Sicherheits- und Inhaltsregeln testen",
+      "implementation": "Heilversprechen, Dosierung, unzerstörbar, Fake-Sterne und automatische Supplementpflicht als negative Content-/Datenfälle prüfen.",
+      "deliverables": [
+        "tests/care-safety.test.ts",
+        "tests/toy-safety.test.ts"
+      ],
+      "acceptance": [
+        "Policy-Tests sperren unerlaubte Claims; passende neutrale Produkttexte bleiben möglich."
+      ],
+      "depends_on": [
+        "M04-05",
+        "M13-02",
+        "M13-04",
+        "M14-04",
+        "M14-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M14-06",
+      "milestone": "M14",
+      "title": "Reale Produkte attributseitig abnehmen",
+      "implementation": "Kleine sorgfältig geprüfte Auswahl veröffentlichen, sobald echte Angebotsrechte bestehen. Fehlende Daten nicht durch KI erfinden.",
+      "deliverables": [
+        "docs/reviews/care-toys.md",
+        "attribute approvals"
+      ],
+      "acceptance": [
+        "Jedes Live-Matching erklärt belegte Eigenschaften; nicht geprüfte Produkte erscheinen nur mit entsprechend begrenzter Aussage oder gar nicht."
+      ],
+      "depends_on": [
+        "M04-05",
+        "M13-02",
+        "M13-04",
+        "M14-05",
+        "M14-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M15-01",
+      "milestone": "M15",
+      "title": "Futter-Domänenmodell ergänzen",
+      "implementation": "Tierart, Lebensphase laut Hersteller, Allein-/Ergänzungsfuttermittel falls belegt, Menge, Nährwertfelder und deren Einheiten/Bezug speichern.",
+      "deliverables": [
+        "schemas/food.ts",
+        "food taxonomy"
+      ],
+      "acceptance": [
+        "Keine Lebensphase/Bedarfsdeckung wird aus dem Namen oder Proteinwert geraten."
+      ],
+      "depends_on": [
+        "M13-02",
+        "M13-04"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M15-02",
+      "milestone": "M15",
+      "title": "Grundpreis-/Multipack-Rechnung implementieren",
+      "implementation": "Einheitliche Mengenbasis und exakte Variante vergleichen; Versand separat, unbekannte Mengen nicht schätzen.",
+      "deliverables": [
+        "src/features/food/unit-price.ts",
+        "tests/food-pricing.test.ts"
+      ],
+      "acceptance": [
+        "Unabhängige Tests für 400g, 1kg, 6x400g und fehlerhafte Mengen bestanden."
+      ],
+      "depends_on": [
+        "M13-02",
+        "M13-04",
+        "M15-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M15-03",
+      "milestone": "M15",
+      "title": "Produktsuche und Futteransichten bauen",
+      "implementation": "Name/Marke/GTIN-Suche, Angebotsvergleich und deklarierte Produktattribute. Barcodeeingabe zunächst Text; Kamera nicht Pflicht.",
+      "deliverables": [
+        "src/pages/de-de/futter/",
+        "food product template"
+      ],
+      "acceptance": [
+        "Echte Futterprodukte mit gleichen Varianten vergleichbar; ohne Nährwerte bleibt Preisvergleich nutzbar."
+      ],
+      "depends_on": [
+        "M13-02",
+        "M13-04",
+        "M15-02",
+        "M15-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M15-04",
+      "milestone": "M15",
+      "title": "OPFF-Machbarkeit prüfen",
+      "implementation": "Konkrete API/Distribution und Rechte verifizieren; definierte Stichprobe gegen GTINs echter zulässiger Feedprodukte messen.",
+      "deliverables": [
+        "docs/OPFF_SPIKE.md",
+        "config/sources/opff.json"
+      ],
+      "acceptance": [
+        "Abdeckung, fehlende Felder und Lizenzfolgen dokumentiert; kein erfundener Trefferanteil."
+      ],
+      "depends_on": [
+        "M13-02",
+        "M13-04",
+        "M15-03",
+        "M15-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M15-05",
+      "milestone": "M15",
+      "title": "OPFF nur bei Eignung anbinden",
+      "implementation": "Adapter und Lizenzprojektion implementieren oder mit begründetem Feature-Flag deaktiviert lassen; nicht als allgemeine Pflichtdatenbank behandeln.",
+      "deliverables": [
+        "scripts/ingest/adapters/opff.ts",
+        "tests/opff-fallback.test.ts"
+      ],
+      "acceptance": [
+        "Fallback auf Händler-/Herstellerlabeldaten funktioniert; keine ungenehmigten Bilder und keine FEDIAF-Tabellenkopie."
+      ],
+      "depends_on": [
+        "M13-02",
+        "M13-04",
+        "M15-04",
+        "M15-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M15-06",
+      "milestone": "M15",
+      "title": "Futterdarstellung abnehmen",
+      "implementation": "Kein Testsieger/Nährwert-Healthscore ohne Methodik und Rechte; Rohdaten klar vom Preisvergleich trennen.",
+      "deliverables": [
+        "docs/reviews/food.md",
+        "E2E food tests"
+      ],
+      "acceptance": [
+        "Labelwerte, Quellen, Menge, Preisstand und Unbekanntwerte sind verständlich und korrekt."
+      ],
+      "depends_on": [
+        "M13-02",
+        "M13-04",
+        "M15-05",
+        "M15-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M16-01",
+      "milestone": "M16",
+      "title": "Profil-State im Browser implementieren",
+      "implementation": "Tierart, optionale Größen-/Gewichtsangaben und Interessen im Tab halten. Keine Pflicht für Name, Adresse oder E-Mail.",
+      "deliverables": [
+        "src/features/profile/state.ts",
+        "profile form"
+      ],
+      "acceptance": [
+        "Initial keine Speicherung und keine Netzübertragung; Tools funktionieren ohne Profil."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M14-03"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M16-02",
+      "milestone": "M16",
+      "title": "Optionale lokale Speicherung bauen",
+      "implementation": "Bewusste Auswahl, versioniertes Schema, Migration, Quota-/Storagefehler und vollständiges Löschen.",
+      "deliverables": [
+        "profile storage.ts",
+        "tests/profile-storage.test.ts"
+      ],
+      "acceptance": [
+        "Speichern und Löschen im Browser nachweisbar; kein serverseitiges Nutzerprofil entsteht."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M14-03",
+        "M16-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M16-03",
+      "milestone": "M16",
+      "title": "Merkliste integrieren",
+      "implementation": "Produkt-/Orts-IDs lokal merken; verschwundene Angebote und veraltete Referenzen sauber behandeln.",
+      "deliverables": [
+        "src/features/profile/favorites.ts",
+        "Merkliste page"
+      ],
+      "acceptance": [
+        "Merkliste lädt aktuelle zulässige Daten; alte Produkte führen nicht zu toten oder falschen Angeboten."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M14-03",
+        "M16-02",
+        "M16-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M16-04",
+      "milestone": "M16",
+      "title": "Reise-Packliste und Druck verbinden",
+      "implementation": "Eigene Checklistenzustände im Browser, druckbare Ansicht ohne Trackingdaten oder unnötige persönliche Angaben.",
+      "deliverables": [
+        "packing state",
+        "print templates"
+      ],
+      "acceptance": [
+        "Abhaken/Drucken benötigt keine Datenbank; gespeicherte Liste ist eindeutig gerätebezogen."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M14-03",
+        "M16-03",
+        "M16-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M16-05",
+      "milestone": "M16",
+      "title": "Sicheren Import/Export ergänzen",
+      "implementation": "Lokale JSON-Datei, Größenlimit, Schema-Prüfung und klare Datenschutzwarnung. Keine Datei an Server senden.",
+      "deliverables": [
+        "profile import-export.ts",
+        "tests/profile-import.test.ts"
+      ],
+      "acceptance": [
+        "Manipulierte Importdaten führen nicht zu XSS, unerlaubten Fetches oder Ausführen von Code."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M14-03",
+        "M16-04",
+        "M16-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M16-06",
+      "milestone": "M16",
+      "title": "Datenschutz- und Netzabnahme durchführen",
+      "implementation": "Mit Browser-Network-Test beweisen, dass Profileingaben nicht in URL, Analytics, Affiliate-Sub-ID oder fremde Requestdaten gelangen.",
+      "deliverables": [
+        "docs/reviews/local-profile.md",
+        "privacy E2E tests"
+      ],
+      "acceptance": [
+        "Anonymes Standardverhalten und Grenzen ohne Backup/Geräteabgleich korrekt beschrieben."
+      ],
+      "depends_on": [
+        "M03-04",
+        "M04-05",
+        "M14-03",
+        "M16-05",
+        "M16-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M17-01",
+      "milestone": "M17",
+      "title": "data-live-Publisher umsetzen",
+      "implementation": "Nur erlaubte offene normalisierte Dateien und Manifest in separatem Branch; Diff-Whitelist, Atomarität, kein Push in main.",
+      "deliverables": [
+        "scripts/publish/data-branch.ts",
+        "data branch workflow"
+      ],
+      "acceptance": [
+        "Publish-Test erkennt fremde Code-/Secret-Dateien und verweigert sie."
+      ],
+      "depends_on": [
+        "M06-06",
+        "M07-04",
+        "M10-05"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M17-02",
+      "milestone": "M17",
+      "title": "Offenen Importplan aktivierbar machen",
+      "implementation": "Wöchentliche/konfigurierte Jobs, dispatch, concurrency, Source-Timeouts, drei Versuche und bereinigte Summaries.",
+      "deliverables": [
+        ".github/workflows/ingest-open.yml"
+      ],
+      "acceptance": [
+        "Manueller vollständiger Lauf erfolgreich oder konkret begrenzt dokumentiert; Fehler ersetzen gültige Daten nicht."
+      ],
+      "depends_on": [
+        "M06-06",
+        "M07-04",
+        "M10-05",
+        "M17-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M17-03",
+      "milestone": "M17",
+      "title": "Täglichen Quellen-/Rebuildpfad hinzufügen",
+      "implementation": "Reise-/Regeländerungen erkennen; Commerce-Rebuild nur bei aktiven Partnern. Cloudflare-Hook als Secret und Buildstatus getrennt behandeln.",
+      "deliverables": [
+        ".github/workflows/source-check.yml",
+        "rebuild-commerce.yml"
+      ],
+      "acceptance": [
+        "Hook-Fehlschlag wird erkannt; keine minütlichen Vollsite-Builds oder Buildloops."
+      ],
+      "depends_on": [
+        "M06-06",
+        "M07-04",
+        "M10-05",
+        "M17-02",
+        "M17-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M17-04",
+      "milestone": "M17",
+      "title": "Frischeanzeige und Stale-Logik bauen",
+      "implementation": "Öffentlicher Datenstand und Source-Alter; abgelaufene Preise ausblenden; gesperrte Regeln ohne grünes Gesamtergebnis.",
+      "deliverables": [
+        "src/features/freshness/",
+        "public health generator"
+      ],
+      "acceptance": [
+        "Gefrorene Zeit im Test provoziert erwartete Warnungen/Sperren."
+      ],
+      "depends_on": [
+        "M06-06",
+        "M07-04",
+        "M10-05",
+        "M17-03",
+        "M17-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M17-05",
+      "milestone": "M17",
+      "title": "Smoke- und Alarmworkflow erstellen",
+      "implementation": "Seiten-/Datenstandprüfung, bereinigte Issues/Benachrichtigungen, Erklärung der 60-Tage-Scheduler-Grenze und unabhängigen Monitorlücke.",
+      "deliverables": [
+        ".github/workflows/smoke.yml",
+        "docs/MONITORING.md"
+      ],
+      "acceptance": [
+        "Ausfall und Datenüberalterung erzeugen nachvollziehbaren Alarm; keine falsche SLA."
+      ],
+      "depends_on": [
+        "M06-06",
+        "M07-04",
+        "M10-05",
+        "M17-04",
+        "M17-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M17-06",
+      "milestone": "M17",
+      "title": "Rollback und Budgetbericht proben",
+      "implementation": "Code-/Datenversion und aktives Feature-Set protokollieren, letzten gültigen zulässigen Stand wiederherstellen; Git-/Build-/Assetverbrauch messen.",
+      "deliverables": [
+        "docs/ROLLBACK.md",
+        "docs/BUDGET_REPORT.md"
+      ],
+      "acceptance": [
+        "Tatsächliche Probe oder lokal nachvollziehbare Simulation, getrennt vom noch blockierten Provider-Rollback."
+      ],
+      "depends_on": [
+        "M06-06",
+        "M07-04",
+        "M10-05",
+        "M17-05",
+        "M17-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M18-01",
+      "milestone": "M18",
+      "title": "SEO-Gates implementieren",
+      "implementation": "Titel/H1, canonical, reale hreflang-Paare, Sitemap, robots/noindex, Pagefind-Ausschlüsse und richtige Statuscodes prüfen.",
+      "deliverables": [
+        "scripts/checks/seo.ts",
+        "sitemap generator",
+        "tests/seo/"
+      ],
+      "acceptance": [
+        "Keine Fixture-/dünnen Filter-/inaktiven Marktseiten im Index; kein Fake-Rating-Markup."
+      ],
+      "depends_on": [
+        "M04-06",
+        "M08-04",
+        "M11-06",
+        "M12-04",
+        "M14-04",
+        "M15-03"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M18-02",
+      "milestone": "M18",
+      "title": "Sicherheits- und Output-Audit abschließen",
+      "implementation": "XSS, Feed-HTML, URL-Schemes, Secret-Canaries, CSP, private JSON-Felder und ungenehmigte Bilder prüfen.",
+      "deliverables": [
+        "scripts/checks/dist.ts",
+        "security tests"
+      ],
+      "acceptance": [
+        "dist enthält ausschließlich zulässige Dateien; bekannte Negativfälle schlagen fehl."
+      ],
+      "depends_on": [
+        "M04-06",
+        "M08-04",
+        "M11-06",
+        "M12-04",
+        "M14-04",
+        "M15-03",
+        "M18-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M18-03",
+      "milestone": "M18",
+      "title": "Performance-/Dateibudgets messen",
+      "implementation": "Build auf repräsentativen Daten, Chunk/Filecounts, initiales JS, Map-Nachladen und Mobile-Lighthouse unter dokumentierten Bedingungen.",
+      "deliverables": [
+        "docs/PERFORMANCE.md",
+        "budget tests"
+      ],
+      "acceptance": [
+        "Budgets eingehalten oder konkreter Blocker; keine erfundenen LCP-/INP-Messwerte."
+      ],
+      "depends_on": [
+        "M04-06",
+        "M08-04",
+        "M11-06",
+        "M12-04",
+        "M14-04",
+        "M15-03",
+        "M18-02",
+        "M18-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M18-04",
+      "milestone": "M18",
+      "title": "Zugänglichkeits- und Browsermatrix ausführen",
+      "implementation": "Tastatur, Screenreader-Hinweise, Kontraste, Zoom, mobiles Format und mindestens zwei Browserpfade prüfen.",
+      "deliverables": [
+        "docs/ACCESSIBILITY.md",
+        "Playwright/axe reports"
+      ],
+      "acceptance": [
+        "Kritische Befunde behoben; Tests und manuelle Beobachtungen nachvollziehbar."
+      ],
+      "depends_on": [
+        "M04-06",
+        "M08-04",
+        "M11-06",
+        "M12-04",
+        "M14-04",
+        "M15-03",
+        "M18-03",
+        "M18-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M18-05",
+      "milestone": "M18",
+      "title": "Geschäfts- und Rechtsinformationen vorbereiten",
+      "implementation": "Echte Betreiberangaben, Datenschutz, Affiliatekennzeichnung, Methodik, Quellen und Kontaktwege integrieren. Ads standardmäßig aus; Consent-/BFSG-Prüfbedarf benennen.",
+      "deliverables": [
+        "legal pages",
+        "config/legal.ts",
+        "docs/LEGAL_CHECKLIST.md"
+      ],
+      "acceptance": [
+        "Keine erfundenen juristischen Personendaten; offene echte Freigaben als Blocker, nicht Textplatzhalter live."
+      ],
+      "depends_on": [
+        "M04-06",
+        "M08-04",
+        "M11-06",
+        "M12-04",
+        "M14-04",
+        "M15-03",
+        "M18-04",
+        "M18-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M18-06",
+      "milestone": "M18",
+      "title": "Fachliche und rechtliche Launchfreigaben erfassen",
+      "implementation": "Kosten, Reise, Versicherung soweit aktiv, Produktclaims, Datenrechte und konkrete Privacy-/Werbeausgestaltung extern bzw. qualifiziert freigeben lassen.",
+      "deliverables": [
+        "docs/reviews/launch.md",
+        "config/launch.json"
+      ],
+      "acceptance": [
+        "Launchstatus referenziert reale Nachweise und freigegebene Features; kein Agent erfindet eine Juristen-/Tierarztprüfung."
+      ],
+      "depends_on": [
+        "M04-06",
+        "M08-04",
+        "M11-06",
+        "M12-04",
+        "M14-04",
+        "M15-03",
+        "M18-05",
+        "M18-01"
+      ],
+      "kind": "external_gate",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M19-01",
+      "milestone": "M19",
+      "title": "Gesamte Golden-Path-Suite ausführen",
+      "implementation": "Kosten -> Information, Ort -> Treffer, Reise -> Checkliste, Finder -> echtes oder gesperrtes Angebot, Futter -> Grundpreis, Profil -> Löschen testen.",
+      "deliverables": [
+        "docs/RELEASE_TESTS.md",
+        "verify reports"
+      ],
+      "acceptance": [
+        "Alle freigegebenen Kernpfade bestanden; nicht aktive Features sind klar deaktiviert."
+      ],
+      "depends_on": [
+        "M17-04",
+        "M18-01",
+        "M18-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M19-02",
+      "milestone": "M19",
+      "title": "Frischen Clone und Offline-Entwicklung prüfen",
+      "implementation": "Neuer Checkout, sichere Installation, Fixture-Build und lokale Tests ohne Secrets/Account durchführen.",
+      "deliverables": [
+        "docs/DEVELOPER_SETUP.md"
+      ],
+      "acceptance": [
+        "Andere Entwickler können die Website reproduzierbar starten; keine lokalen versteckten Dateien erforderlich."
+      ],
+      "depends_on": [
+        "M17-04",
+        "M18-01",
+        "M18-02",
+        "M19-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M19-03",
+      "milestone": "M19",
+      "title": "Internationalisierung mit Testmarkt beweisen",
+      "implementation": "Deaktivierten US-/EU-Testmarkt über Konfig und Adaptervertrag testen; USD, Einheiten und fehlende Kostenquelle korrekt behandeln.",
+      "deliverables": [
+        "tests/expansion-proof.test.ts",
+        "docs/EXPANSION.md"
+      ],
+      "acceptance": [
+        "Kein Umbau am DE-Kern und keine Veröffentlichung ungeprüfter internationaler Seiten nötig."
+      ],
+      "depends_on": [
+        "M17-04",
+        "M18-01",
+        "M18-02",
+        "M19-02",
+        "M19-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M19-04",
+      "milestone": "M19",
+      "title": "Betriebshandbuch und Restrisiken fertigstellen",
+      "implementation": "Source hinzufügen, Partner sperren, Datenrollback, Secretrotation, Frischeprüfung, Gebühren-/Reisereview und Kostenlimits beschreiben.",
+      "deliverables": [
+        "docs/RUNBOOK.md",
+        "docs/KNOWN_LIMITATIONS.md"
+      ],
+      "acceptance": [
+        "Betreiber kann die wichtigsten Eingriffe anhand konkreter Dateien/Befehle durchführen."
+      ],
+      "depends_on": [
+        "M17-04",
+        "M18-01",
+        "M18-02",
+        "M19-03",
+        "M19-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M19-05",
+      "milestone": "M19",
+      "title": "Aufgaben-/Launchstatus abgleichen",
+      "implementation": "Alle 120 Tasks auf Nachweise prüfen; done, blocked und bewusst deferred getrennt zählen. Abnahmebericht nennt exaktes Feature-Set.",
+      "deliverables": [
+        "project/tasks.json",
+        "docs/STATUS.md",
+        "docs/HANDOFF.md"
+      ],
+      "acceptance": [
+        "Keine 100-Prozent-Behauptung bei offenen erforderlichen Freigaben; Status ist mit Dateien/Tests konsistent."
+      ],
+      "depends_on": [
+        "M17-04",
+        "M18-01",
+        "M18-02",
+        "M19-04",
+        "M19-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M19-06",
+      "milestone": "M19",
+      "title": "Freigegebenen Release wirklich veröffentlichen",
+      "implementation": "Nur mit echten Betreiber-/Quellen-/Fachfreigaben und dokumentierter Veröffentlichungsautorisierung über Cloudflare deployen. URL, Build-ID, Code-/Daten-Commit und Smoke notieren.",
+      "deliverables": [
+        "docs/RELEASE.md",
+        "production deployment evidence"
+      ],
+      "acceptance": [
+        "Live-Abnahme real belegt; andernfalls technisch fertigen Stand und konkrete externe Blocker sauber übergeben."
+      ],
+      "depends_on": [
+        "M17-04",
+        "M18-01",
+        "M18-02",
+        "M19-05",
+        "M19-01"
+      ],
+      "kind": "external_gate",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    }
+  ]
+}
