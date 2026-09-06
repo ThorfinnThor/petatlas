@@ -839,8 +839,16 @@
         "M03-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "tests/international-contracts.test.ts fuehrt einen synthetischen US-Anbieter mit USD und imperialer Anzeige durch dieselben Fachschnittstellen. 14 Tests belegen: US-Angebote werden aus DE-Listen gefiltert und umgekehrt, der US-Markt bleibt trotz vorhandenem Adapter ohne Route, die versionierte US-Konfiguration hat weiterhin keinen Adapter, Waehrung und Masssystem folgen dem Markt, und die englische Testansicht laesst den deutschen Textkatalog unveraendert (eingefrorene Kataloge, kein stiller Locale-Rueckfall). Der Build erzeugt keine en-us-Ausgabe. Es wurden keine echten US-Inhalte abgerufen.",
+          "reference": "tests/international-contracts.test.ts; src/domain/i18n.ts; config/locales/",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit && npm run build:fixture",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

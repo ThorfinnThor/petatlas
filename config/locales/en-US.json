@@ -1,0 +1,12 @@
+{
+  "locale": "en-US",
+  "note": "SYNTHETISCH — Testansicht für die Architekturprüfung. Der US-Markt ist nicht gestartet und diese Texte erscheinen in keiner ausgelieferten Seite.",
+  "strings": {
+    "site.buildNotice": "This page is a work in progress.",
+    "offers.shippingUnknown": "Item price, shipping cost unknown",
+    "offers.total": "Total price including shipping",
+    "places.inMunicipality": "in {municipality}",
+    "places.nearMunicipality": "near {municipality}",
+    "common.unknown": "unknown"
+  }
+}

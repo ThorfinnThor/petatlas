@@ -1,0 +1,11 @@
+{
+  "locale": "de-DE",
+  "strings": {
+    "site.buildNotice": "Diese Seite ist ein Aufbaustand.",
+    "offers.shippingUnknown": "Artikelpreis ohne unbekannte Versandkosten",
+    "offers.total": "Gesamtpreis inklusive Versand",
+    "places.inMunicipality": "in {municipality}",
+    "places.nearMunicipality": "im Umkreis von {municipality}",
+    "common.unknown": "unbekannt"
+  }
+}
