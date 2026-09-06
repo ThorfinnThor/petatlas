@@ -467,8 +467,16 @@
         "M01-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Browser-Smoke gegen den gebauten statischen Output: Startseite, eigene 404-Seite und eine Formularprobe unter chromium-desktop, webkit-desktop und chromium-mobile, 18 von 18 Tests bestanden, keine unerwarteten Konsolenfehler, kein horizontales Scrollen. Screenshots je Desktop und mobil unter reports/screenshots/. Zusaetzlich manuell im Browser geprueft: Eingabe 3,25 ergab 3250 Gramm ohne Konsolenmeldung.",
+          "reference": "tests/e2e/smoke.spec.ts; src/pages/404.astro; src/pages/entwicklung/formularprobe.astro; docs/TOOLCHAIN.md",
+          "verified_at": "2026-09-06",
+          "command": "npx playwright test",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

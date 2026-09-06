@@ -1,38 +1,27 @@
 ---
 /**
- * M01-01/M01-05 — Minimale statische Startseite als Nachweis, dass der Build
+ * M01-01/M01-05 — Minimale statische Startseite. Sie belegt, dass der Build
  * reines HTML erzeugt. Informationsarchitektur und Inhalte folgen in M04.
  */
-import { resolveBuildConfig, robotsDirective } from '../../config/build.ts';
-import { createSiteConfig } from '../../config/site.ts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { resolveBuildConfig } from '../../config/build.ts';
 
 const build = resolveBuildConfig();
-const site = createSiteConfig(build.mode, process.env);
 ---
 
-<!doctype html>
-<html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{site.brandName} — Aufbau</title>
-    <meta name="robots" content={robotsDirective(build)} />
-  </head>
-  <body>
+<BaseLayout title="Aufbau">
+  <main>
+    <h1>PetAtlas</h1>
+    <p>
+      Diese Seite ist ein Aufbaustand. Es sind noch keine Inhalte, Daten oder Rechner
+      veröffentlicht. Build-Modus: {build.mode}, Datenquelle: {build.dataSource}.
+    </p>
     {
-      build.showTestDataBanner && (
-        <p data-testid="test-data-banner" role="status">
-          <strong>Testdaten.</strong> Dieser Build zeigt synthetische Beispieldaten. Keine echten
-          Praxen, Preise oder Regeln.
+      build.mode !== 'production' && (
+        <p>
+          <a href="/entwicklung/formularprobe/">Technische Formularprobe</a>
         </p>
       )
     }
-    <main>
-      <h1>{site.brandName}</h1>
-      <p>
-        Diese Seite ist ein Aufbaustand. Es sind noch keine Inhalte, Daten oder Rechner
-        veröffentlicht. Build-Modus: {build.mode}, Datenquelle: {build.dataSource}.
-      </p>
-    </main>
-  </body>
-</html>
+  </main>
+</BaseLayout>

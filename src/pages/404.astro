@@ -1,0 +1,15 @@
+---
+/**
+ * M01-06 — Statische 404-Seite. Cloudflare Static Assets liefert sie über
+ * `not_found_handling: "404-page"` aus (siehe templates/wrangler.jsonc).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Seite nicht gefunden" neverIndex>
+  <main>
+    <h1>Seite nicht gefunden</h1>
+    <p>Diese Adresse gibt es nicht oder nicht mehr.</p>
+    <p><a href="/">Zur Startseite</a></p>
+  </main>
+</BaseLayout>

@@ -74,3 +74,23 @@ export NODE_EXTRA_CA_CERTS="$PWD/.work/ca/system-roots.pem"
 | **Absichtliche Lintfehler brechen ab** | `npm run lint` mit `src/canary-tmp.ts` | exit 1, 4 Fehler (`no-explicit-any`, `no-console`, `eqeqeq`, `no-var`) |
 
 Die Canary-Datei wurde nach der Prüfung entfernt; danach sind Lint und Typecheck wieder exit 0.
+
+## Nachweis M01-06 — Browser-Smoke
+
+Gebaut wird vor jedem E2E-Lauf; getestet wird der Inhalt von `dist/`, nicht der Dev-Server.
+
+| Prüfung | Ergebnis |
+|---|---|
+| `npx playwright test` über chromium-desktop, webkit-desktop und chromium-mobile | 18 von 18 bestanden |
+| Startseite | Status 200, H1 `PetAtlas`, `robots: noindex, nofollow`, sichtbarer Testdatenhinweis, keine Konsolenfehler |
+| 404 | Status 404, eigene Fehlerseite mit Rücklink; außer dem angeforderten 404 keine Konsolenfehler |
+| Formularprobe | gültige Eingabe `2,5` → `2500 Gramm`; ungültige Eingabe → Fehlermeldung statt `0`, `aria-invalid=true` |
+| Tastaturbedienung | Fokus sichtbar, Eingabe und Absenden mit Enter ohne Maus |
+| Mobiles Format | kein horizontales Scrollen der Hauptbedienung |
+| Manuelle Browserprüfung | Eingabe `3,25` ergab `3250 Gramm`, keine Konsolenmeldungen |
+
+Screenshots liegen unter `reports/screenshots/` (Start, Formularprobe, 404; je Desktop und mobil). `reports/` ist nicht versioniert.
+
+### Betriebshinweis Preview-Server
+
+Astro 7 startet `astro preview` in erkannten Agent-Umgebungen automatisch im Hintergrund. Playwright braucht den Server im Vordergrund; die Playwright-Konfiguration setzt deshalb `ASTRO_PREVIEW_BACKGROUND=false` für den `webServer`. Ein hängengebliebener Hintergrundserver wird mit `npx astro preview stop` beendet.

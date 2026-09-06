@@ -1,0 +1,87 @@
+---
+/**
+ * M01-06 — Technische Formularprobe.
+ *
+ * Zweck ist ausschließlich der Browser-Smoke: Label-Zuordnung, sichtbarer
+ * Fokus, Fehlermeldung und Ergebnisansage für Screenreader. Es werden keine
+ * fachlichen Daten angezeigt und nichts an einen Server gesendet.
+ *
+ * Gerechnet wird die Einheitenumrechnung aus ARCHITECTURE: Gewichte werden
+ * intern in Gramm gehalten. Das ist echte Projektlogik, keine erfundene
+ * Beispielrechnung.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { resolveBuildConfig } from '../../../config/build.ts';
+
+const build = resolveBuildConfig();
+const isProduction = build.mode === 'production';
+---
+
+<BaseLayout title={isProduction ? 'Seite nicht gefunden' : 'Formularprobe'} neverIndex>
+  {
+    isProduction ? (
+      <main>
+        <h1>Seite nicht gefunden</h1>
+        <p>Diese technische Testseite wird in production nicht ausgeliefert.</p>
+        <p>
+          <a href="/">Zur Startseite</a>
+        </p>
+      </main>
+    ) : (
+      <main>
+        <h1>Formularprobe</h1>
+        <p class="hinweis">
+          Technische Testseite für den Browser-Smoke. Kein fachlicher Inhalt, keine
+          Datenübertragung, nicht indexierbar.
+        </p>
+
+        <form id="probe" novalidate>
+          <label for="kilogramm">Gewicht in Kilogramm</label>
+          <input
+            id="kilogramm"
+            name="kilogramm"
+            type="text"
+            inputmode="decimal"
+            autocomplete="off"
+            aria-describedby="kilogramm-hilfe"
+            required
+          />
+          <p id="kilogramm-hilfe">Dezimaltrennzeichen Komma oder Punkt, größer als 0.</p>
+          <p>
+            <button type="submit">In Gramm umrechnen</button>
+          </p>
+        </form>
+
+        <p id="ergebnis" data-testid="ergebnis" role="status" aria-live="polite" />
+      </main>
+    )
+  }
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#probe');
+  const feld = document.querySelector<HTMLInputElement>('#kilogramm');
+  const ausgabe = document.querySelector<HTMLParagraphElement>('#ergebnis');
+
+  if (form && feld && ausgabe) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const roh = feld.value.trim().replace(',', '.');
+      const kilogramm = Number(roh);
+
+      // Unbekannt ist nicht null: eine leere oder ungültige Eingabe ergibt
+      // eine Fehlermeldung, kein Ergebnis von 0 Gramm.
+      if (roh === '' || !Number.isFinite(kilogramm) || kilogramm <= 0) {
+        feld.setAttribute('aria-invalid', 'true');
+        ausgabe.classList.add('fehler');
+        ausgabe.textContent = 'Bitte eine Zahl größer als 0 eingeben.';
+        feld.focus();
+        return;
+      }
+
+      feld.removeAttribute('aria-invalid');
+      ausgabe.classList.remove('fehler');
+      ausgabe.textContent = `${Math.round(kilogramm * 1000)} Gramm`;
+    });
+  }
+</script>
