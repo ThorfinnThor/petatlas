@@ -19,7 +19,7 @@
 import { z } from 'zod';
 
 /** Zeitpunkt als ISO-8601-Zeitstempel mit Zone. */
-const IsoTimestamp = z.string().datetime({ offset: true });
+const IsoTimestamp = z.iso.datetime({ offset: true });
 
 /** Kalenderdatum ohne Uhrzeit; siehe src/domain/dates.ts. */
 const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Erwartet wird YYYY-MM-DD.');
@@ -32,7 +32,7 @@ export const ProvenanceSchema = z
     sourceId: z.string().min(1),
     sourceRecordId: z.string().min(1),
     /** Öffentliche Referenz. Ein Token in der URL wäre ein Secret-Leak. */
-    sourceUrl: z.string().url(),
+    sourceUrl: z.url(),
     retrievedAt: IsoTimestamp,
     sourceUpdatedAt: IsoTimestamp.nullable(),
     contentHash: z.string().regex(/^[a-f0-9]{64}$/, 'Erwartet wird ein SHA-256 in Hex.'),

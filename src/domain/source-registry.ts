@@ -24,9 +24,9 @@ export const SourceEntrySchema = z
     publisher: z.string().min(1),
     /** Name genau dieser Distribution, nicht des Anbieters. */
     resourceName: z.string().min(1),
-    distributionUrl: z.string().url(),
+    distributionUrl: z.url(),
     /** Wo die geltenden Bedingungen stehen. Pflicht, auch bei `pending`. */
-    primaryTermsUrl: z.string().url(),
+    primaryTermsUrl: z.url(),
     format: SourceFormat,
     coverage: z.object({ spatial: z.string().min(1), temporal: z.string().min(1) }).strict(),
     updateCadence: z.string().min(1),
@@ -35,7 +35,7 @@ export const SourceEntrySchema = z
     /** Wortlaut des Pflichthinweises, wie die Quelle ihn verlangt. */
     attributionText: z.string().min(1).optional(),
     /** Ziel des Attributionslinks, falls die Quelle einen verlangt. */
-    attributionUrl: z.string().url().optional(),
+    attributionUrl: z.url().optional(),
     notes: z.array(z.string()),
   })
   .strict()

@@ -29,7 +29,7 @@ function antwort(
       arrayBuffer: async () => new ArrayBuffer(0),
     } as Response;
   }
-  const daten = typeof body === 'string' ? new TextEncoder().encode(body) : body;
+  const daten: BodyInit = typeof body === 'string' ? body : new Blob([body as BlobPart]);
   return new Response(daten, { status, headers });
 }
 
@@ -252,16 +252,20 @@ describe('Rücksicht auf die Quelle', () => {
   });
 
   it('sendet den bedingten Abruf mit', async () => {
-    const fetchImpl = vi.fn(async () => antwort('inhalt'));
+    let kopfzeilen: Record<string, string> | undefined;
+    const fetchImpl = (async (_eingabe: unknown, init?: RequestInit) => {
+      kopfzeilen = init?.headers as Record<string, string> | undefined;
+      return antwort('inhalt');
+    }) as unknown as typeof fetch;
+
     await fetchSource(GOT, {
-      fetchImpl: fetchImpl as unknown as typeof fetch,
+      fetchImpl,
       etag: '"abc"',
       lastModified: 'Fri, 07 Apr 2023 19:30:11 GMT',
       sleep: sofort,
     });
-    const kopfzeilen = fetchImpl.mock.calls[0]?.[1]?.headers as Record<string, string>;
-    expect(kopfzeilen['if-none-match']).toBe('"abc"');
-    expect(kopfzeilen['if-modified-since']).toBe('Fri, 07 Apr 2023 19:30:11 GMT');
+    expect(kopfzeilen?.['if-none-match']).toBe('"abc"');
+    expect(kopfzeilen?.['if-modified-since']).toBe('Fri, 07 Apr 2023 19:30:11 GMT');
   });
 });
 
@@ -271,11 +275,14 @@ describe('Keine Adresse von außen', () => {
   });
 
   it('ruft genau die registrierte Distribution ab', async () => {
-    const fetchImpl = vi.fn(async () => antwort('inhalt'));
-    await fetchSource(GOT, { fetchImpl: fetchImpl as unknown as typeof fetch, sleep: sofort });
-    expect(String(fetchImpl.mock.calls[0]?.[0])).toBe(
-      'https://www.gesetze-im-internet.de/got_2022/xml.zip',
-    );
+    const aufrufe: string[] = [];
+    const fetchImpl = (async (eingabe: unknown) => {
+      aufrufe.push(String(eingabe));
+      return antwort('inhalt');
+    }) as unknown as typeof fetch;
+
+    await fetchSource(GOT, { fetchImpl, sleep: sofort });
+    expect(aufrufe).toEqual(['https://www.gesetze-im-internet.de/got_2022/xml.zip']);
   });
 
   it('hasht den unveränderten Körper', async () => {

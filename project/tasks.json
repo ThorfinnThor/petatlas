@@ -1444,8 +1444,16 @@
         "M06-05"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Zwei Jobs in .github/workflows/ci.yml, ohne ein einziges Secret: Pruefkette (npm ci, lint, typecheck, format, Unit-/Vertragstests, Statuswerkzeug, Handoff-Abgleich, Fixture-Build, Suchindex, Lizenzpruefung, Secret-Audit ueber Repo und dist) und Browser-Smoke gegen den gebauten Output. Actions sind auf volle Commit-SHAs gepinnt, permissions steht global auf contents: read, persist-credentials ist aus. Ein Schritt prueft ausdruecklich, dass der Produktionsbuild weiterhin abbricht. Alle Schritte lokal durchgespielt. Dabei zwei echte Befunde behoben, die vorher untergegangen waren: astro check meldete einen Typfehler in tests/fetch.test.ts und 13 Deprecation-Warnungen, weil Zod 4 z.string().url(), .datetime() und .uuid() abgeloest hat. Der Code nutzt jetzt z.url(), z.iso.datetime() und z.uuid(); typecheck endet mit 0 Fehlern, 0 Warnungen, 0 Hinweisen und Exitcode 0.",
+          "reference": ".github/workflows/ci.yml; src/domain/schemas/; tests/fetch.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run lint && npm run typecheck && npm run test:unit && npm run check:licenses && npm run check:security && npm run check:handoff",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

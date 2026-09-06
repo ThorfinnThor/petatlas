@@ -1,0 +1,112 @@
+# M07-01 — Prüfkette für Pull Requests und main.
+#
+# Der Workflow braucht keinen Partneraccount und kein einziges Secret. Ein
+# Fork kann ihn deshalb vollständig ausführen, ohne Zugriff auf etwas zu
+# bekommen, das ihm nicht gehört.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Standard ist Lesen. Einzelne Jobs erhöhen nur, was sie wirklich brauchen.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruefkette:
+    name: Lint, Typecheck, Tests, Fixture-Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      # Actions sind auf volle Commit-SHAs gepinnt: ein verschobener Tag
+      # ändert damit nicht, welcher Code läuft.
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # ci statt install: das Lockfile ist verbindlich, keine stillen Updates.
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Formatierung
+        run: npm run format:check
+
+      - name: Unit- und Vertragstests
+        run: npm run test:unit
+
+      - name: Statuswerkzeug
+        run: |
+          python3 scripts/test_project_status.py
+          npm run status:validate
+
+      - name: Aufgabenstand und Handoff stimmen überein
+        run: npm run check:handoff
+
+      - name: Fixture-Build
+        run: npm run build:fixture
+
+      - name: Suchindex
+        run: npm run build:search
+
+      - name: Rechteprüfung der Quellen
+        run: npm run check:licenses
+
+      # Der Audit läuft nach dem Build und sieht damit auch dist/.
+      - name: Secret- und Fixture-Audit über Repo und dist
+        run: npm run check:security
+
+      - name: Produktionsbuild bleibt gesperrt
+        run: |
+          if npm run build:production > /tmp/production.log 2>&1; then
+            echo "Der Produktionsbuild ist durchgelaufen, obwohl die Launch-Gates offen sind."
+            exit 1
+          fi
+          grep -q "publicRelease.approved=false" /tmp/production.log
+
+  browser:
+    name: Browser-Smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Browser installieren
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: End-to-End gegen den gebauten Output
+        run: npm run test:e2e

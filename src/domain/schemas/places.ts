@@ -36,7 +36,7 @@ export const PlaceSchema = z
       .nullable(),
     /** Nur übernehmen, wenn Quelle und Datenschutzprüfung das tragen. */
     phone: z.string().nullable(),
-    website: z.string().url().nullable(),
+    website: z.url().nullable(),
     openingHours: z.string().nullable(),
     emergency: TriState,
     wheelchair: TriState,

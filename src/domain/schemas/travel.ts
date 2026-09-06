@@ -56,7 +56,7 @@ export const TravelRuleSchema = z
     context: TravelContextKind,
     validity: Period,
     /** Amtliche Fundstelle. Ohne sie darf die Regel nicht live gehen. */
-    officialSourceUrl: z.string().url(),
+    officialSourceUrl: z.url(),
     condition: PredicateSchema,
     /** Verständlicher Hinweistext für die Checkliste. */
     guidance: z.string().min(1),

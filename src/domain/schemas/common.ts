@@ -3,7 +3,7 @@
  */
 import { z } from 'zod';
 
-export const IsoTimestamp = z.string().datetime({ offset: true });
+export const IsoTimestamp = z.iso.datetime({ offset: true });
 export const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Erwartet wird YYYY-MM-DD.');
 export const CountryCode = z.string().regex(/^[A-Z]{2}$/, 'Erwartet wird ein Ländercode wie DE.');
 export const CurrencyCode = z.string().regex(/^[A-Z]{3}$/, 'Erwartet wird eine Währung wie EUR.');

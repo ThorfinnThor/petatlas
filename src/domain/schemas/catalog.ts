@@ -53,7 +53,7 @@ export const OfferSchema = z
     shippingMinor: MinorAmount.nullable(),
     availability: Availability,
     kind: OfferKind,
-    affiliateUrl: z.string().url(),
+    affiliateUrl: z.url(),
     fetchedAt: IsoTimestamp,
     expiresAt: IsoTimestamp.nullable(),
     /** Vertragliche Erlaubnis, dieses Angebot überhaupt anzuzeigen. */

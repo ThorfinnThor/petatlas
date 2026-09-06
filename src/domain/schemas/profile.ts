@@ -13,7 +13,7 @@ import { IsoDate, Species } from './common.ts';
 export const PetProfileSchema = z
   .object({
     /** Lokal vergeben. Keine serverseitige Kennung, kein Tracking. */
-    profileId: z.string().uuid(),
+    profileId: z.uuid(),
     schemaVersion: z.literal(1),
     species: Species,
     /** Frei gewählter Rufname, nur zur Anzeige im eigenen Gerät. */

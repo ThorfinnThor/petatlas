@@ -10,7 +10,7 @@
  */
 import { z } from 'zod';
 
-const IsoTimestamp = z.string().datetime({ offset: true });
+const IsoTimestamp = z.iso.datetime({ offset: true });
 
 export const RightsStatus = z.enum(['pending', 'verified', 'rejected', 'expired']);
 export type RightsStatus = z.infer<typeof RightsStatus>;
@@ -33,7 +33,7 @@ export const SourceRightsSchema = z
     sourceId: z.string().min(1),
     status: RightsStatus,
     licenseId: z.string().nullable(),
-    licenseUrl: z.string().url().nullable(),
+    licenseUrl: z.url().nullable(),
     commercialUse: z.boolean().nullable(),
     publicRedistribution: z.boolean().nullable(),
     websiteDisplay: z.boolean().nullable(),

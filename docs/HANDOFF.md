@@ -8,11 +8,13 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M05 vollständig (36 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M06 vollständig (42 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
-Nicht vorhanden: Cloudflare, GitHub-Actions-Workflows, Import-System, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge, Fachfreigaben.
+Zusätzlich vorhanden: Import- und Snapshot-System (Adapter-API, sicherer Fetcher, deterministische Normalisierung, Differenzprüfung mit Quarantäne, Sharding, Manifest, atomare Veröffentlichung).
+
+Nicht vorhanden: GitHub-Actions-Workflows, Cloudflare-Projekt, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge, Fachfreigaben.
 
 ## Umgebung
 
@@ -34,7 +36,7 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M06-01 — Adapter-API implementieren.** Beginn des generischen Import- und Snapshot-Systems. M06 und M07-01/M07-02 laufen ohne offene Entscheidung.
+**M07-01 — PR- und Main-CI konfigurieren.** M00 bis M06 sind vollständig; Cloudflare-Zugang liegt vor, M07 ist damit durchgehend ausführbar.
 
 Prüfkette vor jedem Commit: `npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npm run check:security && npm run check:licenses && npm run check:handoff`, bei UI-Änderungen zusätzlich `npx playwright test`.
 
@@ -42,9 +44,9 @@ Prüfkette vor jedem Commit: `npm run lint && npm run typecheck && npm run forma
 
 **B-001 ist aufgelöst (ADR-018).** Der Gebührenkatalog wird über den offiziellen XML-ZIP-Download bezogen. Die Vorgaben zu Snapshots, Fehlerverhalten, Provenienz und Darstellung stehen in `docs/DECISIONS.md`; die verbleibende Betriebsprüfung ist Aufgabe M17-07.
 
-## Nächste externe Freigabe
+## Cloudflare
 
-Cloudflare-Account und Repo-Anbindung, erstmals nötig für **M07-03**. Bis dahin ist nichts blockiert; alle offenen Voraussetzungen stehen im Register in `docs/EXTERNAL_SETUP.md`.
+Zugang liegt seit 2026-09-06 vor: OAuth-Token für `Shuu9599@gmail.com's Account`, hinterlegt in der lokalen wrangler-Konfiguration. **Wichtig:** wrangler scheitert ohne `NODE_EXTRA_CA_CERTS` mit „fetch failed“ — dieselbe Ursache wie bei npm.
 
 ## Nicht voraussetzen
 
