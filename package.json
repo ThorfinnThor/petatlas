@@ -12,7 +12,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "build:search": "node scripts/build-search.ts",
-    "build:site": "npm run build && npm run build:search",
+    "build:headers": "node scripts/build-headers.ts",
+    "build:site": "npm run build && npm run build:search && npm run build:headers",
     "build:fixture": "BUILD_MODE=development USE_FIXTURES=true astro build",
     "build:production": "BUILD_MODE=production astro build",
     "preview": "astro preview",
@@ -49,6 +50,7 @@
     "prettier-plugin-astro": "0.14.1",
     "typescript": "6.0.3",
     "typescript-eslint": "8.69.0",
-    "vitest": "5.0.0"
+    "vitest": "5.0.0",
+    "wrangler": "4.129.0"
   }
 }

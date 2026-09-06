@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // M07-03 — Assets-only Projekt (ADR-003).
+  //
+  // Bewusst NICHT vorhanden und auch nicht nachträglich zu ergänzen:
+  //   "main"            — es gibt kein Worker-Script; kein Request läuft durch Code.
+  //   "run_worker_first"— würde genau das wieder einführen.
+  //   "d1_databases", "kv_namespaces", "r2_buckets", "durable_objects"
+  //                     — keine Laufzeitdatenbank im Startumfang (ADR-006).
+  //
+  // Der Name „Workers Static Assets“ bedeutet hier nur, dass Cloudflare die
+  // Dateien ausliefert. Es läuft keine Rechenlogik pro Seitenaufruf.
+  "name": "petatlas-de",
+  "compatibility_date": "2026-09-06",
+
+  "assets": {
+    "directory": "./dist",
+    // Astro baut mit trailingSlash: 'always' und build.format: 'directory'.
+    "html_handling": "force-trailing-slash",
+    // Unbekannte Adressen bekommen die eigene 404-Seite mit Status 404.
+    "not_found_handling": "404-page",
+  },
+
+  // Produktion baut ausschließlich main. Andere Branches erzeugen im
+  // Produktionsprojekt kein Deployment (M07-05).
+  "workers_dev": false,
+}

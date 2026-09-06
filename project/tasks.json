@@ -1491,6 +1491,13 @@
           "verified_at": "2026-09-06",
           "command": "npm ci && npm audit --audit-level=high && npm run check:security -- --repo-only",
           "exit_code": 0
+        },
+        {
+          "description": "Der Security-Workflow laeuft auf GitHub und ist gruen; im selben Push ist auch CI gruen geblieben.",
+          "reference": "https://github.com/ThorfinnThor/petatlas/actions",
+          "verified_at": "2026-09-06",
+          "command": "gh run list",
+          "exit_code": 0
         }
       ],
       "blocker": null,
@@ -1516,8 +1523,16 @@
         "M07-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "wrangler.jsonc ist ein reines Assets-Projekt: kein main, kein run_worker_first, keine D1-/KV-/R2-/Durable-Object-Bindings; 17 Tests pruefen genau diese Abwesenheit. wrangler deploy --dry-run liest 43 Dateien aus dist und meldet 'No bindings found'. scripts/build-headers.ts erzeugt _headers mit einer CSP ohne fremde Herkunft, frame-ancestors none, form-action none, abgeschalteten Browserfunktionen und getrennter Cachedauer fuer gehashte Dateien und das Manifest. Routingtest gegen die echte Cloudflare-Laufzeit (wrangler dev --local): /de-de/ und /de-de/quellen/ antworten 200, eine unbekannte Adresse und die abgeschaltete Rechnerroute 404, /de-de/quellen ohne Schraegstrich leitet mit 307 auf die Fassung mit Schraegstrich, und die Header aus _headers werden tatsaechlich ausgeliefert.",
+          "reference": "wrangler.jsonc; scripts/build-headers.ts; tests/deployment-config.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npx wrangler deploy --dry-run; npx wrangler dev --local + curl",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
