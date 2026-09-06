@@ -1687,8 +1687,16 @@
         "M08-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "src/features/costs/engine.ts rechnet deterministisch in ganzzahligen Cent. Beide Golden Tests aus der Regelspezifikation bestehen: 1.000 Cent x Menge 3 x Faktor 2,00 ergibt 6.000 Cent netto, derselbe Fall im Notdienst 11.000 Cent netto und bei 19 Prozent 13.090 Cent brutto. Faktorbereiche sind kontextabhaengig (regulaer 1 bis 3, Notdienst 2 bis 4) und werden beidseitig geprueft. Die Notdienstgebuehr faellt einmal je Angelegenheit an, nicht je Position und nicht je Tier - beides getestet - und wird getrennt ausgewiesen. Der Kontext kommt aus der Anfrage, nicht aus der Uhrzeit. Menge 0, negative oder gebrochene Menge, Faktor ausserhalb des Bereichs, zu genauer Faktor, unbekannte Position, doppelte Position (§ 6 Doppelbewertung), unpassende Tierart und gemischte Katalogfassungen werfen jeweils einen Fehler statt still zu korrigieren. Arzneimittel, Fremdlabor und Wegegeld sind ausdruecklich nicht enthalten. Ohne fachliche Freigabe (clinicalReview pending) darf keine Gesamtschaetzung gezeigt werden. Gegen den echten Katalog geprueft: Position 1 mit Faktor 1 ergibt 11,26 EUR netto und 13,40 EUR brutto. 29 Tests.",
+          "reference": "src/features/costs/engine.ts; config/costs/DE.json; tests/costs/engine.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

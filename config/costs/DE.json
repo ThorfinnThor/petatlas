@@ -1,0 +1,15 @@
+{
+  "$comment": "M08-02 — Ausgangsregeln der Gebührenengine für den Markt DE. Vor der öffentlichen Aktivierung fachlich zu prüfen (M08-06); clinicalReview steuert das.",
+  "market": "DE",
+  "currency": "EUR",
+  "standardFactorMin": "1.00",
+  "standardFactorMax": "3.00",
+  "emergencyFactorMin": "2.00",
+  "emergencyFactorMax": "4.00",
+  "emergencyFeeMinor": 5000,
+  "factorPrecision": 2,
+  "baseAmountsExcludeVat": true,
+  "vatPercent": 19,
+  "specialAgreementsSupported": false,
+  "clinicalReview": "pending"
+}
