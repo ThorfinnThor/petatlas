@@ -26,3 +26,16 @@ Umgebungshinweis: Node auf dieser Maschine verifiziert die Kette von `registry.n
 
 Hinweis zur Nachvollziehbarkeit: Der Commit „M02-03: Statusartefakte…“ pflegt die Statusdateien, schließt die Aufgabe M02-03 aber **nicht** ab. M02-03 bleibt `todo`, da M02-02 noch offen ist.
 Projektpfad seit 2026-09-06 `~/Projects/pet-platform` (vorher `~/Downloads/pet-platform-implementation`).
+
+## 2026-09-06 — Sitzung 2: M01 vollständig
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M01-03 | ESLint 10 Flat Config, Prettier, Vitest 5, Playwright 1.63, `docs/TOOLCHAIN.md` | Canary-Datei mit Typ- und Lintfehlern | typecheck exit 1 (ts2322), lint exit 1 (4 Fehler); nach Entfernen beide exit 0 |
+| M01-04 | Vollständige `.gitignore`, `.env.example`, `scripts/checks/secrets.ts` | Canary-Token in `src/`, Canary-Hook-URL in `dist/` | beide gemeldet, exit 1, Fund maskiert; danach exit 0 |
+| M01-05 | `config/build.ts`, `fixtures/`, `tests/build-mode.test.ts`, `astro.config.ts` | `build:fixture` hinter totem Proxy; `build:production` | Fixture-Build exit 0 ohne Netz; production exit 1 wegen fehlender Launch-Freigabe |
+| M01-06 | `BaseLayout`, `404.astro`, Formularprobe, `tests/e2e/smoke.spec.ts` | `npx playwright test` über 3 Projekte | 18/18 bestanden; Screenshots unter `reports/screenshots/` |
+
+Zwei echte Hindernisse und ihre Lösung:
+- `@astrojs/check` akzeptiert TypeScript nur bis `<7`. Deshalb ist TypeScript auf 6.0.3 gepinnt, nicht auf die aktuelle 7er-Linie.
+- Astro 7 startet `astro preview` in erkannten Agent-Umgebungen im Hintergrund, weshalb Playwright den Server für beendet hielt. Gelöst über `ASTRO_PREVIEW_BACKGROUND=false` im `webServer`-Block.

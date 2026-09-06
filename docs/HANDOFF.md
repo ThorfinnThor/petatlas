@@ -4,11 +4,11 @@ Stand: 2026-09-06, Ende Sitzung 1.
 
 ## Tatsächlicher Zustand
 
-Projektpfad `~/Projects/pet-platform`. Git-Repository auf Branch `main` mit `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht. 9 von 120 Aufgaben erledigt: M00 vollständig, M01-01, M01-02, M02-01.
+Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht. **13 von 120 Aufgaben erledigt: M00 und M01 vollständig, M02-01.**
 
-Vorhanden: Projektvertrag (`config/launch.json`), zentrale Benennung (`config/site.ts`), Autonomierahmen (`docs/SECURITY_SCOPE.md`), Lizenzgrenzen (`licenses/README.md`), Astro-7-Scaffold mit statischem Build und eine minimale `noindex`-Startseite, Statuswerkzeug plus Schreibwerkzeug `scripts/task_update.py`.
+Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict; ESLint, Prettier, Vitest, Playwright mit gepinnten Versionen und Begründung in `docs/TOOLCHAIN.md`; Secret-Audit über Repo und `dist/`; explizite Build-Modi; BaseLayout, Startseite, 404 und technische Formularprobe mit grünem Browser-Smoke.
 
-Nicht vorhanden: Cloudflare, Domain, Lint/Test-Toolchain, Datenmodelle, Inhalte, Partnerverträge, Fachfreigaben.
+Nicht vorhanden: Cloudflare, GitHub-Actions-Workflows, Domain, Betreiberangaben, Domänenmodelle, echte Daten, Inhalte, Partnerverträge, Fachfreigaben.
 
 ## Umgebung
 
@@ -22,9 +22,16 @@ Fehlt die Datei, mit `security find-certificate -a -p /System/Library/Keychains/
 
 ## Nächster ausführbarer Schritt
 
-**M01-03 — Basisqualität installieren:** ESLint, Prettier, Vitest, Playwright konfigurieren, Versionen pinnen und in `docs/TOOLCHAIN.md` begründen. Abnahme verlangt den Nachweis, dass ein absichtlich eingeführter Typ- oder Lintfehler die Pipeline scheitern lässt.
+Zwei unabhängig ausführbare Aufgaben:
 
-Danach unabhängig möglich: M02-02, M03-01.
+- **M02-02 — Statuswerkzeug integrieren:** npm-Alias für den Statushelfer, Meilensteinfilter und JSON-Ausgabe prüfen. `npm run status` und `npm run status:validate` existieren bereits; die Abnahme verlangt einen belegten Lauf inklusive Meilensteinfilter.
+- **M03-01 — Markt- und Locale-Schemas bauen:** Beginn der Domänenmodelle. `templates/markets.example.json` ist die Vorlage; ADR-010 trennt Markt, Sprache, Währung und geografisches Ziel.
+
+Wiederkehrende Prüfkette vor jedem Commit: `npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npm run check:security`, bei UI-Änderungen zusätzlich `npx playwright test`.
+
+## Nächste externe Freigabe
+
+Cloudflare-Account und Repo-Anbindung, erstmals nötig für **M07-03**. Bis dahin ist nichts blockiert.
 
 ## Erledigte Entscheidung
 
