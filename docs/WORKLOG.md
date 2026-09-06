@@ -115,3 +115,18 @@ Zwei Befunde aus der CI, beide eigene Fehler:
 
 1. Der Metadaten-Test las `dist/build-info.json` und setzte damit einen vorher gelaufenen Build voraus. Lokal grün, in der CI rot, weil dort die Unit-Tests vor jedem Build laufen. Die Metadaten entstehen jetzt in einer exportierten Funktion ohne Dateisystemzugriff.
 2. Der Secret-Audit meldete den Testwert `AWIN_FEED_URL` im Quelltext — zu Recht, das Muster ist genau eine Zuweisung an einen bekannten Secret-Namen. Schlüssel und Wert werden jetzt zur Laufzeit zusammengesetzt, statt die Regel aufzuweichen oder eine Ausnahme einzutragen.
+
+## 2026-09-06 — Sitzung 7: M08 bis auf die fachliche Abnahme
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M08-01 | `scripts/ingest/adapters/got.ts`, ZIP-Fixture, Vergleichsstichprobe | Import gegen die amtliche XML-Fassung | 1006 Positionen, 0 unlesbare Zeilen |
+| M08-02 | `src/features/costs/engine.ts`, `config/costs/DE.json` | beide Golden Tests aus der Regelspezifikation | 6.000 Cent netto; im Notdienst 11.000 netto / 13.090 brutto |
+| M08-03 | `content-data/cost-scenarios/`, `scenarios.ts` | `npm run test:unit` | zwei Vorlagen, beide ungeprüft, keine Gesamtschätzung |
+| M08-04 | Rechneroberfläche, Snapshot, Datenchunk über das Manifest | `npm run test:e2e:features` | 20 Tests; 80,40 € regulär, 139,90 € im Notdienst |
+| M08-05 | `print.css`, Leistungsseiten je Freigabe | Build mit und ohne simulierte Freigabe | ohne Freigabe keine Seite, mit Freigabe genau eine |
+| M08-06 | `docs/reviews/costs.md` | — | **blockiert (B-002)**, keine Abnahme erfunden |
+
+Zwei Befunde beim Bauen:
+- Der erste Parserlauf lieferte „Untersuchung(auch schriftlich“ statt „Untersuchung (auch schriftlich“: der XML-Parser hatte das Leerzeichen nach `<BR/>` weggetrimmt. Aufgefallen ist es nur, weil die Erwartungswerte aus einer unabhängigen Zweitextraktion stammen.
+- Die erste Szenariovorlage verwies auf Position 9. Die ist „Mastschwein“, nicht Hund. Der Test, der jede Positions-ID gegen den echten Katalog prüft, hat das gefangen; die Vorlage nutzt jetzt Position 16 („Hund, Katze, Frettchen“).
