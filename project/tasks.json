@@ -1251,8 +1251,16 @@
         "M05-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/ingest/types.ts trennt fetch, parse, normalize, validate, diff und publish als eigene Ein- und Ausgaenge. Ein Referenzadapter gegen die synthetische Ortsfixture belegt die Schnittstelle: parse liefert quellnahe Datensaetze ohne Fachfelder, normalize erzeugt Fachdatensaetze mit stabiler Quell-ID und vollstaendiger Provenienz, validate meldet ungueltige Saetze statt sie fallenzulassen. IngestError nennt Quelle und Schritt. Ein Test liest den Adapterquelltext und belegt, dass er weder features/, src/pages noch src/components importiert - eine neue Quelle aendert also kein Feature-Modul. 10 Tests.",
+          "reference": "scripts/ingest/types.ts; scripts/ingest/adapters/synthetic-places.ts; tests/ingest/adapter-api.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
