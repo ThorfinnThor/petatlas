@@ -305,8 +305,16 @@
         "M00-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Astro 7.3.1 static + TypeScript 6.0.3 strict; npm ci in frischem Klon installiert und baut reproduzierbar; Build erzeugt genau eine HTML-Datei ohne JavaScript; astro check 0 Fehler.",
+          "reference": "package.json; package-lock.json; astro.config.mjs; .nvmrc; commit 3aed781",
+          "verified_at": "2026-09-06",
+          "command": "git clone && npm ci && npm run build && npx astro check",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -447,8 +455,16 @@
         "M00-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "project/tasks.json als alleinige Statusquelle uebernommen: 120 eindeutige IDs, 20 Meilensteine, schema_version 1, keine Konsistenzfehler. scripts/task_update.py haengt Nachweise an und ueberschreibt keine bestehenden.",
+          "reference": "project/tasks.json; scripts/task_update.py",
+          "verified_at": "2026-09-06",
+          "command": "python3 scripts/project_status.py --validate",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
