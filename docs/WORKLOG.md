@@ -81,3 +81,20 @@ Der Betreiber hat den Bezugsweg für den Gebührenkatalog festgelegt: ausschlie�
 Nachgeprüft: Download antwortet mit HTTP 200 (32.110 Byte, `application/zip`, `ETag` und `Last-Modified` vorhanden), Archiv enthält genau `BJNR140100022.xml`; `robots.txt` schließt keinen Pfad aus.
 
 B-001 ist aufgelöst und bleibt zur Nachvollziehbarkeit im Register stehen. Die verbleibende Betriebsprüfung vor dem zeitgesteuerten Abruf ist als neue Aufgabe **M17-07** angelegt — 121 Aufgaben statt 120.
+
+## 2026-09-06 — Sitzung 5: M06 vollständig, M07 bei 3/6
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M06-01…06 | Adapter-API, sicherer Fetcher, deterministische Normalisierung, Differenzprüfung mit Quarantäne, Sharding und Manifest, atomare Veröffentlichung | `npm run test:unit` | von 258 auf 354 Tests |
+| M07-01 | `.github/workflows/ci.yml` | Lauf 34051504350 auf GitHub | beide Jobs grün |
+| M07-02 | `.github/workflows/security.yml`, `docs/CI_SECURITY.md` | Security-Workflow auf GitHub | grün |
+| M07-03 | `wrangler.jsonc`, `scripts/build-headers.ts` | `wrangler deploy --dry-run` und `wrangler dev --local` mit curl | „No bindings found“; 200/404/307 wie konfiguriert |
+
+Drei Befunde, die ohne die CI nicht aufgefallen wären:
+
+1. **Ein Typfehler und 13 Zod-Deprecations waren unbemerkt geblieben**, weil ich die Ausgabe von `astro check` gekürzt gelesen habe und die Fehlerzeile über dem sichtbaren Bereich stand. `npm run typecheck` endete mit Exitcode 1, während die letzten Zeilen „0 warnings“ meldeten. Der Code nutzt jetzt die Zod-4-API (`z.url()`, `z.iso.datetime()`, `z.uuid()`).
+2. **Zwei Prüfschritte im Security-Workflow trafen sich selbst**: `grep` fand das gesuchte Muster in der eigenen Workflowdatei. Sie prüfen jetzt den Trigger am Zeilenanfang beziehungsweise unter Ausschluss der eigenen Datei.
+3. **Die Tests liefen lokal vor dem Formatlauf.** Prettier fügte in `wrangler.jsonc` ein abschließendes Komma ein, das der Test mit `JSON.parse` nicht lesen konnte — grün lokal, rot in der CI. Der Parser versteht jetzt JSONC, und der Arbeitsloop verlangt `npm run format` vor den Tests.
+
+Der Handoff-Check hat zweimal zugeschlagen, weil `docs/HANDOFF.md` nach dem Abschluss einer Aufgabe noch die erledigte nannte. Die Reihenfolge steht jetzt ausdrücklich in `docs/AUTONOMY.md`.

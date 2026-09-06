@@ -1,9 +1,9 @@
 # Projektstatus
 
-Stand: 2026-09-06, Ende Sitzung 4.
+Stand: 2026-09-06, Ende Sitzung 5.
 
-**Erledigt:** 36 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine. B-001 ist entschieden (ADR-018); die neue Aufgabe M17-07 hält die verbleibende Betriebsprüfung fest.
-**Meilensteine vollständig:** M00, M01, M02, M03, M04, M05 (je 6/6).
+**Erledigt:** 45 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine.
+**Meilensteine vollständig:** M00 bis M06 (je 6/6). M07 bei 3/6.
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 
@@ -15,14 +15,18 @@ Stand: 2026-09-06, Ende Sitzung 4.
 - Oberfläche: Route Registry, Design Tokens, Kopf- und Fußbereich, fünf Kernseiten, statische Suche ohne Backend, zugängliche Formularbausteine.
 - Quellenregister mit Publikationsklassen, Attribution aus derselben Registry, ODbL-Datenfluss, Lizenzregression.
 
-**Nicht vorhanden:** Cloudflare-Projekt, GitHub-Actions-Workflows, Import-System, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge.
+- Import- und Snapshot-System: Adapter-API, sicherer Fetcher, deterministische Normalisierung, Differenzprüfung mit Quarantäne, Sharding, Manifest, atomare Veröffentlichung.
+- CI auf GitHub: zwei Workflows ohne Secrets, Actions auf Commit-SHAs gepinnt, beide grün.
+- Cloudflare: Zugang vorhanden, Assets-only-Konfiguration gegen die echte Laufzeit geprüft.
+
+**Nicht vorhanden:** verbundenes Cloudflare-Projekt, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge.
 
 ## Zahlen der letzten Prüfungen
 
 | Prüfung | Ergebnis |
 |---|---|
-| `npm run test:unit` | 257 Tests in 15 Dateien |
-| `npx playwright test` | 156 Tests über Chromium, WebKit und mobiles Profil |
+| `npm run test:unit` | 371 Tests in 22 Dateien |
+| `npx playwright test` | 153 Tests über Chromium, WebKit und mobiles Profil |
 | `npm run lint` / `typecheck` / `format:check` | sauber |
 | `npm run check:security` | 167 Dateien, kein Fund |
 | `npm run check:licenses` | 2 Quellen, 1 freigegeben, 1 gesperrt, keine Beanstandung |
@@ -31,8 +35,8 @@ Stand: 2026-09-06, Ende Sitzung 4.
 
 ## Offene Entscheidungen des Betreibers
 
-1. **Cloudflare-Zugang.** Erstmals nötig für M07-03. Der Betreiber hat Zugang zugesagt; er ist im Projektkontext noch nicht eingerichtet.
+Keine. Cloudflare-Zugang liegt seit 2026-09-06 vor; B-001 ist entschieden.
 
-**Nächster Schritt:** M06-01 (Adapter-API). M06 und M07 bis einschließlich M07-02 sind ohne beide Entscheidungen ausführbar.
+**Nächster Schritt:** M07-04 (Cloudflare-Buildskript), dann M07-05 und M07-06.
 
 Maßgeblich ist `project/tasks.json`.
