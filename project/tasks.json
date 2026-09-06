@@ -1721,8 +1721,16 @@
         "M08-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "content-data/cost-scenarios/ enthaelt zwei einfache, klar abgegrenzte Vorlagen, beide mit clinicalReview unreviewed. src/features/costs/scenarios.ts rechnet ein Szenario durch und gibt ausdruecklich zurueck, ob die Summe als Schaetzung gezeigt werden darf: ohne Freigabe false, mit dem Hinweis an erster Stelle, dass die Zusammenstellung fachlich nicht geprueft ist. Ausschluesse des Szenarios und der Engine werden zusammengefuehrt. 13 Tests: approved ohne Pruefzeitpunkt oder ohne pruefende Person wird abgelehnt, eine doppelte Position ebenso, jede Vorlage bleibt klein und nennt Ausschluesse, und jede referenzierte Positions-ID existiert tatsaechlich im importierten Katalog. Beim Anlegen ist ein Fehler aufgefallen und behoben worden: Position 9 ist 'Mastschwein', nicht Hund - die Vorlage verweist jetzt auf Position 16 'Hund, Katze, Frettchen'.",
+          "reference": "content-data/cost-scenarios/; src/features/costs/scenarios.ts; tests/costs/scenarios.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

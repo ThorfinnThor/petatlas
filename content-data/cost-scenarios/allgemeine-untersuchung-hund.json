@@ -1,0 +1,16 @@
+{
+  "scenarioId": "allgemeine-untersuchung-hund",
+  "title": "Allgemeine Untersuchung mit Beratung",
+  "species": "dog",
+  "lines": [{ "officialItemId": "16", "quantity": 1, "factor": 1 }],
+  "exclusions": [
+    "weiterführende Diagnostik",
+    "Impfung",
+    "Arzneimittel und Verbrauchsmaterial",
+    "Fremdlabor",
+    "Wegegeld"
+  ],
+  "clinicalReview": "unreviewed",
+  "reviewedAt": null,
+  "reviewedBy": null
+}

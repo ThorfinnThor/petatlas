@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 2/6 (50 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 3/6 (51 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,7 +36,7 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M08-03 — Szenariomodell und Reviewpfad bauen.** `content-data/cost-scenarios/`. Nur einfache, klar definierte Vorlagen; Bestandteile, nicht enthaltene Kosten und Clinical-Reviewstatus speichern. Eine ungeprüfte OP-Vorlage darf nicht als vollständige Kostenschätzung veröffentlicht werden.
+**M08-04 — Rechneroberfläche integrieren.** `/de-de/tierarztkosten/`: Tierart, Positionssuche, Menge, Kontext und Faktor; Ergebnistabelle mit Netto/Brutto, Quelle, Stand und Einschränkungen. Das Feature Flag `costs` bleibt aus, bis M08-06 entschieden ist — die Seite entsteht also zunächst hinter dem Flag.
 
 Alternativ unabhängig: M09-01 (Partnervertragsschema), M10-01 (OSM-Pilot), M12-01 (Reisekontext).
 
