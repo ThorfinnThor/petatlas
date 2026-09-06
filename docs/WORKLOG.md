@@ -21,3 +21,8 @@ Datum / Aufgaben-ID / Commit / Änderung / tatsächlich ausgeführte Prüfung / 
 | M02-01 | (Statuscommit) | `scripts/task_update.py` | `python3 scripts/project_status.py --validate` | 120 Aufgaben, keine Fehler |
 
 Umgebungshinweis: Node auf dieser Maschine verifiziert die Kette von `registry.npmjs.org` nicht mit seinem eingebauten CA-Bundle. Umgehung ohne Abschwächung der TLS-Prüfung: `NODE_EXTRA_CA_CERTS` auf ein Bündel der System-Roots setzen. Erzeugen mit `security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain > .work/ca/system-roots.pem`. `.work/` ist ignoriert; `strict-ssl` bleibt aktiv.
+
+| M01-02 | 44d77ec…, Folgecommit | `docs/REPOSITORY.md`, `origin` gesetzt, `main` gepusht | `gh repo view ThorfinnThor/petatlas --json visibility,defaultBranchRef` | public, `main` |
+
+Hinweis zur Nachvollziehbarkeit: Der Commit „M02-03: Statusartefakte…“ pflegt die Statusdateien, schließt die Aufgabe M02-03 aber **nicht** ab. M02-03 bleibt `todo`, da M02-02 noch offen ist.
+Projektpfad seit 2026-09-06 `~/Projects/pet-platform` (vorher `~/Downloads/pet-platform-implementation`).
