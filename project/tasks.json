@@ -128,8 +128,16 @@
       ],
       "depends_on": [],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Baseline dokumentiert: kein Vorgängerrepo, 26 Paketdateien erhalten, Toolchain erfasst; Statuswerkzeug-Tests grün.",
+          "reference": "docs/BASELINE.md; commit 6dc3a14",
+          "verified_at": "2026-09-06",
+          "command": "python3 scripts/test_project_status.py",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -149,8 +157,16 @@
         "M00-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Startumfang aus ADR-001..016 in config/launch.json festgeschrieben: nur Markt DE aktiv, alle Freigabe-Gates false, Ausschlussliste dokumentiert.",
+          "reference": "config/launch.json; docs/DECISIONS.md Abschnitt 'Übernommener Startumfang (M00-02)'",
+          "verified_at": "2026-09-06",
+          "command": "python3 -c \"import json;json.load(open('config/launch.json'))\"",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

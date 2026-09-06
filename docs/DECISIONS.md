@@ -26,3 +26,12 @@ Stand: 2026-09-06. Diese Entscheidungen sind Vorgaben des Plans, keine behauptet
 Bezahlte Infrastruktur, Login, Newsletter-Versand, Uploads, zentrale Nutzerbewertungen, Cloud-Profil, KI-Ratgeber im Besucherpfad, proprietäre Geocoding-API, serverseitiges Affiliate-Klicktracking, internationale Live-Märkte und automatisch übernommene Behandlungs-/Reiseregeln.
 
 Wenn eine Entscheidung technisch nicht tragfähig ist, dokumentiere Messung, Alternativen und Kosten in einer neuen ADR. Bis zur Entscheidung arbeite an unabhängigen Aufgaben weiter. „Bequemer“ ist kein ausreichender Grund, das Static-first-Prinzip aufzugeben.
+
+## Übernommener Startumfang (M00-02)
+
+Die ADRs ADR-001 bis ADR-016 sind gelesen und als verbindlich übernommen. Der daraus abgeleitete Startumfang ist maschinenlesbar in `config/launch.json` festgehalten:
+
+- **Aktiver Markt:** ausschließlich `DE`. `US` und `NL` existieren als deaktivierte Konfiguration zur Prüfung der Internationalisierung, nicht als Absatzmärkte.
+- **Freigaben:** alle Gates in `config/launch.json` stehen auf `approved: false`. Kein Gate darf durch Implementierungsfortschritt automatisch auf `true` wechseln; nur die dort benannte zuständige Person trägt eine Freigabe mit Nachweis in `docs/reviews/` ein.
+- **Ausdrücklich ausgeschlossen:** die Liste `excludedFromStartScope` in `config/launch.json`. Sie entspricht ADR-006, ADR-012 und dem Abschnitt „Nicht ohne neue Entscheidung hinzufügen“ oben. Ergänzungen nur über eine neue ADR.
+- **Roadmap:** kein ungeplantes Backend und keine Zusatzprodukte. Spätere Ideen gehören nach `docs/FUTURE_SCOPE.md`, nicht in den Startumfang.

@@ -1,0 +1,38 @@
+{
+  "$comment": "M00-02: verbindlicher Startumfang. Kein Eintrag hier behauptet eine bereits erfolgte Freigabe. false bedeutet gesperrt.",
+  "planDate": "2026-09-06",
+  "workingTitle": "PetAtlas",
+  "activeMarkets": ["DE"],
+  "preparedMarkets": ["US", "NL"],
+  "publicRelease": {
+    "approved": false,
+    "approvedBy": null,
+    "approvedAt": null,
+    "note": "Erste Produktion nur nach den Launch-Gates aus docs/QUALITY_GATES.md und M18/M19."
+  },
+  "gates": {
+    "operatorImprint": { "approved": false, "owner": "Betreiber", "note": "Echte Impressums-/Kontaktangaben; keine erfundenen Rechtsangaben." },
+    "domain": { "approved": false, "owner": "Betreiber", "note": "SITE_URL; bis dahin example.invalid nur in development." },
+    "dataRights": { "approved": false, "owner": "prüfende Person", "note": "Publikationsrechte je Quelle inklusive öffentlicher JSON-Weitergabe." },
+    "costsRules": { "approved": false, "owner": "fachlich prüfende Person", "note": "GOT-Regeln, siehe M08-06." },
+    "travelRules": { "approved": false, "owner": "fachlich prüfende Person", "note": "Einreiseregeln, siehe M12-06." },
+    "insuranceAffiliate": { "approved": false, "owner": "Betreiber mit Rechtsprüfung", "note": "Kein individualisierter Tarifvergleich." },
+    "commerceAffiliate": { "approved": false, "owner": "Betreiber", "note": "Partnerverträge und erlaubte Anzeigefelder." },
+    "adsTracking": { "approved": false, "owner": "Betreiber", "note": "Ads und Marketing-Tracking bleiben aus." }
+  },
+  "excludedFromStartScope": [
+    "Laufzeitdatenbank (Supabase, Postgres, D1, KV, Firebase)",
+    "SSR, Server Actions, eigenes API-Backend für Besucher",
+    "Nutzerkonten, Login, Uploads, Newsletter-Versand",
+    "zentrale Nutzerbewertungen und nutzergenerierte Inhalte",
+    "Diagnose-, Dosierungs- oder Behandlungsengine",
+    "profilbasierte Versicherungsrangliste / individualisierter Tarifvergleich",
+    "KI-Ratgeber im Besucherpfad",
+    "proprietäre kostenpflichtige Geocoding-API",
+    "serverseitiges Affiliate-Klicktracking",
+    "internationale Live-Märkte (US, EU) als Absatzmärkte",
+    "automatisch übernommene Behandlungs- oder Reiseregeln ohne Fachfreigabe",
+    "kostenpflichtige Infrastruktur-Tarife und Domainkäufe ohne Betreiberfreigabe"
+  ],
+  "changePolicy": "Ergänzungen dieser Liste nur über eine neue ADR in docs/DECISIONS.md. Freigaben (approved=true) trägt nur die zuständige Person mit Nachweis in docs/reviews/ ein."
+}
