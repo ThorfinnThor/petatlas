@@ -37,6 +37,27 @@ Lokale Entwicklung ist durch die fehlende Domain nicht blockiert; nur `productio
 
 Weitere Secret-Namen nur bei realem Bedarf ergänzen; keine pauschale Sammlung von Zugängen. Vorzugsweise native GitHub-/Cloudflare-Verbindungen und restriktive projektbezogene Berechtigungen.
 
+## Statusregister der externen Voraussetzungen (M00-06)
+
+Stand 2026-09-06. `offen` heißt: noch nicht geliefert. Keine Zeile behauptet eine bestehende Verbindung. Es stehen ausschließlich Secret-**Namen** in diesem Dokument, niemals Werte.
+
+| # | Voraussetzung | Status | Zuständiger Entscheider | Zuerst betroffene Aufgabe | Arbeit läuft weiter an |
+|---|---|---|---|---|---|
+| 1 | GitHub-Inhaber und Repo-Name für das öffentliche Repository | offen (CLI-Login `ThorfinnThor` vorhanden, aber keine Repo-Zuweisung) | Betreiber | M01-02 | allen lokalen Aufgaben; lokale Commits laufen |
+| 2 | Cloudflare-Account und Repo-Anbindung | offen (keine Anmeldung im Projektkontext) | Betreiber | M07-03 | Build-/Konfigurationsarbeit lokal |
+| 3 | Domain und `PUBLIC_SITE_URL` | offen | Betreiber | M18-05 | development/preview mit `example.invalid` |
+| 4 | Impressum, Kontakt, echte Betreiberangaben | offen | Betreiber | M18-04 | Seitengerüst ohne Rechtsangaben |
+| 5 | Prüfung der Datenrechte je Quelle | offen | prüfende Person; bei eindeutigen offenen Quellen dokumentierte Primärprüfung | M05-02 | Adapter gegen synthetische Fixtures |
+| 6 | Waren-Affiliateprogramm (Vertrag) | offen (kein Vertrag) | Betreiber | M13-01 | generischer Adapter, Katalog ohne Live-Feed |
+| 7 | Versicherungs-Affiliate mit Rechtsprüfung | offen | Betreiber mit qualifizierter Rechtsprüfung | M09-02 | deaktivierte technische Slots |
+| 8 | Fachfreigabe Gebührenregeln (GOT) | offen | fachlich geeignete prüfende Person | M08-06 | Rechenkern und synthetische Rechentests |
+| 9 | Fachfreigabe Reiseregeln | offen | fachlich geeignete prüfende Person | M12-06 | Wizard-Logik mit fail-closed Ergebnissen |
+| 10 | Tracking-/Ads-Freigabe | offen | Betreiber | M18-06 | Layout ohne Anzeigen |
+| 11 | Secret `CLOUDFLARE_BUILD_HOOK` (GitHub-Secret) | offen | Betreiber | M17-02 | Workflow mit Dry-Run ohne Hook |
+| 12 | Secret `AWIN_FEED_URL` bzw. konkreter Partnerzugang (Cloudflare-Build-Secret) | offen | Betreiber | M13-02 | Fixture-Feed lokal |
+
+**Wirkung auf die laufende Arbeit:** keine dieser Voraussetzungen blockiert derzeit eine ausführbare Aufgabe. Erst wenn eine der genannten Aufgaben tatsächlich an der Reihe ist, wird ausschließlich diese Aufgabe auf `blocked` gesetzt und in `docs/BLOCKERS.md` mit Ursache, benötigter Handlung und Zuständigem eingetragen. Bis dahin gibt es keinen eingetragenen Blocker.
+
 ## Erster Live-Release
 
 Freigabe muss das tatsächlich aktive Feature-Set nennen. Ein redaktioneller Start ohne Versicherungs- oder Warenpartner ist möglich, sofern die verbleibenden rechtlichen/fachlichen Anforderungen erfüllt sind. Er heißt nicht monetarisierter Start.

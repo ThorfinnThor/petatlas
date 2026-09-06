@@ -275,8 +275,14 @@
         "M00-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Zwoelf externe Voraussetzungen mit Status, Entscheider, zuerst betroffener Aufgabe und unabhaengiger Folgearbeit erfasst; nur Secret-Namen. Kein Blocker eingetragen, lokale Entwicklung laeuft.",
+          "reference": "docs/EXTERNAL_SETUP.md Statusregister; docs/BLOCKERS.md",
+          "verified_at": "2026-09-06"
+        }
+      ],
       "blocker": null,
       "notes": []
     },
