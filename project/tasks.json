@@ -1349,8 +1349,16 @@
         "M06-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/ingest/diff.ts unterscheidet unchanged, changed, suspicious und breaking. Verdaechtig sind: leerer Feed (auch ohne Vorgaenger), Rueckgang der Datensatzzahl um mehr als 20 Prozent bei mindestens 20 Datensaetzen, und eine neue Fassung der Quelle. Strukturbrechend sind fehlende Felder. scripts/ingest/quarantine.ts legt solche Staende samt Bericht beiseite. 14 Tests, Kernnachweis: ein leerer Feed ueberschreibt einen gueltigen Snapshot nicht - die Datei behaelt ihren alten Inhalt, der abgelehnte Stand landet mit Bericht in der Quarantaene. Dasselbe gilt fuer einen strukturbrechenden Stand. Bei unveraendertem Inhalt wird gar nicht geschrieben.",
+          "reference": "scripts/ingest/diff.ts; scripts/ingest/quarantine.ts; tests/ingest/diff-quarantine.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
