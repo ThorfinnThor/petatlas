@@ -557,8 +557,16 @@
         "M02-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Rollen der Statusdateien festgelegt: tasks.json ist maßgeblich, STATUS/WORKLOG/BLOCKERS/HANDOFF sind Ansichten. Beispieluebergang an M02-02 tatsaechlich durchlaufen: todo -> in_progress (current_task gesetzt, in_progress=1) -> done (Nachweis eingetragen, current_task null, Zaehler erhoeht).",
+          "reference": "docs/STATUS.md Abschnitt 'Rollen der Statusdateien'; docs/WORKLOG.md",
+          "verified_at": "2026-09-06",
+          "command": "npm run status; npm run status:json",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -580,8 +588,16 @@
         "M02-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Automatische Pruefung deckt jetzt Abhaengigkeiten, vollstaendige Nachweisfelder bei done, begruendete Blocker, deferred-Begruendung, hoechstens eine in_progress-Hauptaufgabe und die Konsistenz von current_task ab; --validate beendet sich bei Verstoss mit Exitcode ungleich 0. Das Schreibwerkzeug verweigert done ohne Nachweis und blocked ohne Grund und haengt Nachweise an. 22 Tests statt vorher 10, alle gruen.",
+          "reference": "scripts/project_status.py validate(); scripts/task_update.py; scripts/test_project_status.py",
+          "verified_at": "2026-09-06",
+          "command": "python3 scripts/test_project_status.py",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

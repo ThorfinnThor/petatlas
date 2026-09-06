@@ -23,4 +23,18 @@ Stand: 2026-09-06, Ende Sitzung 2.
 
 **Nächste externe Freigabe:** Cloudflare-Account und Repo-Anbindung, erstmals nötig für M07-03.
 
+## Rollen der Statusdateien (M02-03)
+
+`project/tasks.json` ist die einzige maßgebliche Quelle. Die folgenden Dateien sind knappe menschliche Ansichten darauf und dürfen ihr nie widersprechen.
+
+| Datei | Inhalt | Aktualisierung |
+|---|---|---|
+| `project/tasks.json` | Status, Nachweise, Blocker, Abhängigkeiten je Aufgabe | nur über `scripts/task_update.py` |
+| `docs/STATUS.md` | Momentaufnahme: Zahlen, letzte Prüfungen, nächster Schritt | bei jedem Checkpoint |
+| `docs/WORKLOG.md` | Chronologie: Aufgabe, Änderung, ausgeführte Prüfung, Ergebnis | je abgeschlossener Aufgabe |
+| `docs/BLOCKERS.md` | ausschließlich tatsächlich blockierte Aufgaben | beim Eintreten und Auflösen |
+| `docs/HANDOFF.md` | Übergabe an eine frische Sitzung: Zustand, Umgebung, nächster Schritt | bei jedem Checkpoint |
+
+Widerspricht eine Ansicht dem Manifest, gilt das Manifest und die Ansicht wird korrigiert — nie umgekehrt.
+
 Maßgeblich ist `project/tasks.json`.

@@ -39,3 +39,7 @@ Projektpfad seit 2026-09-06 `~/Projects/pet-platform` (vorher `~/Downloads/pet-p
 Zwei echte Hindernisse und ihre Lösung:
 - `@astrojs/check` akzeptiert TypeScript nur bis `<7`. Deshalb ist TypeScript auf 6.0.3 gepinnt, nicht auf die aktuelle 7er-Linie.
 - Astro 7 startet `astro preview` in erkannten Agent-Umgebungen im Hintergrund, weshalb Playwright den Server für beendet hielt. Gelöst über `ASTRO_PREVIEW_BACKGROUND=false` im `webServer`-Block.
+
+| M02-02 | npm-Aliase `status`, `status:json`, `status:validate`, Meilensteinfilter | `npm run status -- --milestone M08`, `npm run status:json`, `python3 scripts/test_project_status.py` | alle exit 0; 10 Tests OK |
+
+Beispielübergang für M02-03, tatsächlich durchlaufen an M02-02: `todo` → `in_progress` (`npm run status` zeigte „Aktuell: M02-02“, `in_progress: 1`) → `done` (`Erledigt: 14/120`, `current_task: null`, Nachweis im Manifest). `implementation_state` wechselte dabei von `not_started` auf `in_progress`, weil er jetzt abgeleitet wird.
