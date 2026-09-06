@@ -1088,8 +1088,16 @@
         "M05-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "src/domain/publication-policy.ts trennt public_open, public_display, restricted_raw und local_user. Die Klasse begrenzt zusaetzlich zu den Rechten, und die Klasse wird zuerst geprueft: ein Rohfeed bleibt gesperrt, selbst wenn ein Rechteeintrag ihn freigaebe. 15 Tests, Kernfall belegt: ein kommerziell nutzbarer, aber nicht weiterverteilbarer Feed ist fuer Repository und oeffentliches JSON gesperrt und bleibt nur fuer die Anzeige im HTML offen - auch in der offensten Klasse.",
+          "reference": "src/domain/publication-policy.ts; tests/rights.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
