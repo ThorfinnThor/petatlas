@@ -1,16 +1,21 @@
 ---
 /**
- * M01-06 — Technische Formularprobe.
+ * M04-05/M01-06 — Formularprobe.
  *
- * Zweck ist ausschließlich der Browser-Smoke: Label-Zuordnung, sichtbarer
- * Fokus, Fehlermeldung und Ergebnisansage für Screenreader. Es werden keine
- * fachlichen Daten angezeigt und nichts an einen Server gesendet.
+ * Zeigt die wiederverwendbaren Formularbausteine im echten Build:
+ * Label-Zuordnung, Pflichtfeldkennzeichnung, Fehlerzusammenfassung mit
+ * Fokusführung und die Ergebnisansage für Screenreader.
  *
- * Gerechnet wird die Einheitenumrechnung aus ARCHITECTURE: Gewichte werden
- * intern in Gramm gehalten. Das ist echte Projektlogik, keine erfundene
- * Beispielrechnung.
+ * Gerechnet wird die Einheitenumrechnung aus der Architektur (Gewichte
+ * intern in Gramm). Das ist echte Projektlogik, keine erfundene
+ * Beispielrechnung. Es werden keine Daten übertragen.
+ *
+ * Wird in production nicht ausgeliefert.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ErrorSummary from '../../components/forms/ErrorSummary.astro';
+import Field from '../../components/forms/Field.astro';
+import Notice from '../../components/Notice.astro';
 import { resolveBuildConfig } from '../../../config/build.ts';
 
 const build = resolveBuildConfig();
@@ -20,68 +25,54 @@ const isProduction = build.mode === 'production';
 <BaseLayout title={isProduction ? 'Seite nicht gefunden' : 'Formularprobe'} neverIndex>
   {
     isProduction ? (
-      <main>
+      <>
         <h1>Seite nicht gefunden</h1>
         <p>Diese technische Testseite wird in production nicht ausgeliefert.</p>
-        <p>
-          <a href="/">Zur Startseite</a>
-        </p>
-      </main>
+      </>
     ) : (
-      <main>
+      <>
         <h1>Formularprobe</h1>
-        <p class="hinweis">
-          Technische Testseite für den Browser-Smoke. Kein fachlicher Inhalt, keine
-          Datenübertragung, nicht indexierbar.
-        </p>
+        <Notice variante="hinweis">
+          <p>
+            Technische Testseite für den Browser-Smoke. Kein fachlicher Inhalt, keine
+            Datenübertragung, nicht indexierbar.
+          </p>
+        </Notice>
 
-        <form id="probe" novalidate>
-          <label for="kilogramm">Gewicht in Kilogramm</label>
-          <input
+        <ErrorSummary id="probe-fehler" />
+
+        <form id="probe" data-validierung data-fehlerliste="probe-fehler" novalidate>
+          <Field
             id="kilogramm"
             name="kilogramm"
-            type="text"
+            label="Gewicht in Kilogramm"
+            hilfe="Dezimaltrennzeichen Komma oder Punkt, größer als 0."
+            fehlertext="Bitte eine Zahl größer als 0 eingeben."
+            regel="zahl-positiv"
             inputmode="decimal"
-            autocomplete="off"
-            aria-describedby="kilogramm-hilfe"
-            required
+            pflicht
           />
-          <p id="kilogramm-hilfe">Dezimaltrennzeichen Komma oder Punkt, größer als 0.</p>
+          <Field
+            id="faktor"
+            name="faktor"
+            label="Faktor"
+            hilfe="Zwischen 1 und 4. Leer lassen bedeutet Faktor 1."
+            fehlertext="Der Faktor muss zwischen 1 und 4 liegen."
+            regel="zahl-bereich"
+            inputmode="decimal"
+            min={1}
+            max={4}
+          />
           <p>
             <button type="submit">In Gramm umrechnen</button>
           </p>
         </form>
 
         <p id="ergebnis" data-testid="ergebnis" role="status" aria-live="polite" />
-      </main>
+      </>
     )
   }
 </BaseLayout>
 
-<script>
-  const form = document.querySelector<HTMLFormElement>('#probe');
-  const feld = document.querySelector<HTMLInputElement>('#kilogramm');
-  const ausgabe = document.querySelector<HTMLParagraphElement>('#ergebnis');
-
-  if (form && feld && ausgabe) {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const roh = feld.value.trim().replace(',', '.');
-      const kilogramm = Number(roh);
-
-      // Unbekannt ist nicht null: eine leere oder ungültige Eingabe ergibt
-      // eine Fehlermeldung, kein Ergebnis von 0 Gramm.
-      if (roh === '' || !Number.isFinite(kilogramm) || kilogramm <= 0) {
-        feld.setAttribute('aria-invalid', 'true');
-        ausgabe.classList.add('fehler');
-        ausgabe.textContent = 'Bitte eine Zahl größer als 0 eingeben.';
-        feld.focus();
-        return;
-      }
-
-      feld.removeAttribute('aria-invalid');
-      ausgabe.classList.remove('fehler');
-      ausgabe.textContent = `${Math.round(kilogramm * 1000)} Gramm`;
-    });
-  }
-</script>
+<script type="module" src="/formular.js"></script>
+<script type="module" src="/formularprobe.js"></script>

@@ -1,0 +1,116 @@
+---
+/**
+ * M04-05 — Ein Formularfeld mit Label, Hilfetext und Fehlermeldung.
+ *
+ * Die Zuordnung ist programmatisch, nicht nur optisch: `label for`,
+ * `aria-describedby` auf Hilfetext und Fehlermeldung, `aria-invalid` im
+ * Fehlerfall. Ein Screenreader liest damit dieselbe Information, die ein
+ * sehender Mensch sieht.
+ */
+export type Regel = 'pflicht' | 'zahl-positiv' | 'zahl-bereich';
+
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  typ?: 'text' | 'search' | 'number';
+  hilfe?: string;
+  /** Fehlermeldung, die bei Regelverstoß angezeigt wird. */
+  fehlertext: string;
+  regel: Regel;
+  pflicht?: boolean;
+  min?: number;
+  max?: number;
+  inputmode?: 'text' | 'decimal' | 'numeric';
+}
+
+const {
+  id,
+  name,
+  label,
+  typ = 'text',
+  hilfe,
+  fehlertext,
+  regel,
+  pflicht = false,
+  min,
+  max,
+  inputmode,
+} = Astro.props;
+
+const hilfeId = `${id}-hilfe`;
+const fehlerId = `${id}-fehler`;
+const beschriebenVon = [hilfe ? hilfeId : null, fehlerId].filter(Boolean).join(' ');
+---
+
+<div class="feld">
+  <label for={id}>
+    {label}{pflicht && <span aria-hidden="true"> *</span>}
+    {pflicht && <span class="feld__pflicht"> (Pflichtfeld)</span>}
+  </label>
+  {
+    hilfe && (
+      <p id={hilfeId} class="feld__hilfe">
+        {hilfe}
+      </p>
+    )
+  }
+  <input
+    id={id}
+    name={name}
+    type={typ}
+    inputmode={inputmode}
+    autocomplete="off"
+    aria-describedby={beschriebenVon}
+    required={pflicht || undefined}
+    data-regel={regel}
+    data-fehlertext={fehlertext}
+    data-label={label}
+    data-min={min}
+    data-max={max}
+  />
+  <p id={fehlerId} class="feld__fehler" hidden></p>
+</div>
+
+<style>
+  .feld {
+    margin-block: var(--abstand-4);
+  }
+
+  .feld label {
+    display: block;
+    font-weight: 600;
+  }
+
+  .feld__pflicht {
+    font-weight: 400;
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
+  .feld__hilfe {
+    margin: var(--abstand-1) 0;
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
+  .feld input {
+    width: 100%;
+    max-width: 20rem;
+    padding: var(--abstand-2);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    background: var(--farbe-grund);
+  }
+
+  .feld input[aria-invalid='true'] {
+    border-color: var(--farbe-fehler);
+    border-width: 2px;
+  }
+
+  .feld__fehler {
+    margin: var(--abstand-1) 0 0;
+    color: var(--farbe-fehler);
+    font-weight: 600;
+  }
+</style>

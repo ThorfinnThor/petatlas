@@ -57,7 +57,12 @@ test.describe('Formularprobe', () => {
     await page.getByLabel('Gewicht in Kilogramm').fill('abc');
     await page.getByRole('button', { name: 'In Gramm umrechnen' }).click();
 
-    await expect(page.getByTestId('ergebnis')).toHaveText('Bitte eine Zahl größer als 0 eingeben.');
+    // Seit M04-05 steht die Meldung am Feld und in der Fehlerzusammenfassung,
+    // nicht mehr im Ergebnisfeld. Das Ergebnisfeld bleibt leer.
+    await expect(page.locator('#kilogramm-fehler')).toHaveText(
+      'Bitte eine Zahl größer als 0 eingeben.',
+    );
+    await expect(page.getByTestId('ergebnis')).toBeEmpty();
     await expect(page.getByLabel('Gewicht in Kilogramm')).toHaveAttribute('aria-invalid', 'true');
   });
 

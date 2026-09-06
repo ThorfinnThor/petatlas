@@ -997,8 +997,16 @@
         "M04-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Wiederverwendbare Formularbausteine: Field (Label, Hilfetext, Fehlertext, Pflichtkennzeichnung auch ohne Farbe, aria-describedby und aria-invalid) und ErrorSummary (role=alert, tabindex=-1, verlinkte Eintraege). Die Validierung liegt deklarativ in public/formular.js und arbeitet ueber data-regel; Felder kennen ihre Pruefung nicht selbst. 14 E2E-Tests: leeres Pflichtfeld erzeugt Meldung statt Ergebnis, die Zusammenfassung bekommt den Fokus und ihr Link springt ins Feld, ein alter Wert bleibt nach einem Fehler nicht stehen, Ausfuellen und Absenden gelingen nur mit der Tastatur, jedes fokussierbare Element hat sichtbaren Fokus. 126 E2E-Tests gruen. Eine aeltere Smoke-Erwartung wurde angepasst, weil die Fehlermeldung jetzt am Feld statt im Ergebnisfeld steht.",
+          "reference": "src/components/forms/; public/formular.js; tests/e2e/forms.spec.ts",
+          "verified_at": "2026-09-06",
+          "command": "npx playwright test",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
