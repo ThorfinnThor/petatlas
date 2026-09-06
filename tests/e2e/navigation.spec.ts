@@ -78,7 +78,9 @@ test('Impressum erfindet keine Betreiberangaben', async ({ page }) => {
 
 test('Quellen- und Datenstandseite benennen den leeren Stand', async ({ page }) => {
   await page.goto('/de-de/quellen/');
-  await expect(page.getByText('Noch keine Quelle im Einsatz')).toBeVisible();
+  // Seit M05-03 kommt die Liste aus der Registry; der leere Stand heißt jetzt
+  // „noch keine Quelle freigegeben“.
+  await expect(page.getByText('Noch keine Quelle freigegeben')).toBeVisible();
 
   await page.goto('/de-de/datenstand/');
   await expect(page.getByText('Noch kein Datensatz veröffentlicht')).toBeVisible();

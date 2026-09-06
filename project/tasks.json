@@ -1120,8 +1120,16 @@
         "M05-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Quellen- und Lizenzhinweise entstehen aus config/sources/. src/components/Attribution.astro gibt den Hinweis je Quelle und Ausgabeform aus und zeigt bei fehlender Freigabe keine Daten, sondern die Feststellung, dass nichts angezeigt wird. /de-de/quellen/ listet beide Quellen mit Distribution, geltenden Bedingungen, Abdeckung, Rechtestand, Attributions- und Share-Alike-Pflicht. 4 E2E-Tests, darunter einer, der belegt, dass die Seite keine Freigabe behauptet, die es nicht gibt. licenses/README.md verweist auf die Erzeugung. 153 E2E-Tests gruen.",
+          "reference": "src/components/Attribution.astro; src/components/pages/Sources.astro; licenses/README.md; tests/e2e/sources.spec.ts",
+          "verified_at": "2026-09-06",
+          "command": "npx playwright test",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

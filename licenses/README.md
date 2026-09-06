@@ -38,3 +38,13 @@ Fremde Lizenztexte werden nur im erlaubten Umfang aus verifizierten Primärquell
 ## Kosten
 
 Keine kostenpflichtigen Tarife, keine Domainbestellung, keine Zusatzabonnements ohne ausdrückliche Freigabe des Betreibers (`docs/SECURITY_SCOPE.md`). Der Startumfang ist so entworfen, dass er auf kostenlosen Stufen von GitHub und Cloudflare lauffähig bleibt; das ist eine Entwurfsabsicht, keine zugesicherte Kostengarantie.
+
+## Wo die Hinweise erzeugt werden (M05-03)
+
+Quellen- und Lizenzhinweise auf der Website entstehen aus `config/sources/`, nicht aus einem separat gepflegten Text. Damit kann ein Hinweis nicht von der tatsächlichen Herkunft der Daten abweichen.
+
+- `src/components/Attribution.astro` gibt den Hinweis für **eine** Quelle und **eine** Ausgabeform aus. Ist die Quelle für diese Ausgabeform nicht freigegeben, erscheint kein Datenhinweis, sondern die Feststellung, dass nichts angezeigt wird.
+- `/de-de/quellen/` listet alle erfassten Quellen mit Distribution, geltenden Bedingungen, Abdeckung, Rechtestand und Attributionspflicht. Ungeprüfte Quellen bleiben in der Liste und werden als ungeprüft ausgewiesen.
+- Diese Datei bleibt der Ort für die **Grenzen** je Datenklasse. Die Website zeigt den Stand; das Repository trägt die Begründung.
+
+Die Attribution einer Quelle mit `shareAlike: true` weist zusätzlich auf die Weitergabepflicht hin. Der tatsächliche Datenfluss, aus dem sich diese Pflicht ergibt, wird in `docs/ODBL_DATAFLOW.md` beschrieben (M05-05).

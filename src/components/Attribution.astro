@@ -1,0 +1,61 @@
+---
+/**
+ * M05-03 — Quellen- und Lizenzhinweis.
+ *
+ * Der Hinweis kommt aus derselben Registry, aus der auch die Daten kommen.
+ * Damit kann er nicht von der tatsächlichen Herkunft abweichen.
+ *
+ * Ist die Attribution Pflicht und der Hinweis aus irgendeinem Grund nicht
+ * erzeugbar, wird nichts angezeigt und stattdessen im Build gewarnt — eine
+ * Ausgabe ohne Pflichthinweis wäre der schlimmere Fall.
+ */
+import { requireSource } from '../domain/source-registry.ts';
+import { mayPublish } from '../domain/rights.ts';
+
+interface Props {
+  sourceId: string;
+  /** Ausgabeform, für die der Hinweis gilt. */
+  channel?: 'websiteDisplay' | 'publicJsonDelivery' | 'images';
+}
+
+const { sourceId, channel = 'websiteDisplay' } = Astro.props;
+
+const quelle = requireSource(sourceId);
+const entscheidung = mayPublish(quelle.rights, channel);
+---
+
+{
+  entscheidung.allowed ? (
+    <p class="attribution">
+      Quelle: <a href={quelle.distributionUrl}>{quelle.resourceName}</a> ({quelle.publisher})
+      {quelle.rights.licenseId !== null && (
+        <>
+          {' · Lizenz: '}
+          {quelle.rights.licenseUrl !== null ? (
+            <a href={quelle.rights.licenseUrl}>{quelle.rights.licenseId}</a>
+          ) : (
+            quelle.rights.licenseId
+          )}
+        </>
+      )}
+      {quelle.rights.shareAlike && ' · Share-Alike-Pflicht beachten'}
+    </p>
+  ) : (
+    <p class="attribution attribution--gesperrt">
+      Diese Quelle ist für die Ausgabeform „{channel}“ nicht freigegeben ({quelle.rights.status}).
+      Es werden keine Daten aus ihr angezeigt.
+    </p>
+  )
+}
+
+<style>
+  .attribution {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+    margin-block: var(--abstand-2);
+  }
+
+  .attribution--gesperrt {
+    color: var(--farbe-fehler);
+  }
+</style>

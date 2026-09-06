@@ -1,30 +1,156 @@
 ---
 /**
- * M04-03 — Quellenseite.
+ * M05-03 — Quellenseite.
  *
- * Zeigt das Quellenregister. Solange keine Quelle geprüft ist, sagt die Seite
- * genau das. Das Register selbst entsteht in M05.
+ * Die Liste kommt aus `config/sources/`, nicht aus einem separat gepflegten
+ * Text. Eine Quelle, die noch nicht geprüft ist, steht als ungeprüft da —
+ * sie verschwindet nicht und wird nicht beschönigt.
  */
+import { allSources, pendingSources, verifiedSources } from '../../domain/source-registry.ts';
 import Notice from '../Notice.astro';
+
+const quellen = allSources();
+const geprueft = verifiedSources();
+const offen = pendingSources();
+
+const statusText: Record<string, string> = {
+  pending: 'Rechte noch nicht geprüft',
+  verified: 'Rechte geprüft und bestätigt',
+  rejected: 'Nutzung abgelehnt',
+  expired: 'Freigabe abgelaufen',
+};
 ---
 
 <h1>Quellen</h1>
 <p>
-  Jede fachliche Angabe auf dieser Website stammt aus einer benannten Quelle. Diese Seite führt die
-  verwendeten Quellen mit Lizenz, Abrufzeitpunkt und Prüfstand auf.
+  Jede fachliche Angabe auf dieser Website stammt aus einer benannten Quelle. Diese Liste kommt aus
+  derselben Konfiguration, aus der auch die Daten geladen werden.
 </p>
 
-<Notice variante="hinweis" titel="Noch keine Quelle im Einsatz">
-  <p>
-    Es werden bisher keine fachlichen Daten ausgeliefert. Sobald eine Quelle eingebunden ist, stehen
-    hier ihre Lizenz, ihr Abrufzeitpunkt und der Stand ihrer Rechteprüfung.
-  </p>
-</Notice>
+{
+  geprueft.length === 0 && (
+    <Notice variante="hinweis" titel="Noch keine Quelle freigegeben">
+      <p>
+        Es ist bisher keine Quelle geprüft, und es werden keine fachlichen Daten ausgeliefert. Die
+        folgenden Einträge sind Kandidaten: ihre Bedingungen sind erfasst, ihre Rechte aber noch
+        nicht bestätigt.
+      </p>
+    </Notice>
+  )
+}
 
-<h2>Was hier stehen wird</h2>
-<ul>
-  <li>Name und Betreiber der Quelle sowie die genaue verwendete Distribution</li>
-  <li>Lizenz und, wo nötig, die vorgeschriebene Namensnennung</li>
-  <li>Abrufzeitpunkt und Stand der Daten</li>
-  <li>Für welche Ausgabeform die Rechte geprüft sind</li>
+<h2>Erfasste Quellen ({quellen.length})</h2>
+<ul class="quellen">
+  {
+    quellen.map((quelle) => (
+      <li>
+        <h3>{quelle.resourceName}</h3>
+        <dl>
+          <dt>Anbieter</dt>
+          <dd>{quelle.publisher}</dd>
+          <dt>Rolle im Projekt</dt>
+          <dd>{quelle.role}</dd>
+          <dt>Distribution</dt>
+          <dd>
+            <a href={quelle.distributionUrl}>{quelle.distributionUrl}</a> ({quelle.format})
+          </dd>
+          <dt>Geltende Bedingungen</dt>
+          <dd>
+            <a href={quelle.primaryTermsUrl}>{quelle.primaryTermsUrl}</a>
+          </dd>
+          <dt>Abdeckung</dt>
+          <dd>
+            {quelle.coverage.spatial}, {quelle.coverage.temporal}, Aktualisierung:{' '}
+            {quelle.updateCadence}
+          </dd>
+          <dt>Rechtestand</dt>
+          <dd>
+            {statusText[quelle.rights.status] ?? quelle.rights.status}
+            {quelle.rights.licenseId !== null && ` · Lizenz: ${quelle.rights.licenseId}`}
+            {quelle.rights.checkedAt !== null &&
+              ` · geprüft am ${quelle.rights.checkedAt.slice(0, 10)}`}
+          </dd>
+          <dt>Attribution</dt>
+          <dd>{quelle.rights.attributionRequired ? 'verpflichtend' : 'nicht verpflichtend'}</dd>
+          {quelle.rights.shareAlike && (
+            <>
+              <dt>Share-Alike</dt>
+              <dd>ja — abgeleitete Datenbanken können weitergabepflichtig sein</dd>
+            </>
+          )}
+        </dl>
+        {quelle.notes.length > 0 && (
+          <ul class="quellen__notizen">
+            {quelle.notes.map((notiz) => (
+              <li>{notiz}</li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ))
+  }
 </ul>
+
+<p>
+  {offen.length} von {quellen.length} Quellen sind noch ungeprüft. Eine ungeprüfte Quelle darf weder im
+  HTML noch als Datei ausgegeben werden. Die Lizenzgrenzen je Datenklasse stehen in
+  <code>licenses/README.md</code> im Repository.
+</p>
+
+<style>
+  .quellen {
+    list-style: none;
+    padding: 0;
+  }
+
+  .quellen > li {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-4);
+    margin-block: var(--abstand-4);
+  }
+
+  .quellen h3 {
+    margin-top: 0;
+    font-size: var(--schrift-normal);
+  }
+
+  .quellen dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--abstand-1);
+  }
+
+  .quellen dt {
+    font-weight: 600;
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
+  .quellen dd {
+    margin: 0 0 var(--abstand-2);
+    overflow-wrap: anywhere;
+  }
+
+  .quellen__notizen {
+    margin: var(--abstand-2) 0 0;
+    padding-inline-start: var(--abstand-4);
+    font-size: var(--schrift-klein);
+    color: var(--farbe-text-leise);
+  }
+
+  @media (min-width: 32rem) {
+    .quellen dl {
+      grid-template-columns: minmax(9rem, auto) 1fr;
+    }
+
+    .quellen dt {
+      grid-column: 1;
+    }
+
+    .quellen dd {
+      grid-column: 2;
+    }
+  }
+</style>
