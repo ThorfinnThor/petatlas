@@ -10,7 +10,7 @@ Festgelegt in M02-05. Ergänzt den Kurzloop in `CLAUDE.md` um das Verhalten im F
 4. **Abnahme festlegen.** Vor der Implementierung notieren, welcher Befehl welches Ergebnis liefern muss. Ein Kriterium, das man erst nach dem Ergebnis formuliert, ist kein Kriterium.
 5. **Implementieren.**
 6. **Prüfen.** Die Prüfkette tatsächlich ausführen: `npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npm run check:security`, bei UI-Änderungen zusätzlich `npx playwright test`.
-7. **Nachweisen.** `scripts/task_update.py` mit Beschreibung, Referenz, Datum und dem tatsächlich gelaufenen Befehl. Kein `done` ohne Nachweis.
+7. **Nachweisen.** `scripts/task_update.py` mit Beschreibung, Referenz, Datum und dem tatsächlich gelaufenen Befehl. Kein `done` ohne Nachweis. **Vorher** `docs/HANDOFF.md` auf die nächste Aufgabe fortschreiben: `npm run check:handoff` läuft in der CI und schlägt sonst fehl.
 8. **Committen.** Kleiner Commit mit Aufgaben-ID. Keine Secrets, keine Rohfeeds, keine Buildreste.
 9. **Weiter.** Nächste unabhängige ausführbare Aufgabe, ohne Rückfrage zu bereits in ADRs entschiedenen Punkten.
 
