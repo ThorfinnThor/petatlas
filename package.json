@@ -11,6 +11,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:fixture": "BUILD_MODE=development USE_FIXTURES=true astro build",
+    "build:production": "BUILD_MODE=production astro build",
     "preview": "astro preview",
     "lint": "eslint .",
     "typecheck": "astro check",

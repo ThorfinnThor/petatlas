@@ -435,8 +435,16 @@
         "M01-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "development/preview/production als explizite Modi in config/build.ts; fehlende Variable faellt auf development mit Fixtures, sichtbarem Testdatenhinweis und noindex zurueck. Fixture-Build laeuft ohne Netz (Proxy auf toten Port, exit 0). production bricht ab, solange launch.json publicRelease.approved=false ist, und lehnt USE_FIXTURES ab. 33 Unit-Tests gruen.",
+          "reference": "config/build.ts; fixtures/; tests/build-mode.test.ts; astro.config.ts; src/pages/index.astro",
+          "verified_at": "2026-09-06",
+          "command": "npm run build:fixture (offline) und npm run build:production",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

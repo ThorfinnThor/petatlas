@@ -1,0 +1,27 @@
+{
+  "synthetic": true,
+  "note": "SYNTHETISCH — erfundene Orte zur Entwicklung. Keine echten Praxen, keine echten Adressen.",
+  "marketId": "DE",
+  "places": [
+    {
+      "id": "synthetic-de-0001",
+      "name": "Beispielpraxis Nord (synthetisch)",
+      "city": "Musterstadt",
+      "postalCode": "00001",
+      "latitude": 52.0,
+      "longitude": 13.0,
+      "phone": null,
+      "openingHours": null
+    },
+    {
+      "id": "synthetic-de-0002",
+      "name": "Beispielklinik Süd (synthetisch)",
+      "city": "Musterstadt",
+      "postalCode": "00002",
+      "latitude": 48.0,
+      "longitude": 11.0,
+      "phone": null,
+      "openingHours": null
+    }
+  ]
+}
