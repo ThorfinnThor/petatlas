@@ -1183,8 +1183,14 @@
         "M05-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "docs/ODBL_DATAFLOW.md beschreibt den tatsaechlichen Fluss in acht Schritten und ordnet jeden davon ein: Filtern, Normalisieren, Entdoppeln und Sharden erzeugen abgeleitete Datenbanken, die oeffentliche JSON-Ausgabe ist deren oeffentliche Verbreitung, die HTML-Seite ist ein Produced Work. Ausdruecklich festgehalten: getrennte Dateien und eigene IDs befreien Joins nicht von der Share-Alike-Pflicht; die place-ID bleibt deshalb an die Quell-ID gebunden. licenses/ODbL-notice.md haelt den Pflichthinweis fuer Anzeige und Weitergabe fest und grenzt Bilder und Kartenkacheln aus.",
+          "reference": "docs/ODBL_DATAFLOW.md; licenses/ODbL-notice.md",
+          "verified_at": "2026-09-06"
+        }
+      ],
       "blocker": null,
       "notes": []
     },
