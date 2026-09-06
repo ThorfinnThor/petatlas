@@ -1,6 +1,6 @@
 # Handoff
 
-Stand: 2026-09-06, Sitzung 3.
+Stand: 2026-09-06, Sitzung 4.
 
 Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur. Reihenfolge: `CLAUDE.md`, dieses Dokument, `npm run status`, dann der betroffene Abschnitt von `docs/MILESTONES.md`.
 
@@ -8,11 +8,11 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00, M01 und M02 vollständig (18 von 120 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M05 vollständig (36 von 120 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
-Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict; ESLint, Prettier, Vitest, Playwright mit gepinnten Versionen; Secret-Audit über Repo und `dist/`; explizite Build-Modi mit gesperrtem `production`; BaseLayout, Startseite, 404 und technische Formularprobe mit grünem Browser-Smoke; Statuswerkzeug mit Schreibwerkzeug und Konsistenzprüfung.
+Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
-Nicht vorhanden: Cloudflare, GitHub-Actions-Workflows, Domain, Betreiberangaben, Domänenmodelle, echte Daten, Inhalte, Partnerverträge, Fachfreigaben.
+Nicht vorhanden: Cloudflare, GitHub-Actions-Workflows, Import-System, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge, Fachfreigaben.
 
 ## Umgebung
 
@@ -34,7 +34,13 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M03-01 — Markt- und Locale-Schemas bauen.** `src/domain/market.ts`, `config/markets/`, `tests/markets.test.ts`. Markt, Sprache, Währung, Zeitzone und Reiseziel sind getrennte Konzepte (ADR-010). Abnahme: ein DE-Nutzer mit Reiseziel IT bleibt im Markt DE, und es wird keine US-Seite erzeugt. Vorlage: `templates/markets.example.json`.
+**M06-01 — Adapter-API implementieren.** Beginn des generischen Import- und Snapshot-Systems. M06 und M07-01/M07-02 laufen ohne offene Entscheidung.
+
+Prüfkette vor jedem Commit: `npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npm run check:security && npm run check:licenses && npm run check:handoff`, bei UI-Änderungen zusätzlich `npx playwright test`.
+
+## Offene Entscheidungen des Betreibers
+
+- **B-001 — Bezugsweg für den Gebührenkatalog (betrifft M08).** Der Verordnungstext ist nach § 5 Abs. 1 UrhG frei, aber gesetze-im-internet.de nennt keine Bedingungen für den systematischen Abruf. Details und die drei denkbaren Wege stehen in `docs/SOURCE_REVIEWS.md`. Bis dahin bleibt die Quelle `pending`; der Rechner wird gegen synthetische Fixtures gebaut.
 
 ## Nächste externe Freigabe
 

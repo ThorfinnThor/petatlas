@@ -55,3 +55,21 @@ Beispielübergang für M02-03, tatsächlich durchlaufen an M02-02: `todo` → `i
 | M02-06 | `scripts/checks/handoff.py`, npm-Skript `check:handoff` | `npm run check:handoff` | erster Lauf rot: veralteter Handoff nannte erledigte Aufgaben; nach Aktualisierung exit 0 |
 
 Der Handoff-Check hat sich unmittelbar bewährt: nach dem Abschluss von M02-06 meldete er erneut rot, weil `docs/HANDOFF.md` noch M02-06 als nächsten Schritt führte.
+
+## 2026-09-06 — Sitzung 4: M03, M04 und M05 vollständig
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M03-01…06 | Markt/Locale, Geld, Einheiten, Datum, Provenienz, Rechte, acht Fachschemas, Provider, internationale Isolation | `npm run test:unit` | von 33 auf 200 Tests |
+| M04-01…06 | Route Registry, Design Tokens, Kernseiten aus der Registry, Pagefind, Formularbausteine, visueller Baseline-Review | `npx playwright test`, 40 Screenshots über 5 Breiten | 141 E2E-Tests; ein Layoutbefund behoben |
+| M05-01…06 | Source Registry, Publikationsklassen, Attribution, Primärprüfung der Quellen, ODbL-Datenfluss, Lizenzregression | `npm run check:licenses`, `npm run test:unit` | 257 Unit- und 156 E2E-Tests |
+
+Vier Hindernisse, die echte Arbeit gekostet haben:
+- `@astrojs/check` akzeptiert TypeScript nur bis `<7`; TypeScript ist deshalb auf 6.0.3 gepinnt.
+- Astro 7 startet `astro preview` in Agent-Umgebungen im Hintergrund; Playwright braucht `ASTRO_PREVIEW_BACKGROUND=false`.
+- Das gebündelte Suchskript scheiterte an einem `__VITE_PRELOAD__`-Platzhalter, weil der Bundler den dynamischen Import auf den erst später erzeugten Pagefind-Index auflöste. Die Suchlogik liegt jetzt als eigenes Modul in `public/`.
+- Der Testdatenhinweis lief über die volle Fensterbreite, weil er außerhalb von `<main>` steht.
+
+Korrigierte Testerwartungen, jeweils ohne Änderung an der Implementierung: zwei Einheitenrundungen (Ganzzahlspeicherung übersehen), zwei Suchtests (Pagefind arbeitet mit Wortstämmen, „keine Treffer“ war die falsche Prüfung) und drei Erwartungen an Texte, die sich durch spätere Aufgaben geändert haben.
+
+Ergebnis der Quellenprüfung M05-04: OSM-Extrakt freigegeben, Gebührenkatalog bleibt gesperrt (B-001).

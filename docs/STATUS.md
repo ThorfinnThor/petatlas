@@ -1,40 +1,39 @@
 # Projektstatus
 
-Stand: 2026-09-06, Ende Sitzung 2.
+Stand: 2026-09-06, Ende Sitzung 4.
 
-**Erledigt:** 13 von 120 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine.
-**Meilensteine vollständig:** M00 (6/6), M01 (6/6). Angefangen: M02 (1/6).
+**Erledigt:** 36 von 120 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine Aufgabe; ein offener Punkt (B-001) wartet auf eine Entscheidung des Betreibers.
+**Meilensteine vollständig:** M00, M01, M02, M03, M04, M05 (je 6/6).
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 
-**Implementiert:** Projektvertrag und Autonomierahmen; Astro-7-Scaffold mit statischem Build; ESLint, Prettier, Vitest und Playwright mit gepinnten Versionen; Secret-Audit über Repo und `dist/`; explizite Build-Modi mit Fixture-Sperre für production; BaseLayout, 404-Seite und technische Formularprobe mit bestandenem Browser-Smoke.
+## Was tatsächlich läuft
 
-**Nicht vorhanden:** Cloudflare-Projekt, GitHub-Actions-Workflows, Domain, Betreiberangaben, Domänenmodelle, echte Daten, Inhalte, Partnerverträge, Fachfreigaben. Keine Website online.
+- Astro 7 static, TypeScript 6 strict, gepinnte Abhängigkeiten, reproduzierbarer Build aus einem frischen Klon.
+- Prüfkette: ESLint, `astro check`, Prettier, Vitest, Playwright, Secret-Audit, Lizenzprüfung, Handoff-Prüfung.
+- Domänenmodelle: Markt und Locale, Geld als ganzzahlige Untereinheiten, Einheiten, Kalenderdatum gegen Zeitpunkt, Provenienz, Rechte, acht Fachschemas, Provider-Auflösung.
+- Oberfläche: Route Registry, Design Tokens, Kopf- und Fußbereich, fünf Kernseiten, statische Suche ohne Backend, zugängliche Formularbausteine.
+- Quellenregister mit Publikationsklassen, Attribution aus derselben Registry, ODbL-Datenfluss, Lizenzregression.
 
-**Letzte tatsächlich ausgeführte Prüfungen:**
-- `npx playwright test`: 18/18 über chromium-desktop, webkit-desktop, chromium-mobile.
-- `npm run test:unit`: 33 Tests in 3 Dateien.
-- `npm run lint`, `npm run typecheck`, `npm run format:check`: sauber.
-- `npm run check:security`: 57 Dateien, kein Fund, Fixtures gekennzeichnet.
-- `npm run build:production`: exit 1, weil `publicRelease.approved=false` — beabsichtigt.
-- `npm run build:fixture` mit totem Proxy: exit 0, also ohne Netz baubar.
+**Nicht vorhanden:** Cloudflare-Projekt, GitHub-Actions-Workflows, Import-System, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge.
 
-**Nächster Schritt:** M02-02 (Statuswerkzeug integrieren) oder M03-01 (Markt- und Locale-Schemas). Beide sind unabhängig ausführbar.
+## Zahlen der letzten Prüfungen
 
-**Nächste externe Freigabe:** Cloudflare-Account und Repo-Anbindung, erstmals nötig für M07-03.
+| Prüfung | Ergebnis |
+|---|---|
+| `npm run test:unit` | 257 Tests in 15 Dateien |
+| `npx playwright test` | 156 Tests über Chromium, WebKit und mobiles Profil |
+| `npm run lint` / `typecheck` / `format:check` | sauber |
+| `npm run check:security` | 167 Dateien, kein Fund |
+| `npm run check:licenses` | 2 Quellen, 1 freigegeben, 1 gesperrt, keine Beanstandung |
+| `python3 scripts/test_project_status.py` | 22 Tests |
+| `npm run build:production` | exit 1 — beabsichtigt, Launch-Gates offen |
 
-## Rollen der Statusdateien (M02-03)
+## Offene Entscheidungen des Betreibers
 
-`project/tasks.json` ist die einzige maßgebliche Quelle. Die folgenden Dateien sind knappe menschliche Ansichten darauf und dürfen ihr nie widersprechen.
+1. **B-001 — Bezugsweg für den Gebührenkatalog.** Betrifft M08. Siehe `docs/BLOCKERS.md` und `docs/SOURCE_REVIEWS.md`.
+2. **Cloudflare-Account und Repo-Anbindung.** Erstmals nötig für M07-03.
 
-| Datei | Inhalt | Aktualisierung |
-|---|---|---|
-| `project/tasks.json` | Status, Nachweise, Blocker, Abhängigkeiten je Aufgabe | nur über `scripts/task_update.py` |
-| `docs/STATUS.md` | Momentaufnahme: Zahlen, letzte Prüfungen, nächster Schritt | bei jedem Checkpoint |
-| `docs/WORKLOG.md` | Chronologie: Aufgabe, Änderung, ausgeführte Prüfung, Ergebnis | je abgeschlossener Aufgabe |
-| `docs/BLOCKERS.md` | ausschließlich tatsächlich blockierte Aufgaben | beim Eintreten und Auflösen |
-| `docs/HANDOFF.md` | Übergabe an eine frische Sitzung: Zustand, Umgebung, nächster Schritt | bei jedem Checkpoint |
-
-Widerspricht eine Ansicht dem Manifest, gilt das Manifest und die Ansicht wird korrigiert — nie umgekehrt.
+**Nächster Schritt:** M06-01 (Adapter-API). M06 und M07 bis einschließlich M07-02 sind ohne beide Entscheidungen ausführbar.
 
 Maßgeblich ist `project/tasks.json`.
