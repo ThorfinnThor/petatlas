@@ -1823,10 +1823,16 @@
         "M08-01"
       ],
       "kind": "external_gate",
-      "status": "todo",
+      "status": "blocked",
       "evidence": [],
-      "blocker": null,
-      "notes": []
+      "blocker": {
+        "reason": "Der Kostenrechner ist fertig implementiert und getestet, aber niemand mit fachlicher Eignung hat Quellenstand und Rechenannahmen abgenommen. Eine solche Autoritaet wird nicht erfunden.",
+        "required_action": "Eine geeignete pruefende Person beauftragen (Tieraerztin oder Tierarzt mit Abrechnungserfahrung, tieraerztliche Verrechnungsstelle oder spezialisierte Rechtsberatung) und die acht Pruefpunkte in docs/reviews/costs.md beantworten lassen. Danach die dort beschriebenen fuenf Schritte zur Freigabe ausfuehren.",
+        "owner": "Betreiber"
+      },
+      "notes": [
+        "Blockiert ausschliesslich die oeffentliche Aktivierung. Der Code ist vollstaendig: 456 Unit-Tests und 30 Feature-E2E-Tests laufen gruen, der Rechner ist hinter dem Feature Flag mit ENABLE_FEATURES=costs vollstaendig bedienbar."
+      ]
     },
     {
       "id": "M09-01",

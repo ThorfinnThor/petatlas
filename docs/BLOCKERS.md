@@ -1,9 +1,10 @@
 # Blockerregister
 
-Stand 2026-09-06. **Keine blockierte Aufgabe.**
+Stand 2026-09-06. **Eine blockierte Aufgabe: M08-06.** Sie blockiert ausschließlich die öffentliche Aktivierung des Rechners, keine weitere Entwicklung.
 
 | Blocker-ID | Aufgabe | Ursache | Benötigte Handlung | Zuständig | Unabhängige Folgearbeit |
 |---|---|---|---|---|---|
+| B-002 | M08-06 | Der Kostenrechner ist fertig und getestet, aber niemand mit fachlicher Eignung hat Quellenstand und Rechenannahmen abgenommen. Eine solche Autorität wird nicht erfunden. | Eine geeignete prüfende Person beauftragen und die acht Prüfpunkte in `docs/reviews/costs.md` beantworten lassen; danach die dort beschriebenen fünf Freigabeschritte ausführen. | Betreiber | M09, M10, M12 und alle übrigen Meilensteine sind unberührt. Der Rechner ist mit `ENABLE_FEATURES=costs` lokal vollständig bedienbar. |
 
 ## Erledigte Punkte
 
