@@ -1382,8 +1382,16 @@
         "M06-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/publish/shards.ts teilt Datensaetze bis sie ihr Budget einhalten (512 KiB, Geo 1 MiB) und erhoeht das Budget nicht: 20000 synthetische Orte werden auf mehrere Shards verteilt, jeder unter der Grenze. Der Inhalts-Hash steht im Dateinamen, dieselbe Eingabe erzeugt dieselben Shards auch bei umgedrehter Reihenfolge, ein leerer Shard wird nicht geschrieben. Der Index enthaelt nur Metadaten und Dateiverweise - ein Test prueft, dass kein Datensatzinhalt darin vorkommt. scripts/publish/manifest.ts prueft jeden Verweis gegen die tatsaechlich geschriebene Datei: fehlende Datei, nach dem Erzeugen veraenderter Inhalt, falsche Groessenangabe und ein Hash, der nicht zum Dateinamen passt, werden abgelehnt. all-data.json und Varianten sind ausdruecklich verboten. 18 Tests.",
+          "reference": "scripts/publish/shards.ts; scripts/publish/manifest.ts; tests/publish-manifest.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
