@@ -58,6 +58,12 @@ Stand 2026-09-06. `offen` heißt: noch nicht geliefert. Keine Zeile behauptet ei
 
 **Wirkung auf die laufende Arbeit:** keine dieser Voraussetzungen blockiert derzeit eine ausführbare Aufgabe. Erst wenn eine der genannten Aufgaben tatsächlich an der Reihe ist, wird ausschließlich diese Aufgabe auf `blocked` gesetzt und in `docs/BLOCKERS.md` mit Ursache, benötigter Handlung und Zuständigem eingetragen. Bis dahin gibt es keinen eingetragenen Blocker.
 
+## Offene Einstellung im GitHub-Projekt (M07-02)
+
+Branch- und Ruleset-Schutz für `main` und `.github/` ist Konfiguration in den Repository-Einstellungen und lässt sich nicht im Code hinterlegen. Solange er fehlt, kann jemand mit Schreibrecht die Workflows selbst ändern und damit die Prüfkette umgehen.
+
+Empfohlen, Entscheidung des Betreibers: erforderliche Statusprüfungen für `CI` und `Security` vor dem Merge, kein direkter Push auf `main`, und eine gesonderte Freigabe für Änderungen unter `.github/`.
+
 ## Erster Live-Release
 
 Freigabe muss das tatsächlich aktive Feature-Set nennen. Ein redaktioneller Start ohne Versicherungs- oder Warenpartner ist möglich, sofern die verbleibenden rechtlichen/fachlichen Anforderungen erfüllt sind. Er heißt nicht monetarisierter Start.

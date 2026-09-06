@@ -1452,6 +1452,13 @@
           "verified_at": "2026-09-06",
           "command": "npm run lint && npm run typecheck && npm run test:unit && npm run check:licenses && npm run check:security && npm run check:handoff",
           "exit_code": 0
+        },
+        {
+          "description": "CI laeuft tatsaechlich auf GitHub: Lauf 34051504350 auf main, beide Jobs gruen (Pruefkette 34s, Browser-Smoke 1m54s mit Chromium und WebKit auf einem frischen Runner). Der Lauf davor (34051351111) ist rot geworden, weil die Handoff-Pruefung den veralteten Handoff erkannt hat - der Workflow stoppt fehlerhafte Eingaben also nachweislich.",
+          "reference": "https://github.com/ThorfinnThor/petatlas/actions/runs/34051504350",
+          "verified_at": "2026-09-06",
+          "command": "gh run view 34051504350",
+          "exit_code": 0
         }
       ],
       "blocker": null,
@@ -1476,8 +1483,16 @@
         "M07-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "security.yml prueft in drei Jobs ohne jedes Secret: Lockfile bleibt bei npm ci unveraendert, alle 17 Abhaengigkeiten sind exakt gepinnt, npm audit ohne High-Findings, alle Actions auf volle Commit-SHAs gepinnt, kein pull_request_target-Trigger, keine Secret-Referenz, jede Workflowdatei setzt permissions ausdruecklich; dazu Secret-Audit mit voller Historie und Rechtepruefung. Alle Schritte lokal nachgestellt. Zwei Pruefschritte trafen zunaechst sich selbst (grep fand das eigene Muster in der Workflowdatei) und pruefen jetzt den Trigger am Zeilenanfang beziehungsweise unter Ausschluss der eigenen Datei. docs/CI_SECURITY.md haelt Bedrohungsmodell, ausdrueckliche Grenzen und das Vorgehen fest, falls spaeter doch ein Secret gebraucht wird. Die fehlende Branch-Protection ist als Einstellung im GitHub-Projekt vermerkt, nicht als Codeproblem behauptet.",
+          "reference": ".github/workflows/security.yml; docs/CI_SECURITY.md; docs/EXTERNAL_SETUP.md",
+          "verified_at": "2026-09-06",
+          "command": "npm ci && npm audit --audit-level=high && npm run check:security -- --repo-only",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

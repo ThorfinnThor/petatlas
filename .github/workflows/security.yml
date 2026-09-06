@@ -1,0 +1,154 @@
+# M07-02 — Supply-Chain-Prüfungen.
+#
+# Der Workflow läuft ohne Secrets und ohne Schreibrechte. Er prüft, was ein
+# Angriff über Abhängigkeiten oder über einen fremden Pull Request anrichten
+# könnte, und läuft zusätzlich zeitgesteuert, damit neue Schwachstellen auch
+# ohne Commit auffallen.
+name: Security
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    # Wöchentlich, damit neue Meldungen ohne Commit auffallen.
+    - cron: '17 6 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  abhaengigkeiten:
+    name: Abhängigkeiten und Lockfile
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Installation ohne Netzänderung am Lockfile
+        run: npm ci
+
+      # Das Lockfile ist verbindlich. Verändert die Installation es, stimmt
+      # etwas nicht mit den deklarierten Versionen.
+      - name: Lockfile bleibt unverändert
+        run: git diff --exit-code -- package-lock.json
+
+      - name: Alle Abhängigkeiten sind exakt gepinnt
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+            const alle = { ...pkg.dependencies, ...pkg.devDependencies };
+            const unscharf = Object.entries(alle).filter(([, v]) => !/^\d+\.\d+\.\d+$/.test(v));
+            if (unscharf.length > 0) {
+              console.error("Nicht exakt gepinnt:", unscharf);
+              process.exit(1);
+            }
+            console.log(Object.keys(alle).length + " Abhängigkeiten, alle exakt gepinnt.");
+          '
+
+      - name: Bekannte Schwachstellen
+        run: npm audit --audit-level=high
+
+  workflows:
+    name: Workflow-Härtung
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      # Ein Tag lässt sich verschieben, ein Commit-SHA nicht. Ein ungepinnter
+      # Verweis ist der klassische Weg, fremden Code in einen Build zu bringen.
+      - name: Actions sind auf volle Commit-SHAs gepinnt
+        run: |
+          verstoesse=$(grep -rhoE '^\s*uses:\s*\S+' .github/workflows \
+            | sed -E 's/^\s*uses:\s*//' \
+            | grep -vE '@[0-9a-f]{40}$' || true)
+          if [ -n "$verstoesse" ]; then
+            echo "Nicht auf einen Commit-SHA gepinnt:"
+            echo "$verstoesse"
+            exit 1
+          fi
+          echo "Alle Actions sind auf volle Commit-SHAs gepinnt."
+
+      # pull_request_target läuft mit den Rechten des Zielrepos und hat Zugriff
+      # auf Secrets. Zusammen mit einem Checkout des PR-Codes ist das die
+      # bekannteste Rechteausweitung in GitHub Actions.
+      # Gesucht wird der Trigger selbst, also die Zeile `pull_request_target:`
+      # am Zeilenanfang — nicht die bloße Erwähnung in diesem Prüfschritt.
+      - name: Kein pull_request_target als Trigger
+        run: |
+          if grep -rnE '^\s{0,4}pull_request_target:' .github/workflows; then
+            echo "pull_request_target ist in diesem Repository nicht zugelassen."
+            exit 1
+          fi
+          echo "Kein pull_request_target-Trigger vorhanden."
+
+      # Auch hier: gesucht wird die tatsächliche Verwendung, nicht das Muster
+      # in diesem Prüfschritt. Deshalb wird die eigene Datei ausgenommen.
+      - name: Keine Secrets in Workflows referenziert
+        run: |
+          if grep -rnE '\$\{\{[[:space:]]*secrets\.' .github/workflows \
+              --exclude=security.yml; then
+            echo "Dieser Workflowsatz kommt ohne Secrets aus; ein Verweis ist erklärungsbedürftig."
+            exit 1
+          fi
+          echo "Keine Secret-Referenz vorhanden."
+
+      - name: Jeder Workflow setzt Berechtigungen ausdrücklich
+        run: |
+          for datei in .github/workflows/*.yml; do
+            if ! grep -q '^permissions:' "$datei"; then
+              echo "$datei setzt keine permissions auf oberster Ebene."
+              exit 1
+            fi
+          done
+          echo "Alle Workflows setzen permissions ausdrücklich."
+
+  geheimnisse:
+    name: Secret- und Fixture-Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Repository mit voller Historie auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Audit über versionierte Dateien
+        run: npm run check:security -- --repo-only
+
+      - name: Rechteprüfung der Quellen
+        run: npm run check:licenses
