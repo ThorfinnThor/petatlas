@@ -1414,8 +1414,16 @@
         "M06-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/publish/pipeline.ts schreibt erst nach .generated, prueft dort das gesamte Manifest gegen die geschriebenen Dateien und uebernimmt erst danach in einem Schritt nach dist. 10 Integrationstests ohne Netz: zwei erfolgreiche synthetische Quellen werden gemeinsam veroeffentlicht, jeder Manifestverweis zeigt auf eine vorhandene Datei mit passendem Hash, keine gesammelte Datei entsteht. Faellt eine von drei Quellen aus, wird gar nichts veroeffentlicht - weder Orte noch Gebuehren liegen einzeln herum, ein bereits veroeffentlichter Stand bleibt byteweise unveraendert, und das Arbeitsverzeichnis wird auch nach dem Abbruch aufgeraeumt. Ein Manifestverweis auf eine fehlende Datei bricht ebenfalls ab, bevor etwas uebernommen wird.",
+          "reference": "scripts/publish/pipeline.ts; tests/snapshot-integration.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
