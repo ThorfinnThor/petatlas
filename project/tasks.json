@@ -247,8 +247,14 @@
         "M00-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Rechtehinweise pro Datenklasse getrennt; keine pauschale Projektlizenz (ADR-017), Codelizenz bleibt offene Betreiberentscheidung; Kostengrenzen benannt.",
+          "reference": "licenses/README.md; docs/DECISIONS.md ADR-017",
+          "verified_at": "2026-09-06"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

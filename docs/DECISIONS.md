@@ -35,3 +35,11 @@ Die ADRs ADR-001 bis ADR-016 sind gelesen und als verbindlich übernommen. Der d
 - **Freigaben:** alle Gates in `config/launch.json` stehen auf `approved: false`. Kein Gate darf durch Implementierungsfortschritt automatisch auf `true` wechseln; nur die dort benannte zuständige Person trägt eine Freigabe mit Nachweis in `docs/reviews/` ein.
 - **Ausdrücklich ausgeschlossen:** die Liste `excludedFromStartScope` in `config/launch.json`. Sie entspricht ADR-006, ADR-012 und dem Abschnitt „Nicht ohne neue Entscheidung hinzufügen“ oben. Ergänzungen nur über eine neue ADR.
 - **Roadmap:** kein ungeplantes Backend und keine Zusatzprodukte. Spätere Ideen gehören nach `docs/FUTURE_SCOPE.md`, nicht in den Startumfang.
+
+## ADR-017 — Codelizenz bleibt offen, keine pauschale Projektlizenz (M00-05)
+
+**Entscheidung:** Es wird keine projektweite `LICENSE`-Datei mit MIT oder einer vergleichbaren pauschalen Erlaubnis angelegt. Die Lizenz für den eigenen Code ist eine eigene, noch ausstehende Entscheidung des Betreibers; bis dahin gilt „alle Rechte vorbehalten“.
+
+**Begründung:** Das Repository enthält absehbar ODbL-Daten, optionale OPFF-Inhalte, vertragliche Partnerfelder und Herstellerbilder. Eine pauschale Projektlizenz würde Rechte einräumen, über die der Betreiber nicht verfügt. Repo-Publicity ist keine Weiterverwendungserlaubnis (ADR-014).
+
+**Konsequenz:** Rechtehinweise werden pro Datenklasse in `licenses/README.md` geführt. Vor jedem Live-Import sind Lizenz, Publikationsrecht und Attributionspflicht der Quelle geprüft und der tatsächliche Datenfluss dokumentiert. Die spätere Codelizenzentscheidung erhält eine eigene ADR und betrifft ausschließlich eigenen Code.
