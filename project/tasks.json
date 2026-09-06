@@ -187,8 +187,16 @@
         "M00-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Benennung, Basis-URL und Betreiberangaben zentral in config/site.ts; production scheitert bei Platzhalterdomain oder fehlenden Betreiberangaben, development laeuft weiter.",
+          "reference": "config/site.ts; scripts/checks/site-config.check.mjs; docs/EXTERNAL_SETUP.md",
+          "verified_at": "2026-09-06",
+          "command": "node scripts/checks/site-config.check.mjs",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

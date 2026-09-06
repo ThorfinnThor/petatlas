@@ -16,6 +16,17 @@ Diese Tabelle ist ein Einrichtungsplan, kein Nachweis bereits bestehender Verbin
 | Fachliche Prüfung Gebühren-/Reiseregeln | Tatsächlich geeignete prüfende Person | Vorschau möglich, ungeprüfte Live-Regeln gesperrt. |
 | Tracking-/Ads-Freigabe | Betreiber nach Prüfung der konkreten Integrationen | Ads und Marketing-Tracking aus; bloße Layoutslots nicht mit echten Anzeigen befüllen. |
 
+## Benennung, Domain und Betreiberangaben (M00-03)
+
+Produktname, Basis-URL und Betreiberangaben stehen ausschließlich in `config/site.ts`. Fachlogik importiert diese Werte; ein Namenswechsel ist eine Änderung an dieser Datei plus Übersetzungstexten, kein projektweites Suchen/Ersetzen.
+
+- **Arbeitstitel „PetAtlas“:** intern und austauschbar (`brandNameIsWorkingTitle: true`). Es wird keine Markenverfügbarkeit, Eintragung oder Schutzfähigkeit behauptet. Eine Markenrecherche ist nicht erfolgt und ist Sache des Betreibers.
+- **Basis-URL:** `PUBLIC_SITE_URL`. Ohne echten Wert gilt `https://example.invalid` — zulässig nur in `development` und `preview`. Ein `production`-Build mit Platzhalterdomain scheitert mit Fehler statt still zu veröffentlichen.
+- **Betreiberangaben:** `legalName`, `address`, `contactEmail` und `responsibleForContent` sind bis zur Lieferung durch den Betreiber `null`. `production` scheitert, solange sie fehlen. Es werden keine Rechtsangaben erfunden (ADR-015).
+- **Nachweis:** `node scripts/checks/site-config.check.mjs`.
+
+Lokale Entwicklung ist durch die fehlende Domain nicht blockiert; nur `production` ist gesperrt.
+
 ## Secret-Namen und Ort
 
 `CLOUDFLARE_BUILD_HOOK`: nur GitHub-Secret für vertrauenswürdigen manuellen/zeitgesteuerten Rebuildjob. Die gesamte Hook-URL ist geheim.

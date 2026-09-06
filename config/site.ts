@@ -1,0 +1,90 @@
+/**
+ * M00-03 — Zentrale Benennung, Basisdomain und Betreiberangaben.
+ *
+ * Einzige Quelle für Produktname, Domain und Impressumsdaten. Fachlogik
+ * (Rechner, Karte, Reisecheck, Katalog) importiert diese Werte und schreibt
+ * sie nicht selbst. Ein Namenswechsel ist dadurch eine Änderung an dieser
+ * Datei plus Übersetzungstexten, kein projektweites Suchen/Ersetzen.
+ *
+ * "PetAtlas" ist ein austauschbarer interner Arbeitstitel. Es ist keine
+ * geprüfte Marke; Verfügbarkeit oder Schutzfähigkeit werden nicht behauptet.
+ */
+
+export type BuildMode = 'development' | 'preview' | 'production';
+
+/** Betreiberangaben. `null` bedeutet: noch nicht vom Betreiber geliefert. */
+export interface OperatorInfo {
+  readonly legalName: string | null;
+  readonly address: string | null;
+  readonly contactEmail: string | null;
+  readonly responsibleForContent: string | null;
+  readonly registerEntry: string | null;
+  readonly vatId: string | null;
+}
+
+export interface SiteConfig {
+  readonly brandName: string;
+  readonly brandNameIsWorkingTitle: boolean;
+  readonly defaultMarketId: string;
+  readonly baseUrl: string;
+  readonly operator: OperatorInfo;
+}
+
+/** Nur in development/preview zulässig; RFC 6761 reserviert `.invalid`. */
+export const DEVELOPMENT_BASE_URL = 'https://example.invalid';
+
+const OPERATOR_UNKNOWN: OperatorInfo = {
+  legalName: null,
+  address: null,
+  contactEmail: null,
+  responsibleForContent: null,
+  registerEntry: null,
+  vatId: null,
+};
+
+export function readBuildMode(env: Record<string, string | undefined>): BuildMode {
+  const raw = env.BUILD_MODE ?? 'development';
+  if (raw === 'development' || raw === 'preview' || raw === 'production') return raw;
+  throw new Error(`BUILD_MODE muss development, preview oder production sein, nicht "${raw}".`);
+}
+
+/**
+ * Baut die Site-Konfiguration für einen Build-Modus.
+ *
+ * production verlangt eine echte, konfigurierte Basis-URL und vollständige
+ * Betreiberangaben. Fehlen sie, scheitert der Build — er fällt nicht still
+ * auf einen Platzhalter zurück. development/preview arbeiten ohne echte
+ * Domain weiter, damit lokale Entwicklung nicht blockiert ist.
+ */
+export function createSiteConfig(
+  mode: BuildMode,
+  env: Record<string, string | undefined>,
+  operator: OperatorInfo = OPERATOR_UNKNOWN,
+): SiteConfig {
+  const configuredUrl = env.PUBLIC_SITE_URL?.trim();
+  const isPlaceholder = !configuredUrl || configuredUrl === DEVELOPMENT_BASE_URL;
+
+  if (mode === 'production') {
+    if (isPlaceholder) {
+      throw new Error(
+        'production benötigt eine echte PUBLIC_SITE_URL. Die Platzhalterdomain example.invalid ist gesperrt (M00-03).',
+      );
+    }
+    const missing = (Object.keys(operator) as (keyof OperatorInfo)[]).filter(
+      (key) => operator[key] === null && key !== 'registerEntry' && key !== 'vatId',
+    );
+    if (missing.length > 0) {
+      throw new Error(
+        `production benötigt echte Betreiberangaben. Fehlend: ${missing.join(', ')}. Keine erfundenen Rechtsangaben (ADR-015).`,
+      );
+    }
+  }
+
+  return {
+    brandName: 'PetAtlas',
+    brandNameIsWorkingTitle: true,
+    defaultMarketId: 'DE',
+    baseUrl: isPlaceholder ? DEVELOPMENT_BASE_URL : configuredUrl,
+    operator,
+  };
+}
