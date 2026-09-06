@@ -22,6 +22,7 @@
     "test:e2e": "playwright test",
     "check:security": "node scripts/checks/secrets.ts",
     "status": "python3 scripts/project_status.py",
+    "status:json": "python3 scripts/project_status.py --json",
     "status:validate": "python3 scripts/project_status.py --validate"
   },
   "dependencies": {

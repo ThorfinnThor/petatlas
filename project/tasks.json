@@ -2,7 +2,7 @@
   "schema_version": 1,
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
-  "implementation_state": "not_started",
+  "implementation_state": "in_progress",
   "current_task": null,
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
@@ -525,8 +525,16 @@
         "M02-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Statushelfer als npm-Aliase eingebunden: status, status:json, status:validate sowie Meilensteinfilter ueber 'npm run status -- --milestone M08'. Alle vier laufen ohne Website und ohne Netz. implementation_state wird jetzt aus dem tatsaechlichen Aufgabenstand abgeleitet statt von Hand gepflegt; es stand faelschlich auf not_started.",
+          "reference": "package.json scripts; scripts/task_update.py; docs/TOOLCHAIN.md",
+          "verified_at": "2026-09-06",
+          "command": "npm run status -- --milestone M08; npm run status:json; npm run status:validate; python3 scripts/test_project_status.py",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

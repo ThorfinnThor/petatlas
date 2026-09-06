@@ -39,6 +39,10 @@ Stand 2026-09-06 (M01-03). Alle Versionen sind exakt gepinnt, kein `^` und kein 
 | `npm run test:unit` | Vitest, offline, `passWithNoTests: false`. |
 | `npm run test:e2e` | Playwright gegen den **gebauten** statischen Output, nicht gegen den Dev-Server. |
 | `npm run build` | Statischer Astro-Build nach `dist/`. |
+| `npm run status` | Gesamtübersicht aus `project/tasks.json`. Läuft ohne Website und ohne Netz. |
+| `npm run status -- --milestone M08` | Teilaufgaben, Nachweise und Blocker eines Meilensteins. |
+| `npm run status:json` | Maschinenlesbare Ausgabe für Skripte und CI. |
+| `npm run status:validate` | Konsistenzprüfung: Abhängigkeiten, Nachweise bei `done`, begründete Blocker. |
 
 Die weiteren Befehle aus `docs/QUALITY_GATES.md` Abschnitt 2 entstehen in den Meilensteinen, die sie brauchen.
 

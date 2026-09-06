@@ -81,6 +81,16 @@ def main() -> int:
     elif args.status != "blocked":
         task["blocker"] = None
 
+    # Der Gesamtzustand folgt dem tatsächlichen Aufgabenstand, nicht einer
+    # von Hand gepflegten Angabe.
+    states = {t.get("status") for t in data["tasks"]}
+    if states == {"todo"}:
+        data["implementation_state"] = "not_started"
+    elif states <= {"done", "deferred"}:
+        data["implementation_state"] = "complete"
+    else:
+        data["implementation_state"] = "in_progress"
+
     if args.current:
         data["current_task"] = args.task_id
     elif data.get("current_task") == args.task_id and args.status != "in_progress":
