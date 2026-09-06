@@ -1,0 +1,37 @@
+{
+  "sourceId": "osm-geofabrik-bremen-pbf",
+  "publisher": "Geofabrik GmbH (Extrakt) / OpenStreetMap-Mitwirkende (Daten)",
+  "resourceName": "OpenStreetMap-Extrakt Bremen, Format .osm.pbf",
+  "distributionUrl": "https://download.geofabrik.de/europe/germany/bremen-latest.osm.pbf",
+  "primaryTermsUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "format": "pbf",
+  "coverage": { "spatial": "DE-HB", "temporal": "tägliches Extrakt" },
+  "updateCadence": "täglich",
+  "role": "Pilotregion für den Ortsdatenimport",
+  "attributionText": "© OpenStreetMap contributors, ODbL 1.0",
+  "attributionUrl": "https://www.openstreetmap.org/copyright",
+  "rights": {
+    "sourceId": "osm-geofabrik-bremen-pbf",
+    "status": "verified",
+    "licenseId": "ODbL-1.0",
+    "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "commercialUse": true,
+    "publicRedistribution": true,
+    "websiteDisplay": true,
+    "publicJsonDelivery": true,
+    "publicRepository": true,
+    "attributionRequired": true,
+    "shareAlike": true,
+    "imagesAllowed": false,
+    "mayStoreHistory": true,
+    "mayCacheOriginals": true,
+    "termsHash": "b8d8aebb21bf405f93f6e21bbf0d8f0a749844f9812ec58692f189add6402b47",
+    "checkedAt": "2026-09-06T00:00:00+00:00",
+    "approvalEvidence": "docs/SOURCE_REVIEWS.md#osm-geofabrik-bremen-pbf"
+  },
+  "notes": [
+    "Eigener Registryeintrag, weil eine Region eine andere Distribution ist als das Deutschland-Extrakt: eigene Adresse, eigene Abdeckung, eigener Stand.",
+    "Die Geofabrik-Seite für Bremen weist dieselbe Lizenz aus wie die Deutschlandseite: ODbL 1.0, Daten von OpenStreetMap-Mitwirkenden, aufbereitet von der Geofabrik GmbH.",
+    "Pilotregion: klein genug, um den Import mit echten Daten zu prüfen, ohne bundesweit zu laden."
+  ]
+}

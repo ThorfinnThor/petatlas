@@ -76,3 +76,15 @@ Der `termsHash` im Registryeintrag ist der Hash des ODbL-Lizenztextes. Ändert e
 - Die **fachliche Prüfung der Rechenregeln** (M08-06) ist ein eigenes Gate. Ein geklärter Bezugsweg macht ungeprüfte Rechenregeln nicht veröffentlichungsfähig.
 - Der **zeitgesteuerte automatische Abruf** wird erst nach der Betriebsprüfung M17-07 aktiviert.
 - Der Rechner wird **nicht als amtlicher Rechner** dargestellt (ADR-018).
+
+---
+
+## osm-geofabrik-bremen-pbf
+
+**Geprüft am:** 2026-09-06 · **Ergebnis:** `verified`
+
+Eigener Registryeintrag, weil eine Region eine andere Distribution ist als das Deutschland-Extrakt: eigene Adresse, eigene Abdeckung, eigener Stand.
+
+Die Geofabrik-Seite für Bremen weist dieselbe Lizenz aus wie die Deutschlandseite: „License: ODbL 1.0“, Daten von OpenStreetMap-Mitwirkenden, aufbereitet von der Geofabrik GmbH. Attribution, Share-Alike für abgeleitete Datenbanken und der Ausschluss von Bildern und Kartenkacheln gelten unverändert; die Feststellungen aus dem Deutschland-Extrakt oben gelten hier gleichermaßen.
+
+Der Pilotlauf über diese Distribution ist in `docs/OSM_PILOT.md` dokumentiert.

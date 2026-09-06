@@ -1,0 +1,43 @@
+{
+  "$comment": "M10-01 — Welche OSM-Objekte übernommen werden. Bewusst eng: nur was das Produkt tatsächlich zeigt. Jede Kategorie nennt die Tags, die sie auslösen; alles andere wird ignoriert.",
+  "categories": [
+    {
+      "category": "veterinary",
+      "label": "Tierarztpraxis",
+      "match": [{ "key": "amenity", "value": "veterinary" }]
+    },
+    {
+      "category": "animal_shelter",
+      "label": "Tierheim",
+      "match": [{ "key": "amenity", "value": "animal_shelter" }]
+    },
+    {
+      "category": "pet_shop",
+      "label": "Zoofachhandel",
+      "match": [{ "key": "shop", "value": "pet" }]
+    },
+    {
+      "category": "dog_park",
+      "label": "Hundewiese",
+      "match": [
+        { "key": "leisure", "value": "dog_park" },
+        { "key": "amenity", "value": "dog_toilet" }
+      ]
+    }
+  ],
+  "$comment_tristate": "Diese Tags werden als tri-state übernommen: fehlt der Tag, bleibt der Wert null (unbekannt), nicht false.",
+  "triStateTags": {
+    "emergency": "emergency",
+    "wheelchair": "wheelchair",
+    "fenced": "barrier",
+    "dogAllowed": "dog"
+  },
+  "$comment_kontakt": "Kontaktdaten werden nur aus diesen Tags übernommen. Betreiber-, Bearbeiter- und E-Mail-Angaben bleiben außen vor.",
+  "contactTags": {
+    "phone": ["phone", "contact:phone"],
+    "website": ["website", "contact:website"],
+    "openingHours": ["opening_hours"],
+    "postalCode": ["addr:postcode"],
+    "municipality": ["addr:city"]
+  }
+}

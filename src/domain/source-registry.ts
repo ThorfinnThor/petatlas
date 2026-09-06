@@ -13,6 +13,7 @@
 import { z } from 'zod';
 
 import got from '../../config/sources/got.json' with { type: 'json' };
+import bremen from '../../config/sources/osm-geofabrik-bremen.json' with { type: 'json' };
 import osm from '../../config/sources/osm-geofabrik-de.json' with { type: 'json' };
 import { SourceRightsSchema, type SourceRights } from './rights.ts';
 
@@ -81,7 +82,7 @@ function parseEntry(raw: unknown): SourceEntry {
   return result.data;
 }
 
-const ENTRIES: readonly SourceEntry[] = [got, osm].map(parseEntry);
+const ENTRIES: readonly SourceEntry[] = [got, osm, bremen].map(parseEntry);
 
 const BY_ID = new Map(ENTRIES.map((entry) => [entry.sourceId, entry]));
 

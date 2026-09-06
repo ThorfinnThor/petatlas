@@ -1,0 +1,90 @@
+{
+  "_hinweis": "SYNTHETISCH — erfundene OSM-Rohobjekte für den Adaptertest. Keine echten Einrichtungen, keine echten Koordinaten aus einer Quelle. Die Struktur entspricht der Ausgabe von osm-pbf-parser-node.",
+  "objekte": [
+    {
+      "type": "node",
+      "id": 1001,
+      "lat": 53.1,
+      "lon": 8.8,
+      "tags": {
+        "amenity": "veterinary",
+        "name": "Synthetische Tierarztpraxis",
+        "addr:city": "Musterstadt",
+        "addr:postcode": "28195",
+        "contact:phone": "+49 421 000000",
+        "website": "https://praxis.example/",
+        "opening_hours": "Mo-Fr 09:00-17:00",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1002,
+      "lat": 53.11,
+      "lon": 8.81,
+      "tags": {
+        "amenity": "veterinary",
+        "name": "Synthetische Notdienstpraxis",
+        "emergency": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1003,
+      "lat": 53.12,
+      "lon": 8.82,
+      "tags": { "amenity": "animal_shelter", "name": "Synthetisches Tierheim" }
+    },
+    {
+      "type": "node",
+      "id": 1004,
+      "lat": 53.13,
+      "lon": 8.83,
+      "tags": {
+        "leisure": "dog_park",
+        "name": "Synthetische Hundewiese",
+        "barrier": "fence",
+        "dog": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1005,
+      "lat": 53.14,
+      "lon": 8.84,
+      "tags": { "shop": "pet", "name": "Synthetischer Zoofachhandel", "wheelchair": "limited" }
+    },
+    {
+      "type": "node",
+      "id": 2001,
+      "lat": 53.15,
+      "lon": 8.85,
+      "tags": { "amenity": "restaurant", "name": "Synthetisches Restaurant" }
+    },
+    {
+      "type": "node",
+      "id": 2002,
+      "lat": 53.16,
+      "lon": 8.86,
+      "tags": { "amenity": "veterinary" }
+    },
+    {
+      "type": "node",
+      "id": 2003,
+      "tags": { "amenity": "veterinary", "name": "Synthetische Praxis ohne Koordinaten" }
+    },
+    {
+      "type": "node",
+      "id": 2004,
+      "lat": 0,
+      "lon": 0,
+      "tags": { "amenity": "veterinary", "name": "Synthetische Praxis auf der Null-Insel" }
+    },
+    {
+      "type": "way",
+      "id": 3001,
+      "refs": [1, 2, 3],
+      "tags": { "leisure": "dog_park", "name": "Synthetische Hundewiese als Fläche" }
+    }
+  ]
+}

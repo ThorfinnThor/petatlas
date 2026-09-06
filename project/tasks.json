@@ -1999,8 +1999,16 @@
         "M06-06"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Echter Pilot ueber das Bremen-Extrakt: 21.162.890 Byte geladen (sha256 25df4aee…), 1.997.647 OSM-Objekte streamend gelesen in 0,9 Sekunden bei 117 MiB Heap, 74 Treffer der konfigurierten Kategorien, 47 Nodes als Ort uebernommen, 8 ohne Namen verworfen, 19 Ways und Relations fuer die Geometrieaufloesung in M10-02 zurueckgestellt, 0 vom Fachschema abgelehnt. Bemerkenswert und richtig: kein einziger Ort traegt emergency=yes, alle 47 stehen auf null - aus 'kein Tag' wird weder 'kein Notdienst' noch 'Notdienst vorhanden'. config/osm-tags.json haelt die Auswahl bewusst eng auf vier Kategorien und nennt ausdruecklich, welche Tags als tri-state und welche als Kontakt uebernommen werden. 27 reproduzierbare Tests gegen tests/fixtures/osm/objekte.json ohne Netz: wheelchair=limited wird nicht zu false, barrier=fence ist eine Umzaeunung und barrier=hedge keine Aussage, eine Website ohne Schema und eine unplausible Postleitzahl werden verworfen, Betreiber- und E-Mail-Angaben nicht uebernommen, die stabile ID kommt aus Typ und Quell-ID und nie aus dem Namen, und eine Koordinate auf der Null-Insel wird abgelehnt statt still verschoben. Keine Overpass-Abfrage im Browser.",
+          "reference": "scripts/ingest/adapters/osm/; config/osm-tags.json; tests/places/osm-adapter.test.ts; docs/OSM_PILOT.md",
+          "verified_at": "2026-09-06",
+          "command": "importiereExtrakt gegen bremen-latest.osm.pbf; npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
