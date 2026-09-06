@@ -808,8 +808,16 @@
         "M03-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "src/domain/providers.ts loest Adapter ueber die Marktkonfiguration auf; Fachmodule fragen nie nach dem Land. unsupported ist ein regulaerer Rueckgabewert und wird von 'keine Daten' unterschieden. Drei Faelle bleiben getrennt: nicht konfiguriert, konfiguriert aber nicht registriert, und Adapter eines fremden Marktes. 9 Tests belegen, dass ein vorhandener DE-Kostenadapter fuer US ausdruecklich nicht verwendet wird.",
+          "reference": "src/domain/providers.ts; config/markets/DE.json; tests/providers.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
