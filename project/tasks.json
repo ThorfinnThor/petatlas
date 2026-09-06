@@ -869,8 +869,16 @@
         "M01-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "src/lib/routes.ts erzeugt alle Pfade aus Marktpraefix und den Slugs aus config/locales/. Keine Domain im Code: canonicalUrl bekommt die Basis uebergeben, ein Test prueft, dass die Routendefinitionen kein http enthalten. Eine Route existiert nur, wenn ihr Feature Flag an ist; routePath wirft sonst, und die Navigation enthaelt den Eintrag nicht. Ein Slugwechsel wird ueber legacySlugs als Redirect abgebildet, aber nicht fuer abgeschaltete Routen. 15 Tests.",
+          "reference": "src/lib/routes.ts; config/locales/de-DE.json; tests/routes.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit && npm run lint && npm run typecheck",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

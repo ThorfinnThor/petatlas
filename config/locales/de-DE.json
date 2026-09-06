@@ -6,6 +6,31 @@
     "offers.total": "Gesamtpreis inklusive Versand",
     "places.inMunicipality": "in {municipality}",
     "places.nearMunicipality": "im Umkreis von {municipality}",
-    "common.unknown": "unbekannt"
-  }
+    "common.unknown": "unbekannt",
+    "nav.home": "Start",
+    "nav.costs": "Tierarztkosten",
+    "nav.map": "Tierärzte in der Nähe",
+    "nav.travel": "Reisecheck",
+    "nav.care": "Pflege",
+    "nav.toys": "Spielzeug",
+    "nav.food": "Futter",
+    "nav.sources": "Quellen",
+    "nav.dataStatus": "Datenstand",
+    "nav.imprint": "Impressum",
+    "nav.privacy": "Datenschutz"
+  },
+  "slugs": {
+    "home": "",
+    "costs": "tierarztkosten",
+    "map": "tierarzt-karte",
+    "travel": "reisecheck",
+    "care": "pflege",
+    "toys": "spielzeug",
+    "food": "futter",
+    "sources": "quellen",
+    "dataStatus": "datenstand",
+    "imprint": "impressum",
+    "privacy": "datenschutz"
+  },
+  "legacySlugs": {}
 }

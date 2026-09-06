@@ -7,6 +7,31 @@
     "offers.total": "Total price including shipping",
     "places.inMunicipality": "in {municipality}",
     "places.nearMunicipality": "near {municipality}",
-    "common.unknown": "unknown"
-  }
+    "common.unknown": "unknown",
+    "nav.home": "Home",
+    "nav.costs": "Vet costs",
+    "nav.map": "Vets nearby",
+    "nav.travel": "Travel check",
+    "nav.care": "Care",
+    "nav.toys": "Toys",
+    "nav.food": "Food",
+    "nav.sources": "Sources",
+    "nav.dataStatus": "Data status",
+    "nav.imprint": "Imprint",
+    "nav.privacy": "Privacy"
+  },
+  "slugs": {
+    "home": "",
+    "costs": "vet-costs",
+    "map": "vet-map",
+    "travel": "travel-check",
+    "care": "care",
+    "toys": "toys",
+    "food": "food",
+    "sources": "sources",
+    "dataStatus": "data-status",
+    "imprint": "imprint",
+    "privacy": "privacy"
+  },
+  "legacySlugs": {}
 }
