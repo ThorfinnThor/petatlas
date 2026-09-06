@@ -1,0 +1,10 @@
+# Vorläufig in M01-01; vollständige Fassung folgt in M01-04.
+node_modules/
+dist/
+.work/
+.generated/
+reports/
+.env
+.env.*
+!.env.example
+.DS_Store

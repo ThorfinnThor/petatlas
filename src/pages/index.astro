@@ -1,0 +1,29 @@
+---
+/**
+ * M01-01 — Minimale statische Startseite als Nachweis, dass der Build
+ * reines HTML erzeugt. Informationsarchitektur und Inhalte folgen in M04.
+ */
+import { createSiteConfig, readBuildMode } from '../../config/site.ts';
+
+const mode = readBuildMode(process.env);
+const site = createSiteConfig(mode, process.env);
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{site.brandName} — Aufbau</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <main>
+      <h1>{site.brandName}</h1>
+      <p>
+        Diese Seite ist ein Aufbaustand. Es sind noch keine Inhalte, Daten oder
+        Rechner veröffentlicht. Build-Modus: {mode}.
+      </p>
+    </main>
+  </body>
+</html>

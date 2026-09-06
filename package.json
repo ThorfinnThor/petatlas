@@ -1,0 +1,27 @@
+{
+  "name": "petatlas",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Haustierplattform, Startmarkt Deutschland. Arbeitstitel, kein geprüfter Markenname.",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "status": "python3 scripts/project_status.py",
+    "status:validate": "python3 scripts/project_status.py --validate"
+  },
+  "dependencies": {
+    "astro": "7.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@types/node": "26.4.1",
+    "typescript": "6.0.3"
+  }
+}
