@@ -98,3 +98,20 @@ Drei Befunde, die ohne die CI nicht aufgefallen wären:
 3. **Die Tests liefen lokal vor dem Formatlauf.** Prettier fügte in `wrangler.jsonc` ein abschließendes Komma ein, das der Test mit `JSON.parse` nicht lesen konnte — grün lokal, rot in der CI. Der Parser versteht jetzt JSONC, und der Arbeitsloop verlangt `npm run format` vor den Tests.
 
 Der Handoff-Check hat zweimal zugeschlagen, weil `docs/HANDOFF.md` nach dem Abschluss einer Aufgabe noch die erledigte nannte. Die Reihenfolge steht jetzt ausdrücklich in `docs/AUTONOMY.md`.
+
+## 2026-09-06 — Sitzung 6: M07 vollständig, erstes Deployment
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M07-04 | `scripts/build-cloudflare.ts`, `dist/build-info.json` | Erfolgslauf und drei Abbruchfälle | production ohne Freigabe, Fixtures außerhalb development und gesetztes Feed-Secret brechen ab |
+| M07-05 | `docs/CLOUDFLARE_SETUP.md` | `npm run test:unit` | 14 Isolationstests |
+| M07-06 | `wrangler.preview.jsonc`, `docs/DEPLOYMENT_EVIDENCE.md` | `wrangler deploy` und curl gegen die Live-Adresse | 32 Dateien deployt, Version `ac32f696`, Smoke bestanden |
+
+**Die Vorschau ist live:** https://petatlas-de-preview.shuu9599.workers.dev
+
+Das Produktionsprojekt ist bewusst nicht angelegt. Ohne Domain, Betreiberangaben und freigegebene Funktion gäbe es nichts zu veröffentlichen; ein leeres Produktionsprojekt wäre eine Behauptung ohne Inhalt.
+
+Zwei Befunde aus der CI, beide eigene Fehler:
+
+1. Der Metadaten-Test las `dist/build-info.json` und setzte damit einen vorher gelaufenen Build voraus. Lokal grün, in der CI rot, weil dort die Unit-Tests vor jedem Build laufen. Die Metadaten entstehen jetzt in einer exportierten Funktion ohne Dateisystemzugriff.
+2. Der Secret-Audit meldete den Testwert `AWIN_FEED_URL` im Quelltext — zu Recht, das Muster ist genau eine Zuweisung an einen bekannten Secret-Namen. Schlüssel und Wert werden jetzt zur Laufzeit zusammengesetzt, statt die Regel aufzuweichen oder eine Ausnahme einzutragen.

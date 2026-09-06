@@ -1,9 +1,9 @@
 # Projektstatus
 
-Stand: 2026-09-06, Ende Sitzung 5.
+Stand: 2026-09-06, Ende Sitzung 6.
 
-**Erledigt:** 45 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine.
-**Meilensteine vollständig:** M00 bis M06 (je 6/6). M07 bei 3/6.
+**Erledigt:** 48 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine.
+**Meilensteine vollständig:** M00 bis M07 (je 6/6).
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 
@@ -17,15 +17,16 @@ Stand: 2026-09-06, Ende Sitzung 5.
 
 - Import- und Snapshot-System: Adapter-API, sicherer Fetcher, deterministische Normalisierung, Differenzprüfung mit Quarantäne, Sharding, Manifest, atomare Veröffentlichung.
 - CI auf GitHub: zwei Workflows ohne Secrets, Actions auf Commit-SHAs gepinnt, beide grün.
-- Cloudflare: Zugang vorhanden, Assets-only-Konfiguration gegen die echte Laufzeit geprüft.
+- Cloudflare: **Vorschau ist live** unter https://petatlas-de-preview.shuu9599.workers.dev — Fixtures, `noindex`, sichtbarer Testdatenhinweis, Freigabestufe A.
+- `npm run build:cloudflare` bricht ab bei production ohne Freigabe, bei Fixtures außerhalb von development und bei gesetztem Feed-Secret ohne Vertrag.
 
-**Nicht vorhanden:** verbundenes Cloudflare-Projekt, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge.
+**Nicht vorhanden:** Produktionsprojekt, Git-Integration bei Cloudflare, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge.
 
 ## Zahlen der letzten Prüfungen
 
 | Prüfung | Ergebnis |
 |---|---|
-| `npm run test:unit` | 371 Tests in 22 Dateien |
+| `npm run test:unit` | 385 Tests in 23 Dateien |
 | `npx playwright test` | 153 Tests über Chromium, WebKit und mobiles Profil |
 | `npm run lint` / `typecheck` / `format:check` | sauber |
 | `npm run check:security` | 167 Dateien, kein Fund |
@@ -37,6 +38,6 @@ Stand: 2026-09-06, Ende Sitzung 5.
 
 Keine. Cloudflare-Zugang liegt seit 2026-09-06 vor; B-001 ist entschieden.
 
-**Nächster Schritt:** M07-04 (Cloudflare-Buildskript), dann M07-05 und M07-06.
+**Nächster Schritt:** M08-01 (GOT-Importer). Unabhängig daneben: M09-01, M10-01, M12-01.
 
 Maßgeblich ist `project/tasks.json`.
