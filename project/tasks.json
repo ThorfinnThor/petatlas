@@ -1316,8 +1316,16 @@
         "M06-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/normalize/canonical.ts schliesst drei Ursachen fuer Nichtdeterminismus aus: Schluesselreihenfolge (kanonisch sortiert), Listenreihenfolge (stabile Sortierung nach fachlichem Schluessel, Bytefolge statt Systemsprache) und Laufmetadaten (retrievedAt, runId, builtAt werden rekursiv aus dem Inhalts-Hash entfernt). null bleibt null, NaN und Infinity werden abgelehnt statt zu null zu werden, doppelte Schluessel werden gemeldet statt ueberschrieben. 19 Tests: zwei Laeufe ueber dieselbe Eingabe mit unterschiedlichem Abrufzeitpunkt erzeugen denselben Inhalts-Hash und dieselben Fachdaten, der Abrufzeitpunkt bleibt als getrennte Laufmetadaten erhalten. Eine Testpraemisse war falsch formuliert: eine umsortierte Quelldatei ist ein anderer Eingang, weil die Provenienz den Dateihash mitfuehrt; geprueft wird jetzt die identische Ortsliste und die bewusste Hashaenderung.",
+          "reference": "scripts/normalize/canonical.ts; scripts/normalize/places.ts; tests/determinism.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
