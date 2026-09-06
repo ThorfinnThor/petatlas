@@ -1,11 +1,21 @@
 # Projektstatus
 
-Stand: Planungspaket erstellt am 2026-09-06.
+Stand: 2026-09-06, Ende der ersten Implementierungssitzung.
 
-**Implementierung:** nicht begonnen. **Aktuelle Aufgabe:** keine.
-**Erledigt:** 0 von 120 Aufgaben; 0 von 20 Meilensteinen vollständig.
-**Website / GitHub-Repo / Cloudflare-Deployment:** mit diesem Paket nicht erstellt.
+**Erledigt:** 8 von 120 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine.
+**Meilensteine vollständig:** M00 (6/6). Angefangen: M01 (1/6), M02 (1/6).
 
-Nächster Schritt: M00-01 — Arbeitsverzeichnis prüfen.
+**Implementiert:** lokales Git-Repository, Projektvertrag (`config/launch.json`, `config/site.ts`, `docs/SECURITY_SCOPE.md`, `licenses/README.md`), Astro-7-Scaffold mit statischem Build, Aufgabenmanifest als Statusquelle mit Schreibwerkzeug.
 
-Maßgeblich ist project/tasks.json. Nach Beginn aus echten Zuständen und Testnachweisen aktualisieren.
+**Nicht vorhanden:** GitHub-Repo, Remote, Cloudflare-Projekt, Domain, Partnerverträge, Fachfreigaben, veröffentlichte Inhalte. Keine echte Website online.
+
+**Letzte tatsächlich ausgeführte Prüfungen:**
+- `git clone && npm ci && npm run build` im frischen Klon: Build erfolgreich, identische `dist/index.html` (sha256 `5dfe5c37…`).
+- `npx astro check`: 0 Fehler, 0 Warnungen.
+- `node scripts/checks/site-config.check.mjs`: 9 Zusicherungen erfüllt.
+- `python3 scripts/project_status.py --validate`: 120 Aufgaben, keine Konsistenzfehler.
+- `python3 scripts/test_project_status.py`: 10 Tests, OK.
+
+**Nächster Schritt:** M01-03 (Basisqualität: Lint, Typecheck, Vitest, Playwright). M01-02 (öffentliches Repo) wartet auf die Zuweisung von Inhaber und Repo-Namen durch den Betreiber.
+
+Maßgeblich ist `project/tasks.json`.
