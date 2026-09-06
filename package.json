@@ -18,6 +18,7 @@
     "format:check": "prettier --check .",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
+    "check:security": "node scripts/checks/secrets.ts",
     "status": "python3 scripts/project_status.py",
     "status:validate": "python3 scripts/project_status.py --validate"
   },

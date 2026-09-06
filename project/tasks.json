@@ -402,8 +402,16 @@
         "M01-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Vollstaendige .gitignore (.work, .generated, dist, .astro, reports, echte .env), .env.example nur mit leeren bzw. unschaedlichen Werten, scripts/checks/secrets.ts prueft versionierte Dateien und dist. Canary nachgewiesen: gho_-Token in src/ und Cloudflare-Hook-URL in dist/ wurden beide gemeldet, exit 1, Fund maskiert; nach Entfernen exit 0. 22 Unit-Tests gruen. Fixtures ohne Synthetik-Marker werden gemeldet.",
+          "reference": ".gitignore; .env.example; scripts/checks/secrets.ts; tests/secrets-check.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run check:security (mit und ohne Canary), npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

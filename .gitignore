@@ -1,15 +1,31 @@
-# Vorläufig in M01-01/M01-02; vollständige Fassung folgt in M01-04.
+# M01-04 — Was hier steht, ist nicht vertraulich, sondern nur nicht versioniert.
+# Vertraulichkeit entsteht durch den Ablageort eines Secrets, nicht durch diese Datei.
+
+# Abhängigkeiten und Buildausgabe
 node_modules/
 dist/
 .astro/
+
+# Import- und Zwischenstände: Rohfeeds, Downloads, normalisierte Build-Eingaben
 .work/
 .generated/
+
+# Test- und Prüfausgaben
 reports/
+test-results/
+playwright-report/
+coverage/
+
+# Echte Umgebungsdateien. Nur .env.example wird versioniert und enthält
+# ausschließlich leere oder offensichtlich unschädliche Beispielwerte.
 .env
 .env.*
 !.env.example
+
+# Python-Bytecode des Statushelfers
 __pycache__/
 *.pyc
+
+# Betriebssystem
 .DS_Store
-test-results/
-playwright-report/
+Thumbs.db
