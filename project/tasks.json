@@ -1029,8 +1029,16 @@
         "M04-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Visueller Ausgangsstand ueber 8 Seiten und 5 Breiten (360 bis 1600 Pixel) im gebauten Output: 40 Screenshots, horizontaler Ueberlauf 0, kein abgeschnittener Text, genau eine H1 je Seite, keine Konsolenfehler. Ein echter Befund wurde behoben: der Testdatenhinweis lief ueber die volle Fensterbreite, weil er ausserhalb von <main> steht; er hat jetzt dieselbe Inhaltsbreite. Die Pruefungen liegen als tests/e2e/ui-baseline.spec.ts vor und laufen bei jedem Lauf mit. 141 E2E-Tests gruen.",
+          "reference": "docs/UI_BASELINE.md; tests/e2e/ui-baseline.spec.ts; reports/screenshots/",
+          "verified_at": "2026-09-06",
+          "command": "npx playwright test && node .work/baseline.mjs",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -45,11 +45,14 @@ const canonical = route ? canonicalUrl(build.baseUrl, market, route) : null;
     <SiteHeader market={market} brandName={site.brandName} aktuellerPfad={Astro.url.pathname} />
     {
       build.showTestDataBanner && (
-        <Notice variante="testdaten" titel="Testdaten" testId="test-data-banner">
-          <p>
-            Dieser Build zeigt synthetische Beispieldaten. Keine echten Praxen, Preise oder Regeln.
-          </p>
-        </Notice>
+        <div class="randbreite">
+          <Notice variante="testdaten" titel="Testdaten" testId="test-data-banner">
+            <p>
+              Dieser Build zeigt synthetische Beispieldaten. Keine echten Praxen, Preise oder
+              Regeln.
+            </p>
+          </Notice>
+        </div>
       )
     }
     <main>
@@ -58,3 +61,12 @@ const canonical = route ? canonicalUrl(build.baseUrl, market, route) : null;
     <SiteFooter market={market} betreiber={site.operator.legalName} />
   </body>
 </html>
+
+<style>
+  /* Der Testdatenhinweis steht außerhalb von <main> und braucht dieselbe
+     Inhaltsbreite, damit er nicht über die ganze Fensterbreite läuft. */
+  .randbreite {
+    max-width: var(--breite-inhalt);
+    margin-inline: auto;
+  }
+</style>
