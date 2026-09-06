@@ -1,0 +1,16 @@
+dist/
+node_modules/
+.astro/
+.work/
+.generated/
+reports/
+test-results/
+playwright-report/
+package-lock.json
+# Vorlagen aus dem Planungspaket bleiben unveraendert.
+templates/
+project/tasks.json
+
+# Markdown bleibt handgeschrieben: Plan- und Statusdokumente sollen nicht bei
+# jedem Formatlauf umgebrochen werden. Inhaltliche Pflege statt Autoformat.
+*.md

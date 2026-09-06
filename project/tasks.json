@@ -369,8 +369,16 @@
         "M01-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "ESLint 10 Flat Config, Prettier, Vitest 5 und Playwright 1.63 eingerichtet, alle Versionen exakt gepinnt und in docs/TOOLCHAIN.md begruendet. Lint/Typecheck/Format sauber, 9 Unit-Tests gruen, Playwright listet 3 Tests. Canary src/canary-tmp.ts liess typecheck (ts2322) und lint (4 Fehler) mit exit 1 scheitern und wurde wieder entfernt.",
+          "reference": "eslint.config.js; vitest.config.ts; playwright.config.ts; .prettierrc.json; tests/site-config.test.ts; docs/TOOLCHAIN.md",
+          "verified_at": "2026-09-06",
+          "command": "npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npx playwright test --list",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

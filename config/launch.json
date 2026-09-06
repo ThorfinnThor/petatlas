@@ -11,14 +11,46 @@
     "note": "Erste Produktion nur nach den Launch-Gates aus docs/QUALITY_GATES.md und M18/M19."
   },
   "gates": {
-    "operatorImprint": { "approved": false, "owner": "Betreiber", "note": "Echte Impressums-/Kontaktangaben; keine erfundenen Rechtsangaben." },
-    "domain": { "approved": false, "owner": "Betreiber", "note": "SITE_URL; bis dahin example.invalid nur in development." },
-    "dataRights": { "approved": false, "owner": "prüfende Person", "note": "Publikationsrechte je Quelle inklusive öffentlicher JSON-Weitergabe." },
-    "costsRules": { "approved": false, "owner": "fachlich prüfende Person", "note": "GOT-Regeln, siehe M08-06." },
-    "travelRules": { "approved": false, "owner": "fachlich prüfende Person", "note": "Einreiseregeln, siehe M12-06." },
-    "insuranceAffiliate": { "approved": false, "owner": "Betreiber mit Rechtsprüfung", "note": "Kein individualisierter Tarifvergleich." },
-    "commerceAffiliate": { "approved": false, "owner": "Betreiber", "note": "Partnerverträge und erlaubte Anzeigefelder." },
-    "adsTracking": { "approved": false, "owner": "Betreiber", "note": "Ads und Marketing-Tracking bleiben aus." }
+    "operatorImprint": {
+      "approved": false,
+      "owner": "Betreiber",
+      "note": "Echte Impressums-/Kontaktangaben; keine erfundenen Rechtsangaben."
+    },
+    "domain": {
+      "approved": false,
+      "owner": "Betreiber",
+      "note": "SITE_URL; bis dahin example.invalid nur in development."
+    },
+    "dataRights": {
+      "approved": false,
+      "owner": "prüfende Person",
+      "note": "Publikationsrechte je Quelle inklusive öffentlicher JSON-Weitergabe."
+    },
+    "costsRules": {
+      "approved": false,
+      "owner": "fachlich prüfende Person",
+      "note": "GOT-Regeln, siehe M08-06."
+    },
+    "travelRules": {
+      "approved": false,
+      "owner": "fachlich prüfende Person",
+      "note": "Einreiseregeln, siehe M12-06."
+    },
+    "insuranceAffiliate": {
+      "approved": false,
+      "owner": "Betreiber mit Rechtsprüfung",
+      "note": "Kein individualisierter Tarifvergleich."
+    },
+    "commerceAffiliate": {
+      "approved": false,
+      "owner": "Betreiber",
+      "note": "Partnerverträge und erlaubte Anzeigefelder."
+    },
+    "adsTracking": {
+      "approved": false,
+      "owner": "Betreiber",
+      "note": "Ads und Marketing-Tracking bleiben aus."
+    }
   },
   "excludedFromStartScope": [
     "Laufzeitdatenbank (Supabase, Postgres, D1, KV, Firebase)",
