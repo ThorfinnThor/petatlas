@@ -54,7 +54,7 @@ function aufloesenGitCommit(): string | null {
   }
 }
 
-interface BuildInfo {
+export interface BuildInfo {
   readonly builtAt: string;
   readonly buildMode: string;
   readonly gitCommit: string | null;
@@ -68,6 +68,32 @@ interface BuildInfo {
     readonly termsHash: string | null;
   }[];
   readonly steps: readonly string[];
+}
+
+/**
+ * Baut die Build-Metadaten. Als eigene Funktion, damit sie prüfbar ist, ohne
+ * dass vorher ein Build gelaufen sein muss.
+ */
+export function erstelleBuildInfo(options: {
+  buildMode: string;
+  gitCommit: string | null;
+  openDataRef: string | null;
+  steps: readonly string[];
+}): BuildInfo {
+  return {
+    builtAt: new Date().toISOString(),
+    buildMode: options.buildMode,
+    gitCommit: options.gitCommit,
+    openDataRef: options.openDataRef,
+    nodeVersion: process.version,
+    sources: allSources().map((quelle) => ({
+      sourceId: quelle.sourceId,
+      rightsStatus: quelle.rights.status,
+      licenseId: quelle.rights.licenseId,
+      termsHash: quelle.rights.termsHash,
+    })),
+    steps: [...options.steps],
+  };
 }
 
 function main(): number {
@@ -123,20 +149,12 @@ function main(): number {
   fuehreAus('Secret- und Fixture-Audit über dist', 'npm', ['run', 'check:security']);
 
   // Schritt 8 — Build-Metadaten mit den exakten Eingaben.
-  const info: BuildInfo = {
-    builtAt: new Date().toISOString(),
+  const info = erstelleBuildInfo({
     buildMode: build.mode,
     gitCommit,
     openDataRef,
-    nodeVersion: process.version,
-    sources: allSources().map((quelle) => ({
-      sourceId: quelle.sourceId,
-      rightsStatus: quelle.rights.status,
-      licenseId: quelle.rights.licenseId,
-      termsHash: quelle.rights.termsHash,
-    })),
     steps: SCHRITTE.map((schritt) => schritt.name),
-  };
+  });
 
   const pfad = join('dist', 'build-info.json');
   writeFileSync(pfad, `${JSON.stringify(info, null, 2)}\n`, 'utf8');
@@ -145,9 +163,11 @@ function main(): number {
   return 0;
 }
 
-try {
-  process.exit(main());
-} catch (fehler) {
-  console.error(`\n✗ ${(fehler as Error).message}`);
-  process.exit(1);
+if (import.meta.filename === process.argv[1]) {
+  try {
+    process.exit(main());
+  } catch (fehler) {
+    console.error(`\n✗ ${(fehler as Error).message}`);
+    process.exit(1);
+  }
 }
