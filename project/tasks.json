@@ -336,8 +336,16 @@
         "M01-01"
       ],
       "kind": "external_gate",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Neues oeffentliches Repo ThorfinnThor/petatlas nach Betreiberzuweisung angelegt; Secret- und Historienpruefung ohne Treffer; origin gesetzt, main gepusht und Public-Status per API geprueft.",
+          "reference": "docs/REPOSITORY.md; https://github.com/ThorfinnThor/petatlas",
+          "verified_at": "2026-09-06",
+          "command": "gh repo view ThorfinnThor/petatlas --json visibility,defaultBranchRef",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

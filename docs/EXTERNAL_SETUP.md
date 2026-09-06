@@ -43,7 +43,7 @@ Stand 2026-09-06. `offen` heißt: noch nicht geliefert. Keine Zeile behauptet ei
 
 | # | Voraussetzung | Status | Zuständiger Entscheider | Zuerst betroffene Aufgabe | Arbeit läuft weiter an |
 |---|---|---|---|---|---|
-| 1 | GitHub-Inhaber und Repo-Name für das öffentliche Repository | offen (CLI-Login `ThorfinnThor` vorhanden, aber keine Repo-Zuweisung) | Betreiber | M01-02 | allen lokalen Aufgaben; lokale Commits laufen |
+| 1 | GitHub-Inhaber und Repo-Name für das öffentliche Repository | **erledigt 2026-09-06:** `ThorfinnThor/petatlas`, public, Default-Branch `main` | Betreiber | M01-02 | — |
 | 2 | Cloudflare-Account und Repo-Anbindung | offen (keine Anmeldung im Projektkontext) | Betreiber | M07-03 | Build-/Konfigurationsarbeit lokal |
 | 3 | Domain und `PUBLIC_SITE_URL` | offen | Betreiber | M18-05 | development/preview mit `example.invalid` |
 | 4 | Impressum, Kontakt, echte Betreiberangaben | offen | Betreiber | M18-04 | Seitengerüst ohne Rechtsangaben |
