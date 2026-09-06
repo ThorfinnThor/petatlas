@@ -744,8 +744,16 @@
         "M03-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "src/domain/source.ts typisiert Provenienz mit Pflichtfeldern und trennt Abruf von fachlicher Pruefung: approved ohne reviewedAt wird abgelehnt, ein erneuter Abruf laesst reviewStatus unveraendert, eine sourceUrl mit Zugangstoken wird zurueckgewiesen. src/domain/rights.ts entscheidet je Ausgabeform (HTML, oeffentliches JSON, Repository, Bilder) und ist fail-closed: null heisst ungeprueft und damit verboten, commercialUse allein genuegt nicht, verified ohne Datum, Nachweis oder Lizenz wird abgelehnt. 25 Vertragstests.",
+          "reference": "src/domain/source.ts; src/domain/rights.ts; src/domain/schemas/index.ts; tests/contracts/provenance-rights.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit && npm run typecheck",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
