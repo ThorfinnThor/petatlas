@@ -8,6 +8,12 @@ Es gibt keine fachliche Freigabe, keine prüfende Person und keine tierärztlich
 
 Der Code ist fertig und getestet. Offen ist ausschließlich die fachliche Abnahme.
 
+## Stand der Prüfung
+
+**2026-09-06:** Der Betreiber hat entschieden, den Rechner zum Ausprobieren freizuschalten und die Prüfung zunächst mit einem Sprachmodell (ChatGPT) vorzunehmen. Bis ein Ergebnis eingetragen ist, gilt der Rechner als **nicht abgenommen**; die Seite trägt einen sichtbaren Warnhinweis, und das Feature Flag in der versionierten Konfiguration bleibt aus — freigeschaltet ist die Vorschau, nicht die Produktion.
+
+Eine Prüfung durch ein Sprachmodell ist eine Vorabkontrolle. Sie ersetzt keine qualifizierte fachliche Abnahme und darf hier nicht als solche eingetragen werden. Wird die Freigabe darauf gestützt, gehört genau das in die Zeile „prüfende Person“ — etwa „Vorabprüfung durch ein Sprachmodell, keine qualifizierte fachliche Abnahme“.
+
 ## Wer prüfen kann
 
 Eine Person mit belastbarer Kenntnis der tierärztlichen Gebührenabrechnung — etwa eine Tierärztin oder ein Tierarzt mit Abrechnungserfahrung, eine tierärztliche Verrechnungsstelle oder eine entsprechend spezialisierte Rechtsberatung. Der Betreiber wählt sie aus; sie wird hier mit Namen oder Funktion und Datum eingetragen.

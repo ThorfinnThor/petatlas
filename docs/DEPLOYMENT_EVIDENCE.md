@@ -10,6 +10,7 @@ Stand 2026-09-06 (M07-06). Hier stehen nur Dinge, die tatsächlich passiert sind
 | Typ | Workers Static Assets, assets-only |
 | Adresse | https://petatlas-de-preview.shuu9599.workers.dev |
 | Version-ID des ersten Deployments | `ac32f696-4e03-4edb-815b-d1445cce9f11` |
+| Version-ID des Deployments mit Rechner | `bea46aa2-e80d-4780-9fbf-8972cafa40b5` (2026-09-06) |
 | Deployter Commit | `fbbb7c17c6a29eb5d6601ee93ee46d8e2e289b46` |
 | Build-Modus | `development` — Fixtures, sichtbarer Testdatenhinweis, `noindex` |
 | Hochgeladene Dateien | 32 |
@@ -44,6 +45,16 @@ Ausgeführt gegen die echte Adresse, nicht lokal:
 | `/build-info.json` | `development`, Commit `fbbb7c17c6a2`, Node v24.19.0 |
 
 Screenshots des laufenden Deployments: `reports/screenshots/live-start-desktop.png` und `live-start-mobil.png`. `reports/` ist nicht versioniert.
+
+## Rechner in der Vorschau (2026-09-06)
+
+Auf Wunsch des Betreibers ist der Tierarztkosten-Rechner in der Vorschau freigeschaltet, damit er ausprobiert werden kann: `ENABLE_FEATURES=costs npm run build:site`.
+
+**Die versionierte Marktkonfiguration bleibt unverändert** — `costs` steht in `config/markets/DE.json` weiterhin auf `false`. Freigeschaltet ist die Vorschau, nicht die Produktion. Ein Produktionsbuild würde den Rechner nicht enthalten, und er ist ohnehin durch die Launch-Gates gesperrt.
+
+Die Seite trägt einen sichtbaren Warnhinweis „Fachlich noch nicht geprüft“, solange `clinicalReview` nicht auf `approved` steht.
+
+Gegen die Live-Adresse geprüft: 1006 Positionen geladen, Position 1 mit Faktor 2 und Menge 3 ergibt 80,40 € brutto, Warnhinweis sichtbar, keine Konsolenfehler.
 
 ## Einordnung
 

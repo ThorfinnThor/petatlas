@@ -38,6 +38,19 @@ const quelle = snapshot.source as {
   eine echte Rechnung kann Positionen enthalten, die hier niemand ausgewählt hat.
 </p>
 
+{
+  COST_CONFIG.clinicalReview !== 'approved' && (
+    <Notice variante="warnung" titel="Fachlich noch nicht geprüft" testId="ungeprueft">
+      <p>
+        Die Rechenannahmen dieses Rechners — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und
+        Rundung — sind <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Der
+        Rechner ist zum Ausprobieren freigeschaltet, nicht als Auskunft. Verlassen Sie sich nicht
+        auf die Beträge.
+      </p>
+    </Notice>
+  )
+}
+
 <DataStatus
   stand={quelle.effectiveFrom}
   quelle={`${quelle.sourceVersion} · ${quelle.legalBasis}`}

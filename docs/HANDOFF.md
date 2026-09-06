@@ -38,7 +38,7 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 **M09-01 — Partnervertragsschema bauen.** Alternativ M10-01 (OSM-Pilot) oder M12-01 (Reisekontext).
 
-**M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Das blockiert nur seine öffentliche Aktivierung. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`.
+**M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Er ist auf Wunsch des Betreibers in der **Vorschau** freigeschaltet und dort mit sichtbarem Warnhinweis erreichbar; die versionierte Marktkonfiguration bleibt auf `costs: false`. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`, die Merkliste in `TODO.md`.
 
 **Rechner ansehen:** `ENABLE_FEATURES=costs npm run build:site && npx astro preview` — der Override wirkt nur in `development`.
 

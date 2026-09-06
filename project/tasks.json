@@ -1831,7 +1831,8 @@
         "owner": "Betreiber"
       },
       "notes": [
-        "Blockiert ausschliesslich die oeffentliche Aktivierung. Der Code ist vollstaendig: 456 Unit-Tests und 30 Feature-E2E-Tests laufen gruen, der Rechner ist hinter dem Feature Flag mit ENABLE_FEATURES=costs vollstaendig bedienbar."
+        "Blockiert ausschliesslich die oeffentliche Aktivierung. Der Code ist vollstaendig: 456 Unit-Tests und 30 Feature-E2E-Tests laufen gruen, der Rechner ist hinter dem Feature Flag mit ENABLE_FEATURES=costs vollstaendig bedienbar.",
+        "2026-09-06: Auf Wunsch des Betreibers ist der Rechner in der Vorschau freigeschaltet (ENABLE_FEATURES=costs beim Deployment), damit er ausprobiert werden kann. Die versionierte Marktkonfiguration bleibt auf costs=false; die Seite traegt einen sichtbaren Warnhinweis 'Fachlich noch nicht geprueft'. Der Betreiber laesst zunaechst mit einem Sprachmodell vorpruefen; das ist keine qualifizierte fachliche Abnahme und wird in docs/reviews/costs.md als solche kenntlich gemacht. Offener Punkt zusaetzlich in TODO.md."
       ]
     },
     {
