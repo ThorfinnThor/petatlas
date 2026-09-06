@@ -44,6 +44,7 @@ Bei fehlendem Account, Secret, Vertrag oder Fachreview nur die betroffene Aufgab
 Dokumentiere: Ursache, benötigte Aktion, zuständiger Entscheider, unabhängige Folgeaufgabe.
 Nutze klar synthetische Fixtures für Entwicklung; produktive Features bleiben bei Bedarf aus.
 Nach drei erfolglosen ernsthaften Korrekturversuchen Ursache dokumentieren, dann neu bewerten.
+Der ausführliche Arbeits- und Fehlerloop mit der Dreierregel steht in docs/AUTONOMY.md.
 Keine Endlosschleife, kein Umgehen von Limits, Captchas, Lizenz- oder Freigabesystemen.
 Stelle keine Rückfragen zu Entscheidungen, die bereits in den ADRs festgelegt sind.
 Eine echte nicht lösbare externe Voraussetzung darf als Blocker gemeldet werden.

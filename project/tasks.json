@@ -619,8 +619,14 @@
         "M02-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Arbeits- und Fehlerloop in docs/AUTONOMY.md festgelegt: neun Schritte je Aufgabe, Dreierregel gegen Endlosschleifen mit Pflicht zur Hypothesendokumentation, ausdrueckliche Liste dessen, was nie als Fortschritt zaehlt, und Abgrenzung Blocker gegen Fehler. CLAUDE.md verweist darauf.",
+          "reference": "docs/AUTONOMY.md; CLAUDE.md",
+          "verified_at": "2026-09-06"
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -642,8 +648,16 @@
         "M02-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Wiederaufnahme geprobt: scripts/checks/handoff.py vergleicht docs/HANDOFF.md maschinell mit dem Manifest. Der erste Lauf schlug fehl und meldete den veralteten Handoff (nannte die bereits erledigten M01-02 und M02-02 als naechsten Schritt, aber keine ausfuehrbare Aufgabe). Nach der Aktualisierung exit 0.",
+          "reference": "scripts/checks/handoff.py; docs/HANDOFF.md; npm-Skript check:handoff",
+          "verified_at": "2026-09-06",
+          "command": "npm run check:handoff",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
