@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // M07-06 — Getrenntes Preview-Projekt.
+  //
+  // Bewusst ein eigenes Cloudflare-Projekt und nicht ein zweiter Branch im
+  // Produktionsprojekt: die Secret-Grenze liegt in der Projektkonfiguration,
+  // nicht in einer Abfrage im Repository-Code (docs/CLOUDFLARE_SETUP.md).
+  //
+  // Hier liegen niemals Partner-Secrets. Der Build ist noindex und trägt den
+  // sichtbaren Testdatenhinweis; er ist keine öffentliche Produktseite.
+  "name": "petatlas-de-preview",
+  "compatibility_date": "2026-09-06",
+
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page",
+  },
+
+  // Anders als im Produktionsprojekt: die Vorschau braucht eine erreichbare
+  // Adresse, sonst lässt sich nichts prüfen.
+  "workers_dev": true,
+}

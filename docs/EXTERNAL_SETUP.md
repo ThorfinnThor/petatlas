@@ -44,7 +44,7 @@ Stand 2026-09-06. `offen` heißt: noch nicht geliefert. Keine Zeile behauptet ei
 | # | Voraussetzung | Status | Zuständiger Entscheider | Zuerst betroffene Aufgabe | Arbeit läuft weiter an |
 |---|---|---|---|---|---|
 | 1 | GitHub-Inhaber und Repo-Name für das öffentliche Repository | **erledigt 2026-09-06:** `ThorfinnThor/petatlas`, public, Default-Branch `main` | Betreiber | M01-02 | — |
-| 2 | Cloudflare-Account und Repo-Anbindung | offen (keine Anmeldung im Projektkontext) | Betreiber | M07-03 | Build-/Konfigurationsarbeit lokal |
+| 2 | Cloudflare-Account | **erledigt 2026-09-06:** Zugang erteilt, Vorschauprojekt `petatlas-de-preview` deployt. Git-Integration und Produktionsprojekt bewusst noch nicht angelegt | Betreiber | — | — |
 | 3 | Domain und `PUBLIC_SITE_URL` | offen | Betreiber | M18-05 | development/preview mit `example.invalid` |
 | 4 | Impressum, Kontakt, echte Betreiberangaben | offen | Betreiber | M18-04 | Seitengerüst ohne Rechtsangaben |
 | 5 | Prüfung der Datenrechte je Quelle | **erledigt 2026-09-06:** OSM-Extrakt `verified` (ODbL 1.0), GOT `verified` über den offiziellen XML-Download (ADR-018). Betriebsprüfung des Abrufs offen als M17-07 | prüfende Person; bei eindeutigen offenen Quellen dokumentierte Primärprüfung | — | — |

@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M06 vollständig, M07 bei 5/6 (47 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig (48 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,7 +36,11 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M07-06 — Cloudflare wirklich verbinden und Smoke testen.** Projekt `petatlas-de` anlegen, ein Deployment auslösen, echte URL und Build-ID in `docs/DEPLOYMENT_EVIDENCE.md` festhalten.
+**M08-01 — GOT-Importer erstellen.** Bezugsweg ist nach ADR-018 der offizielle XML-ZIP-Download; die Vorgaben zu Snapshot, Fehlerverhalten und Provenienz stehen dort.
+
+Alternativ unabhängig: M09-01 (Partnervertragsschema), M10-01 (OSM-Pilot), M12-01 (Reisekontext).
+
+**Live erreichbar:** https://petatlas-de-preview.shuu9599.workers.dev — technische Vorschau mit Fixtures, `noindex`. Nachweise in `docs/DEPLOYMENT_EVIDENCE.md`.
 
 **Reihenfolge beim Abschluss einer Aufgabe:** erst `docs/HANDOFF.md` auf die *nächste* Aufgabe fortschreiben, dann den Status setzen und beides gemeinsam committen. Sonst schlägt `npm run check:handoff` in der CI fehl — genau das ist beim ersten CI-Lauf passiert.
 

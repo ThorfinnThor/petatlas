@@ -1622,8 +1622,16 @@
         "M07-01"
       ],
       "kind": "external_gate",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Cloudflare-Vorschauprojekt petatlas-de-preview tatsaechlich angelegt und deployt: 32 Dateien, Version-ID ac32f696-4e03-4edb-815b-d1445cce9f11, Commit fbbb7c17. Erreichbar unter https://petatlas-de-preview.shuu9599.workers.dev. Smoke gegen die echte Adresse: /de-de/, /de-de/quellen/ und /de-de/impressum/ antworten 200, eine unbekannte Adresse und die abgeschaltete Rechnerroute 404, ohne Schraegstrich 307; CSP, X-Frame-Options DENY und nosniff werden ausgeliefert; robots ist noindex, der Testdatenhinweis sichtbar; keine Konsolenfehler; /build-info.json nennt Modus, Commit und Node-Version. Das Produktionsprojekt petatlas-de ist bewusst NICHT angelegt und die Git-Integration nicht verbunden, weil es nichts Produktionsreifes gibt: keine Domain, keine Betreiberangaben, alle Launch-Gates false.",
+          "reference": "docs/DEPLOYMENT_EVIDENCE.md; wrangler.preview.jsonc; https://petatlas-de-preview.shuu9599.workers.dev",
+          "verified_at": "2026-09-06",
+          "command": "npx wrangler deploy --config wrangler.preview.jsonc; curl gegen die Live-Adresse",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
