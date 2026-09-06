@@ -1589,8 +1589,16 @@
         "M07-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "docs/CLOUDFLARE_SETUP.md haelt die Trennung fest: Produktion baut nur main, eine Vorschau entsteht in einem eigenen Projekt ohne Partner-Secrets, und eine Branch-Abfrage im Repository-Code ist ausdruecklich keine Secret-Grenze, weil derselbe Pull Request sie aendern koennte. tests/build-security.test.ts belegt mit 14 Tests: der Build bricht bei production ohne Freigabe, bei Fixtures ausserhalb von development und bei gesetztem Feed-Secret ohne Vertrag ab; preview ist nie indexierbar und haelt Affiliate aus; eine fehlende Variable ergibt development, nie production; kein Workflow nutzt pull_request_target, fordert ein Secret an oder behaelt Anmeldedaten im Runner. noindex ist ausdruecklich als nicht vertraulich beschrieben.",
+          "reference": "docs/CLOUDFLARE_SETUP.md; tests/build-security.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
