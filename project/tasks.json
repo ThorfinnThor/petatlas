@@ -1283,8 +1283,16 @@
         "M06-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/ingest/fetch.ts nimmt eine Quell-ID entgegen, keine URL: die Adresse kommt aus der Registry, damit keine Eingabe von aussen bestimmt, was abgerufen wird. 28 Tests belegen: file:, data:, javascript:, http und ftp werden abgelehnt; ein Host ausserhalb der Registry ebenso, auch als Ziel einer Weiterleitung; jede Weiterleitung wird einzeln geprueft, eine Schleife bricht ab, eine Weiterleitung ohne Location ebenso; eine zu gross angekuendigte Antwort wird abgelehnt ohne sie zu lesen, eine zu grosse ohne content-length nach dem Lesen, eine leere Antwort gilt nicht als gueltiger Stand; Retry-After wird beachtet, auf ein Maximum gedeckelt und nach der erlaubten Zahl Versuche aufgegeben; 304 ist ein regulaeres Ergebnis; Logs und Fehlertexte enthalten weder Query noch Fragment.",
+          "reference": "scripts/ingest/fetch.ts; tests/fetch.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
