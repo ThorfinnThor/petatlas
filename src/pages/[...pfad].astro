@@ -1,0 +1,61 @@
+---
+/**
+ * M04-03 — Alle Marktseiten entstehen aus der Route Registry.
+ *
+ * `getStaticPaths` erzeugt genau die Pfade, die `buildablePaths` nennt. Damit
+ * kann per Konstruktion keine Seite gebaut werden, die es laut Registry nicht
+ * gibt — und kein Navigationseintrag auf eine leere Ankündigungsseite zeigen.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { allMarkets, requireMarket, type MarketConfig } from '../domain/market.ts';
+import { translate, type LocaleId } from '../domain/i18n.ts';
+import { ROUTES, routeExists, routePath, type RouteKey } from '../lib/routes.ts';
+
+import Care from '../components/pages/Care.astro';
+import Costs from '../components/pages/Costs.astro';
+import DataStatusPage from '../components/pages/DataStatusPage.astro';
+import Food from '../components/pages/Food.astro';
+import Home from '../components/pages/Home.astro';
+import Imprint from '../components/pages/Imprint.astro';
+import Map from '../components/pages/Map.astro';
+import Privacy from '../components/pages/Privacy.astro';
+import Sources from '../components/pages/Sources.astro';
+import Toys from '../components/pages/Toys.astro';
+import Travel from '../components/pages/Travel.astro';
+
+export function getStaticPaths() {
+  return allMarkets()
+    .filter((market) => market.enabled)
+    .flatMap((market) =>
+      ROUTES.filter((route) => routeExists(market, route.key)).map((route) => ({
+        // Astro erwartet den Pfad ohne führenden und abschließenden Schrägstrich.
+        params: { pfad: routePath(market, route.key).slice(1, -1) || undefined },
+        props: { marketId: market.id, routeKey: route.key },
+      })),
+    );
+}
+
+interface Props {
+  marketId: string;
+  routeKey: RouteKey;
+}
+
+const { marketId, routeKey } = Astro.props as Props;
+const market: MarketConfig = requireMarket(marketId);
+const locale = market.locale as LocaleId;
+const titel = translate(locale, `nav.${routeKey}`);
+---
+
+<BaseLayout title={titel} route={routeKey}>
+  {routeKey === 'home' && <Home market={market} />}
+  {routeKey === 'costs' && <Costs />}
+  {routeKey === 'map' && <Map />}
+  {routeKey === 'travel' && <Travel />}
+  {routeKey === 'care' && <Care />}
+  {routeKey === 'toys' && <Toys />}
+  {routeKey === 'food' && <Food />}
+  {routeKey === 'sources' && <Sources />}
+  {routeKey === 'dataStatus' && <DataStatusPage />}
+  {routeKey === 'imprint' && <Imprint />}
+  {routeKey === 'privacy' && <Privacy />}
+</BaseLayout>

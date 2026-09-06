@@ -1,0 +1,40 @@
+---
+/**
+ * M04-03 — Datenschutzseite.
+ *
+ * Beschreibt nur, was der aktuelle Build tatsächlich tut. Es wird nicht
+ * behauptet, es gebe keine Cookies, solange nicht alle aktiven Integrationen
+ * geprüft sind — im Startumfang gibt es schlicht keine.
+ */
+import { resolveBuildConfig } from '../../../config/build.ts';
+import Notice from '../Notice.astro';
+
+const build = resolveBuildConfig();
+---
+
+<h1>Datenschutz</h1>
+
+<h2>Was dieser Aufbaustand tut</h2>
+<ul>
+  <li>Die Seiten sind statisches HTML ohne Serverlogik und ohne Datenbank.</li>
+  <li>Es gibt keine Anmeldung, kein Konto und keine Formularübertragung an einen Server.</li>
+  <li>Es sind keine Analyse-, Werbe- oder Trackingdienste eingebunden.</li>
+  <li>Es wird kein Standort abgefragt.</li>
+  <li>Der Build setzt keine Cookies und lädt keine Inhalte von Drittanbietern.</li>
+</ul>
+
+<Notice variante="hinweis" titel="Gilt für den aktuellen Stand">
+  <p>
+    Diese Beschreibung bezieht sich auf den Funktionsumfang dieses Builds (<strong
+      >{build.mode}</strong
+    >). Kommen Karte, Partnerangebote oder Bilder Dritter hinzu, wird sie vor deren Freigabe
+    überarbeitet und geprüft.
+  </p>
+</Notice>
+
+<h2>Rechtliche Angaben</h2>
+<p>
+  Eine vollständige Datenschutzerklärung mit Verantwortlichem, Rechtsgrundlagen und
+  Betroffenenrechten setzt Betreiberangaben und eine rechtliche Prüfung voraus. Beides liegt für
+  diesen Aufbaustand nicht vor; es wird hier bewusst kein Platzhaltertext ausgegeben.
+</p>

@@ -1,0 +1,48 @@
+---
+/**
+ * M04-03 — Startseite.
+ *
+ * Nennt nur, was es tatsächlich gibt. Solange keine Funktion freigegeben ist,
+ * sagt die Seite das, statt eine Liste kommender Werkzeuge zu versprechen.
+ */
+import type { MarketConfig } from '../../domain/market.ts';
+import { translate, type LocaleId } from '../../domain/i18n.ts';
+import { navigationFor } from '../../lib/routes.ts';
+import Notice from '../Notice.astro';
+
+interface Props {
+  market: MarketConfig;
+}
+
+const { market } = Astro.props;
+const locale = market.locale as LocaleId;
+const werkzeuge = navigationFor(market, 'main').filter((item) => item.key !== 'home');
+---
+
+<h1>PetAtlas</h1>
+<p>
+  Informationen rund um Hund und Katze in Deutschland: Tierarztkosten, Tierärzte in der Nähe und ein
+  Reisecheck. Die Daten stammen aus offenen Quellen; jede Seite nennt ihren Stand und ihre Herkunft.
+</p>
+
+{
+  werkzeuge.length > 0 ? (
+    <>
+      <h2>Werkzeuge</h2>
+      <ul>
+        {werkzeuge.map((item) => (
+          <li>
+            <a href={item.path}>{translate(locale, item.labelKey)}</a>
+          </li>
+        ))}
+      </ul>
+    </>
+  ) : (
+    <Notice variante="hinweis" titel="Noch keine Funktion freigegeben">
+      <p>
+        Es ist bisher kein Werkzeug freigeschaltet. Eine Funktion erscheint hier erst, wenn ihre
+        Daten vorliegen und fachlich geprüft sind — nicht als leere Ankündigung.
+      </p>
+    </Notice>
+  )
+}

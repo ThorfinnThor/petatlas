@@ -44,7 +44,7 @@ test('Unbekannter Datenstand wird als unbekannt ausgewiesen', async ({ page }) =
 });
 
 test('Kein horizontales Scrollen auf den vorhandenen Seiten', async ({ page }) => {
-  for (const pfad of ['/', '/entwicklung/designprobe/', '/entwicklung/formularprobe/']) {
+  for (const pfad of ['/de-de/', '/entwicklung/designprobe/', '/entwicklung/formularprobe/']) {
     await page.goto(pfad);
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,

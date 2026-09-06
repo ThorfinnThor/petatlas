@@ -933,8 +933,16 @@
         "M04-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Alle Marktseiten entstehen aus der Route Registry ueber getStaticPaths; es kann per Konstruktion keine Seite gebaut werden, die die Registry nicht kennt. Der Build erzeugt genau /de-de/, /de-de/quellen/, /de-de/datenstand/, /de-de/impressum/, /de-de/datenschutz/ plus 404 und die zwei Entwicklungsseiten. Templates fuer Rechner, Karte, Reisecheck, Pflege, Spielzeug und Futter liegen vor, werden aber ohne Feature Flag nicht gebaut: /de-de/tierarztkosten/ antwortet mit 404. 9 E2E-Tests belegen unter anderem, dass jeder Navigationseintrag 200 liefert, dass keine abgeschaltete Funktion verlinkt ist, dass die Startseite keine 'demnaechst'-Floskel enthaelt und dass das Impressum keine Betreiberangaben erfindet. 60 E2E-Tests gruen.",
+          "reference": "src/pages/[...pfad].astro; src/components/pages/; tests/e2e/navigation.spec.ts",
+          "verified_at": "2026-09-06",
+          "command": "npx playwright test",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

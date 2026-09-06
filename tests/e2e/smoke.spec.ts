@@ -14,7 +14,7 @@ function collectErrors(page: Page): string[] {
 
 test('Startseite lädt ohne Konsolenfehler und nennt den Aufbaustand', async ({ page }) => {
   const errors = collectErrors(page);
-  const response = await page.goto('/');
+  const response = await page.goto('/de-de/');
 
   expect(response?.status()).toBe(200);
   await expect(page.locator('h1')).toHaveText('PetAtlas');

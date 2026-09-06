@@ -1,0 +1,44 @@
+---
+/**
+ * M04-03 — Datenstandseite.
+ *
+ * Beantwortet die Frage „wie aktuell ist das hier?“ an einer Stelle für die
+ * ganze Website.
+ */
+import { resolveBuildConfig } from '../../../config/build.ts';
+import Notice from '../Notice.astro';
+
+const build = resolveBuildConfig();
+---
+
+<h1>Datenstand</h1>
+<p>
+  Diese Seite zeigt, welche Datensätze ausgeliefert werden, wann sie zuletzt abgerufen wurden und
+  bis wann sie gelten.
+</p>
+
+{
+  build.dataSource === 'fixtures' && (
+    <Notice variante="warnung" titel="Dieser Build zeigt Testdaten">
+      <p>
+        Der aktuelle Build läuft im Modus <strong>{build.mode}</strong> mit synthetischen
+        Beispieldaten. Die angezeigten Werte sind erfunden.
+      </p>
+    </Notice>
+  )
+}
+
+<Notice variante="hinweis" titel="Noch kein Datensatz veröffentlicht">
+  <p>
+    Es ist bisher kein fachlicher Datensatz freigegeben. Ein Eintrag erscheint hier erst, wenn er
+    tatsächlich ausgeliefert wird.
+  </p>
+</Notice>
+
+<h2>Was ein Eintrag enthalten wird</h2>
+<ul>
+  <li>Datensatz und Quelle</li>
+  <li>Zeitpunkt des letzten Abrufs</li>
+  <li>Geltungszeitraum, soweit die Quelle einen nennt</li>
+  <li>Ob die fachliche Prüfung erfolgt ist</li>
+</ul>

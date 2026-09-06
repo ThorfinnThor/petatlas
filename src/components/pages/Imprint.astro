@@ -1,0 +1,53 @@
+---
+/**
+ * M04-03 — Impressum.
+ *
+ * Solange keine echten Betreiberangaben vorliegen, steht hier kein erfundener
+ * Name und keine erfundene Adresse. Der `production`-Build ist dadurch
+ * ohnehin gesperrt (M00-03).
+ */
+import { resolveBuildConfig } from '../../../config/build.ts';
+import { createSiteConfig } from '../../../config/site.ts';
+import Notice from '../Notice.astro';
+
+const build = resolveBuildConfig();
+const site = createSiteConfig(build.mode, process.env);
+const betreiber = site.operator;
+---
+
+<h1>Impressum</h1>
+
+{
+  betreiber.legalName === null ? (
+    <Notice variante="warnung" titel="Betreiberangaben liegen nicht vor">
+      <p>
+        Für diesen Aufbaustand sind keine Betreiberangaben hinterlegt. Es werden bewusst keine
+        erfundenen Namen, Adressen oder Registerangaben angezeigt. Ein Produktionsbuild ohne
+        vollständige Angaben bricht ab.
+      </p>
+    </Notice>
+  ) : (
+    <dl>
+      <dt>Anbieter</dt>
+      <dd>{betreiber.legalName}</dd>
+      <dt>Anschrift</dt>
+      <dd>{betreiber.address}</dd>
+      <dt>Kontakt</dt>
+      <dd>{betreiber.contactEmail}</dd>
+      <dt>Inhaltlich verantwortlich</dt>
+      <dd>{betreiber.responsibleForContent}</dd>
+      {betreiber.registerEntry && (
+        <>
+          <dt>Registereintrag</dt>
+          <dd>{betreiber.registerEntry}</dd>
+        </>
+      )}
+      {betreiber.vatId && (
+        <>
+          <dt>Umsatzsteuer-Identifikationsnummer</dt>
+          <dd>{betreiber.vatId}</dd>
+        </>
+      )}
+    </dl>
+  )
+}

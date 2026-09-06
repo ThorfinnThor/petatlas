@@ -1,0 +1,30 @@
+---
+/**
+ * M04-03 — Quellenseite.
+ *
+ * Zeigt das Quellenregister. Solange keine Quelle geprüft ist, sagt die Seite
+ * genau das. Das Register selbst entsteht in M05.
+ */
+import Notice from '../Notice.astro';
+---
+
+<h1>Quellen</h1>
+<p>
+  Jede fachliche Angabe auf dieser Website stammt aus einer benannten Quelle. Diese Seite führt die
+  verwendeten Quellen mit Lizenz, Abrufzeitpunkt und Prüfstand auf.
+</p>
+
+<Notice variante="hinweis" titel="Noch keine Quelle im Einsatz">
+  <p>
+    Es werden bisher keine fachlichen Daten ausgeliefert. Sobald eine Quelle eingebunden ist, stehen
+    hier ihre Lizenz, ihr Abrufzeitpunkt und der Stand ihrer Rechteprüfung.
+  </p>
+</Notice>
+
+<h2>Was hier stehen wird</h2>
+<ul>
+  <li>Name und Betreiber der Quelle sowie die genaue verwendete Distribution</li>
+  <li>Lizenz und, wo nötig, die vorgeschriebene Namensnennung</li>
+  <li>Abrufzeitpunkt und Stand der Daten</li>
+  <li>Für welche Ausgabeform die Rechte geprüft sind</li>
+</ul>

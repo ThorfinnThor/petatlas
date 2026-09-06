@@ -20,4 +20,9 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  redirects: {
+    // Es gibt genau einen aktiven Markt. Diese Weiterleitung ist deshalb
+    // deterministisch und rät weder Sprache noch Herkunft (ADR-010).
+    '/': '/de-de/',
+  },
 });
