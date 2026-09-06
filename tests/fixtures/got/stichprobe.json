@@ -1,0 +1,53 @@
+{
+  "_hinweis": "Unabhängig mit Python/ElementTree aus der amtlichen XML-Fassung extrahiert, nicht mit dem Produktionsparser. Dient als Vergleichswert.",
+  "quelle": "https://www.gesetze-im-internet.de/got_2022/xml.zip",
+  "quelleSha256": "c7bdcfa9b699280d665b372974108dd1288194b4737691a56d325399cc653feb",
+  "erwarteteAnzahl": 1006,
+  "stichprobe": [
+    {
+      "officialItemId": "1",
+      "originalLabel": "Beratung im einzelnen Fall ohne Untersuchung (auch schriftlich oder fernmündlich)",
+      "baseAmountMinor": 1126
+    },
+    {
+      "officialItemId": "2",
+      "originalLabel": "Eingehende Anamneseerhebung oder Beratung, jeweils das gewöhnliche Maß übersteigend, einschließlich eingehender Vorbereitung, beispielsweise bei Verhaltensstörungen, Physikalischer Therapie und im Rahmen von Naturheilverfahren, z. B. Akupunktur, Homöopathie etc.",
+      "baseAmountMinor": 3078
+    },
+    {
+      "officialItemId": "3",
+      "originalLabel": "Dokumentation aufgrund gesetzlicher Vorgaben",
+      "baseAmountMinor": 1120
+    },
+    {
+      "officialItemId": "101",
+      "originalLabel": "Punktion, Abszess, Zyste",
+      "baseAmountMinor": 1539
+    },
+    {
+      "officialItemId": "301",
+      "originalLabel": "Sedation per injectionem, nicht domestizierte Tiere",
+      "baseAmountMinor": 2640
+    },
+    {
+      "officialItemId": "501",
+      "originalLabel": "Inguinalhernie Ferkel",
+      "baseAmountMinor": 2290
+    },
+    {
+      "officialItemId": "701",
+      "originalLabel": "Entfernung der Schilddrüse oder der Nebenschilddrüse, kompliziert",
+      "baseAmountMinor": 33507
+    },
+    {
+      "officialItemId": "901",
+      "originalLabel": "Spongiosagewinnung",
+      "baseAmountMinor": 20114
+    },
+    {
+      "officialItemId": "1006",
+      "originalLabel": "Nephrektomie",
+      "baseAmountMinor": 26712
+    }
+  ]
+}

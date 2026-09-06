@@ -34,6 +34,8 @@
   },
   "dependencies": {
     "astro": "7.3.1",
+    "fast-xml-parser": "5.11.1",
+    "fflate": "0.8.3",
     "zod": "4.5.4"
   },
   "devDependencies": {

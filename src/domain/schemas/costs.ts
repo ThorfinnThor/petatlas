@@ -16,7 +16,13 @@ export const FeeItemSchema = z
     catalogVersion: z.string().min(1),
     /** Originalbezeichnung, unverändert aus der Quelle. */
     originalLabel: z.string().min(1),
-    species: Species,
+    /**
+     * Die GOT ordnet Positionen keiner eigenen Tierartspalte zu; wo eine
+     * Tierart gemeint ist, steht sie im Bezeichnungstext. `null` heißt
+     * deshalb: die Quelle nennt hier keine Tierart, die sich ohne Auslegung
+     * ablesen ließe. Es wird nichts geraten.
+     */
+    species: Species.nullable(),
     baseUnit: z.string().min(1),
     baseAmountMinor: MinorAmount,
     currency: CurrencyCode,

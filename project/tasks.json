@@ -1654,8 +1654,16 @@
         "M06-03"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/ingest/adapters/got.ts liest den vollstaendigen Katalog aus der amtlichen XML-Fassung: 1006 Positionen, 0 unlesbare Zeilen. Erhalten bleiben laufende Nummer als ID, Originalbezeichnung wortgleich, Betrag centgenau, Katalogversion 'GOT 2022', Ausfertigungsdatum, Aenderungsstand sowie Teil und Abschnitt als Fundstelle. Die Tierart steht in der GOT nicht in einer Spalte, sondern im Text; erkannt wird sie nur an einer ausdruecklichen Wortliste (Hund, Katze) und bleibt sonst null - FeeItem.species ist dafuer nullable geworden. Ein Betrag, der sich nicht als 'nn,nn' lesen laesst, wirft; ab zwei Prozent unlesbarer Zeilen bricht der Import ab. 30 Tests, darunter neun Positionen quer durch den Katalog, deren Erwartungswerte aus einer unabhaengigen Zweitextraktion mit einem anderen Parser (Python/ElementTree) stammen. Das ZIP-Fixture ist die unveraenderte amtliche Datei mit geprueftem sha256; die Tests brauchen kein Netz.",
+          "reference": "scripts/ingest/adapters/got.ts; tests/fixtures/got/; tests/costs/got-import.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

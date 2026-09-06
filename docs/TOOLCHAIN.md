@@ -28,6 +28,11 @@ Stand 2026-09-06 (M01-03). Alle Versionen sind exakt gepinnt, kein `^` und kein 
 | `prettier-plugin-astro` | 0.14.1 | Formatiert `.astro`-Dateien. |
 | `vitest` | 5.0.0 | Unit- und Integrationstests; unterstützt Node 24. |
 | `@playwright/test` | 1.63.0 | End-to-End inklusive zweitem Engine-Pfad und mobilem Format. |
+| `zod` | 4.5.4 | Validierung aller Dateneingänge und Konfigurationen. |
+| `wrangler` | 4.129.0 | Cloudflare-Konfigurationsprüfung und Deployment; gepinnt statt bei jedem Build nachgeladen. |
+| `pagefind` | 1.5.2 | Statischer Suchindex nach dem HTML-Build. |
+| `fflate` | 0.8.3 | Entpackt das GOT-ZIP. Ohne eigene Abhängigkeiten; ein selbst geschriebener ZIP-Leser wäre bei einer amtlichen Quelle die schlechtere Wahl. |
+| `fast-xml-parser` | 5.11.1 | Parst die amtliche XML-Fassung. Ein Regex über Rechtstext wäre keine Grundlage für Gebührenwerte. |
 
 ## Befehle
 
