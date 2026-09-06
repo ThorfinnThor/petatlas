@@ -776,8 +776,16 @@
         "M03-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Fachschemas mit Zod: Product, Offer, Place, FeeItem, CostScenario, TravelRule, PetProfile und OutputManifest. 52 Vertragstests decken die geforderten Fehlerfaelle: falsche GTIN-Pruefziffer, erhaltene fuehrende Null, Multipack gegen Einzelpackung, negativer und nicht ganzzahliger Preis, Preis 0, abgelaufenes Angebot, Breiten-/Laengengrad ausserhalb des Bereichs, NaN-Koordinate, Null-Insel, verdrehte Zeitraeume, doppelte Gebuehrenposition, Leistungsfaktor ausserhalb 1..4, Regel mit unbekanntem Operator statt eval, Chunk ueber Groessengrenze. Unbekannter Versand wird nicht als kostenlos gerechnet, sondern als 'Artikelpreis ohne unbekannte Versandkosten' gelabelt.",
+          "reference": "src/domain/schemas/; tests/contracts/schemas.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit && npm run lint && npm run typecheck",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -1,9 +1,15 @@
 /**
- * M03-03 — Sammelstelle der Datenverträge.
+ * M03-03/M03-04 — Sammelstelle der Datenverträge.
  *
- * Fachschemas (Product, Offer, Place, FeeItem, CostScenario, TravelRule,
- * PetProfile, OutputManifest) kommen in M03-04 hinzu und bauen auf
- * Provenienz und Rechten auf.
+ * Jeder fachliche Datensatz führt Provenienz und Rechte mit; die Fachschemas
+ * beschreiben, was er inhaltlich sein darf.
  */
 export * from '../source.ts';
 export * from '../rights.ts';
+export * from './common.ts';
+export * from './catalog.ts';
+export * from './places.ts';
+export * from './costs.ts';
+export * from './travel.ts';
+export * from './profile.ts';
+export * from './manifest.ts';
