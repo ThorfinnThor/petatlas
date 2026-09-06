@@ -5,13 +5,18 @@ import { describe, expect, it } from 'vitest';
 
 import { buildHeadersFile } from '../scripts/build-headers.ts';
 
-/** wrangler.jsonc enthält Kommentare; für den Test werden sie entfernt. */
+/**
+ * `wrangler.jsonc` ist JSONC: Zeilenkommentare und abschließende Kommas sind
+ * erlaubt, `JSON.parse` versteht beides nicht. Beides wird hier entfernt.
+ */
 function leseWranglerConfig(): Record<string, unknown> {
   const roh = readFileSync(new URL('../wrangler.jsonc', import.meta.url), 'utf8');
   const ohneKommentare = roh
     .split('\n')
-    .filter((zeile) => !zeile.trim().startsWith('//'))
-    .join('\n');
+    .map((zeile) => (zeile.trim().startsWith('//') ? '' : zeile))
+    .join('\n')
+    // Abschließendes Komma vor } oder ] entfernen.
+    .replace(/,(\s*[}\]])/g, '$1');
   return JSON.parse(ohneKommentare) as Record<string, unknown>;
 }
 
