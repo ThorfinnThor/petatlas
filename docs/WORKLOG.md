@@ -43,3 +43,15 @@ Zwei echte Hindernisse und ihre Lösung:
 | M02-02 | npm-Aliase `status`, `status:json`, `status:validate`, Meilensteinfilter | `npm run status -- --milestone M08`, `npm run status:json`, `python3 scripts/test_project_status.py` | alle exit 0; 10 Tests OK |
 
 Beispielübergang für M02-03, tatsächlich durchlaufen an M02-02: `todo` → `in_progress` (`npm run status` zeigte „Aktuell: M02-02“, `in_progress: 1`) → `done` (`Erledigt: 14/120`, `current_task: null`, Nachweis im Manifest). `implementation_state` wechselte dabei von `not_started` auf `in_progress`, weil er jetzt abgeleitet wird.
+
+## 2026-09-06 — Sitzung 3: M02 vollständig
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M02-02 | npm-Aliase `status`, `status:json`, `status:validate`, Meilensteinfilter; `implementation_state` wird abgeleitet | alle vier Befehle plus Statushelfer-Tests | exit 0; `implementation_state` stand fälschlich auf `not_started` und ist jetzt korrekt |
+| M02-03 | Rollen der Statusdateien in `docs/STATUS.md` | Beispielübergang an M02-02 durchlaufen | `todo` → `in_progress` → `done`, Ansichten konsistent |
+| M02-04 | Konsistenzprüfung um `current_task`, vollständige Nachweisfelder, `deferred`-Begründung und CLI-Exitcode erweitert | `python3 scripts/test_project_status.py` | 22 Tests statt 10, alle grün |
+| M02-05 | `docs/AUTONOMY.md`: Loop, Dreierregel, Liste unzulässiger „Fortschritte“ | — | Dokument, kein Testartefakt |
+| M02-06 | `scripts/checks/handoff.py`, npm-Skript `check:handoff` | `npm run check:handoff` | erster Lauf rot: veralteter Handoff nannte erledigte Aufgaben; nach Aktualisierung exit 0 |
+
+Der Handoff-Check hat sich unmittelbar bewährt: nach dem Abschluss von M02-06 meldete er erneut rot, weil `docs/HANDOFF.md` noch M02-06 als nächsten Schritt führte.
