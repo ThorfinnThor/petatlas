@@ -9,6 +9,11 @@ playwright-report/
 package-lock.json
 # Vorlagen aus dem Planungspaket bleiben unveraendert.
 templates/
+
+# Erzeugte Snapshots und Suchindex: kanonisch geschrieben, nicht formatiert.
+# Prettier wuerde sie umbrechen und der naechste Lauf sie zurueckschreiben.
+data-snapshots/
+schemas/
 project/tasks.json
 
 # Markdown bleibt handgeschrieben: Plan- und Statusdokumente sollen nicht bei
