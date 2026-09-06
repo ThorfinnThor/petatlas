@@ -1212,8 +1212,16 @@
         "M05-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "scripts/checks/licenses.ts prueft Registry und Buildoutput: verified ohne termsHash oder ohne hinterlegten Attributionswortlaut wird beanstandet, und eine Datendatei unter /data/v1/ wird beanstandet, wenn ihre Quelle nicht fuer publicJsonDelivery freigegeben ist oder der Pflichthinweis fehlt. 14 Regressionstests simulieren abgelaufene Rechte, einen termsHash-Wechsel, entzogene Bilderlaubnis und eine fehlende Attribution. Belegt: eine abgelaufene Freigabe laesst sich nicht durch einen alten, noch in der Datei stehenden Pflichthinweis umgehen; die entzogene Bilderlaubnis stoppt nur die Bildausgabe und laesst Anzeige und JSON unberuehrt; der gesperrte Gebuehrenkatalog stoppt auch eine versehentlich gebaute Datei.",
+          "reference": "scripts/checks/licenses.ts; tests/license-regression.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit && npm run check:licenses",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
