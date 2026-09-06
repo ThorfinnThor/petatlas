@@ -901,8 +901,16 @@
         "M04-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Design Tokens in src/styles/tokens.css (mobile first, Hell- und Dunkelansicht ueber dieselben Rollen). Wiederverwendbare Bausteine: Notice (Hinweis/Warnung/Ergebnis/Testdaten mit role=status), DataStatus (unbekannter Stand wird als unbekannt ausgewiesen), AdSlot (rendert ohne ads-Flag gar nichts, mit Flag sichtbar gekennzeichnet), SiteHeader und SiteFooter aus der Route Registry. Geprueft im echten Build ueber 375, 768 und 1280 Pixel: horizontaler Ueberlauf 0 auf allen vier Seiten, keine Konsolenfehler. Werbung gestrichelt und neutral-grau gegen durchgezogene farbige Informationsboxen. 33 E2E-Tests gruen.",
+          "reference": "src/styles/tokens.css; src/components/; src/layouts/BaseLayout.astro; tests/e2e/design-system.spec.ts; reports/screenshots/",
+          "verified_at": "2026-09-06",
+          "command": "npx playwright test && node .work/shot2.mjs",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

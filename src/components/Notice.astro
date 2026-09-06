@@ -1,0 +1,63 @@
+---
+/**
+ * M04-02 — Hinweis-, Warn- und Ergebnisbox.
+ *
+ * Drei Rollen mit klar unterschiedlicher Darstellung. `warnung` und
+ * `ergebnis` bekommen `role="status"`, damit Screenreader ein neu
+ * berechnetes Ergebnis auch ansagen.
+ */
+interface Props {
+  variante: 'hinweis' | 'warnung' | 'ergebnis' | 'testdaten';
+  titel?: string;
+  /** Für Tests und gezielte Ansteuerung. */
+  testId?: string;
+}
+
+const { variante, titel, testId } = Astro.props;
+const ansage = variante === 'ergebnis' || variante === 'warnung';
+---
+
+<div
+  class:list={['notiz', `notiz--${variante}`]}
+  role={ansage ? 'status' : undefined}
+  aria-live={variante === 'ergebnis' ? 'polite' : undefined}
+  data-testid={testId}
+>
+  {titel && <p class="notiz__titel">{titel}</p>}
+  <slot />
+</div>
+
+<style>
+  .notiz {
+    border: var(--linie) solid var(--farbe-linie);
+    border-inline-start-width: 4px;
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-4);
+  }
+
+  .notiz__titel {
+    margin: 0 0 var(--abstand-2);
+    font-weight: 600;
+  }
+
+  .notiz :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .notiz--hinweis {
+    background: var(--farbe-hinweis-grund);
+    border-inline-start-color: var(--farbe-hinweis-linie);
+  }
+
+  .notiz--warnung,
+  .notiz--testdaten {
+    background: var(--farbe-warnung-grund);
+    border-inline-start-color: var(--farbe-warnung-linie);
+  }
+
+  .notiz--ergebnis {
+    background: var(--farbe-ergebnis-grund);
+    border-inline-start-color: var(--farbe-ergebnis-linie);
+  }
+</style>

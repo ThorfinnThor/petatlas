@@ -1,0 +1,146 @@
+/*
+ * M04-02 — Design Tokens.
+ *
+ * Mobile first: die Grundwerte gelten für schmale Geräte, größere Breiten
+ * bekommen nur mehr Raum. Farben sind als Token definiert, damit Hell- und
+ * Dunkelansicht dieselben Rollen benutzen.
+ *
+ * Informationsbereiche und Werbeflächen haben ausdrücklich getrennte Token.
+ * Eine Anzeige darf nicht wie eine redaktionelle Aussage aussehen.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Fläche und Text */
+  --farbe-grund: #ffffff;
+  --farbe-flaeche: #f4f4f5;
+  --farbe-text: #18181b;
+  --farbe-text-leise: #52525b;
+  --farbe-linie: #d4d4d8;
+
+  /* Rollen */
+  --farbe-akzent: #1d4ed8;
+  --farbe-akzent-text: #ffffff;
+  --farbe-warnung-grund: #fef3c7;
+  --farbe-warnung-linie: #b45309;
+  --farbe-hinweis-grund: #e0f2fe;
+  --farbe-hinweis-linie: #0369a1;
+  --farbe-ergebnis-grund: #f0fdf4;
+  --farbe-ergebnis-linie: #15803d;
+  --farbe-fehler: #b91c1c;
+
+  /* Werbung: bewusst neutral-grau und klar abgesetzt */
+  --farbe-anzeige-grund: #fafafa;
+  --farbe-anzeige-linie: #a1a1aa;
+  --farbe-anzeige-text: #3f3f46;
+
+  /* Abstände */
+  --abstand-1: 0.25rem;
+  --abstand-2: 0.5rem;
+  --abstand-3: 0.75rem;
+  --abstand-4: 1rem;
+  --abstand-6: 1.5rem;
+  --abstand-8: 2rem;
+
+  /* Typografie */
+  --schrift: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --schrift-klein: 0.875rem;
+  --schrift-normal: 1rem;
+  --schrift-gross: 1.25rem;
+  --schrift-titel: 1.75rem;
+  --zeilenhoehe: 1.6;
+
+  /* Maße */
+  --breite-inhalt: 44rem;
+  --radius: 0.375rem;
+  --linie: 1px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --farbe-grund: #18181b;
+    --farbe-flaeche: #27272a;
+    --farbe-text: #f4f4f5;
+    --farbe-text-leise: #a1a1aa;
+    --farbe-linie: #3f3f46;
+
+    --farbe-akzent: #93c5fd;
+    --farbe-akzent-text: #18181b;
+    --farbe-warnung-grund: #3f2d0a;
+    --farbe-warnung-linie: #fbbf24;
+    --farbe-hinweis-grund: #0c2a3d;
+    --farbe-hinweis-linie: #7dd3fc;
+    --farbe-ergebnis-grund: #0d2818;
+    --farbe-ergebnis-linie: #4ade80;
+    --farbe-fehler: #fca5a5;
+
+    --farbe-anzeige-grund: #202023;
+    --farbe-anzeige-linie: #52525b;
+    --farbe-anzeige-text: #d4d4d8;
+  }
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --schrift-titel: 2.25rem;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: var(--abstand-4);
+  background: var(--farbe-grund);
+  color: var(--farbe-text);
+  font-family: var(--schrift);
+  font-size: var(--schrift-normal);
+  line-height: var(--zeilenhoehe);
+}
+
+/* Kein horizontales Scrollen der Hauptbedienung. */
+img,
+table,
+pre {
+  max-width: 100%;
+}
+
+main,
+header,
+footer {
+  max-width: var(--breite-inhalt);
+  margin-inline: auto;
+}
+
+h1 {
+  font-size: var(--schrift-titel);
+  line-height: 1.2;
+  margin-block: 0 var(--abstand-4);
+}
+
+h2 {
+  font-size: var(--schrift-gross);
+  margin-block: var(--abstand-6) var(--abstand-2);
+}
+
+a {
+  color: var(--farbe-akzent);
+}
+
+:focus-visible {
+  outline: 3px solid var(--farbe-akzent);
+  outline-offset: 2px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}

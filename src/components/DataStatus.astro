@@ -1,0 +1,32 @@
+---
+/**
+ * M04-02 — Datenstand.
+ *
+ * Jede Seite mit fachlichen Daten sagt, woher sie stammen und wie alt sie
+ * sind. Ein unbekannter Stand wird als unbekannt ausgewiesen, nicht
+ * weggelassen und nicht durch das heutige Datum ersetzt.
+ */
+import { formatCalendarDate } from '../domain/dates.ts';
+
+interface Props {
+  /** Kalenderdatum des Datenstands, `null` wenn unbekannt. */
+  stand: string | null;
+  quelle: string | null;
+  locale: string;
+}
+
+const { stand, quelle, locale } = Astro.props;
+---
+
+<p class="datenstand">
+  <span>Datenstand: {stand === null ? 'unbekannt' : formatCalendarDate(stand, locale)}</span>
+  {quelle !== null && <span> · Quelle: {quelle}</span>}
+</p>
+
+<style>
+  .datenstand {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+    margin-block: var(--abstand-2);
+  }
+</style>

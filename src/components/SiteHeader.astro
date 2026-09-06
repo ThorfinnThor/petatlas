@@ -1,0 +1,73 @@
+---
+/**
+ * M04-02 — Kopfbereich mit Hauptnavigation.
+ *
+ * Die Navigation kommt aus der Route Registry. Sie enthält deshalb nur
+ * Seiten, die im aktuellen Markt tatsächlich existieren.
+ */
+import type { MarketConfig } from '../domain/market.ts';
+import { translate, type LocaleId } from '../domain/i18n.ts';
+import { navigationFor, routePath } from '../lib/routes.ts';
+
+interface Props {
+  market: MarketConfig;
+  brandName: string;
+  aktuellerPfad?: string;
+}
+
+const { market, brandName, aktuellerPfad } = Astro.props;
+const locale = market.locale as LocaleId;
+const eintraege = navigationFor(market, 'main').filter((item) => item.key !== 'home');
+---
+
+<header class="kopf">
+  <a class="kopf__marke" href={routePath(market, 'home')}>{brandName}</a>
+  {
+    eintraege.length > 0 && (
+      <nav aria-label="Hauptnavigation">
+        <ul class="kopf__liste">
+          {eintraege.map((item) => (
+            <li>
+              <a href={item.path} aria-current={item.path === aktuellerPfad ? 'page' : undefined}>
+                {translate(locale, item.labelKey)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
+</header>
+
+<style>
+  .kopf {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--abstand-2) var(--abstand-4);
+    align-items: baseline;
+    padding-block: var(--abstand-4);
+    border-bottom: var(--linie) solid var(--farbe-linie);
+    margin-bottom: var(--abstand-6);
+  }
+
+  .kopf__marke {
+    font-weight: 700;
+    font-size: var(--schrift-gross);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .kopf__liste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--abstand-2) var(--abstand-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  [aria-current='page'] {
+    font-weight: 600;
+    text-decoration-thickness: 2px;
+  }
+</style>

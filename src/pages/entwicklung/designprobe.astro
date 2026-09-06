@@ -1,0 +1,113 @@
+---
+/**
+ * M04-02/M04-06 — Designprobe.
+ *
+ * Zeigt alle wiederverwendbaren Bausteine auf einer Seite, damit sich
+ * Layout, Kontrast und die Trennung von Information und Werbung im echten
+ * Build prüfen lassen. Keine fachlichen Aussagen, keine echten Daten.
+ *
+ * Wird in production nicht ausgeliefert.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import DataStatus from '../../components/DataStatus.astro';
+import Notice from '../../components/Notice.astro';
+import { resolveBuildConfig } from '../../../config/build.ts';
+import { defaultMarket } from '../../domain/market.ts';
+
+const build = resolveBuildConfig();
+const isProduction = build.mode === 'production';
+const market = defaultMarket();
+
+// Nur für diese Probe: ein Markt mit eingeschalteter Werbefläche, damit die
+// optische Trennung überhaupt sichtbar wird. Die echte Konfiguration bleibt
+// unverändert; `ads` ist dort weiterhin aus.
+const marktMitAnzeige = {
+  ...market,
+  featureFlags: { ...market.featureFlags, ads: true },
+};
+---
+
+<BaseLayout title={isProduction ? 'Seite nicht gefunden' : 'Designprobe'} neverIndex>
+  {
+    isProduction ? (
+      <>
+        <h1>Seite nicht gefunden</h1>
+        <p>Diese technische Testseite wird in production nicht ausgeliefert.</p>
+      </>
+    ) : (
+      <>
+        <h1>Designprobe</h1>
+        <p>
+          Technische Testseite. Sie zeigt die wiederverwendbaren Bausteine im echten Build und
+          enthält keine fachlichen Aussagen.
+        </p>
+
+        <h2>Hinweis, Warnung, Ergebnis</h2>
+        <Notice variante="hinweis" titel="Hinweis">
+          <p>Neutrale Zusatzinformation ohne Handlungsdruck.</p>
+        </Notice>
+        <Notice variante="warnung" titel="Warnung">
+          <p>Etwas ist unbekannt oder unvollständig. Unbekannt ist nicht „unbedenklich“.</p>
+        </Notice>
+        <Notice variante="ergebnis" titel="Ergebnis" testId="ergebnisbox">
+          <p>Ein berechnetes Ergebnis. Wird Screenreadern angesagt.</p>
+        </Notice>
+
+        <h2>Datenstand</h2>
+        <DataStatus stand="2026-09-06" quelle="synthetische Testquelle" locale={market.locale} />
+        <DataStatus stand={null} quelle={null} locale={market.locale} />
+
+        <h2>Werbefläche</h2>
+        <p>
+          Die folgende Fläche ist optisch deutlich von den Informationsboxen getrennt und trägt
+          sichtbar das Wort „Anzeige“. In der echten Konfiguration ist sie ausgeschaltet.
+        </p>
+        <AdSlot market={marktMitAnzeige} platzierung="probe">
+          <p>Platzhalterinhalt einer Anzeige. Kein echtes Werbemittel.</p>
+        </AdSlot>
+
+        <h2>Lange Inhalte brechen nicht aus</h2>
+        <p>
+          Einwortkette:
+          <span class="lang">Tierarztkostenrechnerergebnisübersichtsseitenbeschriftung</span>
+        </p>
+        <table>
+          <caption>Synthetische Tabelle</caption>
+          <thead>
+            <tr>
+              <th scope="col">Position</th>
+              <th scope="col">Menge</th>
+              <th scope="col">Faktor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Synthetische Beispielposition</td>
+              <td>3</td>
+              <td>2,0</td>
+            </tr>
+          </tbody>
+        </table>
+      </>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .lang {
+    overflow-wrap: anywhere;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    border: var(--linie) solid var(--farbe-linie);
+    padding: var(--abstand-2);
+    text-align: start;
+  }
+</style>

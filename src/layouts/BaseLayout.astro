@@ -1,77 +1,60 @@
 ---
 /**
- * M01-06 — Gemeinsames Grundgerüst. Bewusst minimal: Design, Navigation und
- * Inhaltsstruktur entstehen in M04. Hier zählt nur, dass jede Seite Sprache,
- * Viewport, Titel und die richtige robots-Angabe erhält.
+ * M04-02 — Gemeinsames Grundgerüst für alle Seiten.
+ *
+ * Setzt Sprache, Viewport, Titel, canonical und robots, bindet die Design
+ * Tokens ein und rahmt den Inhalt mit Kopf- und Fußbereich. Fachliche
+ * Inhalte stehen in den Seiten, nicht hier.
  */
 import { resolveBuildConfig, robotsDirective } from '../../config/build.ts';
 import { createSiteConfig } from '../../config/site.ts';
+import { defaultMarket } from '../domain/market.ts';
+import { canonicalUrl, type RouteKey } from '../lib/routes.ts';
+import Notice from '../components/Notice.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import '../styles/tokens.css';
 
 interface Props {
   title: string;
+  /** Route dieser Seite, für canonical und aktiven Navigationszustand. */
+  route?: RouteKey;
   /** Seiten, die auch in production nie indexiert werden dürfen. */
   neverIndex?: boolean;
 }
 
-const { title, neverIndex = false } = Astro.props;
+const { title, route, neverIndex = false } = Astro.props;
 
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
+const market = defaultMarket();
 const robots = neverIndex ? 'noindex, nofollow' : robotsDirective(build);
+const canonical = route ? canonicalUrl(build.baseUrl, market, route) : null;
 ---
 
 <!doctype html>
-<html lang="de">
+<html lang={market.locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} — {site.brandName}</title>
     <meta name="robots" content={robots} />
-    <style>
-      :root {
-        color-scheme: light dark;
-      }
-      body {
-        margin: 0;
-        padding: 1.5rem;
-        font-family: system-ui, sans-serif;
-        line-height: 1.5;
-        max-width: 42rem;
-      }
-      .hinweis {
-        border: 1px solid currentColor;
-        padding: 0.75rem 1rem;
-        margin-bottom: 1.5rem;
-      }
-      label {
-        display: block;
-        margin-top: 1rem;
-        font-weight: 600;
-      }
-      input,
-      select {
-        font: inherit;
-        padding: 0.4rem;
-        min-width: min(100%, 18rem);
-      }
-      :focus-visible {
-        outline: 3px solid currentColor;
-        outline-offset: 2px;
-      }
-      .fehler {
-        font-weight: 600;
-      }
-    </style>
+    {canonical && <link rel="canonical" href={canonical} />}
   </head>
   <body>
+    <SiteHeader market={market} brandName={site.brandName} aktuellerPfad={Astro.url.pathname} />
     {
       build.showTestDataBanner && (
-        <p class="hinweis" data-testid="test-data-banner" role="status">
-          <strong>Testdaten.</strong> Dieser Build zeigt synthetische Beispieldaten. Keine echten
-          Praxen, Preise oder Regeln.
-        </p>
+        <Notice variante="testdaten" titel="Testdaten" testId="test-data-banner">
+          <p>
+            Dieser Build zeigt synthetische Beispieldaten. Keine echten Praxen, Preise oder Regeln.
+          </p>
+        </Notice>
       )
     }
-    <slot />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter market={market} betreiber={site.operator.legalName} />
   </body>
 </html>
