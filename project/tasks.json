@@ -679,8 +679,16 @@
         "M02-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "src/domain/market.ts fuehrt Markt, Sprache, Waehrung, Zeitzone und Reiseziel als getrennte Felder zusammen; Zod-Schema mit strict() plus Loader-Pruefungen. config/markets/ enthaelt DE aktiv sowie US und NL als deaktivierte Testkonfiguration. 18 neue Tests: DE-Nutzer mit Reiseziel IT bleibt in Markt DE mit de-DE und EUR, IT wird kein Markt, routablePathPrefixes liefert nur /de-de, Feature Flags sind fail-closed. Build erzeugt keine en-us-Ausgabe.",
+          "reference": "src/domain/market.ts; config/markets/; tests/markets.test.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit && npm run lint && npm run typecheck && npm run build:fixture",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

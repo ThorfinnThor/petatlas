@@ -1,0 +1,27 @@
+{
+  "id": "DE",
+  "enabled": true,
+  "primaryCountry": "DE",
+  "locale": "de-DE",
+  "pathPrefix": "/de-de",
+  "currency": "EUR",
+  "timeZone": "Europe/Berlin",
+  "measurementSystem": "metric",
+  "featureFlags": {
+    "costs": false,
+    "map": false,
+    "travel": false,
+    "commerce": false,
+    "care": false,
+    "toys": false,
+    "food": false,
+    "profile": false,
+    "ads": false
+  },
+  "providerIds": {
+    "costs": null,
+    "places": null,
+    "travel": null,
+    "commerce": null
+  }
+}

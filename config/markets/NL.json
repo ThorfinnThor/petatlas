@@ -1,0 +1,27 @@
+{
+  "id": "NL",
+  "enabled": false,
+  "primaryCountry": "NL",
+  "locale": "nl-NL",
+  "pathPrefix": "/nl-nl",
+  "currency": "EUR",
+  "timeZone": "Europe/Amsterdam",
+  "measurementSystem": "metric",
+  "featureFlags": {
+    "costs": false,
+    "map": false,
+    "travel": false,
+    "commerce": false,
+    "care": false,
+    "toys": false,
+    "food": false,
+    "profile": false,
+    "ads": false
+  },
+  "providerIds": {
+    "costs": null,
+    "places": null,
+    "travel": null,
+    "commerce": null
+  }
+}

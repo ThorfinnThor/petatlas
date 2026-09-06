@@ -1,0 +1,27 @@
+{
+  "id": "US",
+  "enabled": false,
+  "primaryCountry": "US",
+  "locale": "en-US",
+  "pathPrefix": "/en-us",
+  "currency": "USD",
+  "timeZone": "America/New_York",
+  "measurementSystem": "us",
+  "featureFlags": {
+    "costs": false,
+    "map": false,
+    "travel": false,
+    "commerce": false,
+    "care": false,
+    "toys": false,
+    "food": false,
+    "profile": false,
+    "ads": false
+  },
+  "providerIds": {
+    "costs": null,
+    "places": null,
+    "travel": null,
+    "commerce": null
+  }
+}
