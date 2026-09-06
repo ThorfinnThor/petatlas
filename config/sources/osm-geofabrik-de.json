@@ -5,31 +5,37 @@
   "distributionUrl": "https://download.geofabrik.de/europe/germany.html",
   "primaryTermsUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
   "format": "pbf",
-  "coverage": { "spatial": "DE", "temporal": "tägliches Extrakt" },
+  "coverage": {
+    "spatial": "DE",
+    "temporal": "tägliches Extrakt"
+  },
   "updateCadence": "täglich",
   "role": "Ortsdaten für Karte und lokale Seiten",
   "rights": {
     "sourceId": "osm-geofabrik-germany-pbf",
-    "status": "pending",
-    "licenseId": null,
-    "licenseUrl": null,
-    "commercialUse": null,
-    "publicRedistribution": null,
-    "websiteDisplay": null,
-    "publicJsonDelivery": null,
-    "publicRepository": null,
+    "status": "verified",
+    "licenseId": "ODbL-1.0",
+    "licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "commercialUse": true,
+    "publicRedistribution": true,
+    "websiteDisplay": true,
+    "publicJsonDelivery": true,
+    "publicRepository": true,
     "attributionRequired": true,
     "shareAlike": true,
-    "imagesAllowed": null,
-    "mayStoreHistory": null,
-    "mayCacheOriginals": null,
-    "termsHash": null,
-    "checkedAt": null,
-    "approvalEvidence": null
+    "imagesAllowed": false,
+    "mayStoreHistory": true,
+    "mayCacheOriginals": true,
+    "termsHash": "b8d8aebb21bf405f93f6e21bbf0d8f0a749844f9812ec58692f189add6402b47",
+    "checkedAt": "2026-09-06T00:00:00+00:00",
+    "approvalEvidence": "docs/SOURCE_REVIEWS.md#osm-geofabrik-germany-pbf"
   },
   "notes": [
     "Das Extrakt ist eine konkrete Distribution, nicht „OpenStreetMap“ als Ganzes.",
     "Kartenkacheln sind ein getrennter Dienst mit eigener Nutzungspolitik und bekommen einen eigenen Registryeintrag, sobald die Karte gebaut wird.",
-    "Ob eigene Verarbeitung eine abgeleitete Datenbank erzeugt, wird in M05-05 beschrieben."
-  ]
+    "imagesAllowed ist false: das Extrakt enthält keine Bilder, und ODbL deckt keine Bildrechte Dritter.",
+    "Ob eigene Verarbeitung eine abgeleitete Datenbank erzeugt, wird in docs/ODBL_DATAFLOW.md beschrieben (M05-05)."
+  ],
+  "attributionText": "© OpenStreetMap contributors, ODbL 1.0",
+  "attributionUrl": "https://www.openstreetmap.org/copyright"
 }

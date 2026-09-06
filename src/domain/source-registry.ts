@@ -32,6 +32,10 @@ export const SourceEntrySchema = z
     updateCadence: z.string().min(1),
     role: z.string().min(1),
     rights: SourceRightsSchema,
+    /** Wortlaut des Pflichthinweises, wie die Quelle ihn verlangt. */
+    attributionText: z.string().min(1).optional(),
+    /** Ziel des Attributionslinks, falls die Quelle einen verlangt. */
+    attributionUrl: z.string().url().optional(),
     notes: z.array(z.string()),
   })
   .strict()
@@ -41,6 +45,18 @@ export const SourceEntrySchema = z
         code: 'custom',
         message: `Rechteeintrag gehört zu ${value.rights.sourceId}, nicht zu ${value.sourceId}.`,
         path: ['rights', 'sourceId'],
+      });
+    }
+    if (
+      value.rights.attributionRequired &&
+      value.rights.status === 'verified' &&
+      !value.attributionText
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        message:
+          'Attribution ist Pflicht: eine verifizierte Quelle braucht den verlangten Wortlaut in attributionText.',
+        path: ['attributionText'],
       });
     }
     // Ein Anbietername als resourceName ist der häufigste Registryfehler.

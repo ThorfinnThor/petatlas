@@ -1152,8 +1152,16 @@
         "M05-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Beide Startquellen an ihren Primaerquellen geprueft, Ergebnisse mit Fundstellen und Abruf-Hashes in docs/SOURCE_REVIEWS.md. OSM-Extrakt: verified unter ODbL 1.0 (Geofabrik-Seite, OSM-Copyright-Seite, OSMF Attribution Guidelines); kommerzielle Nutzung erlaubt, Attribution verpflichtend mit Link auf openstreetmap.org/copyright, Share-Alike fuer abgeleitete Datenbanken, Bilder nicht abgedeckt, Kartenkacheln ausdruecklich nicht Teil der Freigabe. GOT: bleibt pending. Der Verordnungstext selbst ist nach § 5 Abs. 1 UrhG nicht geschuetzt, aber das Impressum von gesetze-im-internet.de nennt keine Bedingungen fuer den systematischen Abruf; der Bezugsweg ist damit ungeklaert und als B-001 dem Betreiber vorgelegt. Das Schema verlangt fuer eine verifizierte Quelle mit Attributionspflicht jetzt den verlangten Wortlaut. 243 Unit- und 156 E2E-Tests gruen.",
+          "reference": "docs/SOURCE_REVIEWS.md; config/sources/osm-geofabrik-de.json; config/sources/got.json; docs/BLOCKERS.md B-001",
+          "verified_at": "2026-09-06",
+          "command": "npm run test:unit && npx playwright test",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

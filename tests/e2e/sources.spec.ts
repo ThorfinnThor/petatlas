@@ -16,9 +16,13 @@ test('listet jede erfasste Quelle mit Distribution und Bedingungen', async ({ pa
 
 test('weist ungeprüfte Quellen als ungeprüft aus, statt sie zu verstecken', async ({ page }) => {
   await page.goto('/de-de/quellen/');
-  await expect(page.getByText('Noch keine Quelle freigegeben')).toBeVisible();
   await expect(page.getByText('Rechte noch nicht geprüft').first()).toBeVisible();
-  await expect(page.getByText('2 von 2 Quellen sind noch ungeprüft')).toBeVisible();
+  await expect(page.getByText('1 von 2 Quellen sind noch ungeprüft')).toBeVisible();
+});
+
+test('nennt für die geprüfte Quelle Lizenz und Prüfdatum', async ({ page }) => {
+  await page.goto('/de-de/quellen/');
+  await expect(page.getByText(/Rechte geprüft und bestätigt.*ODbL-1\.0.*2026-09-06/)).toBeVisible();
 });
 
 test('nennt die Attributions- und Share-Alike-Pflicht', async ({ page }) => {
@@ -29,8 +33,9 @@ test('nennt die Attributions- und Share-Alike-Pflicht', async ({ page }) => {
   ).toBeVisible();
 });
 
-test('behauptet keine Freigabe, die es nicht gibt', async ({ page }) => {
+test('behauptet für den Gebührenkatalog keine Freigabe', async ({ page }) => {
   await page.goto('/de-de/quellen/');
-  const text = await page.locator('main').innerText();
-  expect(text).not.toContain('Rechte geprüft und bestätigt');
+  const eintrag = page.locator('.quellen > li', { hasText: 'Gebührenordnung für Tierärzte' });
+  await expect(eintrag).toContainText('Rechte noch nicht geprüft');
+  await expect(eintrag).not.toContainText('Rechte geprüft und bestätigt');
 });

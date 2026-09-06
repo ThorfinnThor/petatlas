@@ -47,7 +47,7 @@ Stand 2026-09-06. `offen` heißt: noch nicht geliefert. Keine Zeile behauptet ei
 | 2 | Cloudflare-Account und Repo-Anbindung | offen (keine Anmeldung im Projektkontext) | Betreiber | M07-03 | Build-/Konfigurationsarbeit lokal |
 | 3 | Domain und `PUBLIC_SITE_URL` | offen | Betreiber | M18-05 | development/preview mit `example.invalid` |
 | 4 | Impressum, Kontakt, echte Betreiberangaben | offen | Betreiber | M18-04 | Seitengerüst ohne Rechtsangaben |
-| 5 | Prüfung der Datenrechte je Quelle | offen | prüfende Person; bei eindeutigen offenen Quellen dokumentierte Primärprüfung | M05-02 | Adapter gegen synthetische Fixtures |
+| 5 | Prüfung der Datenrechte je Quelle | **teilweise erledigt 2026-09-06:** OSM-Extrakt `verified` (ODbL 1.0). GOT bleibt `pending`: Inhalt frei nach § 5 UrhG, Bezugsweg ungeklärt — Entscheidung des Betreibers, siehe B-001 | prüfende Person; bei eindeutigen offenen Quellen dokumentierte Primärprüfung | M08-01 | Adapter gegen synthetische Fixtures |
 | 6 | Waren-Affiliateprogramm (Vertrag) | offen (kein Vertrag) | Betreiber | M13-01 | generischer Adapter, Katalog ohne Live-Feed |
 | 7 | Versicherungs-Affiliate mit Rechtsprüfung | offen | Betreiber mit qualifizierter Rechtsprüfung | M09-02 | deaktivierte technische Slots |
 | 8 | Fachfreigabe Gebührenregeln (GOT) | offen | fachlich geeignete prüfende Person | M08-06 | Rechenkern und synthetische Rechentests |

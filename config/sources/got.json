@@ -5,7 +5,10 @@
   "distributionUrl": "https://www.gesetze-im-internet.de/got_2022/BJNR140100022.html",
   "primaryTermsUrl": "https://www.gesetze-im-internet.de/urhg/__5.html",
   "format": "html",
-  "coverage": { "spatial": "DE", "temporal": "seit 2022, konsolidierte Fassung" },
+  "coverage": {
+    "spatial": "DE",
+    "temporal": "seit 2022, konsolidierte Fassung"
+  },
   "updateCadence": "bei Änderung der Verordnung",
   "role": "Gebührenkatalog für den Kostenrechner",
   "rights": {
@@ -23,12 +26,14 @@
     "imagesAllowed": null,
     "mayStoreHistory": null,
     "mayCacheOriginals": null,
-    "termsHash": null,
-    "checkedAt": null,
+    "termsHash": "0d1230ebb389ebdfdd0cb265ac74ee91345d19787520507c4db51cf85e375524",
+    "checkedAt": "2026-09-06T00:00:00+00:00",
     "approvalEvidence": null
   },
   "notes": [
-    "Amtliche Werke und redaktionelle Aufbereitung einer Website sind zwei verschiedene Dinge; die Rechtelage wird in M05-04 an der Primärquelle geprüft.",
-    "Fremde Kommentierungen werden nicht übernommen."
+    "Geprüft am 2026-09-06: Der Verordnungstext selbst genießt nach § 5 Abs. 1 UrhG keinen urheberrechtlichen Schutz; Gesetze und Verordnungen sind ausdrücklich genannt.",
+    "Offen ist nicht der Inhalt, sondern der Bezugsweg: gesetze-im-internet.de nennt im Impressum keine Nutzungs- oder Weiterverwendungsbedingungen für den systematischen Abruf seiner HTML-/XML-Fassung.",
+    "Deshalb bleibt der Eintrag pending. Entscheidung des Betreibers erforderlich, siehe docs/SOURCE_REVIEWS.md.",
+    "Fremde Kommentierungen und die redaktionelle Aufbereitung der Website werden ohnehin nicht übernommen."
   ]
 }

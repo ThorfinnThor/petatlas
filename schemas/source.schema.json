@@ -144,6 +144,14 @@
       ],
       "additionalProperties": false
     },
+    "attributionText": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attributionUrl": {
+      "type": "string",
+      "format": "uri"
+    },
     "notes": {
       "type": "array",
       "items": {

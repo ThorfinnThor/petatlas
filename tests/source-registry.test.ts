@@ -45,14 +45,10 @@ describe('Einträge sind konkrete Distributionen', () => {
   });
 });
 
-describe('Kandidaten stehen auf pending', () => {
-  it('hat im Startzustand keine verifizierte Quelle', () => {
-    expect(verifiedSources()).toEqual([]);
-    expect(pendingSources().length).toBe(allSources().length);
-  });
-
+describe('Ungeprüfte Quellen dürfen nichts', () => {
   it('erlaubt für eine pending-Quelle keine einzige Ausgabeform', () => {
-    for (const eintrag of allSources()) {
+    expect(pendingSources().length).toBeGreaterThan(0);
+    for (const eintrag of pendingSources()) {
       for (const kanal of [
         'websiteDisplay',
         'publicJsonDelivery',
@@ -66,6 +62,11 @@ describe('Kandidaten stehen auf pending', () => {
     }
   });
 
+  it('hält den Gebührenkatalog weiterhin zurück', () => {
+    // Der Bezugsweg ist nicht geklärt, siehe docs/SOURCE_REVIEWS.md.
+    expect(requireSource('got-2022-gesetze-im-internet').rights.status).toBe('pending');
+  });
+
   it('trägt für jede Quelle die Attributionspflicht bereits ein', () => {
     for (const eintrag of allSources()) {
       expect(eintrag.rights.attributionRequired).toBe(true);
@@ -74,6 +75,33 @@ describe('Kandidaten stehen auf pending', () => {
 
   it('kennzeichnet das OSM-Extrakt als share-alike-behaftet', () => {
     expect(rightsFor('osm-geofabrik-germany-pbf').shareAlike).toBe(true);
+  });
+});
+
+describe('Verifizierte Quellen tragen ihren Nachweis', () => {
+  it('hat für das OSM-Extrakt Lizenz, Prüfdatum, Nachweis und Wortlaut', () => {
+    const [erste] = verifiedSources();
+    expect(erste?.sourceId).toBe('osm-geofabrik-germany-pbf');
+    expect(erste?.rights.licenseId).toBe('ODbL-1.0');
+    expect(erste?.rights.checkedAt).not.toBeNull();
+    expect(erste?.rights.approvalEvidence).toContain('SOURCE_REVIEWS');
+    expect(erste?.rights.termsHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(erste?.attributionText).toContain('OpenStreetMap');
+  });
+
+  it('erlaubt für das OSM-Extrakt Anzeige, JSON und Repository, aber keine Bilder', () => {
+    const osm = requireSource('osm-geofabrik-germany-pbf');
+    expect(mayPublish(osm.rights, 'websiteDisplay').allowed).toBe(true);
+    expect(mayPublish(osm.rights, 'publicJsonDelivery').allowed).toBe(true);
+    expect(mayPublish(osm.rights, 'publicRepository').allowed).toBe(true);
+    expect(mayPublish(osm.rights, 'images').allowed).toBe(false);
+  });
+
+  it('verlangt für eine verifizierte Quelle mit Attributionspflicht den Wortlaut', () => {
+    const osm = requireSource('osm-geofabrik-germany-pbf');
+    const ohneWortlaut: Record<string, unknown> = { ...osm };
+    delete ohneWortlaut.attributionText;
+    expect(SourceEntrySchema.safeParse(ohneWortlaut).success).toBe(false);
   });
 });
 
