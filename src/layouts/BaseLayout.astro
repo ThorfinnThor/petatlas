@@ -41,7 +41,7 @@ const canonical = route ? canonicalUrl(build.baseUrl, market, route) : null;
     <meta name="robots" content={robots} />
     {canonical && <link rel="canonical" href={canonical} />}
   </head>
-  <body>
+  <body data-pagefind-ignore={neverIndex ? 'all' : undefined}>
     <SiteHeader market={market} brandName={site.brandName} aktuellerPfad={Astro.url.pathname} />
     {
       build.showTestDataBanner && (

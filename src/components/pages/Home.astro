@@ -9,6 +9,7 @@ import type { MarketConfig } from '../../domain/market.ts';
 import { translate, type LocaleId } from '../../domain/i18n.ts';
 import { navigationFor } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
+import Search from '../Search.astro';
 
 interface Props {
   market: MarketConfig;
@@ -46,3 +47,5 @@ const werkzeuge = navigationFor(market, 'main').filter((item) => item.key !== 'h
     </Notice>
   )
 }
+
+<Search />

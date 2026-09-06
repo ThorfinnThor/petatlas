@@ -965,8 +965,16 @@
         "M04-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Pagefind 1.5.2 laeuft nach dem HTML-Build ueber dist/ (npm run build:site). Der Index nimmt 5 von 9 HTML-Dateien auf; 404 und die technischen Entwicklungsseiten sind ueber data-pagefind-ignore ausgeschlossen. Die Suche laeuft im Browser: ein E2E-Test protokolliert alle Netzwerkanfragen und belegt, dass keine an einen fremden Host geht. 10 Suchtests, darunter: Treffer fuehrt auf eine Seite mit Status 200, kein Ergebnis zeigt auf /entwicklung/, leeres Ergebnis wird als 'Keine Treffer' gemeldet statt Treffer zu erfinden, Bedienung per Tastatur. Zwei Punkte mussten korrigiert werden: das gebuendelte Inline-Skript scheiterte an einem __VITE_PRELOAD__-Platzhalter, weil der Bundler den dynamischen Import aufloeste - die Suchlogik liegt jetzt als eigenes Modul in public/. Und zwei Testerwartungen ('keine Treffer' fuer ausgeschlossene Seiten) waren falsch formuliert, weil Pagefind mit Wortstaemmen und Teiltreffern arbeitet; sie pruefen jetzt die Ziel-URLs. 87 E2E-Tests gruen.",
+          "reference": "scripts/build-search.ts; src/components/Search.astro; public/suche.js; tests/e2e/search.spec.ts",
+          "verified_at": "2026-09-06",
+          "command": "npm run build:site && npx playwright test",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

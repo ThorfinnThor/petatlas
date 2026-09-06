@@ -1,0 +1,64 @@
+---
+/**
+ * M04-04 — Suche.
+ *
+ * Die Suche läuft vollständig im Browser gegen den statisch gebauten
+ * Pagefind-Index. Es gibt keinen Suchserver, keine Anfrage an einen Dritten
+ * und keine Übertragung der Eingabe.
+ *
+ * Ohne JavaScript bleibt die Seite bedienbar: das Suchfeld erscheint erst,
+ * wenn das Skript läuft, statt ein totes Formular anzubieten.
+ */
+---
+
+<section class="suche" data-pagefind-ignore="all">
+  <h2 id="suche-titel">Suche</h2>
+  <noscript>
+    <p>Die Suche benötigt JavaScript. Die Inhalte sind über die Navigation erreichbar.</p>
+  </noscript>
+  <form id="suche-form" role="search" aria-labelledby="suche-titel" hidden>
+    <label for="suche-feld">Suchbegriff</label>
+    <input id="suche-feld" type="search" autocomplete="off" enterkeyhint="search" />
+  </form>
+  <p id="suche-status" role="status" aria-live="polite"></p>
+  <ul id="suche-treffer" class="suche__treffer"></ul>
+</section>
+
+<style>
+  .suche {
+    margin-block: var(--abstand-6);
+  }
+
+  .suche label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--abstand-1);
+  }
+
+  .suche input {
+    width: 100%;
+    max-width: 24rem;
+    padding: var(--abstand-2);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    background: var(--farbe-grund);
+  }
+
+  .suche__treffer {
+    list-style: none;
+    padding: 0;
+    margin: var(--abstand-4) 0 0;
+  }
+
+  .suche__treffer li {
+    padding-block: var(--abstand-2);
+    border-bottom: var(--linie) solid var(--farbe-linie);
+  }
+
+  .suche__treffer :global(mark) {
+    background: var(--farbe-warnung-grund);
+    color: inherit;
+  }
+</style>
+
+<script type="module" src="/suche.js"></script>

@@ -23,7 +23,7 @@ export default defineConfig({
     { name: 'chromium-mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: `npm run build && npx astro preview --port ${PORT} --ignore-lock`,
+    command: `npm run build:site && npx astro preview --port ${PORT} --ignore-lock`,
     // Astro startet den Preview-Server in erkannten Agent-Umgebungen sonst im
     // Hintergrund; Playwright braucht ihn im Vordergrund.
     env: { ASTRO_PREVIEW_BACKGROUND: 'false' },
