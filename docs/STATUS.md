@@ -2,8 +2,8 @@
 
 Stand: 2026-09-07, Ende Sitzung 9.
 
-**Erledigt:** 63 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** eine (M08-06, fachliche Abnahme des Rechners).
-**Meilensteine vollständig:** M00 bis M07 und M10 (je 6/6). M08 bei 5/6, die sechste blockiert. M11 bei 4/6.
+**Erledigt:** 64 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** eine (M08-06, fachliche Abnahme des Rechners).
+**Meilensteine vollständig:** M00 bis M07 und M10 (je 6/6). M08 bei 5/6, die sechste blockiert. M11 bei 5/6.
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 
@@ -22,6 +22,7 @@ Stand: 2026-09-07, Ende Sitzung 9.
 - **Tierarztkosten-Rechner:** GOT-Import mit 1006 Positionen aus der amtlichen XML-Fassung, Rechenengine mit beiden Golden Tests, Szenariomodell mit Reviewpfad, Oberfläche und Druckansicht. Läuft hinter dem Feature Flag `costs`; öffentlich erst nach der fachlichen Abnahme.
 - **Bundesweite Ortsdaten:** 9.381 Orte aus allen 16 deutschen OSM-Regionalextrakten, in 217 räumliche Zellen geteilt, 46.116 Ortsnamen für die Suche. Messung in `docs/OSM_BENCHMARK.md`, Abdeckung in `docs/COVERAGE.md`, Abnahme in `docs/reviews/places.md`. Die Karte selbst folgt in M11.
 - **Karte und lokale Seiten:** zugängliche Trefferliste ohne JavaScript, Leaflet erst auf Klick, Standortabfrage nur auf Nutzeraktion, dazu 25 Stadtseiten aus einer gemessenen Qualitäts-Allowlist (`docs/CITY_PAGES.md`). Läuft hinter dem Feature Flag `map`.
+- **Kommunaler Pilot:** 30 Flächen der Berliner Senatsverwaltung (22 Hundefreilauf, 8 Hundemitnahmeverbot) unter `dl-de/zero-2-0`, abgeglichen mit OSM: 10 bestätigt, 0 Widerspruch, 16 unbestätigt, 12 nur kommunal. Noch nicht ausgeliefert; Einzelheiten in `docs/MUNICIPAL_PILOT.md`.
 
 **Nicht vorhanden:** Produktionsprojekt, Git-Integration bei Cloudflare, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge.
 

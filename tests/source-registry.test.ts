@@ -67,10 +67,22 @@ describe('Ungeprüfte Quellen dürfen nichts', () => {
     expect(pendingSources()).toEqual([]);
   });
 
-  it('trägt für jede Quelle die Attributionspflicht bereits ein', () => {
+  it('nennt bei jeder Attributionspflicht auch den verlangten Wortlaut', () => {
+    // Nicht jede Lizenz verlangt eine Nennung: dl-de/zero-2-0 stellt keine
+    // Bedingungen. Die Pflicht darf deshalb nicht behauptet werden, wo es
+    // keine gibt — wo es eine gibt, muss der Wortlaut hinterlegt sein.
     for (const eintrag of allSources()) {
-      expect(eintrag.rights.attributionRequired).toBe(true);
+      if (!eintrag.rights.attributionRequired) continue;
+      expect(eintrag.attributionText, eintrag.sourceId).toBeTruthy();
     }
+  });
+
+  it('verlangt für die kommunale Pilotquelle keine Attribution, führt sie aber', () => {
+    const eintrag = allSources().find((quelle) => quelle.sourceId === 'berlin-hundefreilauf-wfs');
+    expect(eintrag?.rights.attributionRequired).toBe(false);
+    expect(eintrag?.rights.licenseId).toBe('dl-de/zero-2-0');
+    // Herkunft gehört zur Aussage, auch ohne Lizenzpflicht.
+    expect(eintrag?.attributionText).toBeTruthy();
   });
 
   it('kennzeichnet das OSM-Extrakt als share-alike-behaftet', () => {

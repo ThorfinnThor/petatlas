@@ -2329,10 +2329,20 @@
         "M11-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Kommunaler Pilot: WFS-Abgabe 'Hundefreilauf' der Senatsverwaltung fuer Stadtentwicklung Berlin unter dl-de/zero-2-0, Rechte geprueft und in docs/SOURCE_REVIEWS.md dokumentiert (termsHash der Lizenzseite). Der Adapter uebernimmt 30 Flaechen (22 Hundefreilauf, 8 Hundemitnahmeverbot) und lehnt fail-closed ab: fremdes Bezugssystem wird nicht umgerechnet, ein Teilimport wird nicht uebernommen, ein unbekannter typ wird nicht eingeordnet, das Freitextfeld info wird nicht zu einer Zahl. Der Geltungsbereich (nur drei Bezirke plus eine Flaeche in Steglitz-Zehlendorf) steht als Pflichtfeld im Snapshot. Abgleich mit den 9.381 OSM-Orten ueber Punkt-in-Flaeche: 10 bestaetigt, 0 Widerspruch, 16 unbestaetigt, 12 nur kommunal - der Zugewinn sind 12 Flaechen, die OSM nicht kennt. Ein Widerspruch wird benannt, nicht aufgeloest; belegteHundeerlaubnis() liefert true nur bei ausdruecklicher Ausweisung und immer mit Beleg, bei einander widersprechenden Belegen null. Geprueft: 'npm run snapshot:municipal -- --fetch' gegen den echten Dienst am 2026-09-07 liefert fachlich exakt dieselben 30 Flaechen wie die im Repository liegende Antwort; 33 neue Unit-Tests (620 gesamt); 'npm run check:municipal' exit 0; Lizenzpruefung 19 Quellen freigegeben; die Quelle erscheint mit Lizenz und tatsaechlicher Abdeckung auf der oeffentlichen Quellenseite. Die Flaechen werden bewusst noch nicht ausgeliefert, siehe docs/MUNICIPAL_PILOT.md.",
+          "reference": "config/sources/berlin-hundefreilauf.json, scripts/ingest/adapters/municipal/berlin-hundefreilauf.ts, scripts/ingest/snapshot-municipal.ts, scripts/normalize/municipal.ts, scripts/checks/municipal-conflicts.ts, data-snapshots/municipal/berlin-hundefreilauf.json, tests/ingest/municipal-adapter.test.ts, tests/places/municipal-abgleich.test.ts, docs/MUNICIPAL_PILOT.md, docs/SOURCE_REVIEWS.md#berlin-hundefreilauf-wfs",
+          "verified_at": "2026-09-07",
+          "command": "npm run check:municipal",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
-      "notes": []
+      "notes": [
+        "Der erste Live-Abruf scheiterte mit SELF_SIGNED_CERT_IN_CHAIN: der Wurzel 'Telekom Security TLS RSA Root 2023' fehlt im Trust Store dieser Maschine und in dem von Node. Geloest nicht durch Abschalten der TLS-Pruefung, sondern durch Aufnahme genau dieses Roots aus der Mozilla-Rootliste nach Fingerprint-Abgleich; dokumentiert in docs/TOOLCHAIN.md. Der fehlgeschlagene Abruf hatte den vorhandenen Snapshot unangetastet gelassen."
+      ]
     },
     {
       "id": "M11-06",

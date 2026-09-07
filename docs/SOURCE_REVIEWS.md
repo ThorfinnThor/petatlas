@@ -88,3 +88,42 @@ Eigener Registryeintrag, weil eine Region eine andere Distribution ist als das D
 Die Geofabrik-Seite für Bremen weist dieselbe Lizenz aus wie die Deutschlandseite: „License: ODbL 1.0“, Daten von OpenStreetMap-Mitwirkenden, aufbereitet von der Geofabrik GmbH. Attribution, Share-Alike für abgeleitete Datenbanken und der Ausschluss von Bildern und Kartenkacheln gelten unverändert; die Feststellungen aus dem Deutschland-Extrakt oben gelten hier gleichermaßen.
 
 Der Pilotlauf über diese Distribution ist in `docs/OSM_PILOT.md` dokumentiert.
+
+---
+
+## berlin-hundefreilauf-wfs
+
+**Geprüft am:** 2026-09-07 · **Ergebnis:** `verified`
+
+### Was geprüft wurde
+
+| Primärquelle | Fundstelle | sha256 des Abrufs |
+|---|---|---|
+| Metadaten des Datensatzes | `https://datenregister.berlin.de/api/3/action/package_show?id=hundefreilauf-wfs-63c580c9` | — (CKAN-Antwort mit Zeitstempel) |
+| Lizenztext | `https://www.govdata.de/dl-de/zero-2-0` | `872b1a3e…07f1` |
+| Abgabe des Dienstes | `https://gdi.berlin.de/services/wfs/hundefreilauf` (GetFeature, GeoJSON, EPSG:4326) | `f386fe1b…a997` |
+
+Der `termsHash` im Registryeintrag ist der Hash der abgerufenen Lizenzseite. Ändert er sich, gilt die Freigabe als offen und wird erneut geprüft (M05-06).
+
+### Feststellungen
+
+1. **Lizenz.** Die Portalmetadaten weisen den Datensatz als „Datenlizenz Deutschland – Zero – Version 2.0“ aus (`license_id: dl-de-zero-2.0`), mit der Lizenzadresse bei GovData. Der Lizenztext lautet: „Jede Nutzung ist ohne Einschränkungen oder Bedingungen zulässig.“ Genannt sind ausdrücklich Vervielfältigung, Bearbeitung, Weitergabe an Dritte, Zusammenführung mit anderen Daten und Einbindung in Produkte — kommerziell wie nicht kommerziell.
+2. **Attribution.** Nicht verlangt. Der Registryeintrag führt trotzdem einen Attributionstext, weil die Herkunft einer Aussage über eine Fläche zur Aussage gehört. `attributionRequired` steht auf `false`, damit die Lizenzprüfung nicht eine Pflicht behauptet, die es nicht gibt.
+3. **Share-Alike.** Keines. Die Zero-Variante stellt keine Bedingungen, also auch keine Weitergabe unter gleichen Bedingungen.
+4. **Geltungsbereich.** Der Datensatz deckt drei Bezirke ab (Charlottenburg-Wilmersdorf, Friedrichshain-Kreuzberg, Reinickendorf) plus eine Fläche in Steglitz-Zehlendorf. Er ist **keine** berlinweite Auskunft. Das steht als Pflichtfeld `validity` im Snapshot, nicht nur in dieser Prüfung.
+5. **Inhalt.** Zwei Arten von Flächen: ausgewiesene Hundefreilaufflächen und Hundemitnahmeverbote. Beide werden getrennt geführt; aus einem fehlenden Verbot wird keine Erlaubnis abgeleitet.
+6. **Bilder.** Der Datensatz enthält keine. Das Vorschaubild des Portals wird nicht übernommen; `imagesAllowed` steht auf `false`.
+7. **Bezugsweg.** Die WFS-Abgabe ist das offiziell angebotene Format. Abgerufen wird eine Anfrage je Lauf; der Kartendienst (WMS) des Layers wird nicht verwendet.
+
+### Freigegebene Ausgabeformen
+
+| Ausgabeform | Ergebnis |
+|---|---|
+| Anzeige im HTML | erlaubt |
+| Öffentliche JSON-Auslieferung | erlaubt |
+| Öffentliches Repository | erlaubt |
+| Bilder | nicht erlaubt (nicht anwendbar) |
+
+### Offen
+
+Die Daten sind freigegeben, aber noch nicht ausgeliefert (siehe `docs/MUNICIPAL_PILOT.md`). Vor einer Auslieferung ist zu klären, wie Verbotsgebiete dargestellt werden, ohne dass eine Karte sie wie ein Angebot aussehen lässt.

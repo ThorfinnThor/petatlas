@@ -70,6 +70,22 @@ export NODE_EXTRA_CA_CERTS="$PWD/.work/ca/system-roots.pem"
 
 `.work/` ist ignoriert, `strict-ssl` bleibt aktiv. Auf CI-Runnern ist der Schritt voraussichtlich nicht nötig; das wird in M07 geprüft.
 
+### Nachtrag M11-05: ein fehlendes Wurzelzertifikat
+
+`gdi.berlin.de` (kommunale Pilotquelle) legt „Telekom Security TLS RSA Root 2023“ als Wurzel vor. Dieses Zertifikat fehlt sowohl im Systemroot-Export dieser Maschine als auch in der von Node mitgelieferten Liste; Node meldet `SELF_SIGNED_CERT_IN_CHAIN`, `curl` funktioniert (macOS-Vertrauensauswertung).
+
+Behoben wurde das **nicht** durch Abschalten der Prüfung, sondern durch Aufnahme genau dieses einen Wurzelzertifikats in den lokalen Bundle — nachdem es gegen die Mozilla-Rootliste geprüft wurde:
+
+```bash
+curl -sS "https://ccadb.my.salesforce-sites.com/mozilla/IncludedRootsPEMTxt?TrustBitsInclude=Websites" -o roots.pem
+# Fingerprint des vom Server vorgelegten Roots mit der Liste vergleichen:
+#   SHA-256 EF:C6:5C:AD:BB:59:AD:B6:EF:E8:4D:A2:23:11:B3:56:24:B7:1B:3B:1E:A0:DA:8B:66:55:17:4E:C8:97:86:46
+# Nur bei Übereinstimmung die Fassung *aus der Mozilla-Liste* anhängen:
+cat root-aus-mozilla-liste.pem >> .work/ca/system-roots.pem
+```
+
+Angehängt wird die Fassung aus der unabhängigen Liste, nicht die vom Server gelieferte. `NODE_TLS_REJECT_UNAUTHORIZED` bleibt unangetastet. Der Schritt betrifft nur diese Entwicklungsmaschine; der Website-Build braucht ihn nicht, weil er keinen Live-Abruf macht.
+
 ## Nachweis M01-03
 
 | Prüfung | Befehl | Ergebnis |

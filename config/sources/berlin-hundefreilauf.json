@@ -1,0 +1,43 @@
+{
+  "sourceId": "berlin-hundefreilauf-wfs",
+  "publisher": "Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin",
+  "resourceName": "Hundefreilauf Berlin, WFS-Abgabe als GeoJSON (Layer hundefreilauf:hundefreilauf)",
+  "distributionUrl": "https://gdi.berlin.de/services/wfs/hundefreilauf?service=WFS&version=2.0.0&request=GetFeature&typeNames=hundefreilauf%3Ahundefreilauf&outputFormat=application%2Fjson&srsName=EPSG%3A4326",
+  "primaryTermsUrl": "https://www.govdata.de/dl-de/zero-2-0",
+  "format": "json",
+  "coverage": {
+    "spatial": "Berlin, tatsächlich erfasst nur Charlottenburg-Wilmersdorf, Friedrichshain-Kreuzberg, Reinickendorf und ein Eintrag in Steglitz-Zehlendorf",
+    "temporal": "Sachstände der Bezirke zwischen 2023-01-06 und 2024-07-17"
+  },
+  "updateCadence": "nach Bedarf (frequency-of-update: asNeeded); Abruf höchstens wöchentlich",
+  "role": "Kommunaler Pilot: ausgewiesene Hundefreilaufflächen und Hundemitnahmeverbote als Belegquelle neben OpenStreetMap",
+  "rights": {
+    "sourceId": "berlin-hundefreilauf-wfs",
+    "status": "verified",
+    "licenseId": "dl-de/zero-2-0",
+    "licenseUrl": "https://www.govdata.de/dl-de/zero-2-0",
+    "commercialUse": true,
+    "publicRedistribution": true,
+    "websiteDisplay": true,
+    "publicJsonDelivery": true,
+    "publicRepository": true,
+    "attributionRequired": false,
+    "shareAlike": false,
+    "imagesAllowed": false,
+    "mayStoreHistory": true,
+    "mayCacheOriginals": true,
+    "termsHash": "872b1a3ee0edc93cb599e9405d8eb5048d7ec400f252e18fb3716d4d16b407f1",
+    "checkedAt": "2026-09-07T00:00:00+00:00",
+    "approvalEvidence": "docs/SOURCE_REVIEWS.md#berlin-hundefreilauf-wfs"
+  },
+  "notes": [
+    "Die Datenlizenz Deutschland – Zero – Version 2.0 stellt keine Bedingungen; eine Namensnennung ist nicht verlangt. Sie wird trotzdem geführt, weil die Herkunft einer Aussage über eine Fläche zur Aussage gehört.",
+    "Der Datensatz gilt nicht berlinweit. Erfasst sind drei Bezirke plus ein einzelner Eintrag in Steglitz-Zehlendorf; eine Fläche, die hier fehlt, ist damit nicht verboten und auch nicht erlaubt, sondern unbekannt.",
+    "Der Datensatz enthält zwei Arten von Flächen: ausgewiesene Hundefreilaufflächen und Hundemitnahmeverbote. Beide werden getrennt geführt; aus einem fehlenden Verbot wird keine Erlaubnis abgeleitet.",
+    "Bezogen wird über die offiziell angebotene WFS-Abgabe, ein Abruf je Lauf, kein Crawler und keine Kachelabfrage über den Layer.",
+    "Der Antwortkörper enthält einen Zeitstempel des Dienstes. Der Inhalts-Hash der Rohantwort ändert sich deshalb bei jedem Abruf; verglichen wird der normalisierte Datensatz, nicht die Rohantwort.",
+    "Das Freitextfeld info der Quelle enthält teils Flächenangaben, teils Hinweise wie „aktuell nicht nutzbar“ und teils eine fremde Adresse. Es wird als Freitext übernommen und nicht zu einer Zahl gemacht."
+  ],
+  "attributionText": "Hundefreilauf Berlin, Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin, Datenlizenz Deutschland – Zero – Version 2.0",
+  "attributionUrl": "https://daten.berlin.de/datensaetze/hundefreilauf-wfs-63c580c9"
+}

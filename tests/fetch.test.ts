@@ -66,7 +66,11 @@ describe('Schädliche und unerlaubte Adressen', () => {
   });
 
   it('enthält nur Hosts der erfassten Quellen', () => {
-    expect([...HOSTS].sort()).toEqual(['download.geofabrik.de', 'www.gesetze-im-internet.de']);
+    expect([...HOSTS].sort()).toEqual([
+      'download.geofabrik.de',
+      'gdi.berlin.de',
+      'www.gesetze-im-internet.de',
+    ]);
   });
 });
 

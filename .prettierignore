@@ -17,6 +17,10 @@ schemas/
 project/tasks.json
 content-data/city-allowlist.json
 
+# Unveraenderte Antwort der Quelle. Sie muss Byte fuer Byte so bleiben, wie
+# der Dienst sie geliefert hat: ihr Hash steht als Herkunftsnachweis im Snapshot.
+tests/fixtures/municipal/
+
 # Markdown bleibt handgeschrieben: Plan- und Statusdokumente sollen nicht bei
 # jedem Formatlauf umgebrochen werden. Inhaltliche Pflege statt Autoformat.
 *.md

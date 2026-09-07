@@ -11,6 +11,7 @@ export * from './catalog.ts';
 export * from './city.ts';
 export * from './places.ts';
 export * from './costs.ts';
+export * from './municipal.ts';
 export * from './travel.ts';
 export * from './profile.ts';
 export * from './manifest.ts';

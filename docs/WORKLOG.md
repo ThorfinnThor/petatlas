@@ -163,3 +163,14 @@ Zu M11-04 im Einzelnen:
 - Die Allowlist ist eine Obergrenze, keine Zusicherung. Der Build misst jede gelistete Stadt erneut; erfüllt sie die Kriterien nicht mehr, entfällt ihre Seite. Ein Test vergleicht die Datei mit dem echten Datenstand und nennt im Fehlerfall den Regenerierungsbefehl.
 - Zwei Textfehler sind erst im Browser aufgefallen und dort behoben worden: „1 Tierheime“ (jetzt eine Zählform je Kategorie) und ein fehlendes Leerzeichen vor dem Stadtnamen.
 - Nebenbefund: die Leistungsseiten des Rechners trugen ein canonical auf die Rechnerseite und erklärten sich damit selbst zum Duplikat. Beide Seitenarten setzen jetzt über `subroutePath` ein canonical auf sich selbst.
+
+| M11-05 | `config/sources/berlin-hundefreilauf.json`, `adapters/municipal/`, `normalize/municipal.ts`, `check:municipal` | `npm run snapshot:municipal -- --fetch`, `npm run check:municipal`, 33 neue Tests | 30 Flächen, 10 bestätigt, 0 Widerspruch, 16 unbestätigt, 12 nur kommunal |
+
+Zu M11-05 im Einzelnen:
+
+- Quelle ist die WFS-Abgabe „Hundefreilauf“ der Berliner Senatsverwaltung unter `dl-de/zero-2-0` — eine Lizenz ohne Bedingungen. Der Attributionstext steht trotzdem im Registryeintrag, und `attributionRequired` steht auf `false`: eine Pflicht zu behaupten, die es nicht gibt, wäre genauso falsch wie eine zu übergehen.
+- Der Datensatz gilt nur für drei Bezirke. Das steht als Pflichtfeld `validity` im Snapshot. Aus dem Schweigen der Verwaltung folgt nichts: `unbestaetigt` ist im Abgleich ein eigener Fall neben `widerspruch`, und `belegteHundeerlaubnis()` liefert `true` nur bei ausdrücklicher Ausweisung, mit Beleg.
+- Der Zugewinn ist messbar: 12 ausgewiesene Freilaufflächen, die OSM nicht führt, und 10 Belege für Flächen, die OSM zwar kennt, aber nicht belegen kann. Widersprüche gab es an diesem Datenstand keine; der Fall ist trotzdem implementiert und getestet.
+- Der Live-Abruf scheiterte zuerst mit `SELF_SIGNED_CERT_IN_CHAIN`: der Wurzel „Telekom Security TLS RSA Root 2023“ fehlt im Trust Store dieser Maschine und in dem von Node. Behoben nicht durch Abschalten der Prüfung, sondern durch Aufnahme genau dieses Roots aus der Mozilla-Rootliste nach Fingerprint-Abgleich (`docs/TOOLCHAIN.md`). Der fehlgeschlagene Abruf hatte den vorhandenen Snapshot unangetastet gelassen — das war der erste Beleg dafür, dass der Fehlerpfad stimmt.
+- Prettier hat die im Repository liegende Rohantwort umformatiert und damit ihren Hash verändert. Sie ist jetzt in `.prettierignore`: ihr Hash ist der Herkunftsnachweis im Snapshot und darf nicht vom Formatlauf abhängen.
+- Zwei ältere Tests hatten Annahmen, die nicht mehr stimmen: die Hostliste des Fetchers und „jede Quelle verlangt Attribution“. Beide beschreiben jetzt, was gelten soll, statt was zufällig galt.
