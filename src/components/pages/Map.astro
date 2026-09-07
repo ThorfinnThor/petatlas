@@ -12,6 +12,7 @@ import Notice from '../Notice.astro';
 import DataStatus from '../DataStatus.astro';
 import { defaultMarket } from '../../domain/market.ts';
 import { TILES } from '../../features/map/tiles.ts';
+import { STANDORT_TEXTE } from '../../features/map/geolocation.ts';
 import {
   KATEGORIE_LABEL,
   RADIEN_METER,
@@ -84,6 +85,11 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
       Ohne Auswahl zeigt die Liste den Ausschnitt um {STANDARD.name}.
     </p>
     <ul id="ort-treffer" class="ortstreffer"></ul>
+    <p>
+      <button type="button" id="standort">Meinen Standort verwenden</button>
+    </p>
+    <p class="hilfe">{STANDORT_TEXTE.hinweisVorher}</p>
+    <p id="standort-status" role="status" aria-live="polite"></p>
   </div>
 
   <fieldset>

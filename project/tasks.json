@@ -2263,8 +2263,16 @@
         "M11-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Der Standort wird ausschliesslich in einem Klickhandler abgefragt: ein E2E-Test zaehlt die Aufrufe von getCurrentPosition und belegt null beim Seitenaufruf. Kein watchPosition, maximumAge 0 - also kein Dauerbetrieb und kein zwischengespeicherter Wert. Ein Test mit freigegebenem Standort prueft danach localStorage, sessionStorage, Cookies, die Adresszeile und alle Netzwerkanfragen: die Koordinaten tauchen nirgends auf, und es geht keine Nicht-GET-Anfrage raus. Ablehnung, Zeitueberschreitung und nicht verfuegbarer Dienst sind drei eigene Faelle mit eigenem Text, der jeweils den Weg ueber die Ortseingabe anbietet; nach einer Ablehnung bleibt der Knopf benutzbar und die Liste vollstaendig. Der gefundene Punkt heisst 'Ihr ungefaehrer Standort' mit Genauigkeitsangabe, nicht eine Gemeinde - aus einer Koordinate folgt keine Verwaltungszugehoerigkeit. Dichte Ausschnitte: hoechstens 300 Marker werden gezeichnet, und die Oberflaeche sagt, wie viele nicht dargestellt sind; im 50-km-Umkreis um Berlin geprueft. 16 Unit- und 7 E2E-Tests.",
+          "reference": "src/features/map/geolocation.ts; src/features/map/map.ts; tests/places/geolocation.test.ts; tests/e2e-features/map-standort.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:unit && npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

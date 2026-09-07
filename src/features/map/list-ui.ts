@@ -16,6 +16,7 @@ import {
   notdienstHinweis,
   type ListenOrt,
 } from './list.ts';
+import { frageStandort, standortLabel } from './geolocation.ts';
 import { zeigeKarte, waehleMarker } from './map.ts';
 import { normalisiere, sucheOrte, type OrtsEintrag } from './place-search.ts';
 
@@ -240,6 +241,34 @@ export function listeStarten(): void {
     } else {
       void zeichneKarte();
     }
+  });
+
+  const standortKnopf = document.querySelector<HTMLButtonElement>('#standort');
+  const standortStatus = document.querySelector<HTMLElement>('#standort-status');
+
+  // Der Standort wird ausschließlich hier abgefragt: in einem Klickhandler.
+  // Es gibt keinen Aufruf beim Laden der Seite und kein watchPosition.
+  standortKnopf?.addEventListener('click', () => {
+    if (!standortStatus) return;
+    standortKnopf.disabled = true;
+    standortStatus.textContent = 'Standort wird abgefragt …';
+
+    void frageStandort().then((ergebnis) => {
+      standortKnopf.disabled = false;
+      if (ergebnis.art !== 'ok') {
+        standortStatus.textContent = ergebnis.text;
+        return;
+      }
+      // Der Wert bleibt in dieser Variablen. Er wird nicht gespeichert und
+      // nicht gesendet.
+      gewaehlt = {
+        name: standortLabel(ergebnis.genauigkeitMeter),
+        latitude: ergebnis.latitude,
+        longitude: ergebnis.longitude,
+      };
+      standortStatus.textContent = `Ausschnitt um ${gewaehlt.name}.`;
+      void aktualisiere();
+    });
   });
 
   let timer: number | undefined;

@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 vollständig, M11 bei 2/6 (61 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 vollständig, M11 bei 3/6 (62 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M11-03 — Marker und Geolocation behandeln.** Rendergrenzen bei dichten Ausschnitten, Standortabfrage nur auf Nutzeraktion, Ablehnungs- und Timeoutpfade, klare Standortdatenhaltung. Abnahme: der Standort wird ohne passende Aktion weder gespeichert noch versendet.
+**M11-04 — Lokale Seite aus Qualitäts-Allowlist generieren.** Bis zu 25 Städte, ausschließlich mit genug echten Daten; keine leeren Kategorien und kein erfundener Mindestbestand. `content-data/city-allowlist.json`.
 
-Liste und Karte stehen: statischer Standardausschnitt, Ortssuche, Filter, Karte erst auf Klick. Alternativ M09-01 oder M12-01.
+Liste, Karte und Standort stehen. Alternativ M09-01 oder M12-01.
 
 **M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Er ist auf Wunsch des Betreibers in der **Vorschau** freigeschaltet und dort mit sichtbarem Warnhinweis erreichbar; die versionierte Marktkonfiguration bleibt auf `costs: false`. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`, die Merkliste in `TODO.md`.
 
