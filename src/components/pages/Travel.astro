@@ -12,8 +12,15 @@
  */
 import Notice from '../Notice.astro';
 import { reiseUmfang, umfangsSatz } from '../../features/travel/scope.ts';
+import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
+import { devFeatureOverrides } from '../../../config/build.ts';
+import { routePath } from '../../lib/routes.ts';
 
 const umfang = reiseUmfang();
+const quellenPfad = routePath(
+  withEnabledFeatures(defaultMarket(), devFeatureOverrides()),
+  'sources',
+);
 
 const LAENDER: Readonly<Record<string, string>> = {
   DE: 'Deutschland',
@@ -75,17 +82,208 @@ const transit = umfang.transitCountries.map(name);
   }
 </ul>
 
-<Notice variante="hinweis" titel="Regeln folgen">
+<Notice variante="warnung" titel="Fachlich noch nicht geprüft">
   <p>
-    Die eigentliche Prüfung braucht belegte Regeln mit Fundstelle, Geltungszeitraum und fachlicher
-    Freigabe. Sie kommt im nächsten Schritt. Solange sie fehlt, steht hier keine Beispielprüfung:
-    eine Checkliste aus erfundenen Regeln wäre schlimmer als gar keine.
+    Die Regeln sind aus den amtlichen Quellen erfasst und mit Fundstelle hinterlegt (<a
+      href={quellenPfad}>Quellen</a
+    >), aber <strong>fachlich noch nicht abgenommen</strong>. Deshalb gibt es hier kein grünes
+    Gesamtergebnis, sondern eine Vorschau: einzelne Punkte werden ausgewertet, das Gesamturteil
+    bleibt offen. Verbindlich ist die Auskunft der zuständigen Behörde.
   </p>
 </Notice>
 
+<section aria-labelledby="check-titel">
+  <h2 id="check-titel">Angaben zur Reise</h2>
+
+  <form id="reiseform">
+    <div class="feld">
+      <label for="tierart">Tierart</label>
+      <select id="tierart">
+        <option value="dog">Hund</option>
+        <option value="cat">Katze</option>
+        <option value="other">anderes Tier</option>
+      </select>
+    </div>
+
+    <div class="feld">
+      <label for="richtung">Richtung</label>
+      <select id="richtung">
+        <option value="outbound">Hinreise aus Deutschland</option>
+        <option value="return">Rückreise nach Deutschland</option>
+      </select>
+    </div>
+
+    <div class="feld">
+      <label for="ziel">Zielland (bei Rückreise: Herkunftsland)</label>
+      <select id="ziel">
+        {umfang.destinations.map((code) => <option value={code}>{name(code)}</option>)}
+        <option value="XX">anderes Land</option>
+      </select>
+    </div>
+
+    <fieldset>
+      <legend>Durchreise</legend>
+      {
+        umfang.transitCountries.map((code) => (
+          <label class="wahl">
+            <input type="checkbox" name="transit" value={code} />
+            {name(code)}
+          </label>
+        ))
+      }
+      <label class="wahl">
+        <input type="checkbox" name="transit" value="XX" />
+        anderes Land
+      </label>
+    </fieldset>
+
+    <div class="feld">
+      <label for="reisedatum">Tag der Reise</label>
+      <input id="reisedatum" type="date" required />
+    </div>
+
+    <div class="feld">
+      <label for="anzahl">Anzahl der Tiere</label>
+      <input id="anzahl" type="number" min="1" max="20" value="1" />
+    </div>
+
+    <div class="feld">
+      <label for="geburtsdatum">Geburtsdatum des Tieres</label>
+      <input id="geburtsdatum" type="date" />
+      <p class="hilfe">Leer lassen, wenn unbekannt. Unbekannt bleibt unbekannt.</p>
+    </div>
+
+    <div class="feld">
+      <label for="chip">Ist das Tier mit einem Transponder gekennzeichnet?</label>
+      <select id="chip">
+        <option value="unbekannt">weiß ich nicht</option>
+        <option value="ja">ja</option>
+        <option value="nein">nein</option>
+      </select>
+    </div>
+
+    <div class="feld">
+      <label for="chipdatum">Datum der Kennzeichnung</label>
+      <input id="chipdatum" type="date" />
+    </div>
+
+    <div class="feld">
+      <label for="impfung">Besteht eine gültige Tollwutimpfung?</label>
+      <select id="impfung">
+        <option value="unbekannt">weiß ich nicht</option>
+        <option value="ja">ja</option>
+        <option value="nein">nein</option>
+      </select>
+    </div>
+
+    <div class="feld">
+      <label for="impfdatum">Datum der Erstimpfung</label>
+      <input id="impfdatum" type="date" />
+    </div>
+
+    <div class="feld">
+      <label for="ausweis">Liegt ein EU-Heimtierausweis vor?</label>
+      <select id="ausweis">
+        <option value="unbekannt">weiß ich nicht</option>
+        <option value="ja">ja</option>
+        <option value="nein">nein</option>
+      </select>
+    </div>
+
+    <div class="feld">
+      <label for="begleitung">Reist das Tier mit Ihnen?</label>
+      <select id="begleitung">
+        <option value="unbekannt">weiß ich nicht</option>
+        <option value="ja">ja</option>
+        <option value="nein">nein</option>
+      </select>
+    </div>
+
+    <p id="ohne-javascript" class="hilfe">
+      Das Ausrechnen braucht JavaScript. Umfang, Ausnahmen und die amtlichen Verweise auf dieser
+      Seite bleiben auch ohne lesbar.
+    </p>
+    <p><button type="submit" id="pruefen" hidden>Angaben prüfen</button></p>
+  </form>
+
+  <div id="reiseergebnis" role="status" aria-live="polite"></div>
+</section>
+
 {umfang.notes.map((hinweis) => <p class="hinweis">{hinweis}</p>)}
 
+<script>
+  import { reisecheckStarten } from '../../features/travel/wizard-ui.ts';
+
+  reisecheckStarten();
+</script>
+
 <style>
+  .feld {
+    margin-block: var(--abstand-4);
+  }
+
+  .feld label,
+  legend {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--abstand-1);
+  }
+
+  input[type='date'],
+  input[type='number'],
+  select {
+    width: 100%;
+    max-width: 24rem;
+    padding: var(--abstand-2);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    background: var(--farbe-grund);
+  }
+
+  fieldset {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-4);
+  }
+
+  .wahl {
+    display: block;
+    font-weight: 400;
+    margin-block: var(--abstand-1);
+  }
+
+  .hilfe {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+    margin-block: var(--abstand-1);
+  }
+
+  #reiseergebnis :global(.ergebnis__kopf) {
+    font-weight: 700;
+    border-inline-start: 4px solid var(--farbe-linie);
+    padding-inline-start: var(--abstand-3);
+  }
+
+  #reiseergebnis :global(.ergebnis__punkte),
+  #reiseergebnis :global(.ergebnis__gruende) {
+    list-style: none;
+    padding: 0;
+  }
+
+  #reiseergebnis :global(.ergebnis__punkte > li),
+  #reiseergebnis :global(.ergebnis__gruende > li) {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-3);
+  }
+
+  #reiseergebnis :global(.punkt__zustand) {
+    font-weight: 600;
+    margin-top: 0;
+  }
+
   .umfang {
     display: grid;
     grid-template-columns: max-content 1fr;

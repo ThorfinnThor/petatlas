@@ -2540,10 +2540,20 @@
         "M12-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Bedienbarer Reisecheck auf /de-de/reisecheck/: Auswahl von Tierart, Richtung, Ziel, Durchreise, Reisetag, Tierzahl, Geburtsdatum sowie Kennzeichnung, Tollwutimpfung, Heimtierausweis und Begleitung - jede Ja/Nein-Frage mit dritter Antwort 'weiss ich nicht', die nirgends zu ja oder nein wird. Der Ablauf prueft erst den Umfang und dann die Regeln: eine nicht unterstuetzte Route bekommt gar keine Checkliste, sondern die Begruendung. Der Vorschaumodus ist im Motor verankert: pruefeReise({vorschau:true}) wertet auch nicht freigegebene Regeln aus, deckelt das Gesamtergebnis aber hart auf unknown - ein not_fulfilled bleibt stehen, ein fulfilled wird zu unknown mit Begruendung. Damit gibt es kein gruenes Gesamtergebnis fuer eine unvollstaendige, nicht unterstuetzte oder ungeprueft geregelte Reise. Fristen werden gegen den Reisetag geprueft, nicht gegen den Tag des Ausfuellens. Jeder Checklistenpunkt nennt Hinweistext und amtliche Fundstelle. Geprueft: 15 neue Unit-Tests (745 gesamt) und 5 neue Feature-E2E-Tests (128 gesamt), darunter einer, der alle Anfragen protokolliert und belegt, dass nichts den Rechner verlaesst; im Browser mit vollstaendigen Angaben durchgespielt (5 Punkte erfuellt, Gesamtergebnis trotzdem offen). npm run verify exit 0, 174 Standard-E2E gruen.",
+          "reference": "src/features/travel/wizard.ts, src/features/travel/wizard-ui.ts, src/features/travel/engine.ts, src/components/pages/Travel.astro, tests/travel/wizard.test.ts, tests/e2e-features/reisecheck.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
-      "notes": []
+      "notes": [
+        "Die Route /de-de/reisecheck/ entsteht wie alle Marktseiten aus der Route Registry (M04-01); ein eigenes Verzeichnis src/pages/de-de/reisecheck/ waere ein zweiter Ort, an dem Pfade entstehen. Es kommt mit den Zielseiten in M12-05 als Unterseiten-Route hinzu."
+      ]
     },
     {
       "id": "M12-05",

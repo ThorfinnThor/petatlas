@@ -34,12 +34,13 @@ test('unterscheidet „nicht geprüft“ von „nicht erlaubt“', async ({ page
   await expect(page.getByText(/nicht erlaubt und nicht verboten|es ist ungeprüft/)).toBeVisible();
 });
 
-test('zeigt keine Beispielprüfung mit erfundenen Regeln', async ({ page }) => {
+test('rechnet nur mit belegten Regeln und sagt, dass sie ungeprüft sind', async ({ page }) => {
   await page.goto(REISE);
-  // Kein Formular, keine Checkliste, kein Ergebnis, solange keine belegten
-  // Regeln vorliegen.
-  await expect(page.locator('form')).toHaveCount(0);
-  await expect(page.getByText('Regeln folgen')).toBeVisible();
+  // Seit M12-04 gibt es ein Formular — aber nur mit Regeln, die eine
+  // amtliche Fundstelle haben und ausdrücklich als ungeprüft gelten.
+  await expect(page.getByText('Fachlich noch nicht geprüft')).toBeVisible();
+  await expect(page.locator('#reiseform')).toBeVisible();
+  await expect(page.locator('.ergebnis__punkte')).toHaveCount(0);
 });
 
 test('bleibt ohne JavaScript vollständig lesbar', async ({ browser }) => {
@@ -48,4 +49,81 @@ test('bleibt ohne JavaScript vollständig lesbar', async ({ browser }) => {
   await seite.goto(REISE);
   await expect(seite.locator('.ausnahmen li')).toHaveCount(umfang.unsupported.length);
   await kontext.close();
+});
+
+test('rechnet lokal und gibt kein grünes Gesamtergebnis', async ({ page }) => {
+  const fremdeAnfragen: string[] = [];
+  page.on('request', (anfrage) => {
+    if (!anfrage.url().startsWith('http://localhost')) fremdeAnfragen.push(anfrage.url());
+  });
+
+  await page.goto(REISE);
+  await page.selectOption('#tierart', 'dog');
+  await page.selectOption('#ziel', 'AT');
+  await page.fill('#reisedatum', '2026-10-01');
+  await page.fill('#geburtsdatum', '2020-01-01');
+  await page.selectOption('#chip', 'ja');
+  await page.fill('#chipdatum', '2020-03-01');
+  await page.selectOption('#impfung', 'ja');
+  await page.fill('#impfdatum', '2026-01-01');
+  await page.selectOption('#ausweis', 'ja');
+  await page.selectOption('#begleitung', 'ja');
+  await page.click('#pruefen');
+
+  await expect(page.locator('.ergebnis__punkte > li')).toHaveCount(5);
+  // Alle Punkte erfüllt — und trotzdem kein grünes Gesamtergebnis.
+  await expect(page.locator('.ergebnis__kopf')).toHaveAttribute('data-zustand', 'unknown');
+  await expect(page.locator('#reiseergebnis')).toContainText('fachlich noch nicht geprüft');
+  expect(fremdeAnfragen).toEqual([]);
+});
+
+test('eine offene Angabe bleibt offen', async ({ page }) => {
+  await page.goto(REISE);
+  await page.fill('#reisedatum', '2026-10-01');
+  await page.fill('#geburtsdatum', '2020-01-01');
+  await page.selectOption('#chip', 'ja');
+  await page.click('#pruefen');
+
+  const offen = page.locator('.ergebnis__punkte > li[data-zustand="unknown"]');
+  await expect(offen.first()).toBeVisible();
+  await expect(page.locator('.ergebnis__kopf')).toHaveAttribute('data-zustand', 'unknown');
+});
+
+test('ein klarer Mangel wird als Mangel benannt', async ({ page }) => {
+  await page.goto(REISE);
+  await page.fill('#reisedatum', '2026-10-01');
+  await page.fill('#geburtsdatum', '2020-01-01');
+  await page.selectOption('#chip', 'nein');
+  await page.click('#pruefen');
+  await expect(page.locator('.ergebnis__kopf')).toHaveAttribute('data-zustand', 'not_fulfilled');
+});
+
+test('eine nicht unterstützte Route bekommt keine Checkliste', async ({ page }) => {
+  await page.goto(REISE);
+  await page.selectOption('#ziel', 'XX');
+  await page.fill('#reisedatum', '2026-10-01');
+  await page.fill('#geburtsdatum', '2020-01-01');
+  await page.click('#pruefen');
+
+  await expect(page.locator('.ergebnis__punkte')).toHaveCount(0);
+  await expect(page.locator('.ergebnis__kopf')).toHaveAttribute('data-zustand', 'not_applicable');
+  await expect(page.locator('.ergebnis__gruende > li').first()).toBeVisible();
+});
+
+test('ohne Reisedatum wird nicht geraten', async ({ page }) => {
+  await page.goto(REISE);
+  await page.click('#pruefen');
+  // Das Feld ist als Pflichtfeld ausgezeichnet: der Browser hält das
+  // Absenden auf. Entscheidend ist, dass keine Checkliste entsteht.
+  await expect(page.locator('.ergebnis__punkte')).toHaveCount(0);
+  expect(
+    await page.locator('#reisedatum').evaluate((feld) => (feld as HTMLInputElement).validity.valid),
+  ).toBe(false);
+
+  // Auch wenn die Pflichtprüfung des Browsers umgangen wird, rechnet die
+  // Seite nicht mit einem geratenen Datum.
+  await page.locator('#reisedatum').evaluate((feld) => feld.removeAttribute('required'));
+  await page.click('#pruefen');
+  await expect(page.locator('#reiseergebnis')).toContainText('Reisedatum');
+  await expect(page.locator('.ergebnis__punkte')).toHaveCount(0);
 });

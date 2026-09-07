@@ -175,6 +175,8 @@ export interface ReiseErgebnis {
   readonly uebersprungen: readonly UebersprungeneRegel[];
   /** Klartext für die Oberfläche, immer gefüllt. */
   readonly hinweise: readonly string[];
+  /** Wurde mit nicht freigegebenen Regeln gerechnet? */
+  readonly vorschau: boolean;
 }
 
 export interface Pruefauftrag {
@@ -183,6 +185,17 @@ export interface Pruefauftrag {
   readonly fakten: Fakten;
   /** Kalendertag, gegen den Geltung und Fristen geprüft werden. */
   readonly stichtag: string;
+  /**
+   * Vorschaumodus: wertet auch fachlich **nicht freigegebene** Regeln aus,
+   * damit sich die Oberfläche vor der Freigabe überhaupt bedienen lässt.
+   *
+   * Der Preis dafür ist fest eingebaut: im Vorschaumodus gibt es kein
+   * `fulfilled` als Gesamtergebnis. Ein „alles in Ordnung“ aus ungeprüften
+   * Regeln wäre genau die unüberprüfte Reiseberatung, die hier nicht
+   * entstehen soll. Ein `not_fulfilled` bleibt dagegen stehen: ein klarer
+   * Mangel ist auch aus einer vorbereiteten Regel ein nützlicher Hinweis.
+   */
+  readonly vorschau?: boolean;
 }
 
 /**
@@ -192,7 +205,7 @@ export interface Pruefauftrag {
  * `fulfilled`. „Wir haben nichts gefunden“ ist keine Unbedenklichkeit.
  */
 export function pruefeReise(auftrag: Pruefauftrag): ReiseErgebnis {
-  const { regeln, route, fakten, stichtag } = auftrag;
+  const { regeln, route, fakten, stichtag, vorschau = false } = auftrag;
   if (alsDatum(stichtag) === null) {
     throw new TravelEngineError('Stichtag ist kein Kalenderdatum.');
   }
@@ -205,13 +218,32 @@ export function pruefeReise(auftrag: Pruefauftrag): ReiseErgebnis {
       uebersprungen.push({ ruleId: regel.ruleId, grund: 'Gilt für eine andere Route.' });
       continue;
     }
-    if (!isRuleLive(regel, stichtag)) {
+    const imZeitraum =
+      stichtag >= regel.validity.from &&
+      (regel.validity.until === null || stichtag <= regel.validity.until);
+    const freigegeben = regel.reviewedAt !== null && regel.reviewedBy !== null;
+
+    if (!imZeitraum) {
       uebersprungen.push({
         ruleId: regel.ruleId,
-        grund:
-          regel.reviewedAt === null || regel.reviewedBy === null
-            ? 'Ohne fachliche Freigabe; wird nicht ausgewertet.'
-            : `Außerhalb ihres Geltungszeitraums am ${stichtag}.`,
+        grund: `Außerhalb ihres Geltungszeitraums am ${stichtag}.`,
+      });
+      continue;
+    }
+    if (!freigegeben && !vorschau) {
+      uebersprungen.push({
+        ruleId: regel.ruleId,
+        grund: 'Ohne fachliche Freigabe; wird nicht ausgewertet.',
+      });
+      continue;
+    }
+    // Im Vorschaumodus ist eine freigegebene Regel trotzdem an ihren
+    // Zeitraum gebunden — `isRuleLive` bleibt die Messlatte für den
+    // Regelbetrieb.
+    if (freigegeben && !isRuleLive(regel, stichtag)) {
+      uebersprungen.push({
+        ruleId: regel.ruleId,
+        grund: `Außerhalb ihres Geltungszeitraums am ${stichtag}.`,
       });
       continue;
     }
@@ -266,18 +298,34 @@ export function pruefeReise(auftrag: Pruefauftrag): ReiseErgebnis {
       );
     }
     if (gesamt === 'fulfilled') {
-      hinweise.push(
-        'Alle geprüften Voraussetzungen sind nach Ihren Angaben erfüllt. Das ist keine Einreisegarantie: ' +
-          'geprüft wurde nur, was hier hinterlegt ist, und die Entscheidung trifft die Grenzkontrolle.',
-      );
+      if (vorschau) {
+        // Deckel im Vorschaumodus: kein grünes Gesamtergebnis aus Regeln,
+        // die niemand fachlich geprüft hat.
+        gesamt = 'unknown';
+        hinweise.push(
+          'Nach Ihren Angaben spricht in den vorbereiteten Regeln nichts dagegen. Ein Gesamtergebnis ' +
+            'gibt es trotzdem nicht: diese Regeln sind fachlich noch nicht geprüft, und eine ungeprüfte ' +
+            'Unbedenklichkeit wäre keine.',
+        );
+      } else {
+        hinweise.push(
+          'Alle geprüften Voraussetzungen sind nach Ihren Angaben erfüllt. Das ist keine Einreisegarantie: ' +
+            'geprüft wurde nur, was hier hinterlegt ist, und die Entscheidung trifft die Grenzkontrolle.',
+        );
+      }
     }
   }
 
-  if (uebersprungen.length > 0) {
+  // Nur inhaltlich bedeutsame Auslassungen erwähnen: dass Regeln für andere
+  // Routen nicht gelten, ist kein Befund, sondern der Normalfall.
+  const bedeutsam = uebersprungen.filter(
+    (eintrag) => eintrag.grund !== 'Gilt für eine andere Route.',
+  );
+  if (bedeutsam.length > 0) {
     hinweise.push(
-      `${uebersprungen.length} Regel(n) wurden nicht ausgewertet; die Gründe stehen in der Liste.`,
+      `${bedeutsam.length} Regel(n) wurden nicht ausgewertet; die Gründe stehen in der Liste.`,
     );
   }
 
-  return { gesamt, positionen, uebersprungen, hinweise };
+  return { gesamt, positionen, uebersprungen, hinweise, vorschau };
 }

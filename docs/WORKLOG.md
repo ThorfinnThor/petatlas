@@ -258,3 +258,12 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Die österreichische Behördenseite verweist mit Stand 2023 weiterhin auf 576/2013, die niederländische nennt keine eigenen Anforderungen, und die italienische Seite liefert eine Bot-Prüfung statt Inhalt. Sie wurde **nicht umgangen**; der Punkt steht als offene Frage in der Quellenprüfung.
 - Keine der 40 Regeln ist fachlich freigegeben. Ein Test belegt, dass die Maschine selbst bei lückenlosen Angaben kein grünes Ergebnis liefert, sondern `unknown` mit Begründung.
 - Der Regelsatz steht einmal und wird deterministisch auf 4 Ziele × 2 Tierarten × 5 Anforderungen ausgerollt. 24 gleichlautende Dateien wären 24 Gelegenheiten für einen Tippfehler.
+
+| M12-04 | `src/features/travel/wizard.ts`, `wizard-ui.ts`, Formular und Ergebnisliste auf der Reiseseite, Vorschaumodus im Motor | `npm run test:e2e:features` (128 Tests) | 5 Checklistenpunkte, nie ein grünes Gesamtergebnis |
+
+- Der Vorschaumodus steht **im Motor**, nicht im Text: `vorschau: true` wertet auch nicht freigegebene Regeln aus, deckelt das Gesamtergebnis aber hart auf `unknown`. Ein `not_fulfilled` bleibt stehen — ein klarer Mangel ist auch aus einer vorbereiteten Regel ein nützlicher Hinweis, eine ungeprüfte Unbedenklichkeit dagegen nicht.
+- Reihenfolge im Ablauf: erst Umfang, dann Regeln. Eine nicht unterstützte Route bekommt gar keine Checkliste, sondern die Begründung, warum nicht.
+- „Weiß ich nicht“ ist eine gültige Antwort und wird nirgends zu ja oder nein. Fehlt eine Angabe, bleibt genau der Punkt offen — und das Gesamtergebnis auch.
+- Fristen werden gegen den **Reisetag** geprüft, nicht gegen den Tag des Ausfüllens. Ein Test belegt beides mit derselben Impfung und zwei Reisedaten.
+- Alles läuft lokal: ein E2E-Test protokolliert alle Anfragen und belegt, dass keine einzige den Rechner verlässt.
+- Zwei ältere Tests hatten Annahmen aus M12-01, die nicht mehr stimmen: „kein Formular auf der Seite“ und die Pflichtfeldprüfung des Reisedatums. Beide sind auf die Sache umgeschrieben, nicht gelöscht.
