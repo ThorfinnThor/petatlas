@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": null,
+  "current_task": "M10-04",
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -2097,7 +2097,7 @@
         "M10-01"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "in_progress",
       "evidence": [],
       "blocker": null,
       "notes": []

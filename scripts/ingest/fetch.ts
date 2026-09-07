@@ -176,7 +176,9 @@ export async function fetchSource(
       return { status: 'not_modified', resource: null };
     }
 
-    if (antwort.status === 429 || antwort.status === 503) {
+    // 502 nimmt der Server der Geofabrik, wenn zu schnell abgerufen wird.
+    // Er wird deshalb wie ein Rate Limit behandelt: warten, nicht drängeln.
+    if (antwort.status === 429 || antwort.status === 502 || antwort.status === 503) {
       if (versuche >= maxRetries) {
         throw new IngestError(
           sourceId,

@@ -13,7 +13,7 @@
 import { z } from 'zod';
 
 import got from '../../config/sources/got.json' with { type: 'json' };
-import bremen from '../../config/sources/osm-geofabrik-bremen.json' with { type: 'json' };
+import regionen from '../../config/sources/osm-regions.json' with { type: 'json' };
 import osm from '../../config/sources/osm-geofabrik-de.json' with { type: 'json' };
 import { SourceRightsSchema, type SourceRights } from './rights.ts';
 
@@ -82,7 +82,36 @@ function parseEntry(raw: unknown): SourceEntry {
   return result.data;
 }
 
-const ENTRIES: readonly SourceEntry[] = [got, osm, bremen].map(parseEntry);
+/**
+ * Die deutschen Regionalextrakte. Jede Region ist eine eigene Distribution —
+ * eigene Adresse, eigene Abdeckung, eigener Stand. Die Rechtelage ist für
+ * alle dieselbe und wurde einmal geprüft; der gemeinsame Teil steht deshalb
+ * einmal in der Konfiguration statt sechzehnmal kopiert.
+ */
+function regionaleEintraege(): SourceEntry[] {
+  return regionen.regions.map((region) =>
+    parseEntry({
+      sourceId: `osm-geofabrik-${region.id}-pbf`,
+      publisher: regionen.publisher,
+      resourceName: `OpenStreetMap-Extrakt ${region.name}, Format .osm.pbf`,
+      distributionUrl: regionen.urlTemplate.replace('{region}', region.id),
+      primaryTermsUrl: regionen.primaryTermsUrl,
+      format: 'pbf',
+      coverage: { spatial: region.iso, temporal: 'tägliches Extrakt' },
+      updateCadence: 'täglich',
+      role: regionen.role,
+      attributionText: regionen.attributionText,
+      attributionUrl: regionen.attributionUrl,
+      rights: { ...regionen.rights, sourceId: `osm-geofabrik-${region.id}-pbf` },
+      notes: [
+        `Regionalextrakt ${region.name} (${region.iso}). Eine Region ist eine eigene Distribution.`,
+        'Die Rechtelage entspricht der geprüften Fassung des Deutschland- und des Bremen-Extrakts.',
+      ],
+    }),
+  );
+}
+
+const ENTRIES: readonly SourceEntry[] = [got, osm].map(parseEntry).concat(regionaleEintraege());
 
 const BY_ID = new Map(ENTRIES.map((entry) => [entry.sourceId, entry]));
 
