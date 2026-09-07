@@ -267,3 +267,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Fristen werden gegen den **Reisetag** geprüft, nicht gegen den Tag des Ausfüllens. Ein Test belegt beides mit derselben Impfung und zwei Reisedaten.
 - Alles läuft lokal: ein E2E-Test protokolliert alle Anfragen und belegt, dass keine einzige den Rechner verlässt.
 - Zwei ältere Tests hatten Annahmen aus M12-01, die nicht mehr stimmen: „kein Formular auf der Seite“ und die Pflichtfeldprüfung des Reisedatums. Beide sind auf die Sache umgeschrieben, nicht gelöscht.
+
+| M12-05 | `content-data/travel/packing-list.json`, `packing.ts`, `laender.ts`, `src/pages/de-de/reisecheck/[ziel].astro`, Druckregeln | `npm run test:e2e:features` (142 Tests) | vier Zielseiten, 16 Packlisteneinträge, keine Medikamente |
+
+- Zielseiten entstehen **nur** für die vier unterstützten Ziele. Für andere gibt es keine Seite, auch keine mit „bald“: eine Seite zu einem Land, dessen Regeln niemand gelesen hat, wäre eine Auskunft.
+- Die Packliste trennt Aufgaben aus Regeln von Unterlagen und Ausrüstung. Jede regelbezogene Aufgabe verweist auf eine tatsächlich vorhandene Anforderung — der Loader wirft, wenn die Anforderung verschwindet, und ein Test prüft zusätzlich die Gegenrichtung: jede Anforderung hat eine Aufgabe.
+- Keine Medikamente, keine Wirkstoffe, keine Dosierungen. Der Test prüft die Einträge, nicht den Hinweistext darüber — der darf die Wörter nennen, weil er sie verneint.
+- Beförderungsbedingungen stehen als eigener Abschnitt und ausdrücklich als „etwas anderes“ als die staatlichen Regeln: sie werden weder geprüft noch wiedergegeben.
+- Ein Astro-Detail: `getStaticPaths` läuft in einem eigenen Modulkontext und sieht keine Werte aus dem Frontmatter der Seite. Die Ländertabelle liegt deshalb in `src/features/travel/laender.ts` — importiert statt lokal definiert.

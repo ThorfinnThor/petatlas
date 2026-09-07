@@ -127,3 +127,68 @@ test('ohne Reisedatum wird nicht geraten', async ({ page }) => {
   await expect(page.locator('#reiseergebnis')).toContainText('Reisedatum');
   await expect(page.locator('.ergebnis__punkte')).toHaveCount(0);
 });
+
+test.describe('Zielseiten', () => {
+  const ZIELE = ['oesterreich', 'frankreich', 'italien', 'niederlande'];
+
+  test('gibt es genau für die unterstützten Ziele', async ({ page }) => {
+    for (const ziel of ZIELE) {
+      const antwort = await page.request.get(`${REISE}${ziel}/`);
+      expect(antwort.status(), ziel).toBe(200);
+    }
+    for (const ziel of ['spanien', 'schweiz', 'usa']) {
+      const antwort = await page.request.get(`${REISE}${ziel}/`);
+      expect(antwort.status(), ziel).toBe(404);
+    }
+  });
+
+  test('zeigt Anforderungen mit Fundstelle und eine abhakbare Packliste', async ({ page }) => {
+    await page.goto(`${REISE}oesterreich/`);
+    await expect(page.locator('h1')).toContainText('Österreich');
+    await expect(page.locator('.anforderungen > li')).toHaveCount(5);
+    await expect(page.locator('.anforderungen a').first()).toHaveAttribute('href', /^https:\/\//);
+    await expect(page.locator('.packliste > li')).toHaveCount(16);
+    await expect(page.locator('.packliste .kasten').first()).toBeVisible();
+  });
+
+  test('weist Beförderungsbedingungen getrennt aus', async ({ page }) => {
+    await page.goto(`${REISE}oesterreich/`);
+    const abschnitt = page.locator('section, body').filter({ hasText: 'Fluggesellschaft' });
+    await expect(page.getByText('Fluggesellschaft, Bahn und Fähre')).toBeVisible();
+    await expect(abschnitt.first()).toContainText('etwas anderes');
+    await expect(abschnitt.first()).toContainText('weder geprüft noch wiedergegeben');
+  });
+
+  test('empfiehlt keine Medikamente', async ({ page }) => {
+    await page.goto(`${REISE}oesterreich/`);
+    await expect(page.getByText('Keine Reiseapotheke')).toBeVisible();
+    // Geprüft wird die Liste selbst: der Hinweis darüber darf die Wörter
+    // nennen, weil er sie verneint — die Einträge dürfen es nicht.
+    const eintraege = (await page.locator('.packliste').allInnerTexts()).join('\n').toLowerCase();
+    for (const wort of ['wirkstoff', 'dosier', 'wurmkur', 'beruhigungsmittel', 'medikament']) {
+      expect(eintraege.includes(wort), wort).toBe(false);
+    }
+  });
+
+  test('bleibt im Druck vollständig und ohne Bedienelemente', async ({ page }) => {
+    await page.goto(`${REISE}oesterreich/`);
+    await page.emulateMedia({ media: 'print' });
+    await expect(page.locator('.packliste > li').first()).toBeVisible();
+    await expect(page.locator('.anforderungen > li').first()).toBeVisible();
+    await expect(page.locator('#drucken')).toBeHidden();
+  });
+
+  test('verlinkt die anderen Ziele und den Check', async ({ page }) => {
+    await page.goto(`${REISE}oesterreich/`);
+    await expect(page.locator('.ziele a')).toHaveCount(3);
+    await expect(page.locator(`a[href="${REISE}"]`).first()).toBeVisible();
+  });
+
+  test('zeigt auf sich selbst als canonical', async ({ page }) => {
+    await page.goto(`${REISE}italien/`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      new RegExp(`${REISE}italien/$`),
+    );
+  });
+});

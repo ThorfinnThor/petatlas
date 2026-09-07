@@ -1,0 +1,138 @@
+{
+  "listId": "reisecheck-v1",
+  "lastEditedAt": "2026-09-07",
+  "items": [
+    {
+      "itemId": "heimtierausweis-mitnehmen",
+      "label": "EU-Heimtierausweis einpacken",
+      "category": "rule_task",
+      "requirementId": "identification-document",
+      "note": "Ohne das Dokument nützt die beste Impfung nichts: es weist Kennzeichnung und Impfung nach.",
+      "order": 1
+    },
+    {
+      "itemId": "chipnummer-pruefen",
+      "label": "Transpondernummer mit dem Ausweis abgleichen",
+      "category": "rule_task",
+      "requirementId": "microchip",
+      "note": "Stimmen Nummer im Tier und Nummer im Ausweis nicht überein, ist der Nachweis wertlos.",
+      "order": 2
+    },
+    {
+      "itemId": "impftermin-pruefen",
+      "label": "Datum der Tollwutimpfung gegen den Reisetag prüfen",
+      "category": "rule_task",
+      "requirementId": "rabies-vaccination",
+      "note": "Zwischen vollständiger Erstimpfung und Reise müssen mindestens 21 Tage liegen.",
+      "order": 3
+    },
+    {
+      "itemId": "begleitung-klaeren",
+      "label": "Klären, wer das Tier tatsächlich begleitet",
+      "category": "rule_task",
+      "requirementId": "owner-accompanied",
+      "note": "Reist eine andere Person, gelten andere Anforderungen — und dieser Check deckt sie nicht ab.",
+      "order": 4
+    },
+    {
+      "itemId": "tierzahl-pruefen",
+      "label": "Anzahl der Tiere prüfen",
+      "category": "rule_task",
+      "requirementId": "max-five-animals",
+      "note": "Ab sechs Tieren ist es keine private Verbringung mehr.",
+      "order": 5
+    },
+    {
+      "itemId": "ausweis-kopie",
+      "label": "Kopie oder Foto der Papiere getrennt aufbewahren",
+      "category": "documents",
+      "requirementId": null,
+      "note": "Bei Verlust des Originals hilft eine Kopie beim Klären, auch wenn sie es nicht ersetzt.",
+      "order": 6
+    },
+    {
+      "itemId": "kontakt-praxis",
+      "label": "Telefonnummer der eigenen Tierarztpraxis notieren",
+      "category": "documents",
+      "requirementId": null,
+      "note": "Im Ausland ist die vertraute Praxis oft die schnellste Auskunft zur Vorgeschichte des Tieres.",
+      "order": 7
+    },
+    {
+      "itemId": "adresse-unterkunft",
+      "label": "Adresse der Unterkunft und Rückreiseplan notieren",
+      "category": "documents",
+      "requirementId": null,
+      "note": "Wird nach dem Aufenthaltsort gefragt, ist die Antwort dann zur Hand.",
+      "order": 8
+    },
+    {
+      "itemId": "transportbox",
+      "label": "Transportbox oder gesicherte Rückhaltemöglichkeit",
+      "category": "equipment",
+      "requirementId": null,
+      "note": "In vielen Ländern ist ein ungesichertes Tier im Auto eine Ordnungswidrigkeit — und bei einer Vollbremsung eine Gefahr für alle.",
+      "order": 9
+    },
+    {
+      "itemId": "leine-geschirr",
+      "label": "Leine und gut sitzendes Geschirr, Ersatzleine",
+      "category": "equipment",
+      "requirementId": null,
+      "note": "Eine gerissene Leine ist im fremden Umfeld ein größeres Problem als zu Hause.",
+      "order": 10
+    },
+    {
+      "itemId": "maulkorb",
+      "label": "Maulkorb, an den das Tier gewöhnt ist",
+      "category": "equipment",
+      "requirementId": null,
+      "note": "In manchen Ländern und in öffentlichen Verkehrsmitteln vorgeschrieben. Ein ungewohnter Maulkorb ist Stress; Gewöhnung braucht Wochen.",
+      "order": 11
+    },
+    {
+      "itemId": "wasser-napf",
+      "label": "Wasser und faltbarer Napf",
+      "category": "equipment",
+      "requirementId": null,
+      "note": "Auf langen Fahrten die einfachste Vorsorge gegen Überhitzung.",
+      "order": 12
+    },
+    {
+      "itemId": "futter-gewohnt",
+      "label": "Gewohntes Futter für die gesamte Reise",
+      "category": "equipment",
+      "requirementId": null,
+      "note": "Ein Futterwechsel unterwegs ist eine vermeidbare Belastung für den Magen.",
+      "order": 13
+    },
+    {
+      "itemId": "decke-bekannt",
+      "label": "Vertraute Decke oder Liegeplatz",
+      "category": "equipment",
+      "requirementId": null,
+      "note": "Ein bekannter Geruch macht eine fremde Unterkunft für viele Tiere erträglicher.",
+      "order": 14
+    },
+    {
+      "itemId": "kotbeutel",
+      "label": "Kotbeutel in ausreichender Zahl",
+      "category": "equipment",
+      "requirementId": null,
+      "note": "Vielerorts Pflicht und überall selbstverständlich.",
+      "order": 15
+    },
+    {
+      "itemId": "adressanhaenger",
+      "label": "Anhänger mit aktueller Telefonnummer am Halsband",
+      "category": "equipment",
+      "requirementId": null,
+      "note": "Ein Transponder hilft nur, wenn jemand ihn ausliest; eine Nummer am Halsband hilft sofort.",
+      "order": 16
+    }
+  ],
+  "notes": [
+    "Keine Medikamente, keine Wirkstoffe, keine Dosierungen. Was ein Tier auf einer Reise braucht, entscheidet die Tierarztpraxis, die es kennt.",
+    "Die regelbezogenen Aufgaben folgen den Anforderungen aus content-data/travel/rules/; die Ausruestung ist praktische Erfahrung und keine Vorschrift."
+  ]
+}

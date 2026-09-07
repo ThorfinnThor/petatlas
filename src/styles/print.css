@@ -8,6 +8,29 @@
  */
 
 @media print {
+  /* M12-05 — Zielseiten und Packliste.
+   *
+   * Auf Papier bleibt, was man abhaken kann: die Aufgaben, die Unterlagen,
+   * die Ausrüstung und die Fundstellen. Das Formular des Reisechecks und der
+   * Druckknopf selbst verschwinden. */
+  #reiseform,
+  #drucken,
+  #ohne-javascript {
+    display: none !important;
+  }
+
+  .packliste > li {
+    page-break-inside: avoid;
+  }
+
+  .packliste .kasten {
+    border-color: #000;
+  }
+
+  .anforderungen > li {
+    page-break-inside: avoid;
+  }
+
   /* Navigation, Suche und Formulare sind auf Papier ohne Funktion. */
   header nav,
   .suche,

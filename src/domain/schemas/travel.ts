@@ -184,6 +184,57 @@ export const TravelRequirementSchema = z
   .strict();
 export type TravelRequirement = z.infer<typeof TravelRequirementSchema>;
 
+/**
+ * M12-05 — Packliste.
+ *
+ * Zwei Sorten von Einträgen: **regelbezogene Aufgaben**, die sich aus einer
+ * Anforderung ergeben (dann steht die `requirementId` dabei), und
+ * **Ausrüstung**, die schlicht praktisch ist.
+ *
+ * Was hier nicht vorkommt: Medikamente. Keine Wirkstoffe, keine Dosierungen,
+ * keine „Reiseapotheke“ mit Empfehlungen. Was ein Tier braucht, entscheidet
+ * die Tierarztpraxis, die es kennt — nicht eine Liste, die alle sehen.
+ */
+export const PackingCategory = z.enum(['rule_task', 'equipment', 'documents']);
+export type PackingCategory = z.infer<typeof PackingCategory>;
+
+export const PackingItemSchema = z
+  .object({
+    itemId: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Kleinbuchstaben und Bindestriche.'),
+    label: z.string().min(1),
+    category: PackingCategory,
+    /** Anforderung, aus der die Aufgabe folgt. `null` = keine Regel dahinter. */
+    requirementId: z.string().nullable(),
+    /** Warum der Punkt auf der Liste steht. */
+    note: z.string().min(1),
+    order: z.number().int().nonnegative(),
+  })
+  .strict()
+  .superRefine((wert, ctx) => {
+    if (wert.category === 'rule_task' && wert.requirementId === null) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Eine regelbezogene Aufgabe ohne Anforderung ist keine.',
+        path: ['requirementId'],
+      });
+    }
+  });
+export type PackingItem = z.infer<typeof PackingItemSchema>;
+
+export const PackingListSchema = z
+  .object({
+    listId: z.string().min(1),
+    lastEditedAt: IsoDate,
+    items: z.array(PackingItemSchema).min(1),
+    notes: z.array(z.string()),
+  })
+  .strict()
+  .refine((wert) => new Set(wert.items.map((i) => i.itemId)).size === wert.items.length, {
+    message: 'Eintragskennungen müssen eindeutig sein.',
+    path: ['items'],
+  });
+export type PackingList = z.infer<typeof PackingListSchema>;
+
 export const TravelRuleSetSchema = z
   .object({
     ruleSetId: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Kleinbuchstaben und Bindestriche.'),

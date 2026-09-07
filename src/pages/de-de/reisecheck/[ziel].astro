@@ -1,0 +1,203 @@
+---
+/**
+ * M12-05 — Zielseite je unterstütztem Land.
+ *
+ * Eine Seite entsteht **nur** für Ziele, die im geprüften Umfang stehen. Für
+ * alle anderen gibt es keine Seite — auch keine mit dem Hinweis „bald“. Eine
+ * Seite zu einem Land, dessen Regeln niemand gelesen hat, wäre eine Auskunft.
+ *
+ * Die Seite ist zum Ausdrucken gedacht: die Packliste hat Kästchen zum
+ * Abhaken, und die Druckregeln in `src/styles/print.css` blenden aus, was auf
+ * Papier nichts nützt.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Notice from '../../../components/Notice.astro';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../config/build.ts';
+import { routePath, subroutePath } from '../../../lib/routes.ts';
+import { reiseUmfang } from '../../../features/travel/scope.ts';
+import { regelSaetze } from '../../../features/travel/rules.ts';
+import { KATEGORIE_TITEL, packlisteNach } from '../../../features/travel/packing.ts';
+import type { TravelRuleSet } from '../../../domain/schemas/travel.ts';
+import { ZIELLAENDER } from '../../../features/travel/laender.ts';
+
+export function getStaticPaths() {
+  const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  if (!isFeatureEnabled(market, 'travel')) return [];
+
+  return reiseUmfang()
+    .destinations.filter((code) => ZIELLAENDER[code] !== undefined)
+    .map((code) => ({
+      params: { ziel: ZIELLAENDER[code]!.slug },
+      props: { code, name: ZIELLAENDER[code]!.name },
+    }));
+}
+
+const { code, name } = Astro.props as { code: string; name: string };
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const checkPfad = routePath(market, 'travel');
+const eigenerPfad = subroutePath(market, 'travel', ZIELLAENDER[code]!.slug);
+
+const satz: TravelRuleSet = regelSaetze()[0]!;
+const umfang = reiseUmfang();
+---
+
+<BaseLayout title={`Mit Hund oder Katze nach ${name}`} route="travel" canonicalPfad={eigenerPfad}>
+  <h1>Mit Hund oder Katze nach {name}</h1>
+
+  <p>
+    Was für die private, begleitete Reise aus Deutschland nach {name} zu erledigen ist — mit Fundstelle
+    zu jedem Punkt und einer Packliste zum Ausdrucken. Für den Abgleich mit Ihren eigenen Daten gibt es
+    den <a href={checkPfad}>Reisecheck</a>.
+  </p>
+
+  <Notice variante="warnung" titel="Fachlich noch nicht geprüft">
+    <p>
+      Die Anforderungen stammen aus der Rechtsgrundlage und sind mit Fundstelle belegt, aber
+      <strong>fachlich noch nicht abgenommen</strong>. Verbindlich ist die Auskunft der zuständigen
+      Behörde. Diese Seite ist eine Vorbereitung, keine Genehmigung.
+    </p>
+  </Notice>
+
+  <h2>Was gilt</h2>
+  <p class="grundlage">Rechtsgrundlage: {satz.legalBasis}.</p>
+  <ul class="anforderungen">
+    {
+      satz.requirements.map((anforderung) => (
+        <li data-anforderung={anforderung.requirementId}>
+          <h3>{anforderung.citation}</h3>
+          <p>{anforderung.guidance}</p>
+          <p class="fundstelle">
+            <a href={anforderung.officialSourceUrl} rel="nofollow noopener">
+              Amtliche Fundstelle
+            </a>
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>Packliste</h2>
+  <p class="hilfe">
+    Zum Ausdrucken gedacht: <button type="button" id="drucken" hidden>Seite drucken</button>
+    <span id="druckhinweis">Im Browser über „Drucken“ (Strg+P beziehungsweise Cmd+P).</span>
+  </p>
+
+  {
+    (['rule_task', 'documents', 'equipment'] as const).map((kategorie) => (
+      <section aria-labelledby={`packliste-${kategorie}`}>
+        <h3 id={`packliste-${kategorie}`}>{KATEGORIE_TITEL[kategorie]}</h3>
+        <ul class="packliste" data-kategorie={kategorie}>
+          {packlisteNach(kategorie).map((eintrag) => (
+            <li data-eintrag={eintrag.itemId}>
+              <span class="kasten" aria-hidden="true" />
+              <strong>{eintrag.label}.</strong> {eintrag.note}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <Notice variante="hinweis" titel="Keine Reiseapotheke">
+    <p>
+      Auf dieser Liste stehen keine Medikamente, keine Wirkstoffe und keine Dosierungen. Was Ihr
+      Tier auf einer Reise braucht — gegen Reiseübelkeit, gegen Zecken, bei bestehenden Erkrankungen
+      —, entscheidet die Tierarztpraxis, die es kennt.
+    </p>
+  </Notice>
+
+  <h2>Fluggesellschaft, Bahn und Fähre</h2>
+  <p>
+    Die Beförderungsbedingungen des Unternehmens sind <strong>etwas anderes</strong> als die staatlichen
+    Einreiseregeln: Größe und Art der Transportbox, Gewichtsgrenzen, Anzahl der Tiere an Bord, Anmeldefristen
+    und Aufpreise legt jedes Unternehmen selbst fest, und sie ändern sich häufig. Sie werden hier weder
+    geprüft noch wiedergegeben.
+  </p>
+  <p>
+    Fragen Sie vor der Buchung beim konkreten Unternehmen nach — und lassen Sie sich die Zusage für
+    Ihr Tier schriftlich geben, nicht nur telefonisch.
+  </p>
+
+  <h2>Andere Ziele</h2>
+  <p>
+    Eigene Seiten gibt es nur für {umfang.destinations.length} Ziele:
+    {' '}{umfang.destinations.map((c) => ZIELLAENDER[c]?.name ?? c).join(', ')}. Fehlt Ihr Ziel,
+    heißt das nicht, dass die Reise unzulässig wäre — nur, dass hier niemand die Regeln dafür
+    geprüft hat.
+  </p>
+  <ul class="ziele">
+    {
+      umfang.destinations
+        .filter((c) => c !== code && ZIELLAENDER[c] !== undefined)
+        .map((c) => (
+          <li>
+            <a href={subroutePath(market, 'travel', ZIELLAENDER[c]!.slug)}>
+              {ZIELLAENDER[c]!.name}
+            </a>
+          </li>
+        ))
+    }
+  </ul>
+
+  <script>
+    // Der Druckknopf erscheint nur mit JavaScript; ohne bleibt der Hinweis
+    // auf die Druckfunktion des Browsers stehen.
+    const knopf = document.querySelector<HTMLButtonElement>('#drucken');
+    const hinweis = document.querySelector<HTMLElement>('#druckhinweis');
+    if (knopf !== null) {
+      knopf.hidden = false;
+      if (hinweis !== null) hinweis.hidden = true;
+      knopf.addEventListener('click', () => window.print());
+    }
+  </script>
+
+  <style>
+    .grundlage,
+    .fundstelle,
+    .hilfe {
+      color: var(--farbe-text-leise);
+      font-size: var(--schrift-klein);
+    }
+
+    .anforderungen,
+    .packliste,
+    .ziele {
+      list-style: none;
+      padding: 0;
+    }
+
+    .anforderungen > li {
+      border: var(--linie) solid var(--farbe-linie);
+      border-radius: var(--radius);
+      padding: var(--abstand-3) var(--abstand-4);
+      margin-block: var(--abstand-3);
+    }
+
+    .anforderungen h3 {
+      margin: 0 0 var(--abstand-1);
+      font-size: var(--schrift-normal);
+    }
+
+    .packliste > li {
+      display: flex;
+      gap: var(--abstand-2);
+      align-items: baseline;
+      margin-block: var(--abstand-2);
+    }
+
+    .kasten {
+      flex: 0 0 auto;
+      width: 0.9em;
+      height: 0.9em;
+      border: 1.5px solid var(--farbe-text);
+      border-radius: 2px;
+    }
+
+    .ziele {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--abstand-2) var(--abstand-4);
+    }
+  </style>
+</BaseLayout>

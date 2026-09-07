@@ -2576,8 +2576,16 @@
         "M12-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Vier Zielseiten (Oesterreich, Frankreich, Italien, Niederlande) mit den fuenf Anforderungen samt Fundstelle, einer Packliste zum Ausdrucken und einem eigenen Abschnitt zu Befoerderungsbedingungen. Seiten entstehen ausschliesslich fuer Ziele aus dem geprueften Umfang; /de-de/reisecheck/spanien/ und andere antworten mit 404. Die Packliste hat 16 Eintraege in drei Rubriken: fuenf regelbezogene Aufgaben, die je auf eine tatsaechlich vorhandene Anforderung verweisen (der Loader wirft bei einem toten Verweis, ein Test prueft zusaetzlich, dass jede Anforderung abgedeckt ist), Unterlagen und Ausruestung. Keine Medikamente, keine Wirkstoffe, keine Dosierungen - geprueft an den Eintraegen selbst, nicht am verneinenden Hinweistext darueber. Befoerderungsbedingungen von Fluggesellschaft, Bahn und Faehre stehen getrennt und ausdruecklich als etwas anderes als die staatlichen Einreiseregeln; sie werden weder geprueft noch wiedergegeben. Druckregeln in print.css blenden Formular und Druckknopf aus und halten Packliste und Anforderungen zusammen; ein E2E-Test prueft das mit emulateMedia('print'). Geprueft: 8 neue Unit-Tests (753 gesamt) und 14 neue Feature-E2E-Tests (142 gesamt), npm run verify exit 0, 174 Standard-E2E gruen.",
+          "reference": "content-data/travel/packing-list.json, src/features/travel/packing.ts, src/features/travel/laender.ts, src/pages/de-de/reisecheck/[ziel].astro, src/styles/print.css, tests/travel/packing.test.ts, tests/e2e-features/reisecheck.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
