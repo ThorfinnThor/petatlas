@@ -1,0 +1,49 @@
+{
+  "taxonomyId": "food",
+  "lastEditedAt": "2026-09-07",
+  "categories": [
+    {
+      "categoryId": "dry-food",
+      "label": "Trockenfutter",
+      "species": ["dog", "cat"],
+      "description": "Extrudiertes oder gepresstes Trockenfutter in Beuteln und Säcken.",
+      "matchAttributes": ["netContentGrams", "packUnits", "lifeStage", "kind"]
+    },
+    {
+      "categoryId": "wet-food",
+      "label": "Nassfutter",
+      "species": ["dog", "cat"],
+      "description": "Nassfutter in Dosen, Schalen und Beuteln.",
+      "matchAttributes": ["netContentGrams", "packUnits", "lifeStage", "kind"]
+    },
+    {
+      "categoryId": "snack",
+      "label": "Snacks und Kauartikel mit Futteranteil",
+      "species": ["dog", "cat"],
+      "description": "Ergänzungsfuttermittel zum Belohnen und Kauen.",
+      "matchAttributes": ["netContentGrams", "packUnits", "kind"]
+    }
+  ],
+  "excluded": [
+    {
+      "topic": "Diätfuttermittel für besondere Ernährungszwecke",
+      "reason": "Ihre Verwendung setzt eine tierärztliche Indikation voraus. Ein Preisvergleich dafür wäre eine Empfehlung zur Fütterung bei einer Erkrankung."
+    },
+    {
+      "topic": "Nahrungsergänzung und Einzelfuttermittel als Kur",
+      "reason": "Ihre Wirkung hängt vom Einzelfall ab; ohne Indikation ist eine Auswahl nicht begründbar."
+    },
+    {
+      "topic": "Rationsberechnung und Fütterungsempfehlung",
+      "reason": "Wie viel ein bestimmtes Tier braucht, hängt von Alter, Aktivität, Gesundheit und Haltung ab. Eine Website kennt nichts davon."
+    },
+    {
+      "topic": "Bewertung der Zusammensetzung, Nährwertscores",
+      "reason": "Aus lückenhaften Labeldaten entsteht keine Qualitätsaussage. Ein Score wäre eine Methodik, die niemand geprüft hat."
+    }
+  ],
+  "notes": [
+    "Der Bereich vergleicht Mengen und Preise, nicht Qualitäten.",
+    "Deklarierte Nährwerte werden angezeigt, wenn sie vorliegen — sie werden weder verrechnet noch bewertet."
+  ]
+}

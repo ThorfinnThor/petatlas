@@ -379,3 +379,14 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 | M14-06 | `docs/reviews/care-toys.md`, Blockerregister, `TODO.md` | — | **blockiert (B-006)**, keine echten Produkte erfunden |
 
 M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Produkte lassen sich erst abnehmen, wenn es Angebotsrechte gibt — und dann Attribut für Attribut mit Fundstelle. Der Ablauf steht geschrieben, samt des Satzes, der die ganze Aufgabe trägt: fehlt eine Angabe, bleibt sie leer. Sie wird nicht aus der Beschreibung, aus einem Vergleichsprodukt oder aus einem Sprachmodell ergänzt.
+
+## 2026-09-07 — Sitzung 9 (Fortsetzung): M15 beginnt
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M15-01 | `src/domain/schemas/food.ts`, `content-data/taxonomy/food.json`, `src/features/food/taxonomy.ts` | `npx vitest run tests/food` | 13 Tests; „Junior“ im Namen bleibt ohne Wirkung |
+
+- Lebensphase und Futterart kommen aus der Deklaration und brauchen eine Fundstelle. Ein Test führt ein Produkt mit „Junior“ im Namen und erwartet `lifeStage: null` — der Name ist Text, kein Beleg.
+- Ein Nährwert ohne **Einheit** oder ohne **Bezug** ist keine Angabe: „22 Prozent Protein“ heißt etwas anderes je nachdem, ob es sich auf Frisch- oder Trockenmasse bezieht. Beides ist Pflicht, sobald ein Wert dasteht.
+- Ein nicht deklarierter Nährwert wird als `null` zurückgegeben, nicht als 0.
+- Die Gegenliste der Futtertaxonomie nennt Diätfuttermittel, Nahrungsergänzung, Rationsberechnung und Nährwertscores — mit Begründung. Der Bereich vergleicht Mengen und Preise, nicht Qualitäten.

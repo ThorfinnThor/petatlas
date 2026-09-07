@@ -3027,8 +3027,16 @@
         "M13-04"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Futter-Domaenenmodell mit Tierart, Marke, Produktname, GTIN, Lebensphase, Futterart, Fuellmenge, Gebindegroesse, deklarierten Naehrwerten und Zusammensetzung. Lebensphase und Futterart kommen ausschliesslich aus der Deklaration und verlangen eine Fundstelle - ein Test fuehrt ein Produkt mit 'Junior' im Namen und erwartet lifeStage null, weil ein Name kein Beleg ist. Ein Naehrwert braucht Einheit und Bezug (Frischmasse, Trockenmasse oder je 1000 kJ), sobald ein Wert dasteht, dazu Fundstelle und Pruefdatum; ohne Wert darf er als nicht deklariert eingetragen werden. naehrwert() gibt einen nicht deklarierten Wert als null zurueck und nicht als 0, gesamtmengeGramm() rechnet nur bei vollstaendigen Angaben und gibt sonst null. Jeder Naehrstoff darf je Produkt nur einmal vorkommen. Die Futtertaxonomie fuehrt drei Kategorien (Trocken-, Nassfutter, Snacks) und vier begruendete Ausschluesse: Diaetfuttermittel, Nahrungsergaenzung als Kur, Rationsberechnung und Naehrwertscores. 13 neue Tests (938 gesamt), npm run verify exit 0.",
+          "reference": "src/domain/schemas/food.ts, content-data/taxonomy/food.json, src/features/food/taxonomy.ts, tests/food/model.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/food",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
