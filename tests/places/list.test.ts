@@ -155,7 +155,10 @@ describe('Notdienst wird nie zugesichert', () => {
 
 describe('Entfernungsangabe', () => {
   it('rundet unter einem Kilometer auf zehn Meter', () => {
-    expect(formatiereEntfernung(1234).replace(/ /g, ' ')).toMatch(/1,2 km/);
-    expect(formatiereEntfernung(847).replace(/ /g, ' ')).toMatch(/850 m/);
+    // Intl setzt zwischen Zahl und Einheit ein geschütztes Leerzeichen; für
+    // den Vergleich wird jeder Leerraum vereinheitlicht.
+    const ohneLeerraum = (wert: string) => wert.replace(/\s/g, ' ');
+    expect(ohneLeerraum(formatiereEntfernung(1234))).toMatch(/1,2 km/);
+    expect(ohneLeerraum(formatiereEntfernung(847))).toMatch(/850 m/);
   });
 });
