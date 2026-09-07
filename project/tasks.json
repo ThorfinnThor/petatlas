@@ -2363,10 +2363,20 @@
         "M11-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Abnahme der Kartenoberflaeche im echten Browser, Chromium als Desktop (1280 px) und als Pixel 7 (412 px): 108 Feature-E2E-Tests gruen, davon 22 neue aus dieser Abnahme. Geprueft und bestanden: kein horizontaler Bedienbruch auf Karten-, Stadt-, Quellen- und Startseite (scrollWidth minus clientWidth <= 1 px) und auch nicht bei geoeffneter Karte; die Karte laesst sich mit Fokus und Enter oeffnen, die Zoombedienung ist erreichbar; bei geblocktem Kacheldienst meldet die Karte den Ausfall, die Liste bleibt vollstaendig und die Attribution ('OpenStreetMap contributors' plus ODbL-Hinweis) bleibt sichtbar; 50 km um Bremen laedt mehrere Zellen, jede genau einmal, ein kleinerer Radius laedt nichts nach; ein Ortswechsel Bremen -> Hannover laesst keinen Eintrag der vorherigen Liste stehen; alle internen Links von vier Seiten antworten mit 200, waehrend eine nicht gelistete Stadt, ein erfundener Pfad und eine erfundene Datendatei mit 404 antworten - keine 200-Attrappe, auch nicht in der ausgelieferten Cloudflare-Vorschau (dort HTTP 404 mit eigener Fehlerseite); eine ausgelieferte Zellendatei fuehrt ODbL-1.0, Attributionstext und -adresse, und /data/v1/places/de/LICENSE.txt ist abrufbar; Karten- und Stadtseite haben je genau eine H1 und ein canonical auf sich selbst; der Entwicklungsbuild traegt durchgaengig noindex. Dokumentiert in docs/reviews/map-ui.md samt drei offenen Punkten (Sitemap, Meta-Description, hreflang), die ausdruecklich zum spaeteren SEO-Meilenstein gehoeren.",
+          "reference": "tests/e2e-features/map-abnahme.spec.ts, docs/reviews/map-ui.md, reports/playwright-features/",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
-      "notes": []
+      "notes": [
+        "Zwei eigene Testannahmen waren falsch und wurden im Test korrigiert, nicht in der Implementierung: gleiche Kettennamen in zwei Staedten (verglichen werden jetzt ganze Eintraege statt Namen) und der Seitentitel der Kartenseite, der aus der Navigationsbeschriftung kommt und nicht aus der H1."
+      ]
     },
     {
       "id": "M12-01",

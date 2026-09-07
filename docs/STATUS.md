@@ -2,8 +2,8 @@
 
 Stand: 2026-09-07, Ende Sitzung 9.
 
-**Erledigt:** 64 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** eine (M08-06, fachliche Abnahme des Rechners).
-**Meilensteine vollständig:** M00 bis M07 und M10 (je 6/6). M08 bei 5/6, die sechste blockiert. M11 bei 5/6.
+**Erledigt:** 65 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** eine (M08-06, fachliche Abnahme des Rechners).
+**Meilensteine vollständig:** M00 bis M07, M10 und M11 (je 6/6). M08 bei 5/6, die sechste blockiert.
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 

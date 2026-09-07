@@ -174,3 +174,13 @@ Zu M11-05 im Einzelnen:
 - Der Live-Abruf scheiterte zuerst mit `SELF_SIGNED_CERT_IN_CHAIN`: der Wurzel „Telekom Security TLS RSA Root 2023“ fehlt im Trust Store dieser Maschine und in dem von Node. Behoben nicht durch Abschalten der Prüfung, sondern durch Aufnahme genau dieses Roots aus der Mozilla-Rootliste nach Fingerprint-Abgleich (`docs/TOOLCHAIN.md`). Der fehlgeschlagene Abruf hatte den vorhandenen Snapshot unangetastet gelassen — das war der erste Beleg dafür, dass der Fehlerpfad stimmt.
 - Prettier hat die im Repository liegende Rohantwort umformatiert und damit ihren Hash verändert. Sie ist jetzt in `.prettierignore`: ihr Hash ist der Herkunftsnachweis im Snapshot und darf nicht vom Formatlauf abhängen.
 - Zwei ältere Tests hatten Annahmen, die nicht mehr stimmen: die Hostliste des Fetchers und „jede Quelle verlangt Attribution“. Beide beschreiben jetzt, was gelten soll, statt was zufällig galt.
+
+| M11-06 | `tests/e2e-features/map-abnahme.spec.ts`, `docs/reviews/map-ui.md` | `npm run test:e2e:features` (108 Tests über zwei Geräteprofile) | kein horizontaler Bedienbruch, keine 200-Attrappe, Attribution vollständig |
+
+Zu M11-06 im Einzelnen:
+
+- Geprüft wurde im echten Browser, Desktop und Pixel 7: Überbreite (`scrollWidth − clientWidth ≤ 1 px`) auf vier Seitentypen und zusätzlich bei geöffneter Karte, Öffnen der Karte per Tastatur, Kachelausfall, Nachladen der Nachbarzellen, Ortswechsel, interne Links, Statuscodes und Attribution im Datenpfad.
+- Beim Kachelausfall bleibt nicht nur die Liste stehen, sondern auch die Attribution — das war der Punkt, an dem eine Abnahme sonst „läuft ja noch“ sagt und die Pflichthinweise übersieht.
+- 404 heißt 404, auch in der ausgelieferten Vorschau bei Cloudflare: `/de-de/gibt-es-nicht/` antwortet dort mit HTTP 404 und der eigenen Fehlerseite.
+- Zwei Testannahmen von mir waren falsch und sind korrigiert worden, nicht die Implementierung: Ketten wie „Fressnapf“ heißen in Bremen und Hannover gleich (verglichen werden jetzt ganze Einträge), und der Seitentitel der Kartenseite kommt aus der Navigationsbeschriftung, nicht aus der H1.
+- Offen und ausdrücklich dem SEO-Meilenstein zugeordnet: Sitemap, Meta-Description, hreflang. Sie stehen als offene Punkte im Abnahmedokument, nicht als stillschweigende Lücke.
