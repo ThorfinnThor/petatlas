@@ -2018,9 +2018,13 @@
         "M09-01"
       ],
       "kind": "external_gate",
-      "status": "todo",
+      "status": "blocked",
       "evidence": [],
-      "blocker": null,
+      "blocker": {
+        "reason": "Es gibt keinen Partnervertrag und keine Pruefung der konkreten Ausgestaltung nach § 34d GewO. Eine tatsaechliche Zulassung und eine qualifizierte Pruefung werden nicht erfunden; ein Disclaimer ersetzt sie nicht.",
+        "required_action": "Programmzulassung eines Anbieters oder Netzwerks einholen und die acht Pruefpunkte in docs/reviews/insurance.md beantworten lassen; danach die sechs Freigabeschritte dort ausfuehren. Technisch fehlt nichts: Schema, Freigabelogik, Linkpruefung, Hinweistexte und Tests stehen.",
+        "owner": "Betreiber"
+      },
       "notes": []
     },
     {

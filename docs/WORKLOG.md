@@ -225,3 +225,7 @@ Zu M11-06 im Einzelnen:
 - Neu ist die letzte Regel: ein Programm mit leerer Werbekennzeichnung erzeugt keinen Hinweis. Das Schema verlangt sie ohnehin — die Regel steht trotzdem noch einmal im Code, weil ein ungekennzeichneter Hinweis schlimmer wäre als gar keiner.
 - Ein ungültiges Ziel und eine fehlende Freigabe sind zwei verschiedene Dinge: die Freigabe betrifft das Programm, die Prüfung das Ziel. Ohne gültiges Ziel gibt es auch bei erlaubtem Programm keinen Link.
 - Ohne Partner bleiben alle fünf Hinweistexte stehen, ohne Anbieterlink und ohne eine einzige Preisangabe — geprüft wird das mit einer Suche nach `http` und nach Eurobeträgen im ausgegebenen Text.
+
+| M09-06 | `docs/reviews/insurance.md`, Blockerregister, `TODO.md` | — | **blockiert (B-003)**, keine Freigabe erfunden |
+
+M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen Partnervertrag und keine Prüfung der konkreten Ausgestaltung nach § 34d GewO. Technisch fehlt nichts — deshalb steht in `docs/reviews/insurance.md` ausdrücklich, dass die Aufgabe nicht an der Umsetzung hängt, sondern an einer Zulassung und einer Prüfung, die niemand hier erfinden kann.

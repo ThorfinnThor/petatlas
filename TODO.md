@@ -23,7 +23,15 @@ Die acht Punkte in Kurzform:
 
 **Anmerkung zur geplanten Prüfung:** Eine Prüfung durch ein Sprachmodell ist eine nützliche Vorabkontrolle, aber keine qualifizierte fachliche Abnahme. Wenn die Freigabe darauf gestützt wird, sollte in `docs/reviews/costs.md` genau so stehen, worauf sie beruht — damit später niemand eine Autorität annimmt, die es nicht gab.
 
-## 2. Kartenkacheln vor einem kommerziellen Start klären
+## 2. Partnervertrag und § 34d-Prüfung für das Versicherungsmodul
+
+**Status:** offen · **Aufgabe:** M09-06 · **Blocker:** B-003 · **Zuständig:** Betreiber
+
+Das Modul ist gebaut und getestet, aber es gibt **keinen Partnervertrag** und keine Prüfung der konkreten Ausgestaltung. Solange das so ist, ist die Partnerkonfiguration leer, das Feature `commerce` aus und kein einziger Anbieterlink erreichbar. Die Seite bleibt mit ihren fünf Hinweistexten trotzdem informativ.
+
+**Was zu tun ist:** die acht Prüfpunkte in **[docs/reviews/insurance.md](docs/reviews/insurance.md)** beantworten und dort mit Datum und prüfender Person eintragen, danach die sechs Freigabeschritte ausführen. Der wichtigste Punkt ist der zweite: ob die konkrete Ausgestaltung eine Versicherungsvermittlung nach § 34d GewO ist. Das entscheidet nicht die Absicht, sondern was die Seite tatsächlich tut — und die Frage gehört zu einer Person mit einschlägiger Qualifikation.
+
+## 3. Kartenkacheln vor einem kommerziellen Start klären
 
 **Status:** offen · **Zuständig:** Betreiber · **Blockiert nichts**
 
@@ -31,7 +39,7 @@ Die Karte lädt Kacheln von `tile.openstreetmap.org`. Die Nutzungspolitik der Op
 
 Für eine technische Vorschau ist das in Ordnung. Vor einem Start mit nennenswertem Verkehr oder mit Monetarisierung gehört ein eigener oder bezahlter Kacheldienst her. Die Konfiguration ist dafür vorbereitet: `config/tiles.json` enthält Adresse, Attribution und Hosts an einer Stelle, und der Host steht auch in der Content Security Policy nur dort.
 
-## 3. Weitere offene Voraussetzungen
+## 4. Weitere offene Voraussetzungen
 
 Diese blockieren derzeit nichts und stehen mit Status, Entscheider und zuerst betroffener Aufgabe im Register in **[docs/EXTERNAL_SETUP.md](docs/EXTERNAL_SETUP.md)**:
 
