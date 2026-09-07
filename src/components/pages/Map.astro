@@ -11,6 +11,7 @@
 import Notice from '../Notice.astro';
 import DataStatus from '../DataStatus.astro';
 import { defaultMarket } from '../../domain/market.ts';
+import { TILES } from '../../features/map/tiles.ts';
 import {
   KATEGORIE_LABEL,
   RADIEN_METER,
@@ -112,6 +113,23 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
   </div>
 </form>
 
+<section aria-labelledby="karte-titel">
+  <h2 id="karte-titel">Karte</h2>
+  <p>
+    Die Karte lädt erst, wenn Sie sie anfordern. Vorher wird keine einzige Kachel geladen und Ihre
+    IP-Adresse geht an keinen Kartendienst.
+  </p>
+  <p class="kartenhinweis">{TILES.noticeText}</p>
+  <p>
+    <button type="button" id="karte-anzeigen">Karte anzeigen</button>
+  </p>
+  <div id="karte" class="karte" hidden></div>
+  <p id="karte-status" role="status" aria-live="polite"></p>
+  <p class="hilfe">
+    Die Karte ist eine Ergänzung. Alles, was sie zeigt, steht auch in der Liste darunter.
+  </p>
+</section>
+
 <section aria-labelledby="treffer-titel">
   <h2 id="treffer-titel">Treffer</h2>
   <p id="treffer-status" role="status" aria-live="polite">
@@ -164,6 +182,19 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
 </p>
 
 <style>
+  .karte {
+    height: 24rem;
+    max-height: 70vh;
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    margin-block: var(--abstand-3);
+  }
+
+  .kartenhinweis {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
   .feld {
     margin-block: var(--abstand-4);
   }

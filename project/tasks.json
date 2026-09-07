@@ -2231,8 +2231,16 @@
         "M11-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Leaflet 1.9.4 wird erst nach einem Klick geladen, samt Stylesheet. Ein E2E-Test protokolliert alle Anfragen an tile.openstreetmap.org und belegt: beim Seitenaufruf keine einzige Kachel, nach dem Klick welche. Die Attribution steht in der Kartenecke ('Leaflet | © OpenStreetMap-Mitwirkende'), und die Seite sagt vorher, dass beim Anzeigen die IP-Adresse an den Kacheldienst geht. keepBuffer 0 verhindert das Vorladen ueber den sichtbaren Rand hinaus; ein Test prueft, dass in drei Sekunden weniger als 60 Kacheln angefragt werden. Faellt der Kacheldienst aus - im Test durch Blocken der Anfragen erzwungen -, meldet die Karte das und die Liste bleibt vollstaendig lesbar. Zwei echte Befunde behoben: der Selektor traf nicht, weil Leaflet die Klasse auf den Container selbst setzt, und Leaflets Bildmarker liefen als 404 ins Leere, weil sie relativ zum Stylesheet aufgeloest werden - jetzt gezeichnete Kreismarker ohne zusaetzliche Anfrage. Die CSP erlaubt den Kachelhost nur in img-src und nur aus config/tiles.json. 12 E2E-Tests.",
+          "reference": "src/features/map/map.ts; src/features/map/tiles.ts; config/tiles.json; tests/e2e-features/map.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

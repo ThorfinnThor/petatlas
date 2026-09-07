@@ -16,6 +16,7 @@ import {
   notdienstHinweis,
   type ListenOrt,
 } from './list.ts';
+import { zeigeKarte, waehleMarker } from './map.ts';
 import { normalisiere, sucheOrte, type OrtsEintrag } from './place-search.ts';
 
 const MANIFEST = '/data/v1/manifest.json';
@@ -159,7 +160,13 @@ export function listeStarten(): void {
 
   if (!form || !ortsFeld || !ortsHinweis || !ortsTreffer || !radius || !status || !liste) return;
 
+  const karteKnopf = document.querySelector<HTMLButtonElement>('#karte-anzeigen');
+  const karteBehaelter = document.querySelector<HTMLElement>('#karte');
+  const karteStatus = document.querySelector<HTMLElement>('#karte-status');
+
   let gewaehlt: { name: string; latitude: number; longitude: number } | null = null;
+  let letzteOrte: readonly ListenOrt[] = [];
+  let karteAktiv = false;
 
   function kategorien(): string[] {
     return [...document.querySelectorAll<HTMLInputElement>('input[name="kategorie"]:checked')].map(
@@ -182,7 +189,9 @@ export function listeStarten(): void {
         maxTreffer: 100,
       });
 
+      letzteOrte = treffer.map((eintrag) => eintrag.ort);
       liste!.innerHTML = treffer.map(trefferMarkup).join('');
+      if (karteAktiv) void zeichneKarte();
       status!.textContent =
         treffer.length === 0
           ? leereListeHinweis(gewaehlt.name, radiusMeter)
@@ -193,6 +202,45 @@ export function listeStarten(): void {
       console.error('Ortsdaten:', fehler);
     }
   }
+
+  async function zeichneKarte(): Promise<void> {
+    if (!karteBehaelter || !karteStatus || gewaehlt === null) return;
+    karteBehaelter.hidden = false;
+    karteBehaelter.replaceChildren();
+
+    const { gezeigt, ausgelassen } = waehleMarker(letzteOrte);
+    try {
+      await zeigeKarte({
+        container: karteBehaelter,
+        mitte: { latitude: gewaehlt.latitude, longitude: gewaehlt.longitude },
+        orte: letzteOrte,
+        // Ein Ausfall des Kacheldienstes betrifft nur die Karte.
+        beiKachelfehler: () => {
+          karteStatus.textContent =
+            'Der Kartendienst liefert gerade keine Kacheln. Die Liste unten bleibt vollständig.';
+        },
+      });
+      karteStatus.textContent =
+        ausgelassen === 0
+          ? `${gezeigt.length} Orte auf der Karte.`
+          : `${gezeigt.length} von ${gezeigt.length + ausgelassen} Orten auf der Karte; der Rest steht in der Liste.`;
+    } catch (fehler) {
+      karteStatus.textContent = 'Die Karte konnte nicht geladen werden. Die Liste bleibt nutzbar.';
+      console.error('Karte:', fehler);
+    }
+  }
+
+  karteKnopf?.addEventListener('click', () => {
+    karteAktiv = true;
+    karteKnopf.disabled = true;
+    if (gewaehlt === null) {
+      // Ohne gewählten Ort zeigt die Karte den Standardausschnitt der Liste.
+      gewaehlt = { name: 'Berlin', latitude: 52.5174, longitude: 13.3951 };
+      void aktualisiere();
+    } else {
+      void zeichneKarte();
+    }
+  });
 
   let timer: number | undefined;
   ortsFeld.addEventListener('input', () => {

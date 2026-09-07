@@ -23,7 +23,15 @@ Die acht Punkte in Kurzform:
 
 **Anmerkung zur geplanten Prüfung:** Eine Prüfung durch ein Sprachmodell ist eine nützliche Vorabkontrolle, aber keine qualifizierte fachliche Abnahme. Wenn die Freigabe darauf gestützt wird, sollte in `docs/reviews/costs.md` genau so stehen, worauf sie beruht — damit später niemand eine Autorität annimmt, die es nicht gab.
 
-## 2. Weitere offene Voraussetzungen
+## 2. Kartenkacheln vor einem kommerziellen Start klären
+
+**Status:** offen · **Zuständig:** Betreiber · **Blockiert nichts**
+
+Die Karte lädt Kacheln von `tile.openstreetmap.org`. Die Nutzungspolitik der OpenStreetMap Foundation sagt ausdrücklich, dass es **keinen SLA** gibt und dass der Zugang jederzeit entzogen werden kann — und dass kommerzielle Dienste sich dessen besonders bewusst sein sollten.
+
+Für eine technische Vorschau ist das in Ordnung. Vor einem Start mit nennenswertem Verkehr oder mit Monetarisierung gehört ein eigener oder bezahlter Kacheldienst her. Die Konfiguration ist dafür vorbereitet: `config/tiles.json` enthält Adresse, Attribution und Hosts an einer Stelle, und der Host steht auch in der Content Security Policy nur dort.
+
+## 3. Weitere offene Voraussetzungen
 
 Diese blockieren derzeit nichts und stehen mit Status, Entscheider und zuerst betroffener Aufgabe im Register in **[docs/EXTERNAL_SETUP.md](docs/EXTERNAL_SETUP.md)**:
 
@@ -33,6 +41,6 @@ Diese blockieren derzeit nichts und stehen mit Status, Entscheider und zuerst be
 - Branch-Protection im GitHub-Projekt (`docs/CI_SECURITY.md`)
 - Betriebsprüfung vor dem zeitgesteuerten GOT-Abruf (Aufgabe M17-07)
 
-## 3. Nicht angelegt, mit Absicht
+## 4. Nicht angelegt, mit Absicht
 
 Das Cloudflare-**Produktionsprojekt** existiert nicht. Ohne Domain, Betreiberangaben und freigegebene Funktion gäbe es nichts zu veröffentlichen. Details in `docs/DEPLOYMENT_EVIDENCE.md`.

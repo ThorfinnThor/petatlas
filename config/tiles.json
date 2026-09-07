@@ -1,0 +1,12 @@
+{
+  "$comment": "M11-02 — Kartenkacheln sind ein austauschbarer Darstellungsdienst, keine Datenquelle. Die Kacheln werden angezeigt, nicht übernommen: kein Vorabladen, kein Offlinearchiv, kein Proxy zur Umgehung von Limits.",
+  "provider": "osm-standard",
+  "urlTemplate": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+  "attributionHtml": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>-Mitwirkende",
+  "maxZoom": 19,
+  "minZoom": 5,
+  "policyUrl": "https://operations.osmfoundation.org/policies/tiles/",
+  "$comment_policy": "Die Nutzungspolitik verlangt sichtbare Attribution, verbietet Vorabladen und Offlinearchive und sagt ausdrücklich, dass es keinen SLA gibt und der Zugang jederzeit entzogen werden kann. Für einen kommerziellen Start ist deshalb ein eigener oder bezahlter Kacheldienst vorzusehen; siehe TODO.md.",
+  "noticeText": "Kartendarstellung von OpenStreetMap. Beim Anzeigen der Karte werden Kacheln von tile.openstreetmap.org geladen; dabei sieht dieser Dienst Ihre IP-Adresse.",
+  "hosts": ["https://tile.openstreetmap.org"]
+}

@@ -14,10 +14,16 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { TILES } from '../src/features/map/tiles.ts';
+
 const ZIEL_VERZEICHNIS = 'dist';
 
 /**
  * Content Security Policy.
+ *
+ * `img-src` erlaubt zusätzlich den konfigurierten Kachelhost. Die Kacheln
+ * werden erst nach einem Klick geladen; die Erlaubnis in der Policy ist
+ * kein Vorabladen.
  *
  * `script-src 'self'` reicht, weil alle Skripte als eigene Dateien
  * ausgeliefert werden — deshalb liegt die Suchlogik in `public/` und nicht
@@ -32,7 +38,10 @@ const CSP = [
   "script-src 'self'",
   // Astro schreibt komponentenbezogene Styles in <style>-Elemente.
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data:",
+  // Kartenkacheln kommen von einem fremden Host. Das ist eine bewusste
+  // Erweiterung für genau diesen Zweck, kein allgemeines Aufweichen: der
+  // Host steht in config/tiles.json und nirgends sonst.
+  `img-src 'self' data: ${TILES.hosts.join(' ')}`,
   "font-src 'self'",
   // Der Pagefind-Index liegt auf derselben Herkunft; nichts geht nach außen.
   "connect-src 'self'",
