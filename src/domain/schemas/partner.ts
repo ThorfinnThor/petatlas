@@ -131,7 +131,7 @@ export const PartnerProgramSchema = z
       } else {
         // Das Ziel muss auf einem der vertraglich erlaubten Hosts liegen und
         // über https erreichbar sein. Sonst ist es kein zugelassenes Ziel.
-        let ziel: URL | null = null;
+        let ziel: URL | null;
         try {
           ziel = new URL(wert.landingUrl);
         } catch {
