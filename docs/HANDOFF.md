@@ -38,13 +38,15 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 **M12-02 — Deklarative Rules Engine implementieren.** `src/features/travel/engine.ts` und `tests/travel/`: feste Prädikate (die DSL steht bereits in `src/domain/schemas/travel.ts`), gültige Zeiträume, Prioritäten und vier Ergebniszustände. Kein ausführbarer Code aus Daten. Abnahme: Einheiten-, Kalender-, `unknown`-/`not_applicable`- und Versionsgrenztests bestehen.
 
-Vorhanden aus M12-01: `content-data/travel/scope.json` mit vier Zielstaaten und zehn ausdrücklich nicht geprüften Fällen, `src/features/travel/scope.ts` (fail-closed, sammelt alle Gründe), die Reiseseite zeigt den Umfang und keine Beispielprüfung, `docs/TRAVEL_SCOPE.md`. Der Feature-E2E-Lauf baut jetzt mit `ENABLE_FEATURES=costs,map,travel`.
+Vorhanden: `content-data/travel/scope.json` mit vier Zielstaaten und zehn ausdrücklich nicht geprüften Fällen, `src/features/travel/scope.ts` (fail-closed, sammelt alle Gründe), die Reiseseite zeigt den Umfang und keine Beispielprüfung, `docs/TRAVEL_SCOPE.md`. Der Feature-E2E-Lauf baut jetzt mit `ENABLE_FEATURES=costs,map,travel`.
 
 **M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Er ist auf Wunsch des Betreibers in der **Vorschau** freigeschaltet und dort mit sichtbarem Warnhinweis erreichbar; die versionierte Marktkonfiguration bleibt auf `costs: false`. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`, die Merkliste in `TODO.md`.
 
 **Rechner ansehen:** `ENABLE_FEATURES=costs npm run build:site && npx astro preview` — der Override wirkt nur in `development`.
 
 **Live erreichbar:** https://petatlas-de-preview.shuu9599.workers.dev — technische Vorschau, `noindex`, mit freigeschaltetem Rechner. Nachweise in `docs/DEPLOYMENT_EVIDENCE.md`.
+
+**Vor jedem Commit:** `npm run verify` — Lint, Typecheck, Format, Unit-Tests, Secret-Audit, Lizenz- und Handoff-Prüfung in einer Kette. Über den **Exit-Code** prüfen, nicht über die letzten Ausgabezeilen; in dieser Sitzung sind vier Commits mit roter Kette rausgegangen, weil ich nur die Ausgabe gelesen habe.
 
 **Reihenfolge beim Abschluss einer Aufgabe:** erst `docs/HANDOFF.md` auf die *nächste* Aufgabe fortschreiben, dann den Status setzen und beides gemeinsam committen. Sonst schlägt `npm run check:handoff` in der CI fehl — genau das ist beim ersten CI-Lauf passiert.
 
