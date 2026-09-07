@@ -2867,8 +2867,16 @@
         "M14-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Attributschema mit Herkunft und Verifikationsstatus. Jedes Attribut traegt value (null heisst unbekannt), unit, verification (manufacturer_stated, merchant_feed, measured, unverified), sourceUrl, sourceLabel und checkedAt. Das Schema erzwingt: ein Beleg braucht Fundstelle und Pruefdatum, ein unbekannter Wert ist zwingend unverified, eine Zahl braucht eine Einheit, und ein Attribut darf je Produkt nur einmal vorkommen. darfMatchen() verlangt bekannten Wert und Beleg - unverified ist kein schwacher Beleg, sondern gar keiner. matchbareAttribute() schneidet zusaetzlich mit der Taxonomie: ein Attribut, das die Kategorie nicht als Matchingattribut nennt, entscheidet nichts. ungepruefteAttribute() benennt die Gegenseite, also welche Matchingattribute der Kategorie ohne belegten Wert sind. Die Pruefdaten sind synthetisch und als solche gekennzeichnet (dataKind synthetic, Adressen auf beispiel.invalid); ein Eintrag steht bewusst als unverified mit null darin, damit eine fehlende Herstellerangabe nicht zur Annahme wird. Der Loader lehnt zusaetzlich eine unbekannte Kategorie ab. 11 neue Tests (891 gesamt), npm run verify exit 0.",
+          "reference": "src/domain/schemas/product-attributes.ts, content-data/attributes/synthetic-review.json, content-data/attributes/README.md, src/features/care/attributes.ts, tests/care/attributes.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/care/attributes.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

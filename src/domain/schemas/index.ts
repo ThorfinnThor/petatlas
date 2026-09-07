@@ -14,6 +14,7 @@ export * from './costs.ts';
 export * from './disclosure.ts';
 export * from './municipal.ts';
 export * from './partner.ts';
+export * from './product-attributes.ts';
 export * from './taxonomy.ts';
 export * from './travel.ts';
 export * from './profile.ts';

@@ -343,3 +343,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Die Ausschlussliste ist Pflichtfeld im Schema. Eine Kategorienliste ohne ihre Grenze liest sich wie das Versprechen, alles abzudecken; hier stehen Arzneimittel, Supplemente, medizinische Tests, Antiparasitika und Therapiegeräte mit Begründung.
 - `attributErlaubt()` klingt kleinlich und ist der Kern: ein Attribut, das die Kategorie nicht nennt, darf kein Produkt „passend“ machen. „Gut bei Gelenkproblemen“ ist kein Merkmal eines Kauspielzeugs.
 - Tests sperren Wirkversprechen in Kategorienamen und Beschreibungen („hilft gegen“, „lindert“, „unzerstörbar“) und verlangen zu jedem Ausschluss eine echte Begründung.
+
+| M14-02 | `src/domain/schemas/product-attributes.ts`, `content-data/attributes/`, `src/features/care/attributes.ts` | `npx vitest run tests/care/attributes.test.ts` | 11 Tests; jedes belegte Attribut hat Fundstelle und Prüfdatum |
+
+- Ein Attribut ohne Herkunft ist eine Behauptung. Das Schema erzwingt deshalb: Beleg nur mit Fundstelle **und** Prüfdatum, unbekannter Wert nur als `unverified`, Zahl nur mit Einheit.
+- `unverified` ist kein schwacher Beleg, sondern gar keiner: `darfMatchen()` verlangt bekannten Wert und Beleg. Was niemand weiß, spricht weder für noch gegen ein Produkt.
+- Die Prüfdaten sind synthetisch und als solche gekennzeichnet (`dataKind: "synthetic"`). Echte Produktdaten setzen echte Angebotsrechte voraus; eine „geprüfte“ Liste aus einem Feed abgeschrieben täuschte Sorgfalt vor.
+- Ein Eintrag steht bewusst als `unverified` mit `null` in den Daten: eine fehlende Herstellerangabe wird nicht zu einer Annahme.
+- `ungepruefteAttribute()` benennt, was **nicht** geprüft ist — für die spätere Anzeige mindestens so wichtig wie das Geprüfte.

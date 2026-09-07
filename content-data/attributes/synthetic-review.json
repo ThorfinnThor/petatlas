@@ -1,0 +1,95 @@
+{
+  "reviewId": "synthetische-attributpruefung-v1",
+  "lastEditedAt": "2026-09-07",
+  "dataKind": "synthetic",
+  "products": [
+    {
+      "productId": "synthetisch:ball-70",
+      "categoryId": "fetch-toy",
+      "attributes": [
+        {
+          "attribute": "sizeRange",
+          "value": "ab 15 kg Körpergewicht",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://beispiel.invalid/produkte/ball-70",
+          "sourceLabel": "Herstellerseite (synthetisch)",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "attribute": "diameterMillimeters",
+          "value": 70,
+          "unit": "mm",
+          "verification": "measured",
+          "sourceUrl": "https://beispiel.invalid/produkte/ball-70",
+          "sourceLabel": "eigene Messung (synthetisch)",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "attribute": "material",
+          "value": "Naturkautschuk",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://beispiel.invalid/produkte/ball-70",
+          "sourceLabel": "Herstellerseite (synthetisch)",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "attribute": "floats",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://beispiel.invalid/produkte/ball-70",
+          "sourceLabel": "Herstellerseite (synthetisch)",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "attribute": "hardnessLevel",
+          "value": null,
+          "unit": null,
+          "verification": "unverified",
+          "sourceUrl": null,
+          "sourceLabel": "keine Angabe gefunden",
+          "checkedAt": null
+        }
+      ]
+    },
+    {
+      "productId": "synthetisch:buerste-klein",
+      "categoryId": "grooming-brush",
+      "attributes": [
+        {
+          "attribute": "coatLength",
+          "value": "kurzhaarig",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://beispiel.invalid/produkte/buerste-klein",
+          "sourceLabel": "Herstellerseite (synthetisch)",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "attribute": "toolWidthMillimeters",
+          "value": 65,
+          "unit": "mm",
+          "verification": "merchant_feed",
+          "sourceUrl": "https://beispiel.invalid/shop/buerste-klein",
+          "sourceLabel": "Händlerfeed (synthetisch)",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "attribute": "material",
+          "value": null,
+          "unit": null,
+          "verification": "unverified",
+          "sourceUrl": null,
+          "sourceLabel": "Feed nennt kein Material",
+          "checkedAt": null
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Alle Produkte, Adressen und Angaben sind erfunden. Echte Produktdaten kommen erst mit echten Angebotsrechten (M14-06).",
+    "Der Eintrag hardnessLevel steht bewusst als unverified mit null darin: eine fehlende Herstellerangabe wird nicht zu einer Annahme."
+  ]
+}
