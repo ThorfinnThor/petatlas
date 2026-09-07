@@ -2900,8 +2900,16 @@
         "M14-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Deterministisches Matching in zwei streng getrennten Stufen. Harte Filter schliessen aus: falsche Tierart, ueberschrittene Herstellergrenze (maxLoadKilograms), Groessenbereich, der das angegebene Gewicht ausschliesst - jeweils nur mit belegtem Wert und bekanntem Gewicht. Eine unbekannte oder unbelegte Eigenschaft schliesst nichts aus und macht auch nichts passend: ein Test belegt beides mit Punktzahl 0 und leerer Begruendung. Weiche Kriterien sind sechs benannte Beduerfnisse mit je einem erklaerenden Satz (indoor, apportieren, kauen, beschaeftigung, wasser, langhaar), zugeordnet ueber eine ausdrueckliche Tabelle; ein unbekanntes Beduerfnis wird ignoriert. Herstellergrenzen werden nur in klarer Form gelesen: 'ab 15 kg' und 'bis 10 kg' ja, 'fuer grosse Hunde' und 'ca. 15 kg' nein. Rasse bewirkt nachweislich nichts - derselbe Bedarf mit und ohne Rasse ergibt per toEqual dasselbe Ergebnis, und ein Test prueft, dass in keiner Begruendung medizinische Woerter auftauchen. Der Spielzeugfinder ist eine Einschraenkung derselben Bewertung statt eines zweiten Motors; ein Test vergleicht beide Ergebnisse. 15 neue Tests (906 gesamt), npm run verify exit 0.",
+          "reference": "src/features/care/matching.ts, src/features/toys/matching.ts, tests/toys/matching.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/toys",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

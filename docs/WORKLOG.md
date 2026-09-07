@@ -351,3 +351,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Die Prüfdaten sind synthetisch und als solche gekennzeichnet (`dataKind: "synthetic"`). Echte Produktdaten setzen echte Angebotsrechte voraus; eine „geprüfte“ Liste aus einem Feed abgeschrieben täuschte Sorgfalt vor.
 - Ein Eintrag steht bewusst als `unverified` mit `null` in den Daten: eine fehlende Herstellerangabe wird nicht zu einer Annahme.
 - `ungepruefteAttribute()` benennt, was **nicht** geprüft ist — für die spätere Anzeige mindestens so wichtig wie das Geprüfte.
+
+| M14-03 | `src/features/care/matching.ts`, `src/features/toys/matching.ts`, `tests/toys/matching.test.ts` | `npx vitest run tests/toys` | 15 Tests; Rasse ändert nachweislich nichts |
+
+- Zwei Stufen, streng getrennt: harte Filter schließen aus (Tierart, Herstellergrenze, Größenbereich) — aber nur mit **belegtem** Wert. Eine unbekannte Eigenschaft schließt nichts aus und macht auch nichts passend.
+- Der schärfste Test ist der einfachste: dasselbe Produkt, derselbe Bedarf, einmal mit und einmal ohne Rasse — beide Ergebnisse müssen `toEqual` sein. Rasse ist keine Diagnose und schon gar keine Produkteignung.
+- Weiche Kriterien gibt es nur als benannte Bedürfnisse mit je einem erklärenden Satz. Ein unbekanntes Bedürfnis wird ignoriert statt großzügig ausgelegt.
+- Herstellergrenzen werden nur in klarer Form gelesen: „ab 15 kg“ und „bis 10 kg“ ja, „für große Hunde“ und „ca. 15 kg“ nein.
+- Der Spielzeugfinder ist eine Einschränkung derselben Bewertung, kein zweiter Motor: zwei Motoren wären zwei Gelegenheiten, sich zu widersprechen — ein Test vergleicht beide Ergebnisse.
