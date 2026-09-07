@@ -17,8 +17,13 @@ import { readFileSync } from 'node:fs';
 import { resolveBuildConfig } from '../../config/build.ts';
 import { mayPublishAs } from '../../src/domain/publication-policy.ts';
 import { requireSource } from '../../src/domain/source-registry.ts';
-import { MAX_GEO_CHUNK_BYTES, type ChunkEntry } from '../../src/domain/schemas/manifest.ts';
+import {
+  MAX_CHUNK_BYTES,
+  MAX_GEO_CHUNK_BYTES,
+  type ChunkEntry,
+} from '../../src/domain/schemas/manifest.ts';
 import type { Place } from '../../src/domain/schemas/places.ts';
+import { normalisiere } from '../../src/features/map/place-search.ts';
 import { canonicalJson, type JsonValue } from '../normalize/canonical.ts';
 import { buildManifest, writeFiles, writeManifest, type PublishableFile } from './manifest.ts';
 
@@ -106,6 +111,51 @@ export function baueZellen(orte: readonly Place[]): readonly Zelle[] {
           .map(oeffentlicheProjektion),
       };
     });
+}
+
+/**
+ * Teilt den Ortsnamenindex nach Anfangsbuchstaben.
+ *
+ * Bundesweit sind es über 46.000 Ortsnamen; als eine Datei wären das
+ * mehrere Megabyte im ersten Browserpfad. Für ein Autocomplete braucht der
+ * Browser aber nur den Teil, der zum getippten Anfang passt.
+ *
+ * Eine zu große Gruppe wird weiter geteilt — nach zwei Zeichen statt einem.
+ * Das Budget wird nicht angehoben.
+ */
+export function teileOrtsnamen(
+  eintraege: readonly Record<string, JsonValue>[],
+  maxBytes: number,
+): ReadonlyMap<string, readonly Record<string, JsonValue>[]> {
+  const nachPraefix = new Map<string, Record<string, JsonValue>[]>();
+
+  for (const eintrag of eintraege) {
+    const name = normalisiere(String(eintrag.name ?? ''));
+    // Namen, die nicht mit a–z beginnen, landen gesammelt unter '0'.
+    const erster = /^[a-z]/.test(name) ? (name[0] as string) : '0';
+    const vorhanden = nachPraefix.get(erster);
+    if (vorhanden === undefined) nachPraefix.set(erster, [eintrag]);
+    else vorhanden.push(eintrag);
+  }
+
+  const ergebnis = new Map<string, readonly Record<string, JsonValue>[]>();
+  for (const [praefix, gruppe] of nachPraefix) {
+    if (Buffer.byteLength(canonicalJson(gruppe as unknown as JsonValue), 'utf8') <= maxBytes) {
+      ergebnis.set(praefix, gruppe);
+      continue;
+    }
+    const feiner = new Map<string, Record<string, JsonValue>[]>();
+    for (const eintrag of gruppe) {
+      const name = normalisiere(String(eintrag.name ?? ''));
+      const zwei = name.slice(0, 2).padEnd(2, '_');
+      const vorhanden = feiner.get(zwei);
+      if (vorhanden === undefined) feiner.set(zwei, [eintrag]);
+      else vorhanden.push(eintrag);
+    }
+    for (const [zwei, teil] of feiner) ergebnis.set(zwei, teil);
+  }
+
+  return new Map([...ergebnis.entries()].sort(([a], [b]) => (a < b ? -1 : 1)));
 }
 
 function sha256(inhalt: string): string {
@@ -208,18 +258,39 @@ function main(): number {
   dateien.push(index.datei);
   chunks.push({ ...index.chunk, dependsOn: chunks.map((chunk) => chunk.chunkId) });
 
-  const ortsIndexInhalt = canonicalJson({
+  // Ortsnamen nach Anfangsbuchstaben teilen: der Browser lädt nur den Teil,
+  // der zum getippten Anfang passt.
+  const namensGruppen = teileOrtsnamen(ortsIndex.entries, MAX_CHUNK_BYTES - 4096);
+  const namensVerweise: { praefix: string; path: string; count: number }[] = [];
+
+  for (const [praefix, gruppe] of namensGruppen) {
+    const inhalt = canonicalJson({ ...huelle, prefix: praefix, entries: gruppe } as JsonValue);
+    const { datei, chunk } = alsChunk(
+      `/data/v1/places/de/names/${praefix}`,
+      inhalt,
+      `places-de-names-${praefix}`,
+    );
+    dateien.push(datei);
+    chunks.push(chunk);
+    namensVerweise.push({ praefix, path: datei.path, count: gruppe.length });
+  }
+
+  const namensIndexInhalt = canonicalJson({
     ...huelle,
     source: ortsIndex.source as unknown as JsonValue,
-    entries: ortsIndex.entries as unknown as JsonValue,
+    entryCount: ortsIndex.entries.length,
+    shards: namensVerweise as unknown as JsonValue,
   } as JsonValue);
-  const ortsIndexChunk = alsChunk(
+  const namensIndex = alsChunk(
     '/data/v1/places/de/place-index',
-    ortsIndexInhalt,
+    namensIndexInhalt,
     'places-de-place-index',
   );
-  dateien.push(ortsIndexChunk.datei);
-  chunks.push(ortsIndexChunk.chunk);
+  dateien.push(namensIndex.datei);
+  chunks.push({
+    ...namensIndex.chunk,
+    dependsOn: namensVerweise.map((verweis) => `places-de-names-${verweis.praefix}`),
+  });
 
   writeFiles(OUT_DIR, dateien);
 
@@ -237,7 +308,10 @@ function main(): number {
   const gesamt = chunks.reduce((summe, chunk) => summe + chunk.byteSize, 0);
   console.log(
     `Ortsdaten veröffentlicht: ${zellen.length} Zellen, ${snapshot.places.length} Orte, ` +
-      `${(gesamt / 1024).toFixed(0)} KiB gesamt, Index ${(index.chunk.byteSize / 1024).toFixed(1)} KiB.`,
+      `${namensGruppen.size} Namensteile mit ${ortsIndex.entries.length} Ortsnamen, ` +
+      `${(gesamt / 1024 / 1024).toFixed(1)} MiB gesamt. ` +
+      `Kartenindex ${(index.chunk.byteSize / 1024).toFixed(0)} KiB, ` +
+      `Namensindex ${(namensIndex.chunk.byteSize / 1024).toFixed(1)} KiB.`,
   );
   return 0;
 }

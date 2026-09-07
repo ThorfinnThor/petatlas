@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M10-04",
+  "current_task": null,
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -2097,8 +2097,16 @@
         "M10-01"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Echter bundesweiter Lauf ueber alle 16 deutschen Regionalextrakte: 4,60 GiB geladen in 917 s, verarbeitet in 546 s, 9.381 Orte und 46.116 Ortsnamen, keine Region gescheitert. Spitzenspeicher 373 MiB, Spitzenbedarf Plattenplatz 870 MiB - also die groesste einzelne Region, nicht die Summe: jede Region wird geladen, verarbeitet und ihre Rohdatei sofort geloescht, .work/osm/ ist nach dem Lauf leer. Sequenziell mit 20 Sekunden Pause zwischen den Regionen, weil die Quelle bei zu schnellen Abrufen mit HTTP 502 antwortet - genau das ist beim ersten Versuch passiert. 502 wird deshalb wie ein Rate Limit behandelt: warten, gedeckelter Rueckzug, nach vier Versuchen aufgeben; kein paralleles Laden und keine engen Wiederholschleifen. Eine gescheiterte Region beendet den Lauf nicht, sondern wird als missingRegions in der Abdeckung ausgewiesen. Die 16 Regionen entstehen aus einer Konfiguration; jede bleibt eine eigene Distribution mit eigener Adresse und eigenem Stand. Messung je Region in docs/OSM_BENCHMARK.md.",
+          "reference": "scripts/ingest/osm-country.ts; config/sources/osm-regions.json; docs/OSM_BENCHMARK.md; data-snapshots/places/",
+          "verified_at": "2026-09-07",
+          "command": "npm run ingest:osm-de",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
