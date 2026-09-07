@@ -295,6 +295,8 @@ describe('Gebühren und Szenarien', () => {
 describe('Reiseregeln', () => {
   const RULE = {
     ruleId: 'synthetic-rule-1',
+    requirementId: 'microchip',
+    priority: 0,
     originCountry: 'DE',
     destinationCountry: 'IT',
     transitCountries: ['AT'],

@@ -113,6 +113,16 @@ export type TravelScope = z.infer<typeof TravelScopeSchema>;
 export const TravelRuleSchema = z
   .object({
     ruleId: z.string().min(1),
+    /**
+     * Fachliche Anforderung, die diese Regel abbildet — etwa
+     * `microchip` oder `rabies-vaccination`. Zwei Regeln mit derselben
+     * Anforderung schließen einander aus; es gilt die mit der höheren
+     * Priorität, damit eine Landesregel eine allgemeine Regel verdrängen
+     * kann, ohne dass beide nebeneinander in der Checkliste stehen.
+     */
+    requirementId: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Kleinbuchstaben und Bindestriche.'),
+    /** Höhere Zahl verdrängt niedrigere bei gleicher Anforderung. */
+    priority: z.number().int(),
     originCountry: CountryCode,
     destinationCountry: CountryCode,
     transitCountries: z.array(CountryCode),

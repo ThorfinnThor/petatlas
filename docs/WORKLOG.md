@@ -241,3 +241,12 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - `pruefeUmfang()` ist fail-closed und sammelt alle Gründe: ein unbekanntes Alter ist nicht „erwachsen“, ein unbekanntes Land nicht „vermutlich EU“. Wer zwei Dinge ändern muss, erfährt beide.
 - Die Altersgrenze von zwölf Monaten ist ausdrücklich eine Umfangsgrenze dieser Anwendung und keine Rechtsaussage. Sie steht so in der Datei, in der Dokumentation und im Schemakommentar.
 - Es gibt bewusst **kein** Formular und keine Beispielprüfung, solange keine belegten Regeln vorliegen. Ein E2E-Test hält das fest.
+
+| M12-02 | `src/features/travel/engine.ts`, `tests/travel/engine.test.ts`, Priorität und Anforderungs-ID im Regelschema | `npx vitest run tests/travel` | 37 Tests; unbekannt bleibt unbekannt, ungeprüfte Regeln fließen nicht ein |
+
+- Sieben feste Prädikate, kein `eval`, keine Funktion aus JSON. Ein unbekannter Operator wirft einen Fehler, statt die Regel zur Hälfte auszuwerten.
+- `unknown` ist ein eigener Zustand, kein Zwischenschritt zu „nein“: eine fehlende Angabe ergibt weder erfüllt noch unerfüllt. Bei `all` schlägt ein sicher unerfüllter Teil eine offene Frage, bei `any` ist es umgekehrt.
+- Kalenderrechnung in UTC, geprüft an Monats-, Jahres-, Schaltjahres- und Zeitumstellungsgrenzen. Ein unmögliches Datum wie der 31. Februar gilt als unbekannt, nicht als gültig.
+- Regeln ohne fachliche Freigabe oder außerhalb ihres Geltungszeitraums werden nicht ausgewertet — verschwinden aber nicht still, sondern stehen mit Grund in der Liste der übersprungenen Regeln.
+- Ohne eine einzige auswertbare Regel ist das Gesamtergebnis `unknown`, nicht „alles in Ordnung“. „Wir haben nichts gefunden“ ist keine Unbedenklichkeit.
+- Neu im Regelschema: `requirementId` und `priority`. Zwei Regeln zur selben Anforderung schließen einander aus; die höhere Priorität gewinnt, die verdrängte wird ausgewiesen.

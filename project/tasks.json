@@ -2474,8 +2474,16 @@
         "M12-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Deklarative Regelmaschine mit sieben festen Praedikaten (all, any, eq, in, dateBefore, dateAfter, daysBetween). Kein eval, keine Funktion aus Daten: ein unbekannter Operator wirft TravelEngineError, statt die Regel halb auszuwerten. Vier Ergebniszustaende; unknown ist ein eigener Zustand und keine Vorstufe von nein - eine fehlende oder null-Angabe ergibt weder erfuellt noch unerfuellt, bei all schlaegt ein sicher unerfuellter Teil eine offene Frage, bei any umgekehrt. Kalenderrechnung in UTC, geprueft an Monats-, Jahres-, Schaltjahres- (2024-02-28 bis 2024-03-01 = 2 Tage) und Zeitumstellungsgrenzen; ein unmoegliches Datum wie 2026-02-31 gilt als unbekannt. Der Stichtag kommt von aussen, nie aus der Uhr - ein ungueltiger Stichtag wirft. Regeln ohne fachliche Freigabe oder ausserhalb ihres Geltungszeitraums werden nicht ausgewertet und stehen mit Grund in der Liste der uebersprungenen Regeln; Versionsgrenze geprueft mit Stichtagen genau am letzten Gueltigkeitstag, danach und davor. Ohne auswertbare Regel ist das Gesamtergebnis unknown, nicht fulfilled. Neu im Schema: requirementId und priority - zwei Regeln zur selben Anforderung schliessen einander aus, die hoehere Prioritaet gewinnt und die verdraengte wird ausgewiesen. Geprueft: 37 Tests unter tests/travel (716 gesamt), npm run verify exit 0.",
+          "reference": "src/features/travel/engine.ts, tests/travel/engine.test.ts, src/domain/schemas/travel.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/travel",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
