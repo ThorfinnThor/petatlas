@@ -2609,9 +2609,13 @@
         "M12-01"
       ],
       "kind": "external_gate",
-      "status": "todo",
+      "status": "blocked",
       "evidence": [],
-      "blocker": null,
+      "blocker": {
+        "reason": "Die Reiseregeln sind mit Fundstelle erfasst, aber niemand mit einschlaegiger Qualifikation hat sie geprueft. Eine solche Pruefung wird nicht erfunden; ein Hinweistext ersetzt sie nicht. Offen sind ausserdem die nationalen Sonderregeln der vier Zielstaaten und die italienische Quelle, die sich nicht automatisiert lesen liess.",
+        "required_action": "Die acht Pruefpunkte in docs/reviews/travel.md beantworten lassen und die sechs Freigabeschritte ausfuehren, einschliesslich Eintrag der geprueften Inhaltssignatur in content-data/travel/approvals.json und Freischaltung des Gates travelRules in config/launch.json.",
+        "owner": "Betreiber mit fachlich pruefender Person"
+      },
       "notes": []
     },
     {

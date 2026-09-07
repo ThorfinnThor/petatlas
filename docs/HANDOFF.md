@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6 (75 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert (75 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -39,6 +39,10 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 **M13-01 — Affiliate-Produktfeeds beginnen** (kleinste offene ausführbare ID). M12-06 ist ein **externer Freigabepunkt**: er verlangt eine kompetente fachliche Prüfung aller Live-Regeln plus vollständige Testmatrix. Ohne diese Prüfung bleibt der Reisecheck in der Vorschau — das ist im Motor verankert und nicht nur ein Hinweistext.
 
 Vorhanden aus M12: Umfang, Regelmaschine mit Vorschaumodus, 40 vorbereitete Regeln aus der Delegierten Verordnung (EU) 2026/131, der bedienbare Check auf `/de-de/reisecheck/`, vier Zielseiten mit Packliste zum Ausdrucken und getrennt ausgewiesenen Beförderungsbedingungen.
+
+**M12-06 ist blockiert (B-004):** Der Reisecheck ist fertig, die Regeln sind mit Fundstelle erfasst, aber fachlich nicht geprüft. Er läuft deshalb in der Vorschau — ohne positives Gesamtergebnis, und das steckt im Motor, nicht nur im Text. Prüfpunkte und Freigabeschritte in `docs/reviews/travel.md`.
+
+**M09-06 ist blockiert (B-003):** Kein Partnervertrag, keine Prüfung nach § 34d GewO. Ohne beides bleibt die Partnerkonfiguration leer und es entsteht keine Versicherungs-CTA. Prüfpunkte in `docs/reviews/insurance.md`.
 
 **M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Er ist auf Wunsch des Betreibers in der **Vorschau** freigeschaltet und dort mit sichtbarem Warnhinweis erreichbar; die versionierte Marktkonfiguration bleibt auf `costs: false`. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`, die Merkliste in `TODO.md`.
 

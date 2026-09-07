@@ -31,7 +31,17 @@ Das Modul ist gebaut und getestet, aber es gibt **keinen Partnervertrag** und ke
 
 **Was zu tun ist:** die acht Prüfpunkte in **[docs/reviews/insurance.md](docs/reviews/insurance.md)** beantworten und dort mit Datum und prüfender Person eintragen, danach die sechs Freigabeschritte ausführen. Der wichtigste Punkt ist der zweite: ob die konkrete Ausgestaltung eine Versicherungsvermittlung nach § 34d GewO ist. Das entscheidet nicht die Absicht, sondern was die Seite tatsächlich tut — und die Frage gehört zu einer Person mit einschlägiger Qualifikation.
 
-## 3. Kartenkacheln vor einem kommerziellen Start klären
+## 3. Fachliche Prüfung der Reiseregeln
+
+**Status:** offen · **Aufgabe:** M12-06 · **Blocker:** B-004 · **Zuständig:** Betreiber mit fachlich prüfender Person
+
+Der Reisecheck ist fertig und bedienbar, die Regeln sind aus der Delegierten Verordnung (EU) 2026/131 mit Fundstelle erfasst — aber **nicht fachlich geprüft**. Solange das so ist, läuft der Check in der Vorschau: einzelne Punkte werden ausgewertet, ein positives Gesamtergebnis entsteht nicht.
+
+**Was zu tun ist:** die acht Prüfpunkte in **[docs/reviews/travel.md](docs/reviews/travel.md)** beantworten und die sechs Freigabeschritte ausführen. Besonders offen: nationale Sonderregeln der vier Zielstaaten und die italienische Quelle, die sich nicht automatisiert lesen ließ (siehe [docs/reviews/travel-sources.md](docs/reviews/travel-sources.md)).
+
+**Eingebaut ist bereits:** Ändert sich der Regelsatz nach einer Freigabe, fällt der Check automatisch in die Vorschau zurück — die Freigabe nennt die Signatur des Inhalts, den sie geprüft hat.
+
+## 4. Kartenkacheln vor einem kommerziellen Start klären
 
 **Status:** offen · **Zuständig:** Betreiber · **Blockiert nichts**
 
@@ -39,7 +49,7 @@ Die Karte lädt Kacheln von `tile.openstreetmap.org`. Die Nutzungspolitik der Op
 
 Für eine technische Vorschau ist das in Ordnung. Vor einem Start mit nennenswertem Verkehr oder mit Monetarisierung gehört ein eigener oder bezahlter Kacheldienst her. Die Konfiguration ist dafür vorbereitet: `config/tiles.json` enthält Adresse, Attribution und Hosts an einer Stelle, und der Host steht auch in der Content Security Policy nur dort.
 
-## 4. Weitere offene Voraussetzungen
+## 5. Weitere offene Voraussetzungen
 
 Diese blockieren derzeit nichts und stehen mit Status, Entscheider und zuerst betroffener Aufgabe im Register in **[docs/EXTERNAL_SETUP.md](docs/EXTERNAL_SETUP.md)**:
 

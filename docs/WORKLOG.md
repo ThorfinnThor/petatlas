@@ -275,3 +275,10 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Keine Medikamente, keine Wirkstoffe, keine Dosierungen. Der Test prüft die Einträge, nicht den Hinweistext darüber — der darf die Wörter nennen, weil er sie verneint.
 - Beförderungsbedingungen stehen als eigener Abschnitt und ausdrücklich als „etwas anderes“ als die staatlichen Regeln: sie werden weder geprüft noch wiedergegeben.
 - Ein Astro-Detail: `getStaticPaths` läuft in einem eigenen Modulkontext und sieht keine Werte aus dem Frontmatter der Seite. Die Ländertabelle liegt deshalb in `src/features/travel/laender.ts` — importiert statt lokal definiert.
+
+| M12-06 | `freigabe.ts` mit Inhaltssignatur, `content-data/travel/approvals.json`, `docs/reviews/travel.md` | `npx vitest run tests/travel/freigabe.test.ts` | 11 Tests; **blockiert (B-004)**, keine Freigabe erfunden |
+
+- Der externe Teil — eine kompetente fachliche Prüfung — ist ein Blocker und bleibt es. Der technische Teil war es nicht: **die Sperre bei Quelländerung** ist gebaut und getestet.
+- Eine Freigabe nennt die Signatur des Inhalts, den sie geprüft hat. Ändert sich eine Frist, ein Wortlaut, eine Fundstelle oder ein Zielland, passt die Signatur nicht mehr und der Check fällt automatisch in die Vorschau zurück. Anmerkungen und Abrufdaten der Quellen ändern die Signatur nicht — sie sagen nichts über den fachlichen Inhalt.
+- Die Signatur ist ausdrücklich ein Änderungsmelder und keine Sicherheitsmaßnahme; sie steht so im Code und im Freigabedokument.
+- Der Vorschaumodus wird jetzt aus den Daten entschieden (`nurVorschau()`), nicht mehr durch ein hart gesetztes `true` im Wizard.

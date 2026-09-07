@@ -16,6 +16,7 @@
  */
 import type { RequirementState } from '../../domain/schemas/travel.ts';
 import { pruefeReise, type Fakten, type ReiseErgebnis } from './engine.ts';
+import { nurVorschau } from './freigabe.ts';
 import { alleRegeln } from './rules.ts';
 import { pruefeUmfang, type UmfangsErgebnis } from './scope.ts';
 
@@ -132,8 +133,10 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
     },
     fakten: fakten(eingabe),
     stichtag: eingabe.travelDate,
-    // Vorschau: die Regeln sind vorbereitet, aber nicht fachlich freigegeben.
-    vorschau: true,
+    // Vorschau, solange ein Regelsatz nicht fachlich freigegeben ist oder
+    // sich seit seiner Freigabe geändert hat. Der Modus wird nicht hier
+    // entschieden, sondern in `freigabe.ts` — und zwar aus den Daten.
+    vorschau: nurVorschau(),
   });
 
   return {

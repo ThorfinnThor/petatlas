@@ -235,6 +235,31 @@ export const PackingListSchema = z
   });
 export type PackingList = z.infer<typeof PackingListSchema>;
 
+/**
+ * M12-06 — Fachliche Freigabe eines Regelsatzes.
+ *
+ * Die Freigabe nennt die **Signatur des geprüften Inhalts**. Ändert sich der
+ * Regelsatz, passt die Signatur nicht mehr, und die Freigabe gilt für den
+ * neuen Inhalt nicht — ohne dass jemand daran denken muss.
+ */
+export const TravelApprovalSchema = z
+  .object({
+    ruleSetId: z.string().min(1),
+    approvedAt: IsoDate,
+    approvedBy: z.string().min(1),
+    /** Signatur des Inhalts, der tatsächlich geprüft wurde. */
+    sourceDigest: z.string().regex(/^[0-9a-f]{16}$/, 'Erwartet werden 16 Hexstellen.'),
+    /** Worauf sich die Freigabe stützt, etwa docs/reviews/travel.md. */
+    evidence: z.string().min(1),
+  })
+  .strict();
+export type TravelApproval = z.infer<typeof TravelApprovalSchema>;
+
+export const TravelApprovalListSchema = z
+  .object({ approvals: z.array(TravelApprovalSchema) })
+  .strict();
+export type TravelApprovalList = z.infer<typeof TravelApprovalListSchema>;
+
 export const TravelRuleSetSchema = z
   .object({
     ruleSetId: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Kleinbuchstaben und Bindestriche.'),
