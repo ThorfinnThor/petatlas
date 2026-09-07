@@ -367,3 +367,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Ohne Gewichtsangabe wird nichts ausgeschlossen und nichts behauptet: der Treffer hat null Punkte und den Satz „nur nicht ausgeschlossen“.
 - Die Pflegeseiten nennen je Kategorie, wonach gefiltert wird, und führen die fünf Ausschlüsse mit Begründung. Produkte stehen dort erst mit Angebotsrechten und geprüften Eigenschaften — statt einer leeren Liste steht genau dieser Satz da.
 - Ein Markup-Befund aus dem Test: „keine Übereinstimmung“ und „nicht geprüft“ trugen dieselbe Klasse. Das sind zwei verschiedene Aussagen und haben jetzt zwei Klassen.
+
+| M14-05 | `src/features/care/policy.ts`, `tests/care-safety.test.ts`, `tests/toy-safety.test.ts` | `npx vitest run tests/care-safety.test.ts tests/toy-safety.test.ts` | 19 Tests; neun Regelgruppen, neutrale Texte bleiben möglich |
+
+- Gesperrt sind fünf Gruppen: Heilversprechen, Dosierung und Anwendung, Haltbarkeitsversprechen, erfundene Bewertungen und die automatische Zusatzempfehlung — dazu die Ableitung aus der Rasse.
+- Der Prüfer prüft sich selbst: elf Beispielsätze müssen anschlagen, acht neutrale Produkttexte dürfen es nicht. Ohne diese zweite Hälfte wäre die Regel eine Sperre gegen alles.
+- Auch **Attributnamen** sind geprüft: `jointSupport`, `healthBenefit`, `calmingEffect` und `therapyUse` sind gesperrt, weil ein Name allein schon eine medizinische Eignung behaupten kann.
+- Geprüft werden Taxonomien, Attributwerte, Bedürfniserklärungen, die Seiten und die im Matching erzeugten Sätze — also auch das, was zur Laufzeit entsteht und in keiner Datei steht.
+- Der Prüfer selbst wird nicht mit sich selbst geprüft: er enthält die verbotenen Wörter zwangsläufig, weil er sie definiert.

@@ -2968,8 +2968,16 @@
         "M14-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Inhaltsregeln fuer Pflege- und Spielzeugtexte mit neun Mustergruppen: Heilversprechen (heilt, lindert, wirkt gegen, entzuendungshemmend), Vorbeugeversprechen, Dosierung (mg pro kg, einmal taeglich), Anwendungsdauer, Haltbarkeitsversprechen (unzerstoerbar, haelt ewig, lebenslange Garantie), erfundene Bewertungen (Sterne, Testsieger, Bestseller), automatische Supplementempfehlung und Ableitung aus der Rasse. Geprueft wird der Wortlaut; ein Satz, der die Aussage ausdruecklich verneint, zaehlt nicht, damit die Seite sagen darf, was sie nicht tut. Der Pruefer prueft sich selbst: elf Beispielsaetze muessen anschlagen, acht neutrale Produkttexte duerfen es nicht - ohne diese zweite Haelfte waere die Regel eine Sperre gegen alles. Zusaetzlich sind Attributnamen geprueft: jointSupport, healthBenefit, calmingEffect und therapyUse sind gesperrt, weil schon der Name eine medizinische Eignung behaupten kann. Angewandt wird die Pruefung auf beide Taxonomien, alle Attributwerte, die sechs Beduerfniserklaerungen, die Seiten Care.astro, Toys.astro und die Pflegekategorieseite sowie auf die im Matching zur Laufzeit erzeugten Saetze. Der Pruefer selbst ist ausgenommen, weil er die verbotenen Woerter definiert. 19 neue Tests (925 gesamt), npm run verify exit 0.",
+          "reference": "src/features/care/policy.ts, tests/care-safety.test.ts, tests/toy-safety.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/care-safety.test.ts tests/toy-safety.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
