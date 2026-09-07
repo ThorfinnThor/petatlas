@@ -2138,6 +2138,13 @@
           "verified_at": "2026-09-07",
           "command": "npm run build:places",
           "exit_code": 0
+        },
+        {
+          "description": "Korrektur zum vorigen Nachweis: die Notdienstzahlen dort waren aus dem Gedaechtnis geschrieben und falsch. Tatsaechlich gemessen im Snapshot: 9 Orte mit emergency=true, 8 mit false, 9.364 unbekannt, bei 9.381 Orten insgesamt. docs/COVERAGE.md nennt diese Zahlen korrekt, weil sie dort aus den Daten erzeugt werden. Die Aussage bleibt dieselbe und wird durch die richtigen Zahlen eher staerker: mit 9 von 9.381 Angaben taugen die Daten fuer keine Notdienstauskunft.",
+          "reference": "data-snapshots/places/places-de.json; docs/COVERAGE.md Zeile 53",
+          "verified_at": "2026-09-07",
+          "command": "Auszaehlung ueber den Snapshot",
+          "exit_code": 0
         }
       ],
       "blocker": null,
