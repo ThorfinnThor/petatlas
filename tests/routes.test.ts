@@ -17,6 +17,7 @@ import {
   redirectsFor,
   routeExists,
   routePath,
+  subroutePath,
 } from '../src/lib/routes.ts';
 
 const DE = requireMarket('DE');
@@ -24,6 +25,26 @@ const DE = requireMarket('DE');
 function withFeature(market: MarketConfig, feature: string, on: boolean): MarketConfig {
   return { ...market, featureFlags: { ...market.featureFlags, [feature]: on } };
 }
+
+describe('Unterseiten', () => {
+  const mitKarte = withFeature(DE, 'map', true);
+
+  it('hängt den Slug an den Routenpfad', () => {
+    expect(subroutePath(mitKarte, 'map', 'muenchen')).toBe('/de-de/tierarzt-karte/muenchen/');
+  });
+
+  it('lehnt einen Slug ab, der kein Slug ist', () => {
+    expect(() => subroutePath(mitKarte, 'map', '../geheim')).toThrow(RouteError);
+    expect(() => subroutePath(mitKarte, 'map', 'München')).toThrow(RouteError);
+    expect(() => subroutePath(mitKarte, 'map', '')).toThrow(RouteError);
+  });
+
+  it('gibt keinen Pfad unter einer abgeschalteten Route aus', () => {
+    expect(() => subroutePath(withFeature(DE, 'map', false), 'map', 'muenchen')).toThrow(
+      RouteError,
+    );
+  });
+});
 
 describe('Pfade', () => {
   it('setzt Marktpräfix und abschließenden Schrägstrich', () => {

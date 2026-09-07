@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   RADIEN_METER,
+  mengeMitLabel,
   filtereOrte,
   formatiereEntfernung,
   leereListeHinweis,
@@ -160,5 +161,17 @@ describe('Entfernungsangabe', () => {
     const ohneLeerraum = (wert: string) => wert.replace(/\s/g, ' ');
     expect(ohneLeerraum(formatiereEntfernung(1234))).toMatch(/1,2 km/);
     expect(ohneLeerraum(formatiereEntfernung(847))).toMatch(/850 m/);
+  });
+});
+
+describe('Zählform', () => {
+  it('setzt Einzahl und Mehrzahl richtig', () => {
+    expect(mengeMitLabel(1, 'animal_shelter')).toBe('1 Tierheim');
+    expect(mengeMitLabel(5, 'animal_shelter')).toBe('5 Tierheime');
+    expect(mengeMitLabel(0, 'veterinary')).toBe('0 Tierarztpraxen');
+  });
+
+  it('erfindet für eine unbekannte Kategorie kein Wort', () => {
+    expect(mengeMitLabel(3, 'raumstation')).toBe('3 raumstation');
   });
 });

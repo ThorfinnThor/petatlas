@@ -2295,10 +2295,20 @@
         "M11-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "25 lokale Stadtseiten aus einer gemessenen Qualitaets-Allowlist. Kandidaten sind Staedte des OSM-Ortsindex ab 50.000 Einwohnern (188); geeignet ist eine Stadt nur bei mindestens einem Eintrag je Pflichtkategorie, 25 Eintraegen insgesamt, 10 Tierarztpraxen, 15 mit Kontaktangabe und 10 in der Stadt selbst, gemessen im Umkreis von 10 km (STADT_KRITERIEN in src/features/map/city.ts). 42 Staedte erfuellen das, ausgewaehlt sind die 25 mit dem groessten Bestand; die kleinste ausgewaehlte hat 44 erfasste Orte. Erzeugt mit 'npm run build:city-allowlist' nach content-data/city-allowlist.json, validiert gegen CityAllowlistSchema. Der Build misst jede gelistete Stadt erneut und baut nur die weiterhin geeigneten - eine leere Kategorie verhindert die Seite, statt sie leer zu zeigen. Geprueft: 'ENABLE_FEATURES=costs,map npx astro build' erzeugt genau 25 Seiten unter /de-de/tierarzt-karte/; 586 Unit-Tests (davon 21 neue zu Slug, Kriterien, Auswahl und Allowlist gegen den echten Datenstand); 86 Feature-E2E-Tests (davon 12 neue: Verlinkung aller 25 Seiten von der Kartenseite, alle vier Kategorien mit sichtbaren Eintraegen, Quelle und Lizenz, canonical auf sich selbst, 404 fuer eine nicht gelistete Stadt, Lesbarkeit ohne JavaScript); 153 Standard-E2E-Tests unveraendert gruen. Im Browser geprueft und dabei zwei Textfehler gefunden und behoben: '1 Tierheime' und ein fehlendes Leerzeichen vor dem Stadtnamen. Dokumentiert in docs/CITY_PAGES.md.",
+          "reference": "content-data/city-allowlist.json, src/features/map/city.ts, src/features/map/city-allowlist.ts, src/pages/de-de/tierarzt-karte/[stadt].astro, tests/places/city.test.ts, tests/places/city-allowlist.test.ts, tests/e2e-features/city.spec.ts, docs/CITY_PAGES.md",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
-      "notes": []
+      "notes": [
+        "Nebenbefund behoben: die Leistungsseiten des Rechners setzten ihr canonical auf die Rechnerseite und erklaerten sich damit selbst zum Duplikat. BaseLayout kennt jetzt canonicalPfad; Pfade von Unterseiten entstehen ueber routes.ts (subroutePath), nicht per Zeichenkette in der Seite."
+      ]
     },
     {
       "id": "M11-05",

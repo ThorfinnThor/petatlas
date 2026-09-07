@@ -20,17 +20,27 @@ interface Props {
   title: string;
   /** Route dieser Seite, für canonical und aktiven Navigationszustand. */
   route?: RouteKey;
+  /**
+   * Pfad dieser Seite, wenn sie eine Unterseite einer Route ist. Ohne diese
+   * Angabe zeigte das canonical einer Stadtseite auf die Kartenseite und
+   * erklärte sie damit selbst zum Duplikat.
+   */
+  canonicalPfad?: string;
   /** Seiten, die auch in production nie indexiert werden dürfen. */
   neverIndex?: boolean;
 }
 
-const { title, route, neverIndex = false } = Astro.props;
+const { title, route, canonicalPfad, neverIndex = false } = Astro.props;
 
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const robots = neverIndex ? 'noindex, nofollow' : robotsDirective(build);
-const canonical = route ? canonicalUrl(build.baseUrl, market, route) : null;
+const canonical = canonicalPfad
+  ? new URL(canonicalPfad, build.baseUrl).toString()
+  : route
+    ? canonicalUrl(build.baseUrl, market, route)
+    : null;
 ---
 
 <!doctype html>

@@ -15,6 +15,7 @@ templates/
 data-snapshots/
 schemas/
 project/tasks.json
+content-data/city-allowlist.json
 
 # Markdown bleibt handgeschrieben: Plan- und Statusdokumente sollen nicht bei
 # jedem Formatlauf umgebrochen werden. Inhaltliche Pflege statt Autoformat.

@@ -13,6 +13,7 @@ import Notice from '../../../components/Notice.astro';
 import DataStatus from '../../../components/DataStatus.astro';
 import { approvedScenarios } from '../../../features/costs/scenarios.ts';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
+import { subroutePath } from '../../../lib/routes.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import snapshot from '../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 import type { CostScenario } from '../../../domain/schemas/index.ts';
@@ -33,7 +34,15 @@ const market = defaultMarket();
 const quelle = snapshot.source as { sourceVersion: string; effectiveFrom: string | null };
 ---
 
-<BaseLayout title={scenario.title} route="costs">
+<BaseLayout
+  title={scenario.title}
+  route="costs"
+  canonicalPfad={subroutePath(
+    withEnabledFeatures(market, devFeatureOverrides()),
+    'costs',
+    scenario.scenarioId,
+  )}
+>
   <h1>{scenario.title}</h1>
 
   <DataStatus stand={quelle.effectiveFrom} quelle={quelle.sourceVersion} locale={market.locale} />

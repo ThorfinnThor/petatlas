@@ -1,0 +1,277 @@
+---
+/**
+ * M11-04 — Lokale Stadtseite.
+ *
+ * Gebaut wird eine Seite nur für Städte, die auf der Allowlist stehen **und**
+ * die Qualitätskriterien im aktuellen Datenstand erfüllen (siehe
+ * `src/features/map/city.ts`). Eine Kategorie ohne Eintrag verhindert die
+ * Seite; sie erscheint nicht als leere Rubrik.
+ *
+ * Der Verzeichnisname wiederholt den Kartenslug, weil Astro die Route aus dem
+ * Dateipfad ableitet. Verlinkt wird trotzdem ausschließlich über
+ * `subroutePath`, damit kein zweiter Ort entsteht, an dem Pfade entstehen.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Notice from '../../../components/Notice.astro';
+import DataStatus from '../../../components/DataStatus.astro';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../config/build.ts';
+import { routePath, subroutePath } from '../../../lib/routes.ts';
+import { PFLICHT_KATEGORIEN, STADT_KRITERIEN } from '../../../features/map/city.ts';
+import {
+  baubareStadtseiten,
+  nachKategorie,
+  type Stadtseite,
+} from '../../../features/map/city-allowlist.ts';
+import {
+  KATEGORIE_LABEL,
+  KATEGORIE_ZAEHLFORM,
+  formatiereEntfernung,
+  mengeMitLabel,
+  notdienstHinweis,
+  type ListenOrt,
+} from '../../../features/map/list.ts';
+import snapshot from '../../../../data-snapshots/places/places-de.json' with { type: 'json' };
+import { oeffentlicheProjektion } from '../../../../scripts/publish/places.ts';
+import type { Place } from '../../../domain/schemas/places.ts';
+
+/** Wie viele Einträge je Kategorie auf der Seite stehen. */
+const JE_KATEGORIE = 12;
+
+export function getStaticPaths() {
+  const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  // Ohne Kartenfunktion gibt es keine Kartenroute — und damit auch keine
+  // Unterseite darunter.
+  if (!isFeatureEnabled(market, 'map')) return [];
+
+  const orte = (snapshot.places as unknown as Place[]).map(
+    oeffentlicheProjektion,
+  ) as unknown as ListenOrt[];
+  const seiten = baubareStadtseiten(orte);
+
+  return seiten.map((seite) => ({
+    params: { stadt: seite.slug },
+    props: {
+      seite,
+      nachbarn: seiten.map((andere) => ({ slug: andere.slug, name: andere.stadt.name })),
+    },
+  }));
+}
+
+interface Nachbar {
+  readonly slug: string;
+  readonly name: string;
+}
+
+const { seite, nachbarn } = Astro.props as { seite: Stadtseite; nachbarn: readonly Nachbar[] };
+const market = defaultMarket();
+const gruppen = nachKategorie(seite.treffer);
+
+const quelle = snapshot.source as {
+  name: string;
+  licenseId: string;
+  attribution: string;
+  attributionUrl: string;
+};
+
+const kartenPfad = routePath(withEnabledFeatures(market, devFeatureOverrides()), 'map');
+const eigenerPfad = subroutePath(
+  withEnabledFeatures(market, devFeatureOverrides()),
+  'map',
+  seite.slug,
+);
+const umkreis = formatiereEntfernung(STADT_KRITERIEN.radiusMeter);
+
+// „77 Tierarztpraxen, 1 Tierheim, 34 Zoofachgeschäfte und 5 Hundewiesen“ —
+// die Zahlen kommen aus der Messung, die Grammatik aus der Zählform.
+const mengen = PFLICHT_KATEGORIEN.map((kategorie) =>
+  mengeMitLabel(seite.befund.jeKategorie[kategorie] ?? 0, kategorie),
+);
+const bestand = `${mengen.slice(0, -1).join(', ')} und ${mengen[mengen.length - 1]}`;
+---
+
+<BaseLayout
+  title={`Tierärzte und Tierbedarf in ${seite.stadt.name}`}
+  route="map"
+  canonicalPfad={eigenerPfad}
+>
+  <h1>Tierärzte und Tierbedarf in {seite.stadt.name}</h1>
+
+  <p>
+    In {seite.stadt.name} und im Umkreis von {umkreis} sind {seite.befund.gesamt} Orte erfasst:
+    {' '}{bestand}. {seite.befund.inGemeinde} davon sind laut Quelle {seite.stadt.name} selbst zugeordnet,
+    die übrigen liegen im Umland.
+  </p>
+
+  <DataStatus stand={null} quelle={`${quelle.name} · ${quelle.licenseId}`} locale={market.locale} />
+
+  <Notice variante="hinweis" titel="Was diese Seite ist — und was nicht">
+    <p>
+      Diese Liste zeigt, was in OpenStreetMap erfasst ist. Sie ist
+      <strong>nicht vollständig</strong>: eine Praxis, die hier fehlt, existiert deshalb nicht
+      weniger. Angaben wie Öffnungszeiten stammen aus der Quelle und können veraltet sein — vor
+      einem Besuch bitte anrufen. Es gibt hier keine Bewertungen, keine Rangfolge und keine
+      bezahlten Platzierungen; sortiert wird ausschließlich nach Entfernung zum Stadtmittelpunkt.
+    </p>
+  </Notice>
+
+  <Notice variante="warnung" titel="Kein Notdienstverzeichnis">
+    <p>
+      Auch wenn hier Praxen stehen: eine Notdienstauskunft ist das nicht. Im Notfall hilft der
+      Notdienstplan der zuständigen Tierärztekammer oder ein Anruf in der Praxis.
+    </p>
+  </Notice>
+
+  {
+    Object.keys(KATEGORIE_LABEL).map((kategorie) => {
+      const eintraege = gruppen.get(kategorie) ?? [];
+      // Eine Kategorie ohne Eintrag kommt auf einer gebauten Seite nicht vor;
+      // sollte sie es doch, bleibt sie weg statt leer dazustehen.
+      if (eintraege.length === 0) return null;
+      return (
+        <section aria-labelledby={`titel-${kategorie}`}>
+          <h2 id={`titel-${kategorie}`}>
+            {KATEGORIE_ZAEHLFORM[kategorie]?.[1] ?? KATEGORIE_LABEL[kategorie]} in{' '}
+            {seite.stadt.name} ({eintraege.length})
+          </h2>
+          {eintraege.length > JE_KATEGORIE && (
+            <p class="hilfe">
+              Die {JE_KATEGORIE} nächstgelegenen von {eintraege.length} erfassten. Alle weiteren
+              stehen in der <a href={kartenPfad}>Karte und Liste</a>.
+            </p>
+          )}
+          <ul class="treffer">
+            {eintraege.slice(0, JE_KATEGORIE).map((treffer) => (
+              <li>
+                <h3>{treffer.ort.name}</h3>
+                <p class="meta">
+                  {formatiereEntfernung(treffer.entfernungMeter)} vom Stadtmittelpunkt ·{' '}
+                  {treffer.ortsLabel}
+                  {treffer.punktBerechnet && ' · Position berechnet'}
+                </p>
+                {treffer.ort.openingHours !== null ? (
+                  <p>Öffnungszeiten: {treffer.ort.openingHours}</p>
+                ) : (
+                  <p class="unbekannt">Öffnungszeiten nicht erfasst</p>
+                )}
+                {treffer.ort.phone !== null && (
+                  <p>
+                    Telefon:{' '}
+                    <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
+                  </p>
+                )}
+                {treffer.ort.website !== null && (
+                  <p>
+                    <a href={treffer.ort.website} rel="nofollow noopener">
+                      Website
+                    </a>
+                  </p>
+                )}
+                {notdienstHinweis(treffer.ort.emergency) !== null && (
+                  <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    })
+  }
+
+  <section aria-labelledby="karte-titel">
+    <h2 id="karte-titel">Karte und eigener Umkreis</h2>
+    <p>
+      Für einen anderen Umkreis, andere Kategorien oder Ihren eigenen Standort:
+      {' '}<a href={kartenPfad}>Tierärzte und Orte in der Nähe</a>. Dort lässt sich der Ausschnitt
+      frei wählen; die Karte lädt erst auf Klick.
+    </p>
+  </section>
+
+  {
+    nachbarn.length > 1 && (
+      <section aria-labelledby="staedte-titel">
+        <h2 id="staedte-titel">Weitere Städte mit eigener Seite</h2>
+        <p class="hilfe">
+          Eine Stadt bekommt hier nur dann eine Seite, wenn in allen vier Kategorien genug erfasst
+          ist. Fehlt Ihre Stadt, heißt das: die Daten reichen dafür nicht — nicht, dass es dort
+          nichts gibt.
+        </p>
+        <ul class="staedte">
+          {nachbarn
+            .filter((nachbar) => nachbar.slug !== seite.slug)
+            .map((nachbar) => (
+              <li>
+                <a
+                  href={subroutePath(
+                    withEnabledFeatures(market, devFeatureOverrides()),
+                    'map',
+                    nachbar.slug,
+                  )}
+                >
+                  {nachbar.name}
+                </a>
+              </li>
+            ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <h2>Quelle</h2>
+  <p>
+    {quelle.attribution}. Die Daten stehen unter der Open Database License;
+    {' '}<a href={quelle.attributionUrl} rel="nofollow noopener">Herkunft und Lizenz</a>. Die
+    ausgelieferten Ortsdaten sind eine abgeleitete Datenbank und werden unter derselben Lizenz
+    weitergegeben.
+  </p>
+
+  <style>
+    .hilfe {
+      color: var(--farbe-text-leise);
+      font-size: var(--schrift-klein);
+    }
+
+    .treffer,
+    .staedte {
+      list-style: none;
+      padding: 0;
+    }
+
+    .treffer > li {
+      border: var(--linie) solid var(--farbe-linie);
+      border-radius: var(--radius);
+      padding: var(--abstand-3) var(--abstand-4);
+      margin-block: var(--abstand-3);
+    }
+
+    .treffer h3 {
+      margin: 0 0 var(--abstand-1);
+      font-size: var(--schrift-normal);
+    }
+
+    .treffer p {
+      margin-block: var(--abstand-1);
+    }
+
+    .meta {
+      color: var(--farbe-text-leise);
+      font-size: var(--schrift-klein);
+    }
+
+    .unbekannt {
+      color: var(--farbe-text-leise);
+      font-style: italic;
+    }
+
+    .notdienst {
+      border-inline-start: 3px solid var(--farbe-warnung-linie);
+      padding-inline-start: var(--abstand-2);
+    }
+
+    .staedte {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--abstand-2) var(--abstand-4);
+    }
+  </style>
+</BaseLayout>

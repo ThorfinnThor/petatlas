@@ -147,3 +147,19 @@ Drei Dinge, die beim Bauen aufgefallen sind:
 1. **Die Quelle drosselt.** Der erste Versuch endete mit HTTP 502, nachdem kurz zuvor mehrere Kopfabfragen abgesetzt worden waren. Der Import lädt deshalb sequenziell mit Pausen und behandelt 502 wie ein Rate Limit. Das macht den Lauf langsamer als nötig — mit Absicht.
 2. **Der ungeteilte Ortsnamenindex war 6,68 MB** und wurde vom Manifest abgelehnt. Die Grenze hat genau das getan, wofür sie da ist. Der Index ist jetzt nach Anfangsbuchstaben in 51 Teile geteilt.
 3. **Eine Zahl im Nachweis war aus dem Gedächtnis geschrieben** und falsch: „12 von 9.369“ Notdienstangaben statt der gemessenen 9 von 9.381. `docs/COVERAGE.md` war richtig, weil die Zahlen dort aus den Daten erzeugt werden. Der Nachweis ist korrigiert.
+
+## 2026-09-07 — Sitzung 9: M11 Karte und lokale Seiten
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M11-01 | `src/features/map/list.ts`, `list-ui.ts`, Kartenseite | E2E mit abgeschaltetem JavaScript | 25 echte Treffer stehen im ausgelieferten HTML |
+| M11-02 | `map.ts`, `config/tiles.json` | E2E mit Protokoll aller Kachelanfragen | beim Seitenaufruf keine Kachel, erst nach dem Klick |
+| M11-03 | `geolocation.ts`, Marker- und Rendergrenzen | E2E mit erteiltem, verweigertem und zeitüberschrittenem Standort | `getCurrentPosition` beim Laden null Aufrufe |
+| M11-04 | `city.ts`, `city-allowlist.ts`, `content-data/city-allowlist.json`, Stadtseite | `npm run build:city-allowlist`, Unit- und E2E-Tests, Build | 25 Seiten aus 42 geeigneten von 188 Kandidaten |
+
+Zu M11-04 im Einzelnen:
+
+- Die Auswahl ist gemessen, nicht redaktionell: 10 km Umkreis, mindestens ein Eintrag je Pflichtkategorie, mindestens 25 Einträge, 10 Tierarztpraxen, 15 mit Kontaktangabe und 10 in der Stadt selbst. Häufigster Ablehnungsgrund war „zu wenige Einträge in der Stadt selbst“ (138 Städte), dahinter fehlende Hundewiesen (42) und fehlende Tierheime (26). Kriterien und Zahlen stehen in `docs/CITY_PAGES.md`.
+- Die Allowlist ist eine Obergrenze, keine Zusicherung. Der Build misst jede gelistete Stadt erneut; erfüllt sie die Kriterien nicht mehr, entfällt ihre Seite. Ein Test vergleicht die Datei mit dem echten Datenstand und nennt im Fehlerfall den Regenerierungsbefehl.
+- Zwei Textfehler sind erst im Browser aufgefallen und dort behoben worden: „1 Tierheime“ (jetzt eine Zählform je Kategorie) und ein fehlendes Leerzeichen vor dem Stadtnamen.
+- Nebenbefund: die Leistungsseiten des Rechners trugen ein canonical auf die Rechnerseite und erklärten sich damit selbst zum Duplikat. Beide Seitenarten setzen jetzt über `subroutePath` ein canonical auf sich selbst.

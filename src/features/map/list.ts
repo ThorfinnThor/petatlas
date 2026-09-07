@@ -48,6 +48,24 @@ export const KATEGORIE_LABEL: Readonly<Record<string, string>> = {
   dog_park: 'Hundewiese',
 };
 
+/**
+ * Zählform je Kategorie: Einzahl und Mehrzahl. „1 Tierheime“ liest sich wie
+ * ein Fehler in den Daten, obwohl nur die Grammatik falsch wäre.
+ */
+export const KATEGORIE_ZAEHLFORM: Readonly<Record<string, readonly [string, string]>> = {
+  veterinary: ['Tierarztpraxis', 'Tierarztpraxen'],
+  animal_shelter: ['Tierheim', 'Tierheime'],
+  pet_shop: ['Zoofachgeschäft', 'Zoofachgeschäfte'],
+  dog_park: ['Hundewiese', 'Hundewiesen'],
+};
+
+/** „1 Tierheim“, „34 Zoofachgeschäfte“. */
+export function mengeMitLabel(anzahl: number, kategorie: string, locale = 'de-DE'): string {
+  const formen = KATEGORIE_ZAEHLFORM[kategorie];
+  const wort = formen === undefined ? kategorie : (formen[anzahl === 1 ? 0 : 1] ?? kategorie);
+  return `${anzahl.toLocaleString(locale)} ${wort}`;
+}
+
 export interface ListenFilter {
   /** Mittelpunkt der Suche. */
   readonly mitte: { readonly latitude: number; readonly longitude: number };

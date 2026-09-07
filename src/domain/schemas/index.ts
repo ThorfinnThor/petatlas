@@ -8,6 +8,7 @@ export * from '../source.ts';
 export * from '../rights.ts';
 export * from './common.ts';
 export * from './catalog.ts';
+export * from './city.ts';
 export * from './places.ts';
 export * from './costs.ts';
 export * from './travel.ts';

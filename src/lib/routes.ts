@@ -106,6 +106,18 @@ export function routePath(market: MarketConfig, key: RouteKey): string {
   return slug === '' ? `${market.pathPrefix}/` : `${market.pathPrefix}/${slug}/`;
 }
 
+/**
+ * Pfad einer Unterseite unterhalb einer Route — etwa eine Stadtseite unter
+ * der Kartenroute. Auch diese Pfade entstehen hier und nicht in den Seiten;
+ * ein ungültiger Slug ist ein Fehler und kein zusammengesetzter Pfad.
+ */
+export function subroutePath(market: MarketConfig, key: RouteKey, slug: string): string {
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
+    throw new RouteError(`"${slug}" ist kein zulässiger Slug für eine Unterseite.`);
+  }
+  return `${routePath(market, key)}${slug}/`;
+}
+
 /** Absolute URL. Die Basis kommt von außen; hier steht keine Domain. */
 export function canonicalUrl(baseUrl: string, market: MarketConfig, key: RouteKey): string {
   return new URL(routePath(market, key), baseUrl).toString();
