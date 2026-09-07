@@ -1,0 +1,96 @@
+---
+/**
+ * M13-05 — Katalog.
+ *
+ * Die Seite zeigt Angebote, wenn es welche gibt — und sagt ehrlich, wenn es
+ * keine gibt. Der leere Zustand ist derzeit der echte: ohne freigegebenen
+ * Partnervertrag hat kein Angebot eine Anzeigeerlaubnis, und ohne
+ * Anzeigeerlaubnis wird keines gezeigt.
+ *
+ * Die Sortierung steht mit ihrer Erklärung auf der Seite. Eine Ordnung, die
+ * sich nicht erklären lässt, lässt sich auch nicht prüfen — und „Relevanz“
+ * wäre hier nur ein anderes Wort für „nach unserem Vorteil“.
+ */
+import Notice from '../Notice.astro';
+import OfferCard from '../OfferCard.astro';
+import { defaultMarket } from '../../domain/market.ts';
+import { SORTIERUNGEN, katalogAnsicht } from '../../features/commerce/filters.ts';
+import type { Offer, Product } from '../../domain/schemas/catalog.ts';
+
+const market = defaultMarket();
+
+/**
+ * Es gibt keine ausgelieferte Angebotsdatei, solange kein Vertrag besteht
+ * (siehe `scripts/build/commerce.ts`). Die Seite baut deshalb aus einer
+ * leeren Liste — und zeigt genau das.
+ */
+const angebote: readonly Offer[] = [];
+const produkte: readonly Product[] = [];
+const jetzt = new Date().toISOString();
+const ansicht = katalogAnsicht(angebote, produkte, market.primaryCountry, jetzt);
+---
+
+<h1>Angebote</h1>
+
+<p>
+  Produkte für Hund und Katze mit Preis, Versandangabe und Grundpreis, soweit die Quelle sie
+  hergibt. Jedes Angebot ist als Anzeige gekennzeichnet und führt zu einem Händler; wir verkaufen
+  nichts selbst.
+</p>
+
+<Notice variante="hinweis" titel="Wie sortiert wird">
+  <p>
+    Die Reihenfolge hängt <strong>nicht</strong> davon ab, wie viel ein Händler zahlt. Zur Wahl stehen
+    nur Ordnungen, die sich in einem Satz erklären lassen:
+  </p>
+  <ul>
+    {
+      SORTIERUNGEN.map((sortierung) => (
+        <li data-sortierung={sortierung.schluessel}>
+          <strong>{sortierung.schluessel}:</strong> {sortierung.erklaerung}
+        </li>
+      ))
+    }
+  </ul>
+</Notice>
+
+{
+  ansicht.leerHinweis !== null && (
+    <Notice variante="warnung" titel="Derzeit keine Angebote">
+      <p data-testid="katalog-leer">{ansicht.leerHinweis}</p>
+    </Notice>
+  )
+}
+
+<ul class="katalog" data-testid="katalog-liste">
+  {
+    ansicht.eintraege.map((eintrag) => (
+      <li>
+        <OfferCard angebot={eintrag.angebot} produkt={eintrag.produkt} jetzt={jetzt} />
+      </li>
+    ))
+  }
+</ul>
+
+<h2>Was hier nicht passiert</h2>
+<ul>
+  <li>
+    <strong>Keine Kaufempfehlung.</strong> Es gibt keine Bestenliste und keine Auswahl nach Profil Ihres
+    Tieres.
+  </li>
+  <li>
+    <strong>Kein Preisvergleich über ungleiche Dinge.</strong> Ein Multipack wird nicht mit einer Einzelpackung
+    verglichen, und bei unbekannter Füllmenge gibt es keinen Grundpreis.
+  </li>
+  <li>
+    <strong>Keine Verfügbarkeitszusage.</strong> Preise und Verfügbarkeit stammen aus einem Händlerfeed
+    und können sich seit dem Abruf geändert haben; der Stand steht an jeder Karte.
+  </li>
+</ul>
+
+<style>
+  .katalog {
+    list-style: none;
+    padding: 0;
+  }
+</style>

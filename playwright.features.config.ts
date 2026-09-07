@@ -29,7 +29,7 @@ export default defineConfig({
   ],
   webServer: {
     command: `npm run build:site && npx astro preview --port ${PORT} --ignore-lock`,
-    env: { ASTRO_PREVIEW_BACKGROUND: 'false', ENABLE_FEATURES: 'costs,map,travel' },
+    env: { ASTRO_PREVIEW_BACKGROUND: 'false', ENABLE_FEATURES: 'costs,map,travel,commerce' },
     port: PORT,
     reuseExistingServer: false,
     timeout: 180_000,

@@ -19,6 +19,7 @@ export type RouteKey =
   | 'home'
   | 'costs'
   | 'map'
+  | 'catalog'
   | 'travel'
   | 'care'
   | 'toys'
@@ -44,6 +45,7 @@ export const ROUTES: readonly RouteDefinition[] = [
   { key: 'home', requiresFeature: null, indexable: true },
   { key: 'costs', requiresFeature: 'costs', indexable: true },
   { key: 'map', requiresFeature: 'map', indexable: true },
+  { key: 'catalog', requiresFeature: 'commerce', indexable: true },
   { key: 'travel', requiresFeature: 'travel', indexable: true },
   { key: 'care', requiresFeature: 'care', indexable: true },
   { key: 'toys', requiresFeature: 'toys', indexable: true },

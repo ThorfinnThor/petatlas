@@ -319,3 +319,10 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Ein Beispiel aus dem Test, das den Punkt trägt: 25,99 € mit kostenlosem Versand schlägt 24,99 € plus 3,95 €. Wer nur den Artikelpreis vergleicht, empfiehlt das falsche Angebot.
 - Der Grundpreis erscheint nur bei bekannter Füllmenge **und** bekanntem Gebinde; sonst steht dort, dass er nicht berechenbar ist.
 - Die Karte rendert ohne Anzeigeerlaubnis und nach Ablauf gar nichts. Die Probe-Seite zeigt sechs Angebote, vier Karten erscheinen.
+
+| M13-05 | `src/features/commerce/filters.ts`, `Catalog.astro`, Route `catalog`, `tests/e2e-features/katalog.spec.ts` | `npx vitest run tests/commerce/filters.test.ts`, `npm run test:e2e:features` (152 Tests) | leerer Katalog mit ehrlicher Begründung, vier erklärte Ordnungen |
+
+- Zulässigkeit wird **vor** dem Filter geprüft: ein Filter kann kein Angebot sichtbar machen, das ohne ihn unsichtbar wäre. Ein Test setzt genau darauf an — er filtert gezielt auf ein gesperrtes Angebot und findet nichts.
+- Jede Sortierung nennt ihre Erklärung auf der Seite. Es gibt kein „Relevanz“: das wäre nur ein anderes Wort für „nach unserem Vorteil“. Ein Test hängt ein Provisionsfeld an die Angebote und belegt, dass sich die Reihenfolge nicht ändert.
+- Beim Grundpreis stehen Angebote ohne bekannte Füllmenge am Ende — nicht als teuerste und nicht als billigste.
+- Der leere Katalog unterscheidet zwei Fälle: „ohne freigegebenen Partnervertrag wird keines angezeigt“ und „zu diesen Filtern ist nichts vorhanden“. Beides ist keine Aussage über den Markt.

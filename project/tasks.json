@@ -2774,8 +2774,16 @@
         "M13-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Katalogseite /de-de/angebote/ hinter dem Feature commerce, mit Filtern, erklaerter Sortierung und ehrlichem Leerzustand. Zulaessigkeit wird vor dem Filter geprueft: Anzeigeerlaubnis, Markt und Ablauf entscheiden zuerst, weshalb ein Filter kein gesperrtes Angebot sichtbar machen kann - ein Test filtert gezielt auf ein Angebot ohne Anzeigeerlaubnis und findet nichts. Vier Sortierungen, jede mit einer Erklaerung in einem Satz, die auf der Seite steht: Preis, Grundpreis, Marke, Stand. Keine Ordnung nach Provision, Partnerschaft oder Relevanz; ein Test haengt ein Provisionsfeld an die Angebote und belegt, dass die Reihenfolge unveraendert bleibt, und ein weiterer, dass die Ordnung nicht von der Eingabereihenfolge abhaengt. Beim Grundpreis stehen Angebote ohne bekannte Fuellmenge am Ende, nicht als teuerste oder billigste. Der Leerzustand unterscheidet 'ohne freigegebenen Partnervertrag wird keines angezeigt' von 'zu diesen Filtern ist nichts vorhanden'. Die Seite sagt ausdruecklich, dass die Reihenfolge nicht davon abhaengt, wie viel ein Haendler zahlt, und nennt drei Dinge, die sie nicht tut. 17 neue Unit-Tests (861 gesamt) und 10 neue Feature-E2E-Tests (152 gesamt), npm run verify exit 0, 198 Standard-E2E gruen.",
+          "reference": "src/features/commerce/filters.ts, src/components/pages/Catalog.astro, src/lib/routes.ts, config/locales/de-DE.json, tests/commerce/filters.test.ts, tests/e2e-features/katalog.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

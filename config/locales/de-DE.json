@@ -10,6 +10,7 @@
     "nav.home": "Start",
     "nav.costs": "Tierarztkosten",
     "nav.map": "Tierärzte in der Nähe",
+    "nav.catalog": "Angebote",
     "nav.travel": "Reisecheck",
     "nav.care": "Pflege",
     "nav.toys": "Spielzeug",
@@ -30,7 +31,8 @@
     "sources": "quellen",
     "dataStatus": "datenstand",
     "imprint": "impressum",
-    "privacy": "datenschutz"
+    "privacy": "datenschutz",
+    "catalog": "angebote"
   },
   "legacySlugs": {}
 }

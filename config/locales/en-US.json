@@ -11,6 +11,7 @@
     "nav.home": "Home",
     "nav.costs": "Vet costs",
     "nav.map": "Vets nearby",
+    "nav.catalog": "Offers",
     "nav.travel": "Travel check",
     "nav.care": "Care",
     "nav.toys": "Toys",
@@ -31,7 +32,8 @@
     "sources": "sources",
     "dataStatus": "data-status",
     "imprint": "imprint",
-    "privacy": "privacy"
+    "privacy": "privacy",
+    "catalog": "offers"
   },
   "legacySlugs": {}
 }

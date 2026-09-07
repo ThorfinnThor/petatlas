@@ -2,8 +2,8 @@
 
 Stand: 2026-09-07, Ende Sitzung 9.
 
-**Erledigt:** 79 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** drei (M08-06, fachliche Abnahme des Rechners; M09-06, Partnervertrag und § 34d-Prüfung; M12-06, fachliche Prüfung der Reiseregeln).
-**Meilensteine vollständig:** M00 bis M07, M10 und M11 (je 6/6). M08 bei 5/6, die sechste blockiert. M09 bei 5/6, die sechste blockiert. M12 bei 5/6, die sechste blockiert. M13 bei 4/6.
+**Erledigt:** 80 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** drei (M08-06, fachliche Abnahme des Rechners; M09-06, Partnervertrag und § 34d-Prüfung; M12-06, fachliche Prüfung der Reiseregeln).
+**Meilensteine vollständig:** M00 bis M07, M10 und M11 (je 6/6). M08 bei 5/6, die sechste blockiert. M09 bei 5/6, die sechste blockiert. M12 bei 5/6, die sechste blockiert. M13 bei 5/6.
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 
