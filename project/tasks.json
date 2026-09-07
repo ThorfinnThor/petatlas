@@ -2933,10 +2933,20 @@
         "M14-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Spielzeugfinder auf /de-de/spielzeug/ mit kurzem Fragebogen (Tierart, Gewicht, sechs benannte Beduerfnisse mit je einem erklaerenden Satz) und Ergebnisliste, die zu jedem Treffer die Begruendung und die offenen Punkte nennt. Der Ergebniskopf sagt ausdruecklich, dass die Reihenfolge belegte Uebereinstimmungen zaehlt und keine Bewertung des Produkts ist; es gibt keinen Sicherheits- oder Haltbarkeitsscore, was ein Test am ausgelieferten Text prueft. Ohne Gewichtsangabe wird nichts ausgeschlossen und nichts behauptet: null Punkte und der Satz 'nur nicht ausgeschlossen'. Mit 5 kg faellt der synthetische Ball wegen der Herstellerangabe 'ab 15 kg' heraus, mit 20 kg erscheint er - beide Faelle sind E2E geprueft. Fuenf Pflegekategorieseiten unter /de-de/pflege/ nennen je Kategorie die Merkmale, nach denen gefiltert wird, und sagen, dass Produkte erst mit Angebotsrechten und einzeln geprueften Eigenschaften erscheinen; eine erfundene Kategorie antwortet mit 404. Die Uebersichtsseite fuehrt die fuenf Ausschluesse mit Begruendung und die Warnung 'Kein Gesundheitsbereich'. 18 neue Feature-E2E-Tests (170 gesamt), npm run verify exit 0, 198 Standard-E2E gruen.",
+          "reference": "src/components/pages/Toys.astro, src/components/pages/Care.astro, src/pages/de-de/pflege/[kategorie].astro, src/features/toys/finder-ui.ts, tests/e2e-features/finder.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
-      "notes": []
+      "notes": [
+        "Befund aus dem Test: 'keine belegte Uebereinstimmung' und 'nicht geprueft' trugen dieselbe CSS-Klasse, obwohl es zwei verschiedene Aussagen sind. Sie haben jetzt zwei Klassen."
+      ]
     },
     {
       "id": "M14-05",

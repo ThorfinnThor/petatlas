@@ -86,10 +86,35 @@
           "checkedAt": null
         }
       ]
+    },
+    {
+      "productId": "synthetisch:kauring",
+      "categoryId": "chew-toy",
+      "attributes": [
+        {
+          "attribute": "material",
+          "value": "Naturkautschuk",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://beispiel.invalid/produkte/kauring",
+          "sourceLabel": "Herstellerseite (synthetisch)",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "attribute": "hardnessLevel",
+          "value": null,
+          "unit": null,
+          "verification": "unverified",
+          "sourceUrl": null,
+          "sourceLabel": "Hersteller nennt keine Härte",
+          "checkedAt": null
+        }
+      ]
     }
   ],
   "notes": [
     "Alle Produkte, Adressen und Angaben sind erfunden. Echte Produktdaten kommen erst mit echten Angebotsrechten (M14-06).",
-    "Der Eintrag hardnessLevel steht bewusst als unverified mit null darin: eine fehlende Herstellerangabe wird nicht zu einer Annahme."
+    "Der Eintrag hardnessLevel steht bewusst als unverified mit null darin: eine fehlende Herstellerangabe wird nicht zu einer Annahme.",
+    "Der Kauring hat bewusst nur ein belegtes Merkmal: so ist sichtbar, wie die Oberflaeche mit offenen Punkten umgeht."
   ]
 }

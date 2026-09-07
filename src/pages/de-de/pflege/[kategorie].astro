@@ -1,0 +1,111 @@
+---
+/**
+ * M14-04 — Eine Pflegekategorie.
+ *
+ * Die Seite sagt, wonach in dieser Kategorie gefiltert wird und welche
+ * Angaben typischerweise fehlen. Produkte stehen hier erst, wenn es
+ * Angebotsrechte gibt und die Eigenschaften einzeln geprüft sind — bis dahin
+ * steht das da, statt einer leeren Liste.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Notice from '../../../components/Notice.astro';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../config/build.ts';
+import { routePath, subroutePath } from '../../../lib/routes.ts';
+import { pflegeTaxonomie } from '../../../features/care/taxonomy.ts';
+import { attributPruefung } from '../../../features/care/attributes.ts';
+import type { TaxonomyCategory } from '../../../domain/schemas/taxonomy.ts';
+
+export function getStaticPaths() {
+  const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  if (!isFeatureEnabled(markt, 'care')) return [];
+
+  return pflegeTaxonomie().categories.map((kategorie) => ({
+    params: { kategorie: kategorie.categoryId },
+    props: { kategorie },
+  }));
+}
+
+const { kategorie } = Astro.props as { kategorie: TaxonomyCategory };
+const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const uebersicht = routePath(markt, 'care');
+const eigenerPfad = subroutePath(markt, 'care', kategorie.categoryId);
+
+const ARTEN: Readonly<Record<string, string>> = {
+  dog: 'Hund',
+  cat: 'Katze',
+  other: 'andere Tiere',
+};
+const produkte = attributPruefung().products.filter(
+  (produkt) => produkt.categoryId === kategorie.categoryId,
+);
+const synthetisch = attributPruefung().dataKind === 'synthetic';
+---
+
+<BaseLayout title={kategorie.label} route="care" canonicalPfad={eigenerPfad}>
+  <h1>{kategorie.label}</h1>
+  <p>{kategorie.description}</p>
+  <p class="hilfe">
+    Für: {kategorie.species.map((art) => ARTEN[art] ?? art).join(', ')} ·
+    <a href={uebersicht}>alle Pflegekategorien</a>
+  </p>
+
+  <h2>Wonach hier gefiltert wird</h2>
+  <ul class="merkmale">
+    {kategorie.matchAttributes.map((merkmal) => <li data-merkmal={merkmal}>{merkmal}</li>)}
+  </ul>
+  <p class="hilfe">
+    Nur diese Merkmale entscheiden, ob ein Produkt in dieser Kategorie als passend gilt — und auch
+    das nur, wenn sie belegt sind. Eine fehlende Angabe macht ein Produkt weder passend noch
+    unpassend.
+  </p>
+
+  <h2>Produkte</h2>
+  {
+    produkte.length === 0 || synthetisch ? (
+      <Notice variante="hinweis" titel="Noch keine geprüften Produkte">
+        <p data-testid="keine-produkte">
+          Hier stehen erst dann Produkte, wenn Angebotsrechte bestehen und die Eigenschaften jedes
+          einzelnen belegt sind. Eine Liste aus einem Händlerfeed abzuschreiben wäre schneller — und
+          würde eine Sorgfalt vortäuschen, die es nicht gab.
+        </p>
+      </Notice>
+    ) : (
+      <ul class="produkte">
+        {produkte.map((produkt) => (
+          <li>{produkt.productId}</li>
+        ))}
+      </ul>
+    )
+  }
+
+  <Notice variante="warnung" titel="Kein Gesundheitsversprechen">
+    <p>
+      Kein Eintrag in dieser Kategorie behauptet eine Wirkung, eine Eignung bei Beschwerden oder
+      eine Haltbarkeit. Wo eine Herstellerangabe vorliegt, steht sie als Herstellerangabe da.
+    </p>
+  </Notice>
+
+  <style>
+    .hilfe {
+      color: var(--farbe-text-leise);
+      font-size: var(--schrift-klein);
+    }
+
+    .merkmale {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--abstand-2) var(--abstand-4);
+      list-style: none;
+      padding: 0;
+    }
+
+    .merkmale li {
+      border: var(--linie) solid var(--farbe-linie);
+      border-radius: var(--radius);
+      padding: var(--abstand-1) var(--abstand-3);
+      font-family: var(--schrift-mono, monospace);
+      font-size: var(--schrift-klein);
+    }
+  </style>
+</BaseLayout>

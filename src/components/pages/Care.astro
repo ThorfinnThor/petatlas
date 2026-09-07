@@ -1,20 +1,89 @@
 ---
 /**
- * M04-03 — Template "Pflege".
+ * M14-04 — Pflegekategorien.
  *
- * Diese Seite wird nur erzeugt, wenn ihr Feature Flag im Markt eingeschaltet
- * ist. Ohne freigegebene Daten existiert weder Route noch Navigationseintrag;
- * es entsteht ausdrücklich keine leere Ankündigungsseite.
- *
- * Die Fachlogik folgt im zuständigen Meilenstein.
+ * Die Seite führt durch fünf Zubehörkategorien und sagt bei jeder, wonach
+ * gefiltert wird. Sie nennt außerdem, was hier **nicht** geführt wird — und
+ * warum. Ohne diesen zweiten Teil sähe die Liste aus, als deckte sie den
+ * Gesundheitsbedarf eines Tieres ab.
  */
 import Notice from '../Notice.astro';
+import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
+import { devFeatureOverrides } from '../../../config/build.ts';
+import { subroutePath } from '../../lib/routes.ts';
+import { pflegeTaxonomie } from '../../features/care/taxonomy.ts';
+
+const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const taxonomie = pflegeTaxonomie();
 ---
 
 <h1>Pflege</h1>
-<Notice variante="hinweis" titel="Fachlogik folgt">
+
+<p>
+  Zubehör für die Fell-, Krallen- und Zahnpflege sowie für Mobilität — beschrieben über belegte
+  Eigenschaften wie Maß, Material und Herstellerangaben. Nicht über eine vermutete gesundheitliche
+  Wirkung.
+</p>
+
+<Notice variante="warnung" titel="Kein Gesundheitsbereich">
   <p>
-    Das Grundgerüst dieser Seite steht. Die eigentliche Funktion wird in ihrem Meilenstein ergänzt,
-    zusammen mit geprüften Daten, Quellenangabe und Datenstand.
+    Hier steht Zubehör, keine Behandlung. Arzneimittel, Nahrungsergänzung, medizinische Tests,
+    Antiparasitika und Therapiegeräte werden <strong>nicht</strong> geführt; die Gründe stehen unten.
+    Was Ihrem Tier fehlt, klärt die Tierarztpraxis — nicht ein Katalog.
   </p>
 </Notice>
+
+<h2>Kategorien</h2>
+<ul class="kategorien">
+  {
+    taxonomie.categories.map((kategorie) => (
+      <li data-kategorie={kategorie.categoryId}>
+        <h3>
+          <a href={subroutePath(markt, 'care', kategorie.categoryId)}>{kategorie.label}</a>
+        </h3>
+        <p>{kategorie.description}</p>
+        <p class="hilfe">Gefiltert wird nach: {kategorie.matchAttributes.join(', ')}.</p>
+      </li>
+    ))
+  }
+</ul>
+
+<h2>Was hier nicht geführt wird</h2>
+<ul class="ausschluesse">
+  {
+    taxonomie.excluded.map((eintrag) => (
+      <li data-ausschluss>
+        <strong>{eintrag.topic}.</strong> {eintrag.reason}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .kategorien,
+  .ausschluesse {
+    list-style: none;
+    padding: 0;
+  }
+
+  .kategorien > li {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-3);
+  }
+
+  .kategorien h3 {
+    margin: 0 0 var(--abstand-1);
+    font-size: var(--schrift-normal);
+  }
+
+  .ausschluesse > li {
+    margin-block: var(--abstand-2);
+  }
+
+  .hilfe {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+</style>

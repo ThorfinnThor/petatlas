@@ -1,20 +1,182 @@
 ---
 /**
- * M04-03 — Template "Spielzeug".
+ * M14-04 — Spielzeugfinder.
  *
- * Diese Seite wird nur erzeugt, wenn ihr Feature Flag im Markt eingeschaltet
- * ist. Ohne freigegebene Daten existiert weder Route noch Navigationseintrag;
- * es entsteht ausdrücklich keine leere Ankündigungsseite.
+ * Der Finder beantwortet eine Frage: was ist nach Ihren Angaben **nicht
+ * ausgeschlossen**? Er beantwortet ausdrücklich nicht, was das beste
+ * Spielzeug ist — dafür bräuchte es Eigenschaften, die niemand belegt hat.
  *
- * Die Fachlogik folgt im zuständigen Meilenstein.
+ * Zu jedem Ergebnis stehen zwei Dinge: warum es erscheint und was nicht
+ * geprüft ist. Ohne die zweite Angabe wäre die Liste eine Empfehlung.
  */
 import Notice from '../Notice.astro';
+import { BEDUERFNISSE } from '../../features/care/matching.ts';
+import { attributPruefung } from '../../features/care/attributes.ts';
+import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
+
+const taxonomie = spielzeugTaxonomie();
+const pruefung = attributPruefung();
+const synthetisch = pruefung.dataKind === 'synthetic';
 ---
 
-<h1>Spielzeug</h1>
-<Notice variante="hinweis" titel="Fachlogik folgt">
-  <p>
-    Das Grundgerüst dieser Seite steht. Die eigentliche Funktion wird in ihrem Meilenstein ergänzt,
-    zusammen mit geprüften Daten, Quellenangabe und Datenstand.
+<h1>Spielzeug finden</h1>
+
+<p>
+  Ein kurzer Fragebogen, ein nachvollziehbares Ergebnis: Der Finder schließt aus, was laut
+  Herstellerangabe nicht passt, und ordnet den Rest nach belegten Übereinstimmungen. Er bewertet
+  keine Produkte und vergibt keine Punkte für Sicherheit oder Haltbarkeit — solche Zahlen wären
+  erfunden.
+</p>
+
+{
+  synthetisch && (
+    <Notice variante="testdaten" titel="Synthetische Produktdaten">
+      <p>
+        Die hinterlegten Produkte sind <strong>erfunden</strong>. Echte Produkte erscheinen erst,
+        wenn Angebotsrechte bestehen und ihre Eigenschaften einzeln geprüft sind.
+      </p>
+    </Notice>
+  )
+}
+
+<form id="finder">
+  <div class="feld">
+    <label for="finder-tierart">Tierart</label>
+    <select id="finder-tierart">
+      <option value="dog">Hund</option>
+      <option value="cat">Katze</option>
+    </select>
+  </div>
+
+  <div class="feld">
+    <label for="finder-gewicht">Gewicht in Kilogramm</label>
+    <input id="finder-gewicht" type="text" inputmode="decimal" placeholder="z. B. 20" />
+    <p class="hilfe">
+      Leer lassen, wenn Sie es nicht wissen. Dann wird nichts wegen der Größe ausgeschlossen — und
+      nichts wegen der Größe empfohlen.
+    </p>
+  </div>
+
+  <fieldset>
+    <legend>Was trifft zu?</legend>
+    {
+      Object.entries(BEDUERFNISSE).map(([schluessel, eintrag]) => (
+        <label class="wahl">
+          <input type="checkbox" name="bedarf" value={schluessel} />
+          {eintrag.label} — <span class="hilfe">{eintrag.erklaerung}</span>
+        </label>
+      ))
+    }
+  </fieldset>
+
+  <p id="finder-ohne-js" class="hilfe">
+    Der Finder rechnet im Browser und braucht dafür JavaScript. Die Kategorien und ihre Grenzen
+    unten bleiben auch ohne lesbar.
   </p>
-</Notice>
+  <p><button type="submit" id="finder-suchen" hidden>Passendes anzeigen</button></p>
+</form>
+
+<div id="finder-ergebnis" role="status" aria-live="polite"></div>
+
+<h2>Kategorien</h2>
+<ul class="kategorien">
+  {
+    taxonomie.categories.map((kategorie) => (
+      <li data-kategorie={kategorie.categoryId}>
+        <strong>{kategorie.label}.</strong> {kategorie.description}
+        <p class="hilfe">Gefiltert wird nach: {kategorie.matchAttributes.join(', ')}.</p>
+      </li>
+    ))
+  }
+</ul>
+
+<h2>Was hier nicht geführt wird</h2>
+<ul class="ausschluesse">
+  {
+    taxonomie.excluded.map((eintrag) => (
+      <li>
+        <strong>{eintrag.topic}.</strong> {eintrag.reason}
+      </li>
+    ))
+  }
+</ul>
+
+<script>
+  import { finderStarten } from '../../features/toys/finder-ui.ts';
+
+  finderStarten();
+</script>
+
+<style>
+  .feld {
+    margin-block: var(--abstand-4);
+  }
+
+  .feld label,
+  legend {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--abstand-1);
+  }
+
+  input[type='text'],
+  select {
+    width: 100%;
+    max-width: 24rem;
+    padding: var(--abstand-2);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    background: var(--farbe-grund);
+  }
+
+  fieldset {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+  }
+
+  .wahl {
+    display: block;
+    font-weight: 400;
+    margin-block: var(--abstand-2);
+  }
+
+  .hilfe {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+    margin-block: var(--abstand-1);
+  }
+
+  .kategorien,
+  .ausschluesse {
+    padding-inline-start: var(--abstand-5);
+  }
+
+  .kategorien li,
+  .ausschluesse li {
+    margin-block: var(--abstand-2);
+  }
+
+  #finder-ergebnis :global(.finder__liste) {
+    list-style: none;
+    padding: 0;
+  }
+
+  #finder-ergebnis :global(.finder__liste > li) {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-3);
+  }
+
+  #finder-ergebnis :global(.finder__kopf) {
+    font-weight: 600;
+  }
+
+  #finder-ergebnis :global(.finder__offen),
+  #finder-ergebnis :global(.finder__neutral),
+  #finder-ergebnis :global(.finder__kategorie) {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+</style>

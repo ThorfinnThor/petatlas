@@ -1,0 +1,89 @@
+/**
+ * M14-04 — Spielzeugfinder im Browser.
+ *
+ * Der Finder rechnet lokal und zeigt zu jedem Ergebnis zwei Dinge: **warum**
+ * es erscheint und **was nicht geprüft** ist. Das zweite ist der Grund, warum
+ * es diesen Finder überhaupt geben darf — eine Liste ohne die Gegenseite
+ * wäre eine Empfehlung.
+ *
+ * Es gibt keinen Sicherheits-, Haltbarkeits- oder Eignungsscore. Die Punkte
+ * sind keine Bewertung des Produkts, sondern die Zahl der belegten
+ * Übereinstimmungen mit den Angaben im Formular; die Oberfläche sagt das.
+ */
+import { attributPruefung } from '../care/attributes.ts';
+import { BEDUERFNISSE, type Bedarf, type Treffer } from '../care/matching.ts';
+import { findeSpielzeug } from './matching.ts';
+
+function escape(text: string): string {
+  return text.replace(
+    /[&<>"']/g,
+    (zeichen) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[zeichen] ?? zeichen,
+  );
+}
+
+function bedarfLesen(): Bedarf {
+  const art = document.querySelector<HTMLSelectElement>('#finder-tierart')?.value ?? 'dog';
+  const gewichtRoh = document.querySelector<HTMLInputElement>('#finder-gewicht')?.value ?? '';
+  const gewicht = /^\d+(\.\d+)?$/.test(gewichtRoh.trim().replace(',', '.'))
+    ? Number(gewichtRoh.trim().replace(',', '.'))
+    : null;
+  const needs = [
+    ...document.querySelectorAll<HTMLInputElement>('input[name="bedarf"]:checked'),
+  ].map((feld) => feld.value);
+  return { species: art, weightKilograms: gewicht, needs };
+}
+
+function trefferMarkup(treffer: Treffer): string {
+  const begruendung =
+    treffer.begruendung.length === 0
+      ? '<p class="finder__neutral">Keine belegte Übereinstimmung mit Ihren Angaben — das Produkt ' +
+        'ist nur nicht ausgeschlossen.</p>'
+      : `<ul class="finder__gruende">${treffer.begruendung
+          .map((grund) => `<li>${escape(grund)}</li>`)
+          .join('')}</ul>`;
+
+  const offen =
+    treffer.ungeprueft.length === 0
+      ? ''
+      : `<p class="finder__offen">Nicht geprüft: ${treffer.ungeprueft.map(escape).join(', ')}.</p>`;
+
+  return `
+    <li data-produkt="${escape(treffer.productId)}" data-punkte="${treffer.punkte}">
+      <h3>${escape(treffer.productId)}</h3>
+      <p class="finder__kategorie">Kategorie: ${escape(treffer.categoryId)}</p>
+      ${begruendung}
+      ${offen}
+    </li>`;
+}
+
+export function finderStarten(): void {
+  const form = document.querySelector<HTMLFormElement>('#finder');
+  const ausgabe = document.querySelector<HTMLElement>('#finder-ergebnis');
+  if (form === null || ausgabe === null) return;
+
+  const hinweis = document.querySelector<HTMLElement>('#finder-ohne-js');
+  if (hinweis !== null) hinweis.hidden = true;
+  const knopf = document.querySelector<HTMLButtonElement>('#finder-suchen');
+  if (knopf !== null) knopf.hidden = false;
+
+  form.addEventListener('submit', (ereignis) => {
+    ereignis.preventDefault();
+    const bedarf = bedarfLesen();
+    const treffer = findeSpielzeug(attributPruefung().products, bedarf);
+
+    const gewaehlt = bedarf.needs
+      .map((eintrag) => BEDUERFNISSE[eintrag]?.label)
+      .filter((label): label is string => label !== undefined);
+
+    const kopf =
+      treffer.length === 0
+        ? '<p class="finder__kopf">Kein Produkt bleibt übrig. Das heißt nicht, dass es keines gibt — ' +
+          'nur, dass hier keines erfasst ist, das zu Ihren Angaben passt.</p>'
+        : `<p class="finder__kopf">${treffer.length} Produkt(e) sind nach Ihren Angaben nicht ` +
+          `ausgeschlossen${gewaehlt.length === 0 ? '' : ` (${escape(gewaehlt.join(', '))})`}. ` +
+          'Die Reihenfolge zählt belegte Übereinstimmungen — sie ist keine Bewertung des Produkts.</p>';
+
+    ausgabe.innerHTML = `${kopf}<ul class="finder__liste">${treffer.map(trefferMarkup).join('')}</ul>`;
+  });
+}

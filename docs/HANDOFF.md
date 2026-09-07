@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 3/6 (83 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 4/6 (84 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M14-04 — Finder-Oberfläche und Erklärungen bauen.** Kurzer Fragebogen, Ergebnisbegründung und verlinkte Herstellerangaben; kein erfundener Sicherheits- oder Haltbarkeitsscore. Abnahme: der Nutzer erkennt, **warum** ein Produkt erscheint und **welche Eigenschaften nicht geprüft** sind.
+**M14-05 — Sicherheits- und Inhaltsregeln testen.** `tests/care-safety.test.ts` und `tests/toy-safety.test.ts`: Heilversprechen, Dosierung, „unzerstörbar“, erfundene Bewertungen und eine automatische Supplementempfehlung als negative Fälle prüfen. Abnahme: die Policy-Tests sperren unerlaubte Aussagen, lassen aber neutrale Produkttexte zu.
 
-Vorhanden: zehn Kategorien mit Ausschlussliste, Attributschema mit Verifikationsstatus, deterministisches Matching (`src/features/care/matching.ts`, `src/features/toys/matching.ts`) mit harten Filtern nur auf belegten Werten, erklärbaren weichen Kriterien und `ungepruefteAttribute()` für die Gegenliste.
+Vorhanden: zehn Kategorien mit Ausschlussliste, Attribute mit Herkunft und Verifikationsstatus, deterministisches Matching (Rasse bewirkt nachweislich nichts), Spielzeugfinder auf `/de-de/spielzeug/` und fünf Pflegekategorieseiten unter `/de-de/pflege/`.
 
 **M13-06 ist blockiert (B-005):** Der Angebotslayer ist fertig, aber es gibt keine Programmfreigabe eines Netzwerks. Ohne sie bleibt der Slot aus — kein Feedabruf, keine öffentliche Angebotsdatei, leerer Katalog mit Begründung. Prüfpunkte in `docs/reviews/commerce-partner.md`.
 

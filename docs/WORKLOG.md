@@ -359,3 +359,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Weiche Kriterien gibt es nur als benannte Bedürfnisse mit je einem erklärenden Satz. Ein unbekanntes Bedürfnis wird ignoriert statt großzügig ausgelegt.
 - Herstellergrenzen werden nur in klarer Form gelesen: „ab 15 kg“ und „bis 10 kg“ ja, „für große Hunde“ und „ca. 15 kg“ nein.
 - Der Spielzeugfinder ist eine Einschränkung derselben Bewertung, kein zweiter Motor: zwei Motoren wären zwei Gelegenheiten, sich zu widersprechen — ein Test vergleicht beide Ergebnisse.
+
+| M14-04 | `Toys.astro` (Finder), `Care.astro`, `src/pages/de-de/pflege/[kategorie].astro`, `finder-ui.ts` | `npm run test:e2e:features` (170 Tests) | Begründung und offene Punkte an jedem Treffer |
+
+- Der Finder beantwortet eine Frage: **was ist nicht ausgeschlossen?** Nicht: was ist das beste Spielzeug. Die Oberfläche sagt das im Ergebniskopf — die Reihenfolge zählt belegte Übereinstimmungen und ist keine Bewertung des Produkts.
+- Zu jedem Treffer stehen Begründung **und** offene Punkte. Beim synthetischen Ball sind alle vier Kategoriemerkmale belegt, also fehlt die Zeile über offene Punkte; beim Kauring steht sie da. Beide Fälle sind getestet.
+- Ohne Gewichtsangabe wird nichts ausgeschlossen und nichts behauptet: der Treffer hat null Punkte und den Satz „nur nicht ausgeschlossen“.
+- Die Pflegeseiten nennen je Kategorie, wonach gefiltert wird, und führen die fünf Ausschlüsse mit Begründung. Produkte stehen dort erst mit Angebotsrechten und geprüften Eigenschaften — statt einer leeren Liste steht genau dieser Satz da.
+- Ein Markup-Befund aus dem Test: „keine Übereinstimmung“ und „nicht geprüft“ trugen dieselbe Klasse. Das sind zwei verschiedene Aussagen und haben jetzt zwei Klassen.
