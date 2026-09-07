@@ -2130,8 +2130,16 @@
         "M10-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "9.381 Orte in 217 raeumliche Zellen zu je 0,5 Grad geteilt, groesster Chunk 487 KiB - unter dem Geo-Budget von 1 MiB. Der Kartenindex nennt nur Zellen mit Bounding Box, Zaehler je Kategorie und Dateiverweis und ist 45 KiB gross; der Namensindex 5,6 KiB. Der initiale Browserpfad ist damit rund 50 KiB statt einer deutschlandweiten Megadatei. Die 46.116 Ortsnamen sind nach Anfangsbuchstaben in 51 Teile geteilt; eine zu grosse Gruppe wird nach zwei Zeichen weiter geteilt statt das Budget anzuheben. Dass die Grenze wirkt, hat sich beim Bauen gezeigt: der ungeteilte Namensindex war 6,68 MB und wurde vom Manifest abgelehnt. Die oeffentliche Projektion zaehlt ihre 15 Felder ausdruecklich auf; ein Test belegt, dass ein zusaetzliches Feld am Ort nicht in die Ausgabe gelangt. Unbekannte Werte bleiben als null erhalten, statt weggelassen zu werden. docs/COVERAGE.md weist die Abdeckung je Kategorie und Region aus und sagt ausdruecklich, dass 4.929 erfasste Tierarztpraxen nicht heissen, dass es so viele gibt; 12 Orte tragen eine Notdienstangabe, 9.369 nicht - damit taugen die Daten nicht fuer eine Notdienstauskunft.",
+          "reference": "scripts/publish/places.ts; docs/COVERAGE.md; tests/places/publish-places.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run build:places",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
