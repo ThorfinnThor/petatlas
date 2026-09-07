@@ -1,20 +1,272 @@
 ---
 /**
- * M04-03 — Template "Tierärzte in der Nähe".
+ * M11-01 — Tierärzte und Orte in der Nähe, als Liste.
  *
- * Diese Seite wird nur erzeugt, wenn ihr Feature Flag im Markt eingeschaltet
- * ist. Ohne freigegebene Daten existiert weder Route noch Navigationseintrag;
- * es entsteht ausdrücklich keine leere Ankündigungsseite.
+ * Die Liste ist die Hauptsache, nicht ein Beiwerk der Karte. Sie wird
+ * statisch mit einem Standardausschnitt gebaut und ist ohne JavaScript
+ * vollständig lesbar; die Filter erweitern sie, sie ermöglichen sie nicht.
  *
- * Die Fachlogik folgt im zuständigen Meilenstein.
+ * Die Karte selbst kommt in M11-02 und lädt erst auf Klick.
  */
 import Notice from '../Notice.astro';
+import DataStatus from '../DataStatus.astro';
+import { defaultMarket } from '../../domain/market.ts';
+import {
+  KATEGORIE_LABEL,
+  RADIEN_METER,
+  filtereOrte,
+  formatiereEntfernung,
+  notdienstHinweis,
+  type ListenOrt,
+} from '../../features/map/list.ts';
+import snapshot from '../../../data-snapshots/places/places-de.json' with { type: 'json' };
+import { oeffentlicheProjektion } from '../../../scripts/publish/places.ts';
+import type { Place } from '../../domain/schemas/places.ts';
+
+const market = defaultMarket();
+
+/** Standardausschnitt der statischen Liste. */
+const STANDARD = { name: 'Berlin', latitude: 52.5174, longitude: 13.3951, radius: 5_000 };
+
+const alleOrte = (snapshot.places as unknown as Place[]).map(
+  oeffentlicheProjektion,
+) as unknown as ListenOrt[];
+
+const standardTreffer = filtereOrte(alleOrte, {
+  mitte: { latitude: STANDARD.latitude, longitude: STANDARD.longitude },
+  gemeinde: STANDARD.name,
+  radiusMeter: STANDARD.radius,
+  kategorien: [],
+  maxTreffer: 25,
+});
+
+const quelle = snapshot.source as {
+  name: string;
+  licenseId: string;
+  attribution: string;
+  attributionUrl: string;
+};
+const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<string, number> };
 ---
 
-<h1>Tierärzte in der Nähe</h1>
-<Notice variante="hinweis" titel="Fachlogik folgt">
+<h1>Tierärzte und Orte in der Nähe</h1>
+
+<p>
+  Erfasste Tierarztpraxen, Tierheime, Zoofachhandel und Hundewiesen in Deutschland. Die Daten
+  stammen aus OpenStreetMap. Sie sind <strong>nicht vollständig</strong>: was hier fehlt, ist nicht
+  erfasst — es ist deshalb nicht unbedingt nicht vorhanden.
+</p>
+
+<DataStatus stand={null} quelle={`${quelle.name} · ${quelle.licenseId}`} locale={market.locale} />
+
+<Notice variante="warnung" titel="Kein Notdienstverzeichnis">
   <p>
-    Das Grundgerüst dieser Seite steht. Die eigentliche Funktion wird in ihrem Meilenstein ergänzt,
-    zusammen mit geprüften Daten, Quellenangabe und Datenstand.
+    Von {abdeckung.placeCount.toLocaleString('de-DE')} erfassten Orten tragen neun eine Notdienstangabe.
+    Diese Liste ist deshalb <strong>keine Notdienstauskunft</strong>. Im Notfall hilft der
+    Notdienstplan der zuständigen Tierärztekammer oder ein Anruf in der Praxis.
   </p>
 </Notice>
+
+<form id="ortsfilter" aria-labelledby="filter-titel">
+  <h2 id="filter-titel">Suchen</h2>
+
+  <div class="feld">
+    <label for="ort">Ort</label>
+    <input
+      id="ort"
+      type="search"
+      autocomplete="off"
+      placeholder="z. B. Bremen"
+      aria-describedby="ort-hinweis"
+    />
+    <p id="ort-hinweis" class="hilfe" role="status" aria-live="polite">
+      Ohne Auswahl zeigt die Liste den Ausschnitt um {STANDARD.name}.
+    </p>
+    <ul id="ort-treffer" class="ortstreffer"></ul>
+  </div>
+
+  <fieldset>
+    <legend>Kategorie</legend>
+    {
+      Object.entries(KATEGORIE_LABEL).map(([schluessel, label]) => (
+        <label class="wahl">
+          <input type="checkbox" name="kategorie" value={schluessel} />
+          {label} ({(abdeckung.byCategory[schluessel] ?? 0).toLocaleString('de-DE')})
+        </label>
+      ))
+    }
+    <p class="hilfe">Keine Auswahl bedeutet alle Kategorien.</p>
+  </fieldset>
+
+  <div class="feld">
+    <label for="radius">Umkreis</label>
+    <select id="radius">
+      {
+        RADIEN_METER.map((meter) => (
+          <option value={meter} selected={meter === STANDARD.radius}>
+            {formatiereEntfernung(meter)}
+          </option>
+        ))
+      }
+    </select>
+  </div>
+</form>
+
+<section aria-labelledby="treffer-titel">
+  <h2 id="treffer-titel">Treffer</h2>
+  <p id="treffer-status" role="status" aria-live="polite">
+    {standardTreffer.length} erfasste Orte im Umkreis von {formatiereEntfernung(STANDARD.radius)} um
+    {' '}{STANDARD.name}.
+  </p>
+
+  <ul id="trefferliste" class="treffer">
+    {
+      standardTreffer.map((treffer) => (
+        <li>
+          <h3>{treffer.ort.name}</h3>
+          <p class="meta">
+            {KATEGORIE_LABEL[treffer.ort.category] ?? treffer.ort.category} ·{' '}
+            {formatiereEntfernung(treffer.entfernungMeter)} · {treffer.ortsLabel}
+            {treffer.punktBerechnet && ' · Position berechnet'}
+          </p>
+          {treffer.ort.openingHours !== null && <p>Öffnungszeiten: {treffer.ort.openingHours}</p>}
+          {treffer.ort.openingHours === null && (
+            <p class="unbekannt">Öffnungszeiten nicht erfasst</p>
+          )}
+          {treffer.ort.phone !== null && (
+            <p>
+              Telefon:{' '}
+              <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
+            </p>
+          )}
+          {treffer.ort.website !== null && (
+            <p>
+              <a href={treffer.ort.website} rel="nofollow noopener">
+                Website
+              </a>
+            </p>
+          )}
+          {notdienstHinweis(treffer.ort.emergency) !== null && (
+            <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<h2>Quelle</h2>
+<p>
+  {quelle.attribution}. Die Daten stehen unter der Open Database License;
+  {' '}<a href={quelle.attributionUrl} rel="nofollow noopener">Herkunft und Lizenz</a>. Die
+  ausgelieferten Ortsdaten sind eine abgeleitete Datenbank und werden unter derselben Lizenz
+  weitergegeben.
+</p>
+
+<style>
+  .feld {
+    margin-block: var(--abstand-4);
+  }
+
+  .feld label,
+  legend {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--abstand-1);
+  }
+
+  input[type='search'],
+  select {
+    width: 100%;
+    max-width: 24rem;
+    padding: var(--abstand-2);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    background: var(--farbe-grund);
+  }
+
+  fieldset {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-4);
+  }
+
+  .wahl {
+    display: block;
+    font-weight: 400;
+    margin-block: var(--abstand-1);
+  }
+
+  .hilfe {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+    margin-block: var(--abstand-1);
+  }
+
+  .ortstreffer {
+    list-style: none;
+    padding: 0;
+    margin: var(--abstand-2) 0;
+  }
+
+  .ortstreffer li {
+    border-bottom: var(--linie) solid var(--farbe-linie);
+  }
+
+  .ortstreffer button {
+    width: 100%;
+    text-align: start;
+    background: none;
+    border: 0;
+    padding: var(--abstand-2);
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .ortstreffer button:hover {
+    background: var(--farbe-flaeche);
+  }
+
+  .treffer {
+    list-style: none;
+    padding: 0;
+  }
+
+  .treffer > li {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-3);
+  }
+
+  .treffer h3 {
+    margin: 0 0 var(--abstand-1);
+    font-size: var(--schrift-normal);
+  }
+
+  .treffer p {
+    margin-block: var(--abstand-1);
+  }
+
+  .meta {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
+  .unbekannt {
+    color: var(--farbe-text-leise);
+    font-style: italic;
+  }
+
+  .notdienst {
+    border-inline-start: 3px solid var(--farbe-warnung-linie);
+    padding-inline-start: var(--abstand-2);
+  }
+</style>
+
+<script>
+  import { listeStarten } from '../../features/map/list-ui.ts';
+
+  listeStarten();
+</script>

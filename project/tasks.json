@@ -2200,8 +2200,16 @@
         "M10-05"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Die Liste ist die Hauptsache und funktioniert ohne Karte und ohne JavaScript: der Standardausschnitt um Berlin steht mit 25 echten Treffern im ausgelieferten HTML, geprueft mit abgeschaltetem JavaScript. Filter fuer Ort, Kategorie und Umkreis erweitern sie im Browser; geladen wird nur der Namensteil zum getippten Anfangsbuchstaben und die raeumlichen Zellen um den gewaehlten Punkt - ein Test belegt, dass beim Seitenaufruf keine einzige Anfrage an /data/v1/places/ geht. Ehrliche Beschriftung: 'in Bremen' gegen 'im Umkreis von Bremen', berechnete Flaechenpunkte als solche gekennzeichnet, fehlende Oeffnungszeiten als 'nicht erfasst'. Bei null Treffern steht ausdruecklich, dass nichts erfasst ist und dass daraus nicht folgt, dass es dort nichts gibt - geprueft an Hannover, wo im Snapshot kein Tierheim innerhalb von 5 km liegt. Die Seite sagt oben, dass sie kein Notdienstverzeichnis ist; eine eingetragene Notdienstangabe wird mit dem Zusatz gezeigt, dass sie keine Zusicherung ist. 22 Unit- und 9 E2E-Tests. Ein Testfall ging zunaechst von keinem Tierheim in Bremen aus - falsch, es gibt eines; der Fall wurde gegen die Daten neu gewaehlt.",
+          "reference": "src/features/map/list.ts; src/features/map/list-ui.ts; src/components/pages/Map.astro; tests/places/list.test.ts; tests/e2e-features/map-list.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:unit && npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
