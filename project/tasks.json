@@ -1985,8 +1985,16 @@
         "M09-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Integrationstests ueber den ganzen Weg: Konfiguration, Freigabeentscheidung, Werbekennzeichnung, Ziel-URL und Hinweistexte. Abgedeckt sind sieben gesperrte Zustaende - kein Programm erfasst, beworben statt zugelassen, Programm beendet, Zulassung abgelaufen, falscher Markt (US-Markt gegen deutschen Vertrag), Feature commerce aus, fehlende Werbekennzeichnung - und zusaetzlich der Fall eines erlaubten Programms mit ungueltigem Ziel, bei dem die Freigabe gilt und der Link trotzdem entfaellt. Neu in partner.ts: ein Programm mit leerer disclosureText erzeugt keinen Hinweis; ein ungekennzeichneter Hinweis waere schlimmer als gar keiner. In jedem gesperrten Zustand bleiben alle fuenf Verbraucherhinweise stehen, ohne Anbieterlink und ohne Preisangabe - geprueft ueber eine Suche nach http und nach Eurobetraegen im ausgegebenen Text. Die ausgelieferte Konfiguration enthaelt kein Wort aus dem Umfeld Provision, Tarif oder Beitrag. Bei mehreren gueltigen Vertraegen entscheidet die Konfigurationsreihenfolge, nicht der Ertrag; ein Test dreht die Reihenfolge um und belegt genau das. Geprueft ueber Exit-Codes: Lint, Typecheck, Format, 679 Unit-Tests, 174 E2E, Secret-Audit, Lizenzpruefung.",
+          "reference": "tests/insurance-integration.test.ts, src/features/commerce/partner.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/insurance-integration.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

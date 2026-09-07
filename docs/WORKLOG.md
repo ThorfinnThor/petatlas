@@ -218,3 +218,10 @@ Zu M11-06 im Einzelnen:
 - Die Prüfung sucht nach Wortlaut, nicht nach Absicht: garantierte Erstattung, zugesicherte Versicherbarkeit, Testsieger, „bester Tarif“, erfundene Monatsbeiträge, Verkaufsdruck. Sätze, die eine solche Aussage ausdrücklich verneinen, zählen nicht — sonst könnte die Seite nicht einmal sagen, was sie nicht tut.
 - Der Prüfer prüft sich selbst: fünf Beispielsätze müssen anschlagen, zwei verneinende dürfen es nicht. Beim ersten Lauf fiel genau das auf — „Die Erstattung ist garantiert“ rutschte durch, weil mein Muster die beiden Wörter direkt nebeneinander erwartete, und „niemand“ fehlte in der Verneinungsliste.
 - Ein Test hält fest, wo der Partnerhinweis eingebunden sein darf: bisher nur auf der Probe-Seite. Kommt eine Versicherungsseite dazu, erzwingt der Test eine ausdrückliche Entscheidung statt eines stillen Einbaus in eine Kosten-, Karten- oder Notfallseite.
+
+| M09-05 | `tests/insurance-integration.test.ts`, Kennzeichnungspflicht in `partner.ts` | `npx vitest run tests/insurance-integration.test.ts` | 14 Tests über den ganzen Weg von der Konfiguration bis zum Link |
+
+- Geprüft wird der **Durchlauf**, nicht ein Baustein: Konfiguration → Freigabeentscheidung → Werbekennzeichnung → Ziel-URL → Hinweistexte. Sieben gesperrte Zustände sind abgedeckt: kein Programm, beworben statt zugelassen, beendet, abgelaufen, falscher Markt, Feature aus, fehlende Werbekennzeichnung.
+- Neu ist die letzte Regel: ein Programm mit leerer Werbekennzeichnung erzeugt keinen Hinweis. Das Schema verlangt sie ohnehin — die Regel steht trotzdem noch einmal im Code, weil ein ungekennzeichneter Hinweis schlimmer wäre als gar keiner.
+- Ein ungültiges Ziel und eine fehlende Freigabe sind zwei verschiedene Dinge: die Freigabe betrifft das Programm, die Prüfung das Ziel. Ohne gültiges Ziel gibt es auch bei erlaubtem Programm keinen Link.
+- Ohne Partner bleiben alle fünf Hinweistexte stehen, ohne Anbieterlink und ohne eine einzige Preisangabe — geprüft wird das mit einer Suche nach `http` und nach Eurobeträgen im ausgegebenen Text.

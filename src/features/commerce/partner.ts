@@ -106,6 +106,17 @@ export function partnerHinweisErlaubt(anfrage: PartnerAnfrage): PartnerEntscheid
     };
   }
 
+  // Ohne Werbekennzeichnung kein Werbehinweis. Das Schema verlangt sie
+  // ohnehin; hier steht die Regel noch einmal, weil ein Hinweis ohne
+  // Kennzeichnung schlimmer wäre als gar keiner.
+  if (passend.disclosureText.trim() === '') {
+    return {
+      erlaubt: false,
+      grund: `Programm ${passend.programId} hat keine Werbekennzeichnung.`,
+      programm: null,
+    };
+  }
+
   return {
     erlaubt: true,
     grund: `Programm ${passend.programId} ist für ${market.primaryCountry} zugelassen und erlaubt "${placement}".`,

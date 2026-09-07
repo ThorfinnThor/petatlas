@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 4/6 (69 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6 (70 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M09-05 — Leere und gesperrte Partnerzustände testen.** `tests/insurance-integration.test.ts`: noch keine Zulassung, Programm beendet, falscher Markt, fehlende Werbekennzeichnung und die erlaubte neutrale Alternative. Abnahme: die Seite bleibt ohne aktiven Partner informativ, ohne erfundene Provisionen oder Angebote.
+**M12-01 — Reisecheck beginnen** (kleinste offene ausführbare ID nach M09). M09-06 ist ein **externer Freigabepunkt**: er verlangt eine tatsächliche Partnerzulassung plus eine dokumentierte Prüfung der konkreten Ausgestaltung nach § 34d GewO. Ohne echten Vertrag lässt sich daran nichts bauen; die Aufgabe wird beim Erreichen als blockiert geführt, nicht mit einem Disclaimer abgehakt.
 
-Vorhanden: Partnerschema mit Freigabelogik, Offenlegung aus `content-data/insurance-disclosures/`, geprüfte Linkerzeugung und `tests/content-policy.test.ts`. Danach folgt M09-06, ein externer Freigabepunkt (echte Partnerzulassung plus Prüfung nach § 34d GewO).
+Vorhanden aus M09: Partnerschema mit Freigabelogik, Offenlegung aus `content-data/insurance-disclosures/`, geprüfte Linkerzeugung, Inhaltsprüfung und Integrationstests für alle gesperrten Zustände. Die ausgelieferte Partnerkonfiguration ist leer, weil es keinen Vertrag gibt.
 
 **M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Er ist auf Wunsch des Betreibers in der **Vorschau** freigeschaltet und dort mit sichtbarem Warnhinweis erreichbar; die versionierte Marktkonfiguration bleibt auf `costs: false`. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`, die Merkliste in `TODO.md`.
 
