@@ -46,6 +46,70 @@ export const TravelContextKind = z.enum([
 export const RequirementState = z.enum(['fulfilled', 'not_fulfilled', 'unknown', 'not_applicable']);
 export type RequirementState = z.infer<typeof RequirementState>;
 
+/**
+ * M12-01 — Der unterstützte Reisekontext.
+ *
+ * V1 prüft einen **kleinen, benannten Standardfall** und sagt für alles
+ * andere ausdrücklich „nicht unterstützt“. Das ist der Kern dieses Schemas:
+ * `unsupported` ist ein Pflichtfeld mit Begründungen, weil eine Liste von
+ * unterstützten Fällen ohne die Gegenliste wie eine weltweite Abdeckung
+ * aussieht.
+ */
+export const UnsupportedCaseSchema = z
+  .object({
+    caseId: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Kleinbuchstaben und Bindestriche.'),
+    /** Was der Fall ist, in einem Satz und ohne Fachjargon. */
+    label: z.string().min(1),
+    /** Warum V1 ihn nicht prüft. Kein „später vielleicht“, sondern ein Grund. */
+    reason: z.string().min(1),
+  })
+  .strict();
+export type UnsupportedCase = z.infer<typeof UnsupportedCaseSchema>;
+
+export const TravelDirection = z.enum(['outbound', 'return']);
+export type TravelDirection = z.infer<typeof TravelDirection>;
+
+export const TravelScopeSchema = z
+  .object({
+    scopeVersion: z.string().min(1),
+    validFrom: IsoDate,
+    /** Herkunftsland. V1 kennt genau eines. */
+    origin: CountryCode,
+    destinations: z.array(CountryCode).min(1),
+    /** Länder, deren Durchreise geprüft wird. */
+    transitCountries: z.array(CountryCode),
+    species: z.array(Species).min(1),
+    contexts: z.array(TravelContextKind).min(1),
+    directions: z.array(TravelDirection).min(1),
+    /**
+     * Untergrenze des Alters als **Umfangsgrenze**, nicht als Rechtsaussage:
+     * für jüngere Tiere gelten zusätzliche Voraussetzungen, die V1 nicht prüft.
+     */
+    minAgeMonths: z.number().int().positive(),
+    /** Obergrenze der Tierzahl im privaten Fall. */
+    maxAnimals: z.number().int().positive(),
+    unsupported: z.array(UnsupportedCaseSchema).min(1),
+    notes: z.array(z.string()),
+  })
+  .strict()
+  .superRefine((wert, ctx) => {
+    if (wert.destinations.includes(wert.origin)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Das Herkunftsland ist kein Reiseziel.',
+        path: ['destinations'],
+      });
+    }
+    if (wert.contexts.includes('unknown')) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Ein unbekannter Reisekontext ist nicht unterstützt, sondern unbekannt.',
+        path: ['contexts'],
+      });
+    }
+  });
+export type TravelScope = z.infer<typeof TravelScopeSchema>;
+
 export const TravelRuleSchema = z
   .object({
     ruleId: z.string().min(1),

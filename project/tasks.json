@@ -2442,8 +2442,16 @@
         "M05-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Unterstuetzter Reisekontext als versionierte Datei: Fassung v1 deckt die private, begleitete Reise mit eigenem Hund oder eigener Katze ab zwoelf Monaten, bis zu fuenf Tieren, von DE nach AT, FR, IT und NL sowie zurueck ab, mit Durchreise durch EU-Staaten der Landrouten. Zehn Faelle sind ausdruecklich nicht geprueft und stehen je mit Begruendung in der Datei und vollstaendig auf der Seite: andere Zielstaaten, Nicht-EU-Transit, andere Tierarten, Jungtiere, mehr als fuenf Tiere, gewerbliche Verbringung, Transport ohne Begleitung, Befoerderungsbedingungen, Rueckreise aus einem Drittstaat, medizinische Einzelfaelle. pruefeUmfang() ist fail-closed: unbekanntes Alter gilt nicht als erwachsen, unbekanntes Land nicht als EU, unbekannter Zweck nicht als privat; alle Gruende werden gesammelt statt beim ersten abzubrechen, und jeder Grund erscheint nur einmal. Die Altersgrenze ist im Schema, in der Datei und in docs/TRAVEL_SCOPE.md ausdruecklich als Umfangsgrenze der Anwendung und nicht als Rechtsaussage bezeichnet. Die Seite sagt woertlich, dass nicht geprueft nicht unzulaessig heisst, und zeigt bewusst kein Formular und keine Beispielpruefung, solange keine belegten Regeln vorliegen. Geprueft: 17 neue Unit-Tests (696 gesamt) und 10 neue Feature-E2E-Tests (118 gesamt, Lauf jetzt mit ENABLE_FEATURES=costs,map,travel); Lint, Typecheck, Format, 174 Standard-E2E, Secret-Audit und Lizenzpruefung ueber Exit-Codes geprueft.",
+          "reference": "content-data/travel/scope.json, src/domain/schemas/travel.ts, src/features/travel/scope.ts, src/components/pages/Travel.astro, docs/TRAVEL_SCOPE.md, tests/travel/scope.test.ts, tests/e2e-features/reisecheck.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

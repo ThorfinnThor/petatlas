@@ -1,0 +1,69 @@
+{
+  "scopeVersion": "v1",
+  "validFrom": "2026-09-07",
+  "origin": "DE",
+  "destinations": ["AT", "FR", "IT", "NL"],
+  "transitCountries": ["AT", "BE", "FR", "IT", "LU", "NL"],
+  "species": ["dog", "cat"],
+  "contexts": ["private_accompanied"],
+  "directions": ["outbound", "return"],
+  "minAgeMonths": 12,
+  "maxAnimals": 5,
+  "unsupported": [
+    {
+      "caseId": "andere-zielstaaten",
+      "label": "Reisen in andere Staaten als Österreich, Frankreich, Italien und die Niederlande",
+      "reason": "Für jedes weitere Land müssten die Regeln einzeln gelesen, belegt und fachlich geprüft werden. Eine Liste ohne diese Arbeit sähe aus wie eine weltweite Abdeckung."
+    },
+    {
+      "caseId": "nicht-eu-transit",
+      "label": "Durchreise durch Staaten außerhalb der EU, etwa die Schweiz",
+      "reason": "Ein Nicht-EU-Staat hat eigene Einreise- und Ausreisebedingungen, auch bei kurzer Durchfahrt. V1 prüft sie nicht."
+    },
+    {
+      "caseId": "andere-tierarten",
+      "label": "Andere Tiere als Hund und Katze, etwa Frettchen, Vögel, Reptilien oder Nager",
+      "reason": "Für sie gelten eigene Vorschriften bis hin zu Artenschutzregeln. Sie mit den Hunde- und Katzenregeln zu prüfen wäre schlicht falsch."
+    },
+    {
+      "caseId": "jungtiere",
+      "label": "Tiere unter zwölf Monaten",
+      "reason": "Für Jungtiere gelten zusätzliche Voraussetzungen rund um Impfzeitpunkte und Mindestalter. V1 prüft sie nicht und schließt sie deshalb aus."
+    },
+    {
+      "caseId": "mehr-als-fuenf-tiere",
+      "label": "Mehr als fünf Tiere auf einer Reise",
+      "reason": "Ab dieser Zahl wird die Reise regelmäßig nicht mehr als privat behandelt, sondern nach anderen Vorschriften beurteilt."
+    },
+    {
+      "caseId": "gewerblich",
+      "label": "Verkauf, Abgabe, Vermittlung oder gewerblicher Transport",
+      "reason": "Eine Verbringung mit Eigentumswechsel oder gewerblichem Zweck folgt anderen Vorschriften als die private Mitnahme des eigenen Tieres."
+    },
+    {
+      "caseId": "ohne-begleitung",
+      "label": "Transport ohne Begleitperson, etwa als Fracht oder durch einen Dienstleister",
+      "reason": "Ohne begleitende Person gelten andere Anforderungen an Papiere und Transport. V1 deckt nur die begleitete Reise ab."
+    },
+    {
+      "caseId": "befoerderer",
+      "label": "Bedingungen von Fluggesellschaften, Bahn und Fähren",
+      "reason": "Sie sind Vertragsbedingungen des Unternehmens und keine staatlichen Einreiseregeln. Sie ändern sich häufig und werden hier getrennt ausgewiesen, nicht mitgeprüft."
+    },
+    {
+      "caseId": "einreise-aus-drittstaat",
+      "label": "Rückreise nach Deutschland aus einem Staat außerhalb der EU",
+      "reason": "Die Einreise aus einem Drittstaat folgt eigenen Anforderungen. V1 deckt nur Hin- und Rückreise innerhalb der genannten EU-Staaten ab."
+    },
+    {
+      "caseId": "medizinische-einzelfaelle",
+      "label": "Ausnahmen wegen Krankheit, Trächtigkeit oder tierärztlicher Behandlung",
+      "reason": "Das sind Einzelfallentscheidungen zwischen Halter, Praxis und Behörde. Eine Website kann sie nicht vorwegnehmen."
+    }
+  ],
+  "notes": [
+    "Die Untergrenze von zwölf Monaten ist eine Umfangsgrenze dieser Anwendung, keine Rechtsaussage. Sie ist bewusst großzügig gewählt, damit kein Grenzfall in den geprüften Bereich rutscht.",
+    "Transitstaaten sind die EU-Staaten auf den naheliegenden Landrouten zwischen Deutschland und den vier Zielstaaten.",
+    "Die eigentlichen Regeln samt Fundstelle und Geltung folgen getrennt; dieser Umfang sagt nur, welche Fälle überhaupt geprüft werden."
+  ]
+}

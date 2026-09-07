@@ -1,20 +1,116 @@
 ---
 /**
- * M04-03 — Template "Reisecheck".
+ * M12-01 — Reisecheck: zuerst der Umfang.
  *
- * Diese Seite wird nur erzeugt, wenn ihr Feature Flag im Markt eingeschaltet
- * ist. Ohne freigegebene Daten existiert weder Route noch Navigationseintrag;
- * es entsteht ausdrücklich keine leere Ankündigungsseite.
+ * Bevor irgendetwas geprüft wird, steht hier, **was** geprüft wird. Eine
+ * Reiseseite, die das nicht sagt, wirkt wie eine weltweite Auskunft — und
+ * genau das ist sie nicht.
  *
- * Die Fachlogik folgt im zuständigen Meilenstein.
+ * Die eigentliche Prüfung folgt mit belegten und fachlich freigegebenen
+ * Regeln. Bis dahin steht hier der Umfang und sonst nichts: eine
+ * Beispielprüfung mit erfundenen Regeln wäre schlimmer als keine.
  */
 import Notice from '../Notice.astro';
+import { reiseUmfang, umfangsSatz } from '../../features/travel/scope.ts';
+
+const umfang = reiseUmfang();
+
+const LAENDER: Readonly<Record<string, string>> = {
+  DE: 'Deutschland',
+  AT: 'Österreich',
+  BE: 'Belgien',
+  FR: 'Frankreich',
+  IT: 'Italien',
+  LU: 'Luxemburg',
+  NL: 'Niederlande',
+};
+
+const name = (code: string): string => LAENDER[code] ?? code;
+const ziele = umfang.destinations.map(name);
+const transit = umfang.transitCountries.map(name);
 ---
 
 <h1>Reisecheck</h1>
-<Notice variante="hinweis" titel="Fachlogik folgt">
+
+<p>{umfangsSatz()}</p>
+
+<Notice variante="warnung" titel="Keine weltweite Auskunft, keine Garantie">
   <p>
-    Das Grundgerüst dieser Seite steht. Die eigentliche Funktion wird in ihrem Meilenstein ergänzt,
-    zusammen mit geprüften Daten, Quellenangabe und Datenstand.
+    Dieser Check deckt <strong>vier Zielstaaten</strong> ab, nicht die Welt. Er ersetzt keine Auskunft
+    der zuständigen Behörde und keine Beratung durch eine Tierarztpraxis. Was hier nicht geprüft wird,
+    ist deshalb nicht erlaubt und nicht verboten — es ist ungeprüft.
   </p>
 </Notice>
+
+<h2>Geprüfter Umfang (Fassung {umfang.scopeVersion})</h2>
+<dl class="umfang">
+  <dt>Von</dt>
+  <dd>{name(umfang.origin)}</dd>
+  <dt>Nach</dt>
+  <dd>{ziele.join(', ')}</dd>
+  <dt>Richtung</dt>
+  <dd>Hinreise und Rückreise</dd>
+  <dt>Durchreise</dt>
+  <dd>{transit.join(', ')}</dd>
+  <dt>Tiere</dt>
+  <dd>
+    eigener Hund oder eigene Katze, ab {umfang.minAgeMonths} Monaten, bis zu {umfang.maxAnimals} Tiere
+  </dd>
+  <dt>Anlass</dt>
+  <dd>private Reise mit Begleitperson</dd>
+</dl>
+
+<h2>Ausdrücklich nicht geprüft</h2>
+<p>
+  Diese Fälle prüft der Check nicht. Das ist keine Aussage darüber, ob sie zulässig sind — nur
+  darüber, dass hier niemand sie beurteilt.
+</p>
+<ul class="ausnahmen">
+  {
+    umfang.unsupported.map((fall) => (
+      <li data-testid={`nicht-geprueft-${fall.caseId}`}>
+        <strong>{fall.label}.</strong> {fall.reason}
+      </li>
+    ))
+  }
+</ul>
+
+<Notice variante="hinweis" titel="Regeln folgen">
+  <p>
+    Die eigentliche Prüfung braucht belegte Regeln mit Fundstelle, Geltungszeitraum und fachlicher
+    Freigabe. Sie kommt im nächsten Schritt. Solange sie fehlt, steht hier keine Beispielprüfung:
+    eine Checkliste aus erfundenen Regeln wäre schlimmer als gar keine.
+  </p>
+</Notice>
+
+{umfang.notes.map((hinweis) => <p class="hinweis">{hinweis}</p>)}
+
+<style>
+  .umfang {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: var(--abstand-2) var(--abstand-4);
+    margin-block: var(--abstand-4);
+  }
+
+  .umfang dt {
+    font-weight: 600;
+  }
+
+  .umfang dd {
+    margin: 0;
+  }
+
+  .ausnahmen {
+    padding-inline-start: var(--abstand-5);
+  }
+
+  .ausnahmen li {
+    margin-block: var(--abstand-2);
+  }
+
+  .hinweis {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+</style>

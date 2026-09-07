@@ -229,3 +229,15 @@ Zu M11-06 im Einzelnen:
 | M09-06 | `docs/reviews/insurance.md`, Blockerregister, `TODO.md` | — | **blockiert (B-003)**, keine Freigabe erfunden |
 
 M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen Partnervertrag und keine Prüfung der konkreten Ausgestaltung nach § 34d GewO. Technisch fehlt nichts — deshalb steht in `docs/reviews/insurance.md` ausdrücklich, dass die Aufgabe nicht an der Umsetzung hängt, sondern an einer Zulassung und einer Prüfung, die niemand hier erfinden kann.
+
+## 2026-09-07 — Sitzung 9 (Fortsetzung): M12 beginnt
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M12-01 | `content-data/travel/scope.json`, `src/features/travel/scope.ts`, Reiseseite, `docs/TRAVEL_SCOPE.md` | `npx vitest run tests/travel`, `npm run test:e2e:features` | 17 Unit- und 10 E2E-Tests; vier Zielstaaten, zehn benannte Ausnahmen |
+
+- Die Seite beginnt mit ihrer Grenze, nicht mit ihrem Können: vier Zielstaaten, private begleitete Reise, Hund oder Katze ab zwölf Monaten, bis zu fünf Tiere. Alles andere steht als benannter Fall mit Begründung darunter.
+- Der wichtigste Satz steht wörtlich auf der Seite: **nicht geprüft heißt nicht unzulässig.** Ein „wird nicht unterstützt“ wird sonst als „geht nicht“ gelesen.
+- `pruefeUmfang()` ist fail-closed und sammelt alle Gründe: ein unbekanntes Alter ist nicht „erwachsen“, ein unbekanntes Land nicht „vermutlich EU“. Wer zwei Dinge ändern muss, erfährt beide.
+- Die Altersgrenze von zwölf Monaten ist ausdrücklich eine Umfangsgrenze dieser Anwendung und keine Rechtsaussage. Sie steht so in der Datei, in der Dokumentation und im Schemakommentar.
+- Es gibt bewusst **kein** Formular und keine Beispielprüfung, solange keine belegten Regeln vorliegen. Ein E2E-Test hält das fest.

@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6 (70 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 1/6 (71 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M12-01 — Reisecheck beginnen** (kleinste offene ausführbare ID nach M09). M09-06 ist ein **externer Freigabepunkt**: er verlangt eine tatsächliche Partnerzulassung plus eine dokumentierte Prüfung der konkreten Ausgestaltung nach § 34d GewO. Ohne echten Vertrag lässt sich daran nichts bauen; die Aufgabe wird beim Erreichen als blockiert geführt, nicht mit einem Disclaimer abgehakt.
+**M12-02 — Deklarative Rules Engine implementieren.** `src/features/travel/engine.ts` und `tests/travel/`: feste Prädikate (die DSL steht bereits in `src/domain/schemas/travel.ts`), gültige Zeiträume, Prioritäten und vier Ergebniszustände. Kein ausführbarer Code aus Daten. Abnahme: Einheiten-, Kalender-, `unknown`-/`not_applicable`- und Versionsgrenztests bestehen.
 
-Vorhanden aus M09: Partnerschema mit Freigabelogik, Offenlegung aus `content-data/insurance-disclosures/`, geprüfte Linkerzeugung, Inhaltsprüfung und Integrationstests für alle gesperrten Zustände. Die ausgelieferte Partnerkonfiguration ist leer, weil es keinen Vertrag gibt.
+Vorhanden aus M12-01: `content-data/travel/scope.json` mit vier Zielstaaten und zehn ausdrücklich nicht geprüften Fällen, `src/features/travel/scope.ts` (fail-closed, sammelt alle Gründe), die Reiseseite zeigt den Umfang und keine Beispielprüfung, `docs/TRAVEL_SCOPE.md`. Der Feature-E2E-Lauf baut jetzt mit `ENABLE_FEATURES=costs,map,travel`.
 
 **M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Er ist auf Wunsch des Betreibers in der **Vorschau** freigeschaltet und dort mit sichtbarem Warnhinweis erreichbar; die versionierte Marktkonfiguration bleibt auf `costs: false`. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`, die Merkliste in `TODO.md`.
 
