@@ -1853,8 +1853,16 @@
         "M05-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Partnervertragsschema und Freigabelogik. PartnerProgramSchema erfasst Anbieter, Netzwerk, Geltungsmaerkte, Status, Vertragsnachweis, erlaubte Zielhosts, statische Kampagnenkennungen, erlaubte Platzierungsarten, Werbekennzeichnung und vertragliche Auflagen. Das Schema ist strict: eine Provisionsangabe wie commissionRate laesst die Konfiguration scheitern, statt in den Browser ausgeliefert zu werden. status approved verlangt Vertragsreferenz, Freigabedatum, dokumentierten Pruefnachweis, mindestens einen Markt, einen Zielhost und eine Platzierung; ein Nachweis ohne Zulassung wird ebenso abgelehnt. Als Platzierung stehen nur Informationsseite, abgesetzter Fussabschnitt und neutrale Uebersicht zur Wahl - neben einem Kostenergebnis oder auf einer Notfallseite ist keine moeglich. partnerHinweisErlaubt() lehnt in fuenf getrennten Faellen ab und begruendet jeden im Klartext. Die ausgelieferte Konfiguration config/publishers/insurance/programs.json ist leer, weil es keinen Vertrag gibt; ein Test belegt, dass daraus an keiner der drei erlaubten Stellen ein Hinweis entsteht. Geprueft: 17 neue Unit-Tests (637 gesamt), Lint, Typecheck, Format, Secret-Audit und Lizenzpruefung gruen.",
+          "reference": "src/domain/schemas/partner.ts, config/publishers/insurance/programs.json, config/publishers/insurance/README.md, src/features/commerce/partner.ts, tests/commerce/partner.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/commerce",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig (65 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 1/6 (66 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M09-01 — Versicherungs-Affiliate ohne Scheinberatung** oder **M12-01 — Reisecheck**. Beide sind unabhängig ausführbar; die kleinste offene ID ist M09-01. Der Abschnitt zu M09 in `docs/MILESTONES.md` beginnt mit der Anbieterrecherche; ohne Partnervertrag darf daraus keine Rangliste und keine Empfehlung werden.
+**M09-02 — Neutralen CTA-Baustein implementieren.** `src/components/InsuranceDisclosure.astro` und `PartnerCta.astro`: ausdrücklich gekennzeichnete Information beziehungsweise Weiterleitung, vom Kostenergebnis getrennt, ohne Rangfolge nach Tierprofil. Abnahme: der Aufruf überträgt keine Diagnose, keine Profilwerte und keine eingegebenen Kosten.
 
-Karte, Liste, Standort, 25 Stadtseiten, kommunaler Pilot und die Abnahme der Kartenoberfläche stehen: `docs/CITY_PAGES.md`, `docs/MUNICIPAL_PILOT.md`, `docs/reviews/map-ui.md`. Offen aus der Abnahme und ausdrücklich einem späteren Meilenstein zugeordnet: Sitemap, Meta-Description und hreflang.
+Das Partnerschema und die Freigabelogik stehen (`src/features/commerce/partner.ts`); ohne Vertrag liefert `partnerHinweisErlaubt()` mit Begründung `false`, und `config/publishers/insurance/programs.json` ist leer, weil es keinen Vertrag gibt. M09-06 wird ein externer Freigabepunkt sein. Alternativ M12-01.
 
 **M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Er ist auf Wunsch des Betreibers in der **Vorschau** freigeschaltet und dort mit sichtbarem Warnhinweis erreichbar; die versionierte Marktkonfiguration bleibt auf `costs: false`. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`, die Merkliste in `TODO.md`.
 

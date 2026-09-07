@@ -184,3 +184,14 @@ Zu M11-06 im Einzelnen:
 - 404 heißt 404, auch in der ausgelieferten Vorschau bei Cloudflare: `/de-de/gibt-es-nicht/` antwortet dort mit HTTP 404 und der eigenen Fehlerseite.
 - Zwei Testannahmen von mir waren falsch und sind korrigiert worden, nicht die Implementierung: Ketten wie „Fressnapf“ heißen in Bremen und Hannover gleich (verglichen werden jetzt ganze Einträge), und der Seitentitel der Kartenseite kommt aus der Navigationsbeschriftung, nicht aus der H1.
 - Offen und ausdrücklich dem SEO-Meilenstein zugeordnet: Sitemap, Meta-Description, hreflang. Sie stehen als offene Punkte im Abnahmedokument, nicht als stillschweigende Lücke.
+
+## 2026-09-07 — Sitzung 9 (Fortsetzung): M09 beginnt
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M09-01 | `src/domain/schemas/partner.ts`, `config/publishers/insurance/`, `src/features/commerce/partner.ts` | `npx vitest run tests/commerce` | 17 Tests; ohne Vertrag entsteht an keiner erlaubten Stelle ein Hinweis |
+
+- `config/publishers/insurance/programs.json` ist leer, und das ist der Zustand, nicht ein Platzhalter: es gibt keinen Partnervertrag.
+- Das Schema ist `.strict()`. Ein Feld wie `commissionRate` lässt die Konfiguration scheitern, statt eine Provisionshöhe in den Browser auszuliefern.
+- `approved` verlangt Vertragsreferenz, Freigabedatum und dokumentierten Prüfnachweis; ein Nachweis ohne Zulassung wird ebenso abgelehnt wie eine Zulassung ohne Nachweis. Eine abgelaufene Zulassung wirkt wie keine.
+- `partnerHinweisErlaubt()` sagt in fünf getrennten Fällen nein — Feature aus, kein Programm, falscher Markt, keine gültige Zulassung, falsche Platzierung — und begründet jedes Mal im Klartext. Auch die Erlaubnis wird begründet.
