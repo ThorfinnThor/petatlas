@@ -2031,8 +2031,16 @@
         "M10-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Zweiter Durchgang loest die Geometrie von Flaechen auf: im Bremen-Pilot alle 19 Ways, insgesamt 66 Orte in 1,5 Sekunden bei 63 MiB Heap, keine einzige unaufloesbare Flaeche. Jeder Ort traegt seine Koordinatenherkunft (47 node, 19 way_centroid); PlaceSchema hat dafuer das Pflichtfeld coordinateSource bekommen, weil ein berechneter Schwerpunkt nicht dasselbe ist wie eine erfasste Koordinate. Eine Flaeche ohne aufloesbare Knoten wird verworfen statt platziert - 17 Tests belegen das fuer leere Knotenliste, ausschliesslich kaputte Knoten, NaN und die Null-Insel; es entsteht kein Ersatzpunkt. Dubletten werden ueber die stabile Quell-ID zusammengefuehrt, nicht ueber Namen: zwei identische Laeufe ergeben weiterhin 66 Orte, zwei gleichnamige Praxen mit verschiedenen IDs bleiben zwei. Bei Konflikt gewinnt die erfasste Koordinate vor dem berechneten Punkt, danach der vollstaendigere Datensatz; bei Gleichstand bleibt das Ergebnis deterministisch.",
+          "reference": "scripts/normalize/geometry.ts; scripts/ingest/adapters/osm/index.ts; tests/places/geometry.test.ts; docs/OSM_PILOT.md",
+          "verified_at": "2026-09-07",
+          "command": "importiereExtraktVollstaendig gegen bremen-latest.osm.pbf; npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -70,6 +70,8 @@ export function createSyntheticPlacesAdapter(): SourceAdapter<RawPlace, Place> {
             name: raw.name,
             category: 'veterinary' as const,
             coordinates: { latitude: raw.latitude, longitude: raw.longitude },
+            // Die Fixture liefert Punkte, keine Flächen.
+            coordinateSource: 'node' as const,
             municipality: raw.city,
             postalCode: raw.postalCode,
             // Unbekannt bleibt null; es wird nichts geraten.

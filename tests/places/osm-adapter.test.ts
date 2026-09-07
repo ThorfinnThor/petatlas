@@ -182,7 +182,7 @@ describe('Nicht verwertbare Objekte', () => {
 
 describe('Vollständige Umwandlung', () => {
   it('erzeugt aus dem Fixture genau die verwertbaren Orte', () => {
-    const orte = FIXTURE.objekte.map(alsOrt).filter((ort) => ort !== null);
+    const orte = FIXTURE.objekte.map((eintrag) => alsOrt(eintrag)).filter((ort) => ort !== null);
     expect(orte.map((ort) => ort.placeId)).toEqual([
       'osm:node:1001',
       'osm:node:1002',

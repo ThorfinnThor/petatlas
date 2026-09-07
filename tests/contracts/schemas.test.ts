@@ -60,6 +60,7 @@ const PLACE = {
   name: 'Beispielpraxis (synthetisch)',
   category: 'veterinary' as const,
   coordinates: { latitude: 52.52, longitude: 13.405 },
+  coordinateSource: 'node' as const,
   municipality: 'Musterstadt',
   postalCode: '10115',
   phone: null,

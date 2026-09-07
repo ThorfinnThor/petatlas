@@ -38,7 +38,28 @@ Gelesen wird streamend. Die 21 MB werden nicht in ein Array geladen; das ist die
 
 Ein Viertel der Treffer hat keinen Namen. Diese Objekte werden nicht übernommen, weil ein Ort ohne Namen für Besucher nichts wert ist.
 
-19 der 74 Treffer sind Flächen statt Punkte — vor allem Hundewiesen. Sie fehlen deshalb noch vollständig; ihre Auflösung ist M10-02.
+19 der 74 Treffer sind Flächen statt Punkte. Ihre Auflösung ist unten beschrieben.
+
+## Zweiter Durchgang: Geometrie (M10-02)
+
+Flächen brauchen einen berechneten Punkt. Der erste Durchgang merkt sich, welche Knoten dafür gebraucht werden; der zweite holt genau diese. Zwei Durchgänge sind billiger als einer, der vorsorglich alle zwei Millionen Knotenpositionen im Speicher hält.
+
+| | |
+|---|---|
+| Laufzeit beider Durchgänge | 1,5 Sekunden |
+| Speicher (Heap) | 63 MiB |
+| Orte insgesamt | 66 |
+| davon erfasste Koordinate (`node`) | 47 |
+| davon berechneter Punkt (`way_centroid`) | 19 |
+| Flächen ohne auflösbare Knoten | 0 |
+
+Nach Kategorie: 33 Tierarztpraxen, 25 Zoofachhandel, 6 Hundewiesen, 2 Tierheime.
+
+Ein berechneter Punkt ist nicht dasselbe wie eine erfasste Koordinate: bei einer konkaven Fläche kann der Schwerpunkt außerhalb liegen. Deshalb trägt jeder Ort seine Herkunft in `coordinateSource` mit, und die Anzeige muss den Unterschied benennen.
+
+Eine Fläche ohne auflösbare Knoten wird **verworfen**. Sie bekommt keinen Mittelpunkt der Region und landet nicht in Berlin.
+
+**Dublettenprobe:** derselbe Lauf zweimal zusammengeführt ergibt weiterhin 66 Orte. Zusammengeführt wird über die stabile Quell-ID, nicht über Name oder Adresse — zwei Praxen gleichen Namens bleiben zwei Praxen.
 
 ## Was daraus **nicht** folgt
 

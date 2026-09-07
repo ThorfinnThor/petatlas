@@ -28,6 +28,13 @@ export const PlaceSchema = z
     name: z.string().min(1),
     category: PlaceCategory,
     coordinates: Coordinates,
+    /**
+     * Woher der Punkt stammt. Ein Node hat eine erfasste Koordinate; bei
+     * einer Fläche ist der Punkt berechnet und liegt nicht zwingend auf dem
+     * Grundstück. Diese Unterscheidung gehört in die Anzeige, nicht nur in
+     * die Daten.
+     */
+    coordinateSource: z.enum(['node', 'way_centroid', 'relation_centroid']),
     /** Gemeinde laut Quelle. `null`, wenn nur der Umkreis bekannt ist. */
     municipality: z.string().nullable(),
     postalCode: z
