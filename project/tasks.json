@@ -2671,8 +2671,16 @@
         "M13-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Produkt und Angebot getrennt normalisiert. Tierart und Kategorie stammen aus einer ausdruecklichen Zuordnungstabelle (config/commerce/category-map.json); eine unbekannte Feedkategorie fuehrt zur Ablehnung, statt aus dem Produktnamen geraten zu werden. Fuellmenge und Gebindegroesse kommen aus eigenen Spalten - Milliliter werden nicht in Gramm umgerechnet, weil das eine Annahme ueber die Dichte waere, und '6er-Pack' im Freitext ergibt keine Gebindegroesse. packUnits darf jetzt null sein: eine unbekannte Gebindegroesse als 1 zu fuehren waere genau der Multipack-Fehler, den der Meilenstein verbietet. vergleichbar() erlaubt einen Preisvergleich nur bei gleicher gepruefter GTIN oder bei durchgehend bekannten und gleichen Merkmalen (Marke, Tierart, Kategorie, Fuellmenge, Gebinde, Variante); jede Unbekannte, jede Abweichung und jeder Widerspruch zwischen zwei Eintraegen derselben GTIN verhindern ihn. findeQuarantaene() meldet widerspruechliche GTIN-Gruppen mit Grund, statt sie zusammenzufuehren. Bei Angeboten bleibt unbekannter Versand null statt 0, unbekannte Verfuegbarkeit unknown statt in_stock, und displayPermission wie imagePermission sind fail-closed false. 25 neue Tests unter tests/product-match (809 gesamt), npm run verify exit 0.",
+          "reference": "scripts/normalize/products.ts, scripts/normalize/offers.ts, config/commerce/category-map.json, src/domain/schemas/catalog.ts, tests/product-match/normalize.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/product-match",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -29,8 +29,14 @@ export const ProductSchema = z
     variant: z.string().nullable(),
     /** Nettofüllmenge in Gramm. `null` = unbekannt, nicht 0. */
     netContentGrams: z.number().int().positive().nullable(),
-    /** Stückzahl im Gebinde. Ein Multipack ist keine Einzelpackung. */
-    packUnits: z.number().int().positive(),
+    /**
+     * Stückzahl im Gebinde. Ein Multipack ist keine Einzelpackung.
+     *
+     * `null` heißt **unbekannt** und ist ausdrücklich nicht 1: ein Feed, der
+     * die Gebindegröße nicht nennt, sagt nicht „Einzelpackung“. Ein Vergleich
+     * mit unbekannter Gebindegröße findet nicht statt (M13-02).
+     */
+    packUnits: z.number().int().positive().nullable(),
     material: z.string().nullable(),
     /** Nur belegte Herstellerangaben; keine abgeleitete medizinische Eignung. */
     verifiedAttributes: z.record(z.string(), z.union([z.string(), z.number(), TriState])),

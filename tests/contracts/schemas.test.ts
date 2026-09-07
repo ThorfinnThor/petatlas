@@ -119,6 +119,8 @@ describe('Produkt', () => {
   it('unterscheidet Einzelpackung und Multipack', () => {
     expect(ProductSchema.parse({ ...PRODUCT, packUnits: 6 }).packUnits).toBe(6);
     expect(ProductSchema.safeParse({ ...PRODUCT, packUnits: 0 }).success).toBe(false);
+    // Unbekannte Gebindegröße bleibt unbekannt und wird nicht zu 1.
+    expect(ProductSchema.parse({ ...PRODUCT, packUnits: null }).packUnits).toBeNull();
   });
 });
 

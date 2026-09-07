@@ -295,3 +295,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Latin-1 wird abgelehnt statt mit Ersatzzeichen gelesen: ein falsch dekodierter Produktname ist schlimmer als ein Abbruch.
 - Fehlt eine Pflichtspalte, bricht der Lauf ab — ein Feed mit anderem Aufbau ist ein anderer Feed. Ungültige Zeilen werden mit Zeilennummer und Grund abgelehnt und gezählt, nicht still übersprungen.
 - Die Fixtures sind synthetisch und als solche gekennzeichnet: echte Awin-Feeds sind Vertragsdaten und gehören nicht in ein öffentliches Repository.
+
+| M13-02 | `scripts/normalize/products.ts`, `offers.ts`, `tests/product-match/` | `npx vitest run tests/product-match` | 25 Tests; kein Vergleich bei unbekannter Menge oder Gebindegröße |
+
+- Tierart und Kategorie kommen aus `config/commerce/category-map.json`, nie aus dem Produktnamen. Eine unbekannte Feedkategorie führt zur Ablehnung — „Katzenspielzeug“ im Namen ist kein Beleg für die Tierart.
+- Größe und Gebinde kommen aus eigenen Spalten. Milliliter werden **nicht** in Gramm umgerechnet: das wäre eine Annahme über die Dichte.
+- `packUnits` darf jetzt `null` sein. Eine unbekannte Gebindegröße als 1 zu führen wäre genau der Multipack-Fehler, den der Meilenstein verbietet; und mit `null` wird nicht verglichen.
+- `vergleichbar()` sagt nur bei gleicher geprüfter GTIN oder bei durchgehend bekannten und gleichen Merkmalen ja. Widersprechen sich zwei Einträge mit derselben GTIN, glaubt die Funktion keiner Seite und der Vergleich unterbleibt.
+- Unbekannter Versand bleibt `null` statt 0, unbekannte Verfügbarkeit bleibt `unknown` statt „auf Lager“, und ohne Vertrag gibt es weder Anzeige- noch Bilderlaubnis.

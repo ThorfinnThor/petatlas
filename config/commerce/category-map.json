@@ -1,0 +1,12 @@
+{
+  "$comment": "M13-02: Zuordnung von Feed-Kategorien zu Tierart und eigener Kategorie. Nur ausdrückliche Einträge; aus einem Produktnamen wird nichts abgeleitet.",
+  "entries": [
+    { "feedCategory": "Hund > Trockenfutter", "species": "dog", "category": "dry_food" },
+    { "feedCategory": "Hund > Nassfutter", "species": "dog", "category": "wet_food" },
+    { "feedCategory": "Hund > Leinen und Geschirre", "species": "dog", "category": "leash" },
+    { "feedCategory": "Hund > Spielzeug", "species": "dog", "category": "toy" },
+    { "feedCategory": "Katze > Trockenfutter", "species": "cat", "category": "dry_food" },
+    { "feedCategory": "Katze > Nassfutter", "species": "cat", "category": "wet_food" },
+    { "feedCategory": "Katze > Spielzeug", "species": "cat", "category": "toy" }
+  ]
+}

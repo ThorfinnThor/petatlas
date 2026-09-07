@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 1/6 (76 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 2/6 (77 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M13-02 — Produkte und Varianten normalisieren.** `scripts/normalize/products.ts` und `offers.ts`, Tests unter `tests/product-match/`: Product und Offer trennen, GTIN, Packung, Größe und Mengenbasis prüfen, mögliche Dubletten in Quarantäne statt in den Preisvergleich. Abnahme: ein falsches Multipack- oder Größenmatch wird **nicht** als Preisvergleich veröffentlicht.
+**M13-03 — Vertrauenswürdigen Cloudflare-Abruf implementieren.** `scripts/build/commerce.ts` und `tests/feed-secrecy.test.ts`: Secrets ausschließlich zur Buildzeit, Domain-Allowlist, Streaming, TTL und eine ausdrückliche Liste erlaubter öffentlicher Felder. Abnahme: Canary-Werte und private Felder tauchen in **keiner** öffentlichen Ausgabe auf; ein fehlender Secret-Name wird ohne seinen Wert protokolliert.
 
-Vorhanden: `scripts/ingest/adapters/awin.ts` (CSV nach RFC 4180, ohne Zugangsdaten, mit Ablehnungsliste statt stillem Wegwerfen) und synthetische Fixtures unter `tests/fixtures/commerce/`.
+Vorhanden: CSV-Adapter ohne Zugangsdaten, Produkt- und Angebotsnormalisierung mit Vergleichbarkeitsprüfung (`scripts/normalize/products.ts`, `offers.ts`) und Quarantäne für widersprüchliche GTIN-Gruppen.
 
 **M12-06 ist blockiert (B-004):** Der Reisecheck ist fertig, die Regeln sind mit Fundstelle erfasst, aber fachlich nicht geprüft. Er läuft deshalb in der Vorschau — ohne positives Gesamtergebnis, und das steckt im Motor, nicht nur im Text. Prüfpunkte und Freigabeschritte in `docs/reviews/travel.md`.
 
