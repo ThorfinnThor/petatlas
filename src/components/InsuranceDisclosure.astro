@@ -1,0 +1,107 @@
+---
+/**
+ * M09-02 — Was ein Versicherungshinweis hier ist, und was er nicht ist.
+ *
+ * Dieser Baustein steht **vor** jedem Partnerhinweis und erscheint auch dann,
+ * wenn es gar keinen Partner gibt. Denn die wichtigere Aussage ist die zweite:
+ * hier wird nicht beraten, nicht verglichen und nichts empfohlen.
+ *
+ * Ohne zugelassenes Programm steht hier ausdrücklich, dass es keinen Partner
+ * gibt — statt einer leeren Fläche, die aussieht, als sei etwas kaputt.
+ */
+import type { PartnerProgram } from '../domain/schemas/partner.ts';
+import { werbekennzeichnung } from '../features/commerce/partner.ts';
+
+interface Props {
+  /** Das zugelassene Programm oder `null`, wenn es keines gibt. */
+  programm: PartnerProgram | null;
+}
+
+const { programm } = Astro.props;
+const kennzeichnung = werbekennzeichnung(programm);
+---
+
+<section
+  class="offenlegung"
+  aria-labelledby="offenlegung-titel"
+  data-testid="versicherung-offenlegung"
+>
+  <h2 id="offenlegung-titel">Was auf dieser Seite steht — und was nicht</h2>
+
+  {
+    kennzeichnung !== null && (
+      <p class="offenlegung__kennzeichnung" data-testid="werbekennzeichnung">
+        {kennzeichnung}
+      </p>
+    )
+  }
+
+  <ul>
+    <li>
+      <strong>Keine Beratung.</strong> Welche Versicherung zu Ihrem Tier passt, hängt von Dingen ab, die
+      diese Website nicht kennt und nicht kennen soll. Eine Einschätzung dazu ist eine Versicherungsvermittlung,
+      und die findet hier nicht statt.
+    </li>
+    <li>
+      <strong>Kein Vergleich und keine Rangfolge.</strong> Es gibt hier keine Bestenliste, keine Punktzahl
+      und keine Auswahl nach Rasse, Alter oder Vorerkrankung.
+    </li>
+    <li>
+      <strong>Keine Tarifdaten.</strong> Beiträge, Leistungen und Wartezeiten stehen beim Anbieter, nicht
+      hier. Was hier stünde, wäre eine Abschrift von unbekanntem Stand.
+    </li>
+    <li>
+      <strong>Keine Aussage zur Erstattung.</strong> Ob eine Behandlung erstattet wird, entscheidet der
+      Vertrag im Einzelfall — nicht eine Website und schon gar nicht im Voraus.
+    </li>
+    {
+      programm === null ? (
+        <li data-testid="kein-partner">
+          <strong>Derzeit kein Partner.</strong> Es besteht kein Vertrag mit einem
+          Versicherungsanbieter. Deshalb steht hier kein Anbieterlink — nicht, weil gerade etwas
+          fehlschlägt.
+        </li>
+      ) : (
+        <li>
+          <strong>Bezahlte Weiterleitung.</strong> Der Anbieterlink ist bezahlt. Er ist als solcher
+          gekennzeichnet, führt direkt zum Anbieter und überträgt nichts, was Sie hier eingegeben
+          haben.
+        </li>
+      )
+    }
+  </ul>
+
+  {
+    programm !== null && programm.restrictions.length > 0 && (
+      <>
+        <h3>Auflagen aus dem Vertrag</h3>
+        <ul>
+          {programm.restrictions.map((auflage) => (
+            <li>{auflage}</li>
+          ))}
+        </ul>
+      </>
+    )
+  }
+</section>
+
+<style>
+  .offenlegung {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-4);
+    margin-block: var(--abstand-6);
+  }
+
+  .offenlegung h2 {
+    margin-top: 0;
+    font-size: var(--schrift-normal);
+  }
+
+  .offenlegung__kennzeichnung {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: var(--schrift-klein);
+  }
+</style>

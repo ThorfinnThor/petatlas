@@ -39,6 +39,7 @@ function programm(overrides: Partial<PartnerProgram> = {}): PartnerProgram {
       reviewedAt: '2026-01-01T00:00:00+00:00',
     },
     allowedLinkHosts: ['beispiel.invalid'],
+    landingUrl: 'https://beispiel.invalid/tierkrankenversicherung',
     campaignIds: ['STATISCH_1'],
     allowedPlacements: ['information_page'],
     disclosureText: 'Werbung: Dieser Hinweis ist bezahlt.',
@@ -98,6 +99,21 @@ describe('Schema', () => {
       const roh = { ...programm(), [feld]: [] };
       expect(PartnerProgramSchema.safeParse(roh).success, feld).toBe(false);
     }
+  });
+
+  it('lehnt ein Ziel ausserhalb der erlaubten Hosts ab', () => {
+    const roh = { ...programm(), landingUrl: 'https://anderer.invalid/angebot' };
+    expect(PartnerProgramSchema.safeParse(roh).success).toBe(false);
+  });
+
+  it('lehnt ein Ziel ohne https ab', () => {
+    const roh = { ...programm(), landingUrl: 'http://beispiel.invalid/angebot' };
+    expect(PartnerProgramSchema.safeParse(roh).success).toBe(false);
+  });
+
+  it('lehnt approved ohne Zieladresse ab', () => {
+    const roh = { ...programm(), landingUrl: null };
+    expect(PartnerProgramSchema.safeParse(roh).success).toBe(false);
   });
 
   it('lehnt eine erfundene Platzierung ab', () => {

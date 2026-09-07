@@ -1,0 +1,93 @@
+---
+/**
+ * M09-02 — Weiterleitung zum Anbieter, wenn es einen gibt.
+ *
+ * Drei Dinge, die dieser Baustein **nicht** tut:
+ *
+ * 1. **Er wählt nicht aus.** Gibt es mehrere zugelassene Programme, entscheidet
+ *    die Reihenfolge in der Konfiguration — nicht ein Tierprofil, nicht eine
+ *    Provision, nicht eine Rangfolge.
+ * 2. **Er trägt nichts hinaus.** Die Zieladresse kommt unverändert aus dem
+ *    Vertrag. Es werden keine Eingaben, keine Profilwerte, keine berechneten
+ *    Kosten und keine Diagnose angehängt; eine statische Kampagnenkennung ist
+ *    das Einzige, was hinzukommen darf.
+ * 3. **Er erscheint nicht ungefragt.** Ohne eingeschaltetes Feature, ohne
+ *    gültige Zulassung, im falschen Markt oder an einer nicht erlaubten Stelle
+ *    wird gar nichts gerendert.
+ */
+import type { MarketConfig } from '../domain/market.ts';
+import type { PartnerPlacement, PartnerProgram } from '../domain/schemas/partner.ts';
+import { partnerHinweisErlaubt, type PartnerEntscheidung } from '../features/commerce/partner.ts';
+import { partnerZiel } from '../features/commerce/links.ts';
+
+interface Props {
+  market: MarketConfig;
+  placement: PartnerPlacement;
+  /** Stichtag der Zulassungsprüfung; im Build das Builddatum. */
+  stichtag?: string;
+  /**
+   * Programme, aus denen gewählt wird. Standard ist die ausgelieferte
+   * Konfiguration; abweichend gesetzt wird das nur auf der Probe-Seite.
+   */
+  programme?: readonly PartnerProgram[];
+}
+
+const { market, placement, stichtag, programme } = Astro.props;
+
+// Das Datum kommt von außen oder aus dem Build — nie aus der Uhr im Browser
+// des Besuchers, denn dann hinge die Auslieferung an dessen Systemzeit.
+const tag = stichtag ?? new Date().toISOString().slice(0, 10);
+const entscheidung: PartnerEntscheidung = partnerHinweisErlaubt({
+  market,
+  placement,
+  stichtag: tag,
+  ...(programme === undefined ? {} : { programme }),
+});
+const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm) : null;
+---
+
+{
+  ziel !== null && entscheidung.programm !== null && (
+    <aside
+      class="partner"
+      aria-label="Anzeige"
+      data-testid={`partner-cta-${placement}`}
+      data-programm={entscheidung.programm.programId}
+    >
+      <p class="partner__kennzeichnung">Anzeige</p>
+      <p>
+        {entscheidung.programm.advertiser} bietet Tierkrankenversicherungen an. Beiträge und
+        Leistungen stehen dort; diese Seite gibt dazu keine Einschätzung ab.
+      </p>
+      <p>
+        <a class="partner__link" href={ziel} rel="sponsored nofollow noopener" target="_blank">
+          Zum Anbieter {entscheidung.programm.advertiser}
+        </a>
+        <span class="partner__hinweis"> (öffnet ein neues Fenster beim Anbieter)</span>
+      </p>
+    </aside>
+  )
+}
+
+<style>
+  .partner {
+    background: var(--farbe-anzeige-grund);
+    border: var(--linie) dashed var(--farbe-anzeige-linie);
+    border-radius: var(--radius);
+    color: var(--farbe-anzeige-text);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-6);
+  }
+
+  .partner__kennzeichnung {
+    margin: 0 0 var(--abstand-2);
+    font-size: var(--schrift-klein);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .partner__hinweis {
+    font-size: var(--schrift-klein);
+  }
+</style>

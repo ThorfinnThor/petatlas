@@ -80,6 +80,8 @@ export const PartnerProgramSchema = z
     approval: PartnerApprovalSchema.nullable(),
     /** Zielhosts, die verlinkt werden dürfen. Allowlist, kein Muster. */
     allowedLinkHosts: z.array(z.string().regex(/^[a-z0-9.-]+$/, 'Erwartet wird ein Host.')),
+    /** Zieladresse laut Vertrag. `null`, solange es keine gibt. */
+    landingUrl: z.url().nullable(),
     /** Statische Kampagnenkennungen. Keine dynamischen Parameter. */
     campaignIds: z.array(z.string().regex(/^[A-Za-z0-9_-]+$/)),
     allowedPlacements: z.array(PartnerPlacement),
@@ -119,6 +121,35 @@ export const PartnerProgramSchema = z
           message: 'approved ohne erlaubte Platzierung: dann darf der Hinweis nirgends stehen.',
           path: ['allowedPlacements'],
         });
+      }
+      if (wert.landingUrl === null) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'approved ohne Zieladresse: ein Hinweis ohne Ziel ist kein Hinweis.',
+          path: ['landingUrl'],
+        });
+      } else {
+        // Das Ziel muss auf einem der vertraglich erlaubten Hosts liegen und
+        // über https erreichbar sein. Sonst ist es kein zugelassenes Ziel.
+        let ziel: URL | null = null;
+        try {
+          ziel = new URL(wert.landingUrl);
+        } catch {
+          ziel = null;
+        }
+        if (ziel === null || ziel.protocol !== 'https:') {
+          ctx.addIssue({
+            code: 'custom',
+            message: 'Zieladresse muss https sein.',
+            path: ['landingUrl'],
+          });
+        } else if (!wert.allowedLinkHosts.includes(ziel.host)) {
+          ctx.addIssue({
+            code: 'custom',
+            message: `Zielhost ${ziel.host} steht nicht in allowedLinkHosts.`,
+            path: ['landingUrl'],
+          });
+        }
       }
     } else if (wert.approval !== null) {
       ctx.addIssue({

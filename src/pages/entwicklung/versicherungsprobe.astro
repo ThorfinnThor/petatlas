@@ -1,0 +1,106 @@
+---
+/**
+ * M09-02 — Probe für Offenlegung und Partnerhinweis.
+ *
+ * Zeigt beide Bausteine in beiden Zuständen: ohne Partner (der echte Zustand)
+ * und mit einem **synthetischen** Beispielprogramm, damit sich die Trennung
+ * von Information und Werbung im echten Build ansehen lässt.
+ *
+ * Das Beispielprogramm ist als synthetisch gekennzeichnet, zeigt auf
+ * `beispiel.invalid` und steht in keiner ausgelieferten Konfiguration.
+ *
+ * Wird in production nicht ausgeliefert.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import InsuranceDisclosure from '../../components/InsuranceDisclosure.astro';
+import PartnerCta from '../../components/PartnerCta.astro';
+import Notice from '../../components/Notice.astro';
+import { resolveBuildConfig } from '../../../config/build.ts';
+import { defaultMarket } from '../../domain/market.ts';
+import { PartnerProgramSchema } from '../../domain/schemas/partner.ts';
+import { partnerHinweisErlaubt } from '../../features/commerce/partner.ts';
+
+const build = resolveBuildConfig();
+const isProduction = build.mode === 'production';
+const market = defaultMarket();
+
+/** Synthetisch. Kein Anbieter, kein Vertrag, keine echte Adresse. */
+const beispielProgramm = PartnerProgramSchema.parse({
+  programId: 'beispielprogramm-synthetisch',
+  advertiser: 'Beispielversicherung (synthetisch)',
+  network: 'direkt',
+  markets: ['DE'],
+  status: 'approved',
+  approval: {
+    contractReference: 'SYNTHETISCH-PROBE',
+    approvedAt: '2026-01-01',
+    expiresAt: null,
+    reviewEvidence: 'Nur Anschauung: keine echte Freigabe, kein echter Vertrag.',
+    reviewedAt: '2026-01-01T00:00:00+00:00',
+  },
+  allowedLinkHosts: ['beispiel.invalid'],
+  landingUrl: 'https://beispiel.invalid/tierkrankenversicherung',
+  campaignIds: ['PROBE_STATISCH'],
+  allowedPlacements: ['information_page'],
+  disclosureText: 'Werbung: Der Anbieterlink auf dieser Seite ist bezahlt.',
+  restrictions: ['Keine Aussagen zu Beiträgen oder Leistungen außerhalb der Anbieterseite.'],
+  notes: ['Synthetisches Beispiel für die Probe-Seite.'],
+});
+
+const marktMitCommerce = {
+  ...market,
+  featureFlags: { ...market.featureFlags, commerce: true },
+};
+
+// Der echte Zustand: Feature aus, keine Programme, also kein Hinweis.
+const echteEntscheidung = partnerHinweisErlaubt({
+  market,
+  placement: 'information_page',
+  stichtag: '2026-09-07',
+});
+---
+
+<BaseLayout title={isProduction ? 'Seite nicht gefunden' : 'Versicherungsprobe'} neverIndex>
+  {
+    isProduction ? (
+      <>
+        <h1>Seite nicht gefunden</h1>
+        <p>Diese technische Testseite wird in production nicht ausgeliefert.</p>
+      </>
+    ) : (
+      <>
+        <h1>Versicherungsprobe</h1>
+
+        <Notice variante="testdaten" titel="Synthetisches Beispiel">
+          <p>
+            Das Programm auf dieser Seite ist erfunden und zeigt auf <code>beispiel.invalid</code>.
+            Es gibt keinen Versicherungspartner; die ausgelieferte Konfiguration ist leer.
+          </p>
+        </Notice>
+
+        <h2>Zustand 1: kein Partner (der echte Zustand)</h2>
+        <p data-testid="echte-begruendung">{echteEntscheidung.grund}</p>
+        <InsuranceDisclosure programm={null} />
+        <PartnerCta market={market} placement="information_page" stichtag="2026-09-07" />
+
+        <h2>Zustand 2: synthetisches Programm, erlaubte Platzierung</h2>
+        <InsuranceDisclosure programm={beispielProgramm} />
+        <PartnerCta
+          market={marktMitCommerce}
+          placement="information_page"
+          stichtag="2026-09-07"
+          programme={[beispielProgramm]}
+        />
+
+        <h2>Zustand 3: dasselbe Programm, nicht erlaubte Platzierung</h2>
+        <p>Hier darf nichts stehen — das Programm erlaubt nur die Informationsseite.</p>
+        <PartnerCta
+          market={marktMitCommerce}
+          placement="neutral_list"
+          stichtag="2026-09-07"
+          programme={[beispielProgramm]}
+        />
+      </>
+    )
+  }
+</BaseLayout>

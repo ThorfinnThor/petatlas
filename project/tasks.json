@@ -1885,10 +1885,20 @@
         "M09-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Neutraler Hinweisbaustein und Offenlegung. InsuranceDisclosure.astro nennt vier Dinge, die hier nicht stattfinden (Beratung, Vergleich/Rangfolge, Tarifdaten, Erstattungszusage) und sagt ohne Partner ausdruecklich, dass es keinen gibt, statt leer zu bleiben. PartnerCta.astro rendert nur bei eingeschaltetem Feature, gueltiger Zulassung, passendem Markt und vertraglich erlaubter Platzierung; es waehlt nicht aus, sondern nimmt das erste zugelassene Programm der Konfiguration - keine Rangfolge, keine Auswahl nach Tierprofil. Die Zieladresse kommt aus dem Vertrag und wird geprueft (https, Host in allowedLinkHosts); angehaengt wird hoechstens eine statische Kampagnenkennung. Geprueft an der Probe-Seite /entwicklung/versicherungsprobe/ (in production nicht ausgeliefert, synthetisches Beispielprogramm auf beispiel.invalid): 21 neue E2E-Tests (174 gesamt) belegen genau einen Hinweis an der einen erlaubten Platzierung, die Werbekennzeichnung, rel='sponsored nofollow noopener', keinen Klickhandler, keine Anfrage an den Anbieter vor dem Klick und eine Ziel-URL mit genau einem Parameter (campaign=PROBE_STATISCH) ohne Profil-, Kosten- oder Diagnosewerte. Auf den echten Seiten steht kein Partnerhinweis. Im Browser geprueft: gestrichelter Rahmen, eigener Grund, Kennzeichnung 'ANZEIGE'.",
+          "reference": "src/components/InsuranceDisclosure.astro, src/components/PartnerCta.astro, src/features/commerce/links.ts, src/pages/entwicklung/versicherungsprobe.astro, tests/e2e/versicherung.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
-      "notes": []
+      "notes": [
+        "Das Partnerschema hat fuer diese Aufgabe das Feld landingUrl bekommen: eine CTA ohne Ziel gibt es nicht. Bei status approved ist es Pflicht, muss https sein und auf einem Host aus allowedLinkHosts liegen."
+      ]
     },
     {
       "id": "M09-03",

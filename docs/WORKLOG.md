@@ -195,3 +195,10 @@ Zu M11-06 im Einzelnen:
 - Das Schema ist `.strict()`. Ein Feld wie `commissionRate` lässt die Konfiguration scheitern, statt eine Provisionshöhe in den Browser auszuliefern.
 - `approved` verlangt Vertragsreferenz, Freigabedatum und dokumentierten Prüfnachweis; ein Nachweis ohne Zulassung wird ebenso abgelehnt wie eine Zulassung ohne Nachweis. Eine abgelaufene Zulassung wirkt wie keine.
 - `partnerHinweisErlaubt()` sagt in fünf getrennten Fällen nein — Feature aus, kein Programm, falscher Markt, keine gültige Zulassung, falsche Platzierung — und begründet jedes Mal im Klartext. Auch die Erlaubnis wird begründet.
+
+| M09-02 | `InsuranceDisclosure.astro`, `PartnerCta.astro`, `links.ts`, `/entwicklung/versicherungsprobe/` | `npm run test:e2e` (174 Tests) | genau ein Hinweis an der erlaubten Stelle, Ziel-URL trägt nur eine statische Kennung |
+
+- Die Offenlegung erscheint auch **ohne** Partner und sagt dann ausdrücklich, dass es keinen gibt. Eine leere Fläche sähe aus wie ein Fehler.
+- Der Partnerhinweis rendert nur bei eingeschaltetem Feature, gültiger Zulassung, passendem Markt und erlaubter Platzierung. Auf der Probe-Seite ist genau eine von drei Platzierungen erlaubt, und genau eine erscheint.
+- Die Zieladresse kommt aus dem Vertrag und wird geprüft (https, Host in der Allowlist). Angehängt wird höchstens eine statische Kampagnenkennung; ein E2E-Test liest die URL und prüft, dass sie genau einen Parameter trägt und weder Profil-, Kosten- noch Diagnosewerte enthält.
+- `rel="sponsored nofollow noopener"`, kein Klickhandler, keine Zwischenstation, und vor dem Klick geht keine einzige Anfrage an den Anbieter.
