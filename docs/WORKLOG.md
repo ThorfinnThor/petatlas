@@ -211,3 +211,10 @@ Zu M11-06 im Einzelnen:
 - `rel="sponsored nofollow noopener"` steht jetzt an genau einer Stelle und wird von der Komponente von dort geholt.
 
 **Prozessfehler in dieser Sitzung:** Der Commit zu M09-02 ging mit rotem Lint raus. Ich hatte die Ausgabe von `npm run lint` nur bis zur letzten Zeile gelesen statt den Exit-Code zu prüfen. Das war das dritte Mal in dieser Sitzung, dass ein Commit vor grüner Prüfkette rausging; seitdem wird jede Stufe über ihren Exit-Code geprüft.
+
+| M09-04 | `content-data/insurance-disclosures/`, `disclosures.ts`, `tests/content-policy.test.ts` | `npx vitest run tests/content-policy.test.ts` | 11 Tests; fünf Hinweistexte, alle auch ohne Partner gültig |
+
+- Die Hinweistexte liegen in `content-data/`, nicht im Bauteil: sie sind redaktionell und gelten **auch ohne Partner**. Ein Text, der nur mit Partner erschiene, wäre kein Verbraucherhinweis, sondern Teil der Werbung — dafür gibt es das Feld `appliesWithoutPartner`, und es steht bei allen fünf auf `true`.
+- Die Prüfung sucht nach Wortlaut, nicht nach Absicht: garantierte Erstattung, zugesicherte Versicherbarkeit, Testsieger, „bester Tarif“, erfundene Monatsbeiträge, Verkaufsdruck. Sätze, die eine solche Aussage ausdrücklich verneinen, zählen nicht — sonst könnte die Seite nicht einmal sagen, was sie nicht tut.
+- Der Prüfer prüft sich selbst: fünf Beispielsätze müssen anschlagen, zwei verneinende dürfen es nicht. Beim ersten Lauf fiel genau das auf — „Die Erstattung ist garantiert“ rutschte durch, weil mein Muster die beiden Wörter direkt nebeneinander erwartete, und „niemand“ fehlte in der Verneinungsliste.
+- Ein Test hält fest, wo der Partnerhinweis eingebunden sein darf: bisher nur auf der Probe-Seite. Kommt eine Versicherungsseite dazu, erzwingt der Test eine ausdrückliche Entscheidung statt eines stillen Einbaus in eine Kosten-, Karten- oder Notfallseite.

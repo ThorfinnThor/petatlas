@@ -1953,8 +1953,16 @@
         "M09-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Redaktion und Erloeslogik getrennt. Fuenf Hinweistexte liegen in content-data/insurance-disclosures/ (keine Beratung, kein Vergleich/keine Rangfolge, keine Tarifdaten, keine Erstattungszusage, kein Verkauf im Notfall); jeder traegt appliesWithoutPartner, und bei allen fuenf steht dort true - ein Text, der nur mit Partner erschiene, waere Werbung und kein Verbraucherhinweis. InsuranceDisclosure.astro rendert sie aus dieser Quelle statt aus dem Bauteil. tests/content-policy.test.ts prueft mit 15 Mustern auf verbotene Aussagen (garantierte Erstattung, zugesicherte Versicherbarkeit trotz Vorerkrankung, Testsieger, bester Tarif, erfundene Monatsbeitraege, Verkaufsdruck) - sowohl in den Texten als auch im Quelltext aller .astro-Bausteine, aller Seiten und der commerce-Module. Verneinende Saetze zaehlen nicht, damit die Seite sagen darf, was sie nicht tut; der Pruefer prueft sich selbst mit fuenf anschlagenden und zwei verneinenden Beispielsaetzen. Zwei Luecken fielen dabei auf und wurden geschlossen: 'Die Erstattung ist garantiert' rutschte durch, und 'niemand' fehlte in der Verneinungsliste. Ein weiterer Test haelt fest, dass der Partnerhinweis nur auf der Probe-Seite eingebunden ist und in keiner Kosten-, Karten- oder Notfallseite. Geprueft ueber Exit-Codes: Lint, Typecheck, Format, 665 Unit-Tests, 174 E2E, Secret-Audit.",
+          "reference": "content-data/insurance-disclosures/, src/domain/schemas/disclosure.ts, src/features/commerce/disclosures.ts, src/components/InsuranceDisclosure.astro, tests/content-policy.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/content-policy.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

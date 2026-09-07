@@ -1,6 +1,6 @@
 ---
 /**
- * M09-02 — Was ein Versicherungshinweis hier ist, und was er nicht ist.
+ * M09-02/M09-04 — Was ein Versicherungshinweis hier ist, und was er nicht ist.
  *
  * Dieser Baustein steht **vor** jedem Partnerhinweis und erscheint auch dann,
  * wenn es gar keinen Partner gibt. Denn die wichtigere Aussage ist die zweite:
@@ -8,17 +8,27 @@
  *
  * Ohne zugelassenes Programm steht hier ausdrücklich, dass es keinen Partner
  * gibt — statt einer leeren Fläche, die aussieht, als sei etwas kaputt.
+ *
+ * Die Texte selbst stehen in `content-data/insurance-disclosures/`. Sie sind
+ * redaktionell und gelten auch ohne Partner; deshalb liegen sie nicht in
+ * dieser Datei und nicht in der Partnerkonfiguration.
  */
-import type { PartnerProgram } from '../domain/schemas/partner.ts';
+import type { PartnerPlacement, PartnerProgram } from '../domain/schemas/partner.ts';
 import { werbekennzeichnung } from '../features/commerce/partner.ts';
+import { disclosuresFor } from '../features/commerce/disclosures.ts';
 
 interface Props {
   /** Das zugelassene Programm oder `null`, wenn es keines gibt. */
   programm: PartnerProgram | null;
+  /** Stelle, an der die Offenlegung steht. */
+  placement?: PartnerPlacement;
 }
 
-const { programm } = Astro.props;
+const { programm, placement = 'information_page' } = Astro.props;
 const kennzeichnung = werbekennzeichnung(programm);
+// Die Texte stehen in content-data, nicht in dieser Datei: sie sind
+// redaktionell und werden ohne Codeänderung gepflegt.
+const texte = disclosuresFor(placement, programm !== null);
 ---
 
 <section
@@ -37,23 +47,13 @@ const kennzeichnung = werbekennzeichnung(programm);
   }
 
   <ul>
-    <li>
-      <strong>Keine Beratung.</strong> Welche Versicherung zu Ihrem Tier passt, hängt von Dingen ab, die
-      diese Website nicht kennt und nicht kennen soll. Eine Einschätzung dazu ist eine Versicherungsvermittlung,
-      und die findet hier nicht statt.
-    </li>
-    <li>
-      <strong>Kein Vergleich und keine Rangfolge.</strong> Es gibt hier keine Bestenliste, keine Punktzahl
-      und keine Auswahl nach Rasse, Alter oder Vorerkrankung.
-    </li>
-    <li>
-      <strong>Keine Tarifdaten.</strong> Beiträge, Leistungen und Wartezeiten stehen beim Anbieter, nicht
-      hier. Was hier stünde, wäre eine Abschrift von unbekanntem Stand.
-    </li>
-    <li>
-      <strong>Keine Aussage zur Erstattung.</strong> Ob eine Behandlung erstattet wird, entscheidet der
-      Vertrag im Einzelfall — nicht eine Website und schon gar nicht im Voraus.
-    </li>
+    {
+      texte.map((text) => (
+        <li data-testid={`hinweis-${text.disclosureId}`}>
+          <strong>{text.heading}.</strong> {text.paragraphs.join(' ')}
+        </li>
+      ))
+    }
     {
       programm === null ? (
         <li data-testid="kein-partner">
