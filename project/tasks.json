@@ -2705,8 +2705,16 @@
         "M13-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Buildpfad fuer Partnerfeeds mit Secrets ausschliesslich zur Buildzeit. Das Log nennt Secret-Namen und nie Werte - kein Praefix, keine Laenge, kein Hash; ein Test prueft das mit einem Canary im Secret. Adressen werden fuer Logs und Fehlermeldungen ohne Query und Fragment ausgegeben, weil dort der Token steht. Host-Allowlist aus config/commerce/feeds.json; ein fremder Host und alles ohne https werden abgelehnt, die Fehlermeldung nennt den Host, nie den Token. leseGedrosselt() bricht waehrend des Lesens ab, sobald die Obergrenze (256 MiB) ueberschritten wird, statt erst den Speicher zu fuellen. TTL von sechs Stunden verhindert, dass jeder Build erneut abruft. Die oeffentliche Projektion zaehlt zwoelf Angebots- und neun Produktfelder ausdruecklich auf, statt zu kopieren: Erlaubnisfelder und verifiedAttributes verlassen den Build nicht, und ein nachtraeglich angehaengtes Feld erscheint nicht in der Ausgabe. oeffentlicheAusgabe() liefert nur Angebote mit Anzeigeerlaubnis, im richtigen Markt und unverfallen - ohne Vertrag also nichts. 'npm run build:commerce' laeuft ohne Secret (meldet den fehlenden Namen, schreibt nichts) und mit gesetztem Secret (ruft nicht ab, weil kein freigegebener Partnervertrag besteht). 20 neue Tests (829 gesamt), npm run verify exit 0.",
+          "reference": "scripts/build/commerce.ts, config/commerce/feeds.json, tests/feed-secrecy.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/feed-secrecy.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

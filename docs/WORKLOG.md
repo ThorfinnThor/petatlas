@@ -303,3 +303,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - `packUnits` darf jetzt `null` sein. Eine unbekannte Gebindegröße als 1 zu führen wäre genau der Multipack-Fehler, den der Meilenstein verbietet; und mit `null` wird nicht verglichen.
 - `vergleichbar()` sagt nur bei gleicher geprüfter GTIN oder bei durchgehend bekannten und gleichen Merkmalen ja. Widersprechen sich zwei Einträge mit derselben GTIN, glaubt die Funktion keiner Seite und der Vergleich unterbleibt.
 - Unbekannter Versand bleibt `null` statt 0, unbekannte Verfügbarkeit bleibt `unknown` statt „auf Lager“, und ohne Vertrag gibt es weder Anzeige- noch Bilderlaubnis.
+
+| M13-03 | `scripts/build/commerce.ts`, `config/commerce/feeds.json`, `tests/feed-secrecy.test.ts` | `npx vitest run tests/feed-secrecy.test.ts`, `npm run build:commerce` mit und ohne Secret | 20 Tests; Canary taucht in keiner Ausgabe auf |
+
+- Die Feedadresse steht in einem Secret, weil sie einen Zugangstoken enthält. Das Log nennt **den Namen**, nie den Wert — auch kein Präfix, keine Länge, keinen Hash. Ein Test prüft genau das.
+- Host-Allowlist aus `config/commerce/feeds.json`: einen Token an einen fremden Host zu senden wäre ein verschenktes Secret. Die Fehlermeldung nennt den Host, aber nie die Query.
+- Gelesen wird gedrosselt und **während** des Lesens abgebrochen, nicht danach: ein zu großer Feed soll den Speicher gar nicht erst füllen.
+- Die öffentliche Projektion zählt Felder auf, statt zu kopieren. Ein Test hängt ein zusätzliches Feld an den Eingang und belegt, dass es am Ausgang nicht erscheint.
+- Ohne Partnervertrag wird nicht abgerufen und nichts geschrieben — auch bei gesetztem Secret. Ein Abruf ohne Zweck belastet nur die Gegenseite.

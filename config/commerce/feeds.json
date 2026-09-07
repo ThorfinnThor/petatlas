@@ -1,0 +1,15 @@
+{
+  "$comment": "M13-03: erlaubte Feedquellen. Die Adresse selbst steht in einem Secret, weil sie einen Zugangstoken enthält; hier steht nur, welcher Host überhaupt zulässig ist.",
+  "maxBytes": 268435456,
+  "ttlHours": 6,
+  "feeds": [
+    {
+      "feedId": "awin-de",
+      "network": "awin",
+      "marketId": "DE",
+      "secretName": "AWIN_FEED_URL",
+      "allowedHosts": ["productdata.awin.com", "ui2.awin.com"],
+      "note": "Ohne Partnervertrag ist der Slot aus: die Anzeige-Erlaubnis kommt aus config/publishers/, nicht aus dem Vorhandensein eines Feeds."
+    }
+  ]
+}
