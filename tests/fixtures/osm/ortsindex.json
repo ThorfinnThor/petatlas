@@ -1,0 +1,77 @@
+{
+  "_hinweis": "SYNTHETISCH — erfundene Ortsknoten für den Suchtest. Struktur wie die Ausgabe von sammleOrtsnamen; die Namensgleichheiten sind absichtlich gesetzt.",
+  "orte": [
+    {
+      "placeId": "osm:node:10",
+      "name": "Bremen",
+      "kind": "city",
+      "latitude": 53.0758,
+      "longitude": 8.8072,
+      "population": 551415,
+      "state": null
+    },
+    {
+      "placeId": "osm:node:11",
+      "name": "Bremerhaven",
+      "kind": "city",
+      "latitude": 53.5396,
+      "longitude": 8.5809,
+      "population": 117281,
+      "state": null
+    },
+    {
+      "placeId": "osm:node:12",
+      "name": "Mitte",
+      "kind": "suburb",
+      "latitude": 53.0759,
+      "longitude": 8.8138,
+      "population": null,
+      "state": null
+    },
+    {
+      "placeId": "osm:node:13",
+      "name": "Mitte",
+      "kind": "suburb",
+      "latitude": 53.5397,
+      "longitude": 8.5823,
+      "population": null,
+      "state": null
+    },
+    {
+      "placeId": "osm:node:14",
+      "name": "Neustadt",
+      "kind": "suburb",
+      "latitude": 53.0631,
+      "longitude": 8.7969,
+      "population": null,
+      "state": null
+    },
+    {
+      "placeId": "osm:node:15",
+      "name": "Höxter",
+      "kind": "town",
+      "latitude": 51.7758,
+      "longitude": 9.3806,
+      "population": 28000,
+      "state": "Nordrhein-Westfalen"
+    },
+    {
+      "placeId": "osm:node:16",
+      "name": "Neustadt",
+      "kind": "town",
+      "latitude": 49.3506,
+      "longitude": 8.1389,
+      "population": 53000,
+      "state": "Rheinland-Pfalz"
+    },
+    {
+      "placeId": "osm:node:17",
+      "name": "Vegesack",
+      "kind": "borough",
+      "latitude": 53.1667,
+      "longitude": 8.6167,
+      "population": 33000,
+      "state": null
+    }
+  ]
+}

@@ -4,24 +4,45 @@
     {
       "category": "veterinary",
       "label": "Tierarztpraxis",
-      "match": [{ "key": "amenity", "value": "veterinary" }]
+      "match": [
+        {
+          "key": "amenity",
+          "value": "veterinary"
+        }
+      ]
     },
     {
       "category": "animal_shelter",
       "label": "Tierheim",
-      "match": [{ "key": "amenity", "value": "animal_shelter" }]
+      "match": [
+        {
+          "key": "amenity",
+          "value": "animal_shelter"
+        }
+      ]
     },
     {
       "category": "pet_shop",
       "label": "Zoofachhandel",
-      "match": [{ "key": "shop", "value": "pet" }]
+      "match": [
+        {
+          "key": "shop",
+          "value": "pet"
+        }
+      ]
     },
     {
       "category": "dog_park",
       "label": "Hundewiese",
       "match": [
-        { "key": "leisure", "value": "dog_park" },
-        { "key": "amenity", "value": "dog_toilet" }
+        {
+          "key": "leisure",
+          "value": "dog_park"
+        },
+        {
+          "key": "amenity",
+          "value": "dog_toilet"
+        }
       ]
     }
   ],
@@ -39,5 +60,12 @@
     "openingHours": ["opening_hours"],
     "postalCode": ["addr:postcode"],
     "municipality": ["addr:city"]
+  },
+  "$comment_orte": "Ortsnamen fuer die Suche. Aus derselben freigegebenen Quelle wie die POIs; keine proprietaere PLZ-Datenbank.",
+  "placeNodes": {
+    "key": "place",
+    "values": ["city", "town", "village", "suburb", "borough"],
+    "populationTag": "population",
+    "stateTag": "addr:state"
   }
 }

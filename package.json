@@ -20,6 +20,7 @@
     "build:cloudflare": "node scripts/build-cloudflare.ts",
     "preview": "astro preview",
     "snapshot:got": "node scripts/ingest/snapshot-got.ts",
+    "snapshot:places": "node scripts/ingest/snapshot-places.ts",
     "lint": "eslint .",
     "typecheck": "astro check",
     "format": "prettier --write .",

@@ -2064,8 +2064,16 @@
         "M10-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "src/features/map/place-search.ts sucht lokal ueber einen kleinen statischen Index; kein Geocoding-Dienst und keine proprietaere PLZ-Datenbank - die Ortsnamen kommen aus denselben freigegebenen OSM-Extrakten wie die POIs (place=city|town|village|suburb|borough). Aus dem Bremen-Extrakt: 34 Ortsknoten, davon 33 mit Einwohnerzahl. Mehrdeutigkeit wird aufgeloest statt geraten: 'Mitte' liefert beide Treffer als 'Mitte (Ortsteil von Bremen)' und 'Mitte (Ortsteil von Bremerhaven)', unterschieden ueber den naechstgelegenen groesseren Ort oder das Bundesland, mit dem Hinweis 'Bitte auswaehlen, welcher gemeint ist'. Namensvergleich loest Umlaute und ss auf, sodass 'hoexter' den Ort 'Hoexter' findet. Kein Treffer ergibt ein leeres Ergebnis mit Hinweis, nie einen ungefaehr passenden Ort. ortsZuordnung sagt 'im Umkreis von', wenn die Gemeinde nicht uebereinstimmt oder unbekannt ist - eine Entfernung ist keine Verwaltungszugehoerigkeit. 22 Tests. scripts/ingest/snapshot-places.ts schreibt Orte und Ortsindex reproduzierbar; das Datum kommt aus dem Stand der Quelldatei, nicht aus dem Zeitpunkt des Laufs.",
+          "reference": "src/features/map/place-search.ts; scripts/ingest/adapters/osm/places-index.ts; scripts/ingest/snapshot-places.ts; tests/places/place-search.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run snapshot:places -- --extract .work/bremen-latest.osm.pbf; npm run test:unit",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
