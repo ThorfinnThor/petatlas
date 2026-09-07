@@ -390,3 +390,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Ein Nährwert ohne **Einheit** oder ohne **Bezug** ist keine Angabe: „22 Prozent Protein“ heißt etwas anderes je nachdem, ob es sich auf Frisch- oder Trockenmasse bezieht. Beides ist Pflicht, sobald ein Wert dasteht.
 - Ein nicht deklarierter Nährwert wird als `null` zurückgegeben, nicht als 0.
 - Die Gegenliste der Futtertaxonomie nennt Diätfuttermittel, Nahrungsergänzung, Rationsberechnung und Nährwertscores — mit Begründung. Der Bereich vergleicht Mengen und Preise, nicht Qualitäten.
+
+| M15-02 | `src/features/food/unit-price.ts`, `tests/food-pricing.test.ts` | `npx vitest run tests/food-pricing.test.ts` | 14 Tests; 400 g, 1 kg, 6 × 400 g und kaputte Mengen |
+
+- Die drei Pflichtfälle stehen als Rechnung im Test: 1 kg für 10,00 € sind 10,00 € je kg; 400 g für 3,00 € sind 7,50 € je kg; 6 × 400 g für 9,49 € sind 3,95 € je kg — gerechnet auf 2400 g, nicht auf eine Dose.
+- Fehlerhafte Mengen fängt das Schema ab, bevor gerechnet wird: 0 g, negative Mengen, 400,5 g und ein Gebinde von 0 sind ungültig.
+- Der Versand bleibt draußen: ein Versandanteil je Kilogramm hinge an der Bestellmenge und wäre für einen Vergleich unbrauchbar. Ein Test vergleicht denselben Grundpreis mit und ohne Versand.
+- Verschiedene **Packungsgrößen** sind verschiedene Varianten und werden nicht verglichen; verschiedene **Gebindegrößen** derselben Packung schon — genau dafür gibt es den Grundpreis.
+- Fehlt bei einem Angebot die Menge, unterbleibt der Vergleich für alle. Ein Ranking, in dem ein Teilnehmer nicht mitgerechnet werden kann, ist irreführend.

@@ -3058,8 +3058,16 @@
         "M15-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Grundpreis- und Multipackrechnung mit den drei geforderten Pflichtfaellen als Rechnung im Test: 1 kg fuer 10,00 Euro ergibt 1000 Cent je kg, 400 g fuer 3,00 Euro ergibt 750 Cent je kg, 6 x 400 g fuer 9,49 Euro ergibt 395 Cent je kg - gerechnet auf 2400 g Gesamtmenge und nicht auf eine Dose. Gerundet wird einmal am Ende und kaufmaennisch (10,00 Euro auf 3 kg ergibt 333 Cent, auf 1,5 kg 667 Cent). Fehlerhafte Mengen faengt das Schema ab, bevor gerechnet wird: 0 g, negative Menge, 400,5 g und Gebinde 0 sind ungueltig. Fehlt Fuellmenge oder Gebindegroesse, gibt es keinen Grundpreis und keine Schaetzung. Der Versand bleibt aussen vor, weil ein Versandanteil je Kilogramm an der Bestellmenge haenge; ein Test vergleicht denselben Grundpreis mit und ohne Versand. Der Vergleich verlangt dieselbe Variante (Marke, Produktname, Packungsgroesse, Tierart) und laesst dabei verschiedene Gebindegroessen ausdruecklich zu; fehlt bei einem Angebot die Menge, unterbleibt der Vergleich fuer alle. 14 neue Tests (952 gesamt), npm run verify exit 0.",
+          "reference": "src/features/food/unit-price.ts, tests/food-pricing.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/food-pricing.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
