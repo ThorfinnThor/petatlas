@@ -1,0 +1,138 @@
+---
+/**
+ * M13-04 — Ein Angebot als Karte.
+ *
+ * Die Karte zeigt einen Preis und sagt dazu, was in ihm **nicht** enthalten
+ * ist. Sie behauptet nichts, was die Daten nicht hergeben:
+ *
+ * - unbekannter Versand wird als unbekannt beschriftet, nicht als kostenlos,
+ * - unbekannte Verfügbarkeit wird als nicht angegeben beschriftet,
+ * - der Grundpreis erscheint nur bei bekannter Menge,
+ * - der Stand des Preises steht dabei, weil ein Feedpreis altern kann.
+ *
+ * Ohne Anzeigeerlaubnis rendert die Karte gar nichts.
+ */
+import type { Offer, Product } from '../domain/schemas/catalog.ts';
+import {
+  VERFUEGBARKEIT_LABEL,
+  abgelaufen,
+  formatiereBetrag,
+  grundpreis,
+  preisAussage,
+  versandkostenfrei,
+} from '../features/commerce/pricing.ts';
+import { PARTNER_LINK_ATTRIBUTE } from '../features/commerce/links.ts';
+
+interface Props {
+  angebot: Offer;
+  produkt: Product;
+  /** Zeitpunkt, gegen den Ablauf geprüft wird. */
+  jetzt: string;
+}
+
+const { angebot, produkt, jetzt } = Astro.props;
+
+const sichtbar = angebot.displayPermission && !abgelaufen(angebot, jetzt);
+const aussage = preisAussage(angebot);
+const basis = grundpreis(angebot, produkt);
+const stand = angebot.fetchedAt.slice(0, 10);
+---
+
+{
+  sichtbar && (
+    <article class="angebot" data-testid={`angebot-${angebot.offerId}`}>
+      <p class="angebot__kennzeichnung">Anzeige</p>
+      <h3>
+        {produkt.brand} {produkt.variant === null ? '' : produkt.variant}
+      </h3>
+
+      <p class="angebot__preis">
+        {formatiereBetrag(angebot.priceMinor, angebot.currency)}
+        <span class="angebot__bezug"> Artikelpreis</span>
+      </p>
+
+      {angebot.shippingMinor === null && (
+        <p class="angebot__unbekannt" data-testid="versand-unbekannt">
+          Versandkosten nicht angegeben — der Gesamtpreis steht damit nicht fest.
+        </p>
+      )}
+      {versandkostenfrei(angebot) && (
+        <p data-testid="versand-frei">Versand laut Händler kostenlos.</p>
+      )}
+      {angebot.shippingMinor !== null && angebot.shippingMinor > 0 && (
+        <p>
+          Versand: {formatiereBetrag(angebot.shippingMinor, angebot.currency)} ·{' '}
+          {formatiereBetrag(aussage.betragMinor, angebot.currency)} gesamt
+        </p>
+      )}
+
+      {basis === null ? (
+        <p class="angebot__unbekannt">Grundpreis nicht berechenbar: Füllmenge nicht angegeben.</p>
+      ) : (
+        <p class="angebot__grundpreis">
+          {formatiereBetrag(basis.proKilogrammMinor, angebot.currency)} je kg · {basis.basis}
+        </p>
+      )}
+
+      <p class="angebot__meta">
+        {VERFUEGBARKEIT_LABEL[angebot.availability]} · Preisstand {stand}
+      </p>
+
+      <p>
+        <a
+          href={angebot.affiliateUrl}
+          rel={PARTNER_LINK_ATTRIBUTE.rel}
+          target={PARTNER_LINK_ATTRIBUTE.target}
+        >
+          Zum Händler
+        </a>
+      </p>
+    </article>
+  )
+}
+
+<style>
+  .angebot {
+    background: var(--farbe-anzeige-grund);
+    border: var(--linie) dashed var(--farbe-anzeige-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-4);
+  }
+
+  .angebot__kennzeichnung {
+    margin: 0 0 var(--abstand-2);
+    font-size: var(--schrift-klein);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .angebot h3 {
+    margin: 0 0 var(--abstand-2);
+    font-size: var(--schrift-normal);
+  }
+
+  .angebot__preis {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-block: var(--abstand-1);
+  }
+
+  .angebot__bezug {
+    font-size: var(--schrift-klein);
+    font-weight: 400;
+  }
+
+  .angebot__grundpreis,
+  .angebot__meta,
+  .angebot__unbekannt {
+    color: var(--farbe-anzeige-text);
+    font-size: var(--schrift-klein);
+    margin-block: var(--abstand-1);
+  }
+
+  .angebot__unbekannt {
+    font-style: italic;
+  }
+</style>

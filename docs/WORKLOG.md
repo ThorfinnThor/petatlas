@@ -311,3 +311,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Gelesen wird gedrosselt und **während** des Lesens abgebrochen, nicht danach: ein zu großer Feed soll den Speicher gar nicht erst füllen.
 - Die öffentliche Projektion zählt Felder auf, statt zu kopieren. Ein Test hängt ein zusätzliches Feld an den Eingang und belegt, dass es am Ausgang nicht erscheint.
 - Ohne Partnervertrag wird nicht abgerufen und nichts geschrieben — auch bei gesetztem Secret. Ein Abruf ohne Zweck belastet nur die Gegenseite.
+
+| M13-04 | `src/features/commerce/pricing.ts`, `OfferCard.astro`, `/entwicklung/angebotsprobe/` | `npx vitest run tests/commerce/pricing.test.ts`, `npm run test:e2e` (198 Tests) | 4 von 6 Karten sichtbar; abgelaufen und ohne Erlaubnis erscheinen nicht |
+
+- Vier Behauptungen sind ausgeschlossen und einzeln getestet: „versandkostenfrei“ bei unbekanntem Versand, „Bestpreis“ über ungleiche Dinge, „günstigster Gesamtpreis“ ohne bekannten Versand und Neukundenpreise im allgemeinen Vergleich.
+- Der Vergleich nennt seinen **Bezug**: Gesamtpreis nur, wenn jedes beteiligte Angebot seine Versandkosten nennt, sonst ausdrücklich nur Artikelpreis.
+- Ein Beispiel aus dem Test, das den Punkt trägt: 25,99 € mit kostenlosem Versand schlägt 24,99 € plus 3,95 €. Wer nur den Artikelpreis vergleicht, empfiehlt das falsche Angebot.
+- Der Grundpreis erscheint nur bei bekannter Füllmenge **und** bekanntem Gebinde; sonst steht dort, dass er nicht berechenbar ist.
+- Die Karte rendert ohne Anzeigeerlaubnis und nach Ablauf gar nichts. Die Probe-Seite zeigt sechs Angebote, vier Karten erscheinen.

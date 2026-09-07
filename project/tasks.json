@@ -2739,8 +2739,16 @@
         "M13-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Preislogik und Angebotskarte. Ausgeschlossen und einzeln getestet sind vier Behauptungen: versandkostenfrei bei unbekanntem Versand (nur eine ausdrueckliche 0 gilt), Bestpreis ueber ungleiche Dinge (verglichen wird nur, was nach vergleichbar() dasselbe Produkt im selben Markt ist), guenstigster Gesamtpreis ohne bekannten Versand (dann bezieht sich der Vergleich ausdruecklich nur auf den Artikelpreis) und Neukundenpreise im allgemeinen Vergleich (kind new_customer_only wird getrennt ausgewiesen). Der Testfall, der den Punkt traegt: 25,99 Euro mit kostenlosem Versand schlaegt 24,99 Euro plus 3,95 Euro Versand. Der Grundpreis wird nur bei bekannter Fuellmenge und bekanntem Gebinde gerechnet, mit dem Gebinde multipliziert, und sonst als nicht berechenbar ausgewiesen. Die Karte rendert ohne Anzeigeerlaubnis und nach Ablauf gar nichts, kennzeichnet sich als Anzeige, setzt rel sponsored und nennt Verfuegbarkeit und Preisstand. Geprueft an der Probe-Seite /entwicklung/angebotsprobe/ (in production nicht ausgeliefert, synthetische Daten auf beispiel.invalid): von sechs Angeboten erscheinen vier Karten. 15 neue Unit-Tests und 24 neue E2E-Tests (844 Unit gesamt, 198 E2E gesamt), npm run verify exit 0.",
+          "reference": "src/features/commerce/pricing.ts, src/components/OfferCard.astro, src/pages/entwicklung/angebotsprobe.astro, tests/commerce/pricing.test.ts, tests/e2e/angebote.spec.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run test:e2e",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

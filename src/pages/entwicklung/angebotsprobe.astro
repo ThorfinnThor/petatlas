@@ -1,0 +1,142 @@
+---
+/**
+ * M13-04 — Probe für die Angebotskarte.
+ *
+ * Zeigt dieselbe Karte in den Zuständen, die im Betrieb vorkommen: bekannter
+ * und unbekannter Versand, versandkostenfrei, unbekannte Menge, unbekannte
+ * Verfügbarkeit, abgelaufen und ohne Anzeigeerlaubnis.
+ *
+ * Alle Daten sind **synthetisch** und zeigen auf `beispiel.invalid`.
+ *
+ * Wird in production nicht ausgeliefert.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Notice from '../../components/Notice.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { resolveBuildConfig } from '../../../config/build.ts';
+import { OfferSchema, ProductSchema } from '../../domain/schemas/catalog.ts';
+import { vergleicheAngebote } from '../../features/commerce/pricing.ts';
+
+const build = resolveBuildConfig();
+const isProduction = build.mode === 'production';
+const JETZT = '2026-09-07T12:00:00+00:00';
+
+const produkt = ProductSchema.parse({
+  productId: 'awin:901:SYN-100',
+  species: 'dog',
+  category: 'dry_food',
+  brand: 'Beispielmarke (synthetisch)',
+  gtin: null,
+  variant: 'Trockenfutter 2 kg',
+  netContentGrams: 2000,
+  packUnits: 1,
+  material: null,
+  verifiedAttributes: {},
+});
+
+const ohneMenge = ProductSchema.parse({
+  ...produkt,
+  productId: 'awin:903:SYN-102',
+  variant: 'Leine 3 m',
+  netContentGrams: null,
+  packUnits: null,
+});
+
+const basisAngebot = {
+  productId: produkt.productId,
+  merchantId: '901',
+  marketId: 'DE',
+  currency: 'EUR',
+  availability: 'in_stock' as const,
+  kind: 'regular' as const,
+  affiliateUrl: 'https://beispiel.invalid/p/1',
+  fetchedAt: '2026-09-07T00:00:00+00:00',
+  expiresAt: null,
+  displayPermission: true,
+  imagePermission: false,
+};
+
+const angebote = [
+  OfferSchema.parse({
+    ...basisAngebot,
+    offerId: 'probe-versand-bekannt',
+    priceMinor: 2499,
+    shippingMinor: 395,
+  }),
+  OfferSchema.parse({
+    ...basisAngebot,
+    offerId: 'probe-versand-frei',
+    priceMinor: 2599,
+    shippingMinor: 0,
+  }),
+  OfferSchema.parse({
+    ...basisAngebot,
+    offerId: 'probe-versand-unbekannt',
+    priceMinor: 2399,
+    shippingMinor: null,
+  }),
+  OfferSchema.parse({
+    ...basisAngebot,
+    offerId: 'probe-ohne-menge',
+    productId: ohneMenge.productId,
+    priceMinor: 1200,
+    shippingMinor: null,
+    availability: 'unknown',
+  }),
+  OfferSchema.parse({
+    ...basisAngebot,
+    offerId: 'probe-abgelaufen',
+    priceMinor: 999,
+    shippingMinor: 0,
+    expiresAt: '2026-09-07T06:00:00+00:00',
+  }),
+  OfferSchema.parse({
+    ...basisAngebot,
+    offerId: 'probe-ohne-erlaubnis',
+    priceMinor: 888,
+    shippingMinor: 0,
+    displayPermission: false,
+  }),
+];
+
+const produkte = [produkt, ohneMenge];
+const vergleich = vergleicheAngebote(angebote.slice(0, 2), [produkt], 'DE');
+---
+
+<BaseLayout title={isProduction ? 'Seite nicht gefunden' : 'Angebotsprobe'} neverIndex>
+  {
+    isProduction ? (
+      <>
+        <h1>Seite nicht gefunden</h1>
+        <p>Diese technische Testseite wird in production nicht ausgeliefert.</p>
+      </>
+    ) : (
+      <>
+        <h1>Angebotsprobe</h1>
+
+        <Notice variante="testdaten" titel="Synthetische Angebote">
+          <p>
+            Alle Preise, Händler und Adressen auf dieser Seite sind erfunden. Es besteht kein
+            Partnervertrag; im Betrieb entsteht ohne Anzeigeerlaubnis keine einzige Karte.
+          </p>
+        </Notice>
+
+        <h2>Karten</h2>
+        {angebote.map((angebot) => (
+          <OfferCard
+            angebot={angebot}
+            produkt={produkte.find((eintrag) => eintrag.productId === angebot.productId) ?? produkt}
+            jetzt={JETZT}
+          />
+        ))}
+
+        <h2>Vergleich</h2>
+        <p data-testid="vergleich-grund">{vergleich.grund}</p>
+        <p data-testid="vergleich-bezug">Bezug: {vergleich.bezug}</p>
+        <p data-testid="vergleich-guenstigstes">
+          Günstigstes: {vergleich.guenstigstes?.offerId ?? 'keines'}
+        </p>
+      </>
+    )
+  }
+</BaseLayout>

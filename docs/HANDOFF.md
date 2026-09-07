@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 3/6 (78 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 4/6 (79 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M13-04 — Angebotsausgabe und Preislogik erstellen.** `src/features/commerce/pricing.ts` und `OfferCard.astro`: klare Preise, unbekannter Versand als unbekannt, Grundpreis wo sinnvoll, Stand, Verfügbarkeit und abgelaufene Angebote; kundenabhängige Rabatte getrennt. Abnahme: keine falsche „kostenlos“- oder „Bestpreis“-Behauptung, und für einen Vergleich sind gleiche Variante und gleicher Markt Pflicht.
+**M13-05 — Katalogansichten und Filter bauen.** Kategorien, Eigenschaften, erklärbare Sortierung und Affiliatekennzeichnung; in JSON nur die erlaubte öffentliche Projektion. Abnahme: die Sortierung ist provisionsunabhängig, und aktive Filter finden nur zulässige Angebote. Achtung: ohne Partnervertrag gibt es keine Angebote mit Anzeigeerlaubnis — die Katalogseite muss diesen leeren Zustand ehrlich zeigen, statt ihn zu umgehen.
 
-Vorhanden: CSV-Adapter ohne Zugangsdaten, Produkt- und Angebotsnormalisierung mit Vergleichbarkeitsprüfung, sowie der Buildpfad `npm run build:commerce` mit Secret-Namen statt Werten im Log, Host-Allowlist, gedrosseltem Lesen, TTL und ausdrücklicher öffentlicher Projektion.
+Vorhanden: CSV-Adapter, Normalisierung mit Vergleichbarkeitsprüfung, Buildpfad mit Secret-Schutz und öffentlicher Projektion, Preislogik (`src/features/commerce/pricing.ts`) und `OfferCard.astro` samt Probe unter `/entwicklung/angebotsprobe/`.
 
 **M12-06 ist blockiert (B-004):** Der Reisecheck ist fertig, die Regeln sind mit Fundstelle erfasst, aber fachlich nicht geprüft. Er läuft deshalb in der Vorschau — ohne positives Gesamtergebnis, und das steckt im Motor, nicht nur im Text. Prüfpunkte und Freigabeschritte in `docs/reviews/travel.md`.
 
