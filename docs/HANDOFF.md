@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6 (80 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert (80 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -39,6 +39,8 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 **M14-01 — Health-/Pflegeprodukte beginnen** (kleinste offene ausführbare ID). M13-06 ist ein **externer Freigabepunkt**: er verlangt eine tatsächliche Programmfreigabe eines Netzwerks samt geprüfter Bild-, Anzeige- und JSON-Rechte. Ohne Vertrag bleibt der Slot aus, und genau so verhält sich der Code bereits.
 
 Vorhanden aus M13: CSV-Adapter ohne Zugangsdaten, Normalisierung mit Vergleichbarkeitsprüfung, Buildpfad mit Secret-Schutz, Preislogik, Angebotskarte und die Katalogseite `/de-de/angebote/` mit ehrlichem Leerzustand und erklärter Sortierung.
+
+**M13-06 ist blockiert (B-005):** Der Angebotslayer ist fertig, aber es gibt keine Programmfreigabe eines Netzwerks. Ohne sie bleibt der Slot aus — kein Feedabruf, keine öffentliche Angebotsdatei, leerer Katalog mit Begründung. Prüfpunkte in `docs/reviews/commerce-partner.md`.
 
 **M12-06 ist blockiert (B-004):** Der Reisecheck ist fertig, die Regeln sind mit Fundstelle erfasst, aber fachlich nicht geprüft. Er läuft deshalb in der Vorschau — ohne positives Gesamtergebnis, und das steckt im Motor, nicht nur im Text. Prüfpunkte und Freigabeschritte in `docs/reviews/travel.md`.
 

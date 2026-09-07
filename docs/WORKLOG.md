@@ -326,3 +326,9 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Jede Sortierung nennt ihre Erklärung auf der Seite. Es gibt kein „Relevanz“: das wäre nur ein anderes Wort für „nach unserem Vorteil“. Ein Test hängt ein Provisionsfeld an die Angebote und belegt, dass sich die Reihenfolge nicht ändert.
 - Beim Grundpreis stehen Angebote ohne bekannte Füllmenge am Ende — nicht als teuerste und nicht als billigste.
 - Der leere Katalog unterscheidet zwei Fälle: „ohne freigegebenen Partnervertrag wird keines angezeigt“ und „zu diesen Filtern ist nichts vorhanden“. Beides ist keine Aussage über den Markt.
+
+| M13-06 | `config/publishers/commerce/`, `angebotsErlaubnis()`, `docs/reviews/commerce-partner.md` | `npx vitest run tests/commerce/partner-slot.test.ts` | 5 Tests; **blockiert (B-005)**, Slot bleibt aus |
+
+- Auch hier war der externe Teil der Blocker und der technische nicht: `angebotsErlaubnis()` prüft je Markt und Stichtag, ob ein freigegebenes Warenprogramm existiert — und **Bildrechte sind eine eigene Erlaubnis**, die nicht aus der Anzeigeerlaubnis folgt.
+- Drei Tests halten den ausgeschalteten Slot fest: keine Anzeige- und keine Bilderlaubnis, leerer Katalog mit Begründung, keine öffentliche Angebotsdatei.
+- Im Freigabedokument stehen die drei Punkte, die gern übersehen werden: Bildrechte, öffentliche JSON-Weitergabe und Linkmodus sind je eigene Erlaubnisse, keine Folge der Programmfreigabe.

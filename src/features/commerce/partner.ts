@@ -10,6 +10,7 @@
  * Die Begründung wird mitgeliefert. Ein stilles `false` wäre im Betrieb nicht
  * zu unterscheiden von einem Fehler.
  */
+import handelsProgramme from '../../../config/publishers/commerce/programs.json' with { type: 'json' };
 import programme from '../../../config/publishers/insurance/programs.json' with { type: 'json' };
 import { isFeatureEnabled, type MarketConfig } from '../../domain/market.ts';
 import {
@@ -27,9 +28,49 @@ function lade(roh: unknown, quelle: string): readonly PartnerProgram[] {
 }
 
 const VERSICHERUNG = lade(programme, 'config/publishers/insurance/programs.json');
+const HANDEL = lade(handelsProgramme, 'config/publishers/commerce/programs.json');
 
 export function insuranceProgramme(): readonly PartnerProgram[] {
   return VERSICHERUNG;
+}
+
+/**
+ * Freigegebene Warenprogramme. Solange diese Liste leer ist, bekommt kein
+ * Angebot eine Anzeigeerlaubnis — der Katalog bleibt leer, und der Feedabruf
+ * unterbleibt (M13-03, M13-06).
+ */
+export function commerceProgramme(): readonly PartnerProgram[] {
+  return HANDEL;
+}
+
+/**
+ * Darf ein Angebot dieses Händlers überhaupt angezeigt werden? Ohne
+ * freigegebenes Programm für den Markt lautet die Antwort nein.
+ */
+export function angebotsErlaubnis(
+  marketId: string,
+  stichtag: string,
+  programme: readonly PartnerProgram[] = HANDEL,
+): { readonly anzeigen: boolean; readonly bilder: boolean; readonly grund: string } {
+  const gueltig = programme.filter(
+    (programm) => programm.markets.includes(marketId) && zulassungGilt(programm, stichtag),
+  );
+  if (gueltig.length === 0) {
+    return {
+      anzeigen: false,
+      bilder: false,
+      grund: `Kein freigegebenes Warenprogramm für ${marketId} am ${stichtag}.`,
+    };
+  }
+  // Bildrechte sind eine eigene Erlaubnis und folgen nicht aus der Anzeige.
+  const mitBildern = gueltig.some((programm) =>
+    programm.notes.some((notiz) => notiz.includes('Bildrechte: erteilt')),
+  );
+  return {
+    anzeigen: true,
+    bilder: mitBildern,
+    grund: `Programm ${gueltig[0]?.programId} ist zugelassen.`,
+  };
 }
 
 export interface PartnerEntscheidung {

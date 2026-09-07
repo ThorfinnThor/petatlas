@@ -2808,9 +2808,13 @@
         "M13-01"
       ],
       "kind": "external_gate",
-      "status": "todo",
+      "status": "blocked",
       "evidence": [],
-      "blocker": null,
+      "blocker": {
+        "reason": "Es gibt keine Programmfreigabe eines Affiliate-Netzwerks und damit weder gepruefte Anzeige- noch Bild- noch JSON-Rechte. Ein Provisionswert aus einer Netzwerkoberflaeche oder aus einem aelteren Gespraech ist kein Vertragsbeleg.",
+        "required_action": "Programmfreigabe einholen, die acht Pruefpunkte in docs/reviews/commerce-partner.md beantworten, das Programm in config/publishers/commerce/programs.json eintragen, das Feed-Secret als Build-Secret hinterlegen und das Gate commerceAffiliate in config/launch.json freischalten.",
+        "owner": "Betreiber"
+      },
       "notes": []
     },
     {

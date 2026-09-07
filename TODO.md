@@ -41,7 +41,15 @@ Der Reisecheck ist fertig und bedienbar, die Regeln sind aus der Delegierten Ver
 
 **Eingebaut ist bereits:** Ändert sich der Regelsatz nach einer Freigabe, fällt der Check automatisch in die Vorschau zurück — die Freigabe nennt die Signatur des Inhalts, den sie geprüft hat.
 
-## 4. Kartenkacheln vor einem kommerziellen Start klären
+## 4. Programmfreigabe für Warenangebote
+
+**Status:** offen · **Aufgabe:** M13-06 · **Blocker:** B-005 · **Zuständig:** Betreiber
+
+Der Angebotslayer ist gebaut: Feedparser, Normalisierung mit Dublettenschutz, Preislogik ohne Kostenlos- und Bestpreisbehauptung, Angebotskarte und Katalogseite. Es fehlt eine **Programmfreigabe eines Netzwerks**. Ohne sie bleibt der Slot aus — kein Feedabruf, keine öffentliche Angebotsdatei, leerer Katalog mit Begründung.
+
+**Was zu tun ist:** die acht Prüfpunkte in **[docs/reviews/commerce-partner.md](docs/reviews/commerce-partner.md)** beantworten. Drei davon werden gern übersehen: Bildrechte, öffentliche JSON-Weitergabe und der erlaubte Linkmodus sind **je eigene** Erlaubnisse und folgen nicht aus der Programmfreigabe.
+
+## 5. Kartenkacheln vor einem kommerziellen Start klären
 
 **Status:** offen · **Zuständig:** Betreiber · **Blockiert nichts**
 
@@ -49,7 +57,7 @@ Die Karte lädt Kacheln von `tile.openstreetmap.org`. Die Nutzungspolitik der Op
 
 Für eine technische Vorschau ist das in Ordnung. Vor einem Start mit nennenswertem Verkehr oder mit Monetarisierung gehört ein eigener oder bezahlter Kacheldienst her. Die Konfiguration ist dafür vorbereitet: `config/tiles.json` enthält Adresse, Attribution und Hosts an einer Stelle, und der Host steht auch in der Content Security Policy nur dort.
 
-## 5. Weitere offene Voraussetzungen
+## 6. Weitere offene Voraussetzungen
 
 Diese blockieren derzeit nichts und stehen mit Status, Entscheider und zuerst betroffener Aufgabe im Register in **[docs/EXTERNAL_SETUP.md](docs/EXTERNAL_SETUP.md)**:
 
