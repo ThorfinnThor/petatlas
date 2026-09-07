@@ -1,0 +1,10 @@
+aw_product_id,merchant_product_id,product_name,description,merchant_id,merchant_name,aw_deep_link,merchant_image_url,search_price,store_price,delivery_cost,currency,in_stock,brand_name,ean,specifications
+1001,SYN-100,Synthetisches Trockenfutter 2 kg,"Beispielbeschreibung, mit Komma",901,Synthetischer Händler,https://beispiel.invalid/p/1001?awc=SYN,https://beispiel.invalid/i/1001.jpg,24.99,24.99,3.95,EUR,1,Beispielmarke,4006381333931,Größe: 2 kg
+1002,SYN-101,"Katzenspielzeug ""Federangel""","Beschreibung mit ""Anführungszeichen"" und Umlauten: äöüß",901,Synthetischer Händler,https://beispiel.invalid/p/1002,https://beispiel.invalid/i/1002.jpg,"7,50","7,50",,EUR,0,Beispielmarke,,Material: Holz
+1003,SYN-102,"Hundeleine 3 m
+mit Zeilenumbruch im Namen","Mehrzeilige
+Beschreibung",902,Zweiter Händler,https://beispiel.invalid/p/1003,,12.00,12.00,0.00,EUR,1,Andere Marke,4006381333948,
+1004,SYN-103,Nassfutter 6er-Pack,"Multipack, sechs Dosen",901,Synthetischer Händler,https://beispiel.invalid/p/1004,https://beispiel.invalid/i/1004.jpg,9.49,9.49,,EUR,,Beispielmarke,,
+1005,SYN-104,Fehlender Preis,Wird abgelehnt,901,Synthetischer Händler,https://beispiel.invalid/p/1005,,,,,EUR,1,Beispielmarke,,
+1006,SYN-105,Unlesbarer Preis,Wird abgelehnt,901,Synthetischer Händler,https://beispiel.invalid/p/1006,,"ab 9,99",,,EUR,1,Beispielmarke,,
+1007,SYN-106,Zu wenige Felder

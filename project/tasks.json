@@ -2637,8 +2637,16 @@
         "M07-04"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "CSV-Adapter fuer Produktfeeds im Awin-Format, der ohne Zugangsdaten arbeitet: er bekommt Bytes und gibt Datensaetze zurueck. CSV wird zeichenweise nach RFC 4180 gelesen - Anfuehrungszeichen schuetzen Trennzeichen und Zeilenumbrueche, doppelte Anfuehrungszeichen stehen fuer eines, CRLF zaehlt als ein Zeilenende, ein offenes Anfuehrungszeichen bricht ab. Encoding: UTF-8 mit optionaler BOM; Latin-1 wird abgelehnt statt mit Ersatzzeichen gelesen. Preise werden aus dem Text in ganzzahlige Cent umgerechnet und nie ueber parseFloat; 'ab 9,99', drei Nachkommastellen, negative Werte und leere Felder werden abgelehnt. Fehlt eine Pflichtspalte im Kopf, bricht der Lauf ab; ungueltige Zeilen werden mit Zeilennummer und Grund in einer Ablehnungsliste gefuehrt statt still uebersprungen. Geprueft mit einer synthetischen Fixture, die Anfuehrungszeichen im Wert, Komma in der Beschreibung, Zeilenumbruch im Produktnamen, fehlende Felder, einen unlesbaren Preis und eine Zeile mit zu wenigen Spalten enthaelt: 4 gueltige Zeilen, 3 begruendete Ablehnungen. Mengentest mit 50.000 im Test erzeugten Zeilen: alle gelesen, keine Ablehnung, unter einer Sekunde. 20 neue Unit-Tests (784 gesamt), npm run verify exit 0.",
+          "reference": "scripts/ingest/adapters/awin.ts, tests/fixtures/commerce/awin-sample.csv, tests/fixtures/commerce/README.md, tests/commerce/awin-adapter.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/commerce/awin-adapter.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

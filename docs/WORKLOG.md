@@ -282,3 +282,16 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Eine Freigabe nennt die Signatur des Inhalts, den sie geprüft hat. Ändert sich eine Frist, ein Wortlaut, eine Fundstelle oder ein Zielland, passt die Signatur nicht mehr und der Check fällt automatisch in die Vorschau zurück. Anmerkungen und Abrufdaten der Quellen ändern die Signatur nicht — sie sagen nichts über den fachlichen Inhalt.
 - Die Signatur ist ausdrücklich ein Änderungsmelder und keine Sicherheitsmaßnahme; sie steht so im Code und im Freigabedokument.
 - Der Vorschaumodus wird jetzt aus den Daten entschieden (`nurVorschau()`), nicht mehr durch ein hart gesetztes `true` im Wizard.
+
+## 2026-09-07 — Sitzung 9 (Fortsetzung): M13 beginnt
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M13-01 | `scripts/ingest/adapters/awin.ts`, `tests/fixtures/commerce/` | `npx vitest run tests/commerce/awin-adapter.test.ts` | 20 Tests; 50.000 Zeilen in unter einer Sekunde |
+
+- Der Parser bekommt **Bytes, keine Anmeldung**. Woher die Bytes kommen — Fixture oder Abruf mit Secret —, entscheidet der Aufrufer; das gehört zu M13-03.
+- CSV zeichenweise nach RFC 4180 statt zeilenweise mit einem regulären Ausdruck. Der Grund steht als Test da: ein Produktname mit eingebettetem Zeilenumbruch, wie er in echten Feeds ständig vorkommt.
+- Preise werden aus dem Text in ganzzahlige Cent umgerechnet, nie über `parseFloat`. „ab 9,99“, „kostenlos“ und drei Nachkommastellen werden abgelehnt statt geraten.
+- Latin-1 wird abgelehnt statt mit Ersatzzeichen gelesen: ein falsch dekodierter Produktname ist schlimmer als ein Abbruch.
+- Fehlt eine Pflichtspalte, bricht der Lauf ab — ein Feed mit anderem Aufbau ist ein anderer Feed. Ungültige Zeilen werden mit Zeilennummer und Grund abgelehnt und gezählt, nicht still übersprungen.
+- Die Fixtures sind synthetisch und als solche gekennzeichnet: echte Awin-Feeds sind Vertragsdaten und gehören nicht in ein öffentliches Repository.
