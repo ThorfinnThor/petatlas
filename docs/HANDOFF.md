@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 2/6 (72 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 3/6 (73 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M12-03 — Offizielle Regelquellen modellieren.** `content-data/travel/rules/` und `docs/reviews/travel-sources.md`: aktuelle EU-Regeln und die Quellen der vier Zielstaaten lesen, fachliche Felder und Fundstellen erfassen. Abnahme: jede vorbereitete Regel hat Quelle, Anwendungsbereich, Inkrafttreten und Reviewstatus. Ohne fachliche Freigabe bleibt `reviewedAt`/`reviewedBy` leer — die Regelmaschine wertet solche Regeln ausdrücklich nicht aus.
+**M12-04 — Wizard und Ergebnisse integrieren.** `src/pages/de-de/reisecheck/`: Auswahl von Tier, Zeitraum, Dokumentstatus, Herkunft, Ziel und Transit; Checkliste mit unbekannten Punkten und amtlichen Links, ohne Garantie. Abnahme: eine unvollständige oder nicht unterstützte Route bekommt **kein** grünes Gesamtergebnis. Achtung: keine Regel ist fachlich freigegeben, die Maschine wertet also derzeit keine aus — die Oberfläche muss diesen Zustand ehrlich darstellen und darf ihn nicht umgehen.
 
-Vorhanden: Umfangsdatei mit vier Zielstaaten und zehn nicht geprüften Fällen, die Regelmaschine (`src/features/travel/engine.ts`) mit sieben Prädikaten, Prioritäten, Geltungszeitraum und vier Ergebniszuständen, dazu 37 Tests unter `tests/travel/`.
+Vorhanden: Umfang (`scope.json`), Regelmaschine (`engine.ts`), Regelsatz `content-data/travel/rules/eu-intra-2026.json` mit fünf Anforderungen aus der Delegierten Verordnung (EU) 2026/131, daraus 40 vorbereitete Regeln, alle ohne Freigabe. Quellenprüfung in `docs/reviews/travel-sources.md`.
 
 **M08-06 ist blockiert (B-002):** Der Rechner ist fertig und getestet, aber die fachliche Abnahme fehlt. Er ist auf Wunsch des Betreibers in der **Vorschau** freigeschaltet und dort mit sichtbarem Warnhinweis erreichbar; die versionierte Marktkonfiguration bleibt auf `costs: false`. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`, die Merkliste in `TODO.md`.
 

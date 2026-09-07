@@ -250,3 +250,11 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Regeln ohne fachliche Freigabe oder außerhalb ihres Geltungszeitraums werden nicht ausgewertet — verschwinden aber nicht still, sondern stehen mit Grund in der Liste der übersprungenen Regeln.
 - Ohne eine einzige auswertbare Regel ist das Gesamtergebnis `unknown`, nicht „alles in Ordnung“. „Wir haben nichts gefunden“ ist keine Unbedenklichkeit.
 - Neu im Regelschema: `requirementId` und `priority`. Zwei Regeln zur selben Anforderung schließen einander aus; die höhere Priorität gewinnt, die verdrängte wird ausgewiesen.
+
+| M12-03 | `content-data/travel/rules/eu-intra-2026.json`, `src/features/travel/rules.ts`, `docs/reviews/travel-sources.md` | `npx vitest run tests/travel/rules.test.ts` | 15 Tests; 40 vorbereitete Regeln, keine davon freigegeben |
+
+- **Die Rechtsgrundlage ist eine andere als erwartet.** Aus dem Gedächtnis hätte ich die Verordnung (EU) Nr. 576/2013 genommen. Tatsächlich gilt seit dem 22. April 2026 die Delegierte Verordnung (EU) 2026/131; 576/2013 war nach Artikel 277 der Verordnung (EU) 2016/429 nur noch bis zum 21. April 2026 anwendbar. Nachgelesen auf EUR-Lex, Artikel 33.
+- Fünf Anforderungen stehen mit Fundstelle im Regelsatz: Kennzeichnung (Art. 7), Tollwutimpfung mit 21-Tage-Frist (Art. 8 i. V. m. Anhang VII Teil 1 der Delegierten Verordnung (EU) 2020/688), Identifizierungsdokument (Art. 11), Begleitung (Art. 3/4) und Höchstzahl fünf (Art. 3).
+- Die österreichische Behördenseite verweist mit Stand 2023 weiterhin auf 576/2013, die niederländische nennt keine eigenen Anforderungen, und die italienische Seite liefert eine Bot-Prüfung statt Inhalt. Sie wurde **nicht umgangen**; der Punkt steht als offene Frage in der Quellenprüfung.
+- Keine der 40 Regeln ist fachlich freigegeben. Ein Test belegt, dass die Maschine selbst bei lückenlosen Angaben kein grünes Ergebnis liefert, sondern `unknown` mit Begründung.
+- Der Regelsatz steht einmal und wird deterministisch auf 4 Ziele × 2 Tierarten × 5 Anforderungen ausgerollt. 24 gleichlautende Dateien wären 24 Gelegenheiten für einen Tippfehler.

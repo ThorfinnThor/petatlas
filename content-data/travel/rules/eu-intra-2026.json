@@ -1,0 +1,97 @@
+{
+  "ruleSetId": "eu-intra-2026",
+  "legalBasis": "Delegierte Verordnung (EU) 2026/131 der Kommission vom 20. Januar 2026 (ABl. L, 2026/131, 27.3.2026), Artikel 33: gilt ab dem 22. April 2026",
+  "appliesFrom": "2026-04-22",
+  "appliesUntil": null,
+  "origins": ["DE"],
+  "destinations": ["AT", "FR", "IT", "NL"],
+  "species": ["dog", "cat"],
+  "contexts": ["private_accompanied"],
+  "sources": [
+    {
+      "url": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
+      "title": "Delegierte Verordnung (EU) 2026/131, deutsche Fassung auf EUR-Lex",
+      "retrievedAt": "2026-09-07",
+      "note": "Rechtsgrundlage. Artikel 3 (einzelne Verbringung), 7 (Einzelkennzeichnung), 8 (Tollwutimpfung), 11 (Identifizierungsdokument). Artikel 33: Inkrafttreten am Tag nach der Veröffentlichung, Anwendung ab 22.04.2026. Die Verordnung (EU) Nr. 576/2013 galt nach Artikel 277 der Verordnung (EU) 2016/429 noch bis zum 21.04.2026 weiter."
+    },
+    {
+      "url": "https://food.ec.europa.eu/animals/live-animal-movements/dogs-cats-and-ferrets/travelling-pet-within-eu_en",
+      "title": "Europäische Kommission, Travelling with a pet within the EU",
+      "retrievedAt": "2026-09-07",
+      "note": "Zusammenfassung der Kommission. Nennt die Gültigkeitsanforderungen aus Anhang VII Teil 1 der Delegierten Verordnung (EU) 2020/688: mindestens zwölf Wochen alt bei der Impfung, Impfdatum nicht vor dem Datum der Kennzeichnung, Gültigkeit beginnt frühestens 21 Tage nach Abschluss der Erstimpfung. Passmodell nach Anhang I Teil 1 der Durchführungsverordnung (EU) 2026/705."
+    }
+  ],
+  "requirements": [
+    {
+      "requirementId": "microchip",
+      "priority": 0,
+      "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
+      "citation": "Artikel 7 Absatz 1 Buchstabe a",
+      "guidance": "Das Tier muss durch einen injizierbaren Transponder gekennzeichnet sein, der nach Artikel 70 der Delegierten Verordnung (EU) 2019/2035 implantiert wurde. Eine vor dem 3. Juli 2011 aufgebrachte, deutlich lesbare Tätowierung kann nach den Übergangsregeln weiter gelten; das prüft dieser Check nicht.",
+      "condition": { "op": "eq", "field": "microchipped", "value": true }
+    },
+    {
+      "requirementId": "rabies-vaccination",
+      "priority": 0,
+      "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
+      "citation": "Artikel 8 Buchstabe a in Verbindung mit Anhang VII Teil 1 der Delegierten Verordnung (EU) 2020/688",
+      "guidance": "Das Tier muss mindestens 21 Tage vor dem Tag der Reise vollständig gegen Tollwut erstgeimpft oder innerhalb der Gültigkeit nachgeimpft sein. Bei der Impfung muss es mindestens zwölf Wochen alt gewesen sein, und die Impfung darf nicht vor der Kennzeichnung erfolgt sein.",
+      "condition": {
+        "op": "all",
+        "of": [
+          { "op": "eq", "field": "rabiesVaccinated", "value": true },
+          {
+            "op": "daysBetween",
+            "from": "rabiesVaccinationDate",
+            "to": "travelDate",
+            "min": 21,
+            "max": null
+          },
+          {
+            "op": "daysBetween",
+            "from": "identificationDate",
+            "to": "rabiesVaccinationDate",
+            "min": 0,
+            "max": null
+          },
+          {
+            "op": "daysBetween",
+            "from": "birthDate",
+            "to": "rabiesVaccinationDate",
+            "min": 84,
+            "max": null
+          }
+        ]
+      }
+    },
+    {
+      "requirementId": "identification-document",
+      "priority": 0,
+      "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
+      "citation": "Artikel 11",
+      "guidance": "Das Tier muss von einem gültigen Identifizierungsdokument begleitet sein — dem EU-Heimtierausweis, ausgestellt von einer ermächtigten Tierärztin oder einem ermächtigten Tierarzt, mit Transpondernummer und Eintrag der Tollwutimpfung. Früher ausgestellte Ausweise gelten nach den Übergangsregeln weiter; welcher Ausweis darunterfällt, prüft dieser Check nicht.",
+      "condition": { "op": "eq", "field": "euPetPassport", "value": true }
+    },
+    {
+      "requirementId": "owner-accompanied",
+      "priority": 0,
+      "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
+      "citation": "Artikel 3 in Verbindung mit Artikel 4",
+      "guidance": "Die Reise muss eine Verbringung zu nichtkommerziellen Zwecken sein: das Tier reist mit seiner Halterin oder ihrem Halter. Reist eine ermächtigte Person statt ihrer, braucht es eine schriftliche Ermächtigung beim Identifizierungsdokument; diesen Fall deckt der Umfang von Fassung v1 nicht ab.",
+      "condition": { "op": "eq", "field": "accompaniedByOwner", "value": true }
+    },
+    {
+      "requirementId": "max-five-animals",
+      "priority": 0,
+      "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
+      "citation": "Artikel 3 in Verbindung mit Artikel 246 Absatz 1 der Verordnung (EU) 2016/429",
+      "guidance": "Höchstens fünf Tiere je Verbringung. Für mehr Tiere gelten andere Vorschriften; Ausnahmen etwa für Wettbewerbe prüft dieser Check nicht.",
+      "condition": { "op": "in", "field": "animals", "values": [1, 2, 3, 4, 5] }
+    }
+  ],
+  "notes": [
+    "Bandwurmbehandlung gegen Echinococcus multilocularis ist nach Artikel 10 nur für die Einreise nach Finnland, Irland, Malta, Nordirland und Norwegen vorgeschrieben. Keines dieser Gebiete liegt im Umfang von Fassung v1; deshalb entsteht dafür keine Regel.",
+    "Junge Tiere und Ausnahmen nach Artikel 9 sind nicht abgebildet: der Umfang schließt Tiere unter zwölf Monaten aus.",
+    "Keine dieser Regeln ist fachlich freigegeben. reviewedAt und reviewedBy bleiben leer, und die Regelmaschine wertet sie deshalb nicht aus."
+  ]
+}

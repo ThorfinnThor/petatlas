@@ -157,6 +157,82 @@ export const TravelRuleSchema = z
 export type TravelRule = z.infer<typeof TravelRuleSchema>;
 
 /**
+ * M12-03 — Ein Regelsatz: mehrere gleichlautende Anforderungen für mehrere
+ * Ziele und Tierarten, aus **einer** Fundstelle.
+ *
+ * Die EU-Anforderungen sind für alle Mitgliedstaaten dieselben. Sie 24-mal
+ * abzuschreiben wäre 24-mal die Gelegenheit, sich zu vertippen. Der Regelsatz
+ * hält sie einmal; die Einzelregeln entstehen daraus deterministisch.
+ *
+ * `reviewedAt`/`reviewedBy` fehlen hier bewusst: ein Regelsatz wird nicht
+ * freigegeben, sondern jede daraus erzeugte Regel einzeln — und bis dahin
+ * wertet die Maschine sie nicht aus.
+ */
+export const TravelRequirementSchema = z
+  .object({
+    requirementId: z
+      .string()
+      .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Kleinbuchstaben und Bindestriche.'),
+    priority: z.number().int(),
+    /** Amtliche Fundstelle genau dieser Anforderung. */
+    officialSourceUrl: z.url(),
+    /** Fundstelle im Klartext, etwa „Art. 8 Buchst. a“. */
+    citation: z.string().min(1),
+    guidance: z.string().min(1),
+    condition: PredicateSchema,
+  })
+  .strict();
+export type TravelRequirement = z.infer<typeof TravelRequirementSchema>;
+
+export const TravelRuleSetSchema = z
+  .object({
+    ruleSetId: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Kleinbuchstaben und Bindestriche.'),
+    /** Rechtsgrundlage im Klartext. */
+    legalBasis: z.string().min(1),
+    /** Ab wann der Rechtsakt gilt — nicht wann er erlassen wurde. */
+    appliesFrom: IsoDate,
+    appliesUntil: IsoDate.nullable(),
+    origins: z.array(CountryCode).min(1),
+    destinations: z.array(CountryCode).min(1),
+    species: z.array(Species).min(1),
+    contexts: z.array(TravelContextKind).min(1),
+    /** Jede tatsächlich gelesene Quelle mit Abrufdatum. */
+    sources: z
+      .array(
+        z
+          .object({
+            url: z.url(),
+            title: z.string().min(1),
+            retrievedAt: IsoDate,
+            note: z.string(),
+          })
+          .strict(),
+      )
+      .min(1),
+    requirements: z.array(TravelRequirementSchema).min(1),
+    notes: z.array(z.string()),
+  })
+  .strict()
+  .superRefine((wert, ctx) => {
+    if (wert.contexts.includes('unknown')) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Ein unbekannter Reisekontext ist kein Anwendungsbereich.',
+        path: ['contexts'],
+      });
+    }
+    const ids = wert.requirements.map((anforderung) => anforderung.requirementId);
+    if (new Set(ids).size !== ids.length) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Anforderungskennungen müssen eindeutig sein.',
+        path: ['requirements'],
+      });
+    }
+  });
+export type TravelRuleSet = z.infer<typeof TravelRuleSetSchema>;
+
+/**
  * Darf diese Regel öffentlich ausgewertet werden? Ohne Fachfreigabe und ohne
  * gültigen Zeitraum lautet die Antwort nein — unabhängig davon, ob der
  * Abruf der Quelle technisch funktioniert hat.

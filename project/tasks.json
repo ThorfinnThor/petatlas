@@ -2507,8 +2507,16 @@
         "M12-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Offizielle Regelquellen gelesen und modelliert. Wichtigster Befund: die Verordnung (EU) Nr. 576/2013 ist nicht mehr die geltende Grundlage - sie war nach Artikel 277 der Verordnung (EU) 2016/429 nur noch bis zum 21.04.2026 anwendbar; seit dem 22.04.2026 gilt die Delegierte Verordnung (EU) 2026/131 (ABl. L, 2026/131, 27.3.2026, Artikel 33), nachgelesen auf EUR-Lex. Aus dem Gedaechtnis waere die alte Verordnung uebernommen worden. Fuenf Anforderungen sind mit Fundstelle erfasst: Kennzeichnung (Art. 7 Abs. 1 Buchst. a), Tollwutimpfung mit 21-Tage-Frist, Mindestalter zwoelf Wochen und Impfung nicht vor Kennzeichnung (Art. 8 Buchst. a i. V. m. Anhang VII Teil 1 der Delegierten Verordnung (EU) 2020/688), Identifizierungsdokument (Art. 11), Begleitung durch die Halterin oder den Halter (Art. 3 i. V. m. Art. 4) und Hoechstzahl fuenf (Art. 3 i. V. m. Art. 246 Abs. 1 der Verordnung (EU) 2016/429). Daraus entstehen deterministisch 40 Einzelregeln (4 Ziele x 2 Tierarten x 5 Anforderungen), jede mit Quelle, Anwendungsbereich, Geltungsbeginn 2026-04-22 und Reviewstatus. Keine davon ist freigegeben: reviewedAt und reviewedBy sind null, und ein Test belegt, dass die Regelmaschine selbst bei lueckenlosen Angaben kein gruenes Ergebnis liefert, sondern unknown mit Begruendung. Vier nationale Quellen wurden gelesen und ihr Stand vermerkt - die oesterreichische Seite verweist mit Stand 2023 noch auf 576/2013, die niederlaendische nennt keine eigenen Anforderungen, die italienische liefert eine Bot-Pruefung statt Inhalt und wurde nicht umgangen. Geprueft: 15 neue Tests (731 gesamt), npm run verify exit 0.",
+          "reference": "content-data/travel/rules/eu-intra-2026.json, src/features/travel/rules.ts, src/domain/schemas/travel.ts, docs/reviews/travel-sources.md, tests/travel/rules.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/travel/rules.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
