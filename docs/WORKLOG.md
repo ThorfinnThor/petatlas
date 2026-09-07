@@ -375,3 +375,7 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Auch **Attributnamen** sind geprüft: `jointSupport`, `healthBenefit`, `calmingEffect` und `therapyUse` sind gesperrt, weil ein Name allein schon eine medizinische Eignung behaupten kann.
 - Geprüft werden Taxonomien, Attributwerte, Bedürfniserklärungen, die Seiten und die im Matching erzeugten Sätze — also auch das, was zur Laufzeit entsteht und in keiner Datei steht.
 - Der Prüfer selbst wird nicht mit sich selbst geprüft: er enthält die verbotenen Wörter zwangsläufig, weil er sie definiert.
+
+| M14-06 | `docs/reviews/care-toys.md`, Blockerregister, `TODO.md` | — | **blockiert (B-006)**, keine echten Produkte erfunden |
+
+M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Produkte lassen sich erst abnehmen, wenn es Angebotsrechte gibt — und dann Attribut für Attribut mit Fundstelle. Der Ablauf steht geschrieben, samt des Satzes, der die ganze Aufgabe trägt: fehlt eine Angabe, bleibt sie leer. Sie wird nicht aus der Beschreibung, aus einem Vergleichsprodukt oder aus einem Sprachmodell ergänzt.

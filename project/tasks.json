@@ -3001,9 +3001,13 @@
         "M14-01"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "blocked",
       "evidence": [],
-      "blocker": null,
+      "blocker": {
+        "reason": "Echte Produkte lassen sich attributseitig nicht abnehmen, solange keine Angebotsrechte bestehen (B-005). Fehlende Herstellerangaben werden nicht ergaenzt - weder aus der Produktbeschreibung noch aus einem Vergleichsprodukt noch aus einem Sprachmodell.",
+        "required_action": "Nach der Programmfreigabe je Produkt die Herstellerangaben mit Fundstelle, Verifikationsstatus und Pruefdatum eintragen, dem Ablauf in docs/reviews/care-toys.md folgen und dataKind der Datei auf real setzen.",
+        "owner": "Betreiber"
+      },
       "notes": []
     },
     {
