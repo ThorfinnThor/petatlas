@@ -2835,8 +2835,16 @@
         "M13-04"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Zehn Startkategorien in zwei Taxonomien: Pflege (Buersten und Kaemme, Krallenpflege, Zahnpflegezubehoer ohne Wirkstoff, Mobilitaetszubehoer, Pflegetextilien) und Spielzeug (Apportieren, Kauen, Beschaeftigung, Katzenspielzeug fuer drinnen, Kratzmoebel). Jede Kategorie nennt Tierarten, eine Beschreibung und die Attribute, nach denen ueberhaupt gefiltert werden darf. Die Ausschlussliste ist Pflichtfeld im Schema und nicht leer: Arzneimittel, Nahrungsergaenzung, medizinische Tests, Antiparasitika und Therapiegeraete stehen mit je einer Begruendung darin - eine Kategorienliste ohne ihre Grenze liest sich wie das Versprechen, alles abzudecken. attributErlaubt() laesst nur Attribute zu, die die Kategorie selbst nennt; 'gut bei Gelenkproblemen' ist kein Merkmal eines Kauspielzeugs, und fuer eine unbekannte Kategorie ist gar nichts erlaubt. Tests sperren Wirkversprechen in Kategoriekennung, Label und Beschreibung (hilft gegen, lindert, heilt, beugt vor, unzerstoerbar, garantiert) und verlangen zu jedem Ausschluss eine Begruendung von mehr als 30 Zeichen. 14 neue Tests (880 gesamt), npm run verify exit 0.",
+          "reference": "content-data/taxonomy/care.json, content-data/taxonomy/toys.json, src/domain/schemas/taxonomy.ts, src/features/care/taxonomy.ts, tests/care/taxonomy.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/care/taxonomy.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -1,0 +1,67 @@
+{
+  "taxonomyId": "care",
+  "lastEditedAt": "2026-09-07",
+  "categories": [
+    {
+      "categoryId": "grooming-brush",
+      "label": "Bürsten und Kämme",
+      "species": ["dog", "cat"],
+      "description": "Bürsten, Kämme, Striegel und Unterwollentferner.",
+      "matchAttributes": ["coatLength", "toolWidthMillimeters", "material"]
+    },
+    {
+      "categoryId": "grooming-claw",
+      "label": "Krallenpflege",
+      "species": ["dog", "cat"],
+      "description": "Krallenscheren und -zangen sowie Feilen ohne Motor.",
+      "matchAttributes": ["sizeRange", "material"]
+    },
+    {
+      "categoryId": "dental-care",
+      "label": "Zahnpflegezubehör",
+      "species": ["dog", "cat"],
+      "description": "Zahnbürsten, Fingerlinge und Kauartikel zur mechanischen Reinigung — ohne Wirkstoffe.",
+      "matchAttributes": ["sizeRange", "material", "dishwasherSafe"]
+    },
+    {
+      "categoryId": "mobility-aid",
+      "label": "Mobilitätszubehör",
+      "species": ["dog"],
+      "description": "Rampen, Einstiegshilfen, Tragehilfen und rutschfeste Unterlagen.",
+      "matchAttributes": ["maxLoadKilograms", "lengthCentimeters", "material"]
+    },
+    {
+      "categoryId": "coat-care-textile",
+      "label": "Pflegetextilien",
+      "species": ["dog", "cat"],
+      "description": "Handtücher, Bademäntel und Pfotenschutztextilien.",
+      "matchAttributes": ["sizeRange", "material", "washableAtCelsius"]
+    }
+  ],
+  "excluded": [
+    {
+      "topic": "Arzneimittel und apothekenpflichtige Produkte",
+      "reason": "Ihre Abgabe und Bewerbung ist gesondert geregelt. Sie sind kein Zubehör und werden hier nicht geführt."
+    },
+    {
+      "topic": "Nahrungsergänzung und Supplemente",
+      "reason": "Ihr Nutzen hängt vom Einzelfall ab und ihre Bewerbung berührt Gesundheitsaussagen. Eine Aufnahme wäre eine gesonderte Erweiterung mit eigener Freigabe."
+    },
+    {
+      "topic": "Medizinische Tests und Diagnostik",
+      "reason": "Ein Testergebnis ohne tierärztliche Einordnung hilft niemandem und kann schaden."
+    },
+    {
+      "topic": "Antiparasitika, Zeckenmittel, Wurmkuren",
+      "reason": "Wirkstoffhaltige Mittel gehören in die Beratung der Tierarztpraxis, nicht in einen Zubehörkatalog."
+    },
+    {
+      "topic": "Therapiegeräte und Behandlungshilfen",
+      "reason": "Ihre Anwendung setzt eine Indikation voraus. Eine Empfehlung ohne Diagnose wäre eine Behandlungsempfehlung."
+    }
+  ],
+  "notes": [
+    "Diese Taxonomie beschreibt Zubehör. Sie enthält keine Wirkversprechen und keine Indikationen.",
+    "Eine Kategorie wird über belegte Eigenschaften gefiltert, nie über eine vermutete gesundheitliche Eignung."
+  ]
+}

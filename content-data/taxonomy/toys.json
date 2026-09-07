@@ -1,0 +1,59 @@
+{
+  "taxonomyId": "toys",
+  "lastEditedAt": "2026-09-07",
+  "categories": [
+    {
+      "categoryId": "fetch-toy",
+      "label": "Apportierspielzeug",
+      "species": ["dog"],
+      "description": "Bälle, Dummys und Wurfspielzeug zum Apportieren.",
+      "matchAttributes": ["sizeRange", "material", "floats", "diameterMillimeters"]
+    },
+    {
+      "categoryId": "chew-toy",
+      "label": "Kauspielzeug",
+      "species": ["dog"],
+      "description": "Kauartikel aus Gummi oder Naturkautschuk, ohne Futterbestandteile.",
+      "matchAttributes": ["sizeRange", "material", "hardnessLevel"]
+    },
+    {
+      "categoryId": "puzzle-toy",
+      "label": "Beschäftigungsspielzeug",
+      "species": ["dog", "cat"],
+      "description": "Schnüffelteppiche, Futterlabyrinthe und Denkspiele.",
+      "matchAttributes": ["difficultyLevel", "dishwasherSafe", "material"]
+    },
+    {
+      "categoryId": "indoor-cat-toy",
+      "label": "Katzenspielzeug für drinnen",
+      "species": ["cat"],
+      "description": "Federangeln, Bälle und Spielzeug für die Wohnung.",
+      "matchAttributes": ["material", "lengthCentimeters"]
+    },
+    {
+      "categoryId": "scratching",
+      "label": "Kratzmöbel",
+      "species": ["cat"],
+      "description": "Kratzbäume, Kratzbretter und Sisalmöbel.",
+      "matchAttributes": ["heightCentimeters", "material", "maxLoadKilograms"]
+    }
+  ],
+  "excluded": [
+    {
+      "topic": "Spielzeug mit Futter- oder Wirkstoffanteil",
+      "reason": "Ein Kauartikel mit Futteranteil ist Futter und gehört in den Futterbereich mit dessen Angaben."
+    },
+    {
+      "topic": "Elektrische Geräte mit Tierkontakt",
+      "reason": "Sicherheitsaussagen dazu ließen sich hier nicht belegen."
+    },
+    {
+      "topic": "Erziehungshilfen mit aversiver Wirkung",
+      "reason": "Sprüh-, Vibrations- und Reizgeräte werden nicht geführt; ihre Bewertung ist eine fachliche Frage, keine Produkteigenschaft."
+    }
+  ],
+  "notes": [
+    "Kein Eintrag behauptet Unzerstörbarkeit, Sicherheit oder eine Eignung für ein bestimmtes Kauverhalten.",
+    "Die Härteangabe ist eine Herstellerangabe und keine Prüfung."
+  ]
+}

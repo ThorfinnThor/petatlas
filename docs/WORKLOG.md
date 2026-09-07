@@ -332,3 +332,14 @@ M09 ist damit inhaltlich fertig und an genau einer Stelle offen: es gibt keinen 
 - Auch hier war der externe Teil der Blocker und der technische nicht: `angebotsErlaubnis()` prüft je Markt und Stichtag, ob ein freigegebenes Warenprogramm existiert — und **Bildrechte sind eine eigene Erlaubnis**, die nicht aus der Anzeigeerlaubnis folgt.
 - Drei Tests halten den ausgeschalteten Slot fest: keine Anzeige- und keine Bilderlaubnis, leerer Katalog mit Begründung, keine öffentliche Angebotsdatei.
 - Im Freigabedokument stehen die drei Punkte, die gern übersehen werden: Bildrechte, öffentliche JSON-Weitergabe und Linkmodus sind je eigene Erlaubnisse, keine Folge der Programmfreigabe.
+
+## 2026-09-07 — Sitzung 9 (Fortsetzung): M14 beginnt
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M14-01 | `content-data/taxonomy/care.json`, `toys.json`, `src/features/care/taxonomy.ts` | `npx vitest run tests/care/taxonomy.test.ts` | 14 Tests; zehn Kategorien, acht begründete Ausschlüsse |
+
+- Die Kategorien beschreiben **Zubehör**, keine Wirkung: Bürsten, Krallenpflege, Zahnpflegezubehör ohne Wirkstoff, Mobilitätszubehör, Pflegetextilien — und beim Spielzeug Apportieren, Kauen, Beschäftigung, Katzenspielzeug, Kratzmöbel.
+- Die Ausschlussliste ist Pflichtfeld im Schema. Eine Kategorienliste ohne ihre Grenze liest sich wie das Versprechen, alles abzudecken; hier stehen Arzneimittel, Supplemente, medizinische Tests, Antiparasitika und Therapiegeräte mit Begründung.
+- `attributErlaubt()` klingt kleinlich und ist der Kern: ein Attribut, das die Kategorie nicht nennt, darf kein Produkt „passend“ machen. „Gut bei Gelenkproblemen“ ist kein Merkmal eines Kauspielzeugs.
+- Tests sperren Wirkversprechen in Kategorienamen und Beschreibungen („hilft gegen“, „lindert“, „unzerstörbar“) und verlangen zu jedem Ausschluss eine echte Begründung.
