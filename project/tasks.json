@@ -2170,8 +2170,16 @@
         "M10-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Datenqualitaetsabnahme ueber den bundesweiten Snapshot: 9.381 Orte, 16 von 16 Regionen, 271 ausgelieferte Dateien. Drei Stichproben unabhaengig gegen die OpenStreetMap-API geprueft, also gegen einen anderen Endpunkt als das verarbeitete Extrakt: Tierarztpraxis Schweer, Das Futterhaus und AniCura stimmen in Koordinate, Name, Kategorie-Tag und Gemeinde exakt mit der Quelle ueberein. npm run check:places meldet keine Beanstandung: kein Ort ausserhalb Deutschlands, keine doppelte ID, kein leerer String statt null, kein Ort ohne Namen, jede Datei traegt den Pflichthinweis, keine Datei enthaelt Bearbeiter-Metadaten, Betreiberangaben oder E-Mail-Adressen. Der Lizenzhinweis wird als LICENSE.txt mit den Daten ausgeliefert. Notdienst: 9 von 9.381 tragen eine Angabe, 9.364 unbekannt, 8 verneint - der Anteil wird bei jedem Lauf ausgegeben, und die Abnahme haelt fest, dass daraus keine Notdienstsuche entstehen darf. Vollstaendigkeit aller real existierenden Einrichtungen wird ausdruecklich nicht behauptet. 9 zusaetzliche Tests fuer die Pruefung selbst.",
+          "reference": "docs/reviews/places.md; scripts/checks/places-quality.ts; tests/places/places-quality.test.ts",
+          "verified_at": "2026-09-07",
+          "command": "npm run check:places; Stichprobe gegen api.openstreetmap.org",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

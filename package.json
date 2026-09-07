@@ -32,6 +32,7 @@
     "test:e2e:features": "playwright test --config playwright.features.config.ts",
     "check:security": "node scripts/checks/secrets.ts",
     "check:licenses": "node scripts/checks/licenses.ts",
+    "check:places": "node scripts/checks/places-quality.ts",
     "check:handoff": "python3 scripts/checks/handoff.py",
     "schema:sources": "node scripts/generate-source-schema.ts",
     "status": "python3 scripts/project_status.py",

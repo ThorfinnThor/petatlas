@@ -292,6 +292,13 @@ function main(): number {
     dependsOn: namensVerweise.map((verweis) => `places-de-names-${verweis.praefix}`),
   });
 
+  // Der Lizenzhinweis wird mit den Daten ausgeliefert, nicht nur daneben
+  // gelegt: wer die Dateien herunterlädt, hat ihn dabei.
+  dateien.push({
+    path: '/data/v1/places/de/LICENSE.txt',
+    content: readFileSync('licenses/ODbL-notice.md', 'utf8'),
+  });
+
   writeFiles(OUT_DIR, dateien);
 
   // Vorhandene Chunks anderer Bereiche behalten: das Manifest beschreibt den
