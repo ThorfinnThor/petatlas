@@ -1,9 +1,9 @@
 # Projektstatus
 
-Stand: 2026-09-06, Ende Sitzung 7.
+Stand: 2026-09-07, Ende Sitzung 8.
 
-**Erledigt:** 53 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** eine (M08-06, fachliche Abnahme des Rechners).
-**Meilensteine vollständig:** M00 bis M07 (je 6/6). M08 bei 5/6, die sechste blockiert.
+**Erledigt:** 59 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** eine (M08-06, fachliche Abnahme des Rechners).
+**Meilensteine vollständig:** M00 bis M07 und M10 (je 6/6). M08 bei 5/6, die sechste blockiert.
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 
@@ -20,6 +20,7 @@ Stand: 2026-09-06, Ende Sitzung 7.
 - Cloudflare: **Vorschau ist live** unter https://petatlas-de-preview.shuu9599.workers.dev — Fixtures, `noindex`, sichtbarer Testdatenhinweis, Freigabestufe A.
 - `npm run build:cloudflare` bricht ab bei production ohne Freigabe, bei Fixtures außerhalb von development und bei gesetztem Feed-Secret ohne Vertrag.
 - **Tierarztkosten-Rechner:** GOT-Import mit 1006 Positionen aus der amtlichen XML-Fassung, Rechenengine mit beiden Golden Tests, Szenariomodell mit Reviewpfad, Oberfläche und Druckansicht. Läuft hinter dem Feature Flag `costs`; öffentlich erst nach der fachlichen Abnahme.
+- **Bundesweite Ortsdaten:** 9.381 Orte aus allen 16 deutschen OSM-Regionalextrakten, in 217 räumliche Zellen geteilt, 46.116 Ortsnamen für die Suche. Messung in `docs/OSM_BENCHMARK.md`, Abdeckung in `docs/COVERAGE.md`, Abnahme in `docs/reviews/places.md`. Die Karte selbst folgt in M11.
 
 **Nicht vorhanden:** Produktionsprojekt, Git-Integration bei Cloudflare, echte Fachdaten, Rechner, Karte, Reisecheck, Katalog, Domain, Betreiberangaben, Partnerverträge.
 
@@ -27,7 +28,7 @@ Stand: 2026-09-06, Ende Sitzung 7.
 
 | Prüfung | Ergebnis |
 |---|---|
-| `npm run test:unit` | 456 Tests in 26 Dateien |
+| `npm run test:unit` | 537 Tests in 31 Dateien |
 | `npx playwright test` | 153 Tests, dazu 30 hinter dem Feature Flag |
 | `npm run lint` / `typecheck` / `format:check` | sauber |
 | `npm run check:security` | 167 Dateien, kein Fund |
@@ -39,6 +40,6 @@ Stand: 2026-09-06, Ende Sitzung 7.
 
 **B-002 — fachliche Abnahme des Kostenrechners.** Es fehlt eine Person mit fachlicher Eignung, die Quellenstand und Rechenannahmen prüft. Die acht Prüfpunkte und die fünf Freigabeschritte stehen in `docs/reviews/costs.md`. Blockiert ausschließlich die öffentliche Aktivierung; alle übrigen Meilensteine sind unberührt.
 
-**Nächster Schritt:** M09-01, M10-01, M12-01 oder M13-01 — alle unabhängig ausführbar.
+**Nächster Schritt:** M11-01 (Karte und lokale Landingpages). Unabhängig daneben: M09-01, M12-01, M13-01.
 
 Maßgeblich ist `project/tasks.json`.

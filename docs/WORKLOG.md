@@ -130,3 +130,20 @@ Zwei Befunde aus der CI, beide eigene Fehler:
 Zwei Befunde beim Bauen:
 - Der erste Parserlauf lieferte „Untersuchung(auch schriftlich“ statt „Untersuchung (auch schriftlich“: der XML-Parser hatte das Leerzeichen nach `<BR/>` weggetrimmt. Aufgefallen ist es nur, weil die Erwartungswerte aus einer unabhängigen Zweitextraktion stammen.
 - Die erste Szenariovorlage verwies auf Position 9. Die ist „Mastschwein“, nicht Hund. Der Test, der jede Positions-ID gegen den echten Katalog prüft, hat das gefangen; die Vorlage nutzt jetzt Position 16 („Hund, Katze, Frettchen“).
+
+## 2026-09-07 — Sitzung 8: M10 vollständig
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M10-01 | OSM-Adapter, `config/osm-tags.json` | Pilotlauf über das Bremen-Extrakt | 2 Mio. Objekte in 0,9 s, 47 Orte, kein `emergency=yes` |
+| M10-02 | `scripts/normalize/geometry.ts`, zweiter Durchgang | Bremen mit Geometrieauflösung | alle 19 Flächen aufgelöst, 66 Orte, keine Doppelzählung |
+| M10-03 | `place-search.ts`, Ortsnamenindex | Suche über echte Bremer Ortsknoten | „Mitte“ wird als mehrdeutig aufgelöst |
+| M10-04 | `scripts/ingest/osm-country.ts`, Regionskonfiguration | bundesweiter Lauf über 16 Regionen | 4,60 GiB, 9.381 Orte, 373 MiB Spitzenspeicher |
+| M10-05 | `scripts/publish/places.ts`, `docs/COVERAGE.md` | `npm run build:places` | 217 Zellen, initialer Browserpfad rund 50 KiB |
+| M10-06 | `docs/reviews/places.md`, `check:places` | Stichprobe gegen die OSM-API | drei Einträge stimmen exakt, keine Beanstandung |
+
+Drei Dinge, die beim Bauen aufgefallen sind:
+
+1. **Die Quelle drosselt.** Der erste Versuch endete mit HTTP 502, nachdem kurz zuvor mehrere Kopfabfragen abgesetzt worden waren. Der Import lädt deshalb sequenziell mit Pausen und behandelt 502 wie ein Rate Limit. Das macht den Lauf langsamer als nötig — mit Absicht.
+2. **Der ungeteilte Ortsnamenindex war 6,68 MB** und wurde vom Manifest abgelehnt. Die Grenze hat genau das getan, wofür sie da ist. Der Index ist jetzt nach Anfangsbuchstaben in 51 Teile geteilt.
+3. **Eine Zahl im Nachweis war aus dem Gedächtnis geschrieben** und falsch: „12 von 9.369“ Notdienstangaben statt der gemessenen 9 von 9.381. `docs/COVERAGE.md` war richtig, weil die Zahlen dort aus den Daten erzeugt werden. Der Nachweis ist korrigiert.
