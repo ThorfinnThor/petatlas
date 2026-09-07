@@ -1920,8 +1920,16 @@
         "M09-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Linkpruefung fuer Partnerziele, vollstaendig offline. pruefeZiel() lehnt ab: fehlende oder unparsebare Adresse, alles ausser https, Zugangsdaten in der Adresse, abweichende Ports, Hosts ausserhalb von allowedLinkHosts (exakter Vergleich, sub.beispiel.invalid gilt nicht als beispiel.invalid), verdeckte Weiterleitungen ueber Parameter wie url, redirect, r, goto und Parameterwerte, die selbst eine Adresse sind, sowie Kampagnenkennungen, die nicht konfiguriert sind. partnerZiel() gibt bei jeder Ablehnung und bei jedem nicht zugelassenen Programmstatus null zurueck - der Link wird ausgeblendet, nicht abgeschwaecht; angehaengt wird hoechstens eine statische Kennung aus der Konfiguration, vertragliche Parameter bleiben unangetastet. rel='sponsored nofollow noopener' steht als PARTNER_LINK_ATTRIBUTE an einer Stelle und wird von PartnerCta.astro von dort geholt. Geprueft: 14 neue Unit-Tests in tests/affiliate-links.test.ts (654 gesamt), darunter einer, der globalThis.fetch ersetzt und belegt, dass die Pruefung keine einzige Anfrage an den Anbieter stellt; ausserdem ein Test, dass Schema und Linkpruefung dieselben Faelle akzeptieren und ablehnen. Vollstaendige Pruefkette ueber Exit-Codes geprueft: Lint, Typecheck, Format, 654 Unit-Tests, 174 E2E, 108 Feature-E2E, Secret-Audit, Lizenzpruefung.",
+          "reference": "src/features/commerce/links.ts, tests/affiliate-links.test.ts, src/components/PartnerCta.astro",
+          "verified_at": "2026-09-07",
+          "command": "npx vitest run tests/affiliate-links.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -18,7 +18,7 @@
 import type { MarketConfig } from '../domain/market.ts';
 import type { PartnerPlacement, PartnerProgram } from '../domain/schemas/partner.ts';
 import { partnerHinweisErlaubt, type PartnerEntscheidung } from '../features/commerce/partner.ts';
-import { partnerZiel } from '../features/commerce/links.ts';
+import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../features/commerce/links.ts';
 
 interface Props {
   market: MarketConfig;
@@ -60,7 +60,12 @@ const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm) : null;
         Leistungen stehen dort; diese Seite gibt dazu keine Einschätzung ab.
       </p>
       <p>
-        <a class="partner__link" href={ziel} rel="sponsored nofollow noopener" target="_blank">
+        <a
+          class="partner__link"
+          href={ziel}
+          rel={PARTNER_LINK_ATTRIBUTE.rel}
+          target={PARTNER_LINK_ATTRIBUTE.target}
+        >
           Zum Anbieter {entscheidung.programm.advertiser}
         </a>
         <span class="partner__hinweis"> (öffnet ein neues Fenster beim Anbieter)</span>

@@ -202,3 +202,12 @@ Zu M11-06 im Einzelnen:
 - Der Partnerhinweis rendert nur bei eingeschaltetem Feature, gültiger Zulassung, passendem Markt und erlaubter Platzierung. Auf der Probe-Seite ist genau eine von drei Platzierungen erlaubt, und genau eine erscheint.
 - Die Zieladresse kommt aus dem Vertrag und wird geprüft (https, Host in der Allowlist). Angehängt wird höchstens eine statische Kampagnenkennung; ein E2E-Test liest die URL und prüft, dass sie genau einen Parameter trägt und weder Profil-, Kosten- noch Diagnosewerte enthält.
 - `rel="sponsored nofollow noopener"`, kein Klickhandler, keine Zwischenstation, und vor dem Klick geht keine einzige Anfrage an den Anbieter.
+
+| M09-03 | `links.ts` mit Zielprüfung, `tests/affiliate-links.test.ts` | `npx vitest run tests/affiliate-links.test.ts` | 14 Tests; ungültige Ziele werden ausgeblendet, nicht abgeschwächt |
+
+- Geprüft wird **offline**. Ein „Verifizieren“ per HTTP-Abruf wäre beim Anbieter ein zählbarer Aufruf — im Build wie im Test. Ein Test ersetzt `globalThis.fetch` und belegt, dass die Prüfung keine einzige Anfrage stellt.
+- Abgelehnt werden: fremde Hosts (exakter Vergleich, `sub.beispiel.invalid` gilt nicht als `beispiel.invalid`), alles ohne https, Zugangsdaten in der Adresse, abweichende Ports, verdeckte Weiterleitungen (`url=`, `redirect=`, `r=` und Parameterwerte, die selbst eine Adresse sind) und Kampagnenkennungen, die nicht konfiguriert sind.
+- Schema und Linkprüfung sind aufeinander abgestimmt: was das Schema durchlässt, nimmt die Linkprüfung an, und was die Linkprüfung ablehnt, lässt das Schema gar nicht erst durch. Sonst gäbe es eine Konfiguration, die gültig aussieht und trotzdem nie einen Link erzeugt.
+- `rel="sponsored nofollow noopener"` steht jetzt an genau einer Stelle und wird von der Komponente von dort geholt.
+
+**Prozessfehler in dieser Sitzung:** Der Commit zu M09-02 ging mit rotem Lint raus. Ich hatte die Ausgabe von `npm run lint` nur bis zur letzten Zeile gelesen statt den Exit-Code zu prüfen. Das war das dritte Mal in dieser Sitzung, dass ein Commit vor grüner Prüfkette rausging; seitdem wird jede Stufe über ihren Exit-Code geprüft.
