@@ -11,7 +11,8 @@ function dienst(
   verhalten: (erfolg: PositionCallback, fehler: PositionErrorCallback) => void,
 ): Geolocation {
   return {
-    getCurrentPosition: (erfolg, fehler) => verhalten(erfolg, fehler as PositionErrorCallback),
+    getCurrentPosition: (erfolg: PositionCallback, fehler?: PositionErrorCallback | null) =>
+      verhalten(erfolg, (fehler ?? (() => undefined)) as PositionErrorCallback),
     watchPosition: () => {
       throw new Error('watchPosition darf nicht verwendet werden.');
     },
@@ -50,7 +51,9 @@ describe('Erfolgsfall', () => {
   });
 
   it('fragt genau einmal ab, nicht dauerhaft', async () => {
-    const getCurrentPosition = vi.fn((erfolg: PositionCallback) => erfolg(position(53, 8, 10)));
+    const getCurrentPosition = vi.fn((erfolg: PositionCallback) => {
+      erfolg(position(53, 8, 10));
+    });
     const watchPosition = vi.fn();
     await frageStandort({
       geolocation: {
@@ -72,7 +75,8 @@ describe('Erfolgsfall', () => {
         clearWatch: vi.fn(),
       } as unknown as Geolocation,
     });
-    const optionen = getCurrentPosition.mock.calls[0]?.[2] as PositionOptions | undefined;
+    const aufruf = getCurrentPosition.mock.calls[0] as unknown[] | undefined;
+    const optionen = aufruf?.[2] as PositionOptions | undefined;
     expect(optionen?.maximumAge).toBe(0);
   });
 });
