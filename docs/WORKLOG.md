@@ -595,3 +595,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - **Safari tabt ab Werk nicht auf Links.** Die Reihenfolgeprüfung über echte Tastendrücke läuft deshalb nur in Chromium. Das ist eine Einstellung des Browsers, kein Mangel der Seite — und es steht im Bericht, statt in einem grünen Häkchen zu verschwinden.
 - Eine eigene Testannahme war falsch: `toBeHidden` trifft eine verschobene Sprungmarke nicht, denn für Playwright ist sie sichtbar. Geprüft wird jetzt ihre Lage im Sichtfeld, vor und nach dem Fokus.
 - Der Bericht nennt auch, was **nicht** geprüft ist: kein Screenreader-Lauf, keine Nutzer mit Hilfsmitteln, keine BFSG-Konformitätserklärung. Bestandene Regelprüfungen sind keine Barrierefreiheitserklärung.
+
+| M18-05 | `config/legal.ts`, `docs/LEGAL_CHECKLIST.md`, Methodik- und Barrierefreiheitsseite | 6 Unit-Tests, 3 neue E2E-Fälle, axe über beide neuen Seiten | grün |
+
+- Die Prüfliste **behauptet nichts**. Sie zählt auf, was verlangt ist, und sagt je Punkt, ob er erfüllt ist, wer entscheidet und was fehlt. Vier von sieben Punkten sind offen, und das steht so da.
+- Der Werbestand wird **abgeleitet, nicht behauptet**: aus den Launch-Gates und daraus, dass kein Partnerprogramm freigegeben ist. Ein Test hält beide Seiten zusammen, damit die Aussage nicht stehen bleibt, wenn sich ein Gate ändert.
+- Die Barrierefreiheitsseite gibt sich **ausdrücklich nicht** als Erklärung im Rechtssinn aus. Bestandene Messungen sind keine Erklärung: dazu gehören eine Bewertung des Geltungsbereichs und ein erreichbarer Rückmeldeweg. Ohne Kontaktadresse steht dort keine erfundene.
+- Ob das BFSG für dieses Angebot überhaupt gilt, ist offen und als offen benannt — Kleinstunternehmen sind teilweise ausgenommen, und die Einordnung hängt am Betreiber.
+- Die Methodikseite beantwortet die Frage, der jede Zahl ausgesetzt ist: woher, wie alt, von wem geprüft. Sie liest dieselben Funktionen wie der Datenstand, statt eine zweite Beschreibung zu pflegen.

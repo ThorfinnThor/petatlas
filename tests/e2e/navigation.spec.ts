@@ -105,3 +105,36 @@ test('Jede Seite hat einen eindeutigen Titel und ein canonical', async ({ page }
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /https?:\/\//);
   }
 });
+
+// M18-05 — Die Pflicht- und Erklärseiten sind erreichbar und erfinden nichts.
+test('Methodikseite nennt Herkunft, Stand und Grenzen', async ({ page }) => {
+  await page.goto('/de-de/methodik/');
+  await expect(page.locator('h1')).toHaveText('Methodik');
+  await expect(page.getByText('Keine erfundenen Zahlen')).toBeVisible();
+  await expect(page.getByText('Unbekannt heißt unbekannt')).toBeVisible();
+  await expect(page.getByRole('link', { name: '/data/v1/health.json' })).toBeVisible();
+});
+
+test('Barrierefreiheitsseite gibt sich nicht als Erklärung aus', async ({ page }) => {
+  await page.goto('/de-de/barrierefreiheit/');
+  await expect(page.locator('h1')).toHaveText('Barrierefreiheit');
+  await expect(page.getByText('noch keine Erklärung zur Barrierefreiheit')).toBeVisible();
+  // Ohne Kontaktadresse steht dort keine erfundene — an beiden Stellen.
+  await expect(page.getByText('keine erfunden')).toHaveCount(2);
+  await expect(page.getByText('Ein Rückmeldeweg wird eingerichtet')).toBeVisible();
+});
+
+test('Der Fußbereich führt zu allen Pflichtseiten', async ({ page }) => {
+  await page.goto('/de-de/');
+  const fuss = page.locator('footer nav');
+  for (const name of [
+    'Quellen',
+    'Datenstand',
+    'Methodik',
+    'Impressum',
+    'Datenschutz',
+    'Barrierefreiheit',
+  ]) {
+    await expect(fuss.getByRole('link', { name })).toBeVisible();
+  }
+});

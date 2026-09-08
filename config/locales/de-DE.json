@@ -20,7 +20,9 @@
     "nav.sources": "Quellen",
     "nav.dataStatus": "Datenstand",
     "nav.imprint": "Impressum",
-    "nav.privacy": "Datenschutz"
+    "nav.privacy": "Datenschutz",
+    "nav.method": "Methodik",
+    "nav.accessibility": "Barrierefreiheit"
   },
   "slugs": {
     "home": "",
@@ -36,7 +38,9 @@
     "privacy": "datenschutz",
     "catalog": "angebote",
     "profile": "mein-tier",
-    "favorites": "merkliste"
+    "favorites": "merkliste",
+    "method": "methodik",
+    "accessibility": "barrierefreiheit"
   },
   "legacySlugs": {}
 }

@@ -21,6 +21,8 @@ const SEITEN = [
   '/de-de/merkliste/',
   '/de-de/quellen/',
   '/de-de/datenstand/',
+  '/de-de/methodik/',
+  '/de-de/barrierefreiheit/',
   '/de-de/impressum/',
   '/de-de/datenschutz/',
 ];

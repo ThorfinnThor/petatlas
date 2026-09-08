@@ -104,7 +104,14 @@ describe('Ausgeschaltete Funktionen haben keine Route', () => {
 
   it('trennt Hauptnavigation und Fußbereich', () => {
     const footer = navigationFor(DE, 'footer').map((item) => item.key);
-    expect(footer).toEqual(['sources', 'dataStatus', 'imprint', 'privacy']);
+    expect(footer).toEqual([
+      'sources',
+      'dataStatus',
+      'method',
+      'imprint',
+      'privacy',
+      'accessibility',
+    ]);
     expect(navigationFor(DE).map((item) => item.key)).not.toContain('imprint');
   });
 });
@@ -122,8 +129,12 @@ describe('Baubare Pfade', () => {
       '/de-de/',
       '/de-de/quellen/',
       '/de-de/datenstand/',
+      // Methodik und Barrierefreiheit hängen an keinem Feature Flag: beide
+      // gehören zu den Pflicht- und Erklärangaben (M18-05).
+      '/de-de/methodik/',
       '/de-de/impressum/',
       '/de-de/datenschutz/',
+      '/de-de/barrierefreiheit/',
     ]);
   });
 });

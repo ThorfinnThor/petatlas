@@ -1,0 +1,90 @@
+---
+/**
+ * M18-05 — Methodikseite.
+ *
+ * Beantwortet die Frage, der jede Zahl auf dieser Website ausgesetzt ist:
+ * **woher stammt sie, wie alt ist sie, und wer hat sie geprüft?** Die Seite
+ * beschreibt keine Absicht, sondern das tatsächliche Verfahren; die Zahlen
+ * daneben stammen aus denselben Funktionen wie der Datenstand.
+ */
+import { HEALTH_PFAD, baueHealthBericht } from '../../features/freshness/health.ts';
+import { verifiedSources, pendingSources } from '../../domain/source-registry.ts';
+import { routePath } from '../../lib/routes.ts';
+import { defaultMarket } from '../../domain/market.ts';
+import Notice from '../Notice.astro';
+
+const markt = defaultMarket();
+const jetzt = new Date();
+const bericht = baueHealthBericht(jetzt.toISOString().slice(0, 10), jetzt.toISOString());
+const gepruefteQuellen = verifiedSources();
+const offeneQuellen = pendingSources();
+---
+
+<h1>Methodik</h1>
+<p>
+  Diese Seite beschreibt, wie die Angaben auf dieser Website zustande kommen — und was ausdrücklich
+  <strong>nicht</strong> getan wird.
+</p>
+
+<h2>Woher die Daten stammen</h2>
+<p>
+  Alle fachlichen Angaben stammen aus benannten Quellen. Für jede Quelle ist festgehalten, wer sie
+  herausgibt, unter welchen Bedingungen sie genutzt werden darf und ob diese Bedingungen geprüft
+  sind. Derzeit sind <strong>{gepruefteQuellen.length}</strong> Quellen geprüft und freigegeben,
+  <strong>{offeneQuellen.length}</strong> sind es nicht — aus einer nicht freigegebenen Quelle wird nichts
+  veröffentlicht.
+</p>
+<p>
+  Die vollständige Liste steht unter <a href={routePath(markt, 'sources')}>Quellen</a>, der Stand
+  jedes Datensatzes unter <a href={routePath(markt, 'dataStatus')}>Datenstand</a> und maschinenlesbar
+  unter <a href={HEALTH_PFAD}>{HEALTH_PFAD}</a>.
+</p>
+
+<h2>Was hier nicht passiert</h2>
+<ul>
+  <li>
+    <strong>Keine erfundenen Zahlen.</strong> Es gibt keine geschätzten Tierarztpreise, keine ausgedachten
+    Bewertungen und keine Tests, die niemand durchgeführt hat.
+  </li>
+  <li>
+    <strong>Unbekannt heißt unbekannt.</strong> Eine fehlende Angabe wird als „nicht angegeben“ ausgewiesen
+    — nicht als „nein“, „kostenlos“, „ungefährlich“ oder „geeignet“.
+  </li>
+  <li>
+    <strong>Keine Diagnose und keine Behandlungsempfehlung.</strong> Diese Website ersetzt keinen Tierarztbesuch
+    und gibt keine Dosierungen an.
+  </li>
+  <li>
+    <strong>Keine personalisierte Empfehlung.</strong> Reihenfolgen entstehen aus nachvollziehbaren Kriterien
+    wie Preis oder Entfernung, nicht aus einer Vergütung.
+  </li>
+</ul>
+
+<h2>Wie mit Unsicherheit umgegangen wird</h2>
+<p>
+  Regeln mit rechtlichem Gewicht — Gebühren und Reisebestimmungen — werden erst ausgewertet, wenn
+  eine fachlich prüfende Person sie freigegeben hat. Ist keine Freigabe eingetragen oder hat sich
+  der geprüfte Inhalt geändert, läuft die betroffene Funktion in einer Vorschau, die ausdrücklich
+  <strong>kein</strong> positives Gesamtergebnis liefert. Eine Freigabe altert außerdem: nach einem Jahr
+  trägt sie kein Ergebnis mehr.
+</p>
+
+<h2>Wie alt die Daten sind</h2>
+<p>
+  Jeder Datensatz nennt seinen Stand und ab wann er als veraltet gilt. Der Gesamtstand dieses Builds
+  lautet: <strong>{bericht.gesamt.frische}</strong>. {bericht.gesamt.begruendung}
+</p>
+
+<h2>Bezahlte Verweise</h2>
+<p>
+  Wo ein Verweis vergütet würde, steht „Anzeige“ daran, und der Link ist als bezahlt ausgezeichnet.
+  Ohne freigegebenen Partnervertrag entsteht kein solcher Verweis; das ist der derzeitige Zustand.
+  Die Reihenfolge von Angeboten hängt nie von einer Vergütung ab.
+</p>
+
+<Notice variante="hinweis" titel="Diese Seite beschreibt den aktuellen Stand">
+  <p>
+    Kommen Funktionen oder Quellen hinzu, wird die Beschreibung mit ihnen geändert — nicht
+    nachträglich.
+  </p>
+</Notice>

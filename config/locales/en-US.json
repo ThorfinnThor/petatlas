@@ -21,7 +21,9 @@
     "nav.sources": "Sources",
     "nav.dataStatus": "Data status",
     "nav.imprint": "Imprint",
-    "nav.privacy": "Privacy"
+    "nav.privacy": "Privacy",
+    "nav.method": "Method",
+    "nav.accessibility": "Accessibility"
   },
   "slugs": {
     "home": "",
@@ -37,7 +39,9 @@
     "privacy": "privacy",
     "catalog": "offers",
     "profile": "my-pet",
-    "favorites": "saved"
+    "favorites": "saved",
+    "method": "method",
+    "accessibility": "accessibility"
   },
   "legacySlugs": {}
 }

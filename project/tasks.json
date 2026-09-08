@@ -3771,8 +3771,14 @@
         "M18-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npm run verify exit 0, 1263 Tests; davon 6 in tests/legal.test.ts. npx playwright test 222 gruen (drei neue Faelle fuer Methodik, Barrierefreiheit und Fussnavigation), features 280 gruen, Zugaenglichkeit 107 bestanden bei 7 uebersprungenen - die beiden neuen Seiten laufen in axe ueber drei Profile mit. Umgesetzt: config/legal.ts zaehlt sieben Pflichtangaben mit Grundlage, Ort, Zustaendigkeit und Bemerkung auf und leitet den Werbestand aus den Launch-Gates ab statt ihn zu behaupten; zwei neue Pflichtseiten (/de-de/methodik/ und /de-de/barrierefreiheit/) samt Fussnavigation und Slugs in beiden Locales; docs/LEGAL_CHECKLIST.md mit Reihenfolge und offenen Punkten. Blockiert und ausdruecklich nicht erfunden: Impressumsangaben, Datenschutzerklaerung und die Erklaerung zur Barrierefreiheit. Die Seiten sagen, dass Angaben fehlen, statt Platzhalter zu zeigen; ohne Kontaktadresse steht kein Rueckmeldeweg da. Der Produktionsbuild bricht ohne echte Betreiberangaben weiterhin ab.",
+          "reference": "config/legal.ts, docs/LEGAL_CHECKLIST.md, src/components/pages/Method.astro, src/components/pages/Accessibility.astro, src/lib/routes.ts, config/locales/, tests/legal.test.ts, tests/e2e/navigation.spec.ts",
+          "verified_at": "2026-09-08T16:00:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

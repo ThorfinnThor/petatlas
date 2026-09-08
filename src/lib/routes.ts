@@ -29,7 +29,9 @@ export type RouteKey =
   | 'sources'
   | 'dataStatus'
   | 'imprint'
-  | 'privacy';
+  | 'privacy'
+  | 'method'
+  | 'accessibility';
 
 interface RouteDefinition {
   readonly key: RouteKey;
@@ -56,8 +58,13 @@ export const ROUTES: readonly RouteDefinition[] = [
   { key: 'food', requiresFeature: 'food', indexable: true },
   { key: 'sources', requiresFeature: null, indexable: true },
   { key: 'dataStatus', requiresFeature: null, indexable: true },
+  // M18-05: Methodik und Barrierefreiheit gehören zu den Pflicht- und
+  // Erklärangaben und stehen deshalb immer zur Verfügung, unabhängig von
+  // jedem Feature Flag. Die Reihenfolge hier ist die Reihenfolge im Fuß.
+  { key: 'method', requiresFeature: null, indexable: true },
   { key: 'imprint', requiresFeature: null, indexable: true },
   { key: 'privacy', requiresFeature: null, indexable: true },
+  { key: 'accessibility', requiresFeature: null, indexable: true },
 ];
 
 const SLUGS: Readonly<Record<string, Readonly<Record<string, string>>>> = {
@@ -143,7 +150,14 @@ export function navigationFor(
   market: MarketConfig,
   section: 'main' | 'footer' = 'main',
 ): readonly NavigationItem[] {
-  const footerKeys: readonly RouteKey[] = ['sources', 'dataStatus', 'imprint', 'privacy'];
+  const footerKeys: readonly RouteKey[] = [
+    'sources',
+    'dataStatus',
+    'method',
+    'imprint',
+    'privacy',
+    'accessibility',
+  ];
   return ROUTES.filter((route) => {
     if (route.key === 'home') return section === 'main';
     const inFooter = footerKeys.includes(route.key);

@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 4/6 (108 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6 (109 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,13 +36,13 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M18-05 — Geschäfts- und Rechtsinformationen vorbereiten.** `config/legal.ts`, die Rechtsseiten und `docs/LEGAL_CHECKLIST.md`: echte Betreiberangaben, Datenschutz, Affiliatekennzeichnung, Methodik, Quellen und Kontaktwege zusammenführen; Werbung standardmäßig aus; Prüfbedarf zu Einwilligung und BFSG benennen. Abnahme: **keine erfundenen juristischen Personendaten** — fehlende echte Freigaben werden als Blocker geführt, nicht als Platzhaltertext ausgeliefert.
+**M18-06 — Fachliche und rechtliche Launchfreigaben erfassen.** `docs/reviews/launch.md` und `config/launch.json`: den Launchstatus an **reale** Nachweise binden. Abnahme: der Status verweist auf tatsächliche Freigaben und freigegebene Funktionen; **kein Agent erfindet eine Juristen- oder Tierarztprüfung**.
 
-Achtung: Betreiberangaben liegen nicht vor und dürfen nicht erfunden werden. Zu erwarten ist deshalb, dass diese Aufgabe teils umgesetzt und teils als Blocker dokumentiert wird — die Struktur entsteht, die Inhalte bleiben leer, und die Seiten sagen das.
+Diese Aufgabe ist ein externer Freigabepunkt. Erwartbar ist deshalb: das Gerüst entsteht — eine Übersicht, die je Gate Zuständigkeit, benötigten Nachweis und heutigen Stand nennt und aus `config/launch.json` liest —, und die Freigaben selbst bleiben offen und als Blocker geführt. Sie einzutragen ist Sache der zuständigen Person.
 
-Gemessen und dokumentiert liegen vor: `docs/ACCESSIBILITY.md` (axe über 13 Seiten in drei Profilen, Tastatur, Zoom, Struktur), `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`. In der CI laufen `check:seo` samt Probelauf, `check:dist`, `check:budgets`, `rollback:pruefen` und der Zugänglichkeitslauf.
+Vorarbeit: `docs/LEGAL_CHECKLIST.md` nennt die Pflichten mit Grundlage und Zuständigkeit, `config/legal.ts` hält sie maschinenlesbar und leitet den Werbestand aus den Gates ab. Die Seiten `/de-de/methodik/` und `/de-de/barrierefreiheit/` sind da; Impressum, Datenschutz und die Barrierefreiheitserklärung sagen, was fehlt, statt Platzhalter zu zeigen.
 
-Die Workflow-Härtung liegt in `scripts/checks/workflows.sh` und läuft in `npm run verify` mit. Neue Secrets in Workflows müssen dort eingetragen und begründet werden; erklärt sind `GITHUB_TOKEN` und `CLOUDFLARE_DEPLOY_HOOK`.
+Gemessen und dokumentiert liegen vor: `docs/ACCESSIBILITY.md`, `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`. In der CI laufen `check:seo` samt Probelauf, `check:dist`, `check:budgets`, `rollback:pruefen` und der Zugänglichkeitslauf.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

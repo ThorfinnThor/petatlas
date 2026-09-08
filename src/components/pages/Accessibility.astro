@@ -1,0 +1,94 @@
+---
+/**
+ * M18-05 — Angaben zur Barrierefreiheit.
+ *
+ * **Keine Erklärung zur Barrierefreiheit im Rechtssinn.** Eine solche
+ * Erklärung braucht eine Bewertung des Geltungsbereichs, einen Feedback-Weg
+ * mit erreichbarer Adresse und die Angabe, ob das Gesetz für dieses Angebot
+ * gilt. Adresse und Bewertung liegen nicht vor; beides zu erfinden wäre
+ * genau die Sorte Platzhaltertext, die hier nicht ausgeliefert wird.
+ *
+ * Was vorliegt, sind Messergebnisse. Die stehen hier.
+ */
+import { createSiteConfig } from '../../../config/site.ts';
+import { resolveBuildConfig } from '../../../config/build.ts';
+import { PFLICHTANGABEN } from '../../../config/legal.ts';
+import Notice from '../Notice.astro';
+
+const build = resolveBuildConfig();
+const site = createSiteConfig(build.mode, process.env);
+const kontakt = site.operator.contactEmail;
+const eintrag = PFLICHTANGABEN.find((pflicht) => pflicht.id === 'barrierefreiheitserklaerung');
+---
+
+<h1>Barrierefreiheit</h1>
+
+<Notice variante="warnung" titel="Dies ist noch keine Erklärung zur Barrierefreiheit">
+  <p>
+    Eine Erklärung im Sinne des Barrierefreiheitsstärkungsgesetzes verlangt mehr als bestandene
+    Prüfungen: eine Bewertung des Geltungsbereichs, einen erreichbaren Rückmeldeweg und die Angabe,
+    ob und für wen das Gesetz gilt. {
+      kontakt === null
+        ? 'Es liegt keine Kontaktadresse vor, und es wird keine erfunden.'
+        : 'Die Bewertung steht aus.'
+    }
+  </p>
+</Notice>
+
+<h2>Was gemessen wurde</h2>
+<p>
+  Geprüft wurde am 8. September 2026 gegen den gebauten Stand, mit einer Regelprüfung nach WCAG 2.0
+  und 2.1 (Stufen A und AA) auf dreizehn Seiten in drei Browserprofilen — Chromium, WebKit und ein
+  mobiles Format. Dazu kamen Prüfungen, die eine Regelprüfung nicht leisten kann: Sprungmarke,
+  Tastaturreihenfolge, sichtbarer Fokus, Umbruch bei 320 Bildpunkten Breite und die Abfolge der
+  Überschriftenebenen.
+</p>
+<p>
+  Ergebnis: kein offener kritischer Befund. Ein Befund wurde dabei gefunden und behoben — es fehlte
+  die Sprungmarke zum Inhalt, sodass die Navigation auf jeder Seite durchtabbt werden musste.
+</p>
+
+<h2>Bekannte Einschränkungen</h2>
+<ul>
+  <li>
+    <strong>Kein Screenreader-Lauf.</strong> Wie NVDA, JAWS oder VoiceOver diese Seiten vorlesen, hat
+    niemand gehört. Die Auszeichnung ist geprüft, das Hörerlebnis nicht.
+  </li>
+  <li>
+    <strong>Keine Prüfung mit Betroffenen.</strong> Ohne Menschen, die auf Hilfsmittel angewiesen sind,
+    gibt es keine Aussage über tatsächliche Bedienbarkeit.
+  </li>
+  <li>
+    <strong>Die Karte</strong> ist eine Ergänzung. Dieselben Orte stehen als Liste darunter; ohne JavaScript
+    bleibt die Liste erreichbar.
+  </li>
+  <li>
+    In Safari springt die Tabulatortaste ab Werk nur zwischen Formularfeldern. Das ist eine
+    Einstellung des Browsers; die Sprungmarke ist auch dort vorhanden und wirksam.
+  </li>
+</ul>
+
+<h2>Rückmeldung</h2>
+<p>
+  {
+    kontakt === null
+      ? 'Ein Rückmeldeweg wird eingerichtet, sobald es eine Kontaktadresse des Betreibers gibt. Bis dahin steht hier keine erfundene Adresse.'
+      : `Barrieren können an ${kontakt} gemeldet werden.`
+  }
+</p>
+
+{
+  eintrag !== undefined && (
+    <p class="fussnote">
+      Stand der Pflicht: {eintrag.status === 'offen' ? 'offen' : eintrag.status}.{' '}
+      {eintrag.bemerkung}
+    </p>
+  )
+}
+
+<style>
+  .fussnote {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+</style>
