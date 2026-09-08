@@ -45,6 +45,10 @@ Diese Liste ist kein Mängelbericht, sondern der Teil der Wahrheit, der sonst in
 - **Keine Erklärung zur Barrierefreiheit.** Ob das BFSG für dieses Angebot überhaupt gilt, ist nicht geprüft.
 - **Keine juristische Prüfung.** Weder Datenschutz noch Werbekennzeichnung noch Barrierefreiheit sind von einer dazu befugten Person bewertet worden.
 
+## Verwandte Register
+
+`problems.md` beschreibt die Betriebsfälle, die nicht kaputt sind, aber in die Irre führen — mit Ursache, Handgriff und dem, was man dabei **nicht** tun soll.
+
 ## Was daraus folgt
 
 Nichts davon hindert die Weiterentwicklung. Alles davon hindert eine Veröffentlichung, die mehr behauptet, als hier steht. Die Reihenfolge, in der diese Punkte auflösbar sind, steht in `docs/reviews/launch.md`.

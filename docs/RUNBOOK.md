@@ -139,4 +139,6 @@ Grenzen und gemessene Werte: `config/budgets.json`, `docs/BUDGET_REPORT.md`. Bei
 | Quellenbeobachtung | `geaendert` heißt: eine Seite ansehen, nicht das Skript reparieren. |
 | Import | Ein Fehlschlag beim Abruf ist kein Datenverlust; der Snapshot bleibt. |
 
+Bevor lange gesucht wird: `problems.md` sammelt die Fälle, die **nicht** kaputt sind, aber so aussehen — der GOT-Abruf aus der CI und die irreführende Wrangler-Meldung stehen dort mit Ursache und Handgriff.
+
 Ein offenes Issue der Rauchprobe muss geschlossen werden, wenn die Ursache behoben ist — sonst erinnert der Lauf nicht mehr, weil er die Meldung für schon vorhanden hält.

@@ -61,3 +61,7 @@ Ein öffentliches Repository ist weder ein Geheimnisspeicher noch automatisch ei
 ## Dokumentpflege
 
 Die modularen docs-Dateien sind für die tägliche Ausführung gedacht; IMPLEMENTIERUNGSPLAN.md ist ihre zusammengefasste Referenz. Architekturänderungen über ADRs dokumentieren und betroffene Spezifikation/Tests konsistent halten. Den Aufgabenstatus niemals aus einer alten Kopie des Plans zurücksetzen.
+
+## Betriebsprobleme
+
+[problems.md](problems.md) sammelt die Fälle, die **nicht** kaputt sind, aber so aussehen — mit Ursache, Handgriff und dem, was man dabei ausdrücklich nicht tun soll. Daneben: [docs/BLOCKERS.md](docs/BLOCKERS.md) für externe Voraussetzungen, [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) für die bewussten Grenzen und [TODO.md](TODO.md) für Entscheidungen außerhalb des Codes.
