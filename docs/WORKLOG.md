@@ -640,3 +640,10 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Der neue Gate verbietet die Wörter, mit denen man sich selbst überschätzt: „100 %“, „produktionsreif“, „startbereit“, „vollständig fertig“ — solange Aufgaben blockiert sind.
 - **Eine eigene Zusicherung war vakuos:** „M08-06 blockiert“ enthält zufällig „6 blockiert“, also traf die Prüfung immer zu. Sie liest jetzt die Zusammenfassungszeile per Muster, und die Gegenprobe mit einer falschen Zahl schlägt an.
 - Zwei Zahlen im Abnahmebericht waren zunächst falsch abgeschrieben und wurden nachgemessen: der Standardbuild erzeugt 13 HTML-Dateien und 346 Dateien, der Featurebuild 60 und 443.
+
+| M19-06 | `docs/reviews/launch.md`, `config/launch.json` | `npm run check:release`: acht offene Gates, vier offene Rechtspflichten | **blockiert (B-008)** |
+
+- Die letzte Aufgabe des Plans wird **nicht** ausgeführt, und das ist die richtige Antwort: eine Veröffentlichung setzt voraus, was es nicht gibt — Betreiberangaben, Domain, Datenrechte, fachliche Abnahmen und eine Autorisierung.
+- Der Produktionsbuild bricht ohne Betreiberangaben ab. Das ist technisch erzwungen, nicht nur vereinbart, und die CI prüft, dass die Sperre hält.
+- Damit ist jede ausführbare Aufgabe des Plans erledigt: 114 von 121, sieben blockiert, keine offen.
+- Die Handoff-Prüfung kannte den Endzustand nicht: sie verlangte immer eine ausführbare Aufgabe. Jetzt verlangt sie bei keiner, dass der Handoff das **ausdrücklich sagt** — sonst liest eine frische Sitzung eine Lücke und sucht sich selbst etwas. Gegengeprüft: ohne den Satz schlägt sie an.

@@ -6,14 +6,14 @@ Stand **2026-09-08**. Dieser Bericht sagt, **was da ist**, was blockiert ist und
 
 | Zustand | Anzahl |
 |---|---|
-| erledigt, mit Nachweis | 113 |
-| blockiert durch eine externe Voraussetzung | 6 |
-| offen | 2 (dieser Abgleich und die Veröffentlichung selbst) |
+| erledigt, mit Nachweis | 114 |
+| blockiert durch eine externe Voraussetzung | 7 |
+| offen und ausführbar | 0 |
 | **gesamt** | **121** |
 
 Jede erledigte Aufgabe trägt einen Nachweis mit Beschreibung, Fundstelle und Prüfdatum; jede blockierte nennt Ursache, benötigte Handlung und zuständige Person. `tests/status-consistency.test.ts` prüft beides — und dass diese Zahlen mit `project/tasks.json` übereinstimmen.
 
-**Keine Hundert-Prozent-Aussage.** 113 von 121 Aufgaben sind erledigt; sechs sind blockiert, und die Blockade liegt jedes Mal außerhalb dieses Repositories.
+**Keine Hundert-Prozent-Aussage.** 114 von 121 Aufgaben sind erledigt; sieben sind blockiert, und die Blockade liegt jedes Mal außerhalb dieses Repositories: eine Freigabe, eine Prüfung oder eine Betreiberangabe, die ein Mensch beibringen muss. Es gibt keine ausführbare Aufgabe mehr.
 
 ## Was ein Besucher heute sähe
 
@@ -63,6 +63,7 @@ Sechs blockierte Aufgaben, alle aus demselben Grund: eine Freigabe, die ein Mens
 | M13-06 | Programmfreigabe eines Netzwerks | Betreiber |
 | M14-06 | echte Produktattribute nach der Programmfreigabe | Betreiber |
 | M18-06 | acht Launch-Gates und vier Rechtspflichten | Betreiber |
+| M19-06 | Veröffentlichung samt Autorisierung | Betreiber |
 
 Dazu die Grenzen, die keine Freigabe auflöst: `docs/KNOWN_LIMITATIONS.md`.
 

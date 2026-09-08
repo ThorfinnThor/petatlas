@@ -3992,9 +3992,19 @@
         "M19-01"
       ],
       "kind": "external_gate",
-      "status": "todo",
-      "evidence": [],
-      "blocker": null,
+      "status": "blocked",
+      "evidence": [
+        {
+          "description": "Vorbereitet und geprueft, aber nicht ausgefuehrt: npm run check:release meldet acht offene Gates und vier offene Rechtspflichten, exit 0 - ein nicht freigegebener Stand ist der Normalzustand. Der Produktionsbuild bleibt gesperrt und wird in der CI als gesperrt geprueft. Die Rauchprobe kann eine ausgelieferte Website ueber --base pruefen, sobald es eine gibt; docs/ROLLBACK.md haelt fest, dass der Weg beim Anbieter mangels Deployment nicht erprobt ist. Der Cloudflare-Zugang besteht (OAuth-Token, Konto geprueft am 2026-09-08), ein Projekt existiert nicht.",
+          "reference": "docs/reviews/launch.md, config/launch.json, scripts/checks/release.ts, docs/ROLLBACK.md, docs/DEPLOYMENT_EVIDENCE.md",
+          "verified_at": "2026-09-08T17:00:00+02:00"
+        }
+      ],
+      "blocker": {
+        "reason": "Eine Veroeffentlichung setzt voraus, was es nicht gibt: echte Betreiberangaben, eine Domain, freigegebene Datenrechte, fachliche Abnahmen fuer Gebuehren und Reiseregeln sowie eine dokumentierte Veroeffentlichungsautorisierung. Alle acht Launch-Gates stehen auf offen, vier Rechtspflichten sind unerfuellt, und der Produktionsbuild bricht ohne Betreiberangaben ab - technisch erzwungen, nicht nur vereinbart. Ohne diese Voraussetzungen wird nicht deployed, und es wird keine erfunden.",
+        "required_action": "Die Reihenfolge in docs/reviews/launch.md abarbeiten: zuerst Betreiberangaben und Domain, dann die Datenschutzerklaerung, dann die Datenrechte, dann die fachlichen Abnahmen, zuletzt Partnervertraege. Jede Freigabe traegt die zustaendige Person mit Datum und Nachweis in config/launch.json ein; npm run check:release prueft danach die Form. Erst wenn publicRelease freigegeben ist, folgt der Deploy ueber Cloudflare, und danach werden URL, Build-ID, Code- und Daten-Commit sowie das Ergebnis von scripts/monitor/smoke.ts --base <adresse> in docs/DEPLOYMENT_EVIDENCE.md festgehalten.",
+        "owner": "Betreiber"
+      },
       "notes": []
     }
   ]

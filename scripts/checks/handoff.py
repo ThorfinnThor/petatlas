@@ -39,7 +39,17 @@ def main() -> int:
     mentioned = set(TASK_ID.findall(handoff))
 
     problems: list[str] = []
-    if not expected & mentioned:
+    if not expected:
+        # Neuer Zustand seit M19-06: es gibt keine ausführbare Aufgabe mehr,
+        # weil alles Übrige auf eine Freigabe wartet. Der Handoff muss das
+        # dann ausdrücklich sagen — sonst liest eine frische Sitzung eine
+        # Lücke und sucht sich selbst etwas.
+        if not re.search(r"[Ee]s gibt keinen mehr|keine ausführbare Aufgabe", handoff):
+            problems.append(
+                "Es gibt keine ausführbare Aufgabe; docs/HANDOFF.md muss das "
+                "ausdrücklich sagen, statt einen nächsten Schritt offenzulassen."
+            )
+    elif not expected & mentioned:
         problems.append(
             "docs/HANDOFF.md nennt keine der ausführbaren Aufgaben "
             f"({', '.join(sorted(expected)) or 'keine'})."
@@ -66,6 +76,12 @@ def main() -> int:
         for problem in problems:
             print(f"  {problem}")
         return 1
+
+    if not expected:
+        print(
+            "Handoff konsistent: es gibt keine ausführbare Aufgabe, und der Handoff sagt das."
+        )
+        return 0
 
     print(
         "Handoff konsistent: nennt "
