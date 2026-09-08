@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M15-05",
+  "current_task": null,
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -3154,8 +3154,16 @@
         "M15-01"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "OPFF-Adapter gebaut und abgeschaltet, mit der gemessenen Begruendung aus docs/OPFF_SPIKE.md. Zwei Riegel in fester Reihenfolge: erst das Recht - der Registryeintrag steht auf pending, mayPublishAs verweigert die oeffentliche Auslieferung -, dann der Schalter foodEnrichment, der in jedem Markt auf false steht. Ein Test schaltet das Feature ein und belegt, dass die rechtliche Sperre trotzdem greift. Der Parser liest den tabulatorgetrennten Export (die Datei endet auf .csv, ist aber TSV), zaehlt Zeilen ohne Code statt sie still zu verlieren, laesst leere Felder leer und bricht ab, wenn eine uebernommene Spalte fehlt. Die Mengenangabe bleibt Text: '1 kg' wird nicht umgerechnet, weil das eine Deutung waere. Die oeffentliche Projektion umfasst vier Felder plus Lizenz und Attribution; image_url ist ausdruecklich nicht dabei, weil die Bilder unter CC BY-SA stehen und Rechte Dritter enthalten koennen - ein Test prueft, dass keine Bildadresse durchkommt. Der Rueckfall auf Haendler- und Herstellerangaben ist der Normalfall und kein Notbetrieb: reichereAn() laesst das Produkt unveraendert und nennt den Grund. Zwei weitere Tests halten fest, dass im Datenbestand keine FEDIAF-Bedarfstabelle und keine Bildadresse aus dem offenen Datensatz liegt. 15 neue Tests (978 gesamt), npm run verify exit 0, 198 + 188 E2E gruen.",
+          "reference": "scripts/ingest/adapters/opff.ts, src/features/food/enrichment.ts, config/markets/DE.json, tests/opff-fallback.test.ts",
+          "verified_at": "2026-09-08",
+          "command": "npx vitest run tests/opff-fallback.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

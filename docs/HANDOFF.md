@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 bei 4/6 (89 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 bei 5/6 (90 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M15-05 — OPFF nur bei Eignung anbinden.** `scripts/ingest/adapters/opff.ts` und `tests/opff-fallback.test.ts`: Adapter und Lizenzprojektion bauen, aber hinter einem **abgeschalteten** Feature Flag mit der Begründung aus dem Spike. Abnahme: der Fallback auf Händler- und Herstellerangaben funktioniert; keine ungenehmigten Bilder, keine FEDIAF-Tabellenkopie.
+**M15-06 — Futterdarstellung abnehmen.** `docs/reviews/food.md` und E2E-Tests: kein Testsieger und kein Nährwert-Score ohne Methodik und Rechte; Rohdaten klar vom Preisvergleich trennen. Abnahme: Labelwerte, Quellen, Menge, Preisstand und Unbekanntwerte sind verständlich und korrekt.
 
-Vorhanden: `docs/OPFF_SPIKE.md` mit gemessenen Zahlen (Nährwerte fehlen fast vollständig: 2 von 1.281 deutschen Produkten) und `config/sources/opff.json` mit `status: "pending"` — die erste bewusst ungeprüfte Quelle im Register.
+Vorhanden: Futtermodell, Grundpreisrechnung, Suche und Produktseiten, der OPFF-Spike mit gemessenen Zahlen sowie der Adapter samt Anreicherung — beides hinter zwei Riegeln: `status: "pending"` in der Registry und `foodEnrichment: false` in jedem Markt.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

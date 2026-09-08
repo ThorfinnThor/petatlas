@@ -416,3 +416,12 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - **Der geforderte Trefferanteil gegen echte Feed-GTINs wurde nicht gemessen und auch nicht geschätzt:** ohne freigegebenes Warenprogramm gibt es keine Sortimentsliste. Das steht als offener Punkt im Spike, statt als Zahl.
 - Lizenzfolgen: ODbL mit Share-Alike für abgeleitete Datenbanken, Bilder unter CC BY-SA und deshalb ausgeschlossen, Attribution Pflicht — und Open Food Facts garantiert die Richtigkeit ausdrücklich nicht.
 - Der Registryeintrag steht auf `pending` und ist damit die erste bewusst ungeprüfte Quelle. Vier Tests hatten die Annahme „alle Quellen sind freigegeben“ eingebaut; sie prüfen jetzt die Regel statt des Zustands.
+
+| M15-05 | `scripts/ingest/adapters/opff.ts`, `src/features/food/enrichment.ts`, `tests/opff-fallback.test.ts` | `npx vitest run tests/opff-fallback.test.ts` | 15 Tests; zwei Riegel, Rückfall auf Etikettangaben |
+
+- Der Adapter ist gebaut und **abgeschaltet** — mit der gemessenen Begründung aus dem Spike statt einer Vermutung. Er bleibt im Baum, weil die Frage wiederkommt, sobald es ein echtes Sortiment gibt; dann ist die Stichprobe nachzuholen und nicht der Parser neu zu schreiben.
+- Zwei Riegel, und die Reihenfolge ist wichtig: **erst das Recht** (`status: "pending"` sperrt), **dann der Schalter** (`foodEnrichment: false`). Ein Test schaltet das Feature ein und belegt, dass die Sperre trotzdem greift.
+- Der Export ist tabulatorgetrennt, obwohl die Datei auf `.csv` endet — der Parser weiß das, statt an einem Komma zu scheitern.
+- Übernommen werden vier Felder. `image_url` steht ausdrücklich nicht dabei: die Bilder stehen unter CC BY-SA und können Rechte Dritter enthalten. Ein Test prüft, dass keine Bildadresse durch die Projektion kommt.
+- „1 kg“ bleibt Text. Eine Umrechnung wäre eine Deutung, und die Mengenrechnung hat mit `netContentGrams` bereits eine belegte Grundlage.
+- Zwei Tests halten fest, was **nicht** im Datenbestand liegen darf: keine FEDIAF-Bedarfstabelle und keine Bildadresse aus dem offenen Datensatz.

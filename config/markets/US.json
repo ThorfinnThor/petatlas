@@ -15,6 +15,7 @@
     "care": false,
     "toys": false,
     "food": false,
+    "foodEnrichment": false,
     "profile": false,
     "ads": false
   },
