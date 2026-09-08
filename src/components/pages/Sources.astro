@@ -113,6 +113,9 @@ const statusText: Record<string, string> = {
   .quellen h3 {
     margin-top: 0;
     font-size: var(--schrift-normal);
+    /* Ressourcennamen enthalten Dateinamen und Adressen, die auf einem
+     * schmalen Bildschirm sonst über den Rand hinauslaufen. */
+    overflow-wrap: anywhere;
   }
 
   .quellen dl {
