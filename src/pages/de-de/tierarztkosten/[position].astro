@@ -1,0 +1,266 @@
+---
+/**
+ * M20-01 — Detailseite einer Gebührenposition.
+ *
+ * Zeigt genau das, was in der Verordnung steht: Bezeichnung, Betrag,
+ * Bezugsgröße, Fundstelle, Geltung. Dazu die Faktorstufen, die sich daraus
+ * rechnen lassen, und den Weg in den Rechner.
+ *
+ * Was hier **nicht** steht: was die Leistung umfasst, wie lange sie dauert,
+ * wann sie nötig ist oder was sie „normalerweise“ kostet. Nichts davon
+ * steht in der Verordnung, und nichts davon wird erfunden.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Notice from '../../../components/Notice.astro';
+import DataStatus from '../../../components/DataStatus.astro';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../config/build.ts';
+import { routePath, subroutePath } from '../../../lib/routes.ts';
+import { formatMoney, money } from '../../../domain/money.ts';
+import { COST_CONFIG } from '../../../features/costs/engine.ts';
+import {
+  faktorzeilen,
+  nachbarn,
+  positionen,
+  type Gebuehrenposition,
+} from '../../../features/costs/detail.ts';
+import snapshot from '../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
+
+export function getStaticPaths() {
+  const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  // Ohne Rechnerfunktion gibt es die Route darüber nicht — und damit auch
+  // keine Unterseite.
+  if (!isFeatureEnabled(market, 'costs')) return [];
+
+  return positionen().map((eintrag) => ({
+    params: { position: eintrag.slug },
+    props: { eintrag },
+  }));
+}
+
+interface Props {
+  eintrag: Gebuehrenposition;
+}
+
+const { eintrag } = Astro.props;
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const { item } = eintrag;
+
+const quelle = snapshot.source as unknown as {
+  effectiveFrom: string;
+  sourceVersion: string;
+  legalBasis: string;
+  url: string;
+};
+
+const regulaer = faktorzeilen(item, 'regular');
+const notdienst = faktorzeilen(item, 'emergency');
+const eigenerPfad = subroutePath(market, 'costs', eintrag.slug);
+const rechner = routePath(market, 'costs');
+const verwandte = nachbarn(eintrag);
+
+function betrag(minor: number): string {
+  return formatMoney(money(minor, item.currency), market.locale);
+}
+---
+
+<BaseLayout
+  title={`${item.originalLabel} — GOT-Nr. ${item.officialItemId}`}
+  route="costs"
+  canonicalPfad={eigenerPfad}
+>
+  <nav aria-label="Brotkrumen" class="krumen">
+    <a href={routePath(market, 'home')}>Start</a> ›
+    <a href={rechner}>Tierarztkosten</a> › <span aria-current="page">Nr. {item.officialItemId}</span
+    >
+  </nav>
+
+  <h1>{item.originalLabel}</h1>
+  <p>
+    Position {item.officialItemId} der Gebührenordnung für Tierärztinnen und Tierärzte, Fassung {
+      quelle.sourceVersion
+    }. Der Betrag unten ist der Grundbetrag der Verordnung — was eine Praxis abrechnet, hängt vom
+    Gebührensatz und den tatsächlich erbrachten Leistungen ab.
+  </p>
+
+  <div class="gebuehr card">
+    <p class="gebuehr__label">Grundbetrag (netto)</p>
+    <p class="gebuehr__wert zahl">{betrag(item.baseAmountMinor)}</p>
+    <p class="gebuehr__bezug">je {item.baseUnit}</p>
+  </div>
+
+  <h2>Gebührensätze</h2>
+  <p>
+    Die Verordnung erlaubt einen Rahmen. Welcher Satz gilt, entscheidet die Praxis im Einzelfall —
+    hier stehen die Stufen, nicht eine Empfehlung.
+  </p>
+
+  <table>
+    <caption
+      >Regulärer Rahmen: {COST_CONFIG.standardFactorMin}-fach bis {
+        COST_CONFIG.standardFactorMax
+      }-fach</caption
+    >
+    <thead>
+      <tr>
+        <th scope="col">Satz</th>
+        <th scope="col" class="zahl">Netto</th>
+        <th scope="col" class="zahl">Mit {COST_CONFIG.vatPercent} % Umsatzsteuer</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        regulaer.map((zeile) => (
+          <tr>
+            <th scope="row">{zeile.faktor}-fach</th>
+            <td class="zahl">{betrag(zeile.nettoMinor)}</td>
+            <td class="zahl">{betrag(zeile.bruttoMinor)}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+
+  <table>
+    <caption>
+      Im einschlägigen Notdienst: {COST_CONFIG.emergencyFactorMin}-fach bis {
+        COST_CONFIG.emergencyFactorMax
+      }-fach, zuzüglich Notdienstgebühr
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col">Satz</th>
+        <th scope="col" class="zahl">Netto</th>
+        <th scope="col" class="zahl">Mit {COST_CONFIG.vatPercent} % Umsatzsteuer</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        notdienst.map((zeile) => (
+          <tr>
+            <th scope="row">{zeile.faktor}-fach</th>
+            <td class="zahl">{betrag(zeile.nettoMinor)}</td>
+            <td class="zahl">{betrag(zeile.bruttoMinor)}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+
+  <p class="hinweis">
+    Die Notdienstgebühr von {betrag(COST_CONFIG.emergencyFeeMinor)} fällt einmal je Angelegenheit an und
+    ist in den Beträgen oben <strong>nicht</strong> enthalten.
+  </p>
+
+  <p>
+    <a class="button button--primary" href={rechner}>Im Rechner verwenden</a>
+  </p>
+
+  <Notice variante="warnung" titel="Fachlich noch nicht geprüft">
+    <p>
+      Die Rechenannahmen — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und Rundung — sind
+      <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Diese Seite gibt den
+      amtlichen Betrag wieder und rechnet ihn hoch; sie ist keine Auskunft und kein
+      Kostenvoranschlag.
+    </p>
+  </Notice>
+
+  <h2>Fundstelle</h2>
+  <dl class="fundstelle">
+    <dt>Verordnung</dt>
+    <dd>{quelle.sourceVersion}</dd>
+    <dt>Fundstelle</dt>
+    <dd>{item.sourceReference}</dd>
+    <dt>Gilt ab</dt>
+    <dd>{item.validity.from}</dd>
+    <dt>Rechtsgrundlage</dt>
+    <dd>{quelle.legalBasis}</dd>
+    <dt>Bezogen über</dt>
+    <dd><a href={quelle.url} rel="nofollow noopener">{quelle.url}</a></dd>
+  </dl>
+
+  {
+    verwandte.length > 0 && (
+      <>
+        <h2>Weitere Positionen in dieser Gruppe</h2>
+        <ul>
+          {verwandte.map((andere) => (
+            <li>
+              <a href={subroutePath(market, 'costs', andere.slug)}>
+                Nr. {andere.item.officialItemId} — {andere.item.originalLabel}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </>
+    )
+  }
+
+  <DataStatus stand={quelle.effectiveFrom} quelle={quelle.sourceVersion} locale={market.locale} />
+</BaseLayout>
+
+<style>
+  .krumen {
+    margin-block-end: var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .gebuehr {
+    margin-block: var(--space-6);
+    max-inline-size: 22rem;
+  }
+
+  .gebuehr__label {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-label);
+  }
+
+  .gebuehr__wert {
+    margin: var(--space-1) 0;
+    font-size: var(--text-h2);
+    font-weight: var(--weight-h1);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  .gebuehr__bezug {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  table {
+    margin-block: var(--space-4) var(--space-8);
+  }
+
+  caption {
+    text-align: start;
+    font-weight: var(--weight-label);
+    padding-block-end: var(--space-2);
+  }
+
+  .hinweis {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .fundstelle {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: var(--space-2) var(--space-4);
+    margin-block: var(--space-4);
+  }
+
+  .fundstelle dt {
+    font-weight: var(--weight-label);
+    color: var(--color-text-muted);
+  }
+
+  .fundstelle dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+</style>

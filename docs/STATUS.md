@@ -3,7 +3,7 @@
 Stand: 2026-09-07, Ende Sitzung 9.
 
 **Erledigt:** 100 von 121 Aufgaben. **In Arbeit:** keine. **Blockiert:** fünf (M08-06, fachliche Abnahme des Rechners; M09-06, Partnervertrag und § 34d-Prüfung; M12-06, fachliche Prüfung der Reiseregeln; M13-06, Programmfreigabe für Warenangebote; M14-06, Attributabnahme echter Produkte).
-**Meilensteine vollständig:** M00 bis M07, M10, M11, M15 und M16 (je 6/6). M08 bei 5/6, die sechste blockiert. M09 bei 5/6, die sechste blockiert. M12 bei 5/6, die sechste blockiert. M13 bei 5/6, die sechste blockiert. M14 bei 5/6, die sechste blockiert. M15 vollständig. M16 vollständig. M17 vollständig (7/7). M18 bei 5/6, die sechste blockiert. M19 bei 5/6, die sechste blockiert.
+**Meilensteine vollständig:** M00 bis M07, M10, M11, M15 und M16 (je 6/6). M08 bei 5/6, die sechste blockiert. M09 bei 5/6, die sechste blockiert. M12 bei 5/6, die sechste blockiert. M13 bei 5/6, die sechste blockiert. M14 bei 5/6, die sechste blockiert. M15 vollständig. M16 vollständig. M17 vollständig (7/7). M18 bei 5/6, die sechste blockiert. M19 bei 5/6, die sechste blockiert. Neuer Block M20 bis M22: M20 bei 1/3.
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 

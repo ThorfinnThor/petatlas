@@ -112,6 +112,21 @@
       "id": "M19",
       "title": "Endabnahme, Betriebshandbuch und Ausbauprobe",
       "goal": "Einen klaren Zustand mit getesteter Übergabe erreichen, statt das Projekt pauschal für fertig zu erklären."
+    },
+    {
+      "id": "M20",
+      "title": "Inhaltstiefe aus vorhandenen Daten",
+      "goal": "Aus den bereits geprüften echten Daten so viel Nutzen holen wie möglich — ohne eine einzige externe Freigabe."
+    },
+    {
+      "id": "M21",
+      "title": "Designvertrag vollständig umsetzen",
+      "goal": "Die offenen Punkte aus docs/DESIGN_REVIEW.md schließen, damit Seiten aus denselben Bausteinen entstehen statt aus dupliziertem Markup."
+    },
+    {
+      "id": "M22",
+      "title": "Datenqualität und Betriebsschulden",
+      "goal": "Gemessene Schwächen abarbeiten: unbekanntes Standdatum, Bibliotheksgröße im Browser, unbelegte Quellenadressen, ungeklärte Futterquelle."
     }
   ],
   "tasks": [
@@ -4005,6 +4020,287 @@
         "required_action": "Die Reihenfolge in docs/reviews/launch.md abarbeiten: zuerst Betreiberangaben und Domain, dann die Datenschutzerklaerung, dann die Datenrechte, dann die fachlichen Abnahmen, zuletzt Partnervertraege. Jede Freigabe traegt die zustaendige Person mit Datum und Nachweis in config/launch.json ein; npm run check:release prueft danach die Form. Erst wenn publicRelease freigegeben ist, folgt der Deploy ueber Cloudflare, und danach werden URL, Build-ID, Code- und Daten-Commit sowie das Ergebnis von scripts/monitor/smoke.ts --base <adresse> in docs/DEPLOYMENT_EVIDENCE.md festgehalten.",
         "owner": "Betreiber"
       },
+      "notes": []
+    },
+    {
+      "id": "M20-01",
+      "milestone": "M20",
+      "title": "Detailseiten je Gebührenposition erzeugen",
+      "implementation": "Aus dem GOT-Snapshot je Position eine eigene Seite mit Betrag, Faktortabelle, Fundstelle, Einordnung und Weg in den Rechner. Slugs deterministisch, eindeutig und stabil.",
+      "deliverables": [
+        "src/features/costs/detail.ts",
+        "src/pages/de-de/tierarztkosten/[position].astro",
+        "tests/costs/detail.test.ts"
+      ],
+      "acceptance": [
+        "Jede Seite nennt Betrag, Faktoren, Fundstelle und Quelle; Titel sind eindeutig; SEO- und Output-Gates bleiben grün; Dateibudget eingehalten."
+      ],
+      "depends_on": [
+        "M18-01",
+        "M18-02"
+      ],
+      "kind": "implementation",
+      "status": "done",
+      "evidence": [
+        {
+          "description": "1006 Detailseiten, 150 Gruppenseiten und eine Katalogseite entstehen aus dem GOT-Snapshot. Slugs sind deterministisch (amtliche Nummer voran, dann Bezeichnung) und fuer alle 1006 Positionen eindeutig; 88 Unit-Tests in tests/costs/ pruefen Slugs, Gliederung und Betraege gegen von Hand nachgerechnete Werte (Position 1: 11,26 EUR netto, 13,40 EUR brutto; zweifach 22,52/26,80; Notdienst zweifach bis vierfach ohne die Notdienstgebuehr). 12 E2E-Faelle pruefen den Weg Rechner - Katalog - Gruppe - Position samt 404 fuer erfundene Slugs. Der Build erzeugt jetzt 1216 Seiten; SEO-Gates gruen, Probelauf als indexierbarer Build ebenfalls (eindeutige Titel ueber die amtliche Nummer), Output-Audit ueber 2795 Dateien ohne Beanstandung, Dateibudget 2795 von 12000. subroutePath nimmt jetzt mehrere Segmente und prueft jedes einzeln, statt einen Schraegstrich im Slug zuzulassen.",
+          "reference": "src/features/costs/detail.ts, src/pages/de-de/tierarztkosten/[position].astro, src/pages/de-de/tierarztkosten/katalog.astro, src/pages/de-de/tierarztkosten/gruppe/[gruppe].astro, tests/costs/detail.test.ts, tests/e2e-features/gebuehrenkatalog.spec.ts, src/lib/routes.ts",
+          "verified_at": "2026-09-08T21:30:00+02:00"
+        }
+      ],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M20-02",
+      "milestone": "M20",
+      "title": "Stadtseiten über die bisherige Obergrenze hinaus",
+      "implementation": "Die Obergrenze der Stadt-Allowlist anheben und neu messen. Aufgenommen wird weiterhin nur, was die Qualitätskriterien tatsächlich erfüllt.",
+      "deliverables": [
+        "content-data/city-allowlist.json",
+        "src/features/map/city.ts"
+      ],
+      "acceptance": [
+        "Die Allowlist entsteht aus einer Messung, nicht aus einer Auswahl; jede Seite erfüllt die Kriterien; die Kriterien selbst bleiben unverändert."
+      ],
+      "depends_on": [
+        "M20-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M20-03",
+      "milestone": "M20",
+      "title": "Weitere kommunale Quellen aufnehmen",
+      "implementation": "Offene kommunale Datensätze weiterer Städte prüfen und aufnehmen: Rechte zuerst, dann Adapter, dann Snapshot und Konfliktprüfung.",
+      "deliverables": [
+        "config/sources/",
+        "scripts/ingest/adapters/municipal/",
+        "docs/SOURCE_REVIEWS.md"
+      ],
+      "acceptance": [
+        "Je Quelle eine dokumentierte Rechteprüfung; Konflikte mit OSM werden benannt, nicht still aufgelöst."
+      ],
+      "depends_on": [
+        "M20-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M21-01",
+      "milestone": "M21",
+      "title": "Komponentenbibliothek anlegen",
+      "implementation": "Button, Card, Badge, Alert, PageHeader, EmptyState als Komponenten mit semantischer Prop-API statt globaler Klassen.",
+      "deliverables": [
+        "src/components/ui/",
+        "tests/design-system.test.ts"
+      ],
+      "acceptance": [
+        "Seiten setzen sich aus Bausteinen zusammen; keine neue lokale Designsprache; bestehende Tests bleiben grün."
+      ],
+      "depends_on": [
+        "M18-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M21-02",
+      "milestone": "M21",
+      "title": "Breadcrumbs auf Unterseiten",
+      "implementation": "Brotkrumen ab Ebene zwei nach Designvertrag Abschnitt 9.3, aus der Route Registry erzeugt.",
+      "deliverables": [
+        "src/components/ui/Breadcrumbs.astro"
+      ],
+      "acceptance": [
+        "Aktuelle Seite nicht verlinkt; mobil umbrechend; auf jeder Unterseite vorhanden."
+      ],
+      "depends_on": [
+        "M21-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M21-03",
+      "milestone": "M21",
+      "title": "Zweispaltige Tool-Ansicht für den Rechner",
+      "implementation": "ToolShell nach Abschnitt 22 und 24.2: Eingaben und Ergebnis nebeneinander ab Tablet, einspaltig darunter.",
+      "deliverables": [
+        "src/components/tools/ToolShell.astro",
+        "src/components/pages/Costs.astro"
+      ],
+      "acceptance": [
+        "Ergebnis ist auf dem Desktop ohne Scrollen sichtbar; mobil bleibt die Reihenfolge Eingabe, Aktion, Ergebnis."
+      ],
+      "depends_on": [
+        "M21-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M21-04",
+      "milestone": "M21",
+      "title": "Schrittanzeige für den Reisecheck",
+      "implementation": "Vier benannte Schritte nach Abschnitt 28.2 mit Text und Nummer, kein rein visueller Fortschrittsbalken.",
+      "deliverables": [
+        "src/components/tools/ToolStepper.astro",
+        "src/components/pages/Travel.astro"
+      ],
+      "acceptance": [
+        "Der aktuelle Schritt ist benannt; Zurückgehen verliert keine Eingabe."
+      ],
+      "depends_on": [
+        "M21-03"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M21-05",
+      "milestone": "M21",
+      "title": "Radio Cards für kleine Entscheidungen",
+      "implementation": "Tierart und Kontext als anklickbare Karten mit echtem Radio im DOM (Abschnitt 13.6).",
+      "deliverables": [
+        "src/components/forms/RadioCard.astro"
+      ],
+      "acceptance": [
+        "Ganze Karte klickbar, Zustand nicht allein über Farbe, Tastaturbedienung unverändert."
+      ],
+      "depends_on": [
+        "M21-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M21-06",
+      "milestone": "M21",
+      "title": "Produktkarte und Bildschirmmappe",
+      "implementation": "Produktkarte nach Abschnitt 20 mit Merkmalszeile und Matching-Begründung; Screenshots je Hauptseite in zwei Formaten nach Abschnitt 57.",
+      "deliverables": [
+        "src/components/commerce/ProductCard.astro",
+        "docs/DESIGN_REVIEW.md",
+        "reports/screenshots/"
+      ],
+      "acceptance": [
+        "Karten zeigen belegte Merkmale und Unbekanntes als unbekannt; die Mappe nennt Viewport, Commit und Befunde."
+      ],
+      "depends_on": [
+        "M21-05"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M22-01",
+      "milestone": "M22",
+      "title": "Ortsdaten mit Standdatum neu importieren",
+      "implementation": "Bundesweiten OSM-Import erneut fahren, damit der Snapshot sein Abrufdatum mitführt.",
+      "deliverables": [
+        "data-snapshots/places/",
+        "docs/OSM_BENCHMARK.md"
+      ],
+      "acceptance": [
+        "Der Datenstand nennt ein Alter statt unbekannt; Ortszahl und Qualitätsprüfung bleiben plausibel."
+      ],
+      "depends_on": [
+        "M18-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M22-02",
+      "milestone": "M22",
+      "title": "Schemaprüfung im Browser verkleinern",
+      "implementation": "Die Laufzeitprüfung der nachgeladenen Datenchunks so umbauen, dass die große Schemabibliothek nicht mehr im Browser landet — ohne die Prüfung aufzugeben.",
+      "deliverables": [
+        "src/domain/runtime-guards.ts",
+        "docs/PERFORMANCE.md"
+      ],
+      "acceptance": [
+        "Initiales JavaScript der datenladenden Seiten deutlich kleiner; eine beschädigte Datei wird weiterhin abgelehnt."
+      ],
+      "depends_on": [
+        "M22-01"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M22-03",
+      "milestone": "M22",
+      "title": "Belegte Quellenadressen für AT und NL",
+      "implementation": "Die tatsächlich gültigen Seiten der beiden Zielstaaten ermitteln, belegen und in die Beobachtung aufnehmen.",
+      "deliverables": [
+        "config/watchlist/rule-sources.json",
+        "docs/reviews/travel-sources.md"
+      ],
+      "acceptance": [
+        "Jede aufgenommene Adresse ist abgerufen und trägt einen geprüften Marker; nicht belegbare Adressen bleiben draußen."
+      ],
+      "depends_on": [
+        "M22-02"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M22-04",
+      "milestone": "M22",
+      "title": "Futterquelle klären",
+      "implementation": "Prüfen, welche offene Quelle für Futterdaten tatsächlich trägt, und die Entscheidung mit Zahlen begründen.",
+      "deliverables": [
+        "docs/reviews/food.md",
+        "config/sources/"
+      ],
+      "acceptance": [
+        "Die Entscheidung nennt gemessene Abdeckung statt Vermutungen; ohne tragfähige Quelle bleiben die Daten synthetisch und sind als solche gekennzeichnet."
+      ],
+      "depends_on": [
+        "M22-03"
+      ],
+      "kind": "implementation",
+      "status": "todo",
+      "evidence": [],
+      "blocker": null,
       "notes": []
     }
   ]

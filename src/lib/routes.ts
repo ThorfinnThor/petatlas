@@ -124,11 +124,18 @@ export function routePath(market: MarketConfig, key: RouteKey): string {
  * der Kartenroute. Auch diese Pfade entstehen hier und nicht in den Seiten;
  * ein ungültiger Slug ist ein Fehler und kein zusammengesetzter Pfad.
  */
-export function subroutePath(market: MarketConfig, key: RouteKey, slug: string): string {
-  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
-    throw new RouteError(`"${slug}" ist kein zulässiger Slug für eine Unterseite.`);
+export function subroutePath(market: MarketConfig, key: RouteKey, ...slugs: string[]): string {
+  if (slugs.length === 0) {
+    throw new RouteError('Eine Unterseite braucht mindestens einen Slug.');
   }
-  return `${routePath(market, key)}${slug}/`;
+  for (const slug of slugs) {
+    // Jedes Segment wird einzeln geprüft. Ein Slug mit Schrägstrich würde
+    // sonst eine Ebene erzeugen, die hier niemand vorgesehen hat.
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) {
+      throw new RouteError(`"${slug}" ist kein zulässiger Slug für eine Unterseite.`);
+    }
+  }
+  return `${routePath(market, key)}${slugs.join('/')}/`;
 }
 
 /** Absolute URL. Die Basis kommt von außen; hier steht keine Domain. */

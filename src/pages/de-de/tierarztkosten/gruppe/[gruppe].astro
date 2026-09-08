@@ -1,0 +1,105 @@
+---
+/**
+ * M20-01 — Eine Gruppe des Gebührenkatalogs.
+ *
+ * Listet die Positionen einer Gruppe mit Grundbetrag und Bezugsgröße. Die
+ * Reihenfolge ist die der Verordnung, nicht eine Rangfolge.
+ */
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import DataStatus from '../../../../components/DataStatus.astro';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../../config/build.ts';
+import { routePath, subroutePath } from '../../../../lib/routes.ts';
+import { formatMoney, money } from '../../../../domain/money.ts';
+import { gruppen, type Gruppe } from '../../../../features/costs/detail.ts';
+import snapshot from '../../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
+
+export function getStaticPaths() {
+  const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  if (!isFeatureEnabled(market, 'costs')) return [];
+  return gruppen().map((gruppe) => ({ params: { gruppe: gruppe.slug }, props: { gruppe } }));
+}
+
+interface Props {
+  gruppe: Gruppe;
+}
+
+const { gruppe } = Astro.props;
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const quelle = snapshot.source as unknown as { effectiveFrom: string; sourceVersion: string };
+const eigenerPfad = subroutePath(market, 'costs', 'gruppe', gruppe.slug);
+---
+
+<BaseLayout title={`${gruppe.name} — ${gruppe.teil}`} route="costs" canonicalPfad={eigenerPfad}>
+  <nav aria-label="Brotkrumen" class="krumen">
+    <a href={routePath(market, 'home')}>Start</a> ›
+    <a href={routePath(market, 'costs')}>Tierarztkosten</a> ›
+    <a href={subroutePath(market, 'costs', 'katalog')}>Gebührenkatalog</a> ›
+    <span aria-current="page">{gruppe.name}</span>
+  </nav>
+
+  <h1>{gruppe.name}</h1>
+  <p>
+    {gruppe.positionen.length}{' '}
+    {gruppe.positionen.length === 1 ? 'Position' : 'Positionen'} aus {gruppe.teil} der Fassung {
+      quelle.sourceVersion
+    }. Angegeben ist der Grundbetrag ohne Umsatzsteuer; die Gebührensätze stehen auf der jeweiligen
+    Seite.
+  </p>
+
+  <ul class="positionen">
+    {
+      gruppe.positionen.map((eintrag) => (
+        <li>
+          <a href={subroutePath(market, 'costs', eintrag.slug)}>
+            <span class="positionen__nummer">Nr. {eintrag.item.officialItemId}</span>
+            <span>{eintrag.item.originalLabel}</span>
+          </a>
+          <span class="positionen__betrag zahl">
+            {formatMoney(money(eintrag.item.baseAmountMinor, eintrag.item.currency), market.locale)}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <DataStatus stand={quelle.effectiveFrom} quelle={quelle.sourceVersion} locale={market.locale} />
+</BaseLayout>
+
+<style>
+  .krumen {
+    margin-block-end: var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .positionen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .positionen li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    align-items: baseline;
+    margin: 0;
+    padding-block: var(--space-3);
+    border-block-end: 1px solid var(--color-border);
+    max-inline-size: none;
+  }
+
+  .positionen__nummer {
+    display: inline-block;
+    min-inline-size: 4.5rem;
+    color: var(--color-text-muted);
+    font-size: var(--text-micro);
+  }
+
+  .positionen__betrag {
+    white-space: nowrap;
+    font-weight: var(--weight-label);
+  }
+</style>

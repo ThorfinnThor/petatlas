@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 5/6, die sechste blockiert (114 von 121 Aufgaben, 7 blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**Der ursprüngliche Plan (M00–M19) ist abgearbeitet; seit dem 2026-09-08 läuft der Block M20 bis M22 für Inhaltstiefe, Designvertrag und Datenqualität. M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 5/6, die sechste blockiert (115 von 134 Aufgaben, 7 blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -38,17 +38,11 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**Es gibt keinen mehr.** 114 von 121 Aufgaben sind erledigt, die übrigen sieben sind blockiert — jede durch eine Freigabe, eine Prüfung oder eine Betreiberangabe, die außerhalb dieses Repositories entsteht. Kein Blocker hält Entwicklung oder Prüfung auf; sie halten ausschließlich die öffentliche Aktivierung auf.
+**M20-02 — Stadtseiten über die bisherige Obergrenze hinaus.** Die Allowlist ist bei 25 Städten gedeckelt (`maxStaedte` in den Kriterien); die Kriterien selbst bleiben, gemessen wird neu.
 
-Was ein Mensch als Nächstes tun müsste, steht der Reihe nach in `docs/reviews/launch.md`:
+Danach: M20-03 (weitere kommunale Quellen), M21-01 bis M21-06 (Designvertrag zu Ende), M22-01 bis M22-04 (Datenqualität). Der Block ist in `docs/MILESTONES.md` und im Manifest beschrieben.
 
-1. **Betreiberangaben und Domain.** Ohne sie bricht der Produktionsbuild ab — das ist die Sperre, nicht ein Versehen.
-2. **Datenschutzerklärung** auf dieser Grundlage.
-3. **Datenrechte bestätigen**, dann die fachlichen Abnahmen für Gebühren und Reiseregeln.
-4. **Partnerverträge**, falls Angebote gewünscht sind.
-5. **Veröffentlichen** (M19-06) und danach URL, Build-ID, Commits und Rauchprobe in `docs/DEPLOYMENT_EVIDENCE.md` festhalten.
-
-Der Abnahmebericht steht in `docs/ACCEPTANCE.md`, die Grenzen in `docs/KNOWN_LIMITATIONS.md`, die Handgriffe in `docs/RUNBOOK.md`.
+Bereits fertig: 1006 Gebührenpositionen haben eigene Seiten, dazu 150 Gruppenseiten und ein Katalogeinstieg. Der Build erzeugt jetzt 1216 Seiten statt 60.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

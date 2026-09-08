@@ -15,7 +15,9 @@ import DataStatus from '../DataStatus.astro';
 import ErrorSummary from '../forms/ErrorSummary.astro';
 import Field from '../forms/Field.astro';
 import { COST_CONFIG, NICHT_ENTHALTEN } from '../../features/costs/engine.ts';
-import { defaultMarket } from '../../domain/market.ts';
+import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
+import { devFeatureOverrides } from '../../../config/build.ts';
+import { subroutePath } from '../../lib/routes.ts';
 import snapshot from '../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 
 const market = defaultMarket();
@@ -28,6 +30,9 @@ const quelle = snapshot.source as {
   amendmentNote: string | null;
   legalBasis: string;
 };
+
+const katalogMarkt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 ---
 
 <h1>Tierarztkosten berechnen</h1>
@@ -148,6 +153,12 @@ const quelle = snapshot.source as {
     die behandelnde Praxis beurteilen.
   </p>
 </Notice>
+
+<h2>Alle Positionen nachschlagen</h2>
+<p>
+  Jede der {snapshot.itemCount} Positionen hat eine eigene Seite mit Grundbetrag, Gebührensätzen und Fundstelle.
+  Der <a href={katalogPfad}>Gebührenkatalog</a> führt über die Gliederung der Verordnung dorthin.
+</p>
 
 <h2>Quelle</h2>
 <p>
