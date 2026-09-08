@@ -73,8 +73,17 @@ Diese blockieren derzeit nichts und stehen mit Status, Entscheider und zuerst be
 - Impressum, Kontakt und echte Betreiberangaben
 - Waren-Affiliateprogramm, Versicherungs-Affiliate, Tracking-/Ads-Freigabe
 - Branch-Protection im GitHub-Projekt (`docs/CI_SECURITY.md`)
-- Betriebsprüfung vor dem zeitgesteuerten GOT-Abruf (Aufgabe M17-07)
 
-## 4. Nicht angelegt, mit Absicht
+## 8. Launchfreigaben und Veröffentlichung
+
+**Status:** offen · **Aufgaben:** M18-06, M19-06 · **Blocker:** B-007, B-008 · **Zuständig:** Betreiber
+
+Acht Launch-Gates in `config/launch.json` stehen auf offen, dazu vier Rechtspflichten aus **[docs/LEGAL_CHECKLIST.md](docs/LEGAL_CHECKLIST.md)**. Reihenfolge, Zuständigkeit und benötigter Nachweis je Gate stehen in **[docs/reviews/launch.md](docs/reviews/launch.md)**.
+
+Die Reihenfolge ist nicht beliebig: ohne Betreiberangaben und Domain bricht der Produktionsbuild ab, und ohne Produktionsbuild ist jede weitere Freigabe folgenlos.
+
+`npm run check:release` prüft nach jedem Eintrag die **Form** — Person, Datum, vorhandener Nachweis. Den Inhalt prüft es nicht; das kann es nicht.
+
+## 9. Nicht angelegt, mit Absicht
 
 Das Cloudflare-**Produktionsprojekt** existiert nicht. Ohne Domain, Betreiberangaben und freigegebene Funktion gäbe es nichts zu veröffentlichen. Details in `docs/DEPLOYMENT_EVIDENCE.md`.
