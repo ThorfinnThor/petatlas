@@ -49,4 +49,14 @@ Die zwölf Wochen sind in der Bedingung als 84 Tage gerechnet. Das ist eine Umre
 2. Sind die Übergangsregeln für ältere Ausweise und Tätowierungen für den geprüften Fall erheblich, oder genügt der jetzige Zuschnitt?
 3. Welche nationalen Sonderregeln gelten in AT, FR, IT und NL zusätzlich — insbesondere Rasse- und Leinenvorschriften?
 4. Ist die italienische Quelle inhaltlich deckungsgleich mit der EU-Zusammenfassung? Sie konnte nicht automatisiert gelesen werden.
-5. Ab wann sind die nationalen Seiten auf die Delegierte Verordnung (EU) 2026/131 umgestellt, und wie wird ein erneuter Wechsel bemerkt?
+5. Ab wann sind die nationalen Seiten auf die Delegierte Verordnung (EU) 2026/131 umgestellt? Wann der Wechsel kommt, bleibt offen; **dass** er bemerkt wird, ist seit M17-03 geklärt: `config/watchlist/rule-sources.json` und der tägliche Lauf `source-check.yml` vergleichen die Seiten mit dem festgehaltenen Stand und melden jede Änderung.
+
+## Was die Beobachtung am 2026-09-08 ergeben hat
+
+| Seite | Befund |
+|---|---|
+| EUR-Lex, CELEX:32026R0131 | **Nicht automatisiert prüfbar.** Ein einfacher Abruf bekommt HTTP 202 mit leerem Körper. Nicht umgangen; die Rechtsgrundlage bleibt eine Sache der Sichtung von Hand. |
+| Kommission, „Travelling with a pet within the EU“ | Lesbar, Vergleich läuft. |
+| Frankreich, `agriculture.gouv.fr` | Lesbar, antwortet sogar mit ETag und Last-Modified. |
+| Italien, `salute.gov.it` | **Nicht prüfbar.** Weiterhin die Bot-Prüfung von 2026-09-07; der Marker „Ministero della Salute“ fehlt in der Antwort. |
+| Österreich, Niederlande | **Nicht beobachtet.** Im Repository ist keine belegte Adresse festgehalten. Zwei plausible Adressen wurden probeweise abgerufen und antworteten mit 404. Eine geratene Adresse zu beobachten wäre schlimmer als keine: sie meldet jahrelang „unverändert“, ohne je die richtige Seite gelesen zu haben. Beide kommen dazu, sobald diese Prüfung die gelesenen Adressen festhält. |

@@ -1,0 +1,35 @@
+{
+  "watchlistId": "rule-sources-de-v1",
+  "states": [
+    {
+      "watchId": "eur-lex-2026-131",
+      "contentHash": null,
+      "etag": null,
+      "lastModified": null
+    },
+    {
+      "watchId": "ec-travelling-pet-within-eu",
+      "contentHash": "a6e7fa8b8e7bca9e76ffc399d51925236727af0788d335fec6f91f1b7d6d7afc",
+      "etag": null,
+      "lastModified": null
+    },
+    {
+      "watchId": "fr-agriculture-rage",
+      "contentHash": "a7ee537e6c74c6d788f7731c3a56222f981bc1b3ff5567a9e8d0ddf86fa628fd",
+      "etag": "\"1788814991\"",
+      "lastModified": "Mon, 07 Sep 2026 21:03:11 GMT"
+    },
+    {
+      "watchId": "it-salute-animali-compagnia",
+      "contentHash": null,
+      "etag": null,
+      "lastModified": null
+    },
+    {
+      "watchId": "got-2022-uebersicht",
+      "contentHash": "9e421d9c748b99ed56db92d1dfed58955bf9066806db51e1d7fae386be3d96c4",
+      "etag": "\"1d1d-65aedaae4e8fc-gzip\"",
+      "lastModified": "Tue, 08 Sep 2026 00:18:01 GMT"
+    }
+  ]
+}

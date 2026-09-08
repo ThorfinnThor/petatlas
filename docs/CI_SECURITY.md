@@ -23,7 +23,11 @@ Damit kann ein Pull Request aus einem fremden Fork die volle Prüfkette durchlau
 
 Eine Ausnahme gibt es, und sie ist bewusst eng gezogen: `ingest-open.yml` läuft **nur** nach Zeitplan oder auf ausdrückliche Auslösung, nie durch einen Pull Request und damit nie unter fremdem Code. Der Job hat `contents: write` und `pull-requests: write` und benutzt `GITHUB_TOKEN`, um einen Pull Request mit dem neuen Datenstand zu öffnen. Nach `main` schreibt er nicht.
 
-`GITHUB_TOKEN` ist kein hinterlegtes Secret, sondern ein pro Lauf ausgestelltes Token, dessen Rechte der Workflow selbst begrenzt. Genau deshalb ist es der einzige Name, den `scripts/checks/workflows.sh` durchlässt; jeder weitere Secret-Verweis macht den Lauf rot, bis ihn jemand dort einträgt und begründet.
+`GITHUB_TOKEN` ist kein hinterlegtes Secret, sondern ein pro Lauf ausgestelltes Token, dessen Rechte der Workflow selbst begrenzt.
+
+Der zweite und bislang letzte erklärte Name ist `CLOUDFLARE_DEPLOY_HOOK` in `rebuild-commerce.yml` (M17-03): die Adresse, die einen Build anstößt. Ihr Token steht im **Pfad**, nicht in der Query — die Kürzung aus dem Commerce-Build würde ihn mitprotokollieren, deshalb kürzt `scripts/publish/deploy-hook.ts` auf den Ursprung und schickt die Adresse an keinen anderen Host als `api.cloudflare.com`. Auch dieser Lauf wird nie durch einen Pull Request ausgelöst.
+
+Jeder weitere Secret-Verweis macht den Lauf rot, bis ihn jemand in `scripts/checks/workflows.sh` einträgt und begründet.
 
 ## Warum die Härtung ein Skript ist
 

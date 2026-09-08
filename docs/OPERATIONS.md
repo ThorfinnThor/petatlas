@@ -72,13 +72,31 @@ Ablauf:
 
 **Was dort ausdrücklich nicht läuft:** der bundesweite OSM-Import. Er lädt rund 4,6 GiB in sechzehn Regionen, braucht Pausen zwischen den Abrufen (die Geofabrik antwortet sonst mit 502) und lief lokal rund eine Stunde. Auf einem GitHub-Runner wäre das ein Kampf gegen Zeit- und Plattengrenzen und ein unnötiger Druck auf einen fremden Server. Er bleibt ein **manueller Lauf**: `npm run ingest:osm-de`, danach `npm run snapshot:places` und `npm run build:places`. Die Messwerte stehen in `docs/OSM_BENCHMARK.md`.
 
-**Der GOT-Abruf ist im Zeitplan noch nicht enthalten** und nur auf Zuruf möglich. Grund: die Abrufbedingungen der Quelle sind noch nicht dokumentiert (M17-07). Erst danach gehört er in den wöchentlichen Lauf.
+**Der GOT-Abruf läuft seit M17-07 im wöchentlichen Zeitplan mit.** Die Abrufbedingungen sind gemessen und in `docs/SOURCE_REVIEWS.md` festgehalten; der Abruf ist bedingt und beantwortet ein HTTP 304 damit, dass der Snapshot unverändert bleibt.
 
 Der Importer führt niemals Code aus dem Daten-Branch oder der Fremdquelle aus. HTML, CSV und JSON gelten als nicht vertrauenswürdige Daten. Markdown/MDX wird nicht aus Feeds ausgeführt. Source-URLs sind konfiguriert; Benutzer können den Importer nicht als allgemeinen URL-Fetcher steuern.
+
+### Beobachtung der Regelquellen (M17-03)
+
+`.github/workflows/source-check.yml` läuft täglich um 05:23 UTC und auf Zuruf. Er vergleicht die Seiten aus `config/watchlist/rule-sources.json` mit dem festgehaltenen Stand in `data-snapshots/watch/rule-sources.json` und meldet, was ein Mensch ansehen muss — je Seite höchstens eine offene Meldung, mit stabilem Titel.
+
+Fünf Befunde, und „unverändert“ ist nur einer davon: `unveraendert`, `geaendert`, `nicht_pruefbar`, `fehler`, `neu`. Eine Antwort ohne den erwarteten Marker gilt als **nicht prüfbar**, nicht als unverändert — sonst würde eine Bot-Prüfung zum neuen Sollzustand.
+
+Zwei Quellen melden dauerhaft `nicht_pruefbar`, und das ist der ehrliche Befund: EUR-Lex beantwortet einen einfachen Abruf mit HTTP 202 und leerem Körper, die italienische Seite mit einer Bot-Prüfung. Beides wird nicht umgangen. Für Österreich und die Niederlande fehlt eine belegte Adresse; sie kommen dazu, sobald die fachliche Prüfung (M12-06) die tatsächlich gelesenen Adressen festhält.
+
+Der Lauf **committet nichts**. Würde er den Vergleichsstand selbst fortschreiben, wäre jede Änderung im selben Moment wieder „gesehen“, ohne dass sie jemand gesehen hat. Er ändert auch keine Regel und stößt keinen Build an: eine Reiseregel wird fachlich geprüft, bevor sie gilt.
 
 ## 6. Rebuilds für Produktpreise
 
 Zusätzlicher Workflow `rebuild-commerce.yml`: täglich, beispielsweise `43 4 * * *` UTC. Er enthält keine Händler-Secrets; er löst lediglich den vertrauenswürdigen Cloudflare-Build aus. Dort erfolgt der Feedabruf. Der Workflow wird erst aktiv, wenn mindestens ein Partner und seine Ausgaberechte freigegeben sind.
+
+### Umgesetzter Stand (M17-03)
+
+`.github/workflows/rebuild-commerce.yml` läuft täglich um 05:47 UTC und auf Zuruf. Der erste Schritt ist die Frage, ob es überhaupt ein zugelassenes Warenprogramm für einen aktiven Markt gibt (`scripts/publish/commerce-rebuild.ts`). Heute lautet die Antwort nein (M13-06), und dann endet der Lauf dort: kein Feedabruf, kein Rebuild, kein Hook.
+
+Hook und Buildstatus bleiben getrennt. `scripts/publish/deploy-hook.ts` ruft den Hook auf und meldet einen Fehlschlag als Fehlschlag; dass der Aufruf angenommen wurde, ist ausdrücklich **keine** Aussage über den Build bei Cloudflare. Der Hook geht an keinen anderen Host als `api.cloudflare.com`, und protokolliert wird nur der Ursprung — sein Token steht im Pfad, nicht in der Query. Fehlt das Secret, wird übersprungen statt gescheitert.
+
+Dass daraus keine Buildschleife wird, hängt nicht am Wohlverhalten, sondern an den Triggern: weder `source-check.yml` noch `rebuild-commerce.yml` noch `ingest-open.yml` reagiert auf `push`, `pull_request` oder `workflow_run`, keiner läuft häufiger als täglich, und jeder hat eine `concurrency`-Gruppe. `tests/workflows/trigger-grenzen.test.ts` prüft das an den Dateien.
 
 Nicht für jeden Artikel, jede Quelle oder jedes Produkt einen Build auslösen. Pro geplanten Lauf aggregieren. Überschneidungen über `concurrency` bzw. einen kontrollierten Build-Takt begrenzen. Builds im Normalbetrieb auf ein überschaubares tägliches Budget begrenzen; häufig aktualisiertes Wetter bekommt später einen separaten kleinen Daten-Build statt die gesamte Website stündlich neu zu bauen.
 

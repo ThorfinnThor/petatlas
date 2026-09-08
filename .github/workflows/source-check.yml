@@ -1,0 +1,108 @@
+# M17-03 — Tägliche Beobachtung der Regelquellen.
+#
+# Der Lauf holt fünf Seiten, vergleicht sie mit dem festgehaltenen Stand und
+# meldet, was ein Mensch ansehen muss. Er ändert **keine** Regel, baut nichts
+# und committet nichts. Eine Reiseregel wird fachlich geprüft, bevor sie gilt
+# (M12-06); ein Cron-Job kann das nicht ersetzen.
+#
+# Warum kein Commit: der Vergleichsstand liegt im Repository. Würde der Lauf
+# ihn selbst fortschreiben, wäre die Änderung im selben Moment wieder
+# „gesehen“ — und niemand hätte sie gesehen. Er bleibt stehen, bis jemand die
+# Änderung sichtet und ihn von Hand mitbringt.
+name: Regelquellen beobachten
+
+on:
+  schedule:
+    # Täglich um 05:23 UTC. Eine Anfrage je Seite und Tag ist für die Quellen
+    # unauffällig und reicht, um einen Wechsel binnen eines Tages zu bemerken.
+    - cron: '23 5 * * *'
+  workflow_dispatch:
+    inputs:
+      trockenlauf:
+        description: 'Nur vergleichen, keine Meldung öffnen'
+        type: boolean
+        default: true
+
+# Kein `push`- und kein `workflow_run`-Trigger: dieser Lauf darf sich nicht
+# selbst oder einen Build auslösen können.
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-check
+  cancel-in-progress: false
+
+jobs:
+  beobachten:
+    name: Quellen vergleichen
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      # Zum Melden. Mehr braucht der Lauf nicht: er schreibt nichts ins Repo.
+      issues: write
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Quellen vergleichen
+        run: |
+          mkdir -p .work
+          node scripts/monitor/source-drift.ts --fetch | tee .work/beobachtung.txt
+
+      - name: Bericht in die Zusammenfassung
+        if: always()
+        run: |
+          {
+            echo '## Beobachtung der Regelquellen'
+            echo
+            echo '```'
+            cat .work/beobachtung.txt 2>/dev/null || echo 'Kein Bericht entstanden.'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Eine Meldung je Seite, mit stabilem Titel. Ist sie schon offen, wird
+      # sie nicht noch einmal geöffnet: ein täglicher Lauf soll erinnern, nicht
+      # das Issue-Board fluten.
+      - name: Befunde melden
+        if: ${{ inputs.trockenlauf != true }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          for datei in .work/meldungen/*.md; do
+            titel=$(head -n 1 "$datei")
+            koerper=$(tail -n +3 "$datei")
+            vorhanden=$(gh issue list --state open --search "$titel in:title" \
+              --json title,number --jq "[.[] | select(.title == \"$titel\")] | length")
+            if [ "$vorhanden" -gt 0 ]; then
+              echo "Schon offen: $titel"
+              continue
+            fi
+            gh issue create --title "$titel" --body "$koerper"
+            echo "Gemeldet: $titel"
+          done
+
+      - name: Bericht aufheben
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: quellenbeobachtung
+          path: |
+            .work/source-drift.json
+            .work/beobachtung.txt
+          retention-days: 14
+          if-no-files-found: warn

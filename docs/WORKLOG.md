@@ -515,3 +515,19 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Der Snapshot führt jetzt `sourceEtag` und `sourceLastModified` mit. Der nächste Lauf schickt sie; bei 304 endet er erfolgreich und lässt den Snapshot unangetastet — ein unveränderter Datenstand ist kein Fehler und darf keinen leeren Commit erzeugen.
 - Nachgeprüft mit zwei Läufen hintereinander: der erste holte die Datei und trug die Kennzeichen ein, der zweite bekam 304. Der Inhalts-Hash blieb derselbe; die Fassung ist unverändert die vom 7. April 2023.
 - Damit ist der GOT-Abruf im wöchentlichen Zeitplan. Fände sich später ein Hinweis gegen automatisierten Abruf, wird nur der Zeitplan gestoppt — der Snapshot bleibt gültig und die Auslieferung läuft weiter.
+
+| Prüfstand | `scripts/checks/workflows.sh`, `npm run check:workflows`, `docs/CI_SECURITY.md` | beide Workflowläufe auf GitHub | grün, nachdem sie vier Commits lang rot standen |
+
+- Zwei rote Läufe, beide von mir verursacht, beide **lokal nicht sichtbar** — das ist der eigentliche Befund. `npm run verify` deckte den Workflowsatz nicht ab.
+- Der Snapshot ließ sich ohne Abruf nicht mehr reproduzieren: der echte Abruf schreibt `retrievalDate`, ETag und Last-Modified, der Neubau aus der Fixture setzte eine Konstante und `null`. Jetzt gilt: dieselben Bytes, dieselben Angaben; andere Bytes, Abbruch statt erfundenem Abrufdatum.
+- Die Workflow-Härtung liegt jetzt in einem Skript und läuft in der Prüfkette mit. Ein Secret-Verweis ist nicht verboten, sondern **erklärungsbedürftig**: erklärt sind `GITHUB_TOKEN` und `CLOUDFLARE_DEPLOY_HOOK`, jeder weitere macht den Lauf rot.
+- Beim Umbau fiel auf, dass die Pin-Prüfung **nie etwas geprüft hat**: ihr Muster verlangte `uses:` am Zeilenanfang, in der Datei steht `- uses:`. Sie traf keine einzige Zeile und war immer grün. Eine Prüfung, die nichts findet, gilt jetzt selbst als Fehler.
+
+| M17-03 | `source-check.yml`, `rebuild-commerce.yml`, `scripts/monitor/source-drift.ts`, `scripts/publish/deploy-hook.ts` | zwei echte Läufe gegen die fünf beobachteten Seiten; 75 Tests in `tests/monitor`, `tests/publish`, `tests/workflows` | zweiter Lauf: 3× unverändert, davon einmal per HTTP 304 |
+
+- Die Beobachtung beantwortet je Seite **eine** Frage: ist sie noch die Seite, die geprüft wurde? Sie übernimmt nichts und stößt nichts an. Eine Reiseregel wird fachlich geprüft, bevor sie gilt — das kann kein Cron-Job ersetzen.
+- Fünf Befunde, und „unverändert“ ist nur einer davon. Eine Antwort ohne den erwarteten Marker gilt als **nicht prüfbar**: sonst würde eine Bot-Prüfung zum neuen Sollzustand. Genau das ist bei `salute.gov.it` der Fall, und EUR-Lex antwortet einem einfachen Abruf mit HTTP 202 und leerem Körper. Beides wird nicht umgangen.
+- **Zwei Zielstaaten fehlen bewusst.** Für AT und NL ist keine Adresse belegt; zwei plausible Adressen antworteten probeweise mit 404. Eine geratene Adresse zu beobachten wäre schlimmer als keine — sie meldet jahrelang „unverändert“, ohne je die richtige Seite gelesen zu haben.
+- Der Vergleichsstand trägt **keinen Zeitstempel**. Sonst wäre jeder tägliche Lauf eine Änderung gewesen — und damit entweder ein Bot-Commit pro Tag oder ein Diff, den niemand mehr liest.
+- Hook und Buildstatus bleiben getrennt: dass der Aufruf angenommen wurde, ist keine Aussage über den Build. Der Hook-Token steht im **Pfad**, nicht in der Query; protokolliert wird nur der Ursprung.
+- Dass keine Buildschleife entsteht, hängt nicht am Wohlverhalten, sondern an den Triggern — kein `push`, kein `workflow_run`, kein `pull_request`, höchstens täglich, je eine `concurrency`-Gruppe. `tests/workflows/trigger-grenzen.test.ts` prüft das an den Dateien und wurde mit einem absichtlich kaputten Workflow gegengeprüft.

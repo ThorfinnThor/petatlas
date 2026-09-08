@@ -1,0 +1,50 @@
+{
+  "watchlistId": "rule-sources-de-v1",
+  "entries": [
+    {
+      "watchId": "eur-lex-2026-131",
+      "title": "Delegierte Verordnung (EU) 2026/131, deutsche Fassung auf EUR-Lex",
+      "url": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
+      "belongsTo": "content-data/travel/rules/eu-intra-2026.json",
+      "expectedMarker": "2026/131",
+      "meaning": "Rechtsgrundlage des Regelsatzes. Eine Aenderung kann Berichtigung, Aenderungsverordnung oder Ende der Geltung sein und macht die fachliche Pruefung erneut noetig. Gemessen am 2026-09-08: EUR-Lex beantwortet einen einfachen Abruf mit HTTP 202 und leerem Koerper. Der Eintrag meldet deshalb dauerhaft nicht_pruefbar; das ist der ehrliche Befund und keine Entwarnung.",
+      "reviewedAt": "2026-09-07"
+    },
+    {
+      "watchId": "ec-travelling-pet-within-eu",
+      "title": "Europaeische Kommission, Travelling with a pet within the EU",
+      "url": "https://food.ec.europa.eu/animals/live-animal-movements/dogs-cats-and-ferrets/travelling-pet-within-eu_en",
+      "belongsTo": "content-data/travel/rules/eu-intra-2026.json",
+      "expectedMarker": "Travelling with a pet within the EU",
+      "meaning": "Zusammenfassung der Kommission. Aus ihr stammen die Gueltigkeitsanforderungen und das Passmodell im Regelsatz.",
+      "reviewedAt": "2026-09-07"
+    },
+    {
+      "watchId": "fr-agriculture-rage",
+      "title": "Frankreich, Ministere de l'Agriculture, Rage: informations grand public et voyageurs",
+      "url": "https://agriculture.gouv.fr/rage-informations-grand-public-et-voyageurs",
+      "belongsTo": "Zielstaat FR",
+      "expectedMarker": "informations grand public et voyageurs",
+      "meaning": "Stand Juni 2026. Nennt Kennzeichnung und Tollwutimpfung und verlinkt ein Merkblatt von 2020.",
+      "reviewedAt": "2026-09-07"
+    },
+    {
+      "watchId": "it-salute-animali-compagnia",
+      "title": "Italien, Ministero della Salute, Reisen mit Heimtieren",
+      "url": "https://www.salute.gov.it/portale/temi/p2_6.jsp?id=214&area=cani&menu=viaggiare",
+      "belongsTo": "Zielstaat IT",
+      "expectedMarker": "Ministero della Salute",
+      "meaning": "Die Adresse liefert eine Bot-Pruefung statt des Inhalts (docs/reviews/travel-sources.md). Sie wird beobachtet, aber nicht umgangen: der Marker fehlt auf der Pruefseite, der Befund bleibt nicht_pruefbar statt unveraendert.",
+      "reviewedAt": "2026-09-07"
+    },
+    {
+      "watchId": "got-2022-uebersicht",
+      "title": "Gebuehrenordnung fuer Tieraerzte (GOT 2022), nichtamtliches Inhaltsverzeichnis",
+      "url": "https://www.gesetze-im-internet.de/got_2022/",
+      "belongsTo": "data-snapshots/got/got-2022.json",
+      "expectedMarker": "nichtamtliches Inhaltsverzeichnis",
+      "meaning": "Die Uebersichtsseite traegt Aenderungshinweise. Der Import selbst laeuft weiterhin woechentlich und bedingt (M17-07); diese Beobachtung ist die frueher sichtbare Anzeige.",
+      "reviewedAt": "2026-09-08"
+    }
+  ]
+}

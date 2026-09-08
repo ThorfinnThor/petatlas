@@ -1,0 +1,91 @@
+# M17-03 — Rebuild des Warenkatalogs, wenn es einen Partner gibt.
+#
+# Der Lauf prüft zuerst, ob überhaupt ein zugelassenes Warenprogramm für einen
+# aktiven Markt existiert. Heute gibt es keins (M13-06), und dann endet er hier.
+# Das ist der beabsichtigte Normalzustand, kein Fehlschlag.
+#
+# Hook und Buildstatus sind zwei Dinge:
+#   - Der Hook wird aufgerufen. Ob er angekommen ist, sagt der HTTP-Status,
+#     und ein Fehlschlag macht diesen Lauf rot.
+#   - Der Build läuft danach bei Cloudflare. Ob er durchläuft, weiß dieser
+#     Lauf nicht — und behauptet es auch nicht.
+#
+# Warum das hier keine Buildschleife werden kann:
+#   - Es gibt keinen `push`- und keinen `workflow_run`-Trigger. Ein Deploy
+#     kann diesen Lauf nicht auslösen, und dieser Lauf schreibt nichts ins
+#     Repository, was einen Deploy auslösen könnte.
+#   - Der Zeitplan ist täglich, nicht minütlich.
+#   - `concurrency` lässt nur einen Lauf zu.
+#   - Ohne Partner wird der Hook gar nicht erst aufgerufen.
+name: Warenkatalog neu bauen
+
+on:
+  schedule:
+    # Täglich um 05:47 UTC, versetzt zur Quellenbeobachtung.
+    - cron: '47 5 * * *'
+  workflow_dispatch:
+    inputs:
+      trockenlauf:
+        description: 'Nur entscheiden, den Hook nicht aufrufen'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rebuild-commerce
+  cancel-in-progress: false
+
+jobs:
+  entscheiden:
+    name: Rebuild nur bei aktiven Partnern
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Gibt es einen zugelassenen Partner?
+        id: partner
+        run: node scripts/publish/commerce-rebuild.ts
+
+      - name: Katalog bauen
+        if: ${{ steps.partner.outputs.noetig == 'true' }}
+        run: npm run build:commerce
+
+      # Der Hook wird nur aufgerufen, wenn es etwas Neues gibt. Fehlt das
+      # Secret, endet der Schritt mit einer klaren Meldung statt mit einem
+      # Fehler: ein Repository ohne hinterlegten Hook ist kein kaputtes
+      # Repository.
+      - name: Build anstoßen
+        if: ${{ steps.partner.outputs.noetig == 'true' && inputs.trockenlauf != true }}
+        env:
+          CLOUDFLARE_DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: node scripts/publish/deploy-hook.ts
+
+      - name: Ergebnis in die Zusammenfassung
+        if: always()
+        run: |
+          {
+            echo '## Warenkatalog'
+            echo
+            if [ "${{ steps.partner.outputs.noetig }}" = 'true' ]; then
+              echo 'Es gibt mindestens ein zugelassenes Warenprogramm; der Katalog wurde gebaut.'
+            else
+              echo 'Kein zugelassenes Warenprogramm. Kein Feedabruf, kein Rebuild, kein Hook.'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

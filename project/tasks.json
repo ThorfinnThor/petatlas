@@ -3476,8 +3476,14 @@
         "M17-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npx vitest run tests/monitor tests/publish tests/workflows: 1 + 3 + 1 Dateien gruen (17 + 46 + 12 Tests). npm run verify: 1123 Tests gruen. Zwei echte Laeufe von scripts/monitor/source-drift.ts --fetch gegen die fuenf Quellen: erster Lauf 3x neu und 2x nicht_pruefbar (EUR-Lex HTTP 202 leer, salute.gov.it Bot-Pruefung), zweiter Lauf 3x unveraendert (davon 1x per HTTP 304), Vergleichsstand bytegleich. Zwei geratene Adressen fuer AT und NL antworteten mit 404 und wurden deshalb nicht aufgenommen. scripts/publish/deploy-hook.ts: fremder Host wird abgelehnt (rc=1), fehlendes Secret uebersprungen (rc=0). scripts/publish/commerce-rebuild.ts: kein zugelassenes Warenprogramm, also kein Rebuild.",
+          "reference": ".github/workflows/source-check.yml, .github/workflows/rebuild-commerce.yml, scripts/monitor/source-drift.ts, scripts/publish/deploy-hook.ts, scripts/publish/commerce-rebuild.ts, config/watchlist/rule-sources.json, tests/workflows/trigger-grenzen.test.ts",
+          "verified_at": "2026-09-08T11:30:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

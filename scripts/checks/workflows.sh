@@ -54,12 +54,19 @@ fi
 #   die Berechtigungsprüfung unten). Es verlässt den Lauf nicht und steht
 #   Forks nur lesend zur Verfügung.
 #
+#   CLOUDFLARE_DEPLOY_HOOK - die Adresse, die einen Build anstößt; ihr Token
+#   steht im Pfad. Sie wird nur in rebuild-commerce.yml gesetzt, nur in einem
+#   Lauf nach Zeitplan oder auf Zuruf, nie in einem Lauf, den ein fremder
+#   Pull Request auslösen kann. scripts/publish/deploy-hook.ts schickt sie an
+#   keinen anderen Host als api.cloudflare.com und protokolliert nur den
+#   Ursprung, nie den Pfad.
+#
 # Jeder weitere Name muss hier bewusst eingetragen werden. Wer ein Secret
 # ergänzt, ohne diese Liste anzufassen, bekommt einen roten Lauf - genau das
 # ist der Zweck.
 if unerklaert=$(grep -rnE '\$\{\{[[:space:]]*secrets\.' "$verzeichnis" \
-  | grep -vE '\$\{\{[[:space:]]*secrets\.GITHUB_TOKEN[[:space:]]*\}\}'); then
-  melde "Nicht erklärter Secret-Verweis; zugelassen ist nur GITHUB_TOKEN:"
+  | grep -vE '\$\{\{[[:space:]]*secrets\.(GITHUB_TOKEN|CLOUDFLARE_DEPLOY_HOOK)[[:space:]]*\}\}'); then
+  melde "Nicht erklärter Secret-Verweis; erklärt sind nur GITHUB_TOKEN und CLOUDFLARE_DEPLOY_HOOK:"
   melde "$unerklaert"
 fi
 
