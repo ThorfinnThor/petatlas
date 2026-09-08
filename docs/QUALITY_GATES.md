@@ -28,6 +28,7 @@ npm run check:dist
 npm run check:links
 npm run check:seo
 npm run check:security
+npm run check:workflows
 npm run check:budgets
 npm run check:release
 npm run verify

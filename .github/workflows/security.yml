@@ -77,53 +77,13 @@ jobs:
         with:
           persist-credentials: false
 
-      # Ein Tag lässt sich verschieben, ein Commit-SHA nicht. Ein ungepinnter
-      # Verweis ist der klassische Weg, fremden Code in einen Build zu bringen.
-      - name: Actions sind auf volle Commit-SHAs gepinnt
-        run: |
-          verstoesse=$(grep -rhoE '^\s*uses:\s*\S+' .github/workflows \
-            | sed -E 's/^\s*uses:\s*//' \
-            | grep -vE '@[0-9a-f]{40}$' || true)
-          if [ -n "$verstoesse" ]; then
-            echo "Nicht auf einen Commit-SHA gepinnt:"
-            echo "$verstoesse"
-            exit 1
-          fi
-          echo "Alle Actions sind auf volle Commit-SHAs gepinnt."
-
-      # pull_request_target läuft mit den Rechten des Zielrepos und hat Zugriff
-      # auf Secrets. Zusammen mit einem Checkout des PR-Codes ist das die
-      # bekannteste Rechteausweitung in GitHub Actions.
-      # Gesucht wird der Trigger selbst, also die Zeile `pull_request_target:`
-      # am Zeilenanfang — nicht die bloße Erwähnung in diesem Prüfschritt.
-      - name: Kein pull_request_target als Trigger
-        run: |
-          if grep -rnE '^\s{0,4}pull_request_target:' .github/workflows; then
-            echo "pull_request_target ist in diesem Repository nicht zugelassen."
-            exit 1
-          fi
-          echo "Kein pull_request_target-Trigger vorhanden."
-
-      # Auch hier: gesucht wird die tatsächliche Verwendung, nicht das Muster
-      # in diesem Prüfschritt. Deshalb wird die eigene Datei ausgenommen.
-      - name: Keine Secrets in Workflows referenziert
-        run: |
-          if grep -rnE '\$\{\{[[:space:]]*secrets\.' .github/workflows \
-              --exclude=security.yml; then
-            echo "Dieser Workflowsatz kommt ohne Secrets aus; ein Verweis ist erklärungsbedürftig."
-            exit 1
-          fi
-          echo "Keine Secret-Referenz vorhanden."
-
-      - name: Jeder Workflow setzt Berechtigungen ausdrücklich
-        run: |
-          for datei in .github/workflows/*.yml; do
-            if ! grep -q '^permissions:' "$datei"; then
-              echo "$datei setzt keine permissions auf oberster Ebene."
-              exit 1
-            fi
-          done
-          echo "Alle Workflows setzen permissions ausdrücklich."
+      # Die vier Härtungsregeln stehen in einem Skript, damit sie auch in der
+      # lokalen Prüfkette laufen. Sie nur hier zu haben hat vier Commits lang
+      # einen roten Prüfstand erzeugt, der lokal unsichtbar war.
+      # Das Skript kommt ohne Abhängigkeiten aus; dieser Job braucht deshalb
+      # weiterhin nur den Checkout.
+      - name: Workflow-Härtung
+        run: bash scripts/checks/workflows.sh
 
   geheimnisse:
     name: Secret- und Fixture-Audit

@@ -6,8 +6,8 @@ Stand 2026-09-06 (M07-02). Beschreibt, wogegen die Workflows schützen sollen un
 
 | Angriffsweg | Maßnahme |
 |---|---|
-| Ein Tag einer fremden Action wird auf anderen Code verschoben | Alle `uses:` sind auf volle 40-stellige Commit-SHAs gepinnt; ein Prüfschritt bricht ab, sobald ein Verweis das nicht ist |
-| Ein fremder Pull Request liest Produktions-Secrets | Beide Workflows benutzen **kein einziges Secret**. `pull_request_target` ist verboten und wird geprüft |
+| Ein Tag einer fremden Action wird auf anderen Code verschoben | Alle `uses:` sind auf volle 40-stellige Commit-SHAs gepinnt; `scripts/checks/workflows.sh` bricht ab, sobald ein Verweis das nicht ist — und ebenso, wenn es keine einzige `uses:`-Zeile findet, damit die Regel nicht ins Leere läuft |
+| Ein fremder Pull Request liest Produktions-Secrets | Die auf Pull Requests laufenden Workflows benutzen **kein einziges Secret**. `pull_request_target` ist verboten und wird geprüft |
 | Ein Workflow bekommt zu viele Rechte | `permissions: contents: read` auf oberster Ebene, zusätzlich je Job; ein Prüfschritt verlangt eine ausdrückliche Angabe in jeder Workflowdatei |
 | Der Checkout hinterlässt ein verwendbares Token im Runner | `persist-credentials: false` in jedem Checkout |
 | Eine Abhängigkeit wird stillschweigend aktualisiert | `npm ci` statt `npm install`; ein Schritt prüft, dass das Lockfile unverändert bleibt, ein weiterer, dass alle 17 Abhängigkeiten exakt gepinnt sind |
@@ -17,9 +17,17 @@ Stand 2026-09-06 (M07-02). Beschreibt, wogegen die Workflows schützen sollen un
 
 ## Was die Workflows dürfen
 
-Lesen. Sonst nichts. Es gibt keinen Job mit `contents: write`, `packages: write`, `id-token: write` oder einem anderen erhöhten Recht, und keinen, der ein Secret anfordert.
+Alles, was auf einen Pull Request hin läuft — `ci.yml` und `security.yml` —, darf lesen und sonst nichts: kein `packages: write`, kein `id-token: write`, kein Secret.
 
 Damit kann ein Pull Request aus einem fremden Fork die volle Prüfkette durchlaufen, ohne dass ihm dabei irgendetwas anvertraut wird. Das ist Absicht: eine CI, die für Fremde ausfällt, wird umgangen; eine CI, die Fremden Secrets gibt, wird ausgenutzt.
+
+Eine Ausnahme gibt es, und sie ist bewusst eng gezogen: `ingest-open.yml` läuft **nur** nach Zeitplan oder auf ausdrückliche Auslösung, nie durch einen Pull Request und damit nie unter fremdem Code. Der Job hat `contents: write` und `pull-requests: write` und benutzt `GITHUB_TOKEN`, um einen Pull Request mit dem neuen Datenstand zu öffnen. Nach `main` schreibt er nicht.
+
+`GITHUB_TOKEN` ist kein hinterlegtes Secret, sondern ein pro Lauf ausgestelltes Token, dessen Rechte der Workflow selbst begrenzt. Genau deshalb ist es der einzige Name, den `scripts/checks/workflows.sh` durchlässt; jeder weitere Secret-Verweis macht den Lauf rot, bis ihn jemand dort einträgt und begründet.
+
+## Warum die Härtung ein Skript ist
+
+Die vier Regeln — gepinnte Actions, kein `pull_request_target`, nur erklärte Secrets, ausdrückliche `permissions` — standen zuerst nur als Schritte in `security.yml`. Sie schlugen deshalb erst nach dem Push an: der Prüfstand stand vier Commits lang auf rot, während lokal alles grün aussah. Sie liegen jetzt in `scripts/checks/workflows.sh`, laufen in `npm run verify` mit und werden vom Workflow mit demselben Aufruf ausgeführt.
 
 ## Ausdrückliche Grenzen
 

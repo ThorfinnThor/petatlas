@@ -29,18 +29,32 @@ import type { FetchedResource } from './types.ts';
 const ZIEL = 'data-snapshots/got/got-2022.json';
 const LOKALE_QUELLE = 'tests/fixtures/got/got_2022.xml.zip';
 
+interface LetzterStand {
+  readonly etag: string | null;
+  readonly lastModified: string | null;
+  readonly sha256: string | null;
+  readonly retrievedAt: string | null;
+}
+
 /** Die Kennzeichen des zuletzt geholten Standes, falls es einen gibt. */
-function letzterStand(): { readonly etag: string | null; readonly lastModified: string | null } {
+function letzterStand(): LetzterStand {
   try {
     const vorhanden = JSON.parse(readFileSync(ZIEL, 'utf8')) as {
-      source?: { sourceEtag?: string | null; sourceLastModified?: string | null };
+      source?: {
+        sourceEtag?: string | null;
+        sourceLastModified?: string | null;
+        sourceSha256?: string | null;
+        retrievalDate?: string | null;
+      };
     };
     return {
       etag: vorhanden.source?.sourceEtag ?? null,
       lastModified: vorhanden.source?.sourceLastModified ?? null,
+      sha256: vorhanden.source?.sourceSha256 ?? null,
+      retrievedAt: vorhanden.source?.retrievalDate ?? null,
     };
   } catch {
-    return { etag: null, lastModified: null };
+    return { etag: null, lastModified: null, sha256: null, retrievedAt: null };
   }
 }
 
@@ -59,16 +73,32 @@ async function holeRessource(mitAbruf: boolean): Promise<FetchedResource | null>
   }
 
   const body = new Uint8Array(readFileSync(LOKALE_QUELLE));
+  const contentHash = createHash('sha256').update(body).digest('hex');
+
+  // Ohne Abruf wird aus der im Repository liegenden Datei neu gebaut. Deren
+  // Kennzeichen stammen aus dem letzten echten Abruf und gelten nur, solange
+  // es dieselben Bytes sind. Weicht der Hash ab, ist die Datei ausgetauscht
+  // worden: dann sind ETag und Last-Modified unbekannt statt geerbt.
+  const vorher = letzterStand();
+  if (vorher.sha256 !== contentHash || vorher.retrievedAt === null) {
+    throw new Error(
+      'Die lokale Quelldatei gehört nicht zum vorhandenen Snapshot. Wann sie ' +
+        'abgerufen wurde, ist damit unbekannt und wird nicht geraten. ' +
+        'Bitte `npm run snapshot:got -- --fetch` ausführen.',
+    );
+  }
+
   return {
     sourceId: 'got-2022-gesetze-im-internet',
     url: 'https://www.gesetze-im-internet.de/got_2022/xml.zip',
     body,
     contentType: 'application/zip',
-    contentHash: createHash('sha256').update(body).digest('hex'),
-    // Der Abrufzeitpunkt der im Repository liegenden Datei, nicht „jetzt“.
-    retrievedAt: '2026-09-06T00:00:00+00:00',
-    etag: null,
-    lastModified: null,
+    contentHash,
+    // Der Abrufzeitpunkt dieser Bytes stammt aus dem letzten echten Abruf,
+    // nicht aus „jetzt“ und nicht aus einer Konstanten im Code.
+    retrievedAt: vorher.retrievedAt,
+    etag: vorher.etag,
+    lastModified: vorher.lastModified,
   };
 }
 

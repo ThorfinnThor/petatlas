@@ -29,7 +29,7 @@ Fehlt die Datei: `security find-certificate -a -p /System/Library/Keychains/Syst
 Prüfkette vor jedem Commit:
 
 ```
-npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npm run check:security && npm run check:handoff
+npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npm run check:security && npm run check:workflows && npm run check:handoff
 ```
 
 Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Preview-Server wird mit `npx astro preview stop` beendet.
@@ -58,7 +58,7 @@ Vorhanden: Datenbranch-Publisher mit Allowlist, `.github/workflows/data-branch.y
 
 **Reihenfolge beim Abschluss einer Aufgabe:** erst `docs/HANDOFF.md` auf die *nächste* Aufgabe fortschreiben, dann den Status setzen und beides gemeinsam committen. Sonst schlägt `npm run check:handoff` in der CI fehl — genau das ist beim ersten CI-Lauf passiert.
 
-Prüfkette vor jedem Commit: `npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npm run check:security && npm run check:licenses && npm run check:handoff`, bei UI-Änderungen zusätzlich `npx playwright test`.
+Prüfkette vor jedem Commit: `npm run lint && npm run typecheck && npm run format:check && npm run test:unit && npm run check:security && npm run check:workflows && npm run check:licenses && npm run check:handoff`, bei UI-Änderungen zusätzlich `npx playwright test`.
 
 ## Entschieden
 
