@@ -633,3 +633,10 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Handgriffe statt Beschreibungen: Auslöser, Befehle, Dateien, Abschlusskriterium. Die Hintergründe stehen woanders; hier steht, was zu **tun** ist.
 - **Ein Betriebshandbuch, dessen Befehle es nicht gibt, ist im Ernstfall schlimmer als keins.** Deshalb prüft ein Test, dass jedes genannte npm-Skript und jede genannte Datei existiert — für Runbook, Entwicklersetup und Rollback.
 - `KNOWN_LIMITATIONS.md` sammelt, was sonst in einem grünen Prüflauf untergeht: keine Verfügbarkeitszusage, der Zeitplan überwacht sich nicht selbst, eine dauerhaft unerreichbare Quelle wird erst nach 400 Tagen zum Alarm, kein Lighthouse-Score, kein Screenreader-Lauf, keine juristische Prüfung.
+
+| M19-05 | `docs/ACCEPTANCE.md`, `tests/status-consistency.test.ts` | Abgleich gegen das Manifest, 6 Tests, Gegenprobe mit falscher Zahl | grün |
+
+- Abgeglichen wird gegen `project/tasks.json`, nicht gegen die Erinnerung: 113 erledigt mit vollständigem Nachweis, 6 blockiert mit Ursache, Handlung und Zuständigkeit, 2 offen.
+- Der neue Gate verbietet die Wörter, mit denen man sich selbst überschätzt: „100 %“, „produktionsreif“, „startbereit“, „vollständig fertig“ — solange Aufgaben blockiert sind.
+- **Eine eigene Zusicherung war vakuos:** „M08-06 blockiert“ enthält zufällig „6 blockiert“, also traf die Prüfung immer zu. Sie liest jetzt die Zusammenfassungszeile per Muster, und die Gegenprobe mit einer falschen Zahl schlägt an.
+- Zwei Zahlen im Abnahmebericht waren zunächst falsch abgeschrieben und wurden nachgemessen: der Standardbuild erzeugt 13 HTML-Dateien und 346 Dateien, der Featurebuild 60 und 443.

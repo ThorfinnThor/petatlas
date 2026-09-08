@@ -50,7 +50,7 @@ Im selben Lauf ist geprüft, dass **keine einzige Kachel** vor der Zustimmung ge
 
 ## Dateien und Größen der Auslieferung
 
-Datei- und Verzeichniszahlen stehen in `docs/BUDGET_REPORT.md` und werden bei jedem CI-Lauf mit `npm run check:budgets` geprüft: 425 Dateien von 12.000, größte Datei 0,46 MiB von 25 MiB.
+Datei- und Verzeichniszahlen stehen in `docs/BUDGET_REPORT.md` und werden bei jedem CI-Lauf mit `npm run check:budgets` geprüft: 443 Dateien von 12.000, größte Datei 0,46 MiB von 25 MiB.
 
 ## Offen
 

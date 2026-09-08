@@ -3961,8 +3961,14 @@
         "M19-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Abgleich gegen das Manifest statt aus dem Gedaechtnis: 121 Aufgaben, davon 113 erledigt mit vollstaendigem Nachweis (Beschreibung, Fundstelle, Pruefdatum), 6 blockiert mit Ursache, Handlung und Zustaendigkeit, 2 offen - dieser Abgleich und die Veroeffentlichung. Keine erledigte Aufgabe ohne Nachweis, keine blockierte ohne Blockereintrag, jede blockierte auch im Blockerregister. Neuer Gate tests/status-consistency.test.ts (6 Tests): er vergleicht die im Handoff genannten Zahlen mit dem Manifest und verbietet die Woerter '100 %', 'produktionsreif', 'startbereit' und 'vollstaendig fertig', solange Aufgaben blockiert sind. Gegengeprueft mit einer absichtlich falschen Zahl im Handoff: zwei Tests schlagen an. Dabei fiel eine eigene vakuose Zusicherung auf - 'M08-06 blockiert' enthaelt zufaellig '6 blockiert'; die Pruefung liest jetzt die Zusammenfassungszeile per Muster. docs/ACCEPTANCE.md nennt das exakte Feature-Set mit gemessenen Zahlen: Standardbuild 13 HTML-Dateien und 346 Dateien, mit allen Flags 60 HTML-Dateien und 443 Dateien; kein Fachwerkzeug eingeschaltet. npm run verify exit 0, 1302 Tests.",
+          "reference": "docs/ACCEPTANCE.md, tests/status-consistency.test.ts, docs/STATUS.md, docs/HANDOFF.md, project/tasks.json",
+          "verified_at": "2026-09-08T16:55:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },
