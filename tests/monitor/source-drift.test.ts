@@ -226,3 +226,18 @@ describe('Die echte Beobachtungsliste', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 });
+
+describe('Ursachen im Klartext', () => {
+  it('nennt bei „fetch failed“ den eigentlichen Grund', async () => {
+    const ergebnis = await pruefeEintrag(EINTRAG, undefined, {
+      fetchImpl: async () => {
+        const grund = Object.assign(new Error('connect ETIMEDOUT 1.2.3.4:443'), {
+          code: 'ETIMEDOUT',
+        });
+        throw new Error('fetch failed', { cause: grund });
+      },
+    });
+    expect(ergebnis.befund).toBe('fehler');
+    expect(ergebnis.begruendung).toContain('ETIMEDOUT');
+  });
+});

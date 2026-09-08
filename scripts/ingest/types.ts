@@ -81,6 +81,25 @@ export interface SourceAdapter<TRaw, TRecord> {
   validate(batch: NormalizedBatch<TRecord>): ValidationResult<TRecord>;
 }
 
+/**
+ * Die Ursachenkette als Text.
+ *
+ * `fetch()` meldet jeden Netzfehler als „fetch failed“ und hängt den
+ * eigentlichen Grund als `cause` an. Ohne diese Auflösung steht im Protokoll
+ * eines fehlgeschlagenen Laufs nichts, womit sich ein Zeitlimit von einer
+ * Sperre oder einem Zertifikatsfehler unterscheiden ließe.
+ */
+export function ursachenkette(fehler: unknown, tiefe = 4): string {
+  const teile: string[] = [];
+  let aktuell: unknown = fehler;
+  for (let schritt = 0; schritt <= tiefe && aktuell instanceof Error; schritt += 1) {
+    const code = (aktuell as NodeJS.ErrnoException).code;
+    teile.push(code === undefined ? aktuell.message : `${aktuell.message} (${code})`);
+    aktuell = aktuell.cause;
+  }
+  return teile.length === 0 ? String(fehler) : teile.join(' <- ');
+}
+
 export class IngestError extends Error {
   readonly sourceId: string;
   readonly step: 'fetch' | 'parse' | 'normalize' | 'validate' | 'diff' | 'publish';

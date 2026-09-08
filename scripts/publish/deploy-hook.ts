@@ -15,6 +15,8 @@
  * Ursprung.
  */
 
+import { ursachenkette } from '../ingest/types.ts';
+
 /** Wohin ein Deploy-Hook zeigen darf. Alles andere wäre ein verschenktes Secret. */
 export const ERLAUBTE_HOOK_HOSTS: readonly string[] = ['api.cloudflare.com'];
 
@@ -97,7 +99,7 @@ export async function loeseBuildAus(
   } catch (fehler) {
     return {
       befund: 'fehlgeschlagen',
-      meldung: `${nurUrsprung(hookUrl)} nicht erreichbar: ${(fehler as Error).message}`,
+      meldung: `${nurUrsprung(hookUrl)} nicht erreichbar: ${ursachenkette(fehler)}`,
       status: null,
     };
   }

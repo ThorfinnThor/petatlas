@@ -24,7 +24,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { canonicalJson, type JsonValue } from '../normalize/canonical.ts';
 import { extrahiereXml, normalizeGot, parseGotXml, PARSER_VERSION } from './adapters/got.ts';
 import { fetchSource } from './fetch.ts';
-import type { FetchedResource } from './types.ts';
+import { ursachenkette, type FetchedResource } from './types.ts';
 
 const ZIEL = 'data-snapshots/got/got-2022.json';
 const LOKALE_QUELLE = 'tests/fixtures/got/got_2022.xml.zip';
@@ -152,7 +152,7 @@ main()
   .then((code) => process.exit(code))
   .catch((fehler: unknown) => {
     // Ein Fehlschlag lässt den vorhandenen Snapshot unangetastet.
-    console.error(`Snapshot nicht erneuert: ${(fehler as Error).message}`);
+    console.error(`Snapshot nicht erneuert: ${ursachenkette(fehler)}`);
     console.error('Der bisherige Snapshot bleibt gültig.');
     process.exit(1);
   });

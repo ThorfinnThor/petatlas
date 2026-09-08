@@ -24,6 +24,7 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 
+import { ursachenkette } from '../ingest/types.ts';
 import {
   WatchlistSchema,
   WatchStateFileSchema,
@@ -150,7 +151,7 @@ export async function pruefeEintrag(
     return {
       watchId: eintrag.watchId,
       befund: 'fehler',
-      begruendung: `Abruf fehlgeschlagen: ${(fehler as Error).message}`,
+      begruendung: `Abruf fehlgeschlagen: ${ursachenkette(fehler)}`,
       contentHash: vorher?.contentHash ?? null,
       etag: vorher?.etag ?? null,
       lastModified: vorher?.lastModified ?? null,
