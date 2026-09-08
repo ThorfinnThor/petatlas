@@ -5,7 +5,7 @@ const PROBE = '/entwicklung/angebotsprobe/';
 
 test('zeigt nur Angebote mit Erlaubnis und ohne Ablauf', async ({ page }) => {
   await page.goto(PROBE);
-  await expect(page.locator('[data-testid^="angebot-"]')).toHaveCount(4);
+  await expect(page.locator('[data-testid^="angebot-"]')).toHaveCount(5);
   await expect(page.locator('[data-testid="angebot-probe-abgelaufen"]')).toHaveCount(0);
   await expect(page.locator('[data-testid="angebot-probe-ohne-erlaubnis"]')).toHaveCount(0);
 });
@@ -73,4 +73,31 @@ test('behauptet auf den echten Seiten kein Angebot', async ({ page }) => {
     await page.goto(pfad);
     await expect(page.locator('[data-testid^="angebot-"]'), pfad).toHaveCount(0);
   }
+});
+
+// M17-04 — Eine statische Seite kann stehen bleiben. Dieses Angebot war zur
+// Bauzeit der Seite gültig und ist beim Ansehen abgelaufen; die Zahl darf
+// dann nicht mehr dastehen.
+test('blendet einen im Browser abgelaufenen Preis aus', async ({ page }) => {
+  await page.goto(PROBE);
+  const karte = page.locator('[data-testid="angebot-probe-im-browser-abgelaufen"]');
+
+  // Die Karte selbst bleibt: es fehlt der Preis, nicht das Angebot.
+  await expect(karte).toHaveCount(1);
+  await expect(karte).toHaveClass(/angebot--abgelaufen/);
+  await expect(karte.locator('[data-preis]').first()).toBeHidden();
+  await expect(karte.locator('[data-testid="preis-abgelaufen"]')).toContainText(
+    'Aktuellen Preis beim Anbieter prüfen',
+  );
+  // textContent enthält auch ausgeblendete Knoten; entscheidend ist, dass
+  // die Zahl nicht mehr zu sehen ist.
+  await expect(karte.getByText('17,99', { exact: false })).toBeHidden();
+});
+
+test('lässt einen gültigen Preis stehen', async ({ page }) => {
+  await page.goto(PROBE);
+  const karte = page.locator('[data-testid="angebot-probe-versand-bekannt"]');
+  await expect(karte).not.toHaveClass(/angebot--abgelaufen/);
+  await expect(karte.locator('[data-preis]').first()).toBeVisible();
+  await expect(karte.locator('[data-testid="preis-abgelaufen"]')).toBeHidden();
 });

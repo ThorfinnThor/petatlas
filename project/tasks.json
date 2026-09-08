@@ -3507,8 +3507,14 @@
         "M17-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npm run verify exit 0, 1157 Unit-Tests. npx playwright test: 219 gruen, features-Konfiguration 280 gruen. Eingefrorene Zeit: tests/freshness/policy.test.ts fasst jede Schwelle von beiden Seiten an (Tag 30 frisch, Tag 31 alternd, Tag 90 alternd, Tag 91 veraltet); fehlender, unlesbarer und in der Zukunft liegender Stand ergeben unbekannt und sperren. tests/freshness/health.test.ts: Wirkung sperrt/warnt, nicht ausgelieferte Datensaetze sperren nichts, der Bericht enthaelt keine Adressen. tests/travel/freigabe.test.ts: eine Freigabe vom 2026-01-01 gilt am 2026-10-01 noch und am 2027-06-01 nicht mehr; nurVorschau('2099-01-01') ist true. tests/e2e/angebote.spec.ts: eine Probekarte mit Ablauf 2026-09-07T18:00Z ist zur Bauzeit gueltig und wird im Browser ausgeblendet, Ersatztext 'Aktuellen Preis beim Anbieter pruefen'; eine gueltige Karte bleibt stehen. tests/e2e/datenstand.spec.ts: Gesamtstand, Tabelle je Datensatz, unbekannt statt aktuell, nicht ausgeliefert statt Ausfall. node scripts/publish/health.ts erzeugt dist/data/v1/health.json: Gesamtstand unbekannt, gesperrt reiseregeln-eu-intra-2026.",
+          "reference": "src/features/freshness/{policy,datasets,health,offer-expiry}.ts, scripts/publish/health.ts, src/components/pages/DataStatusPage.astro, src/components/OfferCard.astro, src/features/travel/freigabe.ts, scripts/normalize/offers.ts, scripts/ingest/osm-country.ts, tests/freshness/, tests/e2e/datenstand.spec.ts",
+          "verified_at": "2026-09-08T14:35:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -51,6 +51,12 @@ export interface RegionsErgebnis {
   readonly ortsnamen: number;
   readonly ohneGeometrie: number;
   readonly ohneNamen: number;
+  /**
+   * `Last-Modified` des heruntergeladenen Extrakts, sonst der Abrufzeitpunkt.
+   * Ohne diese Angabe kann die Frischeanzeige das Alter des Ortsdatensatzes
+   * nicht nennen (M17-04).
+   */
+  readonly standDatum: string;
 }
 
 function argument(name: string): string | null {
@@ -71,6 +77,25 @@ function regionsQuellen(): readonly string[] {
     throw new Error(`Unbekannte Region(en): ${unbekannt.join(', ')}`);
   }
   return auswahl;
+}
+
+/**
+ * Der Stand eines Extrakts. `Last-Modified` sagt, wie alt die Daten sind;
+ * der Abrufzeitpunkt sagt nur, wann jemand sie geholt hat. Fehlt die Angabe
+ * der Quelle, ist der Abrufzeitpunkt die ehrlichere Obergrenze.
+ */
+export function standDerDatei(lastModified: string | null, retrievedAt: string): string {
+  if (lastModified !== null) {
+    const datum = new Date(lastModified);
+    if (!Number.isNaN(datum.getTime())) return datum.toISOString().slice(0, 10);
+  }
+  return retrievedAt.slice(0, 10);
+}
+
+/** Der jüngste Stand über alle verarbeiteten Regionen. */
+export function juengsterStand(berichte: readonly RegionsErgebnis[]): string | null {
+  const staende = berichte.map((bericht) => bericht.standDatum).filter((wert) => wert.length > 0);
+  return staende.length === 0 ? null : (staende.sort().at(-1) ?? null);
 }
 
 async function verarbeiteRegion(
@@ -122,6 +147,7 @@ async function verarbeiteRegion(
       ortsnamen: namen.length,
       ohneGeometrie: importiert.ohneGeometrie.length,
       ohneNamen: importiert.statistik.ohneNamen,
+      standDatum: standDerDatei(abruf.resource.lastModified, abruf.resource.retrievedAt),
     },
     orte: importiert.places,
     namen,
@@ -186,6 +212,11 @@ async function main(): Promise<number> {
     })),
     // Regionen ohne Snapshot werden benannt, nicht verschwiegen.
     missingRegions: gescheitert.map((eintrag) => eintrag.sourceId),
+    // Der Stand der jüngsten verarbeiteten Extraktdatei, nicht der Zeitpunkt
+    // des Skriptlaufs: sonst erzeugte jeder Aufruf eine Änderung ohne
+    // inhaltlichen Unterschied. Ohne dieses Feld kann die Frischeanzeige das
+    // Alter des größten Datensatzes nicht nennen (M17-04).
+    retrievalDate: juengsterStand(berichte),
   };
 
   writeFileSync(

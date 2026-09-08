@@ -14,6 +14,7 @@ import {
   vergleichbar,
 } from '../../scripts/normalize/products.ts';
 import {
+  ablauf,
   normalisiereAngebote,
   verfuegbarkeit,
   versandInMinor,
@@ -247,5 +248,35 @@ describe('Angebote aus dem Feed', () => {
     for (const angebot of ergebnis.angebote) {
       expect(angebot.fetchedAt).toBe(kontext.fetchedAt);
     }
+  });
+});
+
+// M17-04 — Ein Preis ohne Ablauf wäre unbegrenzt haltbar. Ist er nicht.
+describe('Haltbarkeit eines Preises', () => {
+  it('übernimmt einen Ablauf aus dem Vertrag unverändert', () => {
+    expect(
+      ablauf({
+        fetchedAt: '2026-09-07T00:00:00+00:00',
+        expiresAt: '2026-09-30T00:00:00+00:00',
+      }),
+    ).toBe('2026-09-30T00:00:00+00:00');
+  });
+
+  it('rechnet ohne Vertragsangabe die Haltbarkeit aus dem Abrufzeitpunkt', () => {
+    expect(ablauf({ fetchedAt: '2026-09-07T00:00:00+00:00', ttlStunden: 6 })).toBe(
+      '2026-09-07T06:00:00.000Z',
+    );
+  });
+
+  it('lässt keinen Preis ohne Ablauf durch', () => {
+    const kontext = { marketId: 'DE', fetchedAt: '2026-09-07T00:00:00+00:00' };
+    for (const angebot of normalisiereAngebote(FEED.records, kontext).angebote) {
+      expect(angebot.expiresAt).not.toBeNull();
+      expect(angebot.expiresAt! > angebot.fetchedAt).toBe(true);
+    }
+  });
+
+  it('meldet einen unlesbaren Abrufzeitpunkt als unbekannt statt zu raten', () => {
+    expect(ablauf({ fetchedAt: 'irgendwann' })).toBeNull();
   });
 });

@@ -12,6 +12,7 @@
  * 3. **Keine Anzeigeerlaubnis ohne Vertrag.** `displayPermission` und
  *    `imagePermission` kommen von außen und sind fail-closed `false`.
  */
+import feeds from '../../config/commerce/feeds.json' with { type: 'json' };
 import { OfferSchema, type Offer } from '../../src/domain/schemas/catalog.ts';
 import { preisInMinor, type AwinRohzeile } from '../ingest/adapters/awin.ts';
 import { produktId, type Normalisierung } from './products.ts';
@@ -28,6 +29,34 @@ export interface AngebotsKontext {
   readonly imagePermission?: boolean;
   /** Ablaufzeitpunkt laut Vertrag oder Feed. */
   readonly expiresAt?: string | null;
+  /**
+   * Haltbarkeit eines Preises, falls der Feed keine nennt. Ohne Ablauf wäre
+   * ein Preis unbegrenzt haltbar — und genau das ist er nicht: eine statische
+   * Seite kann stehen bleiben, und dann steht eine alte Zahl da (M17-04).
+   * Vorgabe ist das TTL aus `config/commerce/feeds.json`.
+   */
+  readonly ttlStunden?: number;
+}
+
+/** Vorgabehaltbarkeit eines Preises in Stunden, wenn der Feed keine nennt. */
+export const STANDARD_TTL_STUNDEN = feeds.ttlHours;
+
+/**
+ * Der Ablaufzeitpunkt eines Preises. Nennt der Feed einen, gilt dieser.
+ * Sonst wird er aus dem Abrufzeitpunkt und der Haltbarkeit gerechnet — nicht
+ * auf `null` gesetzt: ein Preis ohne Ablauf würde die Browserprüfung
+ * stillschweigend überspringen.
+ */
+export function ablauf(kontext: {
+  readonly fetchedAt: string;
+  readonly expiresAt?: string | null;
+  readonly ttlStunden?: number;
+}): string | null {
+  if (kontext.expiresAt !== undefined && kontext.expiresAt !== null) return kontext.expiresAt;
+  const abruf = Date.parse(kontext.fetchedAt);
+  if (Number.isNaN(abruf)) return null;
+  const stunden = kontext.ttlStunden ?? STANDARD_TTL_STUNDEN;
+  return new Date(abruf + stunden * 60 * 60 * 1000).toISOString();
 }
 
 /** Versandkosten: leer heißt unbekannt, „0“ heißt versandkostenfrei. */
@@ -67,7 +96,7 @@ export function normalisiereAngebot(
     kind: 'regular' as const,
     affiliateUrl: werte.aw_deep_link,
     fetchedAt: kontext.fetchedAt,
-    expiresAt: kontext.expiresAt ?? null,
+    expiresAt: ablauf(kontext),
     // Fail-closed: ohne ausdrückliche vertragliche Erlaubnis wird nichts
     // angezeigt und kein Bild eingebunden.
     displayPermission: kontext.displayPermission === true,

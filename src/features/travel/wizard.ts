@@ -37,6 +37,12 @@ export interface WizardEingabe {
   readonly rabiesVaccinationDate: string | null;
   readonly euPetPassport: Angabe;
   readonly accompaniedByOwner: Angabe;
+  /**
+   * Der Tag, an dem geprüft wird — nicht der Reisetag. Er entscheidet, ob
+   * eine fachliche Freigabe noch aktuell genug ist (M17-04). Fehlt er, wird
+   * das Alter der Freigabe nicht bewertet.
+   */
+  readonly heute?: string;
 }
 
 /** `unbekannt` wird zu `undefined`, nicht zu `false`. */
@@ -136,7 +142,7 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
     // Vorschau, solange ein Regelsatz nicht fachlich freigegeben ist oder
     // sich seit seiner Freigabe geändert hat. Der Modus wird nicht hier
     // entschieden, sondern in `freigabe.ts` — und zwar aus den Daten.
-    vorschau: nurVorschau(),
+    vorschau: nurVorschau(eingabe.heute ?? null),
   });
 
   return {

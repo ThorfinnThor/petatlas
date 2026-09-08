@@ -1,25 +1,47 @@
 ---
 /**
- * M04-03 — Datenstandseite.
+ * M04-03, ausgebaut in M17-04 — Datenstandseite.
  *
  * Beantwortet die Frage „wie aktuell ist das hier?“ an einer Stelle für die
- * ganze Website.
+ * ganze Website — mit Zahlen, nicht mit Zusicherungen. Die Bewertung stammt
+ * aus derselben Funktion, die auch `/data/v1/health.json` erzeugt; Seite und
+ * Datei können deshalb nicht auseinanderlaufen.
+ *
+ * Der Stichtag ist der Bauzeitpunkt. Eine statische Seite kann stehen
+ * bleiben, deshalb steht er sichtbar dabei: wer sie ansieht, soll nicht
+ * raten müssen, wann sie entstand.
  */
 import { resolveBuildConfig } from '../../../config/build.ts';
+import { formatCalendarDate } from '../../domain/dates.ts';
+import { HEALTH_PFAD, baueHealthBericht } from '../../features/freshness/health.ts';
+import { tageText } from '../../features/freshness/policy.ts';
 import Notice from '../Notice.astro';
 
 const build = resolveBuildConfig();
+const jetzt = new Date();
+const bericht = baueHealthBericht(jetzt.toISOString().slice(0, 10), jetzt.toISOString());
+
+const BEWERTUNG_TEXT = {
+  frisch: 'aktuell',
+  alternd: 'älter als erwartet',
+  veraltet: 'veraltet',
+  unbekannt: 'unbekannt',
+} as const;
+
+const locale = 'de-DE';
 ---
 
 <h1>Datenstand</h1>
 <p>
-  Diese Seite zeigt, welche Datensätze ausgeliefert werden, wann sie zuletzt abgerufen wurden und
-  bis wann sie gelten.
+  Diese Seite zeigt, welche Datensätze ausgeliefert werden, wie alt sie sind und ab wann ein Stand
+  als veraltet gilt. Dieselben Angaben stehen maschinenlesbar unter <a href={HEALTH_PFAD}
+    >{HEALTH_PFAD}</a
+  >.
 </p>
 
 {
   build.dataSource === 'fixtures' && (
-    <Notice variante="warnung" titel="Dieser Build zeigt Testdaten">
+    <Notice variante="testdaten" titel="Dieser Build zeigt Testdaten">
       <p>
         Der aktuelle Build läuft im Modus <strong>{build.mode}</strong> mit synthetischen
         Beispieldaten. Die angezeigten Werte sind erfunden.
@@ -28,17 +50,120 @@ const build = resolveBuildConfig();
   )
 }
 
-<Notice variante="hinweis" titel="Noch kein Datensatz veröffentlicht">
+<Notice
+  variante={bericht.gesamt.frische === 'frisch' ? 'hinweis' : 'warnung'}
+  titel={`Gesamtstand: ${BEWERTUNG_TEXT[bericht.gesamt.frische]}`}
+  testId="gesamtstand"
+>
+  <p>{bericht.gesamt.begruendung}</p>
   <p>
-    Es ist bisher kein fachlicher Datensatz freigegeben. Ein Eintrag erscheint hier erst, wenn er
-    tatsächlich ausgeliefert wird.
+    Gebaut am {formatCalendarDate(bericht.builtAt.slice(0, 10), locale)}. Ein unbekannter Stand gilt
+    nicht als aktuell.
   </p>
 </Notice>
 
-<h2>Was ein Eintrag enthalten wird</h2>
+<table class="staende">
+  <caption>Ausgelieferte Datensätze</caption>
+  <thead>
+    <tr>
+      <th scope="col">Datensatz</th>
+      <th scope="col">Stand</th>
+      <th scope="col">Alter</th>
+      <th scope="col">Bewertung</th>
+      <th scope="col">Umfang</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      bericht.datensaetze.map((eintrag) => (
+        <tr data-testid={`datensatz-${eintrag.id}`}>
+          <th scope="row">
+            {eintrag.titel}
+            <span class="staende__quelle">
+              {eintrag.quelle}
+              {eintrag.lizenz === null ? '' : ` · ${eintrag.lizenz}`}
+            </span>
+          </th>
+          <td>
+            {eintrag.stand === null
+              ? 'unbekannt'
+              : formatCalendarDate(eintrag.stand.slice(0, 10), locale)}
+          </td>
+          <td>{eintrag.alterTage === null ? '—' : tageText(eintrag.alterTage)}</td>
+          <td>
+            <span class:list={['marke', `marke--${eintrag.frische}`]}>
+              {BEWERTUNG_TEXT[eintrag.frische]}
+            </span>
+            {eintrag.sperrt && <span class="staende__sperre">sperrt das Ergebnis</span>}
+          </td>
+          <td>
+            {eintrag.ausgeliefert ? eintrag.umfang : `nicht ausgeliefert — ${eintrag.umfang}`}
+            {eintrag.hinweis !== null && <span class="staende__hinweis">{eintrag.hinweis}</span>}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<h2>Wie die Bewertung zustande kommt</h2>
 <ul>
-  <li>Datensatz und Quelle</li>
-  <li>Zeitpunkt des letzten Abrufs</li>
-  <li>Geltungszeitraum, soweit die Quelle einen nennt</li>
-  <li>Ob die fachliche Prüfung erfolgt ist</li>
+  {
+    bericht.datensaetze.map((eintrag) => (
+      <li>
+        <strong>{eintrag.titel}:</strong> {eintrag.begruendung}
+      </li>
+    ))
+  }
 </ul>
+
+<p>
+  Ein Datensatz mit der Wirkung <em>sperrt</em> verhindert ein positives Gesamtergebnis, sobald sein Stand
+  veraltet oder unbekannt ist. Das betrifft Reiseregeln und Preise: dort führt ein alter Stand in die
+  Irre. Bei Karte und Gebührenkatalog bleibt ein alter Stand ein Hinweis.
+</p>
+
+<style>
+  .staende {
+    border-collapse: collapse;
+    inline-size: 100%;
+    margin-block: var(--abstand-4);
+  }
+  .staende caption {
+    text-align: start;
+    font-weight: 600;
+    margin-block-end: var(--abstand-2);
+  }
+  .staende th,
+  .staende td {
+    border-block-end: 1px solid var(--farbe-linie);
+    padding: var(--abstand-2);
+    text-align: start;
+    vertical-align: top;
+  }
+  .staende th[scope='row'] {
+    font-weight: 600;
+  }
+  .staende__quelle,
+  .staende__hinweis,
+  .staende__sperre {
+    display: block;
+    font-weight: 400;
+    font-size: var(--schrift-klein);
+    color: var(--farbe-text-leise);
+    margin-block-start: var(--abstand-1);
+  }
+  .marke {
+    display: inline-block;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius);
+    border: 1px solid var(--farbe-linie);
+    font-size: var(--schrift-klein);
+  }
+  .marke--alternd,
+  .marke--veraltet,
+  .marke--unbekannt {
+    border-color: var(--farbe-warnung-linie);
+    background: var(--farbe-warnung-grund);
+  }
+</style>

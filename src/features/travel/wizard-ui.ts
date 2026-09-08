@@ -54,6 +54,10 @@ function eingabeLesen(): WizardEingabe {
     rabiesVaccinationDate: datum('impfdatum'),
     euPetPassport: angabe('ausweis'),
     accompaniedByOwner: angabe('begleitung'),
+    // Der Prüftag kommt aus dem Browser, nicht aus dem Build: eine
+    // ausgelieferte Seite kann Wochen alt sein, und eine fachliche Freigabe
+    // altert weiter, während sie herumliegt (M17-04).
+    heute: new Date().toISOString().slice(0, 10),
   };
 }
 

@@ -536,3 +536,13 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 
 - **Gemessener Nachtrag zu M17-07:** der GOT-Abruf gelingt vom Arbeitsrechner, **nicht** von einem GitHub-Runner. Fünf Versuche in zwei Workflows, jedes Mal ein Verbindungszeitlimit (`UND_ERR_CONNECT_TIMEOUT` nach 10 s) — kein 403, kein Zertifikatsfehler, keine Antwort mit Hinweis. Der Versuch bleibt im Zeitplan, aber die Aktualisierung des Gebührenkatalogs ist bis auf Weiteres ein manueller Lauf. Sichtbar wurde das erst, nachdem die Fehlermeldung die Ursachenkette mitführt; vorher stand dort nur „fetch failed“.
 - Nebenbefund: `agriculture.gouv.fr` scheiterte einmal genauso und antwortete beim nächsten Lauf sofort. Behördenhosts sind von einem Runner aus unzuverlässig erreichbar; die Beobachtung versucht es deshalb zweimal mit 15 Sekunden Pause. Zwei, nicht fünf — der Unterschied zwischen Nachfragen und Drängeln.
+
+| M17-04 | `src/features/freshness/`, `scripts/publish/health.ts`, Datenstandseite, `offer-expiry.ts` | 1157 Unit-Tests, 219 + 280 E2E, eingefrorene Zeit an jeder Schwelle | grün |
+
+- Vier Bewertungen, und drei davon sind nicht „in Ordnung“. **`unbekannt` ist der wichtigste Fall:** kein Stand, ein unlesbares Datum und ein Datum in der Zukunft gelten nie als aktuell. Ein Stand aus der Zukunft ist ein Datenfehler oder eine falsch gestellte Uhr — nicht besonders frische Daten.
+- Die Schwellen stehen **mit Begründung** bei den Daten, nicht im Code verstreut. Wer sie ändert, ändert einen Satz mit.
+- Zwei Wirkungen: `warnt` für Karte und Gebühren, `sperrt` für Reiseregeln und Preise. Ein alter Ortsdatensatz macht keinen Ort falsch; ein alter Preis und eine alte Rechtsauskunft führen in die Irre.
+- **Der Ortsdatensatz kennt seinen eigenen Stand nicht.** Der bundesweite Import schrieb kein Abrufdatum mit. Die Anzeige sagt deshalb „unbekannt“ und warum — statt still das Builddatum einzusetzen. Der Importer trägt es ab dem nächsten Lauf ein.
+- Ein Preis ohne Ablauf wäre unbegrenzt haltbar. Beim Normalisieren bekommt jeder Preis einen: aus dem Feed, sonst gerechnet aus Abrufzeitpunkt und TTL.
+- Die Browserprüfung ist an einer Probekarte belegt, die **zur Bauzeit gültig und beim Ansehen abgelaufen** ist. Genau das passiert einem stehen gebliebenen Deployment. Die Karte bleibt stehen, die Zahl verschwindet, und an ihrer Stelle steht eine wahre Aussage.
+- Auch eine Freigabe altert: nach 365 Tagen trägt sie kein positives Gesamtergebnis mehr. Der Prüftag kommt aus dem Browser, nicht aus dem Build — eine ausgelieferte Seite kann Wochen alt sein.

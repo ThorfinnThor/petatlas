@@ -132,3 +132,37 @@ describe('Ausgelieferter Stand', () => {
     expect(ergebnis.gesamt).toBe('unknown');
   });
 });
+
+// M17-04 — Auch eine Freigabe altert. Die Zeit steht in diesen Tests still.
+describe('Alter der Freigabe', () => {
+  const freigabe = {
+    ruleSetId: SATZ.ruleSetId,
+    approvedAt: '2026-01-01',
+    approvedBy: 'Fachprüfung',
+    sourceDigest: inhaltsSignatur(SATZ),
+    evidence: 'docs/reviews/travel.md',
+  };
+
+  it('bleibt ohne Stichtag unverändert freigegeben', () => {
+    expect(freigabeFuer(SATZ, [freigabe]).freigegeben).toBe(true);
+  });
+
+  it('gilt am Stichtag kurz nach der Prüfung', () => {
+    expect(freigabeFuer(SATZ, [freigabe], '2026-03-01').freigegeben).toBe(true);
+  });
+
+  it('gilt noch, solange sie nur alternd ist', () => {
+    // 180 Tage Warnschwelle, 365 Tage Sperrschwelle.
+    expect(freigabeFuer(SATZ, [freigabe], '2026-10-01').freigegeben).toBe(true);
+  });
+
+  it('gilt nicht mehr, wenn sie über der Sperrschwelle liegt', () => {
+    const stand = freigabeFuer(SATZ, [freigabe], '2027-06-01');
+    expect(stand.freigegeben).toBe(false);
+    expect(stand.grund).toContain('zu alt');
+  });
+
+  it('schaltet den Reisecheck bei zu alter Freigabe in die Vorschau', () => {
+    expect(nurVorschau('2099-01-01')).toBe(true);
+  });
+});

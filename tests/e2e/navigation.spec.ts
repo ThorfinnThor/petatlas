@@ -76,14 +76,16 @@ test('Impressum erfindet keine Betreiberangaben', async ({ page }) => {
   await expect(page.getByText('Betreiberangaben liegen nicht vor')).toBeVisible();
 });
 
-test('Quellen- und Datenstandseite benennen den leeren Stand', async ({ page }) => {
+test('Quellen- und Datenstandseite benennen den tatsächlichen Stand', async ({ page }) => {
   // Seit M05-03 kommt die Quellenliste aus der Registry und ist nicht mehr
   // leer; geprüft wird deshalb der ausgewiesene Rechtestand.
   await page.goto('/de-de/quellen/');
   await expect(page.getByText('Rechte geprüft und bestätigt').first()).toBeVisible();
 
+  // Seit M17-04 steht dort eine gemessene Tabelle statt eines Platzhalters.
   await page.goto('/de-de/datenstand/');
-  await expect(page.getByText('Noch kein Datensatz veröffentlicht')).toBeVisible();
+  await expect(page.locator('[data-testid="gesamtstand"]')).toBeVisible();
+  await expect(page.locator('[data-testid^="datensatz-"]').first()).toBeVisible();
   await expect(page.getByText('Dieser Build zeigt Testdaten')).toBeVisible();
 });
 

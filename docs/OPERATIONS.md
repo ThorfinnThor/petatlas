@@ -138,6 +138,17 @@ CSP nicht blind auf `unsafe-inline` erweitern. Inline-Skripte möglichst vermeid
 
 `/data/v1/health.json` bzw. `/datenstand/` enthält nur öffentliche Statusdaten: Code-Commit, Daten-Commit, Builddatum, Source-Alter, aktive Features und Zähler. Keine Tokens, privaten Partnerkonditionen oder personenbezogenen Inhalte.
 
+### Umgesetzter Stand (M17-04)
+
+`/data/v1/health.json` entsteht bei jedem `build:site` aus `src/features/freshness/`. Dieselbe Funktion speist `/de-de/datenstand/`; Seite und Datei können deshalb nicht auseinanderlaufen. Die Datei wird mit `max-age=0, must-revalidate` ausgeliefert — eine Datei, die das Alter der Daten nennt, darf nicht selbst aus einem Cache kommen.
+
+Je Datensatz stehen Warn- und Sperrschwelle **mit Begründung** in `src/features/freshness/datasets.ts`. Vier Bewertungen: `frisch`, `alternd`, `veraltet`, `unbekannt`. Ein fehlender Stand, ein unlesbares Datum und ein Datum in der Zukunft sind `unbekannt` — und unbekannt gilt nie als aktuell.
+
+Zwei Wirkungen werden unterschieden. `warnt` gilt für Karte, Gebührenkatalog und kommunale Flächen: ein alter Stand ist dort ein Hinweis, kein Ausfall. `sperrt` gilt für Reiseregeln und Preise: dort führt ein alter Stand in die Irre.
+
+- **Preise:** jedes Angebot bekommt beim Normalisieren einen Ablauf — nennt der Feed keinen, wird er aus Abrufzeitpunkt und dem TTL aus `config/commerce/feeds.json` gerechnet. Im Browser blendet `src/features/freshness/offer-expiry.ts` abgelaufene Preise aus und setzt „Aktuellen Preis beim Anbieter prüfen“ an ihre Stelle. Geprüft wird das an einer Probekarte, die zur Bauzeit gültig und beim Ansehen abgelaufen ist (`tests/e2e/angebote.spec.ts`).
+- **Reiseregeln:** eine fachliche Freigabe altert mit. Nach 180 Tagen ist sie ein Hinweis, nach 365 Tagen trägt sie kein positives Gesamtergebnis mehr; der Reisecheck fällt dann in den Vorschaumodus zurück. Der Prüftag kommt aus dem Browser, nicht aus dem Build.
+
 GitHub-Smoke-Workflow prüft Status, definierte Seiten, Ablauf wichtiger Quellen und Schema-Konsistenz. Öffentliche Issues enthalten nur bereinigte Fehlerberichte. GitHub-Zeitpläne sind keine Alarm-SLA und können bei Inaktivität deaktiviert werden; denselben Scheduler sich selbst überwachen zu lassen deckt diesen Ausfall nicht ab. Betreiber prüft Actions-/Build-Benachrichtigungen und `/datenstand/` regelmäßig. Ein unabhängiger Monitoringdienst oder späterer kleiner Cloudflare-Zeitgeber ist eine separat freizugebende Betriebsverbesserung. [S11]
 
 ## 12. Budgets und Eskalation

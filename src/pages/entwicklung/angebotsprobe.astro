@@ -90,6 +90,15 @@ const angebote = [
     shippingMinor: 0,
     expiresAt: '2026-09-07T06:00:00+00:00',
   }),
+  // M17-04: zur Bauzeit gültig, beim Ansehen längst abgelaufen. Genau der
+  // Fall, den eine statische Seite ohne Browserprüfung falsch darstellt.
+  OfferSchema.parse({
+    ...basisAngebot,
+    offerId: 'probe-im-browser-abgelaufen',
+    priceMinor: 1799,
+    shippingMinor: 0,
+    expiresAt: '2026-09-07T18:00:00+00:00',
+  }),
   OfferSchema.parse({
     ...basisAngebot,
     offerId: 'probe-ohne-erlaubnis',
@@ -122,6 +131,11 @@ const vergleich = vergleicheAngebote(angebote.slice(0, 2), [produkt], 'DE');
         </Notice>
 
         <h2>Karten</h2>
+        <p>
+          Die Karte <code>probe-im-browser-abgelaufen</code> ist zur Bauzeit dieser Seite gültig und
+          heute abgelaufen. Sie zeigt, was der Browser mit einem stehen gebliebenen Deployment
+          macht.
+        </p>
         {angebote.map((angebot) => (
           <OfferCard
             angebot={angebot}

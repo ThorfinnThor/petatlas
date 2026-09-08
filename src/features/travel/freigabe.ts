@@ -25,6 +25,7 @@ import {
   type TravelApproval,
   type TravelRuleSet,
 } from '../../domain/schemas/travel.ts';
+import { bewerte, type FrischePolitik } from '../freshness/policy.ts';
 import { regelSaetze } from './rules.ts';
 
 /** Kanonische Textform des fachlich geprüften Inhalts. */
@@ -87,9 +88,24 @@ export interface FreigabeStand {
   readonly signatur: string;
 }
 
+/**
+ * M17-04 — Auch eine Freigabe altert.
+ *
+ * Die fachliche Prüfung hat einen Rechtsstand zu einem Tag geprüft. Ein Jahr
+ * später ist sie kein Beleg mehr dafür, dass die Regeln noch stimmen: die
+ * Rechtslage ändert sich, nationale Hinweise ändern sich, und der
+ * Änderungsmelder erkennt nur Änderungen **am eigenen Regelsatz**, nicht an
+ * der Welt.
+ *
+ * Die Schwellen stehen in `src/features/freshness/datasets.ts` beim
+ * Datensatz `reiseregeln-eu-intra-2026` und werden hier angewandt.
+ */
+export const FREIGABE_POLITIK: FrischePolitik = { warnAbTagen: 180, sperreAbTagen: 365 };
+
 export function freigabeFuer(
   satz: TravelRuleSet,
   eintraege: readonly TravelApproval[] = FREIGABEN,
+  stichtag: string | null = null,
 ): FreigabeStand {
   const signatur = inhaltsSignatur(satz);
   const eintrag = eintraege.find((freigabe) => freigabe.ruleSetId === satz.ruleSetId);
@@ -113,6 +129,20 @@ export function freigabeFuer(
       signatur,
     };
   }
+  if (stichtag !== null) {
+    const bewertung = bewerte(eintrag.approvedAt, stichtag, FREIGABE_POLITIK);
+    if (bewertung.blockiert) {
+      return {
+        ruleSetId: satz.ruleSetId,
+        freigegeben: false,
+        grund:
+          `Die Freigabe vom ${eintrag.approvedAt} ist am ${stichtag} zu alt: ` +
+          `${bewertung.begruendung} Eine abgelaufene Prüfung trägt kein positives Ergebnis.`,
+        signatur,
+      };
+    }
+  }
+
   return {
     ruleSetId: satz.ruleSetId,
     freigegeben: true,
@@ -121,15 +151,20 @@ export function freigabeFuer(
   };
 }
 
-/** Stand aller Regelsätze. */
-export function freigabeStand(): readonly FreigabeStand[] {
-  return regelSaetze().map((satz) => freigabeFuer(satz));
+/** Stand aller Regelsätze. Mit Stichtag zählt auch das Alter der Freigabe. */
+export function freigabeStand(stichtag: string | null = null): readonly FreigabeStand[] {
+  return regelSaetze().map((satz) => freigabeFuer(satz, FREIGABEN, stichtag));
 }
 
 /**
  * Läuft der Reisecheck im Vorschaumodus? Er tut es, solange **irgendein**
  * Regelsatz nicht freigegeben ist — im Zweifel Vorschau.
+ *
+ * `heute` ist der Tag, an dem geprüft wird, nicht der Reisetag. Er wird
+ * übergeben und nicht aus der Uhr genommen, damit ein Test ihn festhalten
+ * kann. Ohne ihn zählt nur, ob eine Freigabe existiert und passt; mit ihm
+ * zählt zusätzlich, ob sie noch aktuell genug ist.
  */
-export function nurVorschau(): boolean {
-  return freigabeStand().some((stand) => !stand.freigegeben);
+export function nurVorschau(heute: string | null = null): boolean {
+  return freigabeStand(heute).some((stand) => !stand.freigegeben);
 }

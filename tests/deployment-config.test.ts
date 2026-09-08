@@ -85,6 +85,13 @@ describe('Header', () => {
     expect(headers).toContain('max-age=0, must-revalidate');
   });
 
+  it('lässt den Gesundheitsstand nicht altern', () => {
+    // Eine Datei, die das Alter der Daten nennt, darf nicht selbst tagelang
+    // aus einem Cache kommen.
+    const block = headers.slice(headers.indexOf('/data/v1/health.json'));
+    expect(block).toContain('max-age=0, must-revalidate');
+  });
+
   it('nennt sich als erzeugt, damit niemand von Hand hineinschreibt', () => {
     expect(headers.split('\n')[0]).toMatch(/Erzeugt von/);
   });

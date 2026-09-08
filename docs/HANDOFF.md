@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 4/7 (101 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 5/7 (102 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,13 +36,13 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M17-04 — Frischeanzeige und Stale-Logik bauen.** `src/features/freshness/` und ein öffentlicher Gesundheitsstand: Datenstand und Alter je Quelle sichtbar machen, abgelaufene Preise ausblenden, gesperrte Regeln nie zu einem grünen Gesamtergebnis führen lassen. Abnahme: eine eingefrorene Zeit im Test provoziert die erwarteten Warnungen und Sperren.
+**M17-05 — Smoke- und Alarmworkflow erstellen.** `.github/workflows/smoke.yml` und `docs/MONITORING.md`: Seiten- und Datenstandprüfung, bereinigte Issues, die 60-Tage-Grenze der GitHub-Zeitpläne und die Lücke eines Monitors, der sich selbst überwacht, ausdrücklich erklären. Abnahme: Ausfall und Datenüberalterung erzeugen einen nachvollziehbaren Alarm, ohne eine SLA zu behaupten, die es nicht gibt.
 
-Vorhanden: Datenbranch-Publisher mit Allowlist, `.github/workflows/data-branch.yml` und `ingest-open.yml` — Letzterer ist mit einem echten Lauf gegen die Berliner Quelle geprüft. Der GOT-Abruf läuft bedingt über ETag und `Last-Modified` im wöchentlichen Zeitplan mit; die Abrufbedingungen stehen in `docs/SOURCE_REVIEWS.md`.
+Zwei Dinge gehören dort mit hinein, weil sie aus dieser Sitzung offen stehen: ein dauerhaft scheiternder Quellenabruf (der GOT-Abruf gelingt aus der CI heraus nicht) und ein dauerhaft `nicht_pruefbar` gemeldeter Beobachtungseintrag dürfen nicht nur eine Zeile in einer Laufzusammenfassung sein.
 
-Ebenfalls vorhanden: `source-check.yml` vergleicht täglich die Seiten aus `config/watchlist/rule-sources.json` mit `data-snapshots/watch/rule-sources.json` und meldet je Seite höchstens eine offene Meldung; `rebuild-commerce.yml` baut nur bei zugelassenem Partner und trennt Hook-Aufruf von Buildstatus. Zwei Quellen sind dauerhaft `nicht_pruefbar` (EUR-Lex antwortet mit HTTP 202 und leerem Körper, `salute.gov.it` mit einer Bot-Prüfung), zwei Zielstaaten (AT, NL) werden noch nicht beobachtet, weil keine belegte Adresse vorliegt.
+Vorhanden: Datenbranch-Publisher, `data-branch.yml`, `ingest-open.yml` (echter Lauf gegen die Berliner Quelle geprüft), `source-check.yml` und `rebuild-commerce.yml` (beide mit echtem Trockenlauf geprüft). Die Frischeanzeige liegt in `src/features/freshness/`; `/data/v1/health.json` und `/de-de/datenstand/` kommen aus derselben Funktion. Abgelaufene Preise blendet der Browser aus, und eine fachliche Freigabe altert nach 365 Tagen aus dem positiven Ergebnis heraus.
 
-Die Workflow-Härtung liegt seit dieser Sitzung in `scripts/checks/workflows.sh` und läuft in `npm run verify` mit. Sie stand vorher nur in `security.yml` und hat deshalb vier Commits lang unbemerkt rot gestanden. Neue Secrets in Workflows müssen dort eingetragen und begründet werden; erklärt sind `GITHUB_TOKEN` und `CLOUDFLARE_DEPLOY_HOOK`.
+Die Workflow-Härtung liegt in `scripts/checks/workflows.sh` und läuft in `npm run verify` mit. Neue Secrets in Workflows müssen dort eingetragen und begründet werden; erklärt sind `GITHUB_TOKEN` und `CLOUDFLARE_DEPLOY_HOOK`.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 
