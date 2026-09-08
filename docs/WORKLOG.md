@@ -454,3 +454,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Was im Speicher liegt, ist eine Eingabe: der Inhalt läuft durch das Schema, und eingeschmuggelte Interessen wie `__proto__` fallen heraus.
 - Löschen heißt löschen: ein Schlüssel, kein Papierkorb, kein Rest. Ein E2E-Test speichert, löscht, lädt neu und findet ein leeres Formular.
 - Die Seite sagt ausdrücklich, dass es **keinen Geräteabgleich und keine Sicherung** gibt und dass ein geleerter Browser-Speicher den Stand mitnimmt.
+
+| M16-03 | `src/features/profile/favorites.ts`, `favorites-ui.ts`, Seite `/de-de/merkliste/`, `src/features/map/data.ts` | `npx vitest run tests/profile/favorites.test.ts`, `npm run test:e2e:features` (240 Tests) | 15 + 14 Tests; nur Kennungen im Speicher |
+
+- Gemerkt werden **Kennungen, keine Kopien**. Ein E2E-Test liest den Speicher aus und prüft, dass weder Produktname noch Preis darin vorkommen — vier Felder: Art, Kennung, Koordinate, Zeitpunkt.
+- Bei Orten wird die Koordinate mitgespeichert. Sie ist kein Inhalt, sondern der Schlüssel zur richtigen Datenzelle: ohne sie ließe sich ein Ort im bundesweiten Bestand nicht wiederfinden, ohne alles zu laden.
+- Ein Eintrag, der sich nicht mehr auflösen lässt, steht als „nicht mehr erfasst“ da — ohne Link, ohne alten Namen, ohne alten Preis. Ein Test legt einen solchen Eintrag an und prüft genau das.
+- Ein kaputter Eintrag wirft nicht die ganze Liste weg: die gültigen bleiben. Eine Merkliste enthält nichts, was sich rekonstruieren ließe.
+- Nebenbei entstanden: `src/features/map/data.ts`. Das Laden von Manifest und Datenzellen lag bisher in `list-ui.ts`; die Merkliste braucht dasselbe. Zwei Module mit je eigenem Lader laden am Ende verschieden — und nur eines davon richtig.

@@ -13,6 +13,7 @@
     "nav.map": "Vets nearby",
     "nav.catalog": "Offers",
     "nav.profile": "My pet",
+    "nav.favorites": "Saved",
     "nav.travel": "Travel check",
     "nav.care": "Care",
     "nav.toys": "Toys",
@@ -35,7 +36,8 @@
     "imprint": "imprint",
     "privacy": "privacy",
     "catalog": "offers",
-    "profile": "my-pet"
+    "profile": "my-pet",
+    "favorites": "saved"
   },
   "legacySlugs": {}
 }

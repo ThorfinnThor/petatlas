@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 bei 2/6 (93 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 bei 3/6 (94 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M16-03 — Merkliste integrieren.** `src/features/profile/favorites.ts` und eine Merklistenseite: Produkt- und Orts-IDs lokal merken, verschwundene Angebote und veraltete Verweise sauber behandeln. Abnahme: die Merkliste lädt aktuelle zulässige Daten, und alte Produkte führen nicht zu toten oder falschen Angeboten.
+**M16-04 — Reise-Packliste und Druck verbinden.** Eigene Checklistenzustände im Browser und eine druckbare Ansicht ohne Trackingdaten und ohne unnötige persönliche Angaben. Abnahme: Abhaken und Drucken brauchen keine Datenbank, und die gespeicherte Liste ist eindeutig gerätebezogen.
 
-Vorhanden: Profilzustand im Tab, dazu `src/features/profile/storage.ts` — Speichern und Löschen auf Knopfdruck, versioniertes Schema mit Migration von Fassung 1, Kontingent- und Storagefehler als Ergebnis statt als Ausnahme.
+Vorhanden: Profil im Tab mit ausdrücklicher Speicherung, Merkliste unter `/de-de/merkliste/` — sie hält nur Kennungen und löst sie beim Öffnen gegen die aktuellen Daten auf; die Packliste selbst steht bereits auf den Zielseiten des Reisechecks.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

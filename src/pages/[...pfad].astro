@@ -21,6 +21,7 @@ import Care from '../components/pages/Care.astro';
 import Catalog from '../components/pages/Catalog.astro';
 import Costs from '../components/pages/Costs.astro';
 import DataStatusPage from '../components/pages/DataStatusPage.astro';
+import Favorites from '../components/pages/Favorites.astro';
 import Food from '../components/pages/Food.astro';
 import Home from '../components/pages/Home.astro';
 import Imprint from '../components/pages/Imprint.astro';
@@ -64,6 +65,7 @@ const titel = translate(locale, `nav.${routeKey}`);
   {routeKey === 'map' && <Map />}
   {routeKey === 'catalog' && <Catalog />}
   {routeKey === 'profile' && <Profile />}
+  {routeKey === 'favorites' && <Favorites />}
   {routeKey === 'travel' && <Travel />}
   {routeKey === 'care' && <Care />}
   {routeKey === 'toys' && <Toys />}

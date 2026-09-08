@@ -147,6 +147,10 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
     </p>
   </Notice>
 
+  <p>
+    <button type="button" data-merken="food" data-id={produkt.foodId} hidden>Merken</button>
+  </p>
+
   <h2>Angebote</h2>
   <p data-testid="keine-angebote">
     Für dieses Produkt liegt kein Angebot mit Anzeigeerlaubnis vor. Ohne freigegebenen
@@ -174,6 +178,12 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
   }
 
   <p><a href={uebersicht}>Zurück zur Futtersuche</a></p>
+
+  <script>
+    import { merkknoepfeBinden } from '../../../features/profile/favorites-ui.ts';
+
+    merkknoepfeBinden();
+  </script>
 
   <style>
     .angaben {

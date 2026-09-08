@@ -19,40 +19,13 @@ import {
 import { frageStandort, standortLabel } from './geolocation.ts';
 import { zeigeKarte, waehleMarker } from './map.ts';
 import { normalisiere, sucheOrte, type OrtsEintrag } from './place-search.ts';
+import { ladeManifest, ladeZellenUm } from './data.ts';
 
-const MANIFEST = '/data/v1/manifest.json';
+let geladeneNamenCache: Map<string, readonly OrtsEintrag[]> | null = null;
 
-interface ChunkEintrag {
-  readonly chunkId: string;
-  readonly kind: string;
-  readonly marketId: string;
-  readonly path: string;
-}
-
-interface ZellenVerweis {
-  readonly key: string;
-  readonly bbox: readonly [number, number, number, number];
-  readonly count: number;
-  readonly path: string;
-}
-
-let manifestCache: ChunkEintrag[] | null = null;
-const geladeneZellen = new Map<string, readonly ListenOrt[]>();
-const geladeneNamen = new Map<string, readonly OrtsEintrag[]>();
-
-async function ladeManifest(): Promise<readonly ChunkEintrag[]> {
-  if (manifestCache !== null) return manifestCache;
-  const antwort = await fetch(MANIFEST);
-  if (!antwort.ok) throw new Error(`Manifest antwortet mit ${antwort.status}.`);
-  const manifest = (await antwort.json()) as { chunks: ChunkEintrag[] };
-  manifestCache = manifest.chunks;
-  return manifestCache;
-}
-
-async function pfadVon(chunkId: string): Promise<string> {
-  const chunk = (await ladeManifest()).find((eintrag) => eintrag.chunkId === chunkId);
-  if (chunk === undefined) throw new Error(`Das Manifest kennt ${chunkId} nicht.`);
-  return chunk.path;
+function geladeneNamen(): Map<string, readonly OrtsEintrag[]> {
+  geladeneNamenCache ??= new Map<string, readonly OrtsEintrag[]>();
+  return geladeneNamenCache;
 }
 
 /** Lädt den Namensteil zum getippten Anfang, nicht den ganzen Index. */
@@ -70,7 +43,7 @@ async function ladeNamen(begriff: string): Promise<readonly OrtsEintrag[]> {
   );
 
   for (const chunk of passende) {
-    const vorhanden = geladeneNamen.get(chunk.chunkId);
+    const vorhanden = geladeneNamen().get(chunk.chunkId);
     if (vorhanden !== undefined) {
       gesammelt.push(...vorhanden);
       continue;
@@ -78,47 +51,10 @@ async function ladeNamen(begriff: string): Promise<readonly OrtsEintrag[]> {
     const antwort = await fetch(chunk.path);
     if (!antwort.ok) continue;
     const daten = (await antwort.json()) as { entries: OrtsEintrag[] };
-    geladeneNamen.set(chunk.chunkId, daten.entries);
+    geladeneNamen().set(chunk.chunkId, daten.entries);
     gesammelt.push(...daten.entries);
   }
   return gesammelt;
-}
-
-/** Lädt die Zellen, deren Bounding Box den Suchkreis schneiden kann. */
-async function ladeZellenUm(
-  latitude: number,
-  longitude: number,
-  radiusMeter: number,
-): Promise<readonly ListenOrt[]> {
-  const indexPfad = await pfadVon('places-de-index');
-  const index = (await (await fetch(indexPfad)).json()) as { cells: ZellenVerweis[] };
-
-  // Ein Grad Breite sind rund 111 km; für die Länge kommt der Kosinus dazu.
-  const gradLat = radiusMeter / 111_000;
-  const gradLon = radiusMeter / (111_000 * Math.max(0.2, Math.cos((latitude * Math.PI) / 180)));
-
-  const passende = index.cells.filter(
-    (zelle) =>
-      zelle.bbox[0] <= longitude + gradLon &&
-      zelle.bbox[2] >= longitude - gradLon &&
-      zelle.bbox[1] <= latitude + gradLat &&
-      zelle.bbox[3] >= latitude - gradLat,
-  );
-
-  const orte: ListenOrt[] = [];
-  for (const zelle of passende) {
-    const vorhanden = geladeneZellen.get(zelle.key);
-    if (vorhanden !== undefined) {
-      orte.push(...vorhanden);
-      continue;
-    }
-    const antwort = await fetch(zelle.path);
-    if (!antwort.ok) continue;
-    const daten = (await antwort.json()) as { places: ListenOrt[] };
-    geladeneZellen.set(zelle.key, daten.places);
-    orte.push(...daten.places);
-  }
-  return orte;
 }
 
 function escape(wert: string): string {

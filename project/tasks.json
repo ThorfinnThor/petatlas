@@ -3282,8 +3282,16 @@
         "M16-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Merkliste unter /de-de/merkliste/, die nur Kennungen speichert: Art, Kennung, bei Orten die Koordinate als Schluessel zur Datenzelle, und den Zeitpunkt. Ein E2E-Test liest den Speicher aus und belegt, dass weder Produktname noch Preis darin stehen. Angezeigt wird immer das Aktuelle: Futter wird aus dem Bundle, Orte werden ueber ortMitId() aus den ausgelieferten Datenzellen aufgeloest. Ein Eintrag, der sich nicht mehr aufloesen laesst, erscheint als 'nicht mehr erfasst' - ohne Link, ohne alten Namen, ohne alten Preis; ein Test legt einen solchen Eintrag an und prueft Status, Hinweistext und das Fehlen eines Links. Ein Fehler beim Nachschlagen wird wie ein Verschwinden behandelt. Die Liste haelt hoechstens 200 Eintraege, merkt jeden nur einmal, unterscheidet Orte und Futter mit gleicher Kennung und behaelt bei einem kaputten Eintrag die gueltigen. Sie benutzt einen eigenen Speicherschluessel neben dem Profil, und beim Merken geht keine Anfrage raus. Nebenbei wurde das Laden von Manifest und Datenzellen aus list-ui.ts nach src/features/map/data.ts herausgeloest, weil die Merkliste dasselbe braucht; die Kartenseite laeuft unveraendert (226 Feature-E2E vor der Erweiterung gruen). 15 neue Unit-Tests (1022 gesamt) und 14 neue Feature-E2E-Tests (240 gesamt), npm run verify exit 0, 198 Standard-E2E gruen.",
+          "reference": "src/features/profile/favorites.ts, src/features/profile/favorites-ui.ts, src/components/pages/Favorites.astro, src/features/map/data.ts, tests/profile/favorites.test.ts, tests/e2e-features/merkliste.spec.ts",
+          "verified_at": "2026-09-08",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -12,6 +12,7 @@
     "nav.map": "Tierärzte in der Nähe",
     "nav.catalog": "Angebote",
     "nav.profile": "Mein Tier",
+    "nav.favorites": "Merkliste",
     "nav.travel": "Reisecheck",
     "nav.care": "Pflege",
     "nav.toys": "Spielzeug",
@@ -34,7 +35,8 @@
     "imprint": "impressum",
     "privacy": "datenschutz",
     "catalog": "angebote",
-    "profile": "mein-tier"
+    "profile": "mein-tier",
+    "favorites": "merkliste"
   },
   "legacySlugs": {}
 }

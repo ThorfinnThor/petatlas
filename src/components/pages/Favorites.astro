@@ -1,0 +1,89 @@
+---
+/**
+ * M16-03 — Merkliste.
+ *
+ * Die Liste hält nur Kennungen. Was angezeigt wird, kommt beim Öffnen aus den
+ * aktuellen Daten — deshalb steht hier nie ein veralteter Preis und nie ein
+ * Produkt, das es nicht mehr gibt. Was sich nicht mehr auflösen lässt, steht
+ * als solches da, mit einem Knopf zum Entfernen.
+ */
+import Notice from '../Notice.astro';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../domain/market.ts';
+import { devFeatureOverrides } from '../../../config/build.ts';
+import { routePath } from '../../lib/routes.ts';
+
+const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const futterPfad = isFeatureEnabled(markt, 'food') ? routePath(markt, 'food') : '/de-de/futter/';
+const kartenPfad = isFeatureEnabled(markt, 'map')
+  ? routePath(markt, 'map')
+  : '/de-de/tierarzt-karte/';
+---
+
+<h1>Merkliste</h1>
+
+<p>
+  Gemerkte Produkte und Orte — <strong>nur auf diesem Gerät</strong>. Es gibt kein Konto, keinen
+  Abgleich zwischen Geräten und keine Sicherung.
+</p>
+
+<Notice variante="hinweis" titel="Warum hier nie ein alter Preis steht">
+  <p>
+    Die Merkliste speichert nur die Kennung eines Eintrags, keine Kopie. Alles Weitere — Name,
+    Menge, Verfügbarkeit — wird beim Öffnen aus den aktuellen Daten geholt. Ein Eintrag, den es
+    nicht mehr gibt, wird als solcher angezeigt und nicht mit alten Angaben aufgefüllt.
+  </p>
+</Notice>
+
+<div
+  id="merkliste"
+  role="status"
+  aria-live="polite"
+  data-futter={futterPfad}
+  data-karte={kartenPfad}
+>
+</div>
+
+<p id="merkliste-ohne-js" class="hilfe">
+  Die Merkliste liegt im Speicher Ihres Browsers und wird mit JavaScript gelesen. Ohne JavaScript
+  bleibt diese Seite leer — Ihre Einträge sind dann trotzdem noch da.
+</p>
+
+<script>
+  import { merklisteStarten } from '../../features/profile/favorites-ui.ts';
+
+  void merklisteStarten();
+</script>
+
+<style>
+  .hilfe {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
+  #merkliste :global(.merk__liste) {
+    list-style: none;
+    padding: 0;
+  }
+
+  #merkliste :global(.merk__liste > li) {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-3);
+  }
+
+  #merkliste :global(.merk__liste h3) {
+    margin: 0 0 var(--abstand-1);
+    font-size: var(--schrift-normal);
+  }
+
+  #merkliste :global(.merk__kopf) {
+    font-weight: 600;
+  }
+
+  #merkliste :global(.merk__zusatz),
+  #merkliste :global(.merk__weg) {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+</style>
