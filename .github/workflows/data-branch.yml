@@ -1,0 +1,112 @@
+# M17-01 — Datenstand in den Branch `data-live` veröffentlichen.
+#
+# Der Workflow baut die offenen Datendateien, lässt sie prüfen und schreibt
+# sie in einen eigenen Branch. Er schreibt **nie** nach `main`: der Publisher
+# lehnt das ab, und dieser Workflow nennt den Zielbranch fest.
+#
+# Er läuft nur auf Zuruf. Ein Zeitplan kommt in M17-02 dazu — erst der Pfad,
+# dann die Uhr.
+name: Datenbranch
+
+on:
+  workflow_dispatch:
+    inputs:
+      trockenlauf:
+        description: 'Nur prüfen und nichts pushen'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: data-branch
+  cancel-in-progress: false
+
+jobs:
+  veroeffentlichen:
+    name: Daten prüfen und veröffentlichen
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      # Schreibrecht nur in diesem Job und nur für den Datenbranch.
+      contents: write
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Datendateien bauen
+        run: |
+          npm run build
+          npm run build:fees
+          npm run build:places
+          npm run build:headers
+
+      - name: Datenbaum prüfen und vorbereiten
+        run: npm run publish:data -- --out .work/data-branch
+
+      - name: Zielbranch schreiben
+        if: ${{ inputs.trockenlauf == false }}
+        env:
+          ZIEL_BRANCH: data-live
+        run: |
+          set -euo pipefail
+
+          # Doppelte Sicherung: dieser Schritt weigert sich ebenfalls, in
+          # einen Codebranch zu schreiben.
+          if [ "$ZIEL_BRANCH" = "main" ] || [ "$ZIEL_BRANCH" = "master" ]; then
+            echo "In $ZIEL_BRANCH wird kein Datenstand geschrieben." >&2
+            exit 1
+          fi
+
+          git config user.name "petatlas-data-bot"
+          git config user.email "noreply@users.noreply.github.com"
+
+          # Ein eigener Arbeitsbaum: der Hauptbaum mit dem Code wird nicht
+          # angefasst, und ein Fehlschlag hinterlässt keinen halben Stand.
+          rm -rf .work/branch
+          if git ls-remote --exit-code --heads origin "$ZIEL_BRANCH" >/dev/null 2>&1; then
+            git fetch origin "$ZIEL_BRANCH"
+            git worktree add .work/branch "origin/$ZIEL_BRANCH"
+            git -C .work/branch switch -C "$ZIEL_BRANCH"
+          else
+            git worktree add --detach .work/branch
+            git -C .work/branch switch --orphan "$ZIEL_BRANCH"
+          fi
+
+          # Alter Stand weg, neuer Stand rein: der Branch beschreibt immer
+          # genau einen Datenstand, nicht die Summe aller Läufe.
+          find .work/branch -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          cp -R .work/data-branch/. .work/branch/
+
+          git -C .work/branch add -A
+          if git -C .work/branch diff --cached --quiet; then
+            echo "Kein neuer Datenstand; es wird nichts gepusht."
+            exit 0
+          fi
+
+          git -C .work/branch commit -m "Datenstand ${{ github.run_id }}"
+          git -C .work/branch push origin "$ZIEL_BRANCH"
+
+      - name: Zusammenfassung
+        run: |
+          {
+            echo "### Datenbranch"
+            echo
+            echo "Trockenlauf: ${{ inputs.trockenlauf }}"
+            echo
+            echo "Dateien im geprüften Baum:"
+            find .work/data-branch -type f | wc -l
+          } >> "$GITHUB_STEP_SUMMARY"

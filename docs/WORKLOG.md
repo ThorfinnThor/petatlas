@@ -488,3 +488,15 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Nach dem Speichern hat die Adresse weder Suchteil noch Anker. Damit landet die Eingabe auch nicht in einem Referrer.
 - Die gedruckte Packliste enthält keine Profilangaben: auf dem Papier steht, was abzuhaken ist — nicht, wem das Tier gehört.
 - Die Grenzen stehen ausdrücklich im Abnahmedokument: keine Sicherung, kein Geräteabgleich, kein Schutz gegen Mitbenutzer, unverschlüsselte Sicherungsdatei, und ein privater Modus kann alles verweigern.
+
+## 2026-09-08 — Sitzung 10 (Fortsetzung): M17 beginnt
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M17-01 | `scripts/publish/data-branch.ts`, `.github/workflows/data-branch.yml`, `tests/publish/data-branch.test.ts` | `npm run publish:data` gegen die echten Daten, 16 Tests | 273 Dateien, 10,1 MiB geprüft |
+
+- **Allowlist statt Blocklist:** aufgenommen wird nur, was einem erlaubten Muster entspricht. Alles andere fällt heraus — auch, woran niemand gedacht hat.
+- Eine abgelehnte Datei wird **nicht weggelassen, sondern gemeldet**: der Lauf bricht ab. Sonst fiele nicht auf, dass im Datenbaum etwas liegt, das dort nicht hingehört.
+- Jede Datei läuft durch denselben Secret-Audit wie `dist`, und der Zielbranch wird zweimal geprüft: im Publisher und noch einmal im Workflow-Schritt.
+- Der erste Lauf gegen echte Daten fiel durch — an `LICENSE.txt`: mein Muster ließ nur Kleinbuchstaben zu. Genau dafür läuft man ein Skript gegen echte Daten, statt es nur gegen Testdaten zu prüfen.
+- Der Workflow läuft nur auf Zuruf und mit Trockenlauf als Vorgabe. Der Zeitplan kommt in M17-02: erst der Pfad, dann die Uhr.

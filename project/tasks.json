@@ -3412,8 +3412,16 @@
         "M10-05"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Publisher fuer einen eigenen Datenbranch. Aufgenommen wird nur, was einer Allowlist entspricht (v1/**.json und v1/**.txt); alles andere - Code, andere Endungen, Pfade ausserhalb einer Version - wird abgelehnt und bricht den Lauf ab, statt still wegzufallen. Jede Datei laeuft zusaetzlich durch den Secret-Audit aus scripts/checks/secrets.ts; ein Test legt eine Datei mit einem erkennbaren Token an und belegt die Ablehnung. Der Zielbranch wird geprueft: main, master und HEAD sind ausgeschlossen, ebenso unsinnige Namen; die Sperre steht doppelt, im Publisher und im Workflow-Schritt. Geschrieben wird atomar: erst pruefen, dann ein geleertes Zielverzeichnis, dann alles schreiben - ein Abbruch hinterlaesst kein halb gefuelltes Ziel, was ein Test mit einer abgelehnten Datei und ein weiterer mit einem alten Zielstand pruefen. Gegen die echten Daten ausgefuehrt: 273 Dateien, 10,1 MiB. Der erste Lauf schlug fehl, weil das Muster nur Kleinbuchstaben zuliess und der Lizenzhinweis LICENSE.txt heisst; das Muster ist korrigiert und der Grund im Code vermerkt. Der Workflow .github/workflows/data-branch.yml laeuft nur auf workflow_dispatch, hat Trockenlauf als Vorgabe, arbeitet in einem eigenen git-worktree und pusht nur, wenn sich etwas geaendert hat; Actions sind auf Commit-SHAs gepinnt, Schreibrechte gibt es nur in diesem Job. 16 neue Tests (1065 gesamt), npm run verify exit 0.",
+          "reference": "scripts/publish/data-branch.ts, .github/workflows/data-branch.yml, tests/publish/data-branch.test.ts",
+          "verified_at": "2026-09-08",
+          "command": "npm run publish:data -- --out .work/data-branch",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

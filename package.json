@@ -15,6 +15,7 @@
     "build:places": "node scripts/publish/places.ts",
     "build:city-allowlist": "node scripts/publish/city-allowlist.ts",
     "build:commerce": "node scripts/build/commerce.ts",
+    "publish:data": "node scripts/publish/data-branch.ts",
     "build:search": "node scripts/build-search.ts",
     "build:headers": "node scripts/build-headers.ts",
     "build:site": "npm run build && npm run build:fees && npm run build:places && npm run build:search && npm run build:headers",
