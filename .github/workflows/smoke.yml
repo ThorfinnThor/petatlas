@@ -1,0 +1,127 @@
+# M17-05 — Rauchprobe und Alarm.
+#
+# Der Lauf baut die Website aus dem Stand des Repositories und prüft zwei
+# Dinge: sind die Pflichtseiten da, und ist der Datenstand noch aktuell.
+# Beides geht **ohne Deployment** — und der zweite Teil ist genau der Fall,
+# der ohne Deployment eintritt: Daten, die im Repository liegen und dort
+# altern, ohne dass es jemandem auffällt.
+#
+# Steht eine ausgelieferte Adresse zur Verfügung, prüft derselbe Lauf sie
+# zusätzlich über HTTP. Die Adresse ist eine Repository-Variable
+# (`vars.SMOKE_BASE_URL`), kein Secret: eine öffentliche Website ist keine
+# Vertraulichkeit. Fehlt sie, wird der Teil übersprungen und das im
+# Protokoll gesagt — nicht stillschweigend als bestanden gewertet.
+#
+# Was dieser Lauf **nicht** ist: eine Verfügbarkeitszusage. Warum nicht,
+# steht in docs/MONITORING.md.
+name: Rauchprobe
+
+on:
+  schedule:
+    # Täglich um 06:11 UTC, versetzt zu Import und Quellenbeobachtung.
+    - cron: '11 6 * * *'
+  workflow_dispatch:
+    inputs:
+      trockenlauf:
+        description: 'Nur prüfen, keine Meldung öffnen'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: smoke
+  cancel-in-progress: false
+
+jobs:
+  rauchprobe:
+    name: Seiten und Datenstand prüfen
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      # Zum Melden. Der Lauf schreibt nichts ins Repository.
+      issues: write
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Website bauen
+        run: npm run build:site
+
+      - name: Rauchprobe am gebauten Stand
+        id: probe
+        run: |
+          set -o pipefail
+          mkdir -p .work
+          node scripts/monitor/smoke.ts --dist dist | tee .work/rauchprobe.txt
+
+      - name: Rauchprobe an der ausgelieferten Website
+        id: live
+        if: ${{ vars.SMOKE_BASE_URL != '' }}
+        run: |
+          set -o pipefail
+          node scripts/monitor/smoke.ts --base "${{ vars.SMOKE_BASE_URL }}" \
+            | tee -a .work/rauchprobe.txt
+
+      - name: Fehlende Adresse benennen
+        if: ${{ vars.SMOKE_BASE_URL == '' }}
+        run: |
+          echo "Keine Adresse in vars.SMOKE_BASE_URL: die ausgelieferte Website wurde nicht geprüft." \
+            | tee -a .work/rauchprobe.txt
+
+      - name: Bericht in die Zusammenfassung
+        if: always()
+        run: |
+          {
+            echo '## Rauchprobe'
+            echo
+            echo '```'
+            cat .work/rauchprobe.txt 2>/dev/null || echo 'Kein Bericht entstanden.'
+            echo '```'
+            if [ -z "${{ vars.SMOKE_BASE_URL }}" ]; then
+              echo
+              echo 'Die ausgelieferte Website wurde **nicht** geprüft: keine Adresse hinterlegt.'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Eine Meldung mit stabilem Titel: ein täglicher Lauf soll an ein
+      # offenes Problem erinnern, nicht jeden Tag ein neues Issue anlegen.
+      - name: Alarm melden
+        if: ${{ failure() && inputs.trockenlauf != true }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          titel="Rauchprobe fehlgeschlagen"
+          koerper=$(printf '%s\n\n```\n%s\n```\n' \
+            "Die Rauchprobe hat mindestens einen Fehler gefunden. Lauf: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            "$(cat .work/rauchprobe.txt 2>/dev/null || echo 'Kein Bericht entstanden.')")
+          vorhanden=$(gh issue list --state open --search "$titel in:title" \
+            --json title --jq "[.[] | select(.title == \"$titel\")] | length")
+          if [ "$vorhanden" -gt 0 ]; then
+            echo "Schon offen: $titel"
+          else
+            gh issue create --title "$titel" --body "$koerper"
+          fi
+
+      - name: Bericht aufheben
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: rauchprobe
+          path: .work/rauchprobe.txt
+          retention-days: 14
+          if-no-files-found: warn

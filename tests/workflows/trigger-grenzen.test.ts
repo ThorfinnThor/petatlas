@@ -11,6 +11,7 @@ const SCHREIBENDE_WORKFLOWS = [
   '.github/workflows/rebuild-commerce.yml',
   '.github/workflows/source-check.yml',
   '.github/workflows/ingest-open.yml',
+  '.github/workflows/smoke.yml',
 ].map((pfad) => ({ pfad, inhalt: readFileSync(pfad, 'utf8') }));
 
 /** Der `on:`-Block bis zur nächsten Angabe auf oberster Ebene. */
@@ -102,5 +103,32 @@ describe('Die Beobachtung schreibt nichts zurück', () => {
 
   it('bekommt keine Schreibrechte am Inhalt', () => {
     expect(beobachtung).not.toContain('contents: write');
+  });
+});
+
+describe('Die Rauchprobe meldet, statt zu schweigen', () => {
+  const smoke = readFileSync('.github/workflows/smoke.yml', 'utf8');
+
+  it('öffnet nur bei einem Fehlschlag eine Meldung', () => {
+    const melden = smoke.slice(smoke.indexOf('name: Alarm melden'));
+    expect(melden.slice(0, 200)).toContain('failure()');
+  });
+
+  it('nutzt einen stabilen Titel, statt täglich ein neues Issue zu öffnen', () => {
+    expect(smoke).toContain('gh issue list --state open');
+  });
+
+  it('sagt es, wenn keine ausgelieferte Adresse geprüft wurde', () => {
+    expect(smoke).toContain('Keine Adresse in vars.SMOKE_BASE_URL');
+  });
+
+  it('nimmt die Adresse aus einer Variablen, nicht aus einem Secret', () => {
+    expect(smoke).toContain('vars.SMOKE_BASE_URL');
+    expect(smoke).not.toContain('secrets.SMOKE_BASE_URL');
+  });
+
+  it('schreibt nichts ins Repository', () => {
+    expect(smoke).not.toMatch(/git (commit|push)/);
+    expect(smoke).not.toContain('contents: write');
   });
 });

@@ -3538,8 +3538,14 @@
         "M17-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npx vitest run tests/monitor/smoke.test.ts: 17 Tests gruen; jeder Alarmfall einzeln geprueft (fehlende Seite, HTTP 503, fremde Seite unter richtiger Adresse, fehlender und kaputter Gesundheitsstand, Abrufabbruch, stehen gebliebener Build, veraltete Daten). npm run verify exit 0, 1191 Tests. Zusaetzlich an einem echten Build belegt: aus dist entfernte Impressumsseite ergibt rc=1; ein auf 2026-08-01 gesetzter Bauzeitpunkt und ein auf veraltet gesetzter Datensatz ergeben zwei Fehler und rc=1 ('Der letzte Build ist 925 Stunden alt (Grenze 48)', 'Veraltete Datensaetze: gebuehren-got'). Unveraenderter Build: rc=0 mit einer Warnung fuer unbekanntes Alter. Ein bekannter gesperrter Datensatz macht den Lauf ausdruecklich nicht rot.",
+          "reference": ".github/workflows/smoke.yml, scripts/monitor/smoke.ts, docs/MONITORING.md, tests/monitor/smoke.test.ts, tests/workflows/trigger-grenzen.test.ts",
+          "verified_at": "2026-09-08T14:45:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

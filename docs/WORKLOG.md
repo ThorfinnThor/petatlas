@@ -546,3 +546,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Ein Preis ohne Ablauf wäre unbegrenzt haltbar. Beim Normalisieren bekommt jeder Preis einen: aus dem Feed, sonst gerechnet aus Abrufzeitpunkt und TTL.
 - Die Browserprüfung ist an einer Probekarte belegt, die **zur Bauzeit gültig und beim Ansehen abgelaufen** ist. Genau das passiert einem stehen gebliebenen Deployment. Die Karte bleibt stehen, die Zahl verschwindet, und an ihrer Stelle steht eine wahre Aussage.
 - Auch eine Freigabe altert: nach 365 Tagen trägt sie kein positives Gesamtergebnis mehr. Der Prüftag kommt aus dem Browser, nicht aus dem Build — eine ausgelieferte Seite kann Wochen alt sein.
+
+| M17-05 | `.github/workflows/smoke.yml`, `scripts/monitor/smoke.ts`, `docs/MONITORING.md` | 17 Tests je Alarmfall, dazu zwei absichtlich kaputte Kopien eines echten Builds | beide Fehlschläge erkannt, rc=1 |
+
+- Ein Monitor, der nie Alarm schlägt, ist kein Monitor. Deshalb prüfen die Tests vor allem, **dass** er es tut: fehlende Seite, HTTP 503, fremde Seite unter der richtigen Adresse, kaputte Zustandsdatei, stehen gebliebener Build, veraltete Daten.
+- Die wichtigste Prüfung ist der **Bauzeitpunkt**. Schlägt ein Build fehl, bleibt die alte Auslieferung stehen — und ohne diese Prüfung merkt es niemand. 48 Stunden sind die Grenze.
+- Ein bekannter gesperrter Datensatz macht den Lauf ausdrücklich **nicht** rot. Wer sich an ein rotes Licht gewöhnt, übersieht das nächste.
+- Es geht ohne Deployment: geprüft wird der gebaute Stand. Sobald eine Adresse hinterlegt ist, kommt die ausgelieferte Website dazu — und solange keine da ist, sagt der Lauf das, statt den übersprungenen Teil wie einen bestandenen aussehen zu lassen.
+- `docs/MONITORING.md` nennt die Lücken zuerst: der Zeitplan überwacht sich nicht selbst, GitHub schaltet ihn nach 60 Tagen Ruhe ab, zwischen zwei Läufen liegt ein Tag, und eine dauerhaft unerreichbare Quelle wird erst zum Alarm, wenn ihr Datensatz die Sperrschwelle reißt. Keine SLA, keine Rufbereitschaft.

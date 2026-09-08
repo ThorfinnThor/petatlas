@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 5/7 (102 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 6/7 (103 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,11 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M17-05 — Smoke- und Alarmworkflow erstellen.** `.github/workflows/smoke.yml` und `docs/MONITORING.md`: Seiten- und Datenstandprüfung, bereinigte Issues, die 60-Tage-Grenze der GitHub-Zeitpläne und die Lücke eines Monitors, der sich selbst überwacht, ausdrücklich erklären. Abnahme: Ausfall und Datenüberalterung erzeugen einen nachvollziehbaren Alarm, ohne eine SLA zu behaupten, die es nicht gibt.
+**M17-06 — Rollback und Budgetbericht proben.** `docs/ROLLBACK.md` und `docs/BUDGET_REPORT.md`: Code- und Datenversion sowie das aktive Feature-Set protokollieren, den letzten gültigen zulässigen Stand wiederherstellen, Git-, Build- und Assetverbrauch messen. Abnahme: eine tatsächliche Probe oder eine lokal nachvollziehbare Simulation, getrennt vom weiterhin blockierten Provider-Rollback.
 
-Zwei Dinge gehören dort mit hinein, weil sie aus dieser Sitzung offen stehen: ein dauerhaft scheiternder Quellenabruf (der GOT-Abruf gelingt aus der CI heraus nicht) und ein dauerhaft `nicht_pruefbar` gemeldeter Beobachtungseintrag dürfen nicht nur eine Zeile in einer Laufzusammenfassung sein.
-
-Vorhanden: Datenbranch-Publisher, `data-branch.yml`, `ingest-open.yml` (echter Lauf gegen die Berliner Quelle geprüft), `source-check.yml` und `rebuild-commerce.yml` (beide mit echtem Trockenlauf geprüft). Die Frischeanzeige liegt in `src/features/freshness/`; `/data/v1/health.json` und `/de-de/datenstand/` kommen aus derselben Funktion. Abgelaufene Preise blendet der Browser aus, und eine fachliche Freigabe altert nach 365 Tagen aus dem positiven Ergebnis heraus.
+Vorhanden: Datenbranch-Publisher, `data-branch.yml`, `ingest-open.yml`, `source-check.yml`, `rebuild-commerce.yml` und `smoke.yml` — alle mit echtem Lauf oder Trockenlauf geprüft. Die Frischeanzeige liegt in `src/features/freshness/`; `/data/v1/health.json` und `/de-de/datenstand/` kommen aus derselben Funktion. Was die Überwachung erkennt und wo sie nicht hinreicht, steht in `docs/MONITORING.md`.
 
 Die Workflow-Härtung liegt in `scripts/checks/workflows.sh` und läuft in `npm run verify` mit. Neue Secrets in Workflows müssen dort eingetragen und begründet werden; erklärt sind `GITHUB_TOKEN` und `CLOUDFLARE_DEPLOY_HOOK`.
 
