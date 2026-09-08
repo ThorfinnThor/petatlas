@@ -148,7 +148,8 @@ test.describe('Zielseiten', () => {
     await expect(page.locator('.anforderungen > li')).toHaveCount(5);
     await expect(page.locator('.anforderungen a').first()).toHaveAttribute('href', /^https:\/\//);
     await expect(page.locator('.packliste > li')).toHaveCount(16);
-    await expect(page.locator('.packliste .kasten').first()).toBeVisible();
+    // Seit M16-04 sind es echte Kontrollkästchen statt gezeichneter Quadrate.
+    await expect(page.locator('.packliste input[type="checkbox"]').first()).toBeVisible();
   });
 
   test('weist Beförderungsbedingungen getrennt aus', async ({ page }) => {
@@ -190,5 +191,80 @@ test.describe('Zielseiten', () => {
       'href',
       new RegExp(`${REISE}italien/$`),
     );
+  });
+});
+
+test.describe('Packliste abhaken', () => {
+  const ZIEL = `${REISE}oesterreich/`;
+
+  test('merkt Häkchen auf diesem Gerät', async ({ page }) => {
+    await page.goto(ZIEL);
+    const erster = page.locator('.packliste input[type="checkbox"]').first();
+    await erster.check();
+    await expect(page.locator('#packliste-stand')).toContainText('1 von 16 erledigt');
+    await expect(page.locator('#packliste-stand')).toContainText('nur auf diesem Gerät');
+
+    await page.reload();
+    await expect(page.locator('.packliste input[type="checkbox"]').first()).toBeChecked();
+  });
+
+  test('hält Ziele auseinander', async ({ page }) => {
+    await page.goto(ZIEL);
+    await page.locator('.packliste input[type="checkbox"]').first().check();
+    await page.goto(`${REISE}italien/`);
+    await expect(page.locator('.packliste input[type="checkbox"]').first()).not.toBeChecked();
+  });
+
+  test('setzt die Häkchen auf Wunsch zurück', async ({ page }) => {
+    await page.goto(ZIEL);
+    await page.locator('.packliste input[type="checkbox"]').first().check();
+    await page.click('#packliste-zuruecksetzen');
+    await expect(page.locator('.packliste input[type="checkbox"]').first()).not.toBeChecked();
+    await expect(page.locator('#packliste-stand')).toContainText('0 von 16');
+  });
+
+  test('speichert nur Ziel, Eintrag und Zeitpunkt', async ({ page }) => {
+    await page.goto(ZIEL);
+    await page.locator('.packliste input[type="checkbox"]').first().check();
+    const stand = await page.evaluate(() =>
+      JSON.parse(window.localStorage.getItem('petatlas.packing.v1') ?? '{}'),
+    );
+    expect(Object.keys(stand).sort()).toEqual(['updatedAt', 'version', 'ziele']);
+    expect(Object.keys(stand.ziele)).toEqual(['oesterreich']);
+    const roh = await page.evaluate(() => window.localStorage.getItem('petatlas.packing.v1') ?? '');
+    expect(roh).not.toMatch(/name|email|profil/i);
+  });
+
+  test('überträgt beim Abhaken nichts', async ({ page }) => {
+    const anfragen: string[] = [];
+    page.on('request', (anfrage) => {
+      if (anfrage.method() !== 'GET' || !anfrage.url().startsWith('http://localhost')) {
+        anfragen.push(`${anfrage.method()} ${anfrage.url()}`);
+      }
+    });
+    await page.goto(ZIEL);
+    await page.locator('.packliste input[type="checkbox"]').first().check();
+    await expect(page.locator('#packliste-stand')).toContainText('1 von 16');
+    expect(anfragen).toEqual([]);
+  });
+
+  test('druckt die Häkchen mit und die Bedienelemente nicht', async ({ page }) => {
+    await page.goto(ZIEL);
+    await page.locator('.packliste input[type="checkbox"]').first().check();
+    await page.emulateMedia({ media: 'print' });
+    await expect(page.locator('.packliste input[type="checkbox"]').first()).toBeVisible();
+    await expect(page.locator('.packliste input[type="checkbox"]').first()).toBeChecked();
+    await expect(page.locator('#packliste-zuruecksetzen')).toBeHidden();
+    await expect(page.locator('#drucken')).toBeHidden();
+  });
+
+  test('bleibt ohne JavaScript anklickbar', async ({ browser }) => {
+    const kontext = await browser.newContext({ javaScriptEnabled: false });
+    const seite = await kontext.newPage();
+    await seite.goto(ZIEL);
+    const kasten = seite.locator('.packliste input[type="checkbox"]').first();
+    await kasten.check();
+    await expect(kasten).toBeChecked();
+    await kontext.close();
   });
 });

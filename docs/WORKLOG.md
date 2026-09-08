@@ -462,3 +462,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Ein Eintrag, der sich nicht mehr auflösen lässt, steht als „nicht mehr erfasst“ da — ohne Link, ohne alten Namen, ohne alten Preis. Ein Test legt einen solchen Eintrag an und prüft genau das.
 - Ein kaputter Eintrag wirft nicht die ganze Liste weg: die gültigen bleiben. Eine Merkliste enthält nichts, was sich rekonstruieren ließe.
 - Nebenbei entstanden: `src/features/map/data.ts`. Das Laden von Manifest und Datenzellen lag bisher in `list-ui.ts`; die Merkliste braucht dasselbe. Zwei Module mit je eigenem Lader laden am Ende verschieden — und nur eines davon richtig.
+
+| M16-04 | `src/features/profile/packing-state.ts`, `packing-ui.ts`, Zielseiten, Druckregeln | `npx vitest run tests/profile/packing.test.ts`, `npm run test:e2e:features` (254 Tests) | 12 + 7 Tests; Häkchen je Ziel und Gerät |
+
+- Aus den gezeichneten Quadraten sind **echte Kontrollkästchen** geworden. Ohne JavaScript lassen sie sich anklicken und ausdrucken — nur gespeichert wird dann nichts, und die Seite sagt das.
+- Gespeichert werden Zielland, Eintragskennung und ein Zeitstempel. Ein E2E-Test liest den Speicher aus und prüft, dass dort weder Name noch Profilbezug steht.
+- Ziele bleiben getrennt: ein Häkchen für Österreich taucht in Italien nicht auf. Ein Ziel ohne Häkchen wird aus dem Speicher entfernt, statt als leere Liste zu bleiben.
+- Es gibt **keine eigene Druckansicht**. Gedruckt wird die Seite selbst; eine zweite Fassung wäre eine zweite Gelegenheit, etwas wegzulassen. Die Druckregeln blenden nur Bedienelemente aus und lassen gesetzte Häkchen sichtbar.
+- Ein älterer Test suchte noch nach dem gezeichneten Quadrat. Er prüft jetzt das Kontrollkästchen — die Sache ist dieselbe geblieben, die Umsetzung nicht.

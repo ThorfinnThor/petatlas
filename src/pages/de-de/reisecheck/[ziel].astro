@@ -79,25 +79,37 @@ const umfang = reiseUmfang();
 
   <h2>Packliste</h2>
   <p class="hilfe">
-    Zum Ausdrucken gedacht: <button type="button" id="drucken" hidden>Seite drucken</button>
+    Zum Abhaken und Ausdrucken gedacht — die Häkchen bleiben auf diesem Gerät und werden nirgends
+    abgeglichen. <button type="button" id="drucken" hidden>Seite drucken</button>
     <span id="druckhinweis">Im Browser über „Drucken“ (Strg+P beziehungsweise Cmd+P).</span>
   </p>
 
-  {
-    (['rule_task', 'documents', 'equipment'] as const).map((kategorie) => (
-      <section aria-labelledby={`packliste-${kategorie}`}>
-        <h3 id={`packliste-${kategorie}`}>{KATEGORIE_TITEL[kategorie]}</h3>
-        <ul class="packliste" data-kategorie={kategorie}>
-          {packlisteNach(kategorie).map((eintrag) => (
-            <li data-eintrag={eintrag.itemId}>
-              <span class="kasten" aria-hidden="true" />
-              <strong>{eintrag.label}.</strong> {eintrag.note}
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))
-  }
+  <p id="packliste-stand" role="status" aria-live="polite" class="hilfe"></p>
+  <p>
+    <button type="button" id="packliste-zuruecksetzen" hidden>Häkchen zurücksetzen</button>
+  </p>
+
+  <div data-packliste={ZIELLAENDER[code]!.slug}>
+    {
+      (['rule_task', 'documents', 'equipment'] as const).map((kategorie) => (
+        <section aria-labelledby={`packliste-${kategorie}`}>
+          <h3 id={`packliste-${kategorie}`}>{KATEGORIE_TITEL[kategorie]}</h3>
+          <ul class="packliste" data-kategorie={kategorie}>
+            {packlisteNach(kategorie).map((eintrag) => (
+              <li data-eintrag={eintrag.itemId}>
+                <label class="packliste__zeile">
+                  <input type="checkbox" data-eintrag={eintrag.itemId} />
+                  <span>
+                    <strong>{eintrag.label}.</strong> {eintrag.note}
+                  </span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
 
   <Notice variante="hinweis" titel="Keine Reiseapotheke">
     <p>
@@ -141,6 +153,10 @@ const umfang = reiseUmfang();
   </ul>
 
   <script>
+    import { packlisteStarten } from '../../../features/profile/packing-ui.ts';
+
+    packlisteStarten();
+
     // Der Druckknopf erscheint nur mit JavaScript; ohne bleibt der Hinweis
     // auf die Druckfunktion des Browsers stehen.
     const knopf = document.querySelector<HTMLButtonElement>('#drucken');
@@ -180,18 +196,21 @@ const umfang = reiseUmfang();
     }
 
     .packliste > li {
-      display: flex;
-      gap: var(--abstand-2);
-      align-items: baseline;
       margin-block: var(--abstand-2);
     }
 
-    .kasten {
+    .packliste__zeile {
+      display: flex;
+      gap: var(--abstand-2);
+      align-items: baseline;
+      cursor: pointer;
+    }
+
+    .packliste__zeile input {
       flex: 0 0 auto;
-      width: 0.9em;
-      height: 0.9em;
-      border: 1.5px solid var(--farbe-text);
-      border-radius: 2px;
+      width: 1em;
+      height: 1em;
+      margin: 0;
     }
 
     .ziele {

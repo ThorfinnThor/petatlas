@@ -3315,8 +3315,16 @@
         "M16-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Abhakbare Packliste je Ziel und Geraet. Aus den gezeichneten Quadraten wurden echte Kontrollkaestchen: ohne JavaScript anklickbar und druckbar, mit JavaScript zusaetzlich gespeichert - ein E2E-Test mit abgeschaltetem JavaScript belegt die Bedienbarkeit. Gespeichert werden Zielland, Eintragskennung und Zeitstempel unter einem eigenen Schluessel; ein Test liest den Speicher aus und prueft, dass dort kein Name und kein Profilbezug steht. Ziele bleiben getrennt (Haekchen fuer Oesterreich taucht in Italien nicht auf), ein Ziel ohne Haekchen wird entfernt statt als leere Liste zu bleiben, und die Zahl gespeicherter Ziele ist begrenzt. Der Fortschritt steht als '1 von 16 erledigt - gespeichert nur auf diesem Geraet' auf der Seite, dazu ein Knopf zum Zuruecksetzen. Es gibt keine eigene Druckansicht: gedruckt wird die Seite selbst, die Druckregeln blenden Formular, Druckknopf und Zuruecksetzen aus und lassen gesetzte Haekchen sichtbar - geprueft mit emulateMedia('print'). Beim Abhaken geht keine Anfrage raus. Unbrauchbarer Speicherinhalt wird verworfen statt geraten, einschliesslich ungueltiger Zielkennungen. 12 neue Unit-Tests (1034 gesamt) und 14 neue Feature-E2E-Tests (254 gesamt), npm run verify exit 0, 198 Standard-E2E gruen.",
+          "reference": "src/features/profile/packing-state.ts, src/features/profile/packing-ui.ts, src/pages/de-de/reisecheck/[ziel].astro, src/styles/print.css, tests/profile/packing.test.ts, tests/e2e-features/reisecheck.spec.ts",
+          "verified_at": "2026-09-08",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

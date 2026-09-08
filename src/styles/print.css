@@ -15,16 +15,19 @@
    * Druckknopf selbst verschwinden. */
   #reiseform,
   #drucken,
+  #packliste-zuruecksetzen,
   #ohne-javascript {
     display: none !important;
   }
 
-  .packliste > li {
-    page-break-inside: avoid;
+  /* Gesetzte Häkchen müssen auf Papier sichtbar bleiben. */
+  .packliste__zeile input {
+    -webkit-appearance: checkbox;
+    appearance: checkbox;
   }
 
-  .packliste .kasten {
-    border-color: #000;
+  .packliste > li {
+    page-break-inside: avoid;
   }
 
   .anforderungen > li {
