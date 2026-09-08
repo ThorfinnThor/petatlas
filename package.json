@@ -45,6 +45,7 @@
     "check:budgets": "node scripts/checks/budgets.ts",
     "check:seo": "node scripts/checks/seo.ts",
     "check:dist": "node scripts/checks/dist.ts",
+    "check:release": "node scripts/checks/release.ts",
     "check:licenses": "node scripts/checks/licenses.ts",
     "check:places": "node scripts/checks/places-quality.ts",
     "check:municipal": "node scripts/checks/municipal-conflicts.ts",

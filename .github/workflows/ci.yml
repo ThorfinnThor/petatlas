@@ -124,6 +124,11 @@ jobs:
       - name: Output-Audit über dist
         run: npm run check:dist
 
+      # Die Prüfung erteilt nichts; sie widerspricht einer Behauptung ohne
+      # Person, ohne Datum oder ohne Nachweis (M18-06).
+      - name: Freigabestand ist widerspruchsfrei
+        run: npm run check:release
+
       - name: Produktionsbuild bleibt gesperrt
         run: |
           if npm run build:production > /tmp/production.log 2>&1; then

@@ -603,3 +603,9 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Die Barrierefreiheitsseite gibt sich **ausdrücklich nicht** als Erklärung im Rechtssinn aus. Bestandene Messungen sind keine Erklärung: dazu gehören eine Bewertung des Geltungsbereichs und ein erreichbarer Rückmeldeweg. Ohne Kontaktadresse steht dort keine erfundene.
 - Ob das BFSG für dieses Angebot überhaupt gilt, ist offen und als offen benannt — Kleinstunternehmen sind teilweise ausgenommen, und die Einordnung hängt am Betreiber.
 - Die Methodikseite beantwortet die Frage, der jede Zahl ausgesetzt ist: woher, wie alt, von wem geprüft. Sie liest dieselben Funktionen wie der Datenstand, statt eine zweite Beschreibung zu pflegen.
+
+| M18-06 | `docs/reviews/launch.md`, `scripts/checks/release.ts`, `tests/checks/release.test.ts` | 10 Tests, Lauf gegen den echten Stand | **blockiert (B-007)** — Gerüst geliefert, Freigaben offen |
+
+- Die Prüfung kann **nur widersprechen**. Sie erteilt keine Freigabe und prüft keinen Inhalt; sie prüft die Form: Person vorhanden, Datum vorhanden, benannter Nachweis vorhanden. Ein Häkchen ohne Namen ist keine Freigabe, und ein Verweis auf ein Dokument, das es nicht gibt, ist schlimmer als kein Verweis.
+- **Ein nicht freigegebener Stand ist der Normalzustand und kein Fehler.** Der Lauf endet mit 0, obwohl acht Gates und vier Rechtspflichten offen sind. Rot wird er erst, wenn der Stand etwas behauptet, das er nicht belegen kann.
+- `docs/reviews/launch.md` endet mit vier Sätzen darüber, was **nicht** geprüft wurde — damit das später nicht aus einem grünen Prüflauf herausgelesen wird. Ein grüner Lauf heißt: der Stand behauptet nichts Unbelegtes. Er heißt nicht, dass geprüft wurde.

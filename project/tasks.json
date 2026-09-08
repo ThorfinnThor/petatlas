@@ -3805,9 +3805,19 @@
         "M18-01"
       ],
       "kind": "external_gate",
-      "status": "todo",
-      "evidence": [],
-      "blocker": null,
+      "status": "blocked",
+      "evidence": [
+        {
+          "description": "Geruest geliefert und geprueft: scripts/checks/release.ts (npm run check:release) widerspricht jeder Freigabebehauptung ohne Person, ohne Datum oder ohne vorhandenen Nachweis und meldet einen Widerspruch, wenn oeffentlich freigegeben waere, obwohl Gates oder Rechtspflichten offen sind. 10 Tests in tests/checks/release.test.ts, darunter jeder Ablehnungsfall einzeln. Lauf gegen den echten Stand: oeffentliche Freigabe nein, 8 offene Gates, 4 offene Rechtspflichten, keine Beanstandung, exit 0 - ein nicht freigegebener Stand ist der Normalzustand und kein Fehler. docs/reviews/launch.md nennt je Gate Zustaendigkeit, Nachweis, Stand und Fehlendes und haelt ausdruecklich fest, was nicht geprueft wurde. npm run verify exit 0.",
+          "reference": "docs/reviews/launch.md, scripts/checks/release.ts, tests/checks/release.test.ts, config/launch.json, docs/LEGAL_CHECKLIST.md",
+          "verified_at": "2026-09-08T16:05:00+02:00"
+        }
+      ],
+      "blocker": {
+        "reason": "Die acht Launch-Gates verlangen fachliche und rechtliche Freigaben, die ausserhalb dieses Repositories entstehen: echte Betreiberangaben, eine Domain, die Bestaetigung der Publikationsrechte, eine fachliche Abnahme von Gebuehrenrechner und Reiseregeln, eine Pruefung nach § 34d GewO und mindestens eine Programmfreigabe eines Netzwerks. Keine dieser Pruefungen wird erfunden, und ein gruener Pruflauf ersetzt keine.",
+        "required_action": "Je Gate die Pruefpunkte im benannten Nachweis beantworten lassen, das Ergebnis dort mit Datum und Namen eintragen und danach das Gate in config/launch.json auf approved mit approvedBy und approvedAt setzen. Reihenfolge und Zustaendigkeiten stehen in docs/reviews/launch.md; die vier offenen Rechtspflichten in docs/LEGAL_CHECKLIST.md.",
+        "owner": "Betreiber, fuer die fachlichen Gates mit jeweils qualifizierter pruefender Person"
+      },
       "notes": []
     },
     {

@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6 (109 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert (109 von 121 Aufgaben, sechs blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,13 +36,11 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M18-06 — Fachliche und rechtliche Launchfreigaben erfassen.** `docs/reviews/launch.md` und `config/launch.json`: den Launchstatus an **reale** Nachweise binden. Abnahme: der Status verweist auf tatsächliche Freigaben und freigegebene Funktionen; **kein Agent erfindet eine Juristen- oder Tierarztprüfung**.
+**M19-01 — Endabnahme vorbereiten.** Der letzte Meilenstein: Endabnahme, Betriebshandbuch und Ausbauprobe. Er setzt keine erteilte Freigabe voraus; der Abschnitt M19 in `docs/MILESTONES.md` nennt die sechs Aufgaben.
 
-Diese Aufgabe ist ein externer Freigabepunkt. Erwartbar ist deshalb: das Gerüst entsteht — eine Übersicht, die je Gate Zuständigkeit, benötigten Nachweis und heutigen Stand nennt und aus `config/launch.json` liest —, und die Freigaben selbst bleiben offen und als Blocker geführt. Sie einzutragen ist Sache der zuständigen Person.
+**M18-06 ist blockiert (B-007).** Das Gerüst steht: `npm run check:release` widerspricht jeder Freigabebehauptung ohne Person, ohne Datum oder ohne vorhandenen Nachweis, und `docs/reviews/launch.md` nennt je Gate Zuständigkeit, Nachweis und Fehlendes. Die Freigaben selbst entstehen außerhalb dieses Repositories — acht offene Gates, vier offene Rechtspflichten. Kein Agent trägt sie ein.
 
-Vorarbeit: `docs/LEGAL_CHECKLIST.md` nennt die Pflichten mit Grundlage und Zuständigkeit, `config/legal.ts` hält sie maschinenlesbar und leitet den Werbestand aus den Gates ab. Die Seiten `/de-de/methodik/` und `/de-de/barrierefreiheit/` sind da; Impressum, Datenschutz und die Barrierefreiheitserklärung sagen, was fehlt, statt Platzhalter zu zeigen.
-
-Gemessen und dokumentiert liegen vor: `docs/ACCESSIBILITY.md`, `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`. In der CI laufen `check:seo` samt Probelauf, `check:dist`, `check:budgets`, `rollback:pruefen` und der Zugänglichkeitslauf.
+Gemessen und dokumentiert liegen vor: `docs/ACCESSIBILITY.md`, `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`, `docs/LEGAL_CHECKLIST.md`, `docs/reviews/launch.md`. In der CI laufen `check:seo` samt Probelauf, `check:dist`, `check:budgets`, `rollback:pruefen`, `check:release` und der Zugänglichkeitslauf.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 
