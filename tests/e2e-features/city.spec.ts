@@ -42,7 +42,9 @@ test('zeigt auf sich selbst als canonical und führt zurück zur Karte', async (
   await page.goto(`${KARTE}${ERSTE.slug}/`);
   const canonical = page.locator('link[rel="canonical"]');
   await expect(canonical).toHaveAttribute('href', new RegExp(`${KARTE}${ERSTE.slug}/$`));
-  await expect(page.locator(`a[href="${KARTE}"]`).first()).toBeVisible();
+  // Im Inhalt, nicht in der Navigation: die Navigation klappt auf schmalen
+  // Geräten ein, der Rückweg im Text muss trotzdem dastehen.
+  await expect(page.locator(`main a[href="${KARTE}"]`).first()).toBeVisible();
 });
 
 test('es gibt keine Seite für eine Stadt außerhalb der Allowlist', async ({ page }) => {

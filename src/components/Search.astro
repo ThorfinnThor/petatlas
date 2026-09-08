@@ -26,11 +26,13 @@
 
 <style>
   .suche {
-    margin-block-start: var(--abstand-12);
-    padding: var(--abstand-6);
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius-gross);
-    background: var(--farbe-flaeche);
+    margin-block-start: var(--space-16);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-subtle);
+    /* Ein Suchfeld über die volle Rasterbreite liest sich schlecht. */
+    max-inline-size: var(--content-reading);
   }
 
   .suche :global(h2) {
@@ -40,31 +42,31 @@
   .suche label {
     display: block;
     font-weight: 600;
-    margin-bottom: var(--abstand-1);
+    margin-bottom: var(--space-1);
   }
 
   .suche input {
     width: 100%;
     max-width: 26rem;
-    padding: var(--abstand-3);
-    border: var(--linie) solid var(--farbe-linie-stark);
-    border-radius: var(--radius);
-    background: var(--farbe-grund);
+    padding: var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
   }
 
   .suche__treffer {
     list-style: none;
     padding: 0;
-    margin: var(--abstand-4) 0 0;
+    margin: var(--space-4) 0 0;
   }
 
   .suche__treffer li {
-    padding-block: var(--abstand-2);
-    border-bottom: var(--linie) solid var(--farbe-linie);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .suche__treffer :global(mark) {
-    background: var(--farbe-warnung-grund);
+    background: var(--color-warning-soft);
     color: inherit;
   }
 </style>

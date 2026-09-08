@@ -14,6 +14,9 @@ import Notice from '../components/Notice.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import '../styles/tokens.css';
+import '../styles/reset.css';
+import '../styles/typography.css';
+import '../styles/base.css';
 import '../styles/print.css';
 
 interface Props {
@@ -28,9 +31,14 @@ interface Props {
   canonicalPfad?: string;
   /** Seiten, die auch in production nie indexiert werden dürfen. */
   neverIndex?: boolean;
+  /**
+   * Breite Seiten (Karte, große Vergleiche) nutzen den Seitencontainer statt
+   * der Lesebreite — Designvertrag Abschnitt 6.2 und 6.3.
+   */
+  weit?: boolean;
 }
 
-const { title, route, canonicalPfad, neverIndex = false } = Astro.props;
+const { title, route, canonicalPfad, neverIndex = false, weit = false } = Astro.props;
 
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
@@ -60,11 +68,11 @@ const canonical = canonicalPfad
       beim Inhalt ankommt. Sie ist unsichtbar, bis sie den Fokus bekommt.
     */
     }
-    <a class="sprungmarke" href="#inhalt">Zum Inhalt springen</a>
+    <a class="sprungmarke" href="#inhalt">Zum Hauptinhalt springen</a>
     <SiteHeader market={market} brandName={site.brandName} aktuellerPfad={Astro.url.pathname} />
     {
       build.showTestDataBanner && (
-        <div class="randbreite">
+        <div class:list={['randbreite', weit ? 'page-container' : 'reading-container']}>
           <Notice variante="testdaten" titel="Testdaten" testId="test-data-banner">
             <p>
               Dieser Build zeigt synthetische Beispieldaten. Keine echten Praxen, Preise oder
@@ -74,7 +82,7 @@ const canonical = canonicalPfad
         </div>
       )
     }
-    <main id="inhalt" tabindex="-1">
+    <main id="inhalt" tabindex="-1" class:list={[weit ? 'page-container' : 'reading-container']}>
       <slot />
     </main>
     <SiteFooter market={market} betreiber={site.operator.legalName} />
@@ -82,17 +90,24 @@ const canonical = canonicalPfad
 </html>
 
 <style>
+  /*
+   * Abschnitt 39.2: erstes fokussierbares Element. Sie liegt außerhalb des
+   * Sichtfelds statt `display: none` — sonst wäre sie auch für die Tastatur
+   * weg — und springt hinein, sobald sie den Fokus bekommt.
+   */
   .sprungmarke {
     position: absolute;
-    inset-inline-start: var(--abstand-2);
-    inset-block-start: var(--abstand-2);
-    z-index: 10;
-    padding: var(--abstand-2) var(--abstand-3);
-    background: var(--farbe-grund);
-    border: 2px solid var(--farbe-text);
-    border-radius: var(--radius);
-    /* Aus dem Sichtfeld, aber im Fokusfluss — nicht display:none. */
-    transform: translateY(-200%);
+    inset-inline-start: var(--space-3);
+    inset-block-start: var(--space-3);
+    z-index: 20;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    color: var(--color-primary-hover);
+    font-weight: var(--weight-label);
+    text-decoration: none;
+    transform: translateY(-250%);
   }
 
   .sprungmarke:focus {
@@ -104,18 +119,7 @@ const canonical = canonicalPfad
     outline: none;
   }
 
-  /* Der Testdatenhinweis steht außerhalb von <main> und braucht dieselbe
-     Inhaltsbreite, damit er nicht über die ganze Fensterbreite läuft. */
-  /* Der Testdatenhinweis steht außerhalb von `main` und braucht dieselbe
-     Inhaltsbreite und denselben Seitenrand. */
   .randbreite {
-    max-width: var(--breite-inhalt);
-    margin-inline: auto;
-    padding-inline: var(--abstand-4);
-    padding-block-start: var(--abstand-6);
-  }
-
-  .randbreite + main {
-    padding-block-start: var(--abstand-4);
+    padding-block-start: var(--space-6);
   }
 </style>

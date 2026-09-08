@@ -1,5 +1,6 @@
 // M13-05 — Der Katalog zeigt den leeren Zustand ehrlich und erklärt seine Ordnung.
 import { expect, test } from '@playwright/test';
+import { hauptnavigationOeffnen } from '../support/navigation.ts';
 
 const KATALOG = '/de-de/angebote/';
 
@@ -36,5 +37,7 @@ test('behauptet keine Empfehlung und keinen Bestpreis', async ({ page }) => {
 
 test('taucht in der Navigation auf, wenn die Funktion an ist', async ({ page }) => {
   await page.goto('/de-de/');
-  await expect(page.locator(`nav a[href="${KATALOG}"]`)).toBeVisible();
+  // Auf schmalen Geräten steckt die Navigation hinter dem Menüknopf.
+  await hauptnavigationOeffnen(page);
+  await expect(page.locator(`header nav a[href="${KATALOG}"]`)).toBeVisible();
 });

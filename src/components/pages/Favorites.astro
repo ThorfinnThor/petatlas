@@ -56,8 +56,8 @@ const kartenPfad = isFeatureEnabled(markt, 'map')
 
 <style>
   .hilfe {
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 
   #merkliste :global(.merk__liste) {
@@ -66,15 +66,15 @@ const kartenPfad = isFeatureEnabled(markt, 'map')
   }
 
   #merkliste :global(.merk__liste > li) {
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    padding: var(--abstand-3) var(--abstand-4);
-    margin-block: var(--abstand-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    margin-block: var(--space-3);
   }
 
   #merkliste :global(.merk__liste h3) {
-    margin: 0 0 var(--abstand-1);
-    font-size: var(--schrift-normal);
+    margin: 0 0 var(--space-1);
+    font-size: var(--text-body);
   }
 
   #merkliste :global(.merk__kopf) {
@@ -83,7 +83,7 @@ const kartenPfad = isFeatureEnabled(markt, 'map')
 
   #merkliste :global(.merk__zusatz),
   #merkliste :global(.merk__weg) {
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 </style>

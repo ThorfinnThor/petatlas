@@ -74,7 +74,7 @@ const beschriebenVon = [hilfe ? hilfeId : null, fehlerId].filter(Boolean).join('
 
 <style>
   .feld {
-    margin-block: var(--abstand-4);
+    margin-block: var(--space-4);
   }
 
   .feld label {
@@ -84,33 +84,33 @@ const beschriebenVon = [hilfe ? hilfeId : null, fehlerId].filter(Boolean).join('
 
   .feld__pflicht {
     font-weight: 400;
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 
   .feld__hilfe {
-    margin: var(--abstand-1) 0;
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    margin: var(--space-1) 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 
   .feld input {
     width: 100%;
     max-width: 20rem;
-    padding: var(--abstand-2);
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    background: var(--farbe-grund);
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
   }
 
   .feld input[aria-invalid='true'] {
-    border-color: var(--farbe-fehler);
+    border-color: var(--color-danger);
     border-width: 2px;
   }
 
   .feld__fehler {
-    margin: var(--abstand-1) 0 0;
-    color: var(--farbe-fehler);
+    margin: var(--space-1) 0 0;
+    color: var(--color-danger);
     font-weight: 600;
   }
 </style>

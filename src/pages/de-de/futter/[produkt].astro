@@ -194,7 +194,7 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
     .angaben {
       display: grid;
       grid-template-columns: max-content 1fr;
-      gap: var(--abstand-2) var(--abstand-4);
+      gap: var(--space-2) var(--space-4);
     }
 
     .angaben dt {
@@ -208,20 +208,20 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
     .naehrwerte {
       width: 100%;
       border-collapse: collapse;
-      margin-block: var(--abstand-3);
+      margin-block: var(--space-3);
     }
 
     .naehrwerte th,
     .naehrwerte td {
-      border-bottom: var(--linie) solid var(--farbe-linie);
-      padding: var(--abstand-2);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-2);
       text-align: start;
       vertical-align: top;
     }
 
     .hilfe {
-      color: var(--farbe-text-leise);
-      font-size: var(--schrift-klein);
+      color: var(--color-text-muted);
+      font-size: var(--text-small);
     }
 
     .varianten {
@@ -229,7 +229,7 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
       padding: 0;
       display: flex;
       flex-wrap: wrap;
-      gap: var(--abstand-2) var(--abstand-4);
+      gap: var(--space-2) var(--space-4);
     }
   </style>
 </BaseLayout>

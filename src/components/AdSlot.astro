@@ -31,17 +31,17 @@ const sichtbar = isFeatureEnabled(market, 'ads');
 
 <style>
   .anzeige {
-    background: var(--farbe-anzeige-grund);
-    border: var(--linie) dashed var(--farbe-anzeige-linie);
-    border-radius: var(--radius);
-    color: var(--farbe-anzeige-text);
-    padding: var(--abstand-3);
-    margin-block: var(--abstand-6);
+    background: var(--color-surface-subtle);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    padding: var(--space-3);
+    margin-block: var(--space-6);
   }
 
   .anzeige__kennzeichnung {
-    margin: 0 0 var(--abstand-2);
-    font-size: var(--schrift-klein);
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-small);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;

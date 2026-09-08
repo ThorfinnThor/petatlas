@@ -20,20 +20,20 @@ const { id } = Astro.props;
 
 <style>
   .fehlerliste {
-    border: 2px solid var(--farbe-fehler);
-    border-radius: var(--radius);
-    padding: var(--abstand-3) var(--abstand-4);
-    margin-block: var(--abstand-4);
+    border: 2px solid var(--color-danger);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    margin-block: var(--space-4);
   }
 
   .fehlerliste__titel {
-    margin: 0 0 var(--abstand-2);
+    margin: 0 0 var(--space-2);
     font-weight: 700;
-    color: var(--farbe-fehler);
+    color: var(--color-danger);
   }
 
   .fehlerliste ul {
     margin: 0;
-    padding-inline-start: var(--abstand-4);
+    padding-inline-start: var(--space-4);
   }
 </style>

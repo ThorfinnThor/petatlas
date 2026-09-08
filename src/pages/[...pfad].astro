@@ -59,9 +59,16 @@ const { marketId, routeKey } = Astro.props as Props;
 const market: MarketConfig = withEnabledFeatures(requireMarket(marketId), devFeatureOverrides());
 const locale = market.locale as LocaleId;
 const titel = translate(locale, `nav.${routeKey}`);
+
+/**
+ * Breite Seiten nutzen den Seitencontainer statt der Lesebreite
+ * (Designvertrag Abschnitt 6.2 und 6.3): Startseite, Karte und die
+ * Produktübersichten zeigen Raster, keine Fließtexte.
+ */
+const WEITE_SEITEN: readonly RouteKey[] = ['home', 'map', 'catalog', 'care', 'toys', 'food'];
 ---
 
-<BaseLayout title={titel} route={routeKey}>
+<BaseLayout title={titel} route={routeKey} weit={WEITE_SEITEN.includes(routeKey)}>
   {routeKey === 'home' && <Home market={market} />}
   {routeKey === 'costs' && <Costs />}
   {routeKey === 'map' && <Map />}

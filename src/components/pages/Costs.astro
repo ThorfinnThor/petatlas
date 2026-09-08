@@ -159,26 +159,26 @@ const quelle = snapshot.source as {
 
 <style>
   fieldset {
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    padding: var(--abstand-3) var(--abstand-4);
-    margin-block: var(--abstand-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    margin-block: var(--space-4);
   }
 
   legend {
     font-weight: 600;
-    padding-inline: var(--abstand-2);
+    padding-inline: var(--space-2);
   }
 
   .hilfe {
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
-    margin-block: var(--abstand-1);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    margin-block: var(--space-1);
   }
 
   .wahl {
     display: block;
-    margin-block: var(--abstand-2);
+    margin-block: var(--space-2);
     font-weight: 400;
   }
 
@@ -186,23 +186,23 @@ const quelle = snapshot.source as {
   input[type='search'] {
     width: 100%;
     max-width: 28rem;
-    padding: var(--abstand-2);
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    background: var(--farbe-grund);
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
   }
 
   .treffer {
     list-style: none;
     padding: 0;
-    margin: var(--abstand-2) 0;
+    margin: var(--space-2) 0;
     max-height: 18rem;
     overflow-y: auto;
   }
 
   .treffer li {
-    border-bottom: var(--linie) solid var(--farbe-linie);
-    padding-block: var(--abstand-2);
+    border-bottom: 1px solid var(--color-border);
+    padding-block: var(--space-2);
   }
 
   .treffer button {
@@ -210,25 +210,25 @@ const quelle = snapshot.source as {
     width: 100%;
     background: none;
     border: 0;
-    padding: var(--abstand-1);
+    padding: var(--space-1);
     cursor: pointer;
     color: inherit;
   }
 
   .treffer button:hover {
-    background: var(--farbe-flaeche);
+    background: var(--color-surface-subtle);
   }
 
   :global(#ergebnis table) {
     width: 100%;
     border-collapse: collapse;
-    margin-block: var(--abstand-4);
+    margin-block: var(--space-4);
   }
 
   :global(#ergebnis th),
   :global(#ergebnis td) {
-    border-bottom: var(--linie) solid var(--farbe-linie);
-    padding: var(--abstand-2);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-2);
     text-align: start;
     vertical-align: top;
   }
@@ -245,8 +245,8 @@ const quelle = snapshot.source as {
 
   :global(#ergebnis .fundstelle) {
     display: block;
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 </style>
 

@@ -20,11 +20,11 @@ Identische Werte für Desktop- und Mobilprofil, weil dieselben Dateien ausgelief
 
 | Seite | JavaScript | Übertragen gesamt | DOM-Knoten | Anfragen | LCP (untere Schranke) |
 |---|---|---|---|---|---|
-| Start | 2,8 KiB | 49,2 KiB | 115 | 8 | 20–24 ms |
-| Kostenrechner | 97,3 KiB | 146,1 KiB | 134 | 10 | 20–24 ms |
-| Karte | 14,0 KiB | 74,2 KiB | 328 | 9 | 24 ms |
-| Reisecheck | 112,3 KiB | 166,0 KiB | 196 | 10 | 28 ms |
-| Futter | 95,0 KiB | 141,1 KiB | 102 | 11 | 20 ms |
+| Start | 3,4 KiB | 59,7 KiB | 167 | 9 | 28 ms |
+| Kostenrechner | 97,9 KiB | 154,0 KiB | 159 | 11 | 28 ms |
+| Karte | 14,7 KiB | 82,1 KiB | 353 | 10 | 28 ms |
+| Reisecheck | 112,9 KiB | 173,9 KiB | 221 | 11 | 32 ms |
+| Futter | 95,6 KiB | 149,0 KiB | 127 | 12 | 24 ms |
 
 Budgets: JavaScript Warnung ab 60 KiB, Stopp ab 150 KiB. Seitengröße Warnung ab 400 KiB, Stopp ab 900 KiB. DOM-Knoten Warnung ab 1.500, Stopp ab 3.000. **Kein Stopp erreicht.** Drei Seiten liegen über der JavaScript-Warnschwelle; warum, steht im nächsten Abschnitt.
 

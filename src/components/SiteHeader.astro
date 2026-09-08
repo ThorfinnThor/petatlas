@@ -21,75 +21,151 @@ const eintraege = navigationFor(market, 'main').filter((item) => item.key !== 'h
 ---
 
 <header class="kopf">
-  <div class="kopf__inhalt">
-    <a class="kopf__marke" href={routePath(market, 'home')}>
-      <span class="kopf__zeichen" aria-hidden="true">PA</span>
-      <span>{brandName}</span>
-    </a>
+  <div class="kopf__inhalt page-container">
+    <a class="kopf__marke" href={routePath(market, 'home')}>{brandName}</a>
     {
       eintraege.length > 0 && (
-        <nav aria-label="Hauptnavigation">
-          <ul class="kopf__liste">
-            {eintraege.map((item) => (
-              <li>
-                <a href={item.path} aria-current={item.path === aktuellerPfad ? 'page' : undefined}>
-                  {translate(locale, item.labelKey)}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <>
+          {/*
+            Abschnitt 9.2: auf dem Telefon ein Menüknopf statt einer über
+            mehrere Zeilen umbrechenden Linkliste. Der Knopf ist zunächst
+            versteckt und wird erst vom Skript eingeblendet — ohne
+            JavaScript bleibt die vollständige Liste sichtbar, statt dass
+            ein toter Knopf dasteht.
+          */}
+          <button
+            id="menue-knopf"
+            class="kopf__menueknopf"
+            type="button"
+            aria-expanded="false"
+            aria-controls="hauptnavigation"
+            hidden
+          >
+            Menü
+          </button>
+          <nav aria-label="Hauptnavigation" class="kopf__nav" id="hauptnavigation">
+            <ul class="kopf__liste">
+              {eintraege.map((item) => (
+                <li>
+                  <a
+                    href={item.path}
+                    aria-current={item.path === aktuellerPfad ? 'page' : undefined}
+                  >
+                    {translate(locale, item.labelKey)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </>
       )
     }
   </div>
 </header>
 
+<script>
+  import { menueStarten } from '../features/navigation/mobile-menu.ts';
+
+  menueStarten();
+</script>
+
 <style>
+  /*
+   * Abschnitt 9.1 und 9.2: weißer Kopf mit unterer Kante, Wortmarke links,
+   * Navigation daneben. 64 px mobil, 72 px ab Tablet. Sticky, damit die
+   * Navigation auf langen Toolseiten erreichbar bleibt — und mit einem
+   * z-index unterhalb von Dialogen.
+   */
   .kopf {
-    border-block-end: var(--linie) solid var(--farbe-linie);
-    background: var(--farbe-grund);
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 10;
+    background: var(--color-surface);
+    border-block-end: 1px solid var(--color-border);
   }
 
   .kopf__inhalt {
-    max-width: var(--breite-weit);
-    margin-inline: auto;
-    padding: var(--abstand-4);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--abstand-3) var(--abstand-6);
+    gap: var(--space-2) var(--space-6);
+    min-block-size: var(--header-height-mobile);
+    padding-block: var(--space-2);
   }
 
+  @media (min-width: 768px) {
+    .kopf__inhalt {
+      min-block-size: var(--header-height-desktop);
+      flex-wrap: nowrap;
+    }
+  }
+
+  /* Abschnitt 8.4: schlichte Wortmarke, kein Emoji, kein Bild. */
   .kopf__marke {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--abstand-2);
-    font-weight: 700;
-    font-size: var(--schrift-gross);
-    letter-spacing: -0.01em;
-    color: inherit;
+    font-size: var(--text-h4);
+    font-weight: var(--weight-h2);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
     text-decoration: none;
   }
 
-  /* Wortmarke statt Bilddatei: ein Bild wäre eine Datei mehr und eine
-     Lizenzfrage; zwei Buchstaben genügen als Wiedererkennung. */
-  .kopf__zeichen {
-    display: inline-grid;
-    place-items: center;
-    inline-size: 2rem;
-    block-size: 2rem;
-    border-radius: var(--radius);
-    background: var(--farbe-akzent);
-    color: var(--farbe-akzent-text);
-    font-size: var(--schrift-klein);
-    font-weight: 700;
-    letter-spacing: 0.02em;
+  .kopf__nav {
+    /* Abschnitt 54: Navlabels bekommen keine feste Breite. */
+    min-inline-size: 0;
+  }
+
+  /*
+   * Abschnitt 9.2: der Menüknopf gilt nur bis zum Tablet. Er ist mindestens
+   * 44 px hoch (Abschnitt 39.4) und sagt über `aria-expanded`, in welchem
+   * Zustand er ist.
+   */
+  .kopf__menueknopf {
+    margin-inline-start: auto;
+    min-block-size: 44px;
+    padding-inline: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .kopf__menueknopf {
+      display: none;
+    }
+  }
+
+  /* Eingeklappt nur dort, wo der Knopf sichtbar ist. */
+  @media (max-width: 767px) {
+    .kopf__nav[data-eingeklappt='true'] {
+      display: none;
+    }
+
+    .kopf__nav {
+      flex-basis: 100%;
+      padding-block-end: var(--space-2);
+    }
+
+    .kopf__liste {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .kopf__liste a {
+      display: block;
+      padding: var(--space-3);
+      border-block-end: 1px solid var(--color-border);
+      border-radius: 0;
+    }
+
+    .kopf__liste [aria-current='page'] {
+      border-inline-start: 3px solid var(--color-primary);
+      border-block-end-color: var(--color-border);
+      padding-inline-start: var(--space-3);
+      background: var(--color-primary-soft);
+    }
   }
 
   .kopf__liste {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--abstand-1) var(--abstand-2);
+    gap: var(--space-1) var(--space-1);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -97,29 +173,34 @@ const eintraege = navigationFor(market, 'main').filter((item) => item.key !== 'h
 
   .kopf__liste li {
     margin: 0;
+    max-inline-size: none;
   }
 
   .kopf__liste a {
     display: inline-block;
-    padding: var(--abstand-2) var(--abstand-3);
-    border-radius: var(--radius);
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    padding: var(--space-2) var(--space-3);
+    border-block-end: 2px solid transparent;
+    color: var(--color-text);
+    font-size: var(--text-small);
     text-decoration: none;
   }
 
   .kopf__liste a:hover {
-    background: var(--farbe-flaeche);
-    color: var(--farbe-text);
+    color: var(--color-primary-hover);
+    border-block-end-color: var(--color-border-strong);
   }
 
+  /*
+   * Abschnitt 9.1: der aktive Bereich wird über Textfarbe **und** eine
+   * 2-px-Kante angezeigt, nicht allein über eine Hintergrundfarbe.
+   */
   .kopf__liste [aria-current='page'] {
-    background: var(--farbe-akzent-schwach);
-    color: var(--farbe-akzent-stark);
-    font-weight: 600;
+    color: var(--color-primary-hover);
+    font-weight: var(--weight-label);
+    border-block-end-color: var(--color-primary);
   }
 
-  @media (min-width: 48rem) {
+  @media (min-width: 768px) {
     .kopf__liste {
       margin-inline-start: auto;
     }

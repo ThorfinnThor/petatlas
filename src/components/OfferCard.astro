@@ -112,47 +112,47 @@ const stand = angebot.fetchedAt.slice(0, 10);
 <style>
   .angebot__abgelaufen {
     font-weight: 600;
-    margin-block: var(--abstand-1);
+    margin-block: var(--space-1);
   }
 
   .angebot {
-    background: var(--farbe-anzeige-grund);
-    border: var(--linie) dashed var(--farbe-anzeige-linie);
-    border-radius: var(--radius);
-    padding: var(--abstand-3) var(--abstand-4);
-    margin-block: var(--abstand-4);
+    background: var(--color-surface-subtle);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    margin-block: var(--space-4);
   }
 
   .angebot__kennzeichnung {
-    margin: 0 0 var(--abstand-2);
-    font-size: var(--schrift-klein);
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-small);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   .angebot h3 {
-    margin: 0 0 var(--abstand-2);
-    font-size: var(--schrift-normal);
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-body);
   }
 
   .angebot__preis {
     font-size: 1.25rem;
     font-weight: 700;
-    margin-block: var(--abstand-1);
+    margin-block: var(--space-1);
   }
 
   .angebot__bezug {
-    font-size: var(--schrift-klein);
+    font-size: var(--text-small);
     font-weight: 400;
   }
 
   .angebot__grundpreis,
   .angebot__meta,
   .angebot__unbekannt {
-    color: var(--farbe-anzeige-text);
-    font-size: var(--schrift-klein);
-    margin-block: var(--abstand-1);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    margin-block: var(--space-1);
   }
 
   .angebot__unbekannt {

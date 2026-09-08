@@ -13,7 +13,7 @@ Die Grenzen stehen in `config/budgets.json` mit Begründung und stammen aus `doc
 
 | Budget | Gemessen | Warnung ab | Stopp ab |
 |---|---|---|---|
-| Veröffentlichte Dateien | 443 | 12.000 | 18.000 |
+| Veröffentlichte Dateien | 444 | 12.000 | 18.000 |
 | Größte ausgelieferte Datei | 0,46 MiB | 10 MiB | 25 MiB |
 | Snapshots im Repository | 10,2 MiB | 35 MiB | 50 MiB |
 | Git-Historie (`.git`) | 4,2 MiB nach Verdichtung | 250 MiB | 1.000 MiB |

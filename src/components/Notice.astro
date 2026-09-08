@@ -29,15 +29,15 @@ const ansage = variante === 'ergebnis' || variante === 'warnung';
 
 <style>
   .notiz {
-    border: var(--linie) solid var(--farbe-linie);
+    border: 1px solid var(--color-border);
     border-inline-start-width: 4px;
-    border-radius: var(--radius);
-    padding: var(--abstand-4) var(--abstand-6);
-    margin-block: var(--abstand-6);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    margin-block: var(--space-6);
   }
 
   .notiz__titel {
-    margin: 0 0 var(--abstand-2);
+    margin: 0 0 var(--space-2);
     font-weight: 600;
   }
 
@@ -46,18 +46,18 @@ const ansage = variante === 'ergebnis' || variante === 'warnung';
   }
 
   .notiz--hinweis {
-    background: var(--farbe-hinweis-grund);
-    border-inline-start-color: var(--farbe-hinweis-linie);
+    background: var(--color-info-soft);
+    border-inline-start-color: var(--color-info);
   }
 
   .notiz--warnung,
   .notiz--testdaten {
-    background: var(--farbe-warnung-grund);
-    border-inline-start-color: var(--farbe-warnung-linie);
+    background: var(--color-warning-soft);
+    border-inline-start-color: var(--color-warning);
   }
 
   .notiz--ergebnis {
-    background: var(--farbe-ergebnis-grund);
-    border-inline-start-color: var(--farbe-ergebnis-linie);
+    background: var(--color-success-soft);
+    border-inline-start-color: var(--color-success);
   }
 </style>

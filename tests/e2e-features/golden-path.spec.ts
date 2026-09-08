@@ -14,6 +14,7 @@
  * nicht darüber, welche Funktion gelaufen ist.
  */
 import { expect, test, type Page } from '@playwright/test';
+import { hauptnavigationOeffnen } from '../support/navigation.ts';
 
 async function katalogGeladen(page: Page): Promise<void> {
   await expect(page.locator('#suche-hinweis')).toContainText('Positionen geladen', {
@@ -129,6 +130,7 @@ test('Abgeschaltete Funktionen sind wirklich abgeschaltet', async ({ page }) => 
   // Dieser Lauf hat alle Flags an. Der reguläre Lauf prüft das Gegenstück:
   // ohne Flag gibt es die Seite nicht (tests/e2e/smoke.spec.ts).
   await page.goto('/de-de/');
+  await hauptnavigationOeffnen(page);
   await expect(page.locator('header nav a').first()).toBeVisible();
 
   // Keine Werbung, solange kein Partnerprogramm freigegeben ist.

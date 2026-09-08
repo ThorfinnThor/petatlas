@@ -1,17 +1,23 @@
 ---
 /**
- * M04-03 — Startseite.
+ * Startseite nach `docs/DESIGN_SPECIFICATIONS.md` Abschnitt 23.
  *
- * Nennt nur, was es tatsächlich gibt. Solange keine Funktion freigegeben ist,
- * sagt die Seite das, statt eine Liste kommender Werkzeuge zu versprechen.
+ * Aufbau: Hero mit zwei Aktionen, Werkzeugraster, „So arbeiten unsere
+ * Daten“, Produkteinstieg **nach** den Werkzeugen, Transparenzbereich.
  *
- * Die Kurzbeschreibungen der Werkzeuge beschreiben, was das Werkzeug **tut** —
- * nicht, was es verspricht. Wo eine Funktion ohne Freigabe leer bleibt, steht
- * das in der Beschreibung.
+ * Die Karten nennen, was ein Werkzeug **tut**. Wo eine Funktion ohne
+ * Freigabe leer bleibt, steht das in der Karte — Abschnitt 55 verlangt,
+ * Vertrauen zu belegen statt zu behaupten.
  */
 import type { MarketConfig } from '../../domain/market.ts';
 import { translate, type LocaleId } from '../../domain/i18n.ts';
-import { navigationFor, type RouteKey } from '../../lib/routes.ts';
+import {
+  navigationFor,
+  routeExists,
+  routePath,
+  type NavigationItem,
+  type RouteKey,
+} from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
 import Search from '../Search.astro';
 
@@ -21,52 +27,88 @@ interface Props {
 
 const { market } = Astro.props;
 const locale = market.locale as LocaleId;
-const werkzeuge = navigationFor(market, 'main').filter((item) => item.key !== 'home');
+const alle = navigationFor(market, 'main').filter((item) => item.key !== 'home');
 
 const BESCHREIBUNG: Partial<Record<RouteKey, string>> = {
   costs:
-    'Eine Position der amtlichen Gebührenordnung nachrechnen — mit Fundstelle, Faktor und Umsatzsteuer.',
-  map: 'Tierärztinnen, Tierärzte und tierbezogene Orte aus OpenStreetMap, als Liste und auf einer Karte.',
+    'Rechne eine Position der amtlichen Gebührenordnung nach — mit Fundstelle, Faktor und Umsatzsteuer.',
+  map: 'Finde Tierärztinnen, Tierärzte und tierbezogene Orte aus OpenStreetMap, als Liste und auf einer Karte.',
   travel:
-    'Anforderungen für eine Reise mit Hund oder Katze innerhalb der EU, mit Fundstelle je Punkt.',
-  food: 'Futter vergleichen: Menge, deklarierte Nährwerte und Grundpreis je Kilogramm.',
-  care: 'Pflegeprodukte nach belegten Eigenschaften filtern, nicht nach erfundener Eignung.',
-  toys: 'Spielzeug nach Material, Größe und Herstellerangaben filtern.',
-  catalog: 'Produktangebote — solange kein Partnerprogramm freigegeben ist, bleibt die Liste leer.',
-  profile: 'Ein Tierprofil, das ausschließlich in diesem Browser liegt. Kein Konto, kein Server.',
-  favorites: 'Gemerkte Orte und Produkte, ebenfalls nur lokal gespeichert.',
+    'Prüfe die Anforderungen für eine Reise mit Hund oder Katze innerhalb der EU, mit Fundstelle je Punkt.',
+  food: 'Vergleiche Futter nach Menge, deklarierten Nährwerten und Grundpreis je Kilogramm.',
+  care: 'Filtere Pflegeprodukte nach belegten Eigenschaften, nicht nach erfundener Eignung.',
+  toys: 'Filtere Spielzeug nach Material, Größe und Herstellerangaben.',
+  catalog:
+    'Angebote erscheinen hier, sobald ein Partnerprogramm freigegeben ist. Bis dahin bleibt die Liste leer.',
+  profile:
+    'Lege ein Tierprofil an, das ausschließlich in diesem Browser liegt. Kein Konto, kein Server.',
+  favorites: 'Merke dir Orte und Produkte — ebenfalls nur auf diesem Gerät.',
 };
+
+const WERKZEUG_KEYS: readonly RouteKey[] = ['costs', 'map', 'travel', 'profile', 'favorites'];
+const PRODUKT_KEYS: readonly RouteKey[] = ['toys', 'care', 'food', 'catalog'];
+
+function auswahl(keys: readonly RouteKey[]): readonly NavigationItem[] {
+  return keys
+    .map((key) => alle.find((eintrag) => eintrag.key === key))
+    .filter((eintrag): eintrag is NavigationItem => eintrag !== undefined);
+}
+
+const werkzeuge = auswahl(WERKZEUG_KEYS);
+const produkte = auswahl(PRODUKT_KEYS);
+
+const primaer = routeExists(market, 'costs') ? routePath(market, 'costs') : null;
+const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : null;
 ---
 
-<h1>Hund und Katze in Deutschland</h1>
-<p>
-  Tierarztkosten nachrechnen, Tierärzte in der Nähe finden, eine Reise vorbereiten. Die Daten
-  stammen aus offenen Quellen; jede Seite nennt ihren Stand und ihre Herkunft.
-</p>
+<section class="hero">
+  <p class="hero__eyebrow">Praktische Daten für Tierhalter</p>
+  <h1>Besser entscheiden für dein Tier</h1>
+  <p class="lead">
+    Kosten, Orte, Reisen und Produkte — verständlich aufbereitet aus offenen Quellen. Jede Angabe
+    nennt ihren Stand und ihre Herkunft.
+  </p>
 
-<ul class="merkmale">
-  <li>Keine erfundenen Zahlen — unbekannt heißt unbekannt.</li>
-  <li>Jede Angabe nennt Quelle und Stand.</li>
-  <li>Kein Konto, kein Tracking, keine Cookies.</li>
-</ul>
+  {
+    (primaer !== null || sekundaer !== null) && (
+      <p class="hero__aktionen">
+        {primaer !== null && (
+          <a class="button button--primary button--gross" href={primaer}>
+            Tierarztkosten berechnen
+          </a>
+        )}
+        {sekundaer !== null && (
+          <a class="button button--gross" href={sekundaer}>
+            Reisecheck starten
+          </a>
+        )}
+      </p>
+    )
+  }
+
+  <p class="hero__belege">Offene Quellen · Datenstand an jeder Angabe · keine Anmeldung nötig</p>
+</section>
 
 {
   werkzeuge.length > 0 ? (
-    <>
-      <h2>Werkzeuge</h2>
-      <ul class="werkzeuge">
+    <section aria-labelledby="werkzeuge-titel">
+      <h2 id="werkzeuge-titel">Werkzeuge</h2>
+      <ul class="karten">
         {werkzeuge.map((item) => (
-          <li class="werkzeug">
-            <h3 class="werkzeug__titel">
+          <li class="card card--klickbar karte">
+            <h3 class="karte__titel">
               <a href={item.path}>{translate(locale, item.labelKey)}</a>
             </h3>
             {BESCHREIBUNG[item.key] !== undefined && (
-              <p class="werkzeug__text">{BESCHREIBUNG[item.key]}</p>
+              <p class="karte__text">{BESCHREIBUNG[item.key]}</p>
             )}
+            <p class="karte__pfeil" aria-hidden="true">
+              Ansehen →
+            </p>
           </li>
         ))}
       </ul>
-    </>
+    </section>
   ) : (
     <Notice variante="hinweis" titel="Noch keine Funktion freigegeben">
       <p>
@@ -77,73 +119,197 @@ const BESCHREIBUNG: Partial<Record<RouteKey, string>> = {
   )
 }
 
+<section aria-labelledby="daten-titel">
+  <h2 id="daten-titel">So arbeiten unsere Daten</h2>
+  <ol class="schritte">
+    <li class="card card--soft schritt">
+      <p class="schritt__nummer" aria-hidden="true">1</p>
+      <h3 class="schritt__titel">Offene und amtliche Quellen</h3>
+      <p class="schritt__text">
+        Gebührenordnung, OpenStreetMap, kommunale Abgaben und Rechtsakte der EU — jede Quelle mit
+        geprüften Nutzungsrechten.
+      </p>
+    </li>
+    <li class="card card--soft schritt">
+      <p class="schritt__nummer" aria-hidden="true">2</p>
+      <h3 class="schritt__titel">Nachvollziehbar aufbereitet</h3>
+      <p class="schritt__text">
+        Keine erfundenen Zahlen. Was unbekannt ist, steht als unbekannt da — nicht als Null und
+        nicht als „nein“.
+      </p>
+    </li>
+    <li class="card card--soft schritt">
+      <p class="schritt__nummer" aria-hidden="true">3</p>
+      <h3 class="schritt__titel">Mit Stand und Herkunft</h3>
+      <p class="schritt__text">
+        Jede Angabe nennt, woher sie stammt und wie alt sie ist. Der Gesamtstand steht auf der
+        Datenstandseite.
+      </p>
+    </li>
+  </ol>
+</section>
+
+{
+  produkte.length > 0 && (
+    <section aria-labelledby="produkte-titel">
+      <h2 id="produkte-titel">Produkte nach nachvollziehbaren Eigenschaften finden</h2>
+      <p>
+        Gefiltert wird nach belegten Produktangaben. Keine Bewertungen, keine Testsieger, keine
+        medizinischen Versprechen.
+      </p>
+      <ul class="karten">
+        {produkte.map((item) => (
+          <li class="card card--klickbar karte">
+            <h3 class="karte__titel">
+              <a href={item.path}>{translate(locale, item.labelKey)}</a>
+            </h3>
+            {BESCHREIBUNG[item.key] !== undefined && (
+              <p class="karte__text">{BESCHREIBUNG[item.key]}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
 <Search />
 
 <style>
-  .merkmale {
-    list-style: none;
-    margin: 0 0 var(--abstand-8);
-    padding: 0;
+  /* Abschnitt 23.1: Hero ohne Fotobühne, Text bis 760 px. */
+  .hero {
+    padding-block: var(--space-10) var(--space-12);
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      padding-block: var(--space-16) var(--space-12);
+    }
+  }
+
+  .hero__eyebrow {
+    margin: 0 0 var(--space-3);
+    color: var(--color-primary-hover);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-label);
+  }
+
+  .hero h1 {
+    max-inline-size: 18ch;
+  }
+
+  .hero .lead {
+    margin-block: var(--space-4) var(--space-8);
+  }
+
+  .hero__aktionen {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--abstand-2) var(--abstand-3);
+    gap: var(--space-3);
+    margin-block-end: var(--space-6);
+    max-inline-size: none;
   }
 
-  .merkmale li {
+  .hero__belege {
     margin: 0;
-    padding: var(--abstand-2) var(--abstand-3);
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: 999px;
-    background: var(--farbe-flaeche);
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 
-  .werkzeuge {
+  .karten {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--abstand-4);
+    gap: var(--space-4);
   }
 
-  @media (min-width: 34rem) {
-    .werkzeuge {
-      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  @media (min-width: 560px) {
+    .karten {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  .werkzeug {
+  /* Abschnitt 23.2: Desktop 2x2 oder 3+2 — bei fünf Karten also drei Spalten. */
+  @media (min-width: 1024px) {
+    .karten {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .karte {
     margin: 0;
-    padding: var(--abstand-4);
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius-gross);
-    background: var(--farbe-grund);
-    box-shadow: var(--schatten-karte);
+    max-inline-size: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
   }
 
-  .werkzeug:hover {
-    border-color: var(--farbe-linie-stark);
-    box-shadow: var(--schatten-karte-aktiv);
+  .karte__titel {
+    margin: 0;
+    font-size: var(--text-h4);
+    font-weight: var(--weight-h4);
   }
 
-  .werkzeug__titel {
-    margin: 0 0 var(--abstand-2);
-    font-size: var(--schrift-normal);
-    font-weight: 600;
-  }
-
-  .werkzeug__titel a {
+  .karte__titel a {
     text-decoration: none;
   }
 
-  .werkzeug__titel a:hover {
+  .karte__titel a:hover {
     text-decoration: underline;
   }
 
-  .werkzeug__text {
+  .karte__text {
     margin: 0;
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    max-inline-size: none;
+  }
+
+  .karte__pfeil {
+    margin: auto 0 0;
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+  }
+
+  .schritte {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .schritte {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .schritt {
+    margin: 0;
+    max-inline-size: none;
+  }
+
+  .schritt__nummer {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--text-h3);
+    font-weight: var(--weight-h2);
+    line-height: 1;
+  }
+
+  .schritt__titel {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-body);
+    font-weight: var(--weight-label);
+  }
+
+  .schritt__text {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    max-inline-size: none;
   }
 </style>

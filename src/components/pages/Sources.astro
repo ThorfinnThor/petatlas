@@ -104,15 +104,15 @@ const statusText: Record<string, string> = {
   }
 
   .quellen > li {
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    padding: var(--abstand-4);
-    margin-block: var(--abstand-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-block: var(--space-4);
   }
 
   .quellen h3 {
     margin-top: 0;
-    font-size: var(--schrift-normal);
+    font-size: var(--text-body);
     /* Ressourcennamen enthalten Dateinamen und Adressen, die auf einem
      * schmalen Bildschirm sonst über den Rand hinauslaufen. */
     overflow-wrap: anywhere;
@@ -122,25 +122,25 @@ const statusText: Record<string, string> = {
     margin: 0;
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--abstand-1);
+    gap: var(--space-1);
   }
 
   .quellen dt {
     font-weight: 600;
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 
   .quellen dd {
-    margin: 0 0 var(--abstand-2);
+    margin: 0 0 var(--space-2);
     overflow-wrap: anywhere;
   }
 
   .quellen__notizen {
-    margin: var(--abstand-2) 0 0;
-    padding-inline-start: var(--abstand-4);
-    font-size: var(--schrift-klein);
-    color: var(--farbe-text-leise);
+    margin: var(--space-2) 0 0;
+    padding-inline-start: var(--space-4);
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
   }
 
   @media (min-width: 32rem) {

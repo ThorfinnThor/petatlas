@@ -182,7 +182,7 @@ test.describe('Zielseiten', () => {
   test('verlinkt die anderen Ziele und den Check', async ({ page }) => {
     await page.goto(`${REISE}oesterreich/`);
     await expect(page.locator('.ziele a')).toHaveCount(3);
-    await expect(page.locator(`a[href="${REISE}"]`).first()).toBeVisible();
+    await expect(page.locator(`main a[href="${REISE}"]`).first()).toBeVisible();
   });
 
   test('zeigt auf sich selbst als canonical', async ({ page }) => {

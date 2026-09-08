@@ -219,14 +219,14 @@ const transit = umfang.transitCountries.map(name);
 
 <style>
   .feld {
-    margin-block: var(--abstand-4);
+    margin-block: var(--space-4);
   }
 
   .feld label,
   legend {
     display: block;
     font-weight: 600;
-    margin-bottom: var(--abstand-1);
+    margin-bottom: var(--space-1);
   }
 
   input[type='date'],
@@ -234,35 +234,35 @@ const transit = umfang.transitCountries.map(name);
   select {
     width: 100%;
     max-width: 24rem;
-    padding: var(--abstand-2);
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    background: var(--farbe-grund);
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
   }
 
   fieldset {
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    padding: var(--abstand-3) var(--abstand-4);
-    margin-block: var(--abstand-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    margin-block: var(--space-4);
   }
 
   .wahl {
     display: block;
     font-weight: 400;
-    margin-block: var(--abstand-1);
+    margin-block: var(--space-1);
   }
 
   .hilfe {
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
-    margin-block: var(--abstand-1);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    margin-block: var(--space-1);
   }
 
   #reiseergebnis :global(.ergebnis__kopf) {
     font-weight: 700;
-    border-inline-start: 4px solid var(--farbe-linie);
-    padding-inline-start: var(--abstand-3);
+    border-inline-start: 4px solid var(--color-border);
+    padding-inline-start: var(--space-3);
   }
 
   #reiseergebnis :global(.ergebnis__punkte),
@@ -273,10 +273,10 @@ const transit = umfang.transitCountries.map(name);
 
   #reiseergebnis :global(.ergebnis__punkte > li),
   #reiseergebnis :global(.ergebnis__gruende > li) {
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    padding: var(--abstand-3) var(--abstand-4);
-    margin-block: var(--abstand-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    margin-block: var(--space-3);
   }
 
   #reiseergebnis :global(.punkt__zustand) {
@@ -287,8 +287,8 @@ const transit = umfang.transitCountries.map(name);
   .umfang {
     display: grid;
     grid-template-columns: max-content 1fr;
-    gap: var(--abstand-2) var(--abstand-4);
-    margin-block: var(--abstand-4);
+    gap: var(--space-2) var(--space-4);
+    margin-block: var(--space-4);
   }
 
   .umfang dt {
@@ -300,15 +300,15 @@ const transit = umfang.transitCountries.map(name);
   }
 
   .ausnahmen {
-    padding-inline-start: var(--abstand-5);
+    padding-inline-start: var(--space-5);
   }
 
   .ausnahmen li {
-    margin-block: var(--abstand-2);
+    margin-block: var(--space-2);
   }
 
   .hinweis {
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 </style>

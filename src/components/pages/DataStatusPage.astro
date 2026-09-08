@@ -127,17 +127,17 @@ const locale = 'de-DE';
   .staende {
     border-collapse: collapse;
     inline-size: 100%;
-    margin-block: var(--abstand-4);
+    margin-block: var(--space-4);
   }
   .staende caption {
     text-align: start;
     font-weight: 600;
-    margin-block-end: var(--abstand-2);
+    margin-block-end: var(--space-2);
   }
   .staende th,
   .staende td {
-    border-block-end: 1px solid var(--farbe-linie);
-    padding: var(--abstand-2);
+    border-block-end: 1px solid var(--color-border);
+    padding: var(--space-2);
     text-align: start;
     vertical-align: top;
   }
@@ -149,21 +149,21 @@ const locale = 'de-DE';
   .staende__sperre {
     display: block;
     font-weight: 400;
-    font-size: var(--schrift-klein);
-    color: var(--farbe-text-leise);
-    margin-block-start: var(--abstand-1);
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-block-start: var(--space-1);
   }
   .marke {
     display: inline-block;
     padding: 0.1em 0.5em;
-    border-radius: var(--radius);
-    border: 1px solid var(--farbe-linie);
-    font-size: var(--schrift-klein);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    font-size: var(--text-small);
   }
   .marke--alternd,
   .marke--veraltet,
   .marke--unbekannt {
-    border-color: var(--farbe-warnung-linie);
-    background: var(--farbe-warnung-grund);
+    border-color: var(--color-warning);
+    background: var(--color-warning-soft);
   }
 </style>

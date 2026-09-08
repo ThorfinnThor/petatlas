@@ -18,7 +18,7 @@ test('Startseite des Marktes lädt', async ({ page }) => {
   expect(antwort?.status()).toBe(200);
   // Die H1 nennt seit dem Designdurchgang das Thema; die Marke steht in
   // Kopfbereich und Seitentitel.
-  await expect(page.locator('h1')).toHaveText('Hund und Katze in Deutschland');
+  await expect(page.locator('h1')).toHaveText('Besser entscheiden für dein Tier');
 });
 
 test('Die Wurzel leitet auf den aktiven Markt', async ({ page }) => {

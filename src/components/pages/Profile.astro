@@ -136,14 +136,14 @@ import { INTERESSEN } from '../../features/profile/state.ts';
 
 <style>
   .feld {
-    margin-block: var(--abstand-4);
+    margin-block: var(--space-4);
   }
 
   .feld label,
   legend {
     display: block;
     font-weight: 600;
-    margin-bottom: var(--abstand-1);
+    margin-bottom: var(--space-1);
   }
 
   input[type='text'],
@@ -151,28 +151,28 @@ import { INTERESSEN } from '../../features/profile/state.ts';
   select {
     width: 100%;
     max-width: 24rem;
-    padding: var(--abstand-2);
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    background: var(--farbe-grund);
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
   }
 
   fieldset {
-    border: var(--linie) solid var(--farbe-linie);
-    border-radius: var(--radius);
-    padding: var(--abstand-3) var(--abstand-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
   }
 
   .wahl {
     display: block;
     font-weight: 400;
-    margin-block: var(--abstand-1);
+    margin-block: var(--space-1);
   }
 
   .knoepfe {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--abstand-2);
+    gap: var(--space-2);
     align-items: center;
   }
 
@@ -181,9 +181,9 @@ import { INTERESSEN } from '../../features/profile/state.ts';
   }
 
   .hilfe {
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
-    margin-block: var(--abstand-1);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    margin-block: var(--space-1);
   }
 
   #profil-stand :global(.profil__kopf) {
@@ -193,7 +193,7 @@ import { INTERESSEN } from '../../features/profile/state.ts';
   #profil-stand :global(.profil__werte) {
     display: grid;
     grid-template-columns: max-content 1fr;
-    gap: var(--abstand-1) var(--abstand-4);
+    gap: var(--space-1) var(--space-4);
   }
 
   #profil-stand :global(.profil__werte dt) {
@@ -206,7 +206,7 @@ import { INTERESSEN } from '../../features/profile/state.ts';
 
   #profil-stand :global(.profil__hinweis),
   #profil-stand :global(.profil__offen) {
-    color: var(--farbe-text-leise);
-    font-size: var(--schrift-klein);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 </style>

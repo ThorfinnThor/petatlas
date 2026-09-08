@@ -1,0 +1,97 @@
+/*
+ * Typografie nach `docs/DESIGN_SPECIFICATIONS.md` Abschnitt 4.
+ *
+ * Systemschrift, keine Webschrift: schneller, datenschutzfreundlicher und
+ * von der Content Security Policy ohnehin verlangt.
+ */
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  font-weight: var(--weight-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-h1);
+  letter-spacing: -0.035em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  line-height: 1.16;
+  font-weight: var(--weight-h2);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-heading);
+  font-weight: var(--weight-h3);
+  color: var(--color-ink);
+}
+
+h4 {
+  font-size: var(--text-h4);
+  line-height: 1.35;
+  font-weight: var(--weight-h4);
+  color: var(--color-ink);
+}
+
+/* Abschnitt 4.3: Fließtext höchstens 68ch, Tool-Erklärungen 60ch. */
+p,
+li {
+  max-inline-size: 68ch;
+}
+
+.lead {
+  font-size: var(--text-lead);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+  max-inline-size: 60ch;
+}
+
+small,
+.text-small {
+  font-size: var(--text-small);
+  line-height: 1.45;
+}
+
+.text-micro {
+  font-size: var(--text-micro);
+  line-height: 1.4;
+  font-weight: var(--weight-label);
+}
+
+/*
+ * Abschnitt 4.3: Geldwerte und Zahlenkolonnen bekommen tabellarische
+ * Ziffern, damit Beträge untereinander stehen.
+ */
+.zahl,
+td:has(.zahl),
+[data-zahl] {
+  font-variant-numeric: tabular-nums;
+}
+
+a {
+  color: var(--color-primary);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+code,
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
