@@ -80,3 +80,7 @@ npm run build:city-allowlist
 Das Skript misst neu und schreibt die Datei. Der Build prüft anschließend jede gelistete Stadt noch einmal gegen den aktuellen Datenstand: erfüllt sie die Kriterien nicht mehr, entfällt ihre Seite. Die Allowlist ist damit eine Obergrenze, keine Zusicherung.
 
 `tests/places/city-allowlist.test.ts` schlägt fehl, wenn die Datei nicht mehr zum Datenstand passt — der Hinweis auf den Regenerierungslauf steht im Test.
+
+## Nachtrag M20-02 (2026-09-08)
+
+Die Obergrenze war die bindende Beschränkung, nicht die Qualität: von 188 Kandidaten erfüllen **42** die unveränderten Kriterien; bisher hingen 17 davon an der Grenze von 25. `maxStaedte` steht jetzt auf 150 und wirkt nur noch als Sicherheitsventil gegen einen fehlerhaften Datenstand.

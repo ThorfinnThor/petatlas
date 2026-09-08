@@ -4067,8 +4067,14 @@
         "M20-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Die Obergrenze der Stadt-Allowlist war die bindende Beschraenkung, nicht die Qualitaet: von 188 Kandidaten (Staedte ab 50.000 Einwohnern im Ortsindex) erfuellen 42 die unveraenderten Kriterien - bisher hingen 17 davon an der Grenze von 25. maxStaedte steht jetzt auf 150 und wirkt nur noch als Sicherheitsventil gegen einen fehlerhaften Datenstand; die inhaltlichen Kriterien (mindestens 25 erfasste Orte, 10 Tierarztpraxen, 15 mit Kontakt, 10 in der Gemeinde, jede der vier Kategorien belegt, Radius 10 km) sind unveraendert. npm run build:city-allowlist neu ausgefuehrt: 42 Staedte, kleinster Bestand 25 erfasste Orte. Build erzeugt 1233 Seiten, davon 42 Stadtseiten; npm run check:places ohne Beanstandung, SEO-Probelauf als indexierbarer Build gruen, 306 E2E-Faelle gruen. Ein Test hing an der Zahl 25 statt an der Konfiguration und prueft jetzt mit maxStaedte+5 Kandidaten.",
+          "reference": "src/features/map/city.ts, content-data/city-allowlist.json, tests/places/city.test.ts",
+          "verified_at": "2026-09-08T21:35:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

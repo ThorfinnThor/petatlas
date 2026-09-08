@@ -37,7 +37,11 @@ export interface StadtKriterien {
   readonly minMitKontakt: number;
   /** Einträge, die laut Quelle in der Stadt selbst liegen. */
   readonly minInGemeinde: number;
-  /** Obergrenze der Startziele. Mehr Seiten sind kein besseres Angebot. */
+  /**
+   * Obergrenze als Sicherheitsventil, nicht als Auswahl. Ob eine Stadt eine
+   * Seite bekommt, entscheiden die Kriterien darüber; die Grenze verhindert
+   * nur, dass ein fehlerhafter Datenstand tausende Seiten erzeugt.
+   */
   readonly maxStaedte: number;
 }
 
@@ -53,7 +57,10 @@ export const STADT_KRITERIEN: StadtKriterien = {
   minTierarztpraxen: 10,
   minMitKontakt: 15,
   minInGemeinde: 10,
-  maxStaedte: 25,
+  // M20-02: von 25 auf 150 angehoben. Die inhaltlichen Kriterien darüber
+  // bleiben unverändert — es entstehen nur die Seiten dazu, die sie ohnehin
+  // erfüllen und die bisher an der Obergrenze hängen blieben.
+  maxStaedte: 150,
 };
 
 export interface StadtKandidat {

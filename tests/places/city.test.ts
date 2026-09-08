@@ -138,8 +138,13 @@ describe('Auswahl', () => {
   }
 
   it('nimmt nur geeignete Städte und hält die Obergrenze ein', () => {
-    const viele = Array.from({ length: 40 }, (_, i) => kandidat(`Stadt ${i}`, 100 - i));
-    viele.push(kandidat('Ungeeignet', 999, false));
+    // Fünf Kandidaten mehr als die Obergrenze, damit die Prüfung unabhängig
+    // von der konfigurierten Zahl greift.
+    const ueberzaehlig = STADT_KRITERIEN.maxStaedte + 5;
+    const viele = Array.from({ length: ueberzaehlig }, (_, i) =>
+      kandidat(`Stadt ${i}`, ueberzaehlig - i),
+    );
+    viele.push(kandidat('Ungeeignet', 999_999, false));
     const gewaehlt = waehleStaedte(viele);
     expect(gewaehlt.length).toBe(STADT_KRITERIEN.maxStaedte);
     expect(gewaehlt.map((eintrag) => eintrag.stadt.name)).not.toContain('Ungeeignet');
