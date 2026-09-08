@@ -26,7 +26,15 @@
 
 <style>
   .suche {
-    margin-block: var(--abstand-6);
+    margin-block-start: var(--abstand-12);
+    padding: var(--abstand-6);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius-gross);
+    background: var(--farbe-flaeche);
+  }
+
+  .suche :global(h2) {
+    margin-block-start: 0;
   }
 
   .suche label {
@@ -37,9 +45,9 @@
 
   .suche input {
     width: 100%;
-    max-width: 24rem;
-    padding: var(--abstand-2);
-    border: var(--linie) solid var(--farbe-linie);
+    max-width: 26rem;
+    padding: var(--abstand-3);
+    border: var(--linie) solid var(--farbe-linie-stark);
     border-radius: var(--radius);
     background: var(--farbe-grund);
   }

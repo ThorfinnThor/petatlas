@@ -21,53 +21,107 @@ const eintraege = navigationFor(market, 'main').filter((item) => item.key !== 'h
 ---
 
 <header class="kopf">
-  <a class="kopf__marke" href={routePath(market, 'home')}>{brandName}</a>
-  {
-    eintraege.length > 0 && (
-      <nav aria-label="Hauptnavigation">
-        <ul class="kopf__liste">
-          {eintraege.map((item) => (
-            <li>
-              <a href={item.path} aria-current={item.path === aktuellerPfad ? 'page' : undefined}>
-                {translate(locale, item.labelKey)}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    )
-  }
+  <div class="kopf__inhalt">
+    <a class="kopf__marke" href={routePath(market, 'home')}>
+      <span class="kopf__zeichen" aria-hidden="true">PA</span>
+      <span>{brandName}</span>
+    </a>
+    {
+      eintraege.length > 0 && (
+        <nav aria-label="Hauptnavigation">
+          <ul class="kopf__liste">
+            {eintraege.map((item) => (
+              <li>
+                <a href={item.path} aria-current={item.path === aktuellerPfad ? 'page' : undefined}>
+                  {translate(locale, item.labelKey)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+  </div>
 </header>
 
 <style>
   .kopf {
+    border-block-end: var(--linie) solid var(--farbe-linie);
+    background: var(--farbe-grund);
+  }
+
+  .kopf__inhalt {
+    max-width: var(--breite-weit);
+    margin-inline: auto;
+    padding: var(--abstand-4);
     display: flex;
     flex-wrap: wrap;
-    gap: var(--abstand-2) var(--abstand-4);
-    align-items: baseline;
-    padding-block: var(--abstand-4);
-    border-bottom: var(--linie) solid var(--farbe-linie);
-    margin-bottom: var(--abstand-6);
+    align-items: center;
+    gap: var(--abstand-3) var(--abstand-6);
   }
 
   .kopf__marke {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--abstand-2);
     font-weight: 700;
     font-size: var(--schrift-gross);
+    letter-spacing: -0.01em;
     color: inherit;
     text-decoration: none;
+  }
+
+  /* Wortmarke statt Bilddatei: ein Bild wäre eine Datei mehr und eine
+     Lizenzfrage; zwei Buchstaben genügen als Wiedererkennung. */
+  .kopf__zeichen {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 2rem;
+    block-size: 2rem;
+    border-radius: var(--radius);
+    background: var(--farbe-akzent);
+    color: var(--farbe-akzent-text);
+    font-size: var(--schrift-klein);
+    font-weight: 700;
+    letter-spacing: 0.02em;
   }
 
   .kopf__liste {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--abstand-2) var(--abstand-4);
+    gap: var(--abstand-1) var(--abstand-2);
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  [aria-current='page'] {
+  .kopf__liste li {
+    margin: 0;
+  }
+
+  .kopf__liste a {
+    display: inline-block;
+    padding: var(--abstand-2) var(--abstand-3);
+    border-radius: var(--radius);
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+    text-decoration: none;
+  }
+
+  .kopf__liste a:hover {
+    background: var(--farbe-flaeche);
+    color: var(--farbe-text);
+  }
+
+  .kopf__liste [aria-current='page'] {
+    background: var(--farbe-akzent-schwach);
+    color: var(--farbe-akzent-stark);
     font-weight: 600;
-    text-decoration-thickness: 2px;
+  }
+
+  @media (min-width: 48rem) {
+    .kopf__liste {
+      margin-inline-start: auto;
+    }
   }
 </style>

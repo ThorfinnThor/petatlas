@@ -106,8 +106,16 @@ const canonical = canonicalPfad
 
   /* Der Testdatenhinweis steht außerhalb von <main> und braucht dieselbe
      Inhaltsbreite, damit er nicht über die ganze Fensterbreite läuft. */
+  /* Der Testdatenhinweis steht außerhalb von `main` und braucht dieselbe
+     Inhaltsbreite und denselben Seitenrand. */
   .randbreite {
     max-width: var(--breite-inhalt);
     margin-inline: auto;
+    padding-inline: var(--abstand-4);
+    padding-block-start: var(--abstand-6);
+  }
+
+  .randbreite + main {
+    padding-block-start: var(--abstand-4);
   }
 </style>

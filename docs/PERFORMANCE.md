@@ -1,6 +1,6 @@
 # Leistungsmessung
 
-Gemessen am **2026-09-08** auf Commit `55d1be6`, lokal: Apple Silicon, Node 24.19.0, Chromium aus Playwright, gegen den gebauten Output über `astro preview` auf `localhost`. Alle Funktionen waren eingeschaltet (`ENABLE_FEATURES=costs,map,travel,commerce,care,toys,food,profile`), damit die Seiten mit der meisten Logik überhaupt existieren.
+Gemessen am **2026-09-08**, nach dem Designdurchgang erneut, lokal: Apple Silicon, Node 24.19.0, Chromium aus Playwright, gegen den gebauten Output über `astro preview` auf `localhost`. Alle Funktionen waren eingeschaltet (`ENABLE_FEATURES=costs,map,travel,commerce,care,toys,food,profile`), damit die Seiten mit der meisten Logik überhaupt existieren.
 
 Wiederholen: `npm run test:performance`
 
@@ -20,11 +20,11 @@ Identische Werte für Desktop- und Mobilprofil, weil dieselben Dateien ausgelief
 
 | Seite | JavaScript | Übertragen gesamt | DOM-Knoten | Anfragen | LCP (untere Schranke) |
 |---|---|---|---|---|---|
-| Start | 2,8 KiB | 39,6 KiB | 84 | 8 | 16–20 ms |
-| Kostenrechner | 97,3 KiB | 139,1 KiB | 125 | 10 | 20 ms |
-| Karte | 14,0 KiB | 67,2 KiB | 319 | 9 | 24 ms |
-| Reisecheck | 112,3 KiB | 159,0 KiB | 187 | 10 | 28 ms |
-| Futter | 95,0 KiB | 134,1 KiB | 93 | 11 | 20 ms |
+| Start | 2,8 KiB | 49,2 KiB | 115 | 8 | 20–24 ms |
+| Kostenrechner | 97,3 KiB | 146,1 KiB | 134 | 10 | 20–24 ms |
+| Karte | 14,0 KiB | 74,2 KiB | 328 | 9 | 24 ms |
+| Reisecheck | 112,3 KiB | 166,0 KiB | 196 | 10 | 28 ms |
+| Futter | 95,0 KiB | 141,1 KiB | 102 | 11 | 20 ms |
 
 Budgets: JavaScript Warnung ab 60 KiB, Stopp ab 150 KiB. Seitengröße Warnung ab 400 KiB, Stopp ab 900 KiB. DOM-Knoten Warnung ab 1.500, Stopp ab 3.000. **Kein Stopp erreicht.** Drei Seiten liegen über der JavaScript-Warnschwelle; warum, steht im nächsten Abschnitt.
 

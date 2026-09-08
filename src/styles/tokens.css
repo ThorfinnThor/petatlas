@@ -14,26 +14,34 @@
 
   /* Fläche und Text */
   --farbe-grund: #ffffff;
-  --farbe-flaeche: #f4f4f5;
-  --farbe-text: #18181b;
-  --farbe-text-leise: #52525b;
-  --farbe-linie: #d4d4d8;
+  --farbe-flaeche: #f6f6f7;
+  --farbe-flaeche-stark: #ececee;
+  --farbe-text: #17171a;
+  --farbe-text-leise: #56565f;
+  --farbe-linie: #dcdce0;
+  --farbe-linie-stark: #c3c3ca;
 
   /* Rollen */
-  --farbe-akzent: #1d4ed8;
+  --farbe-akzent: #1a4fd0;
+  --farbe-akzent-stark: #123a9e;
+  --farbe-akzent-schwach: #eaf0fe;
   --farbe-akzent-text: #ffffff;
   --farbe-warnung-grund: #fef3c7;
   --farbe-warnung-linie: #b45309;
-  --farbe-hinweis-grund: #e0f2fe;
+  --farbe-hinweis-grund: #e6f2fb;
   --farbe-hinweis-linie: #0369a1;
-  --farbe-ergebnis-grund: #f0fdf4;
+  --farbe-ergebnis-grund: #eefbf3;
   --farbe-ergebnis-linie: #15803d;
-  --farbe-fehler: #b91c1c;
+  --farbe-fehler: #b3261e;
 
   /* Werbung: bewusst neutral-grau und klar abgesetzt */
   --farbe-anzeige-grund: #fafafa;
   --farbe-anzeige-linie: #a1a1aa;
   --farbe-anzeige-text: #3f3f46;
+
+  /* Tiefe. Sparsam: eine Kante trennt zuverlässiger als ein Schatten. */
+  --schatten-karte: 0 1px 2px rgb(23 23 26 / 6%), 0 1px 1px rgb(23 23 26 / 4%);
+  --schatten-karte-aktiv: 0 4px 14px rgb(23 23 26 / 10%);
 
   /* Abstände */
   --abstand-1: 0.25rem;
@@ -42,31 +50,47 @@
   --abstand-4: 1rem;
   --abstand-6: 1.5rem;
   --abstand-8: 2rem;
+  --abstand-12: 3rem;
+  --abstand-16: 4rem;
 
-  /* Typografie */
-  --schrift: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --schrift-klein: 0.875rem;
-  --schrift-normal: 1rem;
-  --schrift-gross: 1.25rem;
-  --schrift-titel: 1.75rem;
-  --zeilenhoehe: 1.6;
+  /*
+   * Typografie: eine Systemschrift, keine Webschrift. Eine nachgeladene
+   * Schrift wäre eine Anfrage an einen fremden Server pro Besuch — und die
+   * Content Security Policy erlaubt sie ohnehin nicht.
+   */
+  --schrift: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --schrift-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+  --schrift-mini: 0.8125rem;
+  --schrift-klein: 0.9375rem;
+  --schrift-normal: 1.0625rem;
+  --schrift-gross: 1.375rem;
+  --schrift-titel: clamp(2rem, 1.4rem + 2.6vw, 3rem);
+  --schrift-untertitel: clamp(1.125rem, 1.02rem + 0.5vw, 1.3125rem);
+  --zeilenhoehe: 1.65;
+  --zeilenhoehe-eng: 1.2;
 
   /* Maße */
-  --breite-inhalt: 44rem;
-  --radius: 0.375rem;
+  --breite-inhalt: 46rem;
+  --breite-weit: 68rem;
+  --radius: 0.5rem;
+  --radius-gross: 0.875rem;
   --linie: 1px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --farbe-grund: #18181b;
-    --farbe-flaeche: #27272a;
-    --farbe-text: #f4f4f5;
-    --farbe-text-leise: #a1a1aa;
-    --farbe-linie: #3f3f46;
+    --farbe-grund: #161619;
+    --farbe-flaeche: #202024;
+    --farbe-flaeche-stark: #2a2a30;
+    --farbe-text: #f2f2f4;
+    --farbe-text-leise: #a8a8b3;
+    --farbe-linie: #35353c;
+    --farbe-linie-stark: #4a4a54;
 
-    --farbe-akzent: #93c5fd;
-    --farbe-akzent-text: #18181b;
+    --farbe-akzent: #9dc0ff;
+    --farbe-akzent-stark: #c3d8ff;
+    --farbe-akzent-schwach: #1b2540;
+    --farbe-akzent-text: #10131c;
     --farbe-warnung-grund: #3f2d0a;
     --farbe-warnung-linie: #fbbf24;
     --farbe-hinweis-grund: #0c2a3d;
@@ -75,18 +99,19 @@
     --farbe-ergebnis-linie: #4ade80;
     --farbe-fehler: #fca5a5;
 
-    --farbe-anzeige-grund: #202023;
+    --farbe-anzeige-grund: #1e1e22;
     --farbe-anzeige-linie: #52525b;
     --farbe-anzeige-text: #d4d4d8;
+
+    --schatten-karte: 0 1px 2px rgb(0 0 0 / 40%);
+    --schatten-karte-aktiv: 0 6px 18px rgb(0 0 0 / 45%);
   }
 }
 
-@media (min-width: 48rem) {
-  :root {
-    --schrift-titel: 2.25rem;
-  }
-}
-
+/*
+ * Grundgerüst. Der Rahmen kommt aus dem Layout, nicht aus jeder Seite:
+ * `main`, `header` und `footer` bekommen ihre Breite hier.
+ */
 *,
 *::before,
 *::after {
@@ -95,12 +120,13 @@
 
 body {
   margin: 0;
-  padding: var(--abstand-4);
   background: var(--farbe-grund);
   color: var(--farbe-text);
   font-family: var(--schrift);
   font-size: var(--schrift-normal);
   line-height: var(--zeilenhoehe);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* Kein horizontales Scrollen der Hauptbedienung. */
@@ -110,31 +136,94 @@ pre {
   max-width: 100%;
 }
 
-main,
-header,
-footer {
+main {
   max-width: var(--breite-inhalt);
   margin-inline: auto;
+  padding-inline: var(--abstand-4);
+  padding-block: var(--abstand-8) var(--abstand-16);
+}
+
+main > :first-child {
+  margin-block-start: 0;
 }
 
 h1 {
   font-size: var(--schrift-titel);
-  line-height: 1.2;
+  line-height: var(--zeilenhoehe-eng);
+  letter-spacing: -0.02em;
   margin-block: 0 var(--abstand-4);
+  text-wrap: balance;
 }
 
 h2 {
   font-size: var(--schrift-gross);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-block: var(--abstand-12) var(--abstand-3);
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: var(--schrift-normal);
+  line-height: 1.35;
   margin-block: var(--abstand-6) var(--abstand-2);
+}
+
+p {
+  margin-block: 0 var(--abstand-4);
+  max-width: 66ch;
+}
+
+/* Der erste Absatz nach der H1 führt in die Seite ein. */
+h1 + p {
+  font-size: var(--schrift-untertitel);
+  line-height: 1.5;
+  color: var(--farbe-text-leise);
+  margin-block-end: var(--abstand-8);
+}
+
+ul,
+ol {
+  padding-inline-start: var(--abstand-6);
+}
+
+li {
+  margin-block: var(--abstand-2);
 }
 
 a {
   color: var(--farbe-akzent);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.08em;
+}
+
+a:hover {
+  color: var(--farbe-akzent-stark);
+}
+
+code,
+kbd {
+  font-family: var(--schrift-mono);
+  font-size: 0.9em;
+  background: var(--farbe-flaeche);
+  border-radius: 0.25rem;
+  padding: 0.1em 0.35em;
+}
+
+hr {
+  border: 0;
+  border-block-start: var(--linie) solid var(--farbe-linie);
+  margin-block: var(--abstand-8);
+}
+
+table {
+  border-collapse: collapse;
 }
 
 :focus-visible {
   outline: 3px solid var(--farbe-akzent);
   outline-offset: 2px;
+  border-radius: 0.2rem;
 }
 
 button,
@@ -143,4 +232,69 @@ select,
 textarea {
   font: inherit;
   color: inherit;
+}
+
+/*
+ * Bedienelemente bekommen eine erkennbare Form. Komponenten, die einen
+ * Knopf bewusst als Listenzeile darstellen, überschreiben das mit ihrer
+ * eigenen, spezifischeren Regel.
+ */
+button {
+  padding: var(--abstand-2) var(--abstand-4);
+  border: var(--linie) solid var(--farbe-linie-stark);
+  border-radius: var(--radius);
+  background: var(--farbe-flaeche);
+  color: var(--farbe-text);
+  font-size: var(--schrift-klein);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--farbe-flaeche-stark);
+  border-color: var(--farbe-text-leise);
+}
+
+button[type='submit'] {
+  background: var(--farbe-akzent);
+  border-color: var(--farbe-akzent);
+  color: var(--farbe-akzent-text);
+}
+
+button[type='submit']:hover {
+  background: var(--farbe-akzent-stark);
+  border-color: var(--farbe-akzent-stark);
+}
+
+input:not([type='checkbox']):not([type='radio']),
+select,
+textarea {
+  padding: var(--abstand-2) var(--abstand-3);
+  border: var(--linie) solid var(--farbe-linie-stark);
+  border-radius: var(--radius);
+  background: var(--farbe-grund);
+}
+
+fieldset {
+  border: var(--linie) solid var(--farbe-linie);
+  border-radius: var(--radius);
+  padding: var(--abstand-4) var(--abstand-6);
+  margin-block: var(--abstand-6);
+}
+
+legend {
+  padding-inline: var(--abstand-2);
+  font-weight: 600;
+}
+
+/* Wer Bewegung reduziert haben will, bekommt keine. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

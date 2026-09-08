@@ -33,10 +33,13 @@ test('Der Testdatenhinweis hat dieselbe Inhaltsbreite wie der Rest', async ({ pa
   await page.goto('/de-de/');
   const masse = await page.evaluate(() => {
     const banner = document.querySelector('[data-testid="test-data-banner"]');
-    const main = document.querySelector('main');
-    if (!banner || !main) return null;
+    // Verglichen wird mit dem **Inhalt** von main, nicht mit dessen
+    // Rahmenkasten: seit dem Designdurchgang hat main einen Innenabstand,
+    // und der Hinweis soll an der Textkante stehen, nicht an der Kastenkante.
+    const inhalt = document.querySelector('main h1');
+    if (!banner || !inhalt) return null;
     const a = banner.getBoundingClientRect();
-    const b = main.getBoundingClientRect();
+    const b = inhalt.getBoundingClientRect();
     return { bannerLinks: Math.round(a.left), mainLinks: Math.round(b.left) };
   });
   expect(masse).not.toBeNull();

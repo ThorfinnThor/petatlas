@@ -4,10 +4,14 @@
  *
  * Nennt nur, was es tatsächlich gibt. Solange keine Funktion freigegeben ist,
  * sagt die Seite das, statt eine Liste kommender Werkzeuge zu versprechen.
+ *
+ * Die Kurzbeschreibungen der Werkzeuge beschreiben, was das Werkzeug **tut** —
+ * nicht, was es verspricht. Wo eine Funktion ohne Freigabe leer bleibt, steht
+ * das in der Beschreibung.
  */
 import type { MarketConfig } from '../../domain/market.ts';
 import { translate, type LocaleId } from '../../domain/i18n.ts';
-import { navigationFor } from '../../lib/routes.ts';
+import { navigationFor, type RouteKey } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
 import Search from '../Search.astro';
 
@@ -18,22 +22,47 @@ interface Props {
 const { market } = Astro.props;
 const locale = market.locale as LocaleId;
 const werkzeuge = navigationFor(market, 'main').filter((item) => item.key !== 'home');
+
+const BESCHREIBUNG: Partial<Record<RouteKey, string>> = {
+  costs:
+    'Eine Position der amtlichen Gebührenordnung nachrechnen — mit Fundstelle, Faktor und Umsatzsteuer.',
+  map: 'Tierärztinnen, Tierärzte und tierbezogene Orte aus OpenStreetMap, als Liste und auf einer Karte.',
+  travel:
+    'Anforderungen für eine Reise mit Hund oder Katze innerhalb der EU, mit Fundstelle je Punkt.',
+  food: 'Futter vergleichen: Menge, deklarierte Nährwerte und Grundpreis je Kilogramm.',
+  care: 'Pflegeprodukte nach belegten Eigenschaften filtern, nicht nach erfundener Eignung.',
+  toys: 'Spielzeug nach Material, Größe und Herstellerangaben filtern.',
+  catalog: 'Produktangebote — solange kein Partnerprogramm freigegeben ist, bleibt die Liste leer.',
+  profile: 'Ein Tierprofil, das ausschließlich in diesem Browser liegt. Kein Konto, kein Server.',
+  favorites: 'Gemerkte Orte und Produkte, ebenfalls nur lokal gespeichert.',
+};
 ---
 
-<h1>PetAtlas</h1>
+<h1>Hund und Katze in Deutschland</h1>
 <p>
-  Informationen rund um Hund und Katze in Deutschland: Tierarztkosten, Tierärzte in der Nähe und ein
-  Reisecheck. Die Daten stammen aus offenen Quellen; jede Seite nennt ihren Stand und ihre Herkunft.
+  Tierarztkosten nachrechnen, Tierärzte in der Nähe finden, eine Reise vorbereiten. Die Daten
+  stammen aus offenen Quellen; jede Seite nennt ihren Stand und ihre Herkunft.
 </p>
+
+<ul class="merkmale">
+  <li>Keine erfundenen Zahlen — unbekannt heißt unbekannt.</li>
+  <li>Jede Angabe nennt Quelle und Stand.</li>
+  <li>Kein Konto, kein Tracking, keine Cookies.</li>
+</ul>
 
 {
   werkzeuge.length > 0 ? (
     <>
       <h2>Werkzeuge</h2>
-      <ul>
+      <ul class="werkzeuge">
         {werkzeuge.map((item) => (
-          <li>
-            <a href={item.path}>{translate(locale, item.labelKey)}</a>
+          <li class="werkzeug">
+            <h3 class="werkzeug__titel">
+              <a href={item.path}>{translate(locale, item.labelKey)}</a>
+            </h3>
+            {BESCHREIBUNG[item.key] !== undefined && (
+              <p class="werkzeug__text">{BESCHREIBUNG[item.key]}</p>
+            )}
           </li>
         ))}
       </ul>
@@ -49,3 +78,72 @@ const werkzeuge = navigationFor(market, 'main').filter((item) => item.key !== 'h
 }
 
 <Search />
+
+<style>
+  .merkmale {
+    list-style: none;
+    margin: 0 0 var(--abstand-8);
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--abstand-2) var(--abstand-3);
+  }
+
+  .merkmale li {
+    margin: 0;
+    padding: var(--abstand-2) var(--abstand-3);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: 999px;
+    background: var(--farbe-flaeche);
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
+  .werkzeuge {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--abstand-4);
+  }
+
+  @media (min-width: 34rem) {
+    .werkzeuge {
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    }
+  }
+
+  .werkzeug {
+    margin: 0;
+    padding: var(--abstand-4);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius-gross);
+    background: var(--farbe-grund);
+    box-shadow: var(--schatten-karte);
+  }
+
+  .werkzeug:hover {
+    border-color: var(--farbe-linie-stark);
+    box-shadow: var(--schatten-karte-aktiv);
+  }
+
+  .werkzeug__titel {
+    margin: 0 0 var(--abstand-2);
+    font-size: var(--schrift-normal);
+    font-weight: 600;
+  }
+
+  .werkzeug__titel a {
+    text-decoration: none;
+  }
+
+  .werkzeug__titel a:hover {
+    text-decoration: underline;
+  }
+
+  .werkzeug__text {
+    margin: 0;
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+</style>

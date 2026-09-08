@@ -16,7 +16,9 @@ async function navigationsLinks(page: Page): Promise<string[]> {
 test('Startseite des Marktes lädt', async ({ page }) => {
   const antwort = await page.goto(MARKT);
   expect(antwort?.status()).toBe(200);
-  await expect(page.locator('h1')).toHaveText('PetAtlas');
+  // Die H1 nennt seit dem Designdurchgang das Thema; die Marke steht in
+  // Kopfbereich und Seitentitel.
+  await expect(page.locator('h1')).toHaveText('Hund und Katze in Deutschland');
 });
 
 test('Die Wurzel leitet auf den aktiven Markt', async ({ page }) => {

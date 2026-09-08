@@ -20,41 +20,63 @@ const eintraege = navigationFor(market, 'footer');
 ---
 
 <footer class="fuss">
-  <nav aria-label="Rechtliches und Quellen">
-    <ul class="fuss__liste">
-      {
-        eintraege.map((item) => (
-          <li>
-            <a href={item.path}>{translate(locale, item.labelKey)}</a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
-  <p class="fuss__betreiber">
-    {betreiber ?? 'Betreiberangaben liegen noch nicht vor.'}
-  </p>
+  <div class="fuss__inhalt">
+    <nav aria-label="Rechtliches und Quellen">
+      <ul class="fuss__liste">
+        {
+          eintraege.map((item) => (
+            <li>
+              <a href={item.path}>{translate(locale, item.labelKey)}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <p class="fuss__betreiber">
+      {betreiber ?? 'Betreiberangaben liegen noch nicht vor.'}
+    </p>
+  </div>
 </footer>
 
 <style>
   .fuss {
-    border-top: var(--linie) solid var(--farbe-linie);
-    margin-top: var(--abstand-8);
-    padding-block: var(--abstand-4);
+    border-block-start: var(--linie) solid var(--farbe-linie);
+    background: var(--farbe-flaeche);
     color: var(--farbe-text-leise);
     font-size: var(--schrift-klein);
+  }
+
+  .fuss__inhalt {
+    max-width: var(--breite-weit);
+    margin-inline: auto;
+    padding: var(--abstand-8) var(--abstand-4);
   }
 
   .fuss__liste {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--abstand-2) var(--abstand-4);
+    gap: var(--abstand-2) var(--abstand-6);
     list-style: none;
-    margin: 0 0 var(--abstand-2);
+    margin: 0 0 var(--abstand-4);
     padding: 0;
+  }
+
+  .fuss__liste li {
+    margin: 0;
+  }
+
+  .fuss__liste a {
+    color: var(--farbe-text);
+    text-decoration-color: var(--farbe-linie-stark);
+  }
+
+  .fuss__liste a:hover {
+    color: var(--farbe-akzent-stark);
+    text-decoration-color: currentcolor;
   }
 
   .fuss__betreiber {
     margin: 0;
+    max-width: 66ch;
   }
 </style>
