@@ -1,6 +1,6 @@
 # Deployment-Nachweise
 
-Stand 2026-09-06 (M07-06). Hier stehen nur Dinge, die tatsächlich passiert sind.
+Stand 2026-09-08. Hier stehen nur Dinge, die tatsächlich passiert sind.
 
 ## Was existiert
 
@@ -11,10 +11,18 @@ Stand 2026-09-06 (M07-06). Hier stehen nur Dinge, die tatsächlich passiert sind
 | Adresse | https://petatlas-de-preview.shuu9599.workers.dev |
 | Version-ID des ersten Deployments | `ac32f696-4e03-4edb-815b-d1445cce9f11` |
 | Version-ID des Deployments mit Rechner | `bea46aa2-e80d-4780-9fbf-8972cafa40b5` (2026-09-06) |
-| Deployter Commit | `fbbb7c17c6a29eb5d6601ee93ee46d8e2e289b46` |
+| **Version-ID des aktuellen Deployments** | **`c0931e47-34fc-4e4b-926b-8a3bdc04c8cd` (2026-09-08)** |
+| Deployter Commit | `a028039dc8cf925eb52a13418382713bf5f3c912` |
 | Build-Modus | `development` — Fixtures, sichtbarer Testdatenhinweis, `noindex` |
-| Hochgeladene Dateien | 32 |
-| Deployt am | 2026-09-06 |
+| Eingeschaltete Funktionen | alle acht DE-Feature-Flags, ausschließlich für die Vorschau |
+| Hochgeladene Dateien | 443 (427 neu, 15 unverändert) |
+| Deployt am | 2026-09-08, auf ausdrückliche Freigabe des Betreibers |
+
+### Warum dieses Deployment
+
+Die Vorschau zeigte drei Tage lang den Stand vom 6. September: ohne Karte, Reisecheck, Futter, Profil, ohne die beiden Rechtsseiten und ohne den Designdurchgang. Wer sie ansah, sah einen Rohbau und hielt ihn für den aktuellen Stand.
+
+**Vor dem Ausliefern geprüft** (jeder Schritt exit 0): Output-Audit über 443 Dateien, Secret-Audit über 902 Dateien, Rechteprüfung, SEO-Gates, Rauchprobe am gebauten Verzeichnis. Erst danach `wrangler deploy -c wrangler.preview.jsonc`.
 
 ## Was ausdrücklich **nicht** existiert
 
@@ -23,7 +31,21 @@ Stand 2026-09-06 (M07-06). Hier stehen nur Dinge, die tatsächlich passiert sind
 - **Keine Domain, kein DNS-Eintrag, keine Secrets** im Cloudflare-Projekt.
 - **Kein Produktionsdeployment.** `npm run build:production` bricht weiterhin ab.
 
-## Smoke-Test gegen das laufende Deployment
+## Smoke-Test gegen das laufende Deployment (2026-09-08)
+
+`node scripts/monitor/smoke.ts --base https://petatlas-de-preview.shuu9599.workers.dev` — **bestanden**, eine Warnung: zwei Datensätze ohne bekanntes Alter (Ortsdaten und Reiseregeln, beides dokumentiert).
+
+| Prüfung | Ergebnis |
+|---|---|
+| `/`, `/de-de/`, `/de-de/tierarztkosten/`, `/de-de/tierarzt-karte/`, `/de-de/reisecheck/`, `/de-de/futter/`, `/de-de/methodik/`, `/de-de/barrierefreiheit/` | je **200** |
+| `/gibt-es-nicht/` | **404** mit eigener Fehlerseite |
+| `/de-de/quellen` ohne Schrägstrich | **307** auf die Fassung mit Schrägstrich |
+| `Content-Security-Policy` | vollständig ausgeliefert, `default-src 'self'`, Kachelhost nur unter `img-src` |
+| `X-Frame-Options` | `DENY` |
+| `Cache-Control` für HTML | `max-age=0, must-revalidate` |
+| `robots.txt` | `Disallow: /` — die Vorschau ist nicht zur Indexierung bestimmt |
+
+## Smoke-Test des ersten Deployments (2026-09-06)
 
 Ausgeführt gegen die echte Adresse, nicht lokal:
 
