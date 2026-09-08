@@ -615,3 +615,9 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Geprüft wird, **was ein Mensch sieht**, nicht welche Funktion gelaufen ist.
 - Drei der sechs Pfade enden bewusst nicht grün, und genau das steht im Test: kein positives Reiseergebnis ohne Freigabe, kein Angebot ohne Vertrag, kein Grundpreis ohne Angebot. In allen drei Fällen steht die Begründung auf der Seite — eine leere Stelle wäre schlechter als eine erklärte.
 - Die Gegenprobe gehört dazu: obwohl der Lauf alle Feature Flags anhat, erscheint keine einzige Angebotskarte.
+
+| M19-02 | `docs/DEVELOPER_SETUP.md`, Korrekturen in `HANDOFF.md` und `TOOLCHAIN.md` | frischer Clone nach `/tmp`, alles darin ausgeführt | grün, dazu eine korrigierte Falschangabe |
+
+- **Nachgestellt statt aufgeschrieben.** Im frischen Clone: `npm ci`, `verify` mit 1273 Tests, `build:site` mit 346 Dateien, `build:fixture`, 228 E2E-Tests. Kein Account, kein Token, keine versteckte Datei.
+- Dabei fiel eine eigene Falschangabe auf: der Handoff verlangte `NODE_EXTRA_CA_CERTS` „für jeden npm-Befehl“. Gemessen stimmt das nicht mehr — npm läuft ohne. Gebraucht wird die Variable nur noch für den Abruf von `gdi.berlin.de` und für `wrangler`.
+- **Wrangler meldet ohne die Variable „auth token has expired“.** Das Token ist intakt; der Refresh scheitert an derselben fehlenden Wurzel. Wer der Meldung glaubt, meldet sich unnötig neu an — deshalb steht der Befund jetzt in drei Dokumenten.

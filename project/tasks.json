@@ -3867,8 +3867,14 @@
         "M19-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Tatsaechlich nachgestellt statt beschrieben: frischer Clone nach /tmp, dann ohne jede Umgebungsvariable und ohne Secret npm ci (Lockfile unveraendert, vier nicht ausgefuehrte Installationsskripte wie vorgesehen), npm run verify mit 1273 Tests exit 0, npm run build:site mit 346 Dateien und einer robots.txt, die alles verbietet, npm run build:fixture und npx playwright test mit 228 bestandenen Faellen. Kein Account, kein Token, keine versteckte lokale Datei noetig; die Playwright-Browser liegen im gemeinsamen Zwischenspeicher und werden sonst mit npx playwright install geholt. Dabei wurde eine falsche Angabe im Handoff korrigiert: NODE_EXTRA_CA_CERTS wird fuer npm nicht mehr gebraucht, sondern nur noch fuer den Abruf von gdi.berlin.de und fuer wrangler - gemessen mit und ohne Variable. Wrangler meldet ohne sie faelschlich ein abgelaufenes Token; mit ihr ist die Anmeldung intakt.",
+          "reference": "docs/DEVELOPER_SETUP.md, docs/HANDOFF.md, docs/TOOLCHAIN.md",
+          "verified_at": "2026-09-08T16:25:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

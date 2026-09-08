@@ -68,7 +68,13 @@ security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates
 export NODE_EXTRA_CA_CERTS="$PWD/.work/ca/system-roots.pem"
 ```
 
-`.work/` ist ignoriert, `strict-ssl` bleibt aktiv. Auf CI-Runnern ist der Schritt voraussichtlich nicht nötig; das wird in M07 geprüft.
+`.work/` ist ignoriert, `strict-ssl` bleibt aktiv. Auf CI-Runnern ist der Schritt nicht nötig.
+
+### Nachtrag M19-02: der npm-Teil gilt nicht mehr
+
+Am 2026-09-08 in einem frischen Clone nachgemessen: `npm ci`, `npm run verify`, `npm run build:site` und `npx playwright test` laufen **ohne** die Variable. Der oben beschriebene Fehler bei `registry.npmjs.org` tritt nicht mehr auf.
+
+Gebraucht wird sie weiterhin für zwei Dinge: den Abruf von `gdi.berlin.de` (siehe unten) und `wrangler`. Ohne sie meldet wrangler „auth token has expired and could not be refreshed“ — das Token ist intakt, der Refresh scheitert an derselben fehlenden Wurzel. Wer der Meldung glaubt, meldet sich unnötig neu an.
 
 ### Nachtrag M11-05: ein fehlendes Wurzelzertifikat
 

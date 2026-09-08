@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 1/6 (110 von 121 Aufgaben, sechs blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 2/6 (111 von 121 Aufgaben, sechs blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -18,13 +18,15 @@ Nicht vorhanden: Cloudflare-Projekt, echte Fachdaten, Rechner, Karte, Reisecheck
 
 ## Umgebung
 
-Node v24.19.0, npm 11.17.0, Python 3.13.15. Für jeden npm-Befehl:
+Node v24.19.0, npm 11.17.0, Python 3.13.15.
 
 ```
 export NODE_EXTRA_CA_CERTS="$PWD/.work/ca/system-roots.pem"
 ```
 
-Fehlt die Datei: `security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain > .work/ca/system-roots.pem`. Ohne sie scheitert npm an `UNABLE_TO_GET_ISSUER_CERT_LOCALLY`. `strict-ssl` bleibt aktiv.
+**Am 2026-09-08 in einem frischen Clone nachgemessen und die frühere Angabe hier korrigiert:** `npm ci`, `npm run verify`, `npm run build:site` und `npx playwright test` laufen **ohne** diese Variable. Sie wird nur für zwei Dinge gebraucht — den Abruf von `gdi.berlin.de` (sonst `SELF_SIGNED_CERT_IN_CHAIN`) und `wrangler`. Wrangler meldet ohne sie „auth token has expired“; das Token ist aber intakt, nur der Refresh scheitert an derselben fehlenden Wurzel.
+
+Fehlt die Datei: `security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain > .work/ca/system-roots.pem`. `strict-ssl` bleibt aktiv; es wird nichts abgeschaltet. Einzelheiten in `docs/DEVELOPER_SETUP.md` und `docs/TOOLCHAIN.md`.
 
 Prüfkette vor jedem Commit:
 
@@ -36,13 +38,13 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M19-02 — Frischen Clone und Offline-Entwicklung prüfen.** `docs/DEVELOPER_SETUP.md`: einen neuen Checkout anlegen, sicher installieren, den Fixture-Build erzeugen und die lokalen Tests fahren — ohne Secret und ohne Account. Abnahme: eine andere Person kann die Website reproduzierbar starten, und es braucht keine versteckte lokale Datei.
+**M19-03 — Internationalisierung mit einem Testmarkt beweisen.** `tests/expansion-proof.test.ts` und `docs/EXPANSION.md`: einen deaktivierten US- oder EU-Testmarkt über Konfiguration und Adaptervertrag durchspielen — USD, andere Einheiten und eine fehlende Kostenquelle müssen richtig behandelt werden. Abnahme: **kein Umbau am DE-Kern** und keine Veröffentlichung ungeprüfter internationaler Seiten.
 
-Achtung beim Nachstellen: `NODE_EXTRA_CA_CERTS` ist eine Eigenheit **dieses** Rechners und gehört als solche dokumentiert, nicht als Projektvoraussetzung. Ein frischer Clone darf sie nicht brauchen.
+Vorarbeit ist da: `tests/international-contracts.test.ts` und `tests/markets.test.ts` prüfen bereits Marktkonfiguration und Angebotsfilter; `config/markets/` enthält die vorbereiteten Märkte.
 
-Die Abnahmeläufe stehen in `docs/RELEASE_TESTS.md`: verify 1273 Tests, E2E 228, Funktionen 294, Zugänglichkeit 107 bei 7 übersprungenen, Leistung 12 Messungen. Drei Kernpfade enden bewusst nicht grün, und das ist dort begründet.
+Ein frischer Clone ist geprüft (`docs/DEVELOPER_SETUP.md`): `npm ci`, `verify` mit 1273 Tests, `build:site` mit 346 Dateien und 228 E2E-Tests laufen ohne Account, ohne Secret und ohne Umgebungsvariable.
 
-Gemessen und dokumentiert liegen außerdem vor: `docs/ACCESSIBILITY.md`, `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`, `docs/LEGAL_CHECKLIST.md`, `docs/reviews/launch.md`.
+Die Abnahmeläufe stehen in `docs/RELEASE_TESTS.md`; gemessen und dokumentiert liegen außerdem vor: `docs/ACCESSIBILITY.md`, `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`, `docs/LEGAL_CHECKLIST.md`, `docs/reviews/launch.md`.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 
@@ -70,7 +72,7 @@ Prüfkette vor jedem Commit: `npm run lint && npm run typecheck && npm run forma
 
 ## Cloudflare
 
-Zugang liegt seit 2026-09-06 vor: OAuth-Token für `Shuu9599@gmail.com's Account`, hinterlegt in der lokalen wrangler-Konfiguration. **Wichtig:** wrangler scheitert ohne `NODE_EXTRA_CA_CERTS` mit „fetch failed“ — dieselbe Ursache wie bei npm.
+Zugang liegt seit 2026-09-06 vor: OAuth-Token für `Shuu9599@gmail.com's Account`, hinterlegt in der lokalen wrangler-Konfiguration. **Wichtig:** wrangler braucht `NODE_EXTRA_CA_CERTS`; ohne die Variable meldet es fälschlich ein abgelaufenes Token (am 2026-09-08 nachgemessen).
 
 ## Nicht voraussetzen
 
