@@ -53,15 +53,20 @@ const ART_TEXT: Readonly<Record<string, string>> = {
 };
 
 const varianten = gleicheVariante(produkt).filter((eintrag) => eintrag.foodId !== produkt.foodId);
+
+// Zwei Packungsgrößen desselben Produkts sind zwei Seiten. Ohne die Menge im
+// Titel trügen sie denselben — und wären damit für Suchmaschinen wie für
+// Menschen nicht auseinanderzuhalten (M18-01).
+const menge = mengenText(produkt);
+const seitentitel =
+  menge === null
+    ? `${produkt.brand} — ${produkt.productName}`
+    : `${produkt.brand} — ${produkt.productName}, ${menge}`;
 const deklariert = produkt.nutrients.filter((eintrag) => eintrag.value !== null);
 const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
 ---
 
-<BaseLayout
-  title={`${produkt.brand} — ${produkt.productName}`}
-  route="food"
-  canonicalPfad={eigenerPfad}
->
+<BaseLayout title={seitentitel} route="food" canonicalPfad={eigenerPfad}>
   <h1>{produkt.brand} — {produkt.productName}</h1>
 
   {

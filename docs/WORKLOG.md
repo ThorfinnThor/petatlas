@@ -564,3 +564,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Das Skript **verändert nichts**. Ein Skript, das ungefragt Daten zurückschreibt, wäre an genau der falschen Stelle bequem; das Wiederherstellen steht als Handgriff im Runbook.
 - Der Provider-Rollback ist **nicht erprobt** und steht auch nicht abgeschrieben im Runbook. Ein abgeschriebenes Runbook ist im Ernstfall schlimmer als keins, weil sich jemand darauf verlässt.
 - Budgets: 425 von 12.000 Dateien, größte Datei 0,46 von 25 MiB, Git-Historie 2,59 MiB gepackt, Buildzeit unter zwei Sekunden von 20 zulässigen Minuten. „Nicht gemessen“ gilt ausdrücklich nicht als „eingehalten“ — ein fehlender Build meldet, was zu tun ist.
+
+| M18-01 | `scripts/checks/seo.ts`, `scripts/publish/sitemap.ts`, `src/lib/html-head.ts`, `tests/seo/` | 30 Tests, dazu zwei Laeufe ueber den echten Build | Probelauf fand vier doppelte Titel |
+
+- Der Gate hätte heute fast nichts geprüft: solange die Launch-Gates offen sind, trägt **jede** Seite `noindex`, und die Regeln für indexierbare Seiten griffen nie. Deshalb gibt es den Probelauf `--als-indexierbar`: „bestünde dieser Build die Prüfung, wenn er veröffentlicht würde?“ Diese Frage jetzt zu stellen ist billiger, als sie am Starttag zu stellen.
+- Er hat sofort etwas gefunden: vier Futterseiten trugen paarweise denselben Titel, weil die Packungsgröße fehlte. Zwei Packungsgrößen sind zwei Seiten — ohne Menge im Titel sind sie weder für Suchmaschinen noch für Menschen auseinanderzuhalten.
+- Die Sitemap entsteht aus dem **gemessenen** Buildoutput: aufgenommen wird, was gebaut wurde und sich selbst als indexierbar ausweist. Eine zweite Aufzählung wäre eine zweite Wahrheit.
+- Ein nicht indexierbarer Build bekommt gar keine Sitemap und ein `robots.txt`, das alles verbietet. Eine Sitemap, die auf einen Testbuild zeigt, wäre eine Einladung, ihn zu indexieren.
+- Weiterleitungsseiten werden nicht an einer H1 gemessen, brauchen aber ein **ausdrückliches** `noindex`. Ein fehlendes Tag ist kein stilles „nein“: die Zwischenseite existiert wirklich.

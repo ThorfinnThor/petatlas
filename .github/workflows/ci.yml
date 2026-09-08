@@ -80,6 +80,28 @@ jobs:
       - name: Gesundheitsstand
         run: npm run build:health
 
+      - name: Sitemap und robots.txt
+        run: npm run build:sitemap
+
+      # Prüft den gebauten Output, nicht die Absicht (M18-01).
+      - name: SEO-Gates
+        run: npm run check:seo
+
+      # Zweiter Durchgang mit allen Funktionen und so, als wäre der Build
+      # indexierbar. Ohne ihn prüfte der Gate heute fast nichts: solange die
+      # Launch-Gates offen sind, trägt jede Seite noindex.
+      - name: SEO-Probelauf mit allen Funktionen
+        env:
+          ENABLE_FEATURES: 'costs,map,travel,commerce,care,toys,food,profile'
+        run: |
+          npm run build:fixture
+          npm run build:fees
+          npm run build:places
+          npm run build:health
+          npm run build:search
+          npm run build:sitemap
+          npm run check:seo -- --als-indexierbar
+
       - name: Rechteprüfung der Quellen
         run: npm run check:licenses
 

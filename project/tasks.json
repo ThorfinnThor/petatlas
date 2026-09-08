@@ -3635,8 +3635,14 @@
         "M15-03"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npm run verify exit 0, 1241 Tests; davon 30 in tests/seo/. npx playwright test: 219 gruen, features 280 gruen. node scripts/checks/seo.ts ueber den echten Build: 11 Seiten, keine Beanstandung, robots.txt verbietet alles, keine Sitemap (Build nicht indexierbar). Probelauf --als-indexierbar ueber den Build mit allen acht Featureflags: 58 Seiten wuerden auch als indexierbarer Build bestehen. Der Probelauf hat dabei einen echten Fehler gefunden: vier Futterseiten trugen paarweise denselben Titel, weil die Packungsgroesse fehlte; behoben. Beide Laeufe stehen als Schritt in ci.yml.",
+          "reference": "scripts/checks/seo.ts, scripts/publish/sitemap.ts, src/lib/html-head.ts, tests/seo/seo-gates.test.ts, src/pages/de-de/futter/[produkt].astro, .github/workflows/ci.yml",
+          "verified_at": "2026-09-08T15:15:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },
