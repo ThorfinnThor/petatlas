@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 2/7 (99 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 3/7 (100 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -38,7 +38,7 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 **M17-03 — Täglichen Quellen- und Rebuildpfad hinzufügen.** `.github/workflows/source-check.yml` und `rebuild-commerce.yml`: Änderungen an Reise- und Regelquellen erkennen, Commerce-Rebuild nur bei aktiven Partnern; den Cloudflare-Hook als Secret und den Buildstatus getrennt behandeln. Abnahme: ein Fehlschlag des Hooks wird erkannt, und es entstehen keine minütlichen Vollbuilds oder Buildschleifen.
 
-Vorhanden: Datenbranch-Publisher mit Allowlist, `.github/workflows/data-branch.yml` und `ingest-open.yml` — Letzterer ist mit einem echten Lauf gegen die Berliner Quelle geprüft (Abruf, volle Prüfkette, Trockenlauf ohne Pull Request).
+Vorhanden: Datenbranch-Publisher mit Allowlist, `.github/workflows/data-branch.yml` und `ingest-open.yml` — Letzterer ist mit einem echten Lauf gegen die Berliner Quelle geprüft (Abruf, volle Prüfkette, Trockenlauf ohne Pull Request). Der GOT-Abruf ist jetzt im Zeitplan: bedingt über ETag und `Last-Modified`, höchstens wöchentlich, Abrufbedingungen in `docs/SOURCE_REVIEWS.md` dokumentiert.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 
@@ -62,7 +62,7 @@ Prüfkette vor jedem Commit: `npm run lint && npm run typecheck && npm run forma
 
 ## Entschieden
 
-**B-001 ist aufgelöst (ADR-018).** Der Gebührenkatalog wird über den offiziellen XML-ZIP-Download bezogen. Die Vorgaben zu Snapshots, Fehlerverhalten, Provenienz und Darstellung stehen in `docs/DECISIONS.md`; die verbleibende Betriebsprüfung ist Aufgabe M17-07.
+**B-001 ist aufgelöst (ADR-018).** Der Gebührenkatalog wird über den offiziellen XML-ZIP-Download bezogen. Die Vorgaben zu Snapshots, Fehlerverhalten, Provenienz und Darstellung stehen in `docs/DECISIONS.md`; die Betriebsprüfung der Abrufbedingungen ist erledigt und in `docs/SOURCE_REVIEWS.md` dokumentiert.
 
 ## Cloudflare
 

@@ -3573,8 +3573,16 @@
         "M17-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Abrufbedingungen der GOT-Quelle am 2026-09-08 tatsaechlich geprueft: robots.txt von gesetze-im-internet.de enthaelt 'User-agent: *' mit leerem 'Disallow:' und schliesst damit keinen Pfad aus; HEAD auf die ZIP-Datei liefert HTTP 200, 32.110 Byte, ETag '7d6e-5f8c40dbcfb78' und Last-Modified 'Fri, 07 Apr 2023 19:30:11 GMT'; bedingte Anfragen mit If-None-Match und mit If-Modified-Since werden je mit HTTP 304 beantwortet; das Impressum enthaelt einen Haftungsausschluss, aber keinen Hinweis gegen automatisierten Abruf oder Weiterverarbeitung. snapshot-got.ts fuehrt jetzt sourceEtag und sourceLastModified im Snapshot mit und schickt sie beim naechsten Lauf; bei 304 endet der Lauf erfolgreich und laesst den Snapshot unveraendert, sodass kein leerer Commit entsteht. Nachgeprueft mit zwei Laeufen hintereinander: der erste holte die Datei und trug die Kennzeichen ein, der zweite bekam 304. Der GOT-Abruf ist damit im woechentlichen Zeitplan von ingest-open.yml (montags 04:17 UTC), mit drei Versuchen und wachsendem Abstand, ohne Verzeichnisdurchsuchung und ohne Parallelitaet. Faende sich spaeter ein Hinweis gegen automatisierten Abruf, wird nur der Zeitplan gestoppt; der vorhandene Snapshot bleibt gueltig. npm run verify exit 0, 1066 Tests.",
+          "reference": "docs/SOURCE_REVIEWS.md, scripts/ingest/snapshot-got.ts, .github/workflows/ingest-open.yml",
+          "verified_at": "2026-09-08",
+          "command": "npm run snapshot:got -- --fetch (zweimal hintereinander)",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": [
         "Neu angelegt am 2026-09-06 aus ADR-018. Betriebsprüfung, kein Blocker für die Implementierung des Rechners.",

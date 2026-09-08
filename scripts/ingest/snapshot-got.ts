@@ -9,6 +9,13 @@
  * Quelle ist standardmäßig die im Repository liegende amtliche Datei. Mit
  * `--fetch` wird stattdessen einmal abgerufen — höchstens das, kein Crawler.
  *
+ * Der Abruf ist **bedingt** (M17-07): der Snapshot führt `sourceEtag` und
+ * `sourceLastModified` des zuletzt geholten Standes mit, und der nächste Lauf
+ * schickt sie als `If-None-Match` und `If-Modified-Since`. Antwortet die
+ * Quelle mit 304, bleibt der vorhandene Snapshot unverändert und der Lauf
+ * endet erfolgreich — ein unveränderter Datenstand ist kein Fehler und darf
+ * keinen leeren Commit erzeugen.
+ *
  * Ausführen: `npm run snapshot:got` oder `npm run snapshot:got -- --fetch`
  */
 import { createHash } from 'node:crypto';
@@ -22,11 +29,31 @@ import type { FetchedResource } from './types.ts';
 const ZIEL = 'data-snapshots/got/got-2022.json';
 const LOKALE_QUELLE = 'tests/fixtures/got/got_2022.xml.zip';
 
-async function holeRessource(mitAbruf: boolean): Promise<FetchedResource> {
+/** Die Kennzeichen des zuletzt geholten Standes, falls es einen gibt. */
+function letzterStand(): { readonly etag: string | null; readonly lastModified: string | null } {
+  try {
+    const vorhanden = JSON.parse(readFileSync(ZIEL, 'utf8')) as {
+      source?: { sourceEtag?: string | null; sourceLastModified?: string | null };
+    };
+    return {
+      etag: vorhanden.source?.sourceEtag ?? null,
+      lastModified: vorhanden.source?.sourceLastModified ?? null,
+    };
+  } catch {
+    return { etag: null, lastModified: null };
+  }
+}
+
+async function holeRessource(mitAbruf: boolean): Promise<FetchedResource | null> {
   if (mitAbruf) {
-    const ergebnis = await fetchSource('got-2022-gesetze-im-internet');
-    if (ergebnis.status !== 'fetched' || ergebnis.resource === null) {
-      throw new Error('Quelle meldet keine Änderung; der vorhandene Snapshot bleibt gültig.');
+    const vorher = letzterStand();
+    const ergebnis = await fetchSource('got-2022-gesetze-im-internet', {
+      etag: vorher.etag,
+      lastModified: vorher.lastModified,
+    });
+    if (ergebnis.status === 'not_modified' || ergebnis.resource === null) {
+      // Unverändert ist ein gutes Ergebnis: der Snapshot bleibt, wie er ist.
+      return null;
     }
     return ergebnis.resource;
   }
@@ -48,6 +75,12 @@ async function holeRessource(mitAbruf: boolean): Promise<FetchedResource> {
 async function main(): Promise<number> {
   const mitAbruf = process.argv.includes('--fetch');
   const ressource = await holeRessource(mitAbruf);
+  if (ressource === null) {
+    console.log(
+      'Die Quelle meldet keine Änderung (HTTP 304). Der vorhandene Snapshot bleibt unverändert.',
+    );
+    return 0;
+  }
 
   const geparst = parseGotXml(extrahiereXml(ressource.body).inhalt);
   const normalisiert = normalizeGot(geparst, { resource: ressource });
@@ -59,6 +92,9 @@ async function main(): Promise<number> {
       url: ressource.url,
       retrievalDate: ressource.retrievedAt,
       sourceSha256: ressource.contentHash,
+      // Für den bedingten Abruf des nächsten Laufs (M17-07).
+      sourceEtag: ressource.etag,
+      sourceLastModified: ressource.lastModified,
       sourceVersion: normalisiert.katalogVersion,
       effectiveFrom: geparst.ausfertigungsDatum,
       amendmentNote: geparst.standKommentar,

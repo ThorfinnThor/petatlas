@@ -79,11 +79,14 @@ jobs:
           echo "erfolg=false" >> "$GITHUB_OUTPUT"
           echo "Kommunale Quelle nach drei Versuchen nicht erreichbar." >&2
 
-      # Der GOT-Abruf bleibt vorerst dem Zuruf vorbehalten: die
-      # Abrufbedingungen sind noch nicht dokumentiert (M17-07).
+      # Der GOT-Abruf ist seit M17-07 im Zeitplan: robots.txt schließt nichts
+      # aus, es gibt keinen Hinweis gegen automatisierten Abruf, und die
+      # Quelle beantwortet bedingte Anfragen mit 304. Der Lauf holt deshalb
+      # höchstens wöchentlich und nur, wenn sich etwas geändert hat
+      # (docs/SOURCE_REVIEWS.md).
       - name: Gebührenkatalog abrufen
         id: got
-        if: ${{ github.event_name == 'workflow_dispatch' && (inputs.quelle == 'got' || inputs.quelle == 'alle') }}
+        if: ${{ github.event_name == 'schedule' || inputs.quelle == 'got' || inputs.quelle == 'alle' }}
         timeout-minutes: 5
         run: |
           set -uo pipefail

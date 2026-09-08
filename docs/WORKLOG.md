@@ -508,3 +508,10 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Der zweite Lauf ist grün: Abruf der kommunalen Quelle, volle Prüfkette, Änderungsprüfung, kein Pull Request (Trockenlauf).
 - Zwei Begrenzungen stehen in `docs/OPERATIONS.md` statt in einer Annahme: der bundesweite OSM-Import läuft nicht auf einem Runner (4,6 GiB, Pausen gegen Drosselung, rund eine Stunde), und der GOT-Abruf bleibt bis M17-07 dem Zuruf vorbehalten.
 - Die Zusammenfassung nennt nur Zustände und Zahlen. Eine Abrufadresse kann einen Token enthalten und gehört deshalb nicht ins Protokoll.
+
+| M17-07 | Bedingter Abruf in `snapshot-got.ts`, Abschnitt in `docs/SOURCE_REVIEWS.md`, GOT im Zeitplan | zwei aufeinanderfolgende Läufe `npm run snapshot:got -- --fetch` | zweiter Lauf bekommt **HTTP 304** |
+
+- Gemessen statt vermutet: `robots.txt` schließt keinen Pfad aus (`Disallow:` ist leer), das Impressum enthält keinen Hinweis gegen automatisierten Abruf, und die Quelle beantwortet `If-None-Match` **und** `If-Modified-Since` mit 304.
+- Der Snapshot führt jetzt `sourceEtag` und `sourceLastModified` mit. Der nächste Lauf schickt sie; bei 304 endet er erfolgreich und lässt den Snapshot unangetastet — ein unveränderter Datenstand ist kein Fehler und darf keinen leeren Commit erzeugen.
+- Nachgeprüft mit zwei Läufen hintereinander: der erste holte die Datei und trug die Kennzeichen ein, der zweite bekam 304. Der Inhalts-Hash blieb derselbe; die Fassung ist unverändert die vom 7. April 2023.
+- Damit ist der GOT-Abruf im wöchentlichen Zeitplan. Fände sich später ein Hinweis gegen automatisierten Abruf, wird nur der Zeitplan gestoppt — der Snapshot bleibt gültig und die Auslieferung läuft weiter.

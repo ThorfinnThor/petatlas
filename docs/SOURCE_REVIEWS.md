@@ -127,3 +127,35 @@ Der `termsHash` im Registryeintrag ist der Hash der abgerufenen Lizenzseite. Än
 ### Offen
 
 Die Daten sind freigegeben, aber noch nicht ausgeliefert (siehe `docs/MUNICIPAL_PILOT.md`). Vor einer Auslieferung ist zu klären, wie Verbotsgebiete dargestellt werden, ohne dass eine Karte sie wie ein Angebot aussehen lässt.
+
+---
+
+## got-2022-gesetze-im-internet — Abrufbedingungen (M17-07)
+
+**Geprüft am:** 2026-09-08 · **Ergebnis:** wöchentlicher, bedingter Abruf vertretbar
+
+Diese Prüfung betrifft **nicht** die Rechte an den Daten — die stehen weiter oben und beruhen auf § 5 Abs. 1 UrhG. Hier geht es allein um die Frage, ob ein zeitgesteuerter Abruf zumutbar und erlaubt ist.
+
+### Was tatsächlich abgerufen wurde
+
+| Prüfung | Ergebnis |
+|---|---|
+| `https://www.gesetze-im-internet.de/robots.txt` | `User-agent: *` mit leerem `Disallow:` — **kein Pfad ausgeschlossen** |
+| `HEAD https://www.gesetze-im-internet.de/got_2022/xml.zip` | HTTP 200, `content-type: application/zip`, 32.110 Byte |
+| `ETag` | `"7d6e-5f8c40dbcfb78"` |
+| `Last-Modified` | `Fri, 07 Apr 2023 19:30:11 GMT` |
+| `If-None-Match` mit diesem ETag | **HTTP 304** |
+| `If-Modified-Since` mit diesem Datum | **HTTP 304** |
+| Impressum der Quelle | Haftungsausschluss und Hinweis, dass keine Rechtsberatung erfolgt; **kein Hinweis gegen automatisierten Abruf**, kein Wort zu Crawlern, Skripten oder Weiterverarbeitung |
+
+### Folgerung
+
+1. **Kein Verbot gefunden.** Weder `robots.txt` noch das Impressum sprechen gegen einen automatisierten Abruf. Fände sich später ein solcher Hinweis, wird nur der Zeitplan gestoppt — der vorhandene Snapshot bleibt gültig und die Auslieferung läuft weiter.
+2. **Bedingter Abruf ist möglich und wird genutzt.** Die Quelle beantwortet `If-None-Match` und `If-Modified-Since` korrekt mit 304. `scripts/ingest/snapshot-got.ts` führt `sourceEtag` und `sourceLastModified` im Snapshot mit und schickt sie beim nächsten Lauf; bei 304 endet der Lauf erfolgreich und lässt den Snapshot unverändert.
+3. **Höchstens wöchentlich.** Der Zeitplan in `.github/workflows/ingest-open.yml` läuft montags um 04:17 UTC. Die Datei ist seit dem 7. April 2023 unverändert; häufiger abzurufen brächte nichts und belastete nur den Server.
+4. **Kein Crawler.** Abgerufen wird genau eine Datei über ihre feste Adresse. Es gibt keine Verzeichnisdurchsuchung, keine Parallelität und keine Wiederholungsschleife ohne Pause — drei Versuche mit wachsendem Abstand, dann Ende.
+5. **Ein Fehlschlag ändert nichts.** Ohne gültige Antwort bleibt der letzte gültige Snapshot stehen; die Website liefert weiter aus.
+
+### Nachgeprüft am 2026-09-08
+
+Zwei aufeinanderfolgende Läufe von `npm run snapshot:got -- --fetch`: der erste holte die Datei und trug ETag und `Last-Modified` in den Snapshot ein, der zweite bekam **HTTP 304** und ließ den Snapshot unangetastet. Der Inhalts-Hash blieb in beiden Fällen `c7bdcfa9b699…`; die Fassung ist unverändert die vom 7. April 2023.
