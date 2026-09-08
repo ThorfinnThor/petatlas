@@ -11,14 +11,21 @@ Stand 2026-09-08. Hier stehen nur Dinge, die tatsächlich passiert sind.
 | Adresse | https://petatlas-de-preview.shuu9599.workers.dev |
 | Version-ID des ersten Deployments | `ac32f696-4e03-4edb-815b-d1445cce9f11` |
 | Version-ID des Deployments mit Rechner | `bea46aa2-e80d-4780-9fbf-8972cafa40b5` (2026-09-06) |
-| **Version-ID des aktuellen Deployments** | **`c0931e47-34fc-4e4b-926b-8a3bdc04c8cd` (2026-09-08)** |
-| Deployter Commit | `a028039dc8cf925eb52a13418382713bf5f3c912` |
+| Version-ID des Deployments mit allen Funktionen | `c0931e47-34fc-4e4b-926b-8a3bdc04c8cd` (2026-09-08) |
+| **Version-ID des aktuellen Deployments** | **`51e7122c-06ad-441f-9ba8-4707641045a4` (2026-09-08, nach dem Designvertrag)** |
+| Deployter Commit | `03a6e70` |
 | Build-Modus | `development` — Fixtures, sichtbarer Testdatenhinweis, `noindex` |
 | Eingeschaltete Funktionen | alle acht DE-Feature-Flags, ausschließlich für die Vorschau |
 | Hochgeladene Dateien | 443 (427 neu, 15 unverändert) |
 | Deployt am | 2026-09-08, auf ausdrückliche Freigabe des Betreibers |
 
-### Warum dieses Deployment
+### Warum das Deployment vom 2026-09-08 (Designvertrag)
+
+`docs/DESIGN_SPECIFICATIONS.md` ist als verbindlicher Designvertrag ins Repository gekommen und umgesetzt worden: Tokens, Typografie, Container, Karten, Buttons, Formulare, Kopfbereich, Fuß und Startseite. Was umgesetzt ist, was bewusst abweicht und was offen bleibt, steht in `docs/DESIGN_REVIEW.md`.
+
+Vor dem Ausliefern geprüft (jeder Schritt exit 0): Output-Audit über 444 Dateien, Secret-Audit über 910 Dateien, SEO-Gates über 60 Seiten, Rauchprobe am gebauten Verzeichnis. Danach gegen die echte Adresse: fünf Seiten je 200, unbekannte Adresse 404, Rauchprobe bestanden mit einer bekannten Warnung.
+
+### Warum das Deployment davor
 
 Die Vorschau zeigte drei Tage lang den Stand vom 6. September: ohne Karte, Reisecheck, Futter, Profil, ohne die beiden Rechtsseiten und ohne den Designdurchgang. Wer sie ansah, sah einen Rohbau und hielt ihn für den aktuellen Stand.
 
