@@ -14,6 +14,7 @@ import { z } from 'zod';
 
 import berlin from '../../config/sources/berlin-hundefreilauf.json' with { type: 'json' };
 import got from '../../config/sources/got.json' with { type: 'json' };
+import opff from '../../config/sources/opff.json' with { type: 'json' };
 import regionen from '../../config/sources/osm-regions.json' with { type: 'json' };
 import osm from '../../config/sources/osm-geofabrik-de.json' with { type: 'json' };
 import { SourceRightsSchema, type SourceRights } from './rights.ts';
@@ -112,7 +113,7 @@ function regionaleEintraege(): SourceEntry[] {
   );
 }
 
-const ENTRIES: readonly SourceEntry[] = [berlin, got, osm]
+const ENTRIES: readonly SourceEntry[] = [berlin, got, opff, osm]
   .map(parseEntry)
   .concat(regionaleEintraege());
 

@@ -407,3 +407,12 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Die Produktseite zeigt jeden deklarierten Nährwert mit **Bezug** und **Quelle** und nennt darunter, was nicht deklariert ist — mit dem Satz, auf den es ankommt: eine fehlende Angabe ist keine Null.
 - Ohne Nährwerte bleibt die Seite nutzbar: Menge und Grundpreisbasis stehen unabhängig davon da.
 - Der Angebotsteil ist leer und sagt warum. Verschiedene Gebindegrößen derselben Packung sind verlinkt; verschiedene Packungsgrößen ausdrücklich nicht.
+
+| M15-04 | `docs/OPFF_SPIKE.md`, `config/sources/opff.json` | CSV-Export vom 08.09.2026 heruntergeladen und ausgezählt | 15.136 Produkte, 1.281 mit Deutschlandbezug, **2** davon mit Proteinwert |
+
+- **Der Befund, auf den es ankommt:** Nährwerte fehlen in Open Pet Food Facts fast vollständig — `proteins_100g` bei 241 von 15.136 Produkten, bei den 1.281 mit Deutschlandbezug bei zwei. Als Nährwertquelle ist der Datensatz damit nicht geeignet. Das ist gemessen, nicht geschätzt.
+- Brauchbar sind Name (90 %), Menge (82 %) und Marke (78 %) bei deutschen Produkten, jeweils über die GTIN — 96 Prozent der Codes liegen als EAN-13 vor.
+- `robots.txt` verbietet `/api` und `/cgi` für alle User-Agents. Systematische API-Abfragen unterbleiben deshalb; bezogen wird der angebotene Export unter `/data` (3,29 MB gzip, täglich erneuert).
+- **Der geforderte Trefferanteil gegen echte Feed-GTINs wurde nicht gemessen und auch nicht geschätzt:** ohne freigegebenes Warenprogramm gibt es keine Sortimentsliste. Das steht als offener Punkt im Spike, statt als Zahl.
+- Lizenzfolgen: ODbL mit Share-Alike für abgeleitete Datenbanken, Bilder unter CC BY-SA und deshalb ausgeschlossen, Attribution Pflicht — und Open Food Facts garantiert die Richtigkeit ausdrücklich nicht.
+- Der Registryeintrag steht auf `pending` und ist damit die erste bewusst ungeprüfte Quelle. Vier Tests hatten die Annahme „alle Quellen sind freigegeben“ eingebaut; sie prüfen jetzt die Regel statt des Zustands.

@@ -3122,8 +3122,16 @@
         "M15-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Machbarkeit von Open Pet Food Facts geprueft am echten Datensatz. Bezugsweg: robots.txt verbietet /api und /cgi fuer alle User-Agents, systematische API-Abfragen unterbleiben deshalb; bezogen wird der angebotene CSV-Export unter /data (3,29 MB gzip, taeglich erneuert, Stand 08.09.2026). Gemessen am vollstaendigen Export mit 15.136 Produkten und 210 Spalten: code 100 Prozent, product_name 80 Prozent (DE 90), brands 45 (DE 78), quantity 47 (DE 82), categories_tags 30 (DE 21), image_url 88 (DE 65) - und proteins_100g bei 241 Produkten insgesamt, bei den 1.281 mit Deutschlandbezug bei genau zwei. Als Naehrwertquelle ist der Datensatz damit nicht geeignet; brauchbar ist er fuer Name, Marke und Menge ueber die GTIN (96 Prozent der Codes im EAN-13-Format). Der von der Aufgabe verlangte Trefferanteil gegen GTINs echter Feedprodukte wurde nicht gemessen und ausdruecklich nicht geschaetzt: ohne freigegebenes Warenprogramm (B-005) gibt es keine Sortimentsliste; der Punkt steht offen im Spike. Lizenzfolgen dokumentiert: ODbL mit Share-Alike fuer abgeleitete Datenbanken, Bilder unter CC BY-SA und deshalb ausgeschlossen, Attribution Pflicht, keine Richtigkeitsgarantie durch Open Food Facts. Registriert als opff-products-csv-export mit status pending - die erste bewusst ungepruefte Quelle; vier Tests, die 'alle Quellen sind freigegeben' angenommen hatten, pruefen jetzt die Regel statt des Zustands. npm run verify exit 0, 963 Tests.",
+          "reference": "docs/OPFF_SPIKE.md, config/sources/opff.json, src/domain/source-registry.ts",
+          "verified_at": "2026-09-08",
+          "command": "curl + Auszaehlung des CSV-Exports",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

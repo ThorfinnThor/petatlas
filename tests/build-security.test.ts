@@ -72,7 +72,14 @@ describe('Build-Metadaten nennen die exakten Eingaben', () => {
         .sort(),
     );
     for (const quelle of info.sources) {
-      expect(quelle.termsHash, quelle.sourceId).toMatch(/^[a-f0-9]{64}$/);
+      // Nur eine geprüfte Quelle trägt den Hash ihrer Bedingungen. Eine
+      // pending-Quelle darf keinen haben — sie hat noch keine Prüfung.
+      const registry = allSources().find((eintrag) => eintrag.sourceId === quelle.sourceId);
+      if (registry?.rights.status === 'verified') {
+        expect(quelle.termsHash, quelle.sourceId).toMatch(/^[a-f0-9]{64}$/);
+      } else {
+        expect(quelle.termsHash, quelle.sourceId).toBeNull();
+      }
     }
     expect(info.steps).toContain('Secret- und Fixture-Audit über dist');
   });

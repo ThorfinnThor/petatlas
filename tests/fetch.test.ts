@@ -69,6 +69,7 @@ describe('Schädliche und unerlaubte Adressen', () => {
     expect([...HOSTS].sort()).toEqual([
       'download.geofabrik.de',
       'gdi.berlin.de',
+      'static.openpetfoodfacts.org',
       'www.gesetze-im-internet.de',
     ]);
   });

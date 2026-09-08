@@ -47,8 +47,9 @@ describe('Einträge sind konkrete Distributionen', () => {
 
 describe('Ungeprüfte Quellen dürfen nichts', () => {
   it('erlaubt für eine pending-Quelle keine einzige Ausgabeform', () => {
-    // Derzeit ist keine Quelle pending; die Schleife bleibt als Regression,
-    // sobald eine neue Quelle hinzukommt.
+    // Seit M15-04 gibt es wieder eine: der OPFF-Export ist erfasst, aber
+    // nicht freigegeben. Genau dafür ist dieser Zustand da.
+    expect(pendingSources().length).toBeGreaterThan(0);
     for (const eintrag of pendingSources()) {
       for (const kanal of [
         'websiteDisplay',
@@ -63,8 +64,14 @@ describe('Ungeprüfte Quellen dürfen nichts', () => {
     }
   });
 
-  it('kennt nach ADR-018 keine ungeprüfte Quelle mehr', () => {
-    expect(pendingSources()).toEqual([]);
+  it('begründet jede ungeprüfte Quelle, statt sie unkommentiert zu führen', () => {
+    // Eine pending-Quelle ist zulässig — sie darf nur nichts veröffentlichen.
+    // Was fehlt und warum, muss aber in den Notizen stehen.
+    for (const eintrag of pendingSources()) {
+      expect(eintrag.notes.length, eintrag.sourceId).toBeGreaterThan(0);
+      expect(eintrag.notes.join(' ').toLowerCase(), eintrag.sourceId).toContain('pending');
+      expect(eintrag.rights.approvalEvidence, eintrag.sourceId).toBeNull();
+    }
   });
 
   it('nennt bei jeder Attributionspflicht auch den verlangten Wortlaut', () => {
@@ -92,7 +99,9 @@ describe('Ungeprüfte Quellen dürfen nichts', () => {
 
 describe('Verifizierte Quellen tragen ihren Nachweis', () => {
   it('hat für jede freigegebene Quelle Lizenz, Prüfdatum, Nachweis und Wortlaut', () => {
-    expect(verifiedSources().length).toBe(allSources().length);
+    // Nicht mehr alle Quellen sind freigegeben: der OPFF-Export ist pending.
+    expect(verifiedSources().length).toBe(allSources().length - pendingSources().length);
+    expect(verifiedSources().length).toBeGreaterThan(0);
     for (const eintrag of verifiedSources()) {
       expect(eintrag.rights.licenseId, eintrag.sourceId).not.toBeNull();
       expect(eintrag.rights.checkedAt, eintrag.sourceId).not.toBeNull();
