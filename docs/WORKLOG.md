@@ -445,3 +445,12 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Kein Feld identifiziert eine Person: keine E-Mail, keine Adresse, keine Telefonnummer, kein Haltername, keine Gesundheitsangabe. Ein Test prüft die Feldliste des erzeugten Profils gegen genau diese Wörter.
 - Interessen kommen aus einer festen Liste. `bereinigeInteressen()` verwirft alles Unbekannte — auch `__proto__` und `constructor`, die sonst gern durch einen naiven Filter rutschen.
 - Die Rasse ist eine freie Angabe für die eigene Übersicht und löst nichts aus. Der Satz steht auf der Seite, weil das Matching in M14-03 bereits so gebaut ist.
+
+| M16-02 | `src/features/profile/storage.ts`, Knöpfe auf der Profilseite, `tests/profile-storage.test.ts` | `npx vitest run tests/profile-storage.test.ts`, `npm run test:e2e:features` (226 Tests) | 18 + 5 Tests; Speichern und Löschen als Handlung |
+
+- Gespeichert wird **nichts automatisch**. Zwei Knöpfe, zwei Meldungen — und ein dritter Test, der belegt, dass ohne Knopfdruck kein Schlüssel im Speicher landet.
+- Fehlschläge sind Ergebnisse, keine Ausnahmen: privater Modus, volles Kontingent, abgeschaltete Speicherung. Jede Funktion gibt Erfolg, Fehlerart und einen Klartext zurück, und die Oberfläche zeigt ihn.
+- Der Stand trägt seine Fassung. Fassung 1 kannte keine Interessen; die Migration ergänzt eine **leere** Liste, statt welche zu erfinden. Ein Stand aus einer unbekannten Fassung wird gar nicht gelesen — auch nicht halb.
+- Was im Speicher liegt, ist eine Eingabe: der Inhalt läuft durch das Schema, und eingeschmuggelte Interessen wie `__proto__` fallen heraus.
+- Löschen heißt löschen: ein Schlüssel, kein Papierkorb, kein Rest. Ein E2E-Test speichert, löscht, lädt neu und findet ein leeres Formular.
+- Die Seite sagt ausdrücklich, dass es **keinen Geräteabgleich und keine Sicherung** gibt und dass ein geleerter Browser-Speicher den Stand mitnimmt.

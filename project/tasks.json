@@ -3249,8 +3249,16 @@
         "M16-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Lokale Speicherung nur auf ausdrueckliche Handlung: zwei Knoepfe fuer Speichern und Loeschen, jeder mit Klartextmeldung. Ohne Knopfdruck landet kein Schluessel im Speicher - ein E2E-Test tippt Angaben ein und prueft localStorage, sessionStorage und Cookies auf leer. Der Stand ist versioniert (Fassung 2); die Migration hebt Fassung 1 an und ergaenzt eine leere Interessenliste, statt welche zu erfinden, und ein Stand aus unbekannter Fassung wird gar nicht gelesen. Gespeicherter Inhalt gilt als Eingabe und laeuft durch PetProfileSchema; eingeschmuggelte Interessen wie __proto__ fallen heraus. Fehlschlaege sind Ergebnisse statt Ausnahmen: kein Speicher (privater Modus), volles Kontingent und abgeschaltete Speicherung liefern je eine eigene Fehlerart und eine verstaendliche Meldung. Geloescht wird vollstaendig - ein Schluessel, kein Papierkorb; ein E2E-Test speichert, loescht, laedt neu und findet ein leeres Formular. Ein weiterer belegt, dass auch beim Speichern keine Anfrage rausgeht, und die Seite sagt ausdruecklich, dass es keinen Geraeteabgleich und keine Sicherung gibt. 18 neue Unit-Tests (1007 gesamt) und 5 neue Feature-E2E-Tests (226 gesamt), npm run verify exit 0, 198 Standard-E2E gruen.",
+          "reference": "src/features/profile/storage.ts, src/features/profile/profile-ui.ts, src/components/pages/Profile.astro, tests/profile-storage.test.ts, tests/e2e-features/profil.spec.ts",
+          "verified_at": "2026-09-08",
+          "command": "npx vitest run tests/profile-storage.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

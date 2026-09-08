@@ -28,7 +28,7 @@ test('überträgt beim Eintippen nichts', async ({ page }) => {
   expect(anfragen).toEqual([]);
 });
 
-test('speichert nichts im Browser', async ({ page }) => {
+test('speichert nichts von allein', async ({ page }) => {
   await page.goto(PROFIL);
   await page.selectOption('#profil-tierart', 'cat');
   await page.fill('#profil-name', 'Mira');
@@ -43,7 +43,67 @@ test('speichert nichts im Browser', async ({ page }) => {
   expect(speicher.cookies).toBe('');
 });
 
-test('vergisst die Angaben beim Neuladen', async ({ page }) => {
+test('speichert auf Knopfdruck und lädt den Stand wieder', async ({ page }) => {
+  await page.goto(PROFIL);
+  await page.selectOption('#profil-tierart', 'dog');
+  await page.fill('#profil-name', 'Bello');
+  await page.fill('#profil-gewicht', '20');
+  await page.check('input[value="futter"]');
+  await page.click('#profil-speichern');
+  await expect(page.locator('.profil__hinweis')).toContainText('Gespeichert');
+
+  const schluessel = await page.evaluate(() => Object.keys(window.localStorage));
+  expect(schluessel).toEqual(['petatlas.profile.v1']);
+
+  await page.reload();
+  await expect(page.locator('#profil-name')).toHaveValue('Bello');
+  await expect(page.locator('#profil-gewicht')).toHaveValue('20');
+  await expect(page.locator('input[value="futter"]')).toBeChecked();
+  await expect(page.locator('.profil__hinweis')).toContainText('nur auf diesem Gerät');
+});
+
+test('löscht den gespeicherten Stand vollständig', async ({ page }) => {
+  await page.goto(PROFIL);
+  await page.selectOption('#profil-tierart', 'dog');
+  await page.fill('#profil-name', 'Bello');
+  await page.click('#profil-speichern');
+  await page.click('#profil-loeschen');
+  await expect(page.locator('.profil__hinweis')).toContainText('Gelöscht');
+
+  expect(await page.evaluate(() => Object.keys(window.localStorage))).toEqual([]);
+  await page.reload();
+  await expect(page.locator('#profil-name')).toHaveValue('');
+});
+
+test('speichert nicht ohne Tierart und Rufname', async ({ page }) => {
+  await page.goto(PROFIL);
+  await page.fill('#profil-gewicht', '20');
+  await page.click('#profil-speichern');
+  await expect(page.locator('.profil__hinweis')).toContainText('fehlen');
+  expect(await page.evaluate(() => Object.keys(window.localStorage))).toEqual([]);
+});
+
+test('überträgt auch beim Speichern nichts', async ({ page }) => {
+  const anfragen: string[] = [];
+  page.on('request', (anfrage) => {
+    if (anfrage.method() !== 'GET' || !anfrage.url().startsWith('http://localhost')) {
+      anfragen.push(`${anfrage.method()} ${anfrage.url()}`);
+    }
+  });
+  await page.goto(PROFIL);
+  await page.selectOption('#profil-tierart', 'dog');
+  await page.fill('#profil-name', 'Bello');
+  await page.click('#profil-speichern');
+  await expect(page.locator('.profil__hinweis')).toContainText('Gespeichert');
+  expect(anfragen).toEqual([]);
+});
+
+test('sagt, dass es keinen Geräteabgleich gibt', async ({ page }) => {
+  await page.goto(PROFIL);
+  await expect(page.locator('main')).toContainText('keinen Abgleich mit anderen Geräten');
+});
+
+test('vergisst ungespeicherte Angaben beim Neuladen', async ({ page }) => {
   await page.goto(PROFIL);
   await page.fill('#profil-name', 'Bello');
   await page.reload();

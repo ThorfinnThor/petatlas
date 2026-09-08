@@ -6,7 +6,9 @@
  * kein Bild-Pixel, keine URL-Parameter. Wer die Seite neu lädt, fängt neu an
  * — und genau das steht auch auf der Seite.
  *
- * Das Speichern kommt in M16-02 und bleibt eine ausdrückliche Handlung.
+ * Seit M16-02 gibt es zwei Knöpfe: Speichern und Löschen. Beides ist eine
+ * ausdrückliche Handlung, beides meldet sein Ergebnis im Klartext — auch den
+ * Fehlschlag, etwa im privaten Modus oder bei vollem Speicher.
  */
 import {
   INTERESSEN,
@@ -17,8 +19,11 @@ import {
   gewichtInGramm,
   type ProfilEntwurf,
 } from './state.ts';
+import { browserSpeicher, lade, loesche, speichere } from './storage.ts';
 
 let entwurf: ProfilEntwurf = LEERER_ENTWURF;
+/** Letzte Rückmeldung zu Speichern oder Löschen. `null` = noch keine. */
+let letzteMeldung: string | null = null;
 
 function escape(text: string): string {
   return text.replace(
@@ -93,11 +98,34 @@ function zeige(): void {
   }
 
   teile.push(
-    '<p class="profil__hinweis">Diese Angaben liegen nur in diesem Tab. Sie werden nicht ' +
-      'gespeichert und nicht übertragen; beim Neuladen sind sie weg.</p>',
+    `<p class="profil__hinweis">${escape(
+      letzteMeldung === null
+        ? 'Diese Angaben liegen in diesem Tab. Gespeichert wird nur, wenn Sie es sagen; ' +
+            'übertragen wird nie etwas.'
+        : letzteMeldung,
+    )}</p>`,
   );
 
   ausgabe.innerHTML = teile.join('');
+}
+
+/** Setzt die Felder aus einem geladenen Stand. */
+function schreibeFelder(entwurfNeu: ProfilEntwurf): void {
+  const setze = (id: string, wert: string): void => {
+    const feld = document.querySelector<HTMLInputElement | HTMLSelectElement>(`#${id}`);
+    if (feld !== null) feld.value = wert;
+  };
+  setze('profil-tierart', entwurfNeu.species ?? '');
+  setze('profil-name', entwurfNeu.displayName);
+  setze(
+    'profil-gewicht',
+    entwurfNeu.weightGrams === null ? '' : String(entwurfNeu.weightGrams / 1000),
+  );
+  setze('profil-geburtsdatum', entwurfNeu.birthDate ?? '');
+  setze('profil-rasse', entwurfNeu.breed ?? '');
+  for (const feld of document.querySelectorAll<HTMLInputElement>('input[name="interesse"]')) {
+    feld.checked = entwurfNeu.interests.includes(feld.value);
+  }
 }
 
 export function profilStarten(): void {
@@ -127,8 +155,57 @@ export function profilStarten(): void {
     leeren.addEventListener('click', () => {
       form.reset();
       entwurf = LEERER_ENTWURF;
+      letzteMeldung = 'Angaben verworfen. Ein gespeicherter Stand bleibt davon unberührt.';
       zeige();
     });
+  }
+
+  const speichern = document.querySelector<HTMLButtonElement>('#profil-speichern');
+  if (speichern !== null) {
+    speichern.hidden = false;
+    speichern.addEventListener('click', () => {
+      entwurf = lies();
+      const profil = alsProfil(entwurf);
+      if (profil === null) {
+        letzteMeldung = 'Zum Speichern fehlen Tierart oder Rufname. Es wurde nichts gespeichert.';
+        zeige();
+        return;
+      }
+      const ergebnis = speichere(
+        browserSpeicher(),
+        profil,
+        entwurf.interests,
+        new Date().toISOString(),
+      );
+      letzteMeldung = ergebnis.meldung;
+      zeige();
+    });
+  }
+
+  const entfernen = document.querySelector<HTMLButtonElement>('#profil-loeschen');
+  if (entfernen !== null) {
+    entfernen.hidden = false;
+    entfernen.addEventListener('click', () => {
+      letzteMeldung = loesche(browserSpeicher()).meldung;
+      zeige();
+    });
+  }
+
+  // Ein gespeicherter Stand wird geladen — aber nur, wenn es einen gibt.
+  const vorhanden = lade(browserSpeicher());
+  if (vorhanden.ok && vorhanden.wert !== null) {
+    entwurf = {
+      species: vorhanden.wert.profile.species,
+      displayName: vorhanden.wert.profile.displayName,
+      birthDate: vorhanden.wert.profile.birthDate,
+      weightGrams: vorhanden.wert.profile.weightGrams,
+      breed: vorhanden.wert.profile.breed,
+      interests: bereinigeInteressen(vorhanden.wert.interests),
+    };
+    schreibeFelder(entwurf);
+    letzteMeldung = 'Gespeicherter Stand geladen — er liegt nur auf diesem Gerät.';
+  } else if (vorhanden.fehler !== null && vorhanden.fehler !== 'kein_speicher') {
+    letzteMeldung = vorhanden.meldung;
   }
 
   zeige();

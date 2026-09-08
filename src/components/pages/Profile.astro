@@ -82,7 +82,16 @@ import { INTERESSEN } from '../../features/profile/state.ts';
     Die Übersicht unten rechnet im Browser und braucht JavaScript. Ohne JavaScript bleibt die Seite
     lesbar; das Formular hat dann keine Funktion.
   </p>
-  <p><button type="button" id="profil-leeren" hidden>Angaben verwerfen</button></p>
+  <p class="knoepfe">
+    <button type="button" id="profil-speichern" hidden>Auf diesem Gerät speichern</button>
+    <button type="button" id="profil-loeschen" hidden>Gespeicherten Stand löschen</button>
+    <button type="button" id="profil-leeren" hidden>Angaben verwerfen</button>
+  </p>
+  <p class="hilfe">
+    Gespeichert wird nur, wenn Sie es sagen — und nur in diesem Browser auf diesem Gerät. Es gibt
+    keinen Abgleich mit anderen Geräten und keine Sicherung; wer den Browser-Speicher löscht, löscht
+    auch diesen Stand.
+  </p>
 </form>
 
 <h2>Stand</h2>
@@ -140,6 +149,12 @@ import { INTERESSEN } from '../../features/profile/state.ts';
     display: block;
     font-weight: 400;
     margin-block: var(--abstand-1);
+  }
+
+  .knoepfe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--abstand-2);
   }
 
   .hilfe {
