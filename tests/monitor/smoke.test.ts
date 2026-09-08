@@ -1,6 +1,10 @@
 // M17-05 — Ein Monitor, der nie Alarm schlägt, ist kein Monitor. Deshalb
 // wird hier vor allem geprüft, dass er es tut: fehlende Seite, falsche
 // Seite, stehen gebliebener Build, veraltete Daten.
+import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -158,13 +162,20 @@ describe('Überalterung', () => {
 });
 
 describe('Leser', () => {
+  // Ein eigenes kleines Verzeichnis, kein `dist`: ein Unit-Test darf nicht
+  // davon abhängen, dass vorher jemand gebaut hat. In der CI läuft er vor
+  // dem Build.
+  const wurzel = mkdtempSync(join(tmpdir(), 'smoke-'));
+  mkdirSync(join(wurzel, 'de-de'), { recursive: true });
+  writeFileSync(join(wurzel, 'de-de', 'index.html'), '<html>Start</html>', 'utf8');
+
   it('macht aus einem Verzeichnispfad eine index.html', async () => {
-    const inhalt = await dateiLeser('dist')('/de-de/');
+    const inhalt = await dateiLeser(wurzel)('/de-de/');
     expect(inhalt?.text).toContain('<html');
   });
 
   it('meldet eine fehlende Datei als nicht vorhanden statt zu werfen', async () => {
-    expect(await dateiLeser('dist')('/gibt-es-nicht/')).toBeNull();
+    expect(await dateiLeser(wurzel)('/gibt-es-nicht/')).toBeNull();
   });
 
   it('ruft nichts über http ab', async () => {
