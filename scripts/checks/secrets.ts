@@ -147,9 +147,26 @@ function isScannable(path: string): boolean {
   }
 }
 
+/**
+ * Alles, was im öffentlichen Repository landen **wird** — nicht nur, was
+ * schon versioniert ist.
+ *
+ * `git ls-files` allein wäre zu spät: eine neu angelegte Datei ist noch nicht
+ * versioniert, und der Prüflauf vor dem Commit sähe sie nicht. Genau das ist
+ * am 2026-09-08 passiert; die lokale Kette war grün, der Prüfstand nach dem
+ * Commit rot. `--others --exclude-standard` nimmt deshalb die noch nicht
+ * versionierten, aber auch nicht ignorierten Dateien dazu.
+ */
 export function trackedFiles(cwd: string): string[] {
-  const out = execFileSync('git', ['ls-files', '-z'], { cwd, encoding: 'utf8' });
-  return out.split('\0').filter(Boolean);
+  const out = execFileSync(
+    'git',
+    ['ls-files', '-z', '--cached', '--others', '--exclude-standard'],
+    {
+      cwd,
+      encoding: 'utf8',
+    },
+  );
+  return [...new Set(out.split('\0').filter(Boolean))];
 }
 
 async function distFiles(root: string): Promise<string[]> {

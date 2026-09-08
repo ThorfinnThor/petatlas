@@ -4,7 +4,12 @@ import { describe, expect, it } from 'vitest';
 
 import { loeseBuildAus, nurUrsprung } from '../../scripts/publish/deploy-hook.ts';
 
-const HOOK = 'https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/geheim123';
+// Bewusst **nicht** in der Form eines echten Deploy-Hooks: der Secret-Audit
+// hält jede Adresse dieser Form für ein offengelegtes Geheimnis, und das soll
+// er auch. Geprüft wird hier ohnehin nur, dass ein Pfadsegment nie im Log
+// landet — dafür genügt der erlaubte Host und ein Segment, das wie ein Token
+// aussieht.
+const HOOK = 'https://api.cloudflare.com/attrappe/kein-echter-hook/geheim123';
 
 describe('Kürzung für das Log', () => {
   it('lässt nur den Ursprung übrig, weil der Token im Pfad steht', () => {
