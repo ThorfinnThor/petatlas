@@ -3217,8 +3217,16 @@
         "M14-03"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Profilzustand im Browsertab, ohne Konto und ohne Server. Das Profil liegt in einer Variablen dieses Tabs: drei E2E-Tests belegen, dass beim Eintippen keine Anfrage rausgeht, dass localStorage, sessionStorage und Cookies leer bleiben und dass die Eingabe nach einem Neuladen weg ist; ein weiterer prueft, dass nichts in die Adresse gelangt. Ein leeres Profil ist gueltig - vollstaendig genug fuer die Vorauswahl ist es mit Tierart und Rufname, alles andere ist freiwillig, und bei fehlendem Gewicht sagt die Oberflaeche, dass dann nichts wegen der Groesse gefiltert wird. Kein Feld identifiziert eine Person: ein Test prueft die Feldliste des erzeugten Profils gegen email, address, phone, ownerName und postalCode und vergleicht sie mit der erlaubten Liste. Interessen stammen aus einer festen Liste; bereinigeInteressen() verwirft Unbekanntes einschliesslich __proto__ und constructor. Das Gewicht wird nur in klarer Form gelesen (20, 4,5, 0.25) und sonst als unbekannt behandelt; ein zu langer Rufname wird gekuerzt statt abgelehnt, eine leere Rasse wird null. Die Seite nennt ausdruecklich, was nicht erhoben wird: keine E-Mail, keine Adresse, kein Haltername, keine Gesundheitsangaben. 11 neue Unit-Tests (989 gesamt) und 16 neue Feature-E2E-Tests (216 gesamt), npm run verify exit 0, 198 Standard-E2E gruen.",
+          "reference": "src/features/profile/state.ts, src/features/profile/profile-ui.ts, src/components/pages/Profile.astro, src/lib/routes.ts, tests/profile/state.test.ts, tests/e2e-features/profil.spec.ts",
+          "verified_at": "2026-09-08",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

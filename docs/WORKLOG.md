@@ -433,3 +433,15 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Jeder Labelwert trägt Einheit, Bezug und verlinkte Quelle mit Prüfdatum. Fehlende Angaben stehen als „nicht deklariert“ da, mit dem Satz „eine fehlende Angabe ist keine Null“.
 - Ein Preisstand ist derzeit nirgends zu sehen, weil es kein Angebot mit Anzeigeerlaubnis gibt. Das Abnahmedokument sagt das, statt die Prüfung als bestanden zu buchen.
 - Die Futterseiten laufen jetzt zusätzlich durch dieselben Inhaltsregeln wie Pflege und Spielzeug.
+
+## 2026-09-08 — Sitzung 10: M16 beginnt
+
+| Aufgabe | Änderung | Tatsächlich ausgeführte Prüfung | Ergebnis |
+|---|---|---|---|
+| M16-01 | `src/features/profile/state.ts`, `profile-ui.ts`, Seite `/de-de/mein-tier/` | `npx vitest run tests/profile`, `npm run test:e2e:features` (216 Tests) | 11 + 8 Tests; kein Speichern, keine Übertragung |
+
+- Das Profil lebt im Arbeitsspeicher des Tabs. Drei E2E-Tests halten das fest: keine Anfrage beim Eintippen, kein Eintrag in `localStorage`, `sessionStorage` oder Cookies, und nach dem Neuladen ist das Feld leer.
+- Ein **leeres Profil ist gültig**. Vollständig genug für die Vorauswahl ist es mit Tierart und Rufname; alles andere ist freiwillig, und die Seite sagt bei fehlendem Gewicht, dass dann nichts wegen der Größe gefiltert wird.
+- Kein Feld identifiziert eine Person: keine E-Mail, keine Adresse, keine Telefonnummer, kein Haltername, keine Gesundheitsangabe. Ein Test prüft die Feldliste des erzeugten Profils gegen genau diese Wörter.
+- Interessen kommen aus einer festen Liste. `bereinigeInteressen()` verwirft alles Unbekannte — auch `__proto__` und `constructor`, die sonst gern durch einen naiven Filter rutschen.
+- Die Rasse ist eine freie Angabe für die eigene Übersicht und löst nichts aus. Der Satz steht auf der Seite, weil das Matching in M14-03 bereits so gebaut ist.

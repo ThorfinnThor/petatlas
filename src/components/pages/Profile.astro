@@ -1,0 +1,174 @@
+---
+/**
+ * M16-01 — Mein Tier.
+ *
+ * Ein Profil ohne Konto: die Angaben bleiben im Tab, werden nicht gespeichert
+ * und nicht übertragen. Es gibt keine E-Mail, keine Adresse, keinen Namen des
+ * Halters — nur das, was für eine Vorauswahl nützt.
+ *
+ * Alle Werkzeuge funktionieren ohne Profil. Das steht auf der Seite, damit
+ * niemand glaubt, er müsse erst etwas eintragen.
+ */
+import Notice from '../Notice.astro';
+import { INTERESSEN } from '../../features/profile/state.ts';
+---
+
+<h1>Mein Tier</h1>
+
+<p>
+  Ein paar Angaben, die die Vorauswahl in Suche und Findern erleichtern. <strong>Freiwillig</strong>
+  — alle Werkzeuge funktionieren auch ohne. Es gibt hier kein Konto, keine Anmeldung und keine Verbindung
+  zu einem Server.
+</p>
+
+<Notice variante="hinweis" titel="Was mit diesen Angaben passiert">
+  <p>
+    Sie bleiben in diesem Browsertab. Sie werden <strong>nicht gespeichert</strong> und
+    <strong>nicht übertragen</strong>: kein Server sieht sie, keine Adresse enthält sie, kein
+    Partnerlink trägt sie weiter. Beim Neuladen der Seite sind sie weg — das dauerhafte Speichern
+    kommt später und bleibt eine eigene Entscheidung.
+  </p>
+</Notice>
+
+<form id="profilform">
+  <div class="feld">
+    <label for="profil-tierart">Tierart</label>
+    <select id="profil-tierart">
+      <option value="">keine Angabe</option>
+      <option value="dog">Hund</option>
+      <option value="cat">Katze</option>
+    </select>
+  </div>
+
+  <div class="feld">
+    <label for="profil-name">Rufname</label>
+    <input id="profil-name" type="text" maxlength="40" autocomplete="off" />
+    <p class="hilfe">Nur für Ihre eigene Übersicht. Ein Spitzname genügt.</p>
+  </div>
+
+  <div class="feld">
+    <label for="profil-gewicht">Gewicht in Kilogramm</label>
+    <input id="profil-gewicht" type="text" inputmode="decimal" autocomplete="off" />
+    <p class="hilfe">Leer lassen, wenn unbekannt. Dann wird nichts wegen der Größe gefiltert.</p>
+  </div>
+
+  <div class="feld">
+    <label for="profil-geburtsdatum">Geburtsdatum</label>
+    <input id="profil-geburtsdatum" type="date" />
+  </div>
+
+  <div class="feld">
+    <label for="profil-rasse">Rasse</label>
+    <input id="profil-rasse" type="text" maxlength="60" autocomplete="off" />
+    <p class="hilfe">
+      Freie Angabe für Ihre Übersicht. Sie löst keine Empfehlung aus: aus einer Rasse folgt hier
+      nichts.
+    </p>
+  </div>
+
+  <fieldset>
+    <legend>Was Sie interessiert</legend>
+    {
+      Object.entries(INTERESSEN).map(([schluessel, label]) => (
+        <label class="wahl">
+          <input type="checkbox" name="interesse" value={schluessel} />
+          {label}
+        </label>
+      ))
+    }
+  </fieldset>
+
+  <p id="profil-ohne-js" class="hilfe">
+    Die Übersicht unten rechnet im Browser und braucht JavaScript. Ohne JavaScript bleibt die Seite
+    lesbar; das Formular hat dann keine Funktion.
+  </p>
+  <p><button type="button" id="profil-leeren" hidden>Angaben verwerfen</button></p>
+</form>
+
+<h2>Stand</h2>
+<div id="profil-stand" role="status" aria-live="polite"></div>
+
+<h2>Was hier nicht erhoben wird</h2>
+<ul>
+  <li><strong>Keine E-Mail-Adresse und kein Konto.</strong> Es gibt nichts anzumelden.</li>
+  <li><strong>Keine Adresse und keine Telefonnummer.</strong> Sie werden für nichts gebraucht.</li>
+  <li>
+    <strong>Kein Name des Halters.</strong> Der Rufname des Tieres ist eine Anzeige für Sie, keine Kennung.
+  </li>
+  <li>
+    <strong>Keine Gesundheitsangaben.</strong> Beschwerden, Diagnosen und Medikamente gehören in die Praxis,
+    nicht in ein Formular auf einer Website.
+  </li>
+</ul>
+
+<script>
+  import { profilStarten } from '../../features/profile/profile-ui.ts';
+
+  profilStarten();
+</script>
+
+<style>
+  .feld {
+    margin-block: var(--abstand-4);
+  }
+
+  .feld label,
+  legend {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--abstand-1);
+  }
+
+  input[type='text'],
+  input[type='date'],
+  select {
+    width: 100%;
+    max-width: 24rem;
+    padding: var(--abstand-2);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    background: var(--farbe-grund);
+  }
+
+  fieldset {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+  }
+
+  .wahl {
+    display: block;
+    font-weight: 400;
+    margin-block: var(--abstand-1);
+  }
+
+  .hilfe {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+    margin-block: var(--abstand-1);
+  }
+
+  #profil-stand :global(.profil__kopf) {
+    font-weight: 600;
+  }
+
+  #profil-stand :global(.profil__werte) {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: var(--abstand-1) var(--abstand-4);
+  }
+
+  #profil-stand :global(.profil__werte dt) {
+    font-weight: 600;
+  }
+
+  #profil-stand :global(.profil__werte dd) {
+    margin: 0;
+  }
+
+  #profil-stand :global(.profil__hinweis),
+  #profil-stand :global(.profil__offen) {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+</style>

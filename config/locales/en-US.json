@@ -12,6 +12,7 @@
     "nav.costs": "Vet costs",
     "nav.map": "Vets nearby",
     "nav.catalog": "Offers",
+    "nav.profile": "My pet",
     "nav.travel": "Travel check",
     "nav.care": "Care",
     "nav.toys": "Toys",
@@ -33,7 +34,8 @@
     "dataStatus": "data-status",
     "imprint": "imprint",
     "privacy": "privacy",
-    "catalog": "offers"
+    "catalog": "offers",
+    "profile": "my-pet"
   },
   "legacySlugs": {}
 }

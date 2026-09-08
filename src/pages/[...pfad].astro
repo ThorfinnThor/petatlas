@@ -26,6 +26,7 @@ import Home from '../components/pages/Home.astro';
 import Imprint from '../components/pages/Imprint.astro';
 import Map from '../components/pages/Map.astro';
 import Privacy from '../components/pages/Privacy.astro';
+import Profile from '../components/pages/Profile.astro';
 import Sources from '../components/pages/Sources.astro';
 import Toys from '../components/pages/Toys.astro';
 import Travel from '../components/pages/Travel.astro';
@@ -62,6 +63,7 @@ const titel = translate(locale, `nav.${routeKey}`);
   {routeKey === 'costs' && <Costs />}
   {routeKey === 'map' && <Map />}
   {routeKey === 'catalog' && <Catalog />}
+  {routeKey === 'profile' && <Profile />}
   {routeKey === 'travel' && <Travel />}
   {routeKey === 'care' && <Care />}
   {routeKey === 'toys' && <Toys />}
