@@ -31,7 +31,7 @@ export default defineConfig({
     command: `npm run build:site && npx astro preview --port ${PORT} --ignore-lock`,
     env: {
       ASTRO_PREVIEW_BACKGROUND: 'false',
-      ENABLE_FEATURES: 'costs,map,travel,commerce,care,toys',
+      ENABLE_FEATURES: 'costs,map,travel,commerce,care,toys,food',
     },
     port: PORT,
     reuseExistingServer: false,

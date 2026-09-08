@@ -398,3 +398,12 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Der Versand bleibt draußen: ein Versandanteil je Kilogramm hinge an der Bestellmenge und wäre für einen Vergleich unbrauchbar. Ein Test vergleicht denselben Grundpreis mit und ohne Versand.
 - Verschiedene **Packungsgrößen** sind verschiedene Varianten und werden nicht verglichen; verschiedene **Gebindegrößen** derselben Packung schon — genau dafür gibt es den Grundpreis.
 - Fehlt bei einem Angebot die Menge, unterbleibt der Vergleich für alle. Ein Ranking, in dem ein Teilnehmer nicht mitgerechnet werden kann, ist irreführend.
+
+| M15-03 | `src/features/food/catalog.ts`, `search-ui.ts`, `Food.astro`, `src/pages/de-de/futter/[produkt].astro` | `npx vitest run tests/food`, `npm run test:e2e:features` (188 Tests) | Suche über Name, Marke und Nummer; vier Produktseiten |
+
+- Die Barcodeeingabe ist eine Texteingabe: eine abgetippte Nummer genügt, Bindestriche und Leerzeichen stören nicht, eine Kamera braucht niemand. Ein Test tippt `4006-3813 33931` und findet das Produkt.
+- Die Suche findet, sie bewertet nicht. Jeder Treffer sagt, worauf er beruht — Nummer, Produktname oder Marke.
+- Kein Treffer heißt „hier nicht erfasst“, nicht „gibt es nicht“.
+- Die Produktseite zeigt jeden deklarierten Nährwert mit **Bezug** und **Quelle** und nennt darunter, was nicht deklariert ist — mit dem Satz, auf den es ankommt: eine fehlende Angabe ist keine Null.
+- Ohne Nährwerte bleibt die Seite nutzbar: Menge und Grundpreisbasis stehen unabhängig davon da.
+- Der Angebotsteil ist leer und sagt warum. Verschiedene Gebindegrößen derselben Packung sind verlinkt; verschiedene Packungsgrößen ausdrücklich nicht.

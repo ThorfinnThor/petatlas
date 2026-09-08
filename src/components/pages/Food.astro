@@ -1,20 +1,157 @@
 ---
 /**
- * M04-03 — Template "Futter".
+ * M15-03 — Futter suchen.
  *
- * Diese Seite wird nur erzeugt, wenn ihr Feature Flag im Markt eingeschaltet
- * ist. Ohne freigegebene Daten existiert weder Route noch Navigationseintrag;
- * es entsteht ausdrücklich keine leere Ankündigungsseite.
- *
- * Die Fachlogik folgt im zuständigen Meilenstein.
+ * Die Seite sucht über Name, Marke und die Nummer vom Etikett. Sie vergleicht
+ * Mengen und Preise; sie bewertet keine Zusammensetzung und vergibt keine
+ * Punkte — dafür bräuchte es eine Methodik, die niemand geprüft hat.
  */
 import Notice from '../Notice.astro';
+import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
+import { devFeatureOverrides } from '../../../config/build.ts';
+import { routePath, subroutePath } from '../../lib/routes.ts';
+import { alleFutter, futterDatenArt } from '../../features/food/catalog.ts';
+import { mengenText } from '../../features/food/unit-price.ts';
+import { futterTaxonomie } from '../../features/food/taxonomy.ts';
+
+const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const basisPfad = routePath(markt, 'food');
+const synthetisch = futterDatenArt() === 'synthetic';
+const produkte = alleFutter();
+const taxonomie = futterTaxonomie();
+
+const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
 ---
 
 <h1>Futter</h1>
-<Notice variante="hinweis" titel="Fachlogik folgt">
-  <p>
-    Das Grundgerüst dieser Seite steht. Die eigentliche Funktion wird in ihrem Meilenstein ergänzt,
-    zusammen mit geprüften Daten, Quellenangabe und Datenstand.
+
+<p>
+  Suchen Sie nach Marke, Produktname oder der Nummer vom Etikett. Verglichen werden Menge und Preis
+  — nicht die Qualität einer Zusammensetzung.
+</p>
+
+{
+  synthetisch && (
+    <Notice variante="testdaten" titel="Synthetische Futterdaten">
+      <p>
+        Die hinterlegten Produkte sind <strong>erfunden</strong>, einschließlich Marken und Nummern.
+        Echte Produkte erscheinen erst mit Angebotsrechten und geprüften Etikettangaben.
+      </p>
+    </Notice>
+  )
+}
+
+<form id="futtersuche" data-basis={basisPfad}>
+  <div class="feld">
+    <label for="futter-begriff">Marke, Produktname oder Nummer vom Etikett</label>
+    <input
+      id="futter-begriff"
+      type="search"
+      autocomplete="off"
+      inputmode="text"
+      placeholder="z. B. Nassfutter oder 4006381333931"
+    />
+    <p class="hilfe">
+      Die Nummer können Sie abtippen; eine Kamera ist nicht nötig. Bindestriche und Leerzeichen
+      stören nicht.
+    </p>
+  </div>
+  <p id="futter-ohne-js" class="hilfe">
+    Die Suche rechnet im Browser und braucht JavaScript. Die vollständige Liste steht darunter.
   </p>
-</Notice>
+  <p><button type="submit" id="futter-suchen" hidden>Suchen</button></p>
+</form>
+
+<div id="futter-treffer" role="status" aria-live="polite"></div>
+
+<h2>Alle erfassten Produkte ({produkte.length})</h2>
+<ul class="produkte">
+  {
+    produkte.map((produkt) => (
+      <li data-futter={produkt.foodId}>
+        <a href={subroutePath(markt, 'food', kurz(produkt.foodId))}>
+          {produkt.brand} — {produkt.productName}
+        </a>
+        <span class="hilfe">
+          {' '}
+          · {mengenText(produkt) ?? 'Menge nicht angegeben'}
+          {produkt.gtin === null ? '' : ` · ${produkt.gtin}`}
+        </span>
+      </li>
+    ))
+  }
+</ul>
+
+<h2>Was hier nicht passiert</h2>
+<ul class="ausschluesse">
+  {
+    taxonomie.excluded.map((eintrag) => (
+      <li data-ausschluss>
+        <strong>{eintrag.topic}.</strong> {eintrag.reason}
+      </li>
+    ))
+  }
+</ul>
+
+<script>
+  import { futtersucheStarten } from '../../features/food/search-ui.ts';
+
+  futtersucheStarten();
+</script>
+
+<style>
+  .feld {
+    margin-block: var(--abstand-4);
+  }
+
+  .feld label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: var(--abstand-1);
+  }
+
+  input[type='search'] {
+    width: 100%;
+    max-width: 24rem;
+    padding: var(--abstand-2);
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    background: var(--farbe-grund);
+  }
+
+  .hilfe {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
+  .produkte,
+  .ausschluesse {
+    padding-inline-start: var(--abstand-5);
+  }
+
+  .produkte li,
+  .ausschluesse li {
+    margin-block: var(--abstand-2);
+  }
+
+  #futter-treffer :global(.treffer__liste) {
+    list-style: none;
+    padding: 0;
+  }
+
+  #futter-treffer :global(.treffer__liste > li) {
+    border: var(--linie) solid var(--farbe-linie);
+    border-radius: var(--radius);
+    padding: var(--abstand-3) var(--abstand-4);
+    margin-block: var(--abstand-3);
+  }
+
+  #futter-treffer :global(.treffer__meta) {
+    color: var(--farbe-text-leise);
+    font-size: var(--schrift-klein);
+  }
+
+  #futter-treffer :global(.treffer__kopf) {
+    font-weight: 600;
+  }
+</style>

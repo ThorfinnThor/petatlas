@@ -1,0 +1,193 @@
+{
+  "datasetId": "synthetische-futterdaten-v1",
+  "lastEditedAt": "2026-09-07",
+  "dataKind": "synthetic",
+  "products": [
+    {
+      "foodId": "synthetisch:trocken-1kg",
+      "productId": "synthetisch:produkt-trocken-1kg",
+      "species": "dog",
+      "brand": "Beispielmarke",
+      "productName": "Trockenfutter Adult Huhn",
+      "gtin": "4006381333931",
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 1000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 22.0,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "nutrient": "fat",
+          "value": 12.0,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "nutrient": "fibre",
+          "value": 2.5,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "nutrient": "ash",
+          "value": null,
+          "unit": null,
+          "basis": null,
+          "sourceLabel": "nicht deklariert",
+          "sourceUrl": null,
+          "checkedAt": null
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://beispiel.invalid/etikett/trocken-1kg",
+      "declarationCheckedAt": "2026-09-07",
+      "categoryId": "dry-food"
+    },
+    {
+      "foodId": "synthetisch:trocken-12kg",
+      "productId": "synthetisch:produkt-trocken-12kg",
+      "species": "dog",
+      "brand": "Beispielmarke",
+      "productName": "Trockenfutter Adult Huhn",
+      "gtin": "4006381333948",
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 12000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 22.0,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "nutrient": "fat",
+          "value": 12.0,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://beispiel.invalid/etikett/trocken-12kg",
+      "declarationCheckedAt": "2026-09-07",
+      "categoryId": "dry-food"
+    },
+    {
+      "foodId": "synthetisch:nass-400g",
+      "productId": "synthetisch:produkt-nass-400g",
+      "species": "cat",
+      "brand": "Zweite Marke",
+      "productName": "Nassfutter Rind pur",
+      "gtin": "4006381333955",
+      "lifeStage": null,
+      "kind": "complete",
+      "netContentGrams": 400,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 10.5,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "nutrient": "fat",
+          "value": 6.0,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "nutrient": "moisture",
+          "value": 78.0,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://beispiel.invalid/etikett/nass-400g",
+      "declarationCheckedAt": "2026-09-07",
+      "categoryId": "wet-food"
+    },
+    {
+      "foodId": "synthetisch:nass-6x400",
+      "productId": "synthetisch:produkt-nass-6x400",
+      "species": "cat",
+      "brand": "Zweite Marke",
+      "productName": "Nassfutter Rind pur",
+      "gtin": "4006381333962",
+      "lifeStage": null,
+      "kind": "complete",
+      "netContentGrams": 400,
+      "packUnits": 6,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 10.5,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "nutrient": "fat",
+          "value": 6.0,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        },
+        {
+          "nutrient": "moisture",
+          "value": 78.0,
+          "unit": "g",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Etikett (synthetisch)",
+          "sourceUrl": "https://beispiel.invalid/etikett",
+          "checkedAt": "2026-09-07"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://beispiel.invalid/etikett/nass-6x400",
+      "declarationCheckedAt": "2026-09-07",
+      "categoryId": "wet-food"
+    }
+  ],
+  "notes": [
+    "Alle Produkte, Marken, GTINs und Adressen sind erfunden. Die GTIN-Pruefziffern stimmen, damit die Suche echt geprueft wird.",
+    "Das Trockenfutter gibt es als 1 kg und als 12 kg: verschiedene Packungsgroessen sind verschiedene Varianten und werden nicht miteinander verglichen.",
+    "Das Nassfutter gibt es als Einzeldose und als 6er-Gebinde derselben Dose: das ist derselbe Artikel und wird ueber den Grundpreis verglichen.",
+    "Bei einem Produkt steht ein Naehrwert ausdruecklich als nicht deklariert."
+  ]
+}

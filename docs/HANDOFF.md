@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 bei 2/6 (87 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 bei 3/6 (88 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M15-03 — Produktsuche und Futteransichten bauen.** `src/pages/de-de/futter/`: Suche nach Name, Marke und GTIN, Angebotsvergleich und deklarierte Produktattribute; Barcodeeingabe zunächst als Text, Kamera ist nicht Pflicht. Abnahme: gleiche Varianten sind vergleichbar, und ohne Nährwerte bleibt der Preisvergleich nutzbar.
+**M15-04 — OPFF-Machbarkeit prüfen.** `docs/OPFF_SPIKE.md` und `config/sources/opff.json`: konkrete API oder Distribution und die Rechtelage tatsächlich verifizieren, dann eine definierte Stichprobe gegen GTINs messen. Abnahme: Abdeckung, fehlende Felder und Lizenzfolgen sind dokumentiert — **kein erfundener Trefferanteil**.
 
-Vorhanden: Futtermodell mit deklarierten Angaben, Futtertaxonomie sowie `src/features/food/unit-price.ts` (Grundpreis nur bei vollständiger Menge, Multipack auf die Gesamtmenge, Versand außen vor).
+Vorhanden: Futtermodell und Taxonomie, Grundpreisrechnung, Futtersuche über Name, Marke und Nummer (`src/features/food/catalog.ts`), Übersicht `/de-de/futter/` und vier Produktseiten mit deklarierten Nährwerten, Bezug, Quelle und der Liste des nicht Deklarierten.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

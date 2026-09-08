@@ -1,0 +1,220 @@
+---
+/**
+ * M15-03 — Ein Futterprodukt.
+ *
+ * Die Seite zeigt, was auf dem Etikett steht — mit Fundstelle und Bezug — und
+ * benennt, was **nicht** deklariert ist. Sie rechnet keinen Nährwert um und
+ * vergibt keine Punkte.
+ *
+ * Angebote erscheinen nur mit Anzeigeerlaubnis. Ohne Partnervertrag gibt es
+ * keine, und dann steht der Preisvergleich als das da, was er ist: leer.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Notice from '../../../components/Notice.astro';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../config/build.ts';
+import { routePath, subroutePath } from '../../../lib/routes.ts';
+import { alleFutter, futterDatenArt, gleicheVariante } from '../../../features/food/catalog.ts';
+import { mengenText } from '../../../features/food/unit-price.ts';
+import type { FutterEintrag } from '../../../features/food/catalog.ts';
+
+export function getStaticPaths() {
+  const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  if (!isFeatureEnabled(markt, 'food')) return [];
+
+  return alleFutter().map((produkt) => ({
+    params: { produkt: produkt.foodId.replace('synthetisch:', '') },
+    props: { produkt },
+  }));
+}
+
+const { produkt } = Astro.props as { produkt: FutterEintrag };
+const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const uebersicht = routePath(markt, 'food');
+const eigenerPfad = subroutePath(markt, 'food', produkt.foodId.replace('synthetisch:', ''));
+const synthetisch = futterDatenArt() === 'synthetic';
+
+const BASIS_TEXT: Readonly<Record<string, string>> = {
+  as_fed_per_100g: 'je 100 g Frischmasse',
+  dry_matter_per_100g: 'je 100 g Trockenmasse',
+  per_1000kj: 'je 1000 kJ',
+};
+
+const PHASE_TEXT: Readonly<Record<string, string>> = {
+  puppy: 'Welpe',
+  adult: 'ausgewachsen',
+  senior: 'Senior',
+  all_stages: 'alle Lebensphasen',
+};
+
+const ART_TEXT: Readonly<Record<string, string>> = {
+  complete: 'Alleinfuttermittel',
+  complementary: 'Ergänzungsfuttermittel',
+};
+
+const varianten = gleicheVariante(produkt).filter((eintrag) => eintrag.foodId !== produkt.foodId);
+const deklariert = produkt.nutrients.filter((eintrag) => eintrag.value !== null);
+const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
+---
+
+<BaseLayout
+  title={`${produkt.brand} — ${produkt.productName}`}
+  route="food"
+  canonicalPfad={eigenerPfad}
+>
+  <h1>{produkt.brand} — {produkt.productName}</h1>
+
+  {
+    synthetisch && (
+      <Notice variante="testdaten" titel="Synthetisches Produkt">
+        <p>Marke, Produktname, Nummer und Angaben sind erfunden.</p>
+      </Notice>
+    )
+  }
+
+  <dl class="angaben">
+    <dt>Menge</dt>
+    <dd data-testid="menge">{mengenText(produkt) ?? 'nicht angegeben'}</dd>
+    <dt>Nummer</dt>
+    <dd>{produkt.gtin ?? 'nicht angegeben'}</dd>
+    <dt>Lebensphase</dt>
+    <dd data-testid="lebensphase">
+      {
+        produkt.lifeStage === null
+          ? 'nicht deklariert'
+          : (PHASE_TEXT[produkt.lifeStage] ?? produkt.lifeStage)
+      }
+    </dd>
+    <dt>Futterart</dt>
+    <dd>{produkt.kind === null ? 'nicht deklariert' : (ART_TEXT[produkt.kind] ?? produkt.kind)}</dd>
+  </dl>
+
+  <h2>Deklarierte Nährwerte</h2>
+  {
+    deklariert.length === 0 ? (
+      <p data-testid="keine-naehrwerte">
+        Für dieses Produkt liegen keine deklarierten Nährwerte vor. Der Mengen- und Preisvergleich
+        funktioniert trotzdem — er braucht sie nicht.
+      </p>
+    ) : (
+      <table class="naehrwerte">
+        <thead>
+          <tr>
+            <th scope="col">Angabe</th>
+            <th scope="col">Wert</th>
+            <th scope="col">Bezug</th>
+            <th scope="col">Quelle</th>
+          </tr>
+        </thead>
+        <tbody>
+          {deklariert.map((eintrag) => (
+            <tr data-naehrwert={eintrag.nutrient}>
+              <th scope="row">{eintrag.nutrient}</th>
+              <td>
+                {eintrag.value} {eintrag.unit}
+              </td>
+              <td>{eintrag.basis === null ? '—' : (BASIS_TEXT[eintrag.basis] ?? eintrag.basis)}</td>
+              <td>
+                {eintrag.sourceUrl === null ? (
+                  eintrag.sourceLabel
+                ) : (
+                  <a href={eintrag.sourceUrl} rel="nofollow noopener">
+                    {eintrag.sourceLabel}
+                  </a>
+                )}
+                {eintrag.checkedAt === null ? '' : `, geprüft am ${eintrag.checkedAt}`}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
+  }
+
+  {
+    offen.length > 0 && (
+      <p class="hilfe" data-testid="nicht-deklariert">
+        Nicht deklariert: {offen.map((eintrag) => eintrag.nutrient).join(', ')}. Eine fehlende
+        Angabe ist keine Null.
+      </p>
+    )
+  }
+
+  <Notice variante="hinweis" titel="Keine Bewertung">
+    <p>
+      Aus diesen Zahlen entsteht hier kein Punktwert und kein Vergleich der Qualität. Was ein
+      bestimmtes Tier braucht, hängt von Dingen ab, die auf keinem Etikett stehen.
+    </p>
+  </Notice>
+
+  <h2>Angebote</h2>
+  <p data-testid="keine-angebote">
+    Für dieses Produkt liegt kein Angebot mit Anzeigeerlaubnis vor. Ohne freigegebenen
+    Partnervertrag wird keines gezeigt — das ist kein Fehler und keine Aussage über den Markt.
+  </p>
+
+  {
+    varianten.length > 0 && (
+      <>
+        <h2>Gleiche Variante, andere Gebindegröße</h2>
+        <ul class="varianten">
+          {varianten.map((eintrag) => (
+            <li data-variante={eintrag.foodId}>
+              <a href={subroutePath(markt, 'food', eintrag.foodId.replace('synthetisch:', ''))}>
+                {mengenText(eintrag) ?? 'Menge nicht angegeben'}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="hilfe">
+          Verglichen wird über den Grundpreis je Kilogramm — sobald es Angebote gibt.
+        </p>
+      </>
+    )
+  }
+
+  <p><a href={uebersicht}>Zurück zur Futtersuche</a></p>
+
+  <style>
+    .angaben {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: var(--abstand-2) var(--abstand-4);
+    }
+
+    .angaben dt {
+      font-weight: 600;
+    }
+
+    .angaben dd {
+      margin: 0;
+    }
+
+    .naehrwerte {
+      width: 100%;
+      border-collapse: collapse;
+      margin-block: var(--abstand-3);
+    }
+
+    .naehrwerte th,
+    .naehrwerte td {
+      border-bottom: var(--linie) solid var(--farbe-linie);
+      padding: var(--abstand-2);
+      text-align: start;
+      vertical-align: top;
+    }
+
+    .hilfe {
+      color: var(--farbe-text-leise);
+      font-size: var(--schrift-klein);
+    }
+
+    .varianten {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--abstand-2) var(--abstand-4);
+    }
+  </style>
+</BaseLayout>

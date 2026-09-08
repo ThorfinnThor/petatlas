@@ -3090,8 +3090,16 @@
         "M15-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Futtersuche und Produktseiten. Gesucht wird ueber Produktname, Marke und die Nummer vom Etikett; die Barcodeeingabe ist bewusst eine Texteingabe, Bindestriche und Leerzeichen werden entfernt, eine Kamera ist nicht noetig - ein Test tippt '4006-3813 33931' und findet das Produkt. Jeder Treffer nennt, worauf er beruht (Nummer, Name, Marke); eine Eingabe unter drei Zeichen findet nichts, und kein Treffer heisst 'hier nicht erfasst', nicht 'gibt es nicht'. Die Produktseite zeigt Menge, Nummer, Lebensphase und Futterart (jeweils 'nicht deklariert', wenn sie fehlen), dazu jeden deklarierten Naehrwert mit Wert, Einheit, Bezug (Frisch- oder Trockenmasse) und verlinkter Quelle samt Pruefdatum; darunter steht, was nicht deklariert ist, mit dem Satz 'Eine fehlende Angabe ist keine Null'. Ohne Naehrwerte bleibt die Seite nutzbar. Der Angebotsteil ist leer und begruendet das mit dem fehlenden Partnervertrag. Dieselbe Packung mit anderem Gebinde ist verlinkt, verschiedene Packungsgroessen ausdruecklich nicht. Die Daten sind synthetisch gekennzeichnet, die GTIN-Pruefziffern stimmen. 11 neue Unit-Tests (963 gesamt) und 18 neue Feature-E2E-Tests (188 gesamt), npm run verify exit 0.",
+          "reference": "src/features/food/catalog.ts, src/features/food/search-ui.ts, src/components/pages/Food.astro, src/pages/de-de/futter/[produkt].astro, content-data/food/synthetic-products.json, tests/food/catalog.test.ts, tests/e2e-features/futter.spec.ts",
+          "verified_at": "2026-09-08",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
