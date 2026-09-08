@@ -627,3 +627,9 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Der wichtigste Satz steht im Fehlertext des Adapters: **„Kein Rückfall auf einen anderen Markt.“** Eine amerikanische Kostenseite, die stillschweigend deutsche Gebührensätze zeigt, wäre schlimmer als gar keine Kostenseite.
 - **Es gibt keinen Wechselkurs im System**, und das ist Absicht: ein umgerechneter Preis wäre eine erfundene Zahl. Ein USD-Betrag bleibt ein USD-Betrag, auch mit deutschem Locale.
 - Zwei eigene Annahmen waren falsch und wurden im Test korrigiert, nicht im Code: der US-Slug heißt `vet-map`, und auch der deutsche Markt hat seine Funktionen in der versionierten Konfiguration aus — es ist eben nichts freigegeben.
+
+| M19-04 | `docs/RUNBOOK.md`, `docs/KNOWN_LIMITATIONS.md`, `tests/runbook.test.ts` | acht Runbook-Befehle ausgeführt, 9 Tests | grün |
+
+- Handgriffe statt Beschreibungen: Auslöser, Befehle, Dateien, Abschlusskriterium. Die Hintergründe stehen woanders; hier steht, was zu **tun** ist.
+- **Ein Betriebshandbuch, dessen Befehle es nicht gibt, ist im Ernstfall schlimmer als keins.** Deshalb prüft ein Test, dass jedes genannte npm-Skript und jede genannte Datei existiert — für Runbook, Entwicklersetup und Rollback.
+- `KNOWN_LIMITATIONS.md` sammelt, was sonst in einem grünen Prüflauf untergeht: keine Verfügbarkeitszusage, der Zeitplan überwacht sich nicht selbst, eine dauerhaft unerreichbare Quelle wird erst nach 400 Tagen zum Alarm, kein Lighthouse-Score, kein Screenreader-Lauf, keine juristische Prüfung.

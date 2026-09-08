@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 3/6 (112 von 121 Aufgaben, sechs blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 4/6 (113 von 121 Aufgaben, sechs blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -38,13 +38,11 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M19-04 — Betriebshandbuch und Restrisiken fertigstellen.** `docs/RUNBOOK.md` und `docs/KNOWN_LIMITATIONS.md`: Quelle hinzufügen, Partner sperren, Datenrollback, Secretrotation, Frischeprüfung, Gebühren- und Reisereview sowie Kostengrenzen als konkrete Handgriffe beschreiben. Abnahme: der Betreiber kann die wichtigsten Eingriffe anhand benannter Dateien und Befehle durchführen.
+**M19-05 — Aufgaben- und Launchstatus abgleichen.** Alle Aufgaben auf ihre Nachweise prüfen; `done`, `blocked` und bewusst `deferred` getrennt zählen; der Abnahmebericht nennt das **exakte** Feature-Set. Abnahme: keine Hundert-Prozent-Behauptung, solange erforderliche Freigaben offen sind, und ein Status, der mit Dateien und Tests übereinstimmt.
 
-Vieles liegt schon in einzelnen Dokumenten (`ROLLBACK`, `MONITORING`, `OPERATIONS`, `SOURCE_REVIEWS`, `LEGAL_CHECKLIST`); das Runbook soll daraus **Handgriffe** machen, nicht die Dokumente wiederholen.
+Danach bleibt nur noch M19-06 — die tatsächliche Veröffentlichung, ein externer Freigabepunkt.
 
-Der Ausbaubeweis steht: `tests/expansion-proof.test.ts` und `docs/EXPANSION.md` zeigen, dass ein zweiter Markt aus Konfiguration und Adaptern entsteht — kein Rückfall auf einen anderen Markt, keine Umrechnung, kein Umbau am DE-Kern, nichts davon veröffentlicht.
-
-Die Abnahmeläufe stehen in `docs/RELEASE_TESTS.md`, der frische Clone in `docs/DEVELOPER_SETUP.md`.
+Vorhanden: `docs/RUNBOOK.md` mit zehn Handgriffen, deren Befehle alle ausgeführt wurden, und `docs/KNOWN_LIMITATIONS.md` mit den Grenzen, die sonst in einem grünen Prüflauf untergehen. `tests/runbook.test.ts` prüft, dass jeder dort genannte Befehl und jede genannte Datei existiert.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

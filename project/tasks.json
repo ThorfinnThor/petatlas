@@ -3929,8 +3929,14 @@
         "M19-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "docs/RUNBOOK.md mit zehn Handgriffen (Quelle aufnehmen, Partner sperren, Datenstand erneuern, zurueckrollen, Secret wechseln, Frische pruefen, Freigabe eintragen, Kosten pruefen, falsche Daten, roter Lauf) - jeder mit Ausloeser, Befehlen, Dateien und Abschlusskriterium. Die genannten Befehle wurden ausgefuehrt: rollback:pruefen, check:release, check:budgets, check:licenses, check:municipal, smoke, source-drift und snapshot:got je exit 0. docs/KNOWN_LIMITATIONS.md nennt 25 Grenzen in fuenf Gruppen, darunter die, die sonst in einem gruenen Prueflauf untergehen: keine Verfuegbarkeitszusage, der Zeitplan ueberwacht sich nicht selbst, eine dauerhaft unerreichbare Quelle wird erst nach 400 Tagen zum Alarm, kein Lighthouse-Score, kein Screenreader-Lauf, keine juristische Pruefung. tests/runbook.test.ts haelt beides ehrlich: jedes im Runbook genannte npm-Skript muss existieren und jede genannte Datei auch - 9 Tests gruen. npm run verify exit 0, 1296 Tests.",
+          "reference": "docs/RUNBOOK.md, docs/KNOWN_LIMITATIONS.md, tests/runbook.test.ts",
+          "verified_at": "2026-09-08T16:45:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },
