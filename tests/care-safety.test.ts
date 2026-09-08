@@ -100,6 +100,21 @@ describe('Ausgelieferte Pflegeinhalte', () => {
     }
   });
 
+  it('enthalten in den Futterseiten und -modulen keine gesperrte Aussage', () => {
+    const futterQuellen = [
+      'src/components/pages/Food.astro',
+      'src/pages/de-de/futter/[produkt].astro',
+      ...dateien('src/features/food', ['.ts']),
+    ];
+    for (const datei of futterQuellen) {
+      const funde = pruefeText(readFileSync(datei, 'utf8'));
+      expect(
+        funde.map((fund) => `${fund.regel}: ${fund.stelle}`),
+        datei,
+      ).toEqual([]);
+    }
+  });
+
   it('enthalten in den Seiten und Modulen keine gesperrte Aussage', () => {
     const quellen = [
       'src/components/pages/Care.astro',

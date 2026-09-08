@@ -425,3 +425,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Übernommen werden vier Felder. `image_url` steht ausdrücklich nicht dabei: die Bilder stehen unter CC BY-SA und können Rechte Dritter enthalten. Ein Test prüft, dass keine Bildadresse durch die Projektion kommt.
 - „1 kg“ bleibt Text. Eine Umrechnung wäre eine Deutung, und die Mengenrechnung hat mit `netContentGrams` bereits eine belegte Grundlage.
 - Zwei Tests halten fest, was **nicht** im Datenbestand liegen darf: keine FEDIAF-Bedarfstabelle und keine Bildadresse aus dem offenen Datensatz.
+
+| M15-06 | `docs/reviews/food.md`, Abnahmetests in `tests/e2e-features/futter.spec.ts` | `npm run test:e2e:features` (200 Tests) | kein Score, Rohdaten getrennt, Unbekanntes benannt |
+
+- Der Test auf „Testsieger“ und „Score“ liest den **behauptenden** Teil der Seite: Ausschlussliste und Hinweisboxen werden vorher entfernt, weil sie die Wörter nennen dürfen — sie verneinen sie. Umgekehrt prüft derselbe Test, dass die Verneinung tatsächlich dasteht.
+- Rohdaten und Angebotsteil sind getrennte Abschnitte; die Nährwerttabelle steht nicht im Angebotsteil, und der Angebotsteil rechnet nicht mit Nährwerten.
+- Jeder Labelwert trägt Einheit, Bezug und verlinkte Quelle mit Prüfdatum. Fehlende Angaben stehen als „nicht deklariert“ da, mit dem Satz „eine fehlende Angabe ist keine Null“.
+- Ein Preisstand ist derzeit nirgends zu sehen, weil es kein Angebot mit Anzeigeerlaubnis gibt. Das Abnahmedokument sagt das, statt die Prüfung als bestanden zu buchen.
+- Die Futterseiten laufen jetzt zusätzlich durch dieselben Inhaltsregeln wie Pflege und Spielzeug.

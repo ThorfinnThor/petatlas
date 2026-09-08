@@ -3186,8 +3186,16 @@
         "M15-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Darstellungsabnahme des Futterbereichs mit 24 Feature-E2E-Tests (200 gesamt). Kein Testsieger und kein Score: der Test liest den behauptenden Teil der Seite - Ausschlussliste und Hinweisboxen werden vorher entfernt, weil sie die Woerter nennen duerfen, wenn sie sie verneinen - und sucht nach Testsieger, Score, Bestnote, Punktzahl und 'Bewertung:'; zusaetzlich prueft er, dass die Verneinung tatsaechlich auf der Seite steht. Rohdaten und Angebotsteil sind getrennte Abschnitte, die Naehrwerttabelle steht nicht im Angebotsteil. Jeder Labelwert traegt Wert, Einheit, Bezug (Frisch- oder Trockenmasse) und verlinkte Quelle mit Pruefdatum, geprueft am Beispiel Protein. Fehlende Angaben erscheinen als 'nicht deklariert' mit dem Satz 'eine fehlende Angabe ist keine Null'. Mengen stehen verstaendlich, einschliesslich '6 x 400 g = 2,4 kg'. Ein Preisstand ist derzeit nirgends zu sehen, weil kein Angebot Anzeigeerlaubnis hat; das Abnahmedokument haelt das als offenen Punkt fest, statt die Pruefung als bestanden zu buchen. Die Futterseiten und -module laufen zusaetzlich durch dieselben neun Inhaltsregeln wie Pflege und Spielzeug. npm run verify exit 0.",
+          "reference": "docs/reviews/food.md, tests/e2e-features/futter.spec.ts, tests/care-safety.test.ts",
+          "verified_at": "2026-09-08",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
