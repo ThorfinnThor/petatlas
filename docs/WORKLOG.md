@@ -479,3 +479,12 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Ein Zusatzfeld wie `endpoint` lässt die Datei scheitern — das Schema ist `.strict()`, und eine Adresse in einer Sicherung hätte dort nichts zu suchen.
 - Der Export baut aus dem, was **gespeichert** ist, nicht aus dem, was gerade im Formular steht. Was nie gespeichert wurde, gehört nicht in eine Sicherung.
 - Ein Test liest den Quelltext des Prüfers und stellt sicher, dass darin kein `fetch(`, kein `XMLHttpRequest` und kein dynamischer `import(` vorkommt.
+
+| M16-06 | `docs/reviews/local-profile.md`, `tests/e2e-features/privatsphaere.spec.ts` | `npm run test:e2e:features` (280 Tests) | keine Anfrage trägt die Eingabe, keine geht an einen fremden Host |
+
+- Geprüft wird mit einem **Mitschnitt aller Anfragen** — Adresse, Methode und Körper — über den ganzen Ablauf: Profil speichern, merken, Merkliste öffnen, Packliste abhaken. Der Kanarienvogel `Kanarienvogel7Q4Z` steht als Rufname und Rassenangabe drin und taucht in keiner Anfrage auf.
+- Keine einzige Anfrage geht an einen fremden Host. Ein eigener Test sucht gezielt nach `analytics`, `gtag`, `matomo`, `plausible`, `segment`, `hotjar`, `facebook` und `doubleclick` — und findet nichts.
+- Es gibt keine Anfrage mit einer anderen Methode als `GET`: kein `POST`, kein Beacon, kein Zählpixel.
+- Nach dem Speichern hat die Adresse weder Suchteil noch Anker. Damit landet die Eingabe auch nicht in einem Referrer.
+- Die gedruckte Packliste enthält keine Profilangaben: auf dem Papier steht, was abzuhaken ist — nicht, wem das Tier gehört.
+- Die Grenzen stehen ausdrücklich im Abnahmedokument: keine Sicherung, kein Geräteabgleich, kein Schutz gegen Mitbenutzer, unverschlüsselte Sicherungsdatei, und ein privater Modus kann alles verweigern.

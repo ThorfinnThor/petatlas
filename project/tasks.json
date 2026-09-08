@@ -3381,8 +3381,16 @@
         "M16-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Datenschutz- und Netzabnahme im Browser mit acht Tests. Methode: Mitschnitt aller Anfragen mit Adresse, Methode und Koerper ueber den ganzen Ablauf - Profil ausfuellen und speichern, Produkt merken, Merkliste oeffnen, Packliste abhaken - mit der Zeichenkette Kanarienvogel7Q4Z als Rufname und Rassenangabe. Ergebnis: keine Anfrage enthaelt die Eingabe, weder in der Adresse noch im Koerper, auch nicht die an die eigene Herkunft. Keine einzige Anfrage geht an einen fremden Host; ein Test sucht gezielt nach analytics, gtag, matomo, plausible, segment, hotjar, facebook und doubleclick. Es gibt keine Anfrage mit anderer Methode als GET, also kein POST, kein Beacon, kein Zaehlpixel. Nach dem Speichern hat die Adresse weder Suchteil noch Anker, die Eingabe steht nicht in location.href. Partnerlinks auf der Angebotsprobe tragen weder die Eingabe noch eine Unterkennung wie subid, clickref, sub_id oder u1. Die gedruckte Packliste enthaelt keine Profilangaben. Gespeichert wird nur unter drei eigenen Schluesseln; Cookies und sessionStorage bleiben leer. docs/reviews/local-profile.md beschreibt das anonyme Standardverhalten und nennt fuenf Grenzen ausdruecklich: keine Sicherung, kein Geraeteabgleich, kein Schutz gegen Mitbenutzer, unverschluesselte Sicherungsdatei und die Moeglichkeit, dass ein privater Modus alles verweigert. npm run verify exit 0.",
+          "reference": "docs/reviews/local-profile.md, tests/e2e-features/privatsphaere.spec.ts",
+          "verified_at": "2026-09-08",
+          "command": "npm run test:e2e:features",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
