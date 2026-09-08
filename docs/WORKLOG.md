@@ -572,3 +572,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Die Sitemap entsteht aus dem **gemessenen** Buildoutput: aufgenommen wird, was gebaut wurde und sich selbst als indexierbar ausweist. Eine zweite Aufzählung wäre eine zweite Wahrheit.
 - Ein nicht indexierbarer Build bekommt gar keine Sitemap und ein `robots.txt`, das alles verbietet. Eine Sitemap, die auf einen Testbuild zeigt, wäre eine Einladung, ihn zu indexieren.
 - Weiterleitungsseiten werden nicht an einer H1 gemessen, brauchen aber ein **ausdrückliches** `noindex`. Ein fehlendes Tag ist kein stilles „nein“: die Zwischenseite existiert wirklich.
+
+| M18-02 | `scripts/checks/dist.ts`, `src/features/map/website.ts`, `astro.config.ts`, `tests/checks/dist-audit.test.ts` | 28 Negativfälle einzeln, dazu der Lauf über 439 ausgelieferte Dateien | drei echte Befunde |
+
+- Der Audit sieht sich **nur den Buildoutput** an: die Dateien, die ein Browser bekäme. Was hier nicht auffällt, fällt draußen auf. Alle Regeln sind Allowlists — eine Blockliste vergisst immer etwas, und was sie vergisst, wird ausgeliefert.
+- **Befund 1: 72 unverschlüsselte Links.** OpenStreetMap enthält `website`-Angaben mit `http://`. Sie stillschweigend auf https zu heben wäre geraten; sie zu verlinken hieße, Leute von einer https-Seite auf einen unverschlüsselten Server zu schicken — und `upgrade-insecure-requests` hätte den Aufruf ohnehin gehoben und damit gebrochen. Sie stehen jetzt als Text da, mit dem Hinweis, warum.
+- **Befund 2: ein Inline-Skript.** Astro hatte das kleine Skript der Angebotskarte ins HTML eingebettet. `script-src 'self'` hätte es im Browser blockiert — und ein fehlender Effekt ist still. Astro bettet jetzt gar nichts mehr ein.
+- **Befund 3: drei Leaflet-Bilder**, die durch dieselbe Änderung aus data:-URIs zu Dateien wurden. Sie stehen jetzt mit Herkunft und Lizenz (BSD-2-Clause) in einer Bilder-Allowlist. Jeder Eintrag nennt einen Grund — sonst ist er kein Eintrag, sondern eine Lücke.
+- Beim Schreiben fiel ein eigener Fehler auf: die Hosts aus `config/tiles.json` stehen als vollständige Ursprünge, verglichen wurde gegen `URL.host`. Der Vergleich wäre nie aufgegangen.

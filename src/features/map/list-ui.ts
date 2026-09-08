@@ -20,6 +20,7 @@ import { frageStandort, standortLabel } from './geolocation.ts';
 import { zeigeKarte, waehleMarker } from './map.ts';
 import { normalisiere, sucheOrte, type OrtsEintrag } from './place-search.ts';
 import { ladeManifest, ladeZellenUm } from './data.ts';
+import { darstellung } from './website.ts';
 
 let geladeneNamenCache: Map<string, readonly OrtsEintrag[]> | null = null;
 
@@ -81,9 +82,21 @@ function trefferMarkup(treffer: ReturnType<typeof filtereOrte>[number]): string 
           : `<p>Öffnungszeiten: ${escape(ort.openingHours)}</p>`
       }
       ${ort.phone === null ? '' : `<p>Telefon: <a href="tel:${escape(ort.phone.replace(/\s/g, ''))}">${escape(ort.phone)}</a></p>`}
-      ${ort.website === null ? '' : `<p><a href="${escape(ort.website)}" rel="nofollow noopener">Website</a></p>`}
+      ${webZeile(ort.website)}
       ${notdienst === null ? '' : `<p class="notdienst">${escape(notdienst)}</p>`}
     </li>`;
+}
+
+/** Website als Link, als Text oder gar nicht — siehe `website.ts`. */
+function webZeile(website: string | null): string {
+  const web = darstellung(website);
+  if (web.art === 'link') {
+    return `<p><a href="${escape(web.url)}" rel="nofollow noopener">Website</a></p>`;
+  }
+  if (web.art === 'text') {
+    return `<p class="unbekannt">Website: ${escape(web.adresse)} (${escape(web.hinweis)})</p>`;
+  }
+  return '';
 }
 
 export function listeStarten(): void {

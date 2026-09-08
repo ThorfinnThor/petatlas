@@ -10,6 +10,7 @@
  */
 import Notice from '../Notice.astro';
 import DataStatus from '../DataStatus.astro';
+import { darstellung } from '../../features/map/website.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { subroutePath } from '../../lib/routes.ts';
@@ -176,13 +177,26 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
               <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
             </p>
           )}
-          {treffer.ort.website !== null && (
-            <p>
-              <a href={treffer.ort.website} rel="nofollow noopener">
-                Website
-              </a>
-            </p>
-          )}
+          {(() => {
+            const web = darstellung(treffer.ort.website);
+            if (web.art === 'link') {
+              return (
+                <p>
+                  <a href={web.url} rel="nofollow noopener">
+                    Website
+                  </a>
+                </p>
+              );
+            }
+            if (web.art === 'text') {
+              return (
+                <p class="unbekannt">
+                  Website: {web.adresse} ({web.hinweis})
+                </p>
+              );
+            }
+            return null;
+          })()}
           {notdienstHinweis(treffer.ort.emergency) !== null && (
             <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
           )}

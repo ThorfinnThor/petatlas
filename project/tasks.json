@@ -3668,8 +3668,14 @@
         "M18-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npm run verify exit 0, 1278 Tests; davon 28 in tests/checks/dist-audit.test.ts mit jedem Negativfall einzeln (Quelldatei, Sourcemap, Schluesselmaterial, Rohdaten, Bild ohne Allowlist-Eintrag, unbekannter Dateityp, Inline-Skript, Event-Attribut, javascript:-Adresse, srcdoc, fremder Unterressourcen-Host, unverschluesselter Link, private JSON-Felder in jeder Tiefe, aufgeweichte CSP, untergeschobene Datei im Verzeichnis). npx playwright test 219 gruen, features 280 gruen. node scripts/checks/dist.ts ueber den Build mit allen Funktionen: 439 Dateien, keine Beanstandung. Der Audit hat drei echte Befunde gefunden: 72 unverschluesselte Links aus OSM-Website-Tags (werden jetzt als Text statt als Link gezeigt), ein Inline-Skript in der Angebotskarte, das die CSP blockiert haette (Astro bettet kleine Assets ein; jetzt abgeschaltet), und drei Leaflet-Bilder, die dadurch als Dateien sichtbar wurden und nun mit Herkunft und Lizenz in der Bilder-Allowlist stehen. Der CI-Ablauf wurde lokal Schritt fuer Schritt nachgestellt: seo, probe, licenses, budgets, security, dist je exit 0.",
+          "reference": "scripts/checks/dist.ts, tests/checks/dist-audit.test.ts, src/features/map/website.ts, astro.config.ts, .github/workflows/ci.yml, docs/CI_SECURITY.md",
+          "verified_at": "2026-09-08T15:25:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

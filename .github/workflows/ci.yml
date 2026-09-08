@@ -100,6 +100,7 @@ jobs:
           npm run build:health
           npm run build:search
           npm run build:sitemap
+          npm run build:headers
           npm run check:seo -- --als-indexierbar
 
       - name: Rechteprüfung der Quellen
@@ -118,6 +119,10 @@ jobs:
       # Der Audit läuft nach dem Build und sieht damit auch dist/.
       - name: Secret- und Fixture-Audit über Repo und dist
         run: npm run check:security
+
+      # Was hier nicht auffällt, fällt draußen auf (M18-02).
+      - name: Output-Audit über dist
+        run: npm run check:dist
 
       - name: Produktionsbuild bleibt gesperrt
         run: |

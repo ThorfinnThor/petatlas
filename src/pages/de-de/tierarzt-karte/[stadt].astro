@@ -14,6 +14,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Notice from '../../../components/Notice.astro';
 import DataStatus from '../../../components/DataStatus.astro';
+import { darstellung } from '../../../features/map/website.ts';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
@@ -160,13 +161,26 @@ const bestand = `${mengen.slice(0, -1).join(', ')} und ${mengen[mengen.length - 
                     <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
                   </p>
                 )}
-                {treffer.ort.website !== null && (
-                  <p>
-                    <a href={treffer.ort.website} rel="nofollow noopener">
-                      Website
-                    </a>
-                  </p>
-                )}
+                {(() => {
+                  const web = darstellung(treffer.ort.website);
+                  if (web.art === 'link') {
+                    return (
+                      <p>
+                        <a href={web.url} rel="nofollow noopener">
+                          Website
+                        </a>
+                      </p>
+                    );
+                  }
+                  if (web.art === 'text') {
+                    return (
+                      <p class="unbekannt">
+                        Website: {web.adresse} ({web.hinweis})
+                      </p>
+                    );
+                  }
+                  return null;
+                })()}
                 {notdienstHinweis(treffer.ort.emergency) !== null && (
                   <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
                 )}

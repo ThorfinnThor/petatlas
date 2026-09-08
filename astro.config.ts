@@ -19,6 +19,16 @@ export default defineConfig({
   trailingSlash: 'always',
   build: {
     format: 'directory',
+    // Auch Stile werden als Datei ausgeliefert, nicht ins HTML gehoben.
+    inlineStylesheets: 'never',
+  },
+  vite: {
+    build: {
+      // Kein Inlining kleiner Assets. Ein eingebettetes Skript verstößt
+      // gegen `script-src 'self'` und liefe im Browser gar nicht — es fiele
+      // nur niemandem auf, weil ein fehlender Effekt still ist (M18-02).
+      assetsInlineLimit: 0,
+    },
   },
   redirects: {
     // Es gibt genau einen aktiven Markt. Diese Weiterleitung ist deshalb

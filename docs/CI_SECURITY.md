@@ -14,6 +14,7 @@ Stand 2026-09-06 (M07-02). Beschreibt, wogegen die Workflows schützen sollen un
 | Eine bekannte Schwachstelle bleibt unbemerkt | `npm audit --audit-level=high`, zusätzlich wöchentlich zeitgesteuert |
 | Ein Geheimnis gerät ins Repository oder in die Ausgabe | `check:security` über versionierte Dateien und über `dist/`; in der CI zusätzlich mit voller Historie ausgecheckt |
 | Ungeprüfte Daten werden veröffentlicht | `check:licenses` prüft Registry und Ausgabe |
+| Etwas Unerwünschtes liegt im ausgelieferten Verzeichnis | `check:dist` prüft jede Datei gegen Allowlists: erlaubte Dateitypen, keine Quell- oder Rohdateien, Bilder nur mit benannter Herkunft und Lizenz, keine Inline-Skripte und Event-Attribute, keine Unterressourcen von fremden Hosts, keine privaten Felder in öffentlichem JSON, vollständige CSP |
 
 ## Was die Workflows dürfen
 
