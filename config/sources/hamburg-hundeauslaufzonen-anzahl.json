@@ -1,0 +1,38 @@
+{
+  "sourceId": "hamburg-hundeauslaufzonen-anzahl",
+  "publisher": "Freie und Hansestadt Hamburg, Bezirksämter (über das Transparenzportal)",
+  "resourceName": "Trefferzahl desselben WFS (resulttype=hits), nur zur Vollständigkeitsprüfung",
+  "distributionUrl": "https://geodienste.hamburg.de/HH_WFS_Hundeauslaufzonen_Paragraf_8?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&typenames=de.hh.up%3Ahundeauslaufzonen_paragraf_8&resulttype=hits",
+  "primaryTermsUrl": "https://www.govdata.de/dl-de/by-2-0",
+  "format": "xml",
+  "coverage": {
+    "spatial": "Freie und Hansestadt Hamburg",
+    "temporal": "Sachstand des Dienstes"
+  },
+  "updateCadence": "gemeinsam mit hamburg-hundeauslaufzonen-wfs",
+  "role": "Vollständigkeitsprüfung: der GeoJSON-Ausgabepfad nennt keine numberMatched, deshalb wird sie einmal gesondert erfragt",
+  "rights": {
+    "sourceId": "hamburg-hundeauslaufzonen-anzahl",
+    "status": "verified",
+    "licenseId": "dl-de/by-2-0",
+    "licenseUrl": "https://www.govdata.de/dl-de/by-2-0",
+    "commercialUse": true,
+    "publicRedistribution": false,
+    "websiteDisplay": false,
+    "publicJsonDelivery": false,
+    "publicRepository": false,
+    "attributionRequired": true,
+    "shareAlike": false,
+    "imagesAllowed": false,
+    "mayStoreHistory": false,
+    "mayCacheOriginals": false,
+    "termsHash": "e187718408d4041ca50b78c800d57c2b71b5a4012156909f073fc5d3576f27e1",
+    "checkedAt": "2026-09-08T00:00:00+00:00",
+    "approvalEvidence": "docs/SOURCE_REVIEWS.md#hamburg-hundeauslaufzonen-wfs"
+  },
+  "notes": [
+    "Aus dieser Antwort wird nichts veröffentlicht. Sie liefert genau eine Zahl: wie viele Flächen der Dienst kennt. Weicht die gelieferte Menge davon ab, bricht der Import ab, statt einen halben Datensatz zu übernehmen."
+  ],
+  "attributionText": "Freie und Hansestadt Hamburg, Bezirksämter, dl-de/by-2-0",
+  "attributionUrl": "https://suche.transparenz.hamburg.de/dataset/hundeauslaufzonen-fur-hunde-nach-8-hamburger-hundeg"
+}

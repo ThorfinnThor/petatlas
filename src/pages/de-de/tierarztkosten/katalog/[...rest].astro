@@ -6,17 +6,23 @@
  * Verordnung ist selbst gegliedert; diese Seite zeigt genau diese
  * Gliederung — Teile, Gruppen, Anzahl — und nichts darüber hinaus.
  */
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import DataStatus from '../../../components/DataStatus.astro';
-import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
-import { devFeatureOverrides } from '../../../../config/build.ts';
-import { routePath, subroutePath } from '../../../lib/routes.ts';
-import { positionen, teile } from '../../../features/costs/detail.ts';
-import snapshot from '../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import DataStatus from '../../../../components/DataStatus.astro';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../../config/build.ts';
+import { routePath, subroutePath } from '../../../../lib/routes.ts';
+import { positionen, teile } from '../../../../features/costs/detail.ts';
+import snapshot from '../../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 
+/**
+ * Der Katalog liegt als Restroute vor, obwohl er nur einen einzigen Pfad
+ * kennt: eine statische `.astro`-Datei würde immer gebaut werden, auch wenn
+ * die Funktion im Markt aus ist — und dann auf eine Route verweisen, die es
+ * dort nicht gibt. Als dynamische Route entsteht sie gar nicht erst.
+ */
 export function getStaticPaths() {
   const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
-  return isFeatureEnabled(market, 'costs') ? [{ params: {} }] : [];
+  return isFeatureEnabled(market, 'costs') ? [{ params: { rest: undefined } }] : [];
 }
 
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());

@@ -13,6 +13,8 @@
 import { z } from 'zod';
 
 import berlin from '../../config/sources/berlin-hundefreilauf.json' with { type: 'json' };
+import hamburg from '../../config/sources/hamburg-hundeauslaufzonen.json' with { type: 'json' };
+import hamburgAnzahl from '../../config/sources/hamburg-hundeauslaufzonen-anzahl.json' with { type: 'json' };
 import got from '../../config/sources/got.json' with { type: 'json' };
 import opff from '../../config/sources/opff.json' with { type: 'json' };
 import regionen from '../../config/sources/osm-regions.json' with { type: 'json' };
@@ -113,7 +115,7 @@ function regionaleEintraege(): SourceEntry[] {
   );
 }
 
-const ENTRIES: readonly SourceEntry[] = [berlin, got, opff, osm]
+const ENTRIES: readonly SourceEntry[] = [berlin, hamburg, hamburgAnzahl, got, opff, osm]
   .map(parseEntry)
   .concat(regionaleEintraege());
 

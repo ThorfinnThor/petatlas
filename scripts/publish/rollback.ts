@@ -49,6 +49,10 @@ export const DATENPFADE: readonly {
     pfad: 'data-snapshots/municipal/berlin-hundefreilauf.json',
     sourceIds: ['berlin-hundefreilauf-wfs'],
   },
+  {
+    pfad: 'data-snapshots/municipal/hamburg-hundeauslaufzonen.json',
+    sourceIds: ['hamburg-hundeauslaufzonen-wfs'],
+  },
   { pfad: 'content-data/travel/rules/eu-intra-2026.json', sourceIds: [] },
   { pfad: 'content-data/travel/approvals.json', sourceIds: [] },
 ];

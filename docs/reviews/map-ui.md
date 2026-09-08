@@ -57,4 +57,4 @@ Diese Punkte sind **keine** Mängel dieser Abnahme, sondern Arbeit, die ausdrüc
 2. **Keine Meta-Description.** `BaseLayout` setzt keine; für lokale Seiten ist das ein Nachteil, der dort mitbehandelt werden sollte.
 3. **Kein hreflang.** Nur der deutsche Markt ist aktiv; die Paare entstehen erst mit einem zweiten.
 
-Ebenfalls offen, aber inhaltlich: die kommunalen Flächen aus M11-05 sind noch nicht Teil der Karte (`docs/MUNICIPAL_PILOT.md`).
+Ebenfalls offen, aber inhaltlich: die kommunalen Flächen aus M11-05 sind noch nicht Teil der Karte (`docs/MUNICIPAL_SOURCES.md`).

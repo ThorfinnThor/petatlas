@@ -21,6 +21,9 @@ function stand(
     'data-snapshots/municipal/berlin-hundefreilauf.json': JSON.stringify({
       source: { sourceId: 'berlin-hundefreilauf-wfs' },
     }),
+    'data-snapshots/municipal/hamburg-hundeauslaufzonen.json': JSON.stringify({
+      source: { sourceId: 'hamburg-hundeauslaufzonen-wfs' },
+    }),
     'content-data/travel/rules/eu-intra-2026.json': JSON.stringify({ ruleSetId: 'x' }),
     'content-data/travel/approvals.json': JSON.stringify({ approvals: [] }),
   };

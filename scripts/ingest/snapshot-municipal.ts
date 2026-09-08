@@ -1,5 +1,5 @@
 /**
- * M11-05 — Erzeugt den versionierten Snapshot der kommunalen Pilotquelle.
+ * M11-05 / M20-03 — Erzeugt die versionierten Snapshots der kommunalen Quellen.
  *
  * Wie beim GOT-Import gilt: Entwicklung, Tests und Website-Builds hängen nie
  * an einem Live-Abruf. Grundlage ist ein validierter lokaler Snapshot.
@@ -7,93 +7,64 @@
  * `--fetch` wird sie einmal neu geholt — einmal, nicht in einer Schleife.
  *
  * Ein fehlgeschlagener Abruf lässt den vorhandenen Snapshot unangetastet.
+ * Scheitert eine Stadt, bleiben die übrigen davon unberührt; der Lauf endet
+ * trotzdem mit einem Fehler, damit nichts still liegen bleibt.
  *
- * Ausführen: `npm run snapshot:municipal` oder `… -- --fetch`
+ * Ausführen: `npm run snapshot:municipal`, `… -- --fetch`,
+ * `… -- --nur berlin-hundefreilauf-wfs`
  */
-import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 
 import { MunicipalSnapshotSchema } from '../../src/domain/schemas/municipal.ts';
 import { requireSource } from '../../src/domain/source-registry.ts';
 import { canonicalJson, type JsonValue } from '../normalize/canonical.ts';
 import {
-  PARSER_VERSION,
-  SOURCE_ID,
-  normalizeFlaechen,
-  parseGeoJson,
-} from './adapters/municipal/berlin-hundefreilauf.ts';
-import { fetchSource } from './fetch.ts';
-import type { FetchedResource } from './types.ts';
+  KOMMUNALE_QUELLEN,
+  ausserhalbDerHuelle,
+  holeRessourcen,
+  quelleOderFehler,
+  type KommunaleQuelle,
+} from './municipal-sources.ts';
 
-const ZIEL = 'data-snapshots/municipal/berlin-hundefreilauf.json';
-const LOKALE_QUELLE = 'tests/fixtures/municipal/berlin-hundefreilauf.geojson';
+async function erneuere(quelle: KommunaleQuelle, mitAbruf: boolean): Promise<void> {
+  const { haupt, hilfen } = await holeRessourcen(quelle, mitAbruf);
+  const registrierung = requireSource(quelle.sourceId);
+  const normalisiert = quelle.verarbeite(haupt, hilfen);
 
-/**
- * Geltungsbereich im Klartext. Er steht im Snapshot, weil er zur Aussage
- * gehört: der Datensatz deckt nicht ganz Berlin ab.
- */
-const GELTUNG =
-  'Ausgewiesene Hundefreilaufflächen und Hundemitnahmeverbote in den Bezirken ' +
-  'Charlottenburg-Wilmersdorf, Friedrichshain-Kreuzberg und Reinickendorf sowie eine Fläche in ' +
-  'Steglitz-Zehlendorf. Eine Fläche, die hier fehlt, ist weder erlaubt noch verboten, sondern ' +
-  'nicht erfasst.';
-
-async function holeRessource(mitAbruf: boolean): Promise<FetchedResource> {
-  if (mitAbruf) {
-    const ergebnis = await fetchSource(SOURCE_ID);
-    if (ergebnis.status !== 'fetched' || ergebnis.resource === null) {
-      throw new Error('Quelle meldet keine Änderung; der vorhandene Snapshot bleibt gültig.');
-    }
-    return ergebnis.resource;
-  }
-
-  const body = new Uint8Array(readFileSync(LOKALE_QUELLE));
-  return {
-    sourceId: SOURCE_ID,
-    url: requireSource(SOURCE_ID).distributionUrl,
-    body,
-    contentType: 'application/json',
-    contentHash: createHash('sha256').update(body).digest('hex'),
-    // Abrufzeitpunkt der im Repository liegenden Antwort, nicht „jetzt“.
-    retrievedAt: '2026-09-07T00:00:00+00:00',
-    etag: null,
-    lastModified: null,
-  };
-}
-
-async function main(): Promise<number> {
-  const mitAbruf = process.argv.includes('--fetch');
-  const ressource = await holeRessource(mitAbruf);
-  const quelle = requireSource(SOURCE_ID);
-
-  const geparst = parseGeoJson(ressource);
-  const normalisiert = normalizeFlaechen(geparst, ressource);
   if (normalisiert.records.length === 0) {
     throw new Error('Kein einziger Datensatz übernommen; der vorhandene Snapshot bleibt gültig.');
   }
 
-  const byKind: Record<string, number> = {};
-  for (const eintrag of normalisiert.records) {
-    byKind[eintrag.record.kind] = (byKind[eintrag.record.kind] ?? 0) + 1;
+  const flaechen = normalisiert.records.map((eintrag) => eintrag.record);
+  const verirrt = ausserhalbDerHuelle(flaechen, quelle.huelle);
+  if (verirrt.length > 0) {
+    throw new Error(
+      `${verirrt.length} Fläche(n) liegen außerhalb von ${quelle.gemeinde} ` +
+        `(erste: ${verirrt[0]?.areaId}). Das deutet auf vertauschte Koordinaten hin; ` +
+        'es wird nichts geschrieben.',
+    );
   }
+
+  const byKind: Record<string, number> = {};
+  for (const flaeche of flaechen) byKind[flaeche.kind] = (byKind[flaeche.kind] ?? 0) + 1;
 
   const snapshot = {
     source: {
-      sourceId: SOURCE_ID,
-      name: quelle.resourceName,
-      url: quelle.attributionUrl ?? quelle.distributionUrl,
-      retrievalDate: ressource.retrievedAt,
-      sourceSha256: ressource.contentHash,
-      licenseId: quelle.rights.licenseId ?? 'unbekannt',
-      licenseUrl: quelle.rights.licenseUrl ?? quelle.primaryTermsUrl,
-      attribution: quelle.attributionText ?? quelle.publisher,
-      attributionUrl: quelle.attributionUrl ?? quelle.primaryTermsUrl,
-      validity: GELTUNG,
-      parserVersion: PARSER_VERSION,
+      sourceId: quelle.sourceId,
+      name: registrierung.resourceName,
+      url: registrierung.attributionUrl ?? registrierung.distributionUrl,
+      retrievalDate: haupt.retrievedAt,
+      sourceSha256: haupt.contentHash,
+      licenseId: registrierung.rights.licenseId ?? 'unbekannt',
+      licenseUrl: registrierung.rights.licenseUrl ?? registrierung.primaryTermsUrl,
+      attribution: registrierung.attributionText ?? registrierung.publisher,
+      attributionUrl: registrierung.attributionUrl ?? registrierung.primaryTermsUrl,
+      validity: quelle.geltung,
+      parserVersion: quelle.parserVersion,
     },
-    areaCount: normalisiert.records.length,
+    areaCount: flaechen.length,
     byKind,
-    areas: normalisiert.records.map((eintrag) => eintrag.record),
+    areas: flaechen,
   };
 
   const geprueft = MunicipalSnapshotSchema.safeParse(snapshot);
@@ -101,16 +72,45 @@ async function main(): Promise<number> {
     throw new Error(`Erzeugter Snapshot ist ungültig: ${geprueft.error.message}`);
   }
 
-  writeFileSync(ZIEL, `${canonicalJson(snapshot as unknown as JsonValue)}\n`, 'utf8');
+  writeFileSync(
+    quelle.snapshotPfad,
+    `${canonicalJson(snapshot as unknown as JsonValue)}\n`,
+    'utf8',
+  );
 
   console.log(
-    `${ZIEL}: ${snapshot.areaCount} Flächen ` +
+    `${quelle.snapshotPfad}: ${snapshot.areaCount} Flächen ` +
       `(${byKind.dog_off_leash ?? 0} Freilauf, ${byKind.dog_prohibited ?? 0} Mitnahmeverbot), ` +
-      `Quellantwort ${ressource.contentHash.slice(0, 12)}…`,
+      `Quellantwort ${haupt.contentHash.slice(0, 12)}…`,
   );
   if (normalisiert.abgelehnt.length > 0) {
-    console.warn(`${normalisiert.abgelehnt.length} Fläche(n) abgelehnt:`);
-    for (const eintrag of normalisiert.abgelehnt) console.warn(`  ${eintrag.id}: ${eintrag.grund}`);
+    console.warn(`  ${normalisiert.abgelehnt.length} Fläche(n) abgelehnt:`);
+    for (const eintrag of normalisiert.abgelehnt) {
+      console.warn(`    ${eintrag.id}: ${eintrag.grund}`);
+    }
+  }
+}
+
+async function main(): Promise<number> {
+  const mitAbruf = process.argv.includes('--fetch');
+  const nurIndex = process.argv.indexOf('--nur');
+  const auswahl =
+    nurIndex === -1 ? KOMMUNALE_QUELLEN : [quelleOderFehler(process.argv[nurIndex + 1] ?? '')];
+
+  let gescheitert = 0;
+  for (const quelle of auswahl) {
+    try {
+      await erneuere(quelle, mitAbruf);
+    } catch (fehler: unknown) {
+      gescheitert += 1;
+      console.error(`${quelle.sourceId} nicht erneuert: ${(fehler as Error).message}`);
+      console.error('  Der bisherige Snapshot dieser Quelle bleibt gültig.');
+    }
+  }
+
+  if (gescheitert > 0) {
+    console.error(`\n${gescheitert} von ${auswahl.length} Quelle(n) nicht erneuert.`);
+    return 1;
   }
   return 0;
 }
@@ -118,7 +118,6 @@ async function main(): Promise<number> {
 main()
   .then((code) => process.exit(code))
   .catch((fehler: unknown) => {
-    console.error(`Snapshot nicht erneuert: ${(fehler as Error).message}`);
-    console.error('Der bisherige Snapshot bleibt gültig.');
+    console.error(`Snapshot-Lauf abgebrochen: ${(fehler as Error).message}`);
     process.exit(1);
   });

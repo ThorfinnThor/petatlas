@@ -1,0 +1,41 @@
+{
+  "sourceId": "hamburg-hundeauslaufzonen-wfs",
+  "publisher": "Freie und Hansestadt Hamburg, Bezirksämter (über das Transparenzportal)",
+  "resourceName": "Hundeauslaufzonen für Hunde nach § 8 Hamburger HundeG, WFS-Abgabe als GeoJSON in EPSG:4326",
+  "distributionUrl": "https://geodienste.hamburg.de/HH_WFS_Hundeauslaufzonen_Paragraf_8?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&typenames=de.hh.up%3Ahundeauslaufzonen_paragraf_8&outputFormat=application%2Fgeo%2Bjson&srsName=EPSG%3A4326",
+  "primaryTermsUrl": "https://www.govdata.de/dl-de/by-2-0",
+  "format": "json",
+  "coverage": {
+    "spatial": "Freie und Hansestadt Hamburg, ausgewiesene Hundeauslaufzonen nach § 8 HundeG",
+    "temporal": "Sachstand des Dienstes; die Quelle nennt kein Datum je Fläche"
+  },
+  "updateCadence": "nach Bedarf; Abruf höchstens wöchentlich",
+  "role": "Kommunale Belegquelle für ausgewiesene Hundeauslaufzonen neben OpenStreetMap",
+  "rights": {
+    "sourceId": "hamburg-hundeauslaufzonen-wfs",
+    "status": "verified",
+    "licenseId": "dl-de/by-2-0",
+    "licenseUrl": "https://www.govdata.de/dl-de/by-2-0",
+    "commercialUse": true,
+    "publicRedistribution": true,
+    "websiteDisplay": true,
+    "publicJsonDelivery": true,
+    "publicRepository": true,
+    "attributionRequired": true,
+    "shareAlike": false,
+    "imagesAllowed": false,
+    "mayStoreHistory": true,
+    "mayCacheOriginals": true,
+    "termsHash": "e187718408d4041ca50b78c800d57c2b71b5a4012156909f073fc5d3576f27e1",
+    "checkedAt": "2026-09-08T00:00:00+00:00",
+    "approvalEvidence": "docs/SOURCE_REVIEWS.md#hamburg-hundeauslaufzonen-wfs"
+  },
+  "notes": [
+    "Die Datenlizenz Deutschland Namensnennung 2.0 verlangt die Nennung des Bereitstellers; anders als bei der Berliner Quelle (dl-de/zero) ist die Attribution hier Pflicht und steht an jeder Anzeige.",
+    "Bezugsweg ist der offiziell angebotene WFS. Kein Crawler, keine Spiegelung des Portals, ein Abruf je Lauf zuzüglich einer kleinen Anfrage zur Trefferzahl.",
+    "Der Dienst liefert ohne srsName-Angabe EPSG:25832. Die Adresse verlangt deshalb ausdrücklich EPSG:4326; der Parser bricht ab, wenn eine Fläche ein anderes Bezugssystem meldet, statt Koordinaten umzurechnen.",
+    "Die Art der Fläche steht in keinem Feld, sondern im Datensatz selbst: er enthält ausschließlich Auslaufzonen nach § 8 HundeG. Der Datensatz nach § 9 (Freilauf nur für geprüfte Hunde) ist bewusst nicht aufgenommen — er wäre eine andere Aussage."
+  ],
+  "attributionText": "Hundeauslaufzonen nach § 8 HundeG, Freie und Hansestadt Hamburg, Bezirksämter, dl-de/by-2-0",
+  "attributionUrl": "https://suche.transparenz.hamburg.de/dataset/hundeauslaufzonen-fur-hunde-nach-8-hamburger-hundeg"
+}

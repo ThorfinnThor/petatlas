@@ -78,6 +78,9 @@ export function datensaetze(wurzel = '.'): readonly Datensatz[] {
   const got = leseJson(`${wurzel}/data-snapshots/got/got-2022.json`);
   const orte = leseJson(`${wurzel}/data-snapshots/places/places-de.json`);
   const freilauf = leseJson(`${wurzel}/data-snapshots/municipal/berlin-hundefreilauf.json`);
+  const auslaufzonen = leseJson(
+    `${wurzel}/data-snapshots/municipal/hamburg-hundeauslaufzonen.json`,
+  );
   const freigaben = leseJson(`${wurzel}/content-data/travel/approvals.json`);
 
   const ersteFreigabe = Array.isArray(feld(freigaben, ['approvals']))
@@ -133,6 +136,20 @@ export function datensaetze(wurzel = '.'): readonly Datensatz[] {
       wirkung: 'warnt',
       stand: alsText(feld(freilauf, ['source', 'retrievalDate'])),
       umfang: `${alsZahl(feld(freilauf, ['areaCount'])) ?? 0} Flächen`,
+      hinweis: null,
+      ausgeliefert: true,
+    },
+    {
+      id: 'hundeauslaufzonen-hamburg',
+      titel: 'Hundeauslaufzonen Hamburg (§ 8 HundeG)',
+      quelle: alsText(feld(auslaufzonen, ['source', 'name'])) ?? 'Bezirksämter Hamburg',
+      lizenz: alsText(feld(auslaufzonen, ['source', 'licenseId'])),
+      politik: { warnAbTagen: 120, sperreAbTagen: 400 },
+      begruendungPolitik:
+        'Die kommunale Abgabe ändert sich selten. Gewarnt wird nach 120 Tagen, als veraltet gilt der Stand nach 400 Tagen.',
+      wirkung: 'warnt',
+      stand: alsText(feld(auslaufzonen, ['source', 'retrievalDate'])),
+      umfang: `${alsZahl(feld(auslaufzonen, ['areaCount'])) ?? 0} Flächen`,
       hinweis: null,
       ausgeliefert: true,
     },

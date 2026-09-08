@@ -69,6 +69,7 @@ describe('Schädliche und unerlaubte Adressen', () => {
     expect([...HOSTS].sort()).toEqual([
       'download.geofabrik.de',
       'gdi.berlin.de',
+      'geodienste.hamburg.de',
       'static.openpetfoodfacts.org',
       'www.gesetze-im-internet.de',
     ]);

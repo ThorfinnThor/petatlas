@@ -32,6 +32,8 @@ import {
   notdienstHinweis,
   type ListenOrt,
 } from '../../../features/map/list.ts';
+import { ART_LABEL, kommunaleFlaechen } from '../../../features/map/municipal.ts';
+import { formatCalendarDate } from '../../../domain/dates.ts';
 import snapshot from '../../../../data-snapshots/places/places-de.json' with { type: 'json' };
 import { oeffentlicheProjektion } from '../../../../scripts/publish/places.ts';
 import type { Place } from '../../../domain/schemas/places.ts';
@@ -89,6 +91,12 @@ const mengen = PFLICHT_KATEGORIEN.map((kategorie) =>
   mengeMitLabel(seite.befund.jeKategorie[kategorie] ?? 0, kategorie),
 );
 const bestand = `${mengen.slice(0, -1).join(', ')} und ${mengen[mengen.length - 1]}`;
+
+// Kommunal ausgewiesene Flächen. `null` heißt: für diese Stadt ist keine
+// Verwaltungsquelle erfasst — nicht, dass es dort keine gäbe.
+const kommunal = kommunaleFlaechen(seite.slug);
+/** Wie viele Flächen auf der Seite stehen, bevor auf die Quelle verwiesen wird. */
+const KOMMUNAL_MAX = 30;
 ---
 
 <BaseLayout
@@ -192,6 +200,65 @@ const bestand = `${mengen.slice(0, -1).join(', ')} und ${mengen[mengen.length - 
     })
   }
 
+  {
+    kommunal !== null && (
+      <section aria-labelledby="kommunal-titel" class="kommunal">
+        <h2 id="kommunal-titel">
+          Von der Verwaltung ausgewiesene Flächen ({kommunal.flaechen.length})
+        </h2>
+        <p>
+          Diese Flächen stammen nicht aus OpenStreetMap, sondern aus dem Datensatz der Verwaltung
+          von {kommunal.gemeinde}. Sie sind damit die verbindlichere Angabe: {kommunal.freilauf}{' '}
+          ausgewiesene Freilauffläche{kommunal.freilauf === 1 ? '' : 'n'}
+          {kommunal.verbot > 0 && (
+            <>
+              {' '}
+              und {kommunal.verbot} Hundemitnahmeverbot{kommunal.verbot === 1 ? '' : 'e'}
+            </>
+          )}
+          .
+        </p>
+        <p class="hilfe">
+          Datenstand des Abrufs: {formatCalendarDate(kommunal.stand.slice(0, 10), market.locale)}
+        </p>
+
+        <Notice variante="hinweis" titel="Wofür dieser Datensatz gilt">
+          <p>{kommunal.geltung}</p>
+        </Notice>
+
+        {kommunal.flaechen.length > KOMMUNAL_MAX && (
+          <p class="hilfe">
+            Die ersten {KOMMUNAL_MAX} von {kommunal.flaechen.length} Flächen, nach Bezeichnung
+            sortiert. Der vollständige Datensatz steht bei der Quelle.
+          </p>
+        )}
+
+        <ul class="flaechen">
+          {kommunal.flaechen.slice(0, KOMMUNAL_MAX).map((flaeche) => (
+            <li>
+              <h3>{flaeche.name ?? 'Ohne Bezeichnung in der Quelle'}</h3>
+              <p class={flaeche.kind === 'dog_off_leash' ? 'ausweisung' : 'ausweisung verbot'}>
+                {ART_LABEL[flaeche.kind]}
+              </p>
+              {flaeche.address !== null && flaeche.address !== flaeche.name && (
+                <p class="meta">{flaeche.address}</p>
+              )}
+              {flaeche.district !== null && <p class="meta">Bezirk: {flaeche.district}</p>}
+              {flaeche.note !== null && <p class="meta">{flaeche.note}</p>}
+            </li>
+          ))}
+        </ul>
+
+        <p class="hilfe">
+          {kommunal.attribution} ·{' '}
+          <a href={kommunal.attributionUrl} rel="nofollow noopener">
+            Datensatz und Lizenz ({kommunal.licenseId})
+          </a>
+        </p>
+      </section>
+    )
+  }
+
   <section aria-labelledby="karte-titel">
     <h2 id="karte-titel">Karte und eigener Umkreis</h2>
     <p>
@@ -280,6 +347,36 @@ const bestand = `${mengen.slice(0, -1).join(', ')} und ${mengen[mengen.length - 
     .notdienst {
       border-inline-start: 3px solid var(--color-warning);
       padding-inline-start: var(--space-2);
+    }
+
+    .flaechen {
+      list-style: none;
+      padding: 0;
+    }
+
+    .flaechen > li {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      margin-block: var(--space-3);
+    }
+
+    .flaechen h3 {
+      margin: 0 0 var(--space-1);
+      font-size: var(--text-body);
+    }
+
+    .flaechen p {
+      margin-block: var(--space-1);
+    }
+
+    .ausweisung {
+      border-inline-start: 3px solid var(--color-success);
+      padding-inline-start: var(--space-2);
+    }
+
+    .ausweisung.verbot {
+      border-inline-start-color: var(--color-warning);
     }
 
     .staedte {

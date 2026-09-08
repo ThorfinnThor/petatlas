@@ -100,7 +100,7 @@ Der Pilotlauf über diese Distribution ist in `docs/OSM_PILOT.md` dokumentiert.
 | Primärquelle | Fundstelle | sha256 des Abrufs |
 |---|---|---|
 | Metadaten des Datensatzes | `https://datenregister.berlin.de/api/3/action/package_show?id=hundefreilauf-wfs-63c580c9` | — (CKAN-Antwort mit Zeitstempel) |
-| Lizenztext | `https://www.govdata.de/dl-de/zero-2-0` | `872b1a3e…07f1` |
+| Lizenztext | `https://www.govdata.de/dl-de/zero-2-0` | `26c8758c…0ecc` (bis 2026-09-08: `872b1a3e…07f1`) |
 | Abgabe des Dienstes | `https://gdi.berlin.de/services/wfs/hundefreilauf` (GetFeature, GeoJSON, EPSG:4326) | `f386fe1b…a997` |
 
 Der `termsHash` im Registryeintrag ist der Hash der abgerufenen Lizenzseite. Ändert er sich, gilt die Freigabe als offen und wird erneut geprüft (M05-06).
@@ -124,9 +124,50 @@ Der `termsHash` im Registryeintrag ist der Hash der abgerufenen Lizenzseite. Än
 | Öffentliches Repository | erlaubt |
 | Bilder | nicht erlaubt (nicht anwendbar) |
 
+### Nachtrag 2026-09-08 (M20-03)
+
+1. **Der `termsHash` hat sich geändert, der Lizenztext nicht.** Die GovData-Seite wurde umgebaut (Navigation, Fußzeile); der Wortlaut der Datenlizenz Deutschland – Zero – Version 2.0 ist unverändert. Beide Abrufe an diesem Tag ergaben denselben neuen Hash. Der Registryeintrag führt jetzt `26c8758c…0ecc`; die Freigabe bleibt bestehen, weil sich die Bedingungen nicht geändert haben.
+2. **Die offene Frage zur Darstellung ist beantwortet.** Verbotsgebiete werden nicht als Kartenfläche gezeigt, sondern als benannter Listeneintrag mit dem Satz „Hunde dürfen nicht mitgenommen werden“ und farblich vom Freilauf abgesetzt. Auf der Stadtseite steht darüber der Geltungsbereich des Datensatzes, damit sein Schweigen nicht als Erlaubnis gelesen wird. Die Daten sind seit M20-03 ausgeliefert (`src/features/map/municipal.ts`).
+
+---
+
+## hamburg-hundeauslaufzonen-wfs
+
+**Geprüft am:** 2026-09-08 · **Ergebnis:** `verified`
+
+### Was geprüft wurde
+
+| Primärquelle | Fundstelle | sha256 des Abrufs |
+|---|---|---|
+| Datensatzseite | `https://suche.transparenz.hamburg.de/dataset/hundeauslaufzonen-fur-hunde-nach-8-hamburger-hundeg` | — (Portalseite mit Zeitstempel) |
+| Lizenztext | `https://www.govdata.de/dl-de/by-2-0` | `e1877184…f27e` |
+| Abgabe des Dienstes | `https://geodienste.hamburg.de/HH_WFS_Hundeauslaufzonen_Paragraf_8` (GetFeature, GeoJSON, EPSG:4326) | `b7a6545b…` |
+| Trefferzahl desselben Dienstes | derselbe Dienst mit `resulttype=hits` | `numberMatched="140"` |
+
+### Feststellungen
+
+1. **Lizenz.** Datenlizenz Deutschland – Namensnennung – Version 2.0. Nutzung, Weitergabe, Bearbeitung und kommerzielle Verwendung sind zulässig; die Lizenz verlangt dafür die Nennung des Bereitstellers.
+2. **Attribution.** **Pflicht** — anders als bei der Berliner Quelle. `attributionRequired` steht deshalb auf `true`, und die Nennung steht an jeder Anzeige der Flächen, nicht nur in einer Quellenliste.
+3. **Share-Alike.** Keines. Die by-Variante verlangt die Nennung, nicht die Weitergabe unter gleichen Bedingungen.
+4. **Geltungsbereich.** Ausgewiesene Hundeauslaufzonen nach § 8 Hamburgisches Hundegesetz, ganzes Stadtgebiet, 140 Flächen. Der Datensatz sagt nichts über Flächen nach § 9 (Freilauf nur für geprüfte Hunde) und nichts über Verbote. Das steht als Pflichtfeld `validity` im Snapshot.
+5. **Kein Typfeld.** Der Datensatz führt kein Feld für die Art der Fläche, weil er nur eine Art enthält. Die Zuordnung `dog_off_leash` steht deshalb als Konstante im Adapter, ausdrücklich kommentiert — nicht als Vermutung aus einem Freitext.
+6. **Bezugssystem.** Der Dienst liefert ohne ausdrückliches `srsName` EPSG:25832. Die Adresse in der Registry verlangt `EPSG:4326`; der Parser bricht ab, wenn auch nur eine Fläche etwas anderes meldet. Umgerechnet wird nichts.
+7. **Vollständigkeit.** Der GeoJSON-Ausgabepfad nennt weder `numberMatched` noch `numberReturned`. Die erwartete Zahl wird deshalb über eine zweite, winzige Anfrage (`resulttype=hits`) erfragt und als eigener Registryeintrag `hamburg-hundeauslaufzonen-anzahl` geführt — mit allen Ausgaberechten auf `false`, weil aus ihr nichts veröffentlicht wird.
+8. **Bilder.** Der Datensatz enthält keine; `imagesAllowed` steht auf `false`.
+9. **Bezugsweg.** Zwei Anfragen je Lauf an den offiziell angebotenen WFS. Kein Crawler, keine Spiegelung des Portals, kein WMS.
+
+### Freigegebene Ausgabeformen
+
+| Ausgabeform | Ergebnis |
+|---|---|
+| Anzeige im HTML | erlaubt, mit Namensnennung |
+| Öffentliche JSON-Auslieferung | erlaubt, mit Namensnennung |
+| Öffentliches Repository | erlaubt |
+| Bilder | nicht erlaubt (nicht anwendbar) |
+
 ### Offen
 
-Die Daten sind freigegeben, aber noch nicht ausgeliefert (siehe `docs/MUNICIPAL_PILOT.md`). Vor einer Auslieferung ist zu klären, wie Verbotsgebiete dargestellt werden, ohne dass eine Karte sie wie ein Angebot aussehen lässt.
+Nichts. Die Flächen sind seit M20-03 auf der Stadtseite Hamburg ausgeliefert.
 
 ---
 

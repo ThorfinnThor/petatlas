@@ -26,8 +26,8 @@
     "imagesAllowed": false,
     "mayStoreHistory": true,
     "mayCacheOriginals": true,
-    "termsHash": "872b1a3ee0edc93cb599e9405d8eb5048d7ec400f252e18fb3716d4d16b407f1",
-    "checkedAt": "2026-09-07T00:00:00+00:00",
+    "termsHash": "26c8758cb9eaf568ddd088bc1656a166b2786d12a41703ae150f5f3746b0ecc7",
+    "checkedAt": "2026-09-08T00:00:00+00:00",
     "approvalEvidence": "docs/SOURCE_REVIEWS.md#berlin-hundefreilauf-wfs"
   },
   "notes": [
@@ -36,7 +36,8 @@
     "Der Datensatz enthält zwei Arten von Flächen: ausgewiesene Hundefreilaufflächen und Hundemitnahmeverbote. Beide werden getrennt geführt; aus einem fehlenden Verbot wird keine Erlaubnis abgeleitet.",
     "Bezogen wird über die offiziell angebotene WFS-Abgabe, ein Abruf je Lauf, kein Crawler und keine Kachelabfrage über den Layer.",
     "Der Antwortkörper enthält einen Zeitstempel des Dienstes. Der Inhalts-Hash der Rohantwort ändert sich deshalb bei jedem Abruf; verglichen wird der normalisierte Datensatz, nicht die Rohantwort.",
-    "Das Freitextfeld info der Quelle enthält teils Flächenangaben, teils Hinweise wie „aktuell nicht nutzbar“ und teils eine fremde Adresse. Es wird als Freitext übernommen und nicht zu einer Zahl gemacht."
+    "Das Freitextfeld info der Quelle enthält teils Flächenangaben, teils Hinweise wie „aktuell nicht nutzbar“ und teils eine fremde Adresse. Es wird als Freitext übernommen und nicht zu einer Zahl gemacht.",
+    "2026-09-08: Der Hash der Lizenzseite hat sich geändert (872b1a3e… → 26c8758c…). Der Lizenztext selbst ist unverändert — „Jede Nutzung ist ohne Einschränkungen oder Bedingungen zulässig“, mit denselben drei Aufzählungspunkten. Geändert hat sich die Seite um den Text herum. Der Hash ist nachgezogen, der Befund steht in docs/SOURCE_REVIEWS.md."
   ],
   "attributionText": "Hundefreilauf Berlin, Senatsverwaltung für Stadtentwicklung, Bauen und Wohnen Berlin, Datenlizenz Deutschland – Zero – Version 2.0",
   "attributionUrl": "https://daten.berlin.de/datensaetze/hundefreilauf-wfs-63c580c9"

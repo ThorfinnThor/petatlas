@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": null,
+  "current_task": "M21-01",
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -2393,8 +2393,8 @@
       "status": "done",
       "evidence": [
         {
-          "description": "Kommunaler Pilot: WFS-Abgabe 'Hundefreilauf' der Senatsverwaltung fuer Stadtentwicklung Berlin unter dl-de/zero-2-0, Rechte geprueft und in docs/SOURCE_REVIEWS.md dokumentiert (termsHash der Lizenzseite). Der Adapter uebernimmt 30 Flaechen (22 Hundefreilauf, 8 Hundemitnahmeverbot) und lehnt fail-closed ab: fremdes Bezugssystem wird nicht umgerechnet, ein Teilimport wird nicht uebernommen, ein unbekannter typ wird nicht eingeordnet, das Freitextfeld info wird nicht zu einer Zahl. Der Geltungsbereich (nur drei Bezirke plus eine Flaeche in Steglitz-Zehlendorf) steht als Pflichtfeld im Snapshot. Abgleich mit den 9.381 OSM-Orten ueber Punkt-in-Flaeche: 10 bestaetigt, 0 Widerspruch, 16 unbestaetigt, 12 nur kommunal - der Zugewinn sind 12 Flaechen, die OSM nicht kennt. Ein Widerspruch wird benannt, nicht aufgeloest; belegteHundeerlaubnis() liefert true nur bei ausdruecklicher Ausweisung und immer mit Beleg, bei einander widersprechenden Belegen null. Geprueft: 'npm run snapshot:municipal -- --fetch' gegen den echten Dienst am 2026-09-07 liefert fachlich exakt dieselben 30 Flaechen wie die im Repository liegende Antwort; 33 neue Unit-Tests (620 gesamt); 'npm run check:municipal' exit 0; Lizenzpruefung 19 Quellen freigegeben; die Quelle erscheint mit Lizenz und tatsaechlicher Abdeckung auf der oeffentlichen Quellenseite. Die Flaechen werden bewusst noch nicht ausgeliefert, siehe docs/MUNICIPAL_PILOT.md.",
-          "reference": "config/sources/berlin-hundefreilauf.json, scripts/ingest/adapters/municipal/berlin-hundefreilauf.ts, scripts/ingest/snapshot-municipal.ts, scripts/normalize/municipal.ts, scripts/checks/municipal-conflicts.ts, data-snapshots/municipal/berlin-hundefreilauf.json, tests/ingest/municipal-adapter.test.ts, tests/places/municipal-abgleich.test.ts, docs/MUNICIPAL_PILOT.md, docs/SOURCE_REVIEWS.md#berlin-hundefreilauf-wfs",
+          "description": "Kommunaler Pilot: WFS-Abgabe 'Hundefreilauf' der Senatsverwaltung fuer Stadtentwicklung Berlin unter dl-de/zero-2-0, Rechte geprueft und in docs/SOURCE_REVIEWS.md dokumentiert (termsHash der Lizenzseite). Der Adapter uebernimmt 30 Flaechen (22 Hundefreilauf, 8 Hundemitnahmeverbot) und lehnt fail-closed ab: fremdes Bezugssystem wird nicht umgerechnet, ein Teilimport wird nicht uebernommen, ein unbekannter typ wird nicht eingeordnet, das Freitextfeld info wird nicht zu einer Zahl. Der Geltungsbereich (nur drei Bezirke plus eine Flaeche in Steglitz-Zehlendorf) steht als Pflichtfeld im Snapshot. Abgleich mit den 9.381 OSM-Orten ueber Punkt-in-Flaeche: 10 bestaetigt, 0 Widerspruch, 16 unbestaetigt, 12 nur kommunal - der Zugewinn sind 12 Flaechen, die OSM nicht kennt. Ein Widerspruch wird benannt, nicht aufgeloest; belegteHundeerlaubnis() liefert true nur bei ausdruecklicher Ausweisung und immer mit Beleg, bei einander widersprechenden Belegen null. Geprueft: 'npm run snapshot:municipal -- --fetch' gegen den echten Dienst am 2026-09-07 liefert fachlich exakt dieselben 30 Flaechen wie die im Repository liegende Antwort; 33 neue Unit-Tests (620 gesamt); 'npm run check:municipal' exit 0; Lizenzpruefung 19 Quellen freigegeben; die Quelle erscheint mit Lizenz und tatsaechlicher Abdeckung auf der oeffentlichen Quellenseite. Die Flaechen werden bewusst noch nicht ausgeliefert, siehe docs/MUNICIPAL_SOURCES.md.",
+          "reference": "config/sources/berlin-hundefreilauf.json, scripts/ingest/adapters/municipal/berlin-hundefreilauf.ts, scripts/ingest/snapshot-municipal.ts, scripts/normalize/municipal.ts, scripts/checks/municipal-conflicts.ts, data-snapshots/municipal/berlin-hundefreilauf.json, tests/ingest/municipal-adapter.test.ts, tests/places/municipal-abgleich.test.ts, docs/MUNICIPAL_SOURCES.md, docs/SOURCE_REVIEWS.md#berlin-hundefreilauf-wfs",
           "verified_at": "2026-09-07",
           "command": "npm run check:municipal",
           "exit_code": 0
@@ -4095,8 +4095,16 @@
         "M20-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Zweite kommunale Quelle aufgenommen und beide ausgeliefert. Hamburg: Hundeauslaufzonen nach § 8 HundeG, WFS-Abgabe der Bezirksaemter unter dl-de/by-2-0, Rechte geprueft und in docs/SOURCE_REVIEWS.md dokumentiert (termsHash e1877184...f27e); 140 Flaechen, 0 abgelehnt. Der Adapter faellt fail-closed aus: die Art steht als kommentierte Konstante im Adapter, weil der Datensatz kein Typfeld fuehrt und nur eine Art enthaelt; ein fremdes srsName je Flaeche bricht ab statt umzurechnen (der Dienst liefert ohne ausdrueckliches EPSG:4326 naemlich EPSG:25832); die Vollstaendigkeit wird gegen eine zweite Anfrage resulttype=hits geprueft (numberMatched=140), weil der GeoJSON-Pfad keine Trefferzahl nennt - ohne diese Zahl wird nicht uebernommen. Die Hilfsquelle hamburg-hundeauslaufzonen-anzahl hat alle Ausgaberechte false. Ortsteilnummer wird nicht zum Bezirk, flaeche_in_qm bleibt Text, statedAt bleibt leer statt geraten. Snapshot-Lauf und Konfliktpruefung sind ueber scripts/ingest/municipal-sources.ts verallgemeinert (eine Beschreibung je Quelle, --nur waehlt eine aus, eine scheiternde Stadt laesst die uebrigen unberuehrt); jede Flaeche wird vor dem Schreiben gegen eine grobe Huelle der eigenen Gemeinde geprueft, was vertauschte Achsen faengt. Abgleich mit den 9.381 OSM-Orten: Hamburg 14 bestaetigt, 0 Widerspruch, 6 unbestaetigt, 126 nur kommunal; Berlin unveraendert 10/0/16/12. Beide Quellen sind jetzt auf der Stadtseite sichtbar - vorher lagen sie ungenutzt im Repository: eigener Abschnitt mit Geltungsbereich, Verbotsgebiete als benannter Text statt als eingefaerbte Flaeche, Namensnennung an der Anzeige (fuer dl-de/by-2-0 Pflicht), Zuordnung Stadtslug zu Snapshot ueber eine ausdrueckliche Liste statt Namensvergleich. Damit ist die offene Frage aus M11-05 zur Darstellung von Verbotsgebieten beantwortet. Nebenbefund und behoben: der Berliner termsHash hatte sich geaendert, weil die GovData-Seite umgebaut wurde - der Lizenztext ist unveraendert, zwei Abrufe ergaben denselben neuen Hash 26c8758c...0ecc. Zweiter Nebenbefund und behoben: src/pages/de-de/tierarztkosten/katalog.astro war eine statische Seite und wurde deshalb auch dann gebaut, wenn die Funktion costs im Markt aus ist - 'npm run build' brach seit M20-01 mit einem RouteError ab; die Seite liegt jetzt als gefilterte Restroute unter katalog/[...rest].astro.",
+          "reference": "config/sources/hamburg-hundeauslaufzonen.json, config/sources/hamburg-hundeauslaufzonen-anzahl.json, scripts/ingest/adapters/municipal/hamburg-hundeauslaufzonen.ts, scripts/ingest/municipal-sources.ts, scripts/ingest/snapshot-municipal.ts, scripts/checks/municipal-conflicts.ts, src/features/map/municipal.ts, src/pages/de-de/tierarzt-karte/[stadt].astro, data-snapshots/municipal/hamburg-hundeauslaufzonen.json, tests/ingest/municipal-hamburg.test.ts, tests/places/municipal-anzeige.test.ts, docs/MUNICIPAL_SOURCES.md, docs/SOURCE_REVIEWS.md",
+          "verified_at": "2026-09-08",
+          "command": "npm run verify && npm run check:municipal",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4116,7 +4124,7 @@
         "M18-01"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "in_progress",
       "evidence": [],
       "blocker": null,
       "notes": []
@@ -4241,8 +4249,16 @@
         "M18-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Bundesweiter OSM-Import zum zweiten Mal vollstaendig gefahren, diesmal mit Standdatum im Snapshot. 16 von 16 Regionen, 4,60 GiB geladen, 474 s laden, 564 s rechnen, Spitzenspeicher 204 MiB, 9.381 Orte und 46.113 Ortsnamen. Der Snapshot fuehrt jetzt retrievalDate 2026-09-07; die oeffentliche Datenstandseite nennt fuer die Ortsdaten '07.09.2026, 1 Tag, aktuell' statt 'unbekannt', der frueher noetige Hinweis entfaellt. Fachlicher Vergleich beider Laeufe: 2 Orte weggefallen, 2 neu, 5 geaendert (dreimal Oeffnungszeiten, zweimal Koordinaten, einmal Name) - normale Bewegung in OSM innerhalb eines Tages, kein Importfehler. Folgearbeit im selben Zug: content-data/city-allowlist.json neu gemessen; genau eine Stadt hat sich geaendert (Halle (Saale) 31 auf 30 erfasste Orte, eine Tierarztpraxis weniger), alle 42 Staedte erfuellen die Kriterien weiterhin. Der Test in tests/places/city-allowlist.test.ts hat die veraltete Messung gefunden, bevor sie ausgeliefert wurde. Geprueft: 'npm run check:places' exit 0 (270 Datendateien, ein Hinweis zur duennen Notdienstlage bleibt bestehen und ist gewollt), 'npm run verify' exit 0, 1344 Unit-Tests gruen.",
+          "reference": "data-snapshots/places/places-de.json, data-snapshots/places/place-index-de.json, content-data/city-allowlist.json, docs/OSM_BENCHMARK.md",
+          "verified_at": "2026-09-08",
+          "command": "npm run check:places",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

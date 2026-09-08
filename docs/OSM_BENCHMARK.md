@@ -71,3 +71,26 @@ npm run ingest:osm-de -- --keep                # Rohdateien behalten
 ```
 
 Der Rohbericht je Region liegt danach in `.work/osm-benchmark.json`.
+
+---
+
+## Zweiter vollständiger Lauf (2026-09-08, M22-01)
+
+Der erste Lauf entstand, bevor der Import sein Abrufdatum mitschrieb; der Datenstand galt deshalb als „unbekannt“. Dieser Lauf holt das nach und dient zugleich als zweite Messung derselben Strecke.
+
+| | erster Lauf (07.09.) | zweiter Lauf (08.09.) |
+|---|---|---|
+| Regionen | 16 von 16 | 16 von 16 |
+| Geladen | 4,60 GiB | 4,60 GiB |
+| Ladezeit gesamt | 917 s | 474 s |
+| Verarbeitungszeit gesamt | 546 s | 564 s |
+| Spitzenspeicher (Heap) | 373 MiB | 204 MiB |
+| Übernommene Orte | 9.381 | 9.381 |
+| Ortsnamen für die Suche | 46.116 | 46.113 |
+| Abrufdatum im Snapshot | fehlt | `2026-09-07` |
+
+Die Ladezeit hat sich fast halbiert, die Rechenzeit blieb gleich — die Ladezeit hängt am Anschluss und an der Auslastung der Spiegel, nicht am Code. Der niedrigere Spitzenspeicher stammt aus einem anderen Zeitpunkt der Speicherbereinigung, nicht aus einer Optimierung; 373 MiB bleiben die belastbare Obergrenze für die Planung.
+
+**Was sich fachlich geändert hat.** Beide Läufe übernehmen 9.381 Orte. Im Einzelvergleich: 2 Orte sind weggefallen, 2 neu hinzugekommen, 5 haben sich geändert (dreimal Öffnungszeiten, zweimal Koordinaten, einmal der Name). Das ist die normale Bewegung in OpenStreetMap innerhalb eines Tages, kein Importfehler.
+
+Folgearbeit im selben Zug: `content-data/city-allowlist.json` wurde neu gemessen. Eine Stadt hat sich verändert (Halle (Saale): 31 → 30 erfasste Orte, eine Tierarztpraxis weniger). Alle 42 Städte erfüllen die Kriterien weiterhin; die Allowlist bleibt bei 42 Einträgen.
