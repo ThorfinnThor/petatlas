@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M17-02",
+  "current_task": null,
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -3443,8 +3443,16 @@
         "M17-01"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Geplanter Importlauf mit woechentlichem Zeitplan (montags 04:17 UTC) und workflow_dispatch, concurrency ohne Abbruch laufender Laeufe, fuenf Minuten Zeitlimit je Quelle und drei Versuchen mit wachsender Pause. Ein Fehlschlag laesst den vorhandenen Snapshot unangetastet - das ist in den Snapshotskripten gebaut, die Versuche fangen nur kurze Stoerungen ab. Nach dem Abruf laeuft die volle Pruefkette samt check:municipal; nur bei tatsaechlicher Aenderung und ohne Trockenlauf wird ein Pull Request geoeffnet, nie ein Push nach main. Zwei echte Laeufe auf GitHub: der erste (34205518686) ist bei 'Neuen Stand pruefen' durchgefallen und hat damit einen zu strengen Test aufgedeckt - der Berliner WFS legt einen Zeitstempel in den Antwortkoerper, weshalb der Hash der Rohantwort nach jedem Abruf ein anderer ist; der Test vergleicht jetzt die normalisierten Flaechen. Der zweite Lauf (34205787130) ist gruen: Abruf, Pruefkette, Aenderungsfeststellung, kein Pull Request im Trockenlauf. Zwei Begrenzungen sind in docs/OPERATIONS.md dokumentiert statt angenommen: der bundesweite OSM-Import laeuft nicht auf einem Runner (4,6 GiB, Pausen gegen Drosselung, rund eine Stunde) und bleibt ein manueller Lauf; der GOT-Abruf ist bis M17-07 nur auf Zuruf moeglich, weil seine Abrufbedingungen noch nicht dokumentiert sind. Die Zusammenfassung enthaelt nur Zustaende und Zahlen, keine Adressen.",
+          "reference": ".github/workflows/ingest-open.yml, docs/OPERATIONS.md, tests/ingest/municipal-adapter.test.ts",
+          "verified_at": "2026-09-08",
+          "command": "gh workflow run 'Offene Quellen importieren' (Lauf 34205787130)",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 1/7 (98 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 2/7 (99 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M17-02 — Offenen Importplan aktivierbar machen.** `.github/workflows/ingest-open.yml`: wöchentliche beziehungsweise konfigurierte Jobs, `workflow_dispatch`, `concurrency`, Zeitlimits je Quelle, drei Versuche und bereinigte Zusammenfassungen. Abnahme: ein manueller vollständiger Lauf ist erfolgreich oder konkret begrenzt dokumentiert — und ein Fehler ersetzt gültige Daten nicht.
+**M17-03 — Täglichen Quellen- und Rebuildpfad hinzufügen.** `.github/workflows/source-check.yml` und `rebuild-commerce.yml`: Änderungen an Reise- und Regelquellen erkennen, Commerce-Rebuild nur bei aktiven Partnern; den Cloudflare-Hook als Secret und den Buildstatus getrennt behandeln. Abnahme: ein Fehlschlag des Hooks wird erkannt, und es entstehen keine minütlichen Vollbuilds oder Buildschleifen.
 
-Vorhanden: `scripts/publish/data-branch.ts` mit Allowlist statt Blocklist, Secret-Audit je Datei, Branchsperre für `main`/`master` und atomarem Schreiben, dazu `.github/workflows/data-branch.yml` (nur auf Zuruf, Trockenlauf als Vorgabe).
+Vorhanden: Datenbranch-Publisher mit Allowlist, `.github/workflows/data-branch.yml` und `ingest-open.yml` — Letzterer ist mit einem echten Lauf gegen die Berliner Quelle geprüft (Abruf, volle Prüfkette, Trockenlauf ohne Pull Request).
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

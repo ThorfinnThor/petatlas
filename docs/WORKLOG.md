@@ -500,3 +500,11 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Jede Datei läuft durch denselben Secret-Audit wie `dist`, und der Zielbranch wird zweimal geprüft: im Publisher und noch einmal im Workflow-Schritt.
 - Der erste Lauf gegen echte Daten fiel durch — an `LICENSE.txt`: mein Muster ließ nur Kleinbuchstaben zu. Genau dafür läuft man ein Skript gegen echte Daten, statt es nur gegen Testdaten zu prüfen.
 - Der Workflow läuft nur auf Zuruf und mit Trockenlauf als Vorgabe. Der Zeitplan kommt in M17-02: erst der Pfad, dann die Uhr.
+
+| M17-02 | `.github/workflows/ingest-open.yml`, Abschnitt 5 in `docs/OPERATIONS.md` | zwei echte Läufe des Workflows auf GitHub | zweiter Lauf grün; der erste hat einen zu strengen Test gefunden |
+
+- Der Lauf erneuert Snapshots, prüft sie mit der vollen Prüfkette und öffnet einen **Pull Request**. Er schreibt nicht nach `main`: ein Datenstand, den niemand angesehen hat, gehört nicht ungefragt in den Hauptbranch.
+- **Der erste Lauf ist durchgefallen — und das war richtig.** Er hat gemeldet, dass der Snapshot nach dem Abruf nicht mehr zum Test passte. Die Ursache war aber die Prüfung, nicht der Datenstand: der Berliner WFS legt einen Zeitstempel in den Antwortkörper, also ändert sich der Hash der Rohantwort bei jedem Abruf. Dass das so ist, stand seit M11-05 im Registryeintrag — im Test stand es noch nicht. Er vergleicht jetzt die normalisierten Flächen.
+- Der zweite Lauf ist grün: Abruf der kommunalen Quelle, volle Prüfkette, Änderungsprüfung, kein Pull Request (Trockenlauf).
+- Zwei Begrenzungen stehen in `docs/OPERATIONS.md` statt in einer Annahme: der bundesweite OSM-Import läuft nicht auf einem Runner (4,6 GiB, Pausen gegen Drosselung, rund eine Stunde), und der GOT-Abruf bleibt bis M17-07 dem Zuruf vorbehalten.
+- Die Zusammenfassung nennt nur Zustände und Zahlen. Eine Abrufadresse kann einen Token enthalten und gehört deshalb nicht ins Protokoll.
