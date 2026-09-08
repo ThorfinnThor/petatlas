@@ -20,6 +20,19 @@ import {
   type ProfilEntwurf,
 } from './state.ts';
 import { browserSpeicher, lade, loesche, speichere } from './storage.ts';
+import { EXPORT_WARNUNG, MAX_IMPORT_BYTES, baueExport, pruefeImport } from './import-export.ts';
+import {
+  FAVORITES_STORAGE_KEY,
+  LEERE_MERKLISTE,
+  lese as leseMerkliste,
+  schreibe as schreibeMerkliste,
+} from './favorites.ts';
+import {
+  PACKING_STORAGE_KEY,
+  leererStand,
+  lese as lesePacken,
+  schreibe as schreibePacken,
+} from './packing-state.ts';
 
 let entwurf: ProfilEntwurf = LEERER_ENTWURF;
 /** Letzte Rückmeldung zu Speichern oder Löschen. `null` = noch keine. */
@@ -128,6 +141,48 @@ function schreibeFelder(entwurfNeu: ProfilEntwurf): void {
   }
 }
 
+function speicherWert(schluessel: string): string | null {
+  const ablage = browserSpeicher();
+  if (ablage === null) return null;
+  try {
+    return ablage.getItem(schluessel);
+  } catch {
+    return null;
+  }
+}
+
+function speicherSetzen(schluessel: string, wert: string): void {
+  const ablage = browserSpeicher();
+  if (ablage === null) return;
+  try {
+    ablage.setItem(schluessel, wert);
+  } catch {
+    // Ein voller Speicher ist kein Grund, den Rest abzubrechen.
+  }
+}
+
+/**
+ * Baut die Exportdatei aus dem, was **gespeichert** ist — nicht aus dem, was
+ * gerade im Formular steht. Was nie gespeichert wurde, gehört auch nicht in
+ * eine Sicherung.
+ */
+function exportDaten(): string {
+  const stand = lade(browserSpeicher());
+  const merkliste = leseMerkliste(speicherWert(FAVORITES_STORAGE_KEY));
+  const packen = lesePacken(speicherWert(PACKING_STORAGE_KEY), new Date().toISOString());
+  return JSON.stringify(
+    baueExport({
+      profile: stand.wert?.profile ?? null,
+      interests: stand.wert?.interests ?? [],
+      favorites: merkliste.entries.length === 0 ? null : merkliste,
+      packing: Object.keys(packen.ziele).length === 0 ? null : packen,
+      exportedAt: new Date().toISOString(),
+    }),
+    null,
+    2,
+  );
+}
+
 export function profilStarten(): void {
   const form = document.querySelector<HTMLFormElement>('#profilform');
   if (form === null) return;
@@ -188,6 +243,67 @@ export function profilStarten(): void {
     entfernen.addEventListener('click', () => {
       letzteMeldung = loesche(browserSpeicher()).meldung;
       zeige();
+    });
+  }
+
+  const exportKnopf = document.querySelector<HTMLButtonElement>('#profil-export');
+  if (exportKnopf !== null) {
+    exportKnopf.hidden = false;
+    exportKnopf.addEventListener('click', () => {
+      const datei = new Blob([exportDaten()], { type: 'application/json' });
+      const adresse = URL.createObjectURL(datei);
+      const verweis = document.createElement('a');
+      verweis.href = adresse;
+      verweis.download = `petatlas-lokal-${new Date().toISOString().slice(0, 10)}.json`;
+      verweis.click();
+      URL.revokeObjectURL(adresse);
+      letzteMeldung = EXPORT_WARNUNG;
+      zeige();
+    });
+  }
+
+  const importFeld = document.querySelector<HTMLInputElement>('#profil-import');
+  if (importFeld !== null) {
+    importFeld.hidden = false;
+    importFeld.addEventListener('change', () => {
+      const datei = importFeld.files?.[0];
+      if (datei === undefined) return;
+      if (datei.size > MAX_IMPORT_BYTES) {
+        letzteMeldung = `Die Datei ist zu groß (${Math.round(datei.size / 1024)} KiB) und wurde nicht gelesen.`;
+        zeige();
+        importFeld.value = '';
+        return;
+      }
+
+      void datei.text().then((inhalt) => {
+        const ergebnis = pruefeImport(inhalt);
+        letzteMeldung = ergebnis.meldung;
+        if (ergebnis.ok && ergebnis.daten !== null) {
+          const daten = ergebnis.daten;
+          if (daten.profile !== null) {
+            speichere(browserSpeicher(), daten.profile, daten.interests, new Date().toISOString());
+            entwurf = {
+              species: daten.profile.species,
+              displayName: daten.profile.displayName,
+              birthDate: daten.profile.birthDate,
+              weightGrams: daten.profile.weightGrams,
+              breed: daten.profile.breed,
+              interests: bereinigeInteressen(daten.interests),
+            };
+            schreibeFelder(entwurf);
+          }
+          speicherSetzen(
+            FAVORITES_STORAGE_KEY,
+            schreibeMerkliste(daten.favorites ?? LEERE_MERKLISTE),
+          );
+          speicherSetzen(
+            PACKING_STORAGE_KEY,
+            schreibePacken(daten.packing ?? leererStand(new Date().toISOString())),
+          );
+        }
+        zeige();
+        importFeld.value = '';
+      });
     });
   }
 

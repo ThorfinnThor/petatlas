@@ -3348,8 +3348,16 @@
         "M16-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Import und Export als lokale Datei, ohne Upload. Der Export baut aus dem gespeicherten Stand (Profil, Interessen, Merkliste, Packlisten) und traegt Format, Fassung und Zeitpunkt; daneben steht die Warnung, dass die Datei unverschluesselt ist und wer sie weitergibt, diese Angaben weitergibt. Der Import prueft in dieser Reihenfolge: Groessenlimit von 256 KiB vor dem Lesen, lesbares JSON, Formatkennung, Fassungsnummer, Schema - abgelehnt wird abgelehnt, nicht repariert und nicht teilweise uebernommen. Manipulierte Daten fuehren nicht zu XSS: ein E2E-Test liest eine Datei mit '<img src=x onerror=alert(1)>' als Rufnamen ein, prueft die Anzeige als Text, sucht nach einem img-Element und lauscht auf Dialoge - nichts davon tritt ein. Unbekannte Zusatzfelder wie 'endpoint' lassen die Datei scheitern, weil das Schema strict ist. Beim Einlesen wird nichts nachgeladen; ein Test protokolliert alle Anfragen, ein weiterer liest den Quelltext des Pruefers und stellt sicher, dass darin kein fetch, kein XMLHttpRequest und kein dynamischer import vorkommt. 15 neue Unit-Tests (1049 gesamt) und 10 neue Feature-E2E-Tests (264 gesamt), npm run verify exit 0, 198 Standard-E2E gruen.",
+          "reference": "src/features/profile/import-export.ts, src/features/profile/profile-ui.ts, src/components/pages/Profile.astro, tests/profile-import.test.ts, tests/e2e-features/profil.spec.ts",
+          "verified_at": "2026-09-08",
+          "command": "npx vitest run tests/profile-import.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },

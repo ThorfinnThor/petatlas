@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 bei 4/6 (95 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 bei 5/6 (96 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M16-05 — Sicheren Import und Export ergänzen.** `profile import-export.ts` und `tests/profile-import.test.ts`: lokale JSON-Datei, Größenlimit, Schemaprüfung und eine klare Datenschutzwarnung; **keine Datei geht an einen Server**. Abnahme: manipulierte Importdaten führen nicht zu XSS, nicht zu unerlaubten Abrufen und nicht zur Ausführung von Code.
+**M16-06 — Datenschutz- und Netzabnahme durchführen.** `docs/reviews/local-profile.md` und Privacy-E2E-Tests: im Browser nachweisen, dass Profileingaben weder in der Adresse noch in Analytics, Affiliate-Sub-ID oder fremden Requestdaten landen. Abnahme: das anonyme Standardverhalten und die Grenzen ohne Sicherung und Geräteabgleich sind richtig beschrieben.
 
-Vorhanden: Profil im Tab mit ausdrücklicher Speicherung, Merkliste mit reiner Kennungsablage, abhakbare Packliste je Ziel und Gerät samt Druckregeln.
+Vorhanden: Profil im Tab mit ausdrücklicher Speicherung, Merkliste mit reiner Kennungsablage, abhakbare Packliste je Ziel und Gerät sowie Import und Export als lokale Datei mit Größenlimit, Schemaprüfung und Datenschutzwarnung.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

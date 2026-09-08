@@ -470,3 +470,12 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Ziele bleiben getrennt: ein Häkchen für Österreich taucht in Italien nicht auf. Ein Ziel ohne Häkchen wird aus dem Speicher entfernt, statt als leere Liste zu bleiben.
 - Es gibt **keine eigene Druckansicht**. Gedruckt wird die Seite selbst; eine zweite Fassung wäre eine zweite Gelegenheit, etwas wegzulassen. Die Druckregeln blenden nur Bedienelemente aus und lassen gesetzte Häkchen sichtbar.
 - Ein älterer Test suchte noch nach dem gezeichneten Quadrat. Er prüft jetzt das Kontrollkästchen — die Sache ist dieselbe geblieben, die Umsetzung nicht.
+
+| M16-05 | `src/features/profile/import-export.ts`, Sicherungsteil der Profilseite, `tests/profile-import.test.ts` | `npx vitest run tests/profile-import.test.ts`, `npm run test:e2e:features` (264 Tests) | 15 + 5 Tests; Datei bleibt lokal |
+
+- Eine Importdatei ist eine **fremde Eingabe**, auch wenn sie vom eigenen Export stammt: sie kann bearbeitet worden, aus einer anderen Fassung oder von jemand anderem sein.
+- Vier Riegel, in dieser Reihenfolge: Größenlimit **vor** dem Lesen (256 KiB), Formatkennung, Fassungsnummer, Schemaprüfung. Was nicht passt, wird abgelehnt — nicht repariert und nicht teilweise übernommen.
+- Ein manipulierter Rufname mit `<img src=x onerror=alert(1)>` bleibt Text: ein E2E-Test liest die Datei ein, prüft die Anzeige als Text, sucht nach einem `img`-Element und lauscht auf Dialoge. Nichts davon tritt ein.
+- Ein Zusatzfeld wie `endpoint` lässt die Datei scheitern — das Schema ist `.strict()`, und eine Adresse in einer Sicherung hätte dort nichts zu suchen.
+- Der Export baut aus dem, was **gespeichert** ist, nicht aus dem, was gerade im Formular steht. Was nie gespeichert wurde, gehört nicht in eine Sicherung.
+- Ein Test liest den Quelltext des Prüfers und stellt sicher, dass darin kein `fetch(`, kein `XMLHttpRequest` und kein dynamischer `import(` vorkommt.

@@ -97,6 +97,24 @@ import { INTERESSEN } from '../../features/profile/state.ts';
 <h2>Stand</h2>
 <div id="profil-stand" role="status" aria-live="polite"></div>
 
+<h2>Sicherung</h2>
+<p>
+  Sie können Ihre lokalen Daten als Datei speichern und auf einem anderen Gerät wieder einlesen. Die
+  Datei bleibt bei Ihnen: sie wird <strong>nicht hochgeladen</strong>, und es gibt keine Stelle, an
+  die sie ginge.
+</p>
+<p class="hilfe">
+  Die Datei ist unverschlüsselt und enthält Profil, Merkliste und abgehakte Packlisten. Wer sie
+  weitergibt, gibt diese Angaben weiter.
+</p>
+<p class="knoepfe">
+  <button type="button" id="profil-export" hidden>Als Datei speichern</button>
+  <label class="datei">
+    Datei einlesen
+    <input type="file" id="profil-import" accept="application/json,.json" hidden />
+  </label>
+</p>
+
 <h2>Was hier nicht erhoben wird</h2>
 <ul>
   <li><strong>Keine E-Mail-Adresse und kein Konto.</strong> Es gibt nichts anzumelden.</li>
@@ -155,6 +173,11 @@ import { INTERESSEN } from '../../features/profile/state.ts';
     display: flex;
     flex-wrap: wrap;
     gap: var(--abstand-2);
+    align-items: center;
+  }
+
+  .datei {
+    font-weight: 400;
   }
 
   .hilfe {
