@@ -72,7 +72,9 @@ Ablauf:
 
 **Was dort ausdrücklich nicht läuft:** der bundesweite OSM-Import. Er lädt rund 4,6 GiB in sechzehn Regionen, braucht Pausen zwischen den Abrufen (die Geofabrik antwortet sonst mit 502) und lief lokal rund eine Stunde. Auf einem GitHub-Runner wäre das ein Kampf gegen Zeit- und Plattengrenzen und ein unnötiger Druck auf einen fremden Server. Er bleibt ein **manueller Lauf**: `npm run ingest:osm-de`, danach `npm run snapshot:places` und `npm run build:places`. Die Messwerte stehen in `docs/OSM_BENCHMARK.md`.
 
-**Der GOT-Abruf läuft seit M17-07 im wöchentlichen Zeitplan mit.** Die Abrufbedingungen sind gemessen und in `docs/SOURCE_REVIEWS.md` festgehalten; der Abruf ist bedingt und beantwortet ein HTTP 304 damit, dass der Snapshot unverändert bleibt.
+**Der GOT-Abruf steht seit M17-07 im wöchentlichen Zeitplan**, bedingt über ETag und `Last-Modified`; ein HTTP 304 lässt den Snapshot unverändert.
+
+**Er gelingt von einem GitHub-Runner aus jedoch nicht.** Am 2026-09-08 in zwei Workflows und fünf Versuchen gemessen: `www.gesetze-im-internet.de:443` nimmt die Verbindung aus diesem Netz nicht an (`UND_ERR_CONNECT_TIMEOUT` nach 10 s), während derselbe Abruf vom Arbeitsrechner sofort funktioniert. Der Versuch bleibt im Zeitplan — er kostet nichts und greift von selbst, sollte die Erreichbarkeit zurückkehren. **Verlassen kann man sich nicht darauf: die Aktualisierung des Gebührenkatalogs ist bis auf Weiteres ein manueller Lauf**, so wie der bundesweite OSM-Import. Ein Fehlschlag ersetzt keine Daten. Einzelheiten in `docs/SOURCE_REVIEWS.md`.
 
 Der Importer führt niemals Code aus dem Daten-Branch oder der Fremdquelle aus. HTML, CSV und JSON gelten als nicht vertrauenswürdige Daten. Markdown/MDX wird nicht aus Feeds ausgeführt. Source-URLs sind konfiguriert; Benutzer können den Importer nicht als allgemeinen URL-Fetcher steuern.
 

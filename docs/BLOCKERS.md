@@ -22,7 +22,9 @@ Stand 2026-09-07. **Fünf blockierte Aufgaben: M08-06, M09-06, M12-06, M13-06 un
 
 **Vollständige Vorgaben:** `docs/DECISIONS.md`, ADR-018. **Quellenprüfung:** `docs/SOURCE_REVIEWS.md`.
 
-**Verbleibend, aber kein Blocker:** Aufgabe **M17-07** dokumentiert die Abrufbedingungen, bevor ein zeitgesteuerter Job aktiviert wird. Die Implementierung des Rechners wartet nicht darauf.
+**Erledigt:** Aufgabe **M17-07** hat die Abrufbedingungen gemessen und dokumentiert; der Abruf ist bedingt und steht im wöchentlichen Zeitplan.
+
+**Offener Betriebspunkt, kein Blocker:** Der Abruf gelingt von einem GitHub-Runner aus nicht — `www.gesetze-im-internet.de:443` nimmt die Verbindung aus diesem Netz nicht an (gemessen am 2026-09-08, fünf Versuche in zwei Workflows, `UND_ERR_CONNECT_TIMEOUT`). Die Aktualisierung des Gebührenkatalogs bleibt deshalb bis auf Weiteres ein manueller Lauf vom Arbeitsrechner. Nichts hängt daran: die Fassung ist seit dem 7. April 2023 unverändert, ein Fehlschlag ersetzt keine Daten, und die Auslieferung läuft weiter. Dass ein dauerhaft scheiternder Abruf auffällt, gehört zu **M17-05**.
 
 Der Eintrag bleibt hier stehen, damit die Entscheidung nachvollziehbar bleibt. Ein Blocker wird nicht gelöscht, sondern aufgelöst.
 

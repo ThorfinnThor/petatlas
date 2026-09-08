@@ -159,3 +159,18 @@ Diese Prüfung betrifft **nicht** die Rechte an den Daten — die stehen weiter 
 ### Nachgeprüft am 2026-09-08
 
 Zwei aufeinanderfolgende Läufe von `npm run snapshot:got -- --fetch`: der erste holte die Datei und trug ETag und `Last-Modified` in den Snapshot ein, der zweite bekam **HTTP 304** und ließ den Snapshot unangetastet. Der Inhalts-Hash blieb in beiden Fällen `c7bdcfa9b699…`; die Fassung ist unverändert die vom 7. April 2023.
+
+### Aus der CI heraus nicht erreichbar (gemessen am 2026-09-08)
+
+Der Abruf gelingt vom Arbeitsrechner, **nicht** von einem GitHub-Runner. Gemessen in zwei unabhängigen Workflows:
+
+| Lauf | Versuche | Ergebnis |
+|---|---|---|
+| `ingest-open.yml`, Zuruf mit `quelle=got` | 3 (mit 30 s und 60 s Pause) | jedes Mal `fetch failed` nach rund 10 s |
+| `source-check.yml`, zwei Läufe | 2 | `Connect Timeout Error (www.gesetze-im-internet.de:443, 10000ms)`, `UND_ERR_CONNECT_TIMEOUT` |
+
+Es ist ein **Verbindungszeitlimit**, kein 403, kein Zertifikatsfehler und keine Antwort mit Hinweis. Der Server nimmt die Verbindung aus diesem Netz nicht an. Nachbarbefund aus demselben Lauf: `agriculture.gouv.fr` scheiterte einmal genauso und antwortete beim anderen Lauf sofort — Behördenhosts sind von einem Runner aus unzuverlässig erreichbar. Die Beobachtung versucht es deshalb zweimal mit einer Pause von 15 Sekunden; mehr wäre Drängeln.
+
+**Folge für den Betrieb:** Der wöchentliche Lauf versucht den Abruf weiter — der Versuch kostet nichts, und sollte die Erreichbarkeit zurückkehren, greift er von selbst. Verlassen kann man sich darauf aber nicht. **Die Aktualisierung des Gebührenkatalogs ist bis auf Weiteres ein manueller Lauf** (`npm run snapshot:got -- --fetch` vom Arbeitsrechner), so wie der bundesweite OSM-Import. Ein Fehlschlag ersetzt keine Daten: der vorhandene Snapshot bleibt gültig, und die Fassung ist ohnehin seit dem 7. April 2023 unverändert.
+
+Dass ein dauerhaft scheiternder Abruf auffällt und nicht nur in einer Zeile der Laufzusammenfassung steht, gehört zu M17-05.

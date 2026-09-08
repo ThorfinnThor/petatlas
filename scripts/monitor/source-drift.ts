@@ -106,7 +106,10 @@ export interface PruefOptionen {
   readonly fetchImpl?: typeof fetch;
   readonly timeoutMs?: number;
   readonly maxBytes?: number;
-  readonly jetzt?: () => string;
+  /** Wie oft ein Verbindungsversuch wiederholt wird. Zwei sind genug. */
+  readonly versuche?: number;
+  readonly pauseMs?: number;
+  readonly sleep?: (ms: number) => Promise<void>;
 }
 
 /** Liest höchstens `maxBytes`; eine riesige Antwort ist kein Grund, Speicher zu fluten. */
@@ -120,7 +123,14 @@ export async function pruefeEintrag(
   vorher: WatchState | undefined,
   optionen: PruefOptionen = {},
 ): Promise<Ergebnis> {
-  const { fetchImpl = fetch, timeoutMs = 30_000, maxBytes = 8 * 1024 * 1024 } = optionen;
+  const {
+    fetchImpl = fetch,
+    timeoutMs = 30_000,
+    maxBytes = 8 * 1024 * 1024,
+    versuche = 2,
+    pauseMs = 15_000,
+    sleep = (ms: number) => new Promise((weiter) => setTimeout(weiter, ms)),
+  } = optionen;
 
   const ziel = new URL(eintrag.url);
   if (ziel.protocol !== 'https:') {
@@ -140,18 +150,30 @@ export async function pruefeEintrag(
     kopfzeilen['if-modified-since'] = vorher.lastModified;
   }
 
-  let antwort: Response;
-  try {
-    antwort = await fetchImpl(ziel, {
-      redirect: 'follow',
-      headers: kopfzeilen,
-      signal: AbortSignal.timeout(timeoutMs),
-    });
-  } catch (fehler) {
+  // Zwei Versuche mit einer ruhigen Pause. Behördenseiten antworten von einem
+  // Runner aus nicht immer beim ersten Anlauf; ein einzelner Fehlversuch wäre
+  // eine Meldung, die niemandem hilft. Mehr als zwei wären Drängeln.
+  let antwort: Response | null = null;
+  let letzterFehler: unknown = null;
+  for (let versuch = 1; versuch <= Math.max(1, versuche); versuch += 1) {
+    try {
+      antwort = await fetchImpl(ziel, {
+        redirect: 'follow',
+        headers: kopfzeilen,
+        signal: AbortSignal.timeout(timeoutMs),
+      });
+      break;
+    } catch (fehler) {
+      letzterFehler = fehler;
+      if (versuch < Math.max(1, versuche)) await sleep(pauseMs);
+    }
+  }
+
+  if (antwort === null) {
     return {
       watchId: eintrag.watchId,
       befund: 'fehler',
-      begruendung: `Abruf fehlgeschlagen: ${ursachenkette(fehler)}`,
+      begruendung: `Abruf nach ${Math.max(1, versuche)} Versuch(en) fehlgeschlagen: ${ursachenkette(letzterFehler)}`,
       contentHash: vorher?.contentHash ?? null,
       etag: vorher?.etag ?? null,
       lastModified: vorher?.lastModified ?? null,

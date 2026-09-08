@@ -140,8 +140,37 @@ describe('Befund je Antwort', () => {
       fetchImpl: async () => {
         throw new Error('getaddrinfo ENOTFOUND');
       },
+      sleep: async () => undefined,
     });
     expect(ergebnis.befund).toBe('fehler');
+  });
+
+  it('versucht es ein zweites Mal, bevor es meldet', async () => {
+    let aufrufe = 0;
+    const ergebnis = await pruefeEintrag(EINTRAG, stand(hash), {
+      fetchImpl: async () => {
+        aufrufe += 1;
+        if (aufrufe === 1) throw new Error('fetch failed');
+        return antwort(SEITE);
+      },
+      sleep: async () => undefined,
+    });
+    expect(aufrufe).toBe(2);
+    expect(ergebnis.befund).toBe('unveraendert');
+  });
+
+  it('drängelt nicht: nach zwei Fehlversuchen ist Schluss', async () => {
+    let aufrufe = 0;
+    const ergebnis = await pruefeEintrag(EINTRAG, stand(hash), {
+      fetchImpl: async () => {
+        aufrufe += 1;
+        throw new Error('fetch failed');
+      },
+      sleep: async () => undefined,
+    });
+    expect(aufrufe).toBe(2);
+    expect(ergebnis.befund).toBe('fehler');
+    expect(ergebnis.begruendung).toContain('2 Versuch');
   });
 
   it('meldet ohne Vergleichsstand neu, nicht unveraendert', async () => {
@@ -236,6 +265,7 @@ describe('Ursachen im Klartext', () => {
         });
         throw new Error('fetch failed', { cause: grund });
       },
+      sleep: async () => undefined,
     });
     expect(ergebnis.befund).toBe('fehler');
     expect(ergebnis.begruendung).toContain('ETIMEDOUT');
