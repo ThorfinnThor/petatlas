@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 2/6 (111 von 121 Aufgaben, sechs blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 3/6 (112 von 121 Aufgaben, sechs blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -38,13 +38,13 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M19-03 — Internationalisierung mit einem Testmarkt beweisen.** `tests/expansion-proof.test.ts` und `docs/EXPANSION.md`: einen deaktivierten US- oder EU-Testmarkt über Konfiguration und Adaptervertrag durchspielen — USD, andere Einheiten und eine fehlende Kostenquelle müssen richtig behandelt werden. Abnahme: **kein Umbau am DE-Kern** und keine Veröffentlichung ungeprüfter internationaler Seiten.
+**M19-04 — Betriebshandbuch und Restrisiken fertigstellen.** `docs/RUNBOOK.md` und `docs/KNOWN_LIMITATIONS.md`: Quelle hinzufügen, Partner sperren, Datenrollback, Secretrotation, Frischeprüfung, Gebühren- und Reisereview sowie Kostengrenzen als konkrete Handgriffe beschreiben. Abnahme: der Betreiber kann die wichtigsten Eingriffe anhand benannter Dateien und Befehle durchführen.
 
-Vorarbeit ist da: `tests/international-contracts.test.ts` und `tests/markets.test.ts` prüfen bereits Marktkonfiguration und Angebotsfilter; `config/markets/` enthält die vorbereiteten Märkte.
+Vieles liegt schon in einzelnen Dokumenten (`ROLLBACK`, `MONITORING`, `OPERATIONS`, `SOURCE_REVIEWS`, `LEGAL_CHECKLIST`); das Runbook soll daraus **Handgriffe** machen, nicht die Dokumente wiederholen.
 
-Ein frischer Clone ist geprüft (`docs/DEVELOPER_SETUP.md`): `npm ci`, `verify` mit 1273 Tests, `build:site` mit 346 Dateien und 228 E2E-Tests laufen ohne Account, ohne Secret und ohne Umgebungsvariable.
+Der Ausbaubeweis steht: `tests/expansion-proof.test.ts` und `docs/EXPANSION.md` zeigen, dass ein zweiter Markt aus Konfiguration und Adaptern entsteht — kein Rückfall auf einen anderen Markt, keine Umrechnung, kein Umbau am DE-Kern, nichts davon veröffentlicht.
 
-Die Abnahmeläufe stehen in `docs/RELEASE_TESTS.md`; gemessen und dokumentiert liegen außerdem vor: `docs/ACCESSIBILITY.md`, `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`, `docs/LEGAL_CHECKLIST.md`, `docs/reviews/launch.md`.
+Die Abnahmeläufe stehen in `docs/RELEASE_TESTS.md`, der frische Clone in `docs/DEVELOPER_SETUP.md`.
 
 **M14-06 ist blockiert (B-006):** Echte Produkte lassen sich attributseitig erst abnehmen, wenn Angebotsrechte bestehen. Finder und Pflegeseiten laufen mit ausdrücklich synthetischen Daten. Ablauf in `docs/reviews/care-toys.md`.
 

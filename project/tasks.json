@@ -3898,8 +3898,14 @@
         "M19-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "tests/expansion-proof.test.ts: 14 Tests gruen. Ein Testmarkt wird vollstaendig ueber Konfiguration und Adapter aufgezogen - Routen aus dem eigenen Locale, derselbe Adaptervertrag, USD statt EUR, US-Maßsystem statt metrisch - ohne eine Zeile am deutschen Kern. Die vier Grenzen sind einzeln belegt: kein Rueckfall auf einen anderen Markt (ein DE-Adapter wird fuer US abgelehnt, eine fehlende Kostenquelle liefert 'Kein Rueckfall' statt eines deutschen Preises), eine fehlende Quelle schaltet keine Funktion und keine Route ein, Waehrung und Einheiten folgen dem Markt ohne Umrechnung (es gibt keinen Wechselkurs im System), und in der versionierten Konfiguration bleibt der Testmarkt abgeschaltet: enabled false, alle Flags aus, kein Adapter, buildablePaths erzeugt nur /de-de/. Beim Schreiben wurden zwei eigene Testannahmen korrigiert: der US-Slug heisst vet-map, und auch der deutsche Markt hat seine Funktionen in der versionierten Konfiguration aus. npm run verify exit 0, 1287 Tests.",
+          "reference": "tests/expansion-proof.test.ts, docs/EXPANSION.md",
+          "verified_at": "2026-09-08T16:35:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

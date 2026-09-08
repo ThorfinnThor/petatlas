@@ -621,3 +621,9 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - **Nachgestellt statt aufgeschrieben.** Im frischen Clone: `npm ci`, `verify` mit 1273 Tests, `build:site` mit 346 Dateien, `build:fixture`, 228 E2E-Tests. Kein Account, kein Token, keine versteckte Datei.
 - Dabei fiel eine eigene Falschangabe auf: der Handoff verlangte `NODE_EXTRA_CA_CERTS` „für jeden npm-Befehl“. Gemessen stimmt das nicht mehr — npm läuft ohne. Gebraucht wird die Variable nur noch für den Abruf von `gdi.berlin.de` und für `wrangler`.
 - **Wrangler meldet ohne die Variable „auth token has expired“.** Das Token ist intakt; der Refresh scheitert an derselben fehlenden Wurzel. Wer der Meldung glaubt, meldet sich unnötig neu an — deshalb steht der Befund jetzt in drei Dokumenten.
+
+| M19-03 | `tests/expansion-proof.test.ts`, `docs/EXPANSION.md` | 14 Tests, Testmarkt vollständig aufgezogen | grün, nichts veröffentlicht |
+
+- Der wichtigste Satz steht im Fehlertext des Adapters: **„Kein Rückfall auf einen anderen Markt.“** Eine amerikanische Kostenseite, die stillschweigend deutsche Gebührensätze zeigt, wäre schlimmer als gar keine Kostenseite.
+- **Es gibt keinen Wechselkurs im System**, und das ist Absicht: ein umgerechneter Preis wäre eine erfundene Zahl. Ein USD-Betrag bleibt ein USD-Betrag, auch mit deutschem Locale.
+- Zwei eigene Annahmen waren falsch und wurden im Test korrigiert, nicht im Code: der US-Slug heißt `vet-map`, und auch der deutsche Markt hat seine Funktionen in der versionierten Konfiguration aus — es ist eben nichts freigegeben.
