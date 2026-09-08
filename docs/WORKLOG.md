@@ -609,3 +609,9 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Die Prüfung kann **nur widersprechen**. Sie erteilt keine Freigabe und prüft keinen Inhalt; sie prüft die Form: Person vorhanden, Datum vorhanden, benannter Nachweis vorhanden. Ein Häkchen ohne Namen ist keine Freigabe, und ein Verweis auf ein Dokument, das es nicht gibt, ist schlimmer als kein Verweis.
 - **Ein nicht freigegebener Stand ist der Normalzustand und kein Fehler.** Der Lauf endet mit 0, obwohl acht Gates und vier Rechtspflichten offen sind. Rot wird er erst, wenn der Stand etwas behauptet, das er nicht belegen kann.
 - `docs/reviews/launch.md` endet mit vier Sätzen darüber, was **nicht** geprüft wurde — damit das später nicht aus einem grünen Prüflauf herausgelesen wird. Ein grüner Lauf heißt: der Stand behauptet nichts Unbelegtes. Er heißt nicht, dass geprüft wurde.
+
+| M19-01 | `tests/e2e-features/golden-path.spec.ts`, `docs/RELEASE_TESTS.md` | sieben Pfade über zwei Profile, dazu der volle Abnahmelauf | grün |
+
+- Geprüft wird, **was ein Mensch sieht**, nicht welche Funktion gelaufen ist.
+- Drei der sechs Pfade enden bewusst nicht grün, und genau das steht im Test: kein positives Reiseergebnis ohne Freigabe, kein Angebot ohne Vertrag, kein Grundpreis ohne Angebot. In allen drei Fällen steht die Begründung auf der Seite — eine leere Stelle wäre schlechter als eine erklärte.
+- Die Gegenprobe gehört dazu: obwohl der Lauf alle Feature Flags anhat, erscheint keine einzige Angebotskarte.

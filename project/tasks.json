@@ -3838,8 +3838,14 @@
         "M18-02"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Neue Suite tests/e2e-features/golden-path.spec.ts mit sieben Faellen ueber zwei Profile: Kosten zu nachvollziehbarer Auskunft (Betrag, Fundstelle, Hinweis 'fachlich noch nicht geprueft'), Ort zu Trefferliste mit Quelle und Lizenz, Reise zu Anforderungen und Packliste ohne gruenes Gesamtergebnis, Finder zu leerem Katalog mit Begruendung, Futter zu Menge mit Begruendung fuer den fehlenden Grundpreis, Profil anlegen, wiederfinden und loeschen ohne Rueckstand, dazu die Gegenprobe, dass trotz aller Feature Flags keine Angebotskarte erscheint. Gesamtlauf am 2026-09-08: npm run verify 1273 Tests exit 0; npx playwright test 228 bestanden; features 294 bestanden; Zugaenglichkeit 107 bestanden bei 7 uebersprungenen; Leistung 12 Messungen ohne Stopp-Budget. docs/RELEASE_TESTS.md haelt fest, was bewusst nicht gruen ist und warum.",
+          "reference": "tests/e2e-features/golden-path.spec.ts, docs/RELEASE_TESTS.md",
+          "verified_at": "2026-09-08T16:15:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },
