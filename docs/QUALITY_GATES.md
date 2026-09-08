@@ -30,6 +30,7 @@ npm run check:seo
 npm run check:security
 npm run check:workflows
 npm run check:budgets
+npm run rollback:pruefen -- HEAD
 npm run check:release
 npm run verify
 ```

@@ -77,8 +77,21 @@ jobs:
       - name: Suchindex
         run: npm run build:search
 
+      - name: Gesundheitsstand
+        run: npm run build:health
+
       - name: Rechteprüfung der Quellen
         run: npm run check:licenses
+
+      # Nach dem Build, weil erst dann etwas zu messen ist. Der Lauf wird rot,
+      # sobald ein Budget seine Stoppgrenze erreicht (M17-06).
+      - name: Budgets
+        run: npm run check:budgets
+
+      # Ein Rollback muss gegen die heutigen Rechte zulässig sein, nicht gegen
+      # die von damals. Geprüft wird der Stand, der gerade gebaut wurde.
+      - name: Rollback-Zulässigkeit des aktuellen Standes
+        run: npm run rollback:pruefen -- HEAD
 
       # Der Audit läuft nach dem Build und sieht damit auch dist/.
       - name: Secret- und Fixture-Audit über Repo und dist

@@ -3569,8 +3569,14 @@
         "M17-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npm run verify exit 0, 1211 Tests. npx vitest run tests/checks tests/publish/rollback.test.ts: 20 Tests gruen; jede Ablehnung einzeln belegt (fehlende Datei, unlesbares JSON, Quelle mit heute widerrufenen Rechten, Quelle nicht mehr im Register, Stand ohne Datum, Stichtag 2028-01-01 reisst die 400-Tage-Grenze). Echte Probe: npm run rollback:pruefen gegen HEAD und gegen einen 25 Commits aelteren Stand, beide zulaessig, 18 Quellen einzeln geprueft, Gebuehrenstand 0 bzw. 2 Tage alt. Gemessener Budgetstand am 2026-09-08: Vorgabebuild 10 Seiten, 328 Dateien, 12 MiB, 1,6 s; Featurebuild 57 Seiten, 425 Dateien, 13 MiB, 1,9 s; groesste Datei 0,46 MiB; Snapshots 10,2 MiB; Git-Historie 9,7 MiB Verzeichnis und 2,59 MiB size-pack bei 922 Objekten. Alle Budgets ok, keins ungemessen. Beides laeuft jetzt als Schritt in ci.yml. Der Provider-Rollback ist ausdruecklich nicht erprobt und als solcher dokumentiert.",
+          "reference": "docs/ROLLBACK.md, docs/BUDGET_REPORT.md, scripts/checks/budgets.ts, config/budgets.json, scripts/publish/rollback.ts, tests/checks/budgets.test.ts, tests/publish/rollback.test.ts, .github/workflows/ci.yml",
+          "verified_at": "2026-09-08T15:00:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

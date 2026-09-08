@@ -1,0 +1,37 @@
+{
+  "$comment": "M17-06: Designgrenzen aus docs/OPERATIONS.md Abschnitt 12. Keine Kostenschätzung und keine Kapazitätszusage. Wer eine Grenze anhebt, ändert sie hier und begründet sie im Commit.",
+  "budgets": [
+    {
+      "id": "dateien-ausgeliefert",
+      "titel": "Veröffentlichte Dateien",
+      "einheit": "Dateien",
+      "warnAb": 12000,
+      "stoppAb": 18000,
+      "begruendung": "Cloudflare nennt im Free-Tarif 20.000 Static Assets. Gewarnt wird bei 12.000, gestoppt vor 18.000 — mit Abstand zur Plattformgrenze, nicht daran entlang."
+    },
+    {
+      "id": "groesste-datei",
+      "titel": "Größte ausgelieferte Datei",
+      "einheit": "MiB",
+      "warnAb": 10,
+      "stoppAb": 25,
+      "begruendung": "Cloudflare nennt 25 MiB je Asset. Eine Datei über 10 MiB ist ein Hinweis, dass geteilt statt vergrößert werden sollte."
+    },
+    {
+      "id": "snapshot-verzeichnis",
+      "titel": "Snapshots im Repository",
+      "einheit": "MiB",
+      "warnAb": 35,
+      "stoppAb": 50,
+      "begruendung": "Repository-Snapshot maximal 50 MiB laut OPERATIONS Abschnitt 12. Keine PBF-Rohdateien in Git."
+    },
+    {
+      "id": "git-verzeichnis",
+      "titel": "Git-Historie",
+      "einheit": "MiB",
+      "warnAb": 250,
+      "stoppAb": 1000,
+      "begruendung": "Ab 250 MiB verlangt OPERATIONS einen Kompressions- oder Archivierungsplan. Der harte Stopp liegt weit darüber, weil Git-Historie sich nicht einfach löschen lässt."
+    }
+  ]
+}

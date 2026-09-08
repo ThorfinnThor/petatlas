@@ -555,3 +555,12 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Es geht ohne Deployment: geprüft wird der gebaute Stand. Sobald eine Adresse hinterlegt ist, kommt die ausgelieferte Website dazu — und solange keine da ist, sagt der Lauf das, statt den übersprungenen Teil wie einen bestandenen aussehen zu lassen.
 - `docs/MONITORING.md` nennt die Lücken zuerst: der Zeitplan überwacht sich nicht selbst, GitHub schaltet ihn nach 60 Tagen Ruhe ab, zwischen zwei Läufen liegt ein Tag, und eine dauerhaft unerreichbare Quelle wird erst zum Alarm, wenn ihr Datensatz die Sperrschwelle reißt. Keine SLA, keine Rufbereitschaft.
 - Der erste Lauf des Prüfstands fiel durch: ein Unit-Test las aus `dist`, und in der CI laufen die Unit-Tests **vor** dem Build. Lokal war das Verzeichnis da, dort nicht. Der Test bringt sein Verzeichnis jetzt selbst mit.
+
+| M17-06 | `docs/ROLLBACK.md`, `docs/BUDGET_REPORT.md`, `scripts/checks/budgets.ts`, `scripts/publish/rollback.ts` | 20 Tests, echte Probe gegen zwei Git-Stände, gemessener Build | beide Stände zulässig, alle Budgets eingehalten |
+
+- Ein Rollback ist nicht „den alten Stand wieder hinstellen“, sondern die Frage, ob er **heute** noch ausgeliefert werden darf. Geprüft wird deshalb gegen die heutige Registry, das heutige Alter und die heutigen Freigaben — nicht gegen die von damals.
+- **Ein Rechtewiderruf lässt sich nicht zurückrollen.** Das ist der wichtigste Prüfpunkt: eine Quelle, die heute auf `pending` steht, macht einen alten Stand unzulässig, so sauber er damals war.
+- Beim Bauen fiel auf, dass die Rechteprüfung fast ins Leere lief: nur die Berliner Datei trägt eine `sourceId`. Der Gebührenstand nennt Namen und Adresse, der Ortsdatensatz seine sechzehn Regionen. Die Zuordnung steht jetzt ausdrücklich in der Datei — vorher hätte die Prüfung stillschweigend „nichts zu beanstanden“ gemeldet.
+- Das Skript **verändert nichts**. Ein Skript, das ungefragt Daten zurückschreibt, wäre an genau der falschen Stelle bequem; das Wiederherstellen steht als Handgriff im Runbook.
+- Der Provider-Rollback ist **nicht erprobt** und steht auch nicht abgeschrieben im Runbook. Ein abgeschriebenes Runbook ist im Ernstfall schlimmer als keins, weil sich jemand darauf verlässt.
+- Budgets: 425 von 12.000 Dateien, größte Datei 0,46 von 25 MiB, Git-Historie 2,59 MiB gepackt, Buildzeit unter zwei Sekunden von 20 zulässigen Minuten. „Nicht gemessen“ gilt ausdrücklich nicht als „eingehalten“ — ein fehlender Build meldet, was zu tun ist.

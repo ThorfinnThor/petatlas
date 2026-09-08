@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 bei 6/7 (103 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig (104 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,9 +36,9 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M17-06 — Rollback und Budgetbericht proben.** `docs/ROLLBACK.md` und `docs/BUDGET_REPORT.md`: Code- und Datenversion sowie das aktive Feature-Set protokollieren, den letzten gültigen zulässigen Stand wiederherstellen, Git-, Build- und Assetverbrauch messen. Abnahme: eine tatsächliche Probe oder eine lokal nachvollziehbare Simulation, getrennt vom weiterhin blockierten Provider-Rollback.
+**M18-01 — SEO-Gates implementieren.** `scripts/checks/seo.ts`, ein Sitemap-Generator und `tests/seo/`: Titel und H1, canonical, echte hreflang-Paare, Sitemap, robots und noindex, Pagefind-Ausschlüsse und richtige Statuscodes prüfen. Abnahme: keine Fixture-, dünnen Filter- oder inaktiven Marktseiten im Index und kein erfundenes Rating-Markup.
 
-Vorhanden: Datenbranch-Publisher, `data-branch.yml`, `ingest-open.yml`, `source-check.yml`, `rebuild-commerce.yml` und `smoke.yml` — alle mit echtem Lauf oder Trockenlauf geprüft. Die Frischeanzeige liegt in `src/features/freshness/`; `/data/v1/health.json` und `/de-de/datenstand/` kommen aus derselben Funktion. Was die Überwachung erkennt und wo sie nicht hinreicht, steht in `docs/MONITORING.md`.
+**M17 ist vollständig.** Vorhanden: Datenbranch-Publisher, `data-branch.yml`, `ingest-open.yml`, `source-check.yml`, `rebuild-commerce.yml`, `smoke.yml`; die Frischeanzeige in `src/features/freshness/` mit `/data/v1/health.json` und `/de-de/datenstand/` aus derselben Funktion; `npm run check:budgets` und `npm run rollback:pruefen` laufen als Schritte in der CI. Was die Überwachung erkennt und wo sie nicht hinreicht, steht in `docs/MONITORING.md`; die gemessenen Budgets in `docs/BUDGET_REPORT.md`; das Rollback-Runbook in `docs/ROLLBACK.md` — der Weg beim Anbieter ist darin ausdrücklich als nicht erprobt gekennzeichnet.
 
 Die Workflow-Härtung liegt in `scripts/checks/workflows.sh` und läuft in `npm run verify` mit. Neue Secrets in Workflows müssen dort eingetragen und begründet werden; erklärt sind `GITHUB_TOKEN` und `CLOUDFLARE_DEPLOY_HOOK`.
 

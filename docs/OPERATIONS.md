@@ -159,8 +159,12 @@ Eigene Startbudgets: Warnung ab 12.000 veröffentlichten Dateien; harter Projekt
 
 Diese Budgets sind Designgrenzen, keine laufenden Kostenschätzungen oder Kapazitätsgarantien. Domain, Kartendienst, fachliche Prüfung und Partnerdienstleistungen können Kosten verursachen.
 
+**Umgesetzter Stand (M17-06):** Die Grenzen stehen mit Begründung in `config/budgets.json`, gemessen wird mit `npm run check:budgets` — je Budget eine Warnschwelle und eine Stoppgrenze, die den Lauf rot macht. Die Prüfung läuft in der CI nach dem Build. Die gemessenen Zahlen vom 2026-09-08 stehen in `docs/BUDGET_REPORT.md`: 425 von 12.000 Dateien, größte Datei 0,46 MiB, Snapshots 10,2 MiB, Git-Historie 2,59 MiB gepackt, Buildzeit unter zwei Sekunden. „Nicht gemessen“ gilt dabei ausdrücklich nicht als „eingehalten“.
+
 ## 13. Rollback
 
 Code-Commit und Daten-Commit im Releaseprotokoll festhalten. Einen bekannten guten Cloudflare-Stand wiederherstellen und danach Smoke-Tests durchführen. Ein Code-Rollback darf keine inzwischen widerrufenen Datenrechte oder abgelaufenen Reiseregeln reaktivieren. Rollback-Entscheidung gegen aktuelle Sperrliste prüfen.
 
 Daten-Rollback verändert den freigegebenen Snapshot nachvollziehbar; keine erzwungene Historienüberschreibung. Die tatsächlichen Provider-Rollback-Befehle beim Einrichten aus aktueller Dokumentation prüfen und als getestetes Runbook festhalten.
+
+**Umgesetzter Stand (M17-06):** Das Runbook steht in `docs/ROLLBACK.md`. `npm run rollback:pruefen -- <ref>` prüft einen Kandidatenstand gegen die **heutigen** Rechte, das heutige Alter und die heutigen Freigaben und verändert dabei nichts. Ein Rechtewiderruf lässt sich damit nicht zurückrollen. Der Weg beim Anbieter ist ausdrücklich **nicht erprobt**, weil es kein Deployment gibt; was dort abgeschrieben statt gemessen wäre, steht nicht im Runbook.
