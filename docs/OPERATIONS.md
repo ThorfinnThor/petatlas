@@ -64,6 +64,16 @@ Ablauf:
 - Bei Änderung einen atomaren Daten-Commit erstellen. Bei unveränderten Inhalten keine reinen Zeitstempel-Commits erzeugen.
 - Erst danach den Cloudflare-Deploy-Hook für `main` auslösen. Der Hook ist ein Secret. Antwort auf Erfolg prüfen; Hook-Aufruf ist noch kein erfolgreicher Build. [S05]
 
+### Umgesetzter Stand (M17-01/M17-02)
+
+`.github/workflows/ingest-open.yml` läuft wöchentlich (montags 04:17 UTC) und auf Zuruf. Er erneuert die Snapshots, prüft sie mit der vollen Prüfkette und öffnet einen **Pull Request** — er schreibt nicht nach `main`. Je Quelle gilt ein Zeitlimit von fünf Minuten und drei Versuche mit wachsender Pause; ein Fehlschlag lässt den vorhandenen Snapshot unangetastet, weil die Snapshotskripte selbst so gebaut sind.
+
+`.github/workflows/data-branch.yml` schreibt die ausgelieferten Datendateien in den Branch `data-live`. Der Publisher lässt nur Dateien aus einer Allowlist durch, prüft jede mit dem Secret-Audit und verweigert `main` und `master` als Ziel.
+
+**Was dort ausdrücklich nicht läuft:** der bundesweite OSM-Import. Er lädt rund 4,6 GiB in sechzehn Regionen, braucht Pausen zwischen den Abrufen (die Geofabrik antwortet sonst mit 502) und lief lokal rund eine Stunde. Auf einem GitHub-Runner wäre das ein Kampf gegen Zeit- und Plattengrenzen und ein unnötiger Druck auf einen fremden Server. Er bleibt ein **manueller Lauf**: `npm run ingest:osm-de`, danach `npm run snapshot:places` und `npm run build:places`. Die Messwerte stehen in `docs/OSM_BENCHMARK.md`.
+
+**Der GOT-Abruf ist im Zeitplan noch nicht enthalten** und nur auf Zuruf möglich. Grund: die Abrufbedingungen der Quelle sind noch nicht dokumentiert (M17-07). Erst danach gehört er in den wöchentlichen Lauf.
+
 Der Importer führt niemals Code aus dem Daten-Branch oder der Fremdquelle aus. HTML, CSV und JSON gelten als nicht vertrauenswürdige Daten. Markdown/MDX wird nicht aus Feeds ausgeführt. Source-URLs sind konfiguriert; Benutzer können den Importer nicht als allgemeinen URL-Fetcher steuern.
 
 ## 6. Rebuilds für Produktpreise

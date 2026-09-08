@@ -1,0 +1,154 @@
+# M17-02 — Geplanter Import der offenen Quellen.
+#
+# Der Lauf holt neue Snapshots, prüft sie und öffnet einen Pull Request. Er
+# schreibt **nicht** nach `main`: ein Datenstand, den niemand angesehen hat,
+# geht nicht ungefragt in den Hauptbranch.
+#
+# Was hier bewusst **nicht** läuft: der bundesweite OSM-Import. Er lädt rund
+# 4,6 GiB in sechzehn Regionen und braucht Pausen zwischen den Abrufen, damit
+# die Quelle nicht gedrosselt wird (docs/OSM_BENCHMARK.md). Auf einem
+# GitHub-Runner wäre er ein Kampf gegen Zeit- und Plattengrenzen — und ein
+# unnötiger Druck auf einen fremden Server. Er bleibt ein manueller Lauf; die
+# Begrenzung steht in docs/OPERATIONS.md.
+name: Offene Quellen importieren
+
+on:
+  schedule:
+    # Wöchentlich, montags um 04:17 UTC. Krumme Minute, damit der Lauf nicht
+    # mit der vollen Stunde vieler anderer Jobs zusammenfällt.
+    - cron: '17 4 * * 1'
+  workflow_dispatch:
+    inputs:
+      quelle:
+        description: 'Welche Quelle'
+        type: choice
+        options: [municipal, got, alle]
+        default: municipal
+      trockenlauf:
+        description: 'Nur abrufen und prüfen, keinen Pull Request öffnen'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ingest-open
+  cancel-in-progress: false
+
+jobs:
+  importieren:
+    name: Snapshots erneuern und prüfen
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: true
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      # Ein Snapshotlauf, der scheitert, lässt den vorhandenen Stand
+      # unangetastet — das ist in den Skripten selbst so gebaut. Die drei
+      # Versuche hier fangen nur die kurzen Störungen ab.
+      - name: Kommunale Quelle abrufen
+        id: municipal
+        if: ${{ github.event_name == 'schedule' || inputs.quelle == 'municipal' || inputs.quelle == 'alle' }}
+        timeout-minutes: 5
+        run: |
+          set -uo pipefail
+          for versuch in 1 2 3; do
+            if npm run snapshot:municipal -- --fetch; then
+              echo "erfolg=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Versuch $versuch fehlgeschlagen; der vorhandene Snapshot bleibt gültig."
+            sleep $((versuch * 30))
+          done
+          echo "erfolg=false" >> "$GITHUB_OUTPUT"
+          echo "Kommunale Quelle nach drei Versuchen nicht erreichbar." >&2
+
+      # Der GOT-Abruf bleibt vorerst dem Zuruf vorbehalten: die
+      # Abrufbedingungen sind noch nicht dokumentiert (M17-07).
+      - name: Gebührenkatalog abrufen
+        id: got
+        if: ${{ github.event_name == 'workflow_dispatch' && (inputs.quelle == 'got' || inputs.quelle == 'alle') }}
+        timeout-minutes: 5
+        run: |
+          set -uo pipefail
+          for versuch in 1 2 3; do
+            if npm run snapshot:got -- --fetch; then
+              echo "erfolg=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Versuch $versuch fehlgeschlagen; der vorhandene Snapshot bleibt gültig."
+            sleep $((versuch * 30))
+          done
+          echo "erfolg=false" >> "$GITHUB_OUTPUT"
+          echo "Gebührenkatalog nach drei Versuchen nicht erreichbar." >&2
+
+      # Ein neuer Snapshot ist erst dann ein guter Snapshot, wenn die
+      # Prüfkette ihn annimmt.
+      - name: Neuen Stand prüfen
+        run: |
+          npm run verify
+          npm run check:municipal
+
+      - name: Änderungen feststellen
+        id: aenderung
+        run: |
+          if git diff --quiet -- data-snapshots; then
+            echo "geaendert=false" >> "$GITHUB_OUTPUT"
+            echo "Keine inhaltliche Änderung an den Snapshots."
+          else
+            echo "geaendert=true" >> "$GITHUB_OUTPUT"
+            git diff --stat -- data-snapshots
+          fi
+
+      - name: Pull Request öffnen
+        if: ${{ steps.aenderung.outputs.geaendert == 'true' && inputs.trockenlauf != true }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          branch="ingest/$(date -u +%Y-%m-%d)-${{ github.run_id }}"
+          git config user.name "petatlas-ingest-bot"
+          git config user.email "noreply@users.noreply.github.com"
+          git switch -c "$branch"
+          git add data-snapshots
+          git commit -m "Snapshots erneuert (Lauf ${{ github.run_id }})"
+          git push origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "Snapshots erneuert" \
+            --body "Automatischer Import der offenen Quellen. Bitte den Diff ansehen, bevor er nach main geht."
+
+      - name: Zusammenfassung
+        if: always()
+        run: |
+          # Nur Zustände und Zahlen, keine Adressen: eine Feed- oder
+          # Abrufadresse kann einen Token enthalten.
+          {
+            echo "### Import offener Quellen"
+            echo
+            echo "| Quelle | Ergebnis |"
+            echo "|---|---|"
+            echo "| kommunal | ${{ steps.municipal.outputs.erfolg || 'übersprungen' }} |"
+            echo "| GOT | ${{ steps.got.outputs.erfolg || 'übersprungen' }} |"
+            echo
+            echo "Snapshots geändert: ${{ steps.aenderung.outputs.geaendert }}"
+            echo
+            echo "Der bundesweite OSM-Import läuft hier nicht; die Begründung steht in docs/OPERATIONS.md."
+          } >> "$GITHUB_STEP_SUMMARY"
