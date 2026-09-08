@@ -3702,8 +3702,14 @@
         "M18-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npm run test:performance: 12 Messungen gruen in Chromium Desktop und Mobil gegen den gebauten Output mit allen Funktionen. Gemessen je Seite JavaScript, uebertragene Bytes, DOM-Knoten, Anfragen und LCP als untere Schranke: Start 2,8/39,6 KiB/84 Knoten, Kostenrechner 97,3/139,1/125, Karte 14,0/67,2/319, Reisecheck 112,3/159,0/187, Futter 95,0/134,1/93. Kein Stopp-Budget erreicht; drei Seiten ueber der JavaScript-Warnschwelle von 60 KiB. Ursache gemessen statt vermutet: die Schemabibliothek mit 85,3 KiB roh und 23,3 KiB komprimiert, die in jeder datenladenden Seite steckt. Die Kartenbibliothek (145,3 KiB) laedt erst auf Anforderung; die Kartenseite uebertraegt beim Aufruf 14 KiB, und im selben Lauf ist belegt, dass vor der Zustimmung keine einzige Kachel geholt wird. Keine Lighthouse-Zahl und keine Felddaten - beides steht in docs/PERFORMANCE.md ausdruecklich als nicht gemessen.",
+          "reference": "docs/PERFORMANCE.md, tests/performance/seitenbudgets.spec.ts, playwright.performance.config.ts, config/budgets.json",
+          "verified_at": "2026-09-08T15:35:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

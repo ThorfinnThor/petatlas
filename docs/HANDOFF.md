@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 2/6 (106 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 3/6 (107 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,11 +36,11 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M18-03 — Performance- und Dateibudgets messen.** `docs/PERFORMANCE.md` und Budgettests: Build auf repräsentativen Daten, Chunk- und Dateizahlen, initiales JavaScript, das Nachladen der Karte und ein mobiles Lighthouse unter dokumentierten Bedingungen. Abnahme: Budgets eingehalten oder ein konkreter Blocker — und **keine erfundenen LCP-/INP-Werte**.
+**M18-04 — Zugänglichkeits- und Browsermatrix ausführen.** `docs/ACCESSIBILITY.md` und Playwright-Berichte: Tastaturbedienung, Screenreader-Hinweise, Kontraste, Zoom, mobiles Format und mindestens zwei Browserpfade prüfen. Abnahme: kritische Befunde behoben, Tests und manuelle Beobachtungen nachvollziehbar.
 
-Vorarbeit liegt schon vor: `docs/BUDGET_REPORT.md` nennt die gemessenen Datei- und Größenzahlen, `npm run check:budgets` prüft sie in der CI. Was fehlt, sind die Laufzeitmessungen im Browser.
+Die E2E-Läufe decken bereits zwei Engines ab (Chromium und WebKit) und ein mobiles Format. Was fehlt, ist die gezielte Prüfung: Fokusreihenfolge, sichtbarer Fokus, Beschriftungen, Kontraste, Verhalten bei 200 Prozent Zoom.
 
-Die SEO- und Output-Gates laufen in der CI: `check:seo` gegen den echten Build, `check:seo -- --als-indexierbar` als Probelauf mit allen Funktionen, `check:dist` als Output-Audit über jede ausgelieferte Datei. Der Output-Audit hat beim Bauen drei echte Befunde gefunden — unverschlüsselte Links aus OSM, ein von der CSP blockiertes Inline-Skript und drei bis dahin eingebettete Leaflet-Bilder.
+Gemessen und dokumentiert liegen vor: `docs/PERFORMANCE.md` (Bytes, DOM-Knoten und LCP als untere Schranke, ausdrücklich ohne Lighthouse-Score und ohne Felddaten), `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`. In der CI laufen `check:seo` samt Probelauf, `check:dist`, `check:budgets` und `rollback:pruefen`.
 
 Die Workflow-Härtung liegt in `scripts/checks/workflows.sh` und läuft in `npm run verify` mit. Neue Secrets in Workflows müssen dort eingetragen und begründet werden; erklärt sind `GITHUB_TOKEN` und `CLOUDFLARE_DEPLOY_HOOK`.
 

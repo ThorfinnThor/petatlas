@@ -32,6 +32,30 @@
       "warnAb": 250,
       "stoppAb": 1000,
       "begruendung": "Ab 250 MiB verlangt OPERATIONS einen Kompressions- oder Archivierungsplan. Der harte Stopp liegt weit darüber, weil Git-Historie sich nicht einfach löschen lässt."
+    },
+    {
+      "id": "js-initial",
+      "titel": "JavaScript beim ersten Laden",
+      "einheit": "KiB",
+      "warnAb": 60,
+      "stoppAb": 150,
+      "begruendung": "Die Seiten sind statisch und ohne JavaScript lesbar. Was trotzdem geladen wird, bleibt klein. Gemessen wird unkomprimiert, weil der Messaufbau (lokaler Vorschau-Server) nicht komprimiert; in der Auslieferung kommen die Dateien komprimiert an, etwa ein Viertel davon. 60 KiB sind ein Hinweis, 150 KiB die Grenze."
+    },
+    {
+      "id": "seite-gesamt",
+      "titel": "Uebertragene Bytes je Seite",
+      "einheit": "KiB",
+      "warnAb": 400,
+      "stoppAb": 900,
+      "begruendung": "Alles, was ein Browser beim ersten Aufruf laedt: HTML, CSS, JavaScript, Schriften. Ohne die Datenchunks, die erst auf Anforderung kommen, und unkomprimiert gemessen."
+    },
+    {
+      "id": "dom-knoten",
+      "titel": "DOM-Knoten je Seite",
+      "einheit": "Knoten",
+      "warnAb": 1500,
+      "stoppAb": 3000,
+      "begruendung": "Eine Seite mit sehr vielen Knoten wird auf schwachen Geraeten langsam, unabhaengig von der Dateigroesse. Die Ortsliste ist der Kandidat dafuer."
     }
   ]
 }

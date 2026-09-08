@@ -580,3 +580,10 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - **Befund 2: ein Inline-Skript.** Astro hatte das kleine Skript der Angebotskarte ins HTML eingebettet. `script-src 'self'` hätte es im Browser blockiert — und ein fehlender Effekt ist still. Astro bettet jetzt gar nichts mehr ein.
 - **Befund 3: drei Leaflet-Bilder**, die durch dieselbe Änderung aus data:-URIs zu Dateien wurden. Sie stehen jetzt mit Herkunft und Lizenz (BSD-2-Clause) in einer Bilder-Allowlist. Jeder Eintrag nennt einen Grund — sonst ist er kein Eintrag, sondern eine Lücke.
 - Beim Schreiben fiel ein eigener Fehler auf: die Hosts aus `config/tiles.json` stehen als vollständige Ursprünge, verglichen wurde gegen `URL.host`. Der Vergleich wäre nie aufgegangen.
+
+| M18-03 | `docs/PERFORMANCE.md`, `tests/performance/seitenbudgets.spec.ts`, `playwright.performance.config.ts` | 12 Messungen in zwei Profilen gegen den gebauten Output | kein Stopp-Budget erreicht |
+
+- Gemessen wird, was ein Browser wirklich lädt — und die Zahlen stehen im Protokoll, nicht nur als „bestanden“. Eine Messung, die man nur als grünes Häkchen sieht, ist keine.
+- **Kein Lighthouse-Score, keine Felddaten.** LCP und INP, wie sie zählen, kommen von echten Besuchern; es gibt keine. Die gemessenen LCP-Werte sind eine untere Schranke von einem lokalen Server und werden gegen kein Budget geprüft. Eine gemessene untere Schranke ist ehrlicher als eine geschätzte Zahl.
+- Drei Seiten liegen über der JavaScript-Warnschwelle. Die Ursache ist **gemessen statt vermutet**: die Schemabibliothek mit 85,3 KiB roh, 23,3 KiB komprimiert. Sie steckt in jeder Seite, die Daten nachlädt — weil der Browser prüft, was er lädt, statt es zu glauben. Das ist ein bewusster Preis, und er steht mit beiden Zahlen im Bericht.
+- Die Kartenseite überträgt beim Aufruf 14 KiB statt der 145 KiB der Kartenbibliothek, und vor der Zustimmung wird keine einzige Kachel geholt. Letzteres ist zugleich eine Datenschutzaussage: der Kacheldienst sieht die IP-Adresse erst nach der Anforderung.
