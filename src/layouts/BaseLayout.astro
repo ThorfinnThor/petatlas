@@ -53,6 +53,14 @@ const canonical = canonicalPfad
     {canonical && <link rel="canonical" href={canonical} />}
   </head>
   <body data-pagefind-ignore={neverIndex ? 'all' : undefined}>
+    {
+      /*
+      M18-04 — Sprungmarke. Ohne sie muss jemand, der mit der Tastatur
+      bedient, auf jeder Seite die ganze Navigation durchtabben, bevor er
+      beim Inhalt ankommt. Sie ist unsichtbar, bis sie den Fokus bekommt.
+    */
+    }
+    <a class="sprungmarke" href="#inhalt">Zum Inhalt springen</a>
     <SiteHeader market={market} brandName={site.brandName} aktuellerPfad={Astro.url.pathname} />
     {
       build.showTestDataBanner && (
@@ -66,7 +74,7 @@ const canonical = canonicalPfad
         </div>
       )
     }
-    <main>
+    <main id="inhalt" tabindex="-1">
       <slot />
     </main>
     <SiteFooter market={market} betreiber={site.operator.legalName} />
@@ -74,6 +82,28 @@ const canonical = canonicalPfad
 </html>
 
 <style>
+  .sprungmarke {
+    position: absolute;
+    inset-inline-start: var(--abstand-2);
+    inset-block-start: var(--abstand-2);
+    z-index: 10;
+    padding: var(--abstand-2) var(--abstand-3);
+    background: var(--farbe-grund);
+    border: 2px solid var(--farbe-text);
+    border-radius: var(--radius);
+    /* Aus dem Sichtfeld, aber im Fokusfluss — nicht display:none. */
+    transform: translateY(-200%);
+  }
+
+  .sprungmarke:focus {
+    transform: translateY(0);
+  }
+
+  /* Der Sprung darf keinen Fokusring an den Inhaltsbereich hängen. */
+  main:focus {
+    outline: none;
+  }
+
   /* Der Testdatenhinweis steht außerhalb von <main> und braucht dieselbe
      Inhaltsbreite, damit er nicht über die ganze Fensterbreite läuft. */
   .randbreite {

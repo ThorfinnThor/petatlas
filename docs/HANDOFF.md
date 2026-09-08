@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 3/6 (107 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 4/6 (108 von 121 Aufgaben).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -36,11 +36,11 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M18-04 — Zugänglichkeits- und Browsermatrix ausführen.** `docs/ACCESSIBILITY.md` und Playwright-Berichte: Tastaturbedienung, Screenreader-Hinweise, Kontraste, Zoom, mobiles Format und mindestens zwei Browserpfade prüfen. Abnahme: kritische Befunde behoben, Tests und manuelle Beobachtungen nachvollziehbar.
+**M18-05 — Geschäfts- und Rechtsinformationen vorbereiten.** `config/legal.ts`, die Rechtsseiten und `docs/LEGAL_CHECKLIST.md`: echte Betreiberangaben, Datenschutz, Affiliatekennzeichnung, Methodik, Quellen und Kontaktwege zusammenführen; Werbung standardmäßig aus; Prüfbedarf zu Einwilligung und BFSG benennen. Abnahme: **keine erfundenen juristischen Personendaten** — fehlende echte Freigaben werden als Blocker geführt, nicht als Platzhaltertext ausgeliefert.
 
-Die E2E-Läufe decken bereits zwei Engines ab (Chromium und WebKit) und ein mobiles Format. Was fehlt, ist die gezielte Prüfung: Fokusreihenfolge, sichtbarer Fokus, Beschriftungen, Kontraste, Verhalten bei 200 Prozent Zoom.
+Achtung: Betreiberangaben liegen nicht vor und dürfen nicht erfunden werden. Zu erwarten ist deshalb, dass diese Aufgabe teils umgesetzt und teils als Blocker dokumentiert wird — die Struktur entsteht, die Inhalte bleiben leer, und die Seiten sagen das.
 
-Gemessen und dokumentiert liegen vor: `docs/PERFORMANCE.md` (Bytes, DOM-Knoten und LCP als untere Schranke, ausdrücklich ohne Lighthouse-Score und ohne Felddaten), `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`. In der CI laufen `check:seo` samt Probelauf, `check:dist`, `check:budgets` und `rollback:pruefen`.
+Gemessen und dokumentiert liegen vor: `docs/ACCESSIBILITY.md` (axe über 13 Seiten in drei Profilen, Tastatur, Zoom, Struktur), `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/MONITORING.md`, `docs/ROLLBACK.md`. In der CI laufen `check:seo` samt Probelauf, `check:dist`, `check:budgets`, `rollback:pruefen` und der Zugänglichkeitslauf.
 
 Die Workflow-Härtung liegt in `scripts/checks/workflows.sh` und läuft in `npm run verify` mit. Neue Secrets in Workflows müssen dort eingetragen und begründet werden; erklärt sind `GITHUB_TOKEN` und `CLOUDFLARE_DEPLOY_HOOK`.
 

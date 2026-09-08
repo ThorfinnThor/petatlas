@@ -3736,8 +3736,14 @@
         "M18-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "npm run test:accessibility: 101 bestanden, 7 uebersprungen, keine Verstoesse. axe-core 4.13 mit den Tags wcag2a, wcag2aa, wcag21a, wcag21aa ueber 13 Seiten in drei Profilen (Chromium Desktop, WebKit Desktop, Pixel 7) = 39 Laeufe ohne Verstoss, einschliesslich der Kontrastregel color-contrast. Dazu Pruefungen, die axe nicht leisten kann: Sprungmarke vorhanden, ausserhalb des Sichtfelds und beim Fokus sichtbar, Sprung setzt den Fokus auf main; erster Tabstopp (Chromium); sichtbarer Fokusring; kein positives tabindex; kein waagerechtes Scrollen bei 320 CSS-Pixeln nach WCAG 1.4.10; genau eine H1, ein main und eine benannte Navigation; Ueberschriftenebenen ohne Sprung. Behobener Befund: die Sprungmarke fehlte ganz (WCAG 2.4.1), jede Seite zwang zum Durchtabben der Navigation. Die sieben uebersprungenen Faelle sind Safari-Tabstopps - Safari tabt ab Werk nicht auf Links; das ist im Bericht benannt statt in einem gruenen Haekchen verschwunden. npm run verify exit 0, 219 + 280 E2E gruen.",
+          "reference": "docs/ACCESSIBILITY.md, tests/accessibility/axe.spec.ts, tests/accessibility/bedienung.spec.ts, playwright.accessibility.config.ts, src/layouts/BaseLayout.astro, .github/workflows/ci.yml",
+          "verified_at": "2026-09-08T15:45:00+02:00"
+        }
+      ],
       "blocker": null,
       "notes": []
     },

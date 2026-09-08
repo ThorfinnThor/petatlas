@@ -161,5 +161,9 @@ jobs:
 
       # Eigener Lauf: der reguläre Build prüft, dass eine abgeschaltete
       # Funktion keine Seite hat. Der Rechner braucht sein Flag.
+      # Zugänglichkeit ist eine Abnahmebedingung, kein Extralauf (M18-04).
+      - name: Zugänglichkeit und Browsermatrix
+        run: npm run test:accessibility
+
       - name: End-to-End für Funktionen hinter ihrem Feature Flag
         run: npm run test:e2e:features
