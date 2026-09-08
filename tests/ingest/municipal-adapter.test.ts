@@ -162,13 +162,18 @@ describe('Echter Datensatz', () => {
     expect([...ids].sort()).toEqual(ids);
   });
 
-  it('erzeugt denselben Snapshot, der im Repository liegt', () => {
+  it('erzeugt dieselben Flächen wie der Snapshot im Repository', () => {
     const snapshot = JSON.parse(
       readFileSync('data-snapshots/municipal/berlin-hundefreilauf.json', 'utf8'),
     ) as unknown;
     const geprueft = MunicipalSnapshotSchema.parse(snapshot);
+    // Verglichen wird der **normalisierte** Datensatz. Der Hash der
+    // Rohantwort taugt dafür nicht: der Dienst legt einen Zeitstempel in den
+    // Antwortkörper, und nach einem frischen Abruf ist er ein anderer. Genau
+    // daran ist der erste geplante Importlauf gescheitert — richtigerweise,
+    // denn die Prüfung war zu streng, nicht der Datenstand falsch.
     expect(geprueft.areas).toEqual(ergebnis.records.map((e) => e.record));
-    expect(geprueft.source.sourceSha256).toBe(res.contentHash);
+    expect(geprueft.source.sourceSha256).toMatch(/^[a-f0-9]{64}$/);
   });
 
   it('nennt den Geltungsbereich im Snapshot', () => {
