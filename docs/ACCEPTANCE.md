@@ -30,3 +30,11 @@ Die Homepage lädt initial 304,9 KiB auf Desktop bzw. 317,2 KiB im mobilen Profi
 Der bisherige Cloudflare-Link zeigt noch den alten Stand. Der lokale Cloudflare-Login ist abgelaufen; im Repository gibt es keine alternative Deployment-Anmeldung. Eine aktualisierte Veröffentlichung samt Prüfung am öffentlichen Link steht deshalb aus.
 
 Domain, Betreiberangaben, Vertragsdaten und qualifizierte Freigaben sind nach ausdrücklicher Nutzerentscheidung zurückgestellt. Vier Quellenbeobachtungs-Meldungen bleiben zur manuellen Prüfung offen. Einzelheiten: `LAUNCH_V2.md`.
+
+## Nachprüfung nach Nutzerrückmeldung: Karte
+
+Am 09.09.2026 wurde nach der V2-Übergabe ein Funktionsfehler im tatsächlichen Browser reproduziert: Nach dem Öffnen der Karte führten Orts- und Kategoriewechsel zum Ausfall der Kartenansicht, während die Trefferliste weiterlief. Die zuvor bestandenen Tests deckten diese Abfolge nicht ab; aus ihnen darf keine vollständige Funktionsabnahme abgeleitet werden.
+
+Die Korrektur erhält die Leaflet-Instanz, aktualisiert deren Marker und Mittelpunkt und verarbeitet Kartenaktualisierungen nacheinander. Überholte Suchantworten werden verworfen. Lokal erneut geprüft: Hamburg/Tierarzt/5 km mit 21 Treffern und Markern; danach 10 km mit 49 Treffern und Markern, jeweils geladene Kacheln und nur eine Karteninstanz. `npm run verify` und `npm run build:app` bestanden. Ein eigener Regressionstest ergänzt diese Abfolge in `tests/app/design-v2.spec.ts`; die Remote-Abnahme der Korrektur steht beim Anlegen des Folge-PR noch aus.
+
+Nächster Abnahmeschritt: vollständige Nutzerabläufe mit wiederholten Eingaben, Orts- und Filterwechseln, Zurücknavigation und mobilen Ansichten prüfen. Die öffentliche Veröffentlichung bleibt bis zur korrigierten Funktionsabnahme und den bestehenden externen Voraussetzungen offen.

@@ -107,3 +107,29 @@ test('saved profile is applied only on request and survives navigation', async (
   await expect(page.locator('#geburtsdatum')).toHaveValue('2020-01-01');
   await expect(page.locator('#chip')).toHaveValue('unbekannt');
 });
+
+test('an opened map follows place, category and radius changes', async ({ page }) => {
+  await page.route('https://tile.openstreetmap.org/**', (route) =>
+    route.fulfill({
+      contentType: 'image/png',
+      body: Buffer.from(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j8L8AAAAASUVORK5CYII=',
+        'base64',
+      ),
+    }),
+  );
+  await page.goto('/de-de/tierarzt-karte/');
+  await page.click('#karte-anzeigen');
+  await expect(page.locator('#karte-status')).toHaveText(/\d+ Orte auf der Karte\./);
+  await page.fill('#ort', 'Hamburg');
+  await page.getByRole('button', { name: 'Hamburg', exact: true }).click();
+  await page.getByRole('checkbox', { name: 'Tierarztpraxis (4.928)', exact: true }).check();
+  await expect(page.locator('#treffer-status')).toContainText('21 erfasste Orte');
+  await expect(page.locator('#karte-status')).toHaveText('21 Orte auf der Karte.');
+  await page.selectOption('#radius', '10000');
+  await expect(page.locator('#treffer-status')).toContainText('10 km um Hamburg');
+  const count = await page.locator('#trefferliste h3').count();
+  await expect(page.locator('#karte-status')).toHaveText(`${count} Orte auf der Karte.`);
+  await expect(page.locator('#karte .leaflet-map-pane')).toHaveCount(1);
+  await expect(page.locator('#karte .leaflet-interactive')).toHaveCount(count);
+});

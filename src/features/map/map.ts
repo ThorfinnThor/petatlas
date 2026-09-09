@@ -12,7 +12,7 @@
  * - kein stiller Ausfall: fällt der Kacheldienst aus, sagt die Karte das,
  *   und die Liste bleibt unberührt.
  */
-import type { CircleMarker, Map as LeafletMap } from 'leaflet';
+import type { CircleMarker, LayerGroup, Map as LeafletMap } from 'leaflet';
 
 import { KATEGORIE_LABEL, type ListenOrt } from './list.ts';
 import { TILES } from './tiles.ts';
@@ -22,7 +22,7 @@ export const MARKER_GRENZE = 300;
 
 export interface KartenZustand {
   readonly karte: LeafletMap;
-  readonly markerEbene: ReturnType<LeafletMap['addLayer']>;
+  readonly markerEbene: LayerGroup;
 }
 
 let leafletModul: typeof import('leaflet') | null = null;
@@ -59,31 +59,44 @@ export interface KartenOptionen {
   readonly beiKachelfehler?: () => void;
 }
 
-export async function zeigeKarte(optionen: KartenOptionen): Promise<KartenZustand> {
+export async function zeigeKarte(
+  optionen: KartenOptionen,
+  bestehend?: KartenZustand,
+): Promise<KartenZustand> {
   const L = await ladeLeaflet();
 
-  const karte = L.map(optionen.container, {
-    center: [optionen.mitte.latitude, optionen.mitte.longitude],
-    zoom: optionen.zoom ?? 13,
-    // Kein Vorabladen von Kacheln außerhalb des Ausschnitts.
-    preferCanvas: false,
-  });
+  const karte =
+    bestehend?.karte ??
+    L.map(optionen.container, {
+      center: [optionen.mitte.latitude, optionen.mitte.longitude],
+      zoom: optionen.zoom ?? 13,
+      // Kein Vorabladen von Kacheln außerhalb des Ausschnitts.
+      preferCanvas: false,
+    });
 
-  const kacheln = L.tileLayer(TILES.urlTemplate, {
-    attribution: TILES.attributionHtml,
-    maxZoom: TILES.maxZoom,
-    minZoom: TILES.minZoom,
-    // Keine Kacheln über den sichtbaren Rand hinaus vorladen.
-    keepBuffer: 0,
-  });
+  if (bestehend) {
+    karte.removeLayer(bestehend.markerEbene);
+    karte.setView(
+      [optionen.mitte.latitude, optionen.mitte.longitude],
+      optionen.zoom ?? karte.getZoom(),
+    );
+  } else {
+    const kacheln = L.tileLayer(TILES.urlTemplate, {
+      attribution: TILES.attributionHtml,
+      maxZoom: TILES.maxZoom,
+      minZoom: TILES.minZoom,
+      // Keine Kacheln über den sichtbaren Rand hinaus vorladen.
+      keepBuffer: 0,
+    });
 
-  let fehlerGemeldet = false;
-  kacheln.on('tileerror', () => {
-    if (fehlerGemeldet) return;
-    fehlerGemeldet = true;
-    optionen.beiKachelfehler?.();
-  });
-  kacheln.addTo(karte);
+    let fehlerGemeldet = false;
+    kacheln.on('tileerror', () => {
+      if (fehlerGemeldet) return;
+      fehlerGemeldet = true;
+      optionen.beiKachelfehler?.();
+    });
+    kacheln.addTo(karte);
+  }
 
   const { gezeigt } = waehleMarker(optionen.orte);
   // Kreismarker statt Bildmarker: Leaflets Standardsymbole sind PNG-Dateien,
@@ -112,7 +125,7 @@ export async function zeigeKarte(optionen: KartenOptionen): Promise<KartenZustan
   }
   const ebene = L.layerGroup(marker).addTo(karte);
 
-  return { karte, markerEbene: ebene as unknown as KartenZustand['markerEbene'] };
+  return { karte, markerEbene: ebene };
 }
 
 function escape(wert: string): string {
