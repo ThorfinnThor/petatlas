@@ -28,10 +28,11 @@ Sie ist ein **Änderungsmelder, keine Sicherheitsmaßnahme**. Gegen ein versehen
 2. **Die fünf Anforderungen.** Sind Kennzeichnung (Art. 7), Tollwutimpfung (Art. 8 i. V. m. Anhang VII Teil 1 der Delegierten Verordnung (EU) 2020/688), Identifizierungsdokument (Art. 11), Begleitung (Art. 3/4) und Höchstzahl (Art. 3) vollständig und richtig wiedergegeben?
 3. **Die Umrechnung.** „Mindestens zwölf Wochen alt“ ist als 84 Tage gerechnet, die Wartezeit als 21 Tage zwischen Impfung und Reisetag. Ist beides so zutreffend?
 4. **Fehlende Anforderungen.** Fehlt für die vier Ziele etwas — Bandwurmbehandlung (nach Art. 10 hier nicht einschlägig), Übergangsregeln für ältere Ausweise, Sonderfälle?
-5. **Nationale Sonderregeln.** Welche Vorschriften der vier Zielstaaten kommen hinzu, insbesondere Rasse-, Leinen- oder Maulkorbvorschriften? Die gelesenen Quellen reichten dafür nicht (siehe `docs/reviews/travel-sources.md`).
-6. **Umfang.** Ist der Zuschnitt vertretbar — vier Ziele, private begleitete Reise, Tiere ab zwölf Monaten, bis zu fünf Tiere —, und sind die zehn ausgeschlossenen Fälle richtig ausgeschlossen?
-7. **Darstellung.** Genügen die Hinweise, dass nicht geprüft nicht unzulässig heißt und dass die verbindliche Auskunft von der Behörde kommt?
-8. **Testmatrix.** Deckt sie ab: je Ziel und Tierart alle fünf Anforderungen, je Anforderung erfüllt / nicht erfüllt / unbekannt, Fristen am Grenztag, Geltung vor Beginn und nach Ende, nicht unterstützte Fälle?
+5. **Nationale Sonderregeln.** Welche Vorschriften der vier Zielstaaten kommen hinzu, insbesondere Rasse-, Leinen- oder Maulkorbvorschriften? Die gelesenen Quellen reichten dafür nicht (siehe `docs/reviews/travel-sources.md`). **Dazu seit M22-03:** die offizielle österreichische Seite nennt weiterhin die aufgehobene Verordnung (EU) Nr. 576/2013 — für Österreich ist damit keine aktuelle nationale Auskunft belegt.
+6. **Zwei weitere Rechtsakte.** Die niederländische NVWA nennt als Grundlage außer 2016/429 und 2026/131 auch die Verordnungen **(EU) 2026/636** und **(EU) 2026/705** (M22-03, gelesen am 2026-09-09). 2026/705 ist im Regelsatz als Fundstelle für das Passmodell genannt; **2026/636 ist bisher nirgends geprüft**. Was regelt sie, und ändert sie an den fünf Anforderungen etwas?
+7. **Umfang.** Ist der Zuschnitt vertretbar — vier Ziele, private begleitete Reise, Tiere ab zwölf Monaten, bis zu fünf Tiere —, und sind die zehn ausgeschlossenen Fälle richtig ausgeschlossen?
+8. **Darstellung.** Genügen die Hinweise, dass nicht geprüft nicht unzulässig heißt und dass die verbindliche Auskunft von der Behörde kommt?
+9. **Testmatrix.** Deckt sie ab: je Ziel und Tierart alle fünf Anforderungen, je Anforderung erfüllt / nicht erfüllt / unbekannt, Fristen am Grenztag, Geltung vor Beginn und nach Ende, nicht unterstützte Fälle?
 
 ## Freigabeschritte
 

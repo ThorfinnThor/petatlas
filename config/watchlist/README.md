@@ -9,14 +9,22 @@ ein Wechsel auffallen, ohne dass ihn jemand zufällig bemerkt
 Gespeichert wird nur, was zum Vergleich nötig ist: ETag, Last-Modified und ein
 Hash über den normalisierten Text. Kein Inhalt, keine Weitergabe.
 
-## Warum zwei Zielstaaten fehlen
+## Wie eine Adresse hier hereinkommt
 
-Für Österreich und die Niederlande ist im Repository **keine genaue Adresse**
-festgehalten. Am 2026-09-08 wurden zwei plausible Adressen probeweise
-abgerufen; beide antworteten mit 404. Eine geratene Adresse zu beobachten wäre
-schlimmer als keine: sie meldet jahrelang „unverändert“, obwohl sie nie die
-richtige Seite gelesen hat. Beide Zielstaaten kommen dazu, sobald die
-fachliche Prüfung (M12-06) die tatsächlich gelesenen Adressen festhält.
+Nur belegt. Für Österreich und die Niederlande fehlte bis M22-03 eine Adresse,
+weil eine **geratene** Adresse schlechter ist als keine: sie meldet jahrelang
+„unverändert“, ohne je die richtige Seite gelesen zu haben. Vier plausible
+Adressen antworteten mit 404.
+
+Gefunden wurden die richtigen am 2026-09-09 im Verzeichnis der Kommission
+(„EU countries' specific information“), das seitdem selbst beobachtet wird:
+ändert es sich, können sich die Landesadressen geändert haben. Jede neue
+Adresse wurde abgerufen, ihr Marker geprüft und ihr Inhalt gelesen — die
+Befunde stehen in `docs/reviews/travel-sources.md`.
+
+Ein Eintrag heißt **nicht**, dass die Seite fachlich taugt. Die österreichische
+Seite steht hier, obwohl sie eine aufgehobene Verordnung nennt. Genau deshalb:
+eine Änderung wäre das Zeichen, dass sie nachgezogen ist.
 
 ## Der Marker
 

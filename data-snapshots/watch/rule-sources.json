@@ -16,8 +16,8 @@
     {
       "watchId": "fr-agriculture-rage",
       "contentHash": "a7ee537e6c74c6d788f7731c3a56222f981bc1b3ff5567a9e8d0ddf86fa628fd",
-      "etag": "\"1788814991\"",
-      "lastModified": "Mon, 07 Sep 2026 21:03:11 GMT"
+      "etag": "\"1788901279\"",
+      "lastModified": "Tue, 08 Sep 2026 21:01:19 GMT"
     },
     {
       "watchId": "it-salute-animali-compagnia",
@@ -26,10 +26,28 @@
       "lastModified": null
     },
     {
+      "watchId": "ec-eu-countries-specific-information",
+      "contentHash": "c79010123e70467847531833a12f6e71b484dd5dd5d3e969aeb63de285dacdc2",
+      "etag": null,
+      "lastModified": null
+    },
+    {
+      "watchId": "at-sozialministerium-heimtiere",
+      "contentHash": "ca00b22500be77a66c5945353ab75dcba7ebbe6ee037c27302b4d863ec733558",
+      "etag": null,
+      "lastModified": "Wed, 09 Sep 2026 08:05:26 GMT"
+    },
+    {
+      "watchId": "nl-nvwa-op-reis-met-huisdier",
+      "contentHash": "f863d5ec3a6be0f2dad554b3cff48699cee146bc2269f4129818afbea85b33e8",
+      "etag": null,
+      "lastModified": null
+    },
+    {
       "watchId": "got-2022-uebersicht",
       "contentHash": "9e421d9c748b99ed56db92d1dfed58955bf9066806db51e1d7fae386be3d96c4",
-      "etag": "\"1d1d-65aedaae4e8fc-gzip\"",
-      "lastModified": "Tue, 08 Sep 2026 00:18:01 GMT"
+      "etag": "\"1d1d-65b01cd28fddb-gzip\"",
+      "lastModified": "Wed, 09 Sep 2026 00:19:15 GMT"
     }
   ]
 }

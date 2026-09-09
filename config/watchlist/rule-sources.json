@@ -38,6 +38,33 @@
       "reviewedAt": "2026-09-07"
     },
     {
+      "watchId": "ec-eu-countries-specific-information",
+      "title": "Europaeische Kommission, EU countries' specific information",
+      "url": "https://food.ec.europa.eu/animals/live-animal-movements/dogs-cats-and-ferrets/eu-countries-specific-information_en",
+      "belongsTo": "Verzeichnis der Zielstaatsquellen",
+      "expectedMarker": "specific information",
+      "meaning": "Aus dieser Liste stammen die Adressen der Zielstaaten. Aendert sie sich, koennen sich die beobachteten Landesadressen geaendert haben - das ist der Grund, warum sie selbst beobachtet wird. Am 2026-09-09 wurden die Adressen fuer AT und NL genau hier ausgelesen statt geraten.",
+      "reviewedAt": "2026-09-09"
+    },
+    {
+      "watchId": "at-sozialministerium-heimtiere",
+      "title": "Oesterreich, Sozialministerium, Movement of pet dogs, cats or ferrets",
+      "url": "https://www.sozialministerium.at/en/Topics/Health/Information-for-travellers/Movement-of-pet-dogs,-cats-or-ferrets-between-Member-states-of-the-EU,-the-EEA-and-Switzerland.html",
+      "belongsTo": "Zielstaat AT",
+      "expectedMarker": "Movement of pet dogs, cats or ferrets",
+      "meaning": "Die offizielle oesterreichische Seite, wie die Kommission sie verlinkt. Am 2026-09-09 abgerufen und gelesen: sie nennt weiterhin die Verordnung (EU) Nr. 576/2013 und Regeln 'seit 29.12.2014' - also eine aufgehobene Grundlage. Sie ist damit keine Grundlage fuer Regeln, sondern ein Beobachtungsgegenstand: eine Aenderung waere das Zeichen, dass Oesterreich nachgezogen hat.",
+      "reviewedAt": "2026-09-09"
+    },
+    {
+      "watchId": "nl-nvwa-op-reis-met-huisdier",
+      "title": "Niederlande, NVWA, Op reis met mijn huisdier",
+      "url": "https://www.nvwa.nl/onderwerpen/dier/op-reis-met-mijn-huisdier",
+      "belongsTo": "Zielstaat NL",
+      "expectedMarker": "Op reis met mijn huisdier",
+      "meaning": "Die niederlaendische Fassung der NVWA-Seite. Am 2026-09-09 abgerufen und gelesen: sie nennt als Rechtsgrundlage die Verordnungen (EU) 2016/429, 2026/131, 2026/636 und 2026/705 - bestaetigt also unabhaengig die Grundlage des Regelsatzes. Die englische Fassung ist eine Uebersichtsseite ohne diese Fundstellen und wird deshalb nicht gesondert beobachtet.",
+      "reviewedAt": "2026-09-09"
+    },
+    {
       "watchId": "got-2022-uebersicht",
       "title": "Gebuehrenordnung fuer Tieraerzte (GOT 2022), nichtamtliches Inhaltsverzeichnis",
       "url": "https://www.gesetze-im-internet.de/got_2022/",

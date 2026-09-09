@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M22-03",
+  "current_task": "M22-04",
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -4355,8 +4355,16 @@
         "M22-02"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Fuer Oesterreich und die Niederlande stehen jetzt belegte Adressen in der Beobachtungsliste - gefunden, nicht geraten. Der Weg dorthin ist der eigentliche Punkt: vier plausible Adressen antworteten am 2026-09-08 und -09 mit 404 (sozialministerium.gv.at/.../Reisen-mit-Heimtieren.html, oesterreich.gv.at/.../Seite.320900.html, nvwa.nl/onderwerpen/honden-katten-en-fretten, english.nvwa.nl/topics/dogs-cats-and-ferrets); sie sind in der Pruefung genannt, damit sie niemand erneut probiert. Die richtigen Adressen stammen aus dem Verzeichnis der Kommission ('EU countries' specific information'), das am 2026-09-09 mit HTTP 200 abgerufen und ausgelesen wurde und seitdem selbst beobachtet wird - aendert es sich, koennen sich die Landesadressen geaendert haben. Jede der drei neuen Adressen wurde abgerufen, ihr Marker geprueft und ihr Inhalt gelesen. Zwei fachliche Befunde daraus: (1) Die offizielle oesterreichische Seite nennt weiterhin die Verordnung (EU) Nr. 576/2013 und Regeln 'seit 29.12.2014' - also eine seit dem 22.04.2026 aufgehobene Grundlage. Sie ist damit keine Grundlage fuer Regeln, sondern ein Beobachtungsgegenstand; fuer Oesterreich ist keine aktuelle nationale Auskunft belegt, und das steht jetzt als Pruefpunkt in docs/reviews/travel.md. (2) Die niederlaendische NVWA-Seite nennt unter 'Waar staat dit in de wet?' die Verordnungen (EU) 2016/429, 2026/131, 2026/636 und 2026/705 - die erste nationale Quelle, die die Grundlage des Regelsatzes unabhaengig bestaetigt, und zugleich der Fund, dass mit 2026/636 ein Rechtsakt genannt wird, den bisher niemand gelesen hat. Das ist als neunter Pruefpunkt in docs/reviews/travel.md und in docs/BLOCKERS.md bei B-004 festgehalten. Die englische NVWA-Fassung ist eine Uebersichtsseite ohne Fundstellen und wird deshalb nicht gesondert beobachtet. Geprueft: 'node scripts/monitor/source-drift.ts --fetch' zweimal ausgefuehrt - alle drei neuen Eintraege zuerst 'neu', danach 'unveraendert', der Marker wurde also tatsaechlich gefunden und nicht nur die Adresse erreicht. Die zwei Eintraege, die sich einem einfachen Abruf entziehen (EUR-Lex mit HTTP 202 und leerem Koerper, das italienische Gesundheitsministerium mit Bot-Pruefung), melden weiterhin nicht_pruefbar statt unveraendert; umgangen wird nichts. 'npm run verify' exit 0.",
+          "reference": "config/watchlist/rule-sources.json, config/watchlist/README.md, docs/reviews/travel-sources.md, docs/reviews/travel.md, docs/BLOCKERS.md",
+          "verified_at": "2026-09-09",
+          "command": "node scripts/monitor/source-drift.ts --fetch",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4376,7 +4384,7 @@
         "M22-03"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "in_progress",
       "evidence": [],
       "blocker": null,
       "notes": []
