@@ -196,3 +196,14 @@ it('berücksichtigt französische Einreiseverbote auch im Transit, aber nicht al
   });
   expect(returning.hinweise.join(' ')).not.toContain('Einreise und Durchreise sind untersagt');
 });
+
+it('prüft die Umfangsgrenze nach Kalendermonaten, nicht nach einer durchschnittlichen Monatslänge', () => {
+  expect(
+    pruefeWizard({ ...VOLLSTAENDIG, birthDate: '2025-10-01', travelDate: '2026-10-01' }).umfang
+      .unterstuetzt,
+  ).toBe(true);
+  expect(
+    pruefeWizard({ ...VOLLSTAENDIG, birthDate: '2025-10-01', travelDate: '2026-09-30' }).umfang
+      .unterstuetzt,
+  ).toBe(false);
+});

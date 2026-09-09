@@ -65,7 +65,8 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   locale={market.locale}
 />
 
-<Notice variante="hinweis" titel="Grenzen der Berechnung">
+<details class="rechner-grenzen">
+  <summary>Grenzen der Berechnung: Sonderfälle und enthaltene Leistungen</summary>
   <p>
     Standardmäßig werden ausgewählte Gebühren mit 19 % Umsatzsteuer berechnet. Für mit der Praxis
     geklärte Sonderfälle können Sie abweichende Faktoren, Steuer und den Erlass der Notdienstgebühr
@@ -76,7 +77,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     Menge richtet sich nach der Einheit der gewählten Gebührenposition, etwa je Behandlung oder
     Zeitabschnitt. Die Praxis muss die Auswahl und Kombination der Leistungen bestätigen.
   </p>
-</Notice>
+</details>
 
 <SavedProfileButton />
 <ToolShell eingabeTitel="Eingaben" ergebnisTitel="Rechnung" ergebnisId="ergebnis-titel" sticky>

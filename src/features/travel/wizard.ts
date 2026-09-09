@@ -65,7 +65,16 @@ function alterInMonaten(geburt: string | null, stichtag: string): number | null 
   const von = Date.parse(`${geburt}T00:00:00Z`);
   const bis = Date.parse(`${stichtag}T00:00:00Z`);
   if (Number.isNaN(von) || Number.isNaN(bis) || bis < von) return null;
-  return Math.floor((bis - von) / (86_400_000 * 30.436_875));
+  const birth = new Date(von);
+  const travel = new Date(bis);
+  if (birth.toISOString().slice(0, 10) !== geburt || travel.toISOString().slice(0, 10) !== stichtag)
+    return null;
+  return (
+    (travel.getUTCFullYear() - birth.getUTCFullYear()) * 12 +
+    travel.getUTCMonth() -
+    birth.getUTCMonth() -
+    (travel.getUTCDate() < birth.getUTCDate() ? 1 : 0)
+  );
 }
 
 /** Baut die Faktenlage. Was der Nutzer nicht weiß, steht hier nicht drin. */

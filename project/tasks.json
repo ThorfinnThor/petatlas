@@ -4510,7 +4510,7 @@
       "status": "done",
       "evidence": [
         {
-          "description": "Implemented confirmed GOT exceptions, detailed travel inputs, national guidance with explicit Italy source gap, supplements page and Amazon/Awin application plan. Local verify: 1448 tests; real-data build: 15 checks. Manual browser: exception confirmation, comma-decimal comparison and invalid-value recovery, rabies expiry and French category exclusion. Full CI on final PR revision is a required merge check, not claimed complete here.",
+          "description": "Implemented confirmed GOT exceptions, detailed travel inputs, national guidance with explicit Italy source gap, supplements page and Amazon/Awin application plan. Local verify: 1449 tests; real-data build: 15 checks. Manual browser: exception confirmation, comma-decimal comparison and invalid-value recovery, rabies expiry and French category exclusion. Full CI on final PR revision is a required merge check, not claimed complete here.",
           "reference": "docs/IMPLEMENTATION_REVIEW_2026-09-09.md, docs/AFFILIATE_PLAN.md, https://github.com/ThorfinnThor/petatlas/pull/8",
           "verified_at": "2026-09-09",
           "command": "npm run verify; npm run build:app; manual browser verification",
