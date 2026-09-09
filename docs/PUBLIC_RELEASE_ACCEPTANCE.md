@@ -14,6 +14,8 @@ Die anschließende Prüfung fand weitere Fehler, die in dieser Änderung behoben
 - Fehlgeschlagene Ortsnamensuche und Kartenkacheln können erneut geladen werden. Verspätete Suchantworten verdrängen keine neuere Eingabe.
 - Orte lassen sich jetzt tatsächlich merken. Der Ansehen-Link öffnet den gespeicherten Ort anhand seiner aktuellen Daten statt des allgemeinen Berlin-Ausschnitts.
 - Fehlgeschlagene Speicherzugriffe behaupten kein erfolgreiches Merken oder Entfernen.
+- Neue Formularfehler erscheinen beim Absenden statt während des Klicks beim Feldwechsel; der Button verschiebt sich dadurch nicht mehr vor dem Klick.
+- Die belegte Tierart eines Produkts begrenzt auch gemischte Kategorien. [West Paw](https://www.westpaw.com/products/toppl-eggplant) und [KONG](https://www.kongcompany.com/kong-classic/) nennen die beiden erfassten Spielzeuge für Hunde.
 - Spielzeuggewicht wird validiert; Produktkategorien und Nährstoffe erhalten verständliche Beschriftungen.
 - Fehler beim Nachladen von Suchergebnissen erhalten eine sichtbare Meldung.
 

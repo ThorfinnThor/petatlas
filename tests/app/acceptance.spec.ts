@@ -189,3 +189,18 @@ test('global search opens a real indexed result and works again after navigation
   await page.fill('#suche-feld', 'Reise');
   await expect(page.locator('#suche-status')).toContainText('Treffer für „Reise“');
 });
+
+test('failed search fragments show an error and recover after reloading', async ({ page }) => {
+  let fail = true;
+  await page.route('**/pagefind/fragment/**', (route) =>
+    fail ? route.fulfill({ status: 503, body: 'unavailable' }) : route.continue(),
+  );
+  await page.goto('/de-de/');
+  await page.fill('#suche-feld', 'Reise');
+  await expect(page.locator('#suche-status')).toContainText('Suchergebnisse konnten nicht geladen');
+  await expect(page.locator('#suche-treffer a')).toHaveCount(0);
+  fail = false;
+  await page.reload();
+  await page.fill('#suche-feld', 'Reise');
+  await expect(page.locator('#suche-treffer a').first()).toBeVisible();
+});

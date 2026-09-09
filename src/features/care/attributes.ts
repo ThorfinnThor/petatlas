@@ -77,6 +77,8 @@ export function herkunftsText(attribut: ProductAttribute): string {
 export function kartenWert(attribut: ProductAttribute): string | null {
   const wert = attribut.value;
   if (wert === null) return null;
+  if (attribut.attribute === 'species' && typeof wert === 'string')
+    return ({ dog: 'Hund', cat: 'Katze' } as Record<string, string>)[wert] ?? wert;
   if (typeof wert === 'boolean') return wert ? 'ja' : 'nein';
   if (typeof wert === 'number') {
     return attribut.unit === null ? String(wert) : `${wert} ${attribut.unit}`;
@@ -112,6 +114,7 @@ export function kartenMerkmale(
  * ist hässlich und fällt auf, und genau das soll es.
  */
 export const MERKMAL_LABEL: Readonly<Record<string, string>> = {
+  species: 'Tierart laut Hersteller',
   difficultyLevel: 'Schwierigkeitsgrad',
   hardnessLevel: 'Härtegrad',
   diameterMillimeters: 'Durchmesser in Millimetern',

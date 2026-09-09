@@ -49,6 +49,15 @@ function produkt(
 const BEDARF: Bedarf = { species: 'dog', weightKilograms: 20, needs: [] };
 
 describe('Harte Filter', () => {
+  it('respects product species even when its category covers dogs and cats', () => {
+    const toy = produkt('puzzle-toy', [beleg('species', 'dog')]);
+    expect(bewerte(toy, BEDARF).zulaessig).toBe(true);
+    expect(bewerte(toy, { ...BEDARF, species: 'cat' }).zulaessig).toBe(false);
+    const unknown = produkt('puzzle-toy', [offen('species')]);
+    expect(bewerte(unknown, { ...BEDARF, species: 'cat' }).zulaessig).toBe(true);
+    expect(bewerte(unknown, BEDARF).ungeprueft).toContain('species');
+  });
+
   it('schließt eine andere Tierart aus', () => {
     const kratzbaum = produkt('scratching', [beleg('material', 'Sisal')]);
     expect(bewerte(kratzbaum, BEDARF).zulaessig).toBe(false);

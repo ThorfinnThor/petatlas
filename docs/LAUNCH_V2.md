@@ -42,6 +42,6 @@ Danach müssen `build-info.json`, HTTP-Header, noindex und die Hauptabläufe am 
 
 Die vier bestehenden GitHub-Quellenmeldungen bleiben offen. Am 09.09.2026 ließen sich die GOT-Übersicht und die niederländische NVWA-Seite erneut lesen; die NVWA nennt weiterhin die im Repository verzeichneten EU-Rechtsgrundlagen. Ein unveränderter Sachverhalt lässt sich daraus nicht für jede Regel ableiten. EUR-Lex und die italienische Behördenseite liefern bei automatisierten Abrufen weiterhin Browserprüfungen. Es wurde keine fachliche Freigabe und kein neuer Vergleichsstand aus einer Bot-Seite abgeleitet. Diese Fälle benötigen die im Projekt vorgesehene manuelle Quellenprüfung.
 
-`main` hat laut GitHub API keine klassische Branch Protection. Vor dem öffentlichen Betrieb sollten die erfolgreichen CI- und Security-Prüfungen verbindlich für Änderungen an main werden. Es wurden keine Rechte oder Kontoeinstellungen verändert.
+`main` ist seit 09.09.2026 geschützt: Pull Request, aktueller Branch und alle fünf CI-/Security-Checks sind vorgeschrieben, auch für Administratoren. Force-Push und Löschen sind gesperrt; Review-Gespräche müssen aufgelöst sein. Ein zusätzlicher menschlicher Approval-Zwang ist für das Einzelbetreiber-Repository nicht eingerichtet. Die Konfiguration wurde über die GitHub API gelesen und bestätigt.
 
 Die konkreten Prüfergebnisse stehen in `ACCEPTANCE.md`.
