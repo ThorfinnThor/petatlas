@@ -2,10 +2,8 @@
 
 ## Tatsächlicher Zustand
 
-M23-01 läuft auf codex/launch-readiness-design-v2. Ausgangspunkt 459e679. Neue Designquelle: DESIGN_SPECIFICATIONS_V2.md. Keine Freigaben erfunden.
+M23-01 ist abgeschlossen: Design V2, reale Produktdaten, Release-Pipeline und Browserabnahme. 129 von 136 Aufgaben sind erledigt; sieben externe Freigaben bleiben blockiert. Umsetzung in PR #5 auf codex/launch-readiness-design-v2. Abnahme: docs/ACCEPTANCE.md; Umfang und Grenzen: docs/LAUNCH_V2.md.
 
 ## Nächster ausführbarer Schritt
 
-M23-01: Design, echte Produktdaten, Release-Pipeline und End-to-End-Abnahme abschließen.
-
-Arbeitsstand (128 von 136 Aufgaben, 7 blockiert). M23-01 ist in Arbeit.
+Im Aufgabenregister gibt es keine ausführbare Aufgabe ohne externe Voraussetzung. Nach erneuter Cloudflare-Anmeldung die verifizierte Vorschau veröffentlichen und deren Revision, Header sowie Nutzerabläufe prüfen. Der bisherige Preview-Link zeigt noch den alten Stand. Domain, Betreiberangaben, Partnerverträge und Fachfreigaben liefert der Nutzer später. Keine Freigaben erfinden und nicht erneut nach diesen zurückgestellten Angaben fragen.

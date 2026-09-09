@@ -3,8 +3,8 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M23-01",
-  "note": "Implemented application; launch-readiness and Design V2 work is in progress. Approval records are separate.",
+  "current_task": null,
+  "note": "V2 application implemented and verified with real data. Public release and deployment authorization remain separate external prerequisites.",
   "status_values": [
     "todo",
     "in_progress",
@@ -4448,8 +4448,20 @@
       ],
       "depends_on": [],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        {
+          "description": "V2 design, sourced real product records, scope-dependent release safeguards, validated snapshot build and browser acceptance implemented. Local verify: 1431 tests. CI 34369711865 at eb38edb: 228 base browser, 107 accessibility, 298 feature, 11 real-app and 12 performance checks passed; 11 existing skips. Security passed. Preview deployment still requires a renewed Cloudflare login, and public launch requires the deferred owner/expert inputs.",
+          "reference": "docs/LAUNCH_V2.md, docs/ACCEPTANCE.md, https://github.com/ThorfinnThor/petatlas/actions/runs/34369711865",
+          "verified_at": "2026-09-09",
+          "command": "npm run verify && npm run build:app; GitHub CI browser suites",
+          "exit_code": 0
+        }
+      ],
+      "blocker": null,
+      "notes": [
+        "Deployment and public-release prerequisites remain tracked separately; no approval was fabricated."
+      ]
     }
   ]
 }
