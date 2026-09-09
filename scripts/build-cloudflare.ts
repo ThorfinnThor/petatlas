@@ -23,7 +23,8 @@
  * Ausführen: `npm run build:cloudflare`
  */
 import { execFileSync } from 'node:child_process';
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, readdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { prepareCommerce, publishCommerce } from './build/commerce.ts';
 import { productionFeatures } from '../config/build.ts';
 import { join } from 'node:path';
@@ -60,9 +61,10 @@ export interface BuildInfo {
   readonly builtAt: string;
   readonly buildMode: string;
   readonly gitCommit: string | null;
-  /** Fixierter Datenstand; null, solange kein data-live-Branch existiert. */
+  /** Commit der versionierten Snapshots; konkrete Dateihashes stehen in dataInputs. */
   readonly openDataRef: string | null;
   readonly nodeVersion: string;
+  readonly dataInputs: readonly { path: string; sha256: string }[];
   readonly sources: readonly {
     readonly sourceId: string;
     readonly rightsStatus: string;
@@ -76,6 +78,18 @@ export interface BuildInfo {
  * Baut die Build-Metadaten. Als eigene Funktion, damit sie prüfbar ist, ohne
  * dass vorher ein Build gelaufen sein muss.
  */
+function inputDigests(directory: string): { path: string; sha256: string }[] {
+  return readdirSync(directory, { withFileTypes: true })
+    .flatMap((entry) => {
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) return inputDigests(path);
+      return entry.name.endsWith('.json')
+        ? [{ path, sha256: createHash('sha256').update(readFileSync(path)).digest('hex') }]
+        : [];
+    })
+    .sort((a, b) => a.path.localeCompare(b.path));
+}
+
 export function erstelleBuildInfo(options: {
   buildMode: string;
   gitCommit: string | null;
@@ -88,6 +102,7 @@ export function erstelleBuildInfo(options: {
     gitCommit: options.gitCommit,
     openDataRef: options.openDataRef,
     nodeVersion: process.version,
+    dataInputs: [...inputDigests('data-snapshots'), ...inputDigests('content-data')],
     sources: allSources().map((quelle) => ({
       sourceId: quelle.sourceId,
       rightsStatus: quelle.rights.status,

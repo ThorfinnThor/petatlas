@@ -51,39 +51,6 @@ const transit = umfang.transitCountries.map(name);
   </p>
 </Notice>
 
-<h2>Geprüfter Umfang (Fassung {umfang.scopeVersion})</h2>
-<dl class="umfang">
-  <dt>Von</dt>
-  <dd>{name(umfang.origin)}</dd>
-  <dt>Nach</dt>
-  <dd>{ziele.join(', ')}</dd>
-  <dt>Richtung</dt>
-  <dd>Hinreise und Rückreise</dd>
-  <dt>Durchreise</dt>
-  <dd>{transit.join(', ')}</dd>
-  <dt>Tiere</dt>
-  <dd>
-    eigener Hund oder eigene Katze, ab {umfang.minAgeMonths} Monaten, bis zu {umfang.maxAnimals} Tiere
-  </dd>
-  <dt>Anlass</dt>
-  <dd>private Reise mit Begleitperson</dd>
-</dl>
-
-<h2>Ausdrücklich nicht geprüft</h2>
-<p>
-  Diese Fälle prüft der Check nicht. Das ist keine Aussage darüber, ob sie zulässig sind — nur
-  darüber, dass hier niemand sie beurteilt.
-</p>
-<ul class="ausnahmen">
-  {
-    umfang.unsupported.map((fall) => (
-      <li data-testid={`nicht-geprueft-${fall.caseId}`}>
-        <strong>{fall.label}.</strong> {fall.reason}
-      </li>
-    ))
-  }
-</ul>
-
 <Notice variante="warnung" titel="Fachlich noch nicht geprüft">
   <p>
     Die Regeln sind aus den amtlichen Quellen erfasst und mit Fundstelle hinterlegt (<a
@@ -245,6 +212,39 @@ const transit = umfang.transitCountries.map(name);
     <div id="reiseergebnis" role="status" aria-live="polite"></div>
   </div>
 </section>
+
+<h2>Geprüfter Umfang (Fassung {umfang.scopeVersion})</h2>
+<dl class="umfang">
+  <dt>Von</dt>
+  <dd>{name(umfang.origin)}</dd>
+  <dt>Nach</dt>
+  <dd>{ziele.join(', ')}</dd>
+  <dt>Richtung</dt>
+  <dd>Hinreise und Rückreise</dd>
+  <dt>Durchreise</dt>
+  <dd>{transit.join(', ')}</dd>
+  <dt>Tiere</dt>
+  <dd>
+    eigener Hund oder eigene Katze, ab {umfang.minAgeMonths} Monaten, bis zu {umfang.maxAnimals} Tiere
+  </dd>
+  <dt>Anlass</dt>
+  <dd>private Reise mit Begleitperson</dd>
+</dl>
+
+<h2>Ausdrücklich nicht geprüft</h2>
+<p>
+  Diese Fälle prüft der Check nicht. Das ist keine Aussage darüber, ob sie zulässig sind — nur
+  darüber, dass hier niemand sie beurteilt.
+</p>
+<ul class="ausnahmen">
+  {
+    umfang.unsupported.map((fall) => (
+      <li data-testid={`nicht-geprueft-${fall.caseId}`}>
+        <strong>{fall.label}.</strong> {fall.reason}
+      </li>
+    ))
+  }
+</ul>
 
 {umfang.notes.map((hinweis) => <p class="hinweis">{hinweis}</p>)}
 

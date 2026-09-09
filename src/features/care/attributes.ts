@@ -112,6 +112,11 @@ export function kartenMerkmale(
  * ist hässlich und fällt auf, und genau das soll es.
  */
 export const MERKMAL_LABEL: Readonly<Record<string, string>> = {
+  difficultyLevel: 'Schwierigkeitsgrad',
+  hardnessLevel: 'Härtegrad',
+  diameterMillimeters: 'Durchmesser in Millimetern',
+  heightCentimeters: 'Höhe in Zentimetern',
+  floats: 'Schwimmfähigkeit',
   coatLength: 'Fellänge',
   dishwasherSafe: 'Spülmaschinenfest',
   lengthCentimeters: 'Länge in Zentimetern',

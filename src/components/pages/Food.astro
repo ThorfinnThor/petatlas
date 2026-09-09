@@ -83,6 +83,60 @@ const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
   }
 </ul>
 
+<h2>Deklarationen nebeneinander</h2>
+<p>
+  Herstellerwerte je 100 g Frischmasse. Unterschiedliche Werte sind keine Rangliste und sagen allein
+  nichts über die Eignung für deinen Hund.
+</p>
+<div
+  class="food-comparison"
+  tabindex="0"
+  role="region"
+  aria-label="Nährwertvergleich, horizontal scrollbar"
+>
+  <table>
+    <caption>Erfasste Produktlinien, Herstellerdeklarationen vom 09.09.2026</caption>
+    <thead
+      ><tr
+        ><th scope="col">Produkt</th><th scope="col">Protein</th><th scope="col">Fett</th><th
+          scope="col">Rohfaser</th
+        ><th scope="col">Rohasche</th><th scope="col">Quelle</th></tr
+      ></thead
+    >
+    <tbody
+      >{
+        produkte
+          .filter(
+            (product, index, all) =>
+              all.findIndex(
+                (other) =>
+                  other.brand === product.brand && other.productName === product.productName,
+              ) === index,
+          )
+          .map((product) => (
+            <tr>
+              <th scope="row">
+                {product.brand} {product.productName}
+              </th>
+              {['protein', 'fat', 'fiber', 'ash'].map((key) => {
+                const nutrient = product.nutrients.find((item) => item.nutrient === key);
+                return (
+                  <td>
+                    {nutrient && nutrient.value !== null
+                      ? `${nutrient.value.toLocaleString('de-DE')} ${nutrient.unit}`
+                      : 'nicht erfasst'}
+                  </td>
+                );
+              })}
+              <td>
+                <a href={product.declarationSourceUrl ?? undefined}>Hersteller</a>
+              </td>
+            </tr>
+          ))
+      }</tbody
+    >
+  </table>
+</div>
 <h2>Was hier nicht passiert</h2>
 <ul class="ausschluesse">
   {
@@ -154,5 +208,21 @@ const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
 
   #futter-treffer :global(.treffer__kopf) {
     font-weight: 600;
+  }
+</style>
+
+<style>
+  .food-comparison {
+    overflow-x: auto;
+    margin-block: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+  .food-comparison table {
+    min-width: 660px;
+  }
+  .food-comparison td {
+    white-space: nowrap;
   }
 </style>

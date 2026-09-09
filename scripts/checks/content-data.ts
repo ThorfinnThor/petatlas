@@ -20,7 +20,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-import type { z } from 'zod';
+import { z } from 'zod';
 
 import { AttributeReviewSchema } from '../../src/domain/schemas/product-attributes.ts';
 import { CityAllowlistSchema } from '../../src/domain/schemas/city.ts';
@@ -52,6 +52,33 @@ export interface Pruefstueck {
 }
 
 export const PRUEFSTUECKE: readonly Pruefstueck[] = [
+  {
+    datei: 'content-data/products/editorial.json',
+    schema: z
+      .object({
+        dataKind: z.literal('real'),
+        note: z.string().min(1),
+        checkedAt: z.iso.date(),
+        products: z.array(
+          z
+            .object({
+              id: z.string().regex(/^[a-z0-9-]+$/),
+              name: z.string().min(1),
+              brand: z.string().min(1),
+              category: z.string().min(1),
+              categoryId: z.string().min(1),
+              sourceUrl: z.url().refine((url) => url.startsWith('https://')),
+              sourceLabel: z.string().min(1),
+              checkedAt: z.iso.date(),
+              facts: z.array(z.string().min(1)).min(1),
+              image: z.null(),
+            })
+            .strict(),
+        ),
+      })
+      .strict(),
+    zweck: 'Echte redaktionelle Herstellerangaben ohne erfundene Angebote',
+  },
   {
     datei: 'content-data/taxonomy/care.json',
     schema: TaxonomySchema,

@@ -169,9 +169,11 @@ jobs:
       # Funktion keine Seite hat. Der Rechner braucht sein Flag.
       # Zugänglichkeit ist eine Abnahmebedingung, kein Extralauf (M18-04).
       - name: Zugänglichkeit und Browsermatrix
+        if: ${{ !cancelled() }}
         run: npm run test:accessibility
 
       - name: End-to-End für Funktionen hinter ihrem Feature Flag
+        if: ${{ !cancelled() }}
         run: npm run test:e2e:features
 
       - name: Browserberichte sichern

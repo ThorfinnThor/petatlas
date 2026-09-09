@@ -32,7 +32,8 @@ test('Jeder Navigationseintrag führt auf eine vorhandene Seite', async ({ page 
   expect(links.length).toBeGreaterThan(0);
 
   for (const href of links) {
-    const antwort = await page.goto(href);
+    const antwort = await page.request.get(href.split('#')[0] ?? href);
+    await page.goto(href);
     expect(antwort?.status(), `${href} antwortet nicht mit 200`).toBe(200);
     // Keine leere Seite: eine Überschrift muss vorhanden sein.
     await expect(page.locator('h1')).toBeVisible();
