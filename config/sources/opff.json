@@ -6,8 +6,8 @@
   "primaryTermsUrl": "https://world.openpetfoodfacts.org/terms-of-use",
   "format": "csv",
   "coverage": {
-    "spatial": "weltweit; 1.281 der 15.136 Produkte mit Deutschlandbezug (gemessen am 08.09.2026)",
-    "temporal": "täglicher Export, zuletzt geändert 08.09.2026"
+    "spatial": "weltweit; 1.516 der 15.136 Produkte mit Deutschlandbezug (erneut gemessen am 09.09.2026)",
+    "temporal": "täglicher Export, zuletzt geändert 09.09.2026, 00:16 UTC"
   },
   "updateCadence": "täglich bereitgestellt; Abruf höchstens täglich, geplant wöchentlich",
   "role": "Möglicher Zusatz zu Händler- und Herstellerangaben bei Futterprodukten. Kein Pflichtbestand.",
@@ -35,7 +35,7 @@
     "Die Datenbank steht unter der Open Database License, einzelne Inhalte unter der Database Contents License; Produktbilder stehen unter CC BY-SA und werden nicht übernommen.",
     "Share-Alike wie bei OpenStreetMap: eine abgeleitete Datenbank müsste bei öffentlicher Weitergabe wieder unter ODbL stehen. Die Folgen sind in docs/ODBL_DATAFLOW.md beschrieben.",
     "robots.txt von world.openpetfoodfacts.org verbietet /api und /cgi für alle User-Agents. Systematische API-Abfragen unterbleiben deshalb; bezogen wird ausschließlich der angebotene Export unter /data.",
-    "Gemessen am 08.09.2026: Nährwertangaben fehlen fast vollständig (proteins_100g bei 241 von 15.136 Produkten, bei den 1.281 Produkten mit Deutschlandbezug bei zwei). Als Nährwertquelle ist der Datensatz damit nicht geeignet; Einzelheiten in docs/OPFF_SPIKE.md."
+    "Erneut gemessen am 09.09.2026 am frischen Export: 15.136 Produkte, 1.516 mit Deutschlandbezug. Naehrwerte weiterhin praktisch nicht vorhanden - proteins_100g bei 241 von 15.136 Produkten und bei 2 von 1.516 mit Deutschlandbezug, fat_100g ebenso. Zutatentext bei 166 von 1.516 (10 Prozent). Name 90 Prozent, Marke 76 Prozent, Menge 81 Prozent. Die Entscheidung aus M15-04 gilt damit unveraendert (M22-04, docs/reviews/food.md)."
   ],
   "attributionText": "Daten von Open Pet Food Facts, Mitwirkende, unter der Open Database License",
   "attributionUrl": "https://world.openpetfoodfacts.org/"

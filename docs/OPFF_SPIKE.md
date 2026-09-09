@@ -29,6 +29,8 @@ Der CSV-Export ist klein genug für einen Build und wird täglich erneuert. Regi
 
 Grundlage: der vollständige CSV-Export vom 08.09.2026, 15.136 Produkte, 210 Spalten. Gezählt wurde, wie oft ein Feld überhaupt gefüllt ist.
 
+> **Nachgemessen am 09.09.2026 (M22-04).** Der frische Export ergibt dieselbe Lage: 15.136 Produkte, 1.516 mit Deutschlandbezug (über `countries_tags` gezählt, deshalb etwas mehr als unten), `proteins_100g` bei 2 davon. Die Tabelle in `docs/reviews/food.md` führt die neuen Zahlen; die Entscheidung ist dort begründet.
+
 | Feld | alle Produkte | mit Deutschlandbezug (1.281) |
 |---|---|---|
 | `code` (Barcode) | 15.136 (100 %) | 1.281 (100 %) |

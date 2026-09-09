@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M22-04",
+  "current_task": null,
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -4384,8 +4384,16 @@
         "M22-03"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Die Entscheidung zur Futterquelle steht mit gemessener Abdeckung statt mit Vermutungen: es bleibt bei synthetischen Daten, und sie bleiben gekennzeichnet. Grundlage sind drei Messungen vom 09.09.2026. (1) Open Pet Food Facts erneut vollstaendig ausgezaehlt am frischen Export (3.294.294 Byte, last-modified 09.09.2026 00:16 UTC): 15.136 Produkte, 1.516 mit Deutschlandbezug; Name 90 Prozent, Marke 76, Menge 81, Zutatentext 10 - aber proteins_100g und fat_100g bei 2 von 1.516. Der Deutschlandbezug ist ueber countries_tags gezaehlt und faellt deshalb hoeher aus als die 1.281 aus M15-04; an der Aussage aendert das nichts, zwei bleiben zwei. Neu mitgemessen wurde der Zutatentext, weil er ohne Naehrwerte immerhin eine Angabe waere - 10 Prozent rechtfertigen keine zweite Quelle mit eigener Fehlerlage und Share-Alike-Pflicht. (2) Feed Materials Register (HTTP 200): Register der Einzelfuttermittel nach Artikel 24 Absatz 6 der Verordnung (EG) Nr. 767/2009, also der Rohstoffe - keine Produkte, keine Barcodes, keine Naehrwerte je Handelsware. (3) lebensmittelwarnung.de (HTTP 200): amtliche Rueckrufe, maschinenlesbar als RSS mit 271 Meldungen im Bundesfeed, aber die veroeffentlichten Produkttypen sind Lebensmittel, Bedarfsgegenstaende, kosmetische Mittel, Baby- und Kinderprodukte und Mittel zum Taetowieren - Futtermittel ist keiner davon, und keine der 271 Meldungen trug einen Futterbezug. Zusaetzlich geprueft: BVL-Arbeitsbereich Futtermittel, Behoerdenseiten ohne Produktdatenbank. Die Entscheidung nennt ausserdem, wann sie neu zu treffen ist - nicht 'irgendwann', sondern an einer Zahl: wenn proteins_100g bei den deutschen Produkten 30 Prozent erreicht. Der Trefferanteil gegen echte Feed-GTINs bleibt weiterhin nicht messbar, weil es kein freigegebenes Warenprogramm gibt (B-005), und wird nicht geschaetzt. Im Code aendert sich nichts, weil bereits alles so steht: dataKind synthetic mit Testdatenhinweis und zwei Tests, opff-Quelle auf status pending, Adapter hinter dem abgeschalteten Flag foodEnrichment. Aktualisiert wurden die Messwerte in config/sources/opff.json. Geprueft: 'npm run verify' exit 0, 'npm run check:licenses' 22 Quellen ohne Beanstandung.",
+          "reference": "docs/reviews/food.md, docs/OPFF_SPIKE.md, config/sources/opff.json",
+          "verified_at": "2026-09-09",
+          "command": "npm run verify",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     }
