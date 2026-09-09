@@ -72,7 +72,7 @@ if (!Astro.slots.has('eingabe') || !Astro.slots.has('ergebnis')) {
   /* Abschnitt 6.1: ab Tablet zwei Spalten, Abschnitt 24.2: 5 zu 7. */
   @media (min-width: 768px) {
     .werkzeug {
-      grid-template-columns: 5fr 7fr;
+      grid-template-columns: 7fr 5fr;
       gap: var(--space-8);
       align-items: start;
     }
@@ -98,7 +98,7 @@ if (!Astro.slots.has('eingabe') || !Astro.slots.has('ergebnis')) {
        nicht beides und nichts Größeres. */
     .werkzeug__ergebnis--sticky {
       position: sticky;
-      inset-block-start: var(--space-6);
+      inset-block-start: 6rem;
       box-shadow: var(--shadow-xs);
     }
   }

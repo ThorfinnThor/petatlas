@@ -79,7 +79,7 @@ describe('Ausgelieferte Spielzeuginhalte', () => {
 
   it('erzeugen auch im Matching keine gesperrte Aussage', () => {
     const kauring = attributPruefung().products.find(
-      (produkt) => produkt.productId === 'synthetisch:kauring',
+      (produkt) => produkt.productId === 'kong-classic',
     );
     expect(kauring).toBeDefined();
     const treffer = bewerte(kauring!, { species: 'dog', weightKilograms: 20, needs: ['kauen'] });

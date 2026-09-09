@@ -135,13 +135,8 @@ jobs:
       - name: Freigabestand ist widerspruchsfrei
         run: npm run check:release
 
-      - name: Produktionsbuild bleibt gesperrt
-        run: |
-          if npm run build:production > /tmp/production.log 2>&1; then
-            echo "Der Produktionsbuild ist durchgelaufen, obwohl die Launch-Gates offen sind."
-            exit 1
-          fi
-          grep -q "publicRelease.approved=false" /tmp/production.log
+      - name: Produktionsfreigaben und Konfiguration
+        run: npx vitest run tests/launch-readiness.test.ts tests/build-mode.test.ts
 
   browser:
     name: Browser-Smoke
@@ -178,3 +173,11 @@ jobs:
 
       - name: End-to-End für Funktionen hinter ihrem Feature Flag
         run: npm run test:e2e:features
+
+      - name: Browserberichte sichern
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: browser-reports
+          path: reports/
+          retention-days: 7

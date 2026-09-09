@@ -75,7 +75,7 @@ describe('Der Hook bleibt an die Partnerentscheidung gebunden', () => {
   });
 
   it('baut den Katalog nur, wenn ein Partner zugelassen ist', () => {
-    const bauSchritt = rebuild.slice(rebuild.indexOf('name: Katalog bauen'));
+    const bauSchritt = rebuild.slice(rebuild.indexOf('name: Build anstoßen'));
     expect(bauSchritt.slice(0, 200)).toContain("steps.partner.outputs.noetig == 'true'");
   });
 

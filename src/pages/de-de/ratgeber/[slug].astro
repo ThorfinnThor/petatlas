@@ -1,0 +1,151 @@
+---
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BrandImage from '../../../components/BrandImage.astro';
+import { devFeatureOverrides } from '../../../../config/build.ts';
+import { defaultMarket, withEnabledFeatures } from '../../../domain/market.ts';
+import { routeExists, routePath } from '../../../lib/routes.ts';
+export function getStaticPaths() {
+  return ['tierarztrechnung-verstehen', 'hundeorte-finden', 'reise-vorbereiten'].map((slug) => ({
+    params: { slug },
+  }));
+}
+const slug = Astro.params.slug;
+const texts = {
+  'tierarztrechnung-verstehen': {
+    title: 'Deine Tierarztrechnung verstehen',
+    category: 'Kosten verstehen',
+    image: 'health-dog-home',
+    intro:
+      'Eine Rechnung besteht aus einzelnen Leistungen. Mit dem Gebührenkatalog kannst du ihre Bezeichnungen und Grundlagen nachvollziehen.',
+    sections: [
+      [
+        'Die einzelne Leistung finden',
+        'Such im Katalog nach der Bezeichnung oder Positionsnummer auf deiner Rechnung. Die angegebene Grundgebühr ist der Ausgangswert dieser Position, nicht automatisch der Gesamtpreis eines Besuchs.',
+      ],
+      [
+        'Deine Eingaben nachvollziehen',
+        'Wähle im Rechner die passende Position, Menge und den Faktor deiner Rechnung. Die Berechnung trennt Positionen und Umsatzsteuer. Hinweise zum Notdienst und zu weiteren Kosten stehen direkt am Ergebnis.',
+      ],
+      [
+        'Offene Fragen klären',
+        'Medikamente, Materialien, Laborleistungen oder weitere Positionen können hinzukommen. Wenn eine Rechnungsposition unklar bleibt, frag die Praxis nach einer Erläuterung. Der Rechner ist eine Orientierung und noch nicht fachlich abgenommen.',
+      ],
+    ],
+    source: 'https://www.gesetze-im-internet.de/got_2022/',
+    sourceName: 'Amtliche Gebührenordnung für Tierärzte',
+    tool: 'costs' as const,
+    action: 'Gebühren nachschlagen',
+  },
+  'hundeorte-finden': {
+    title: 'Gute Hunde-Orte in deiner Nähe finden',
+    category: 'Draußen unterwegs',
+    image: 'play-dog-alpine-lake',
+    intro:
+      'Die Karte zeigt erfasste Orte, keine vollständige Liste aller Angebote. So nutzt du sie für deinen nächsten Ausflug oder die Suche nach einer Praxis.',
+    sections: [
+      [
+        'Ort auswählen',
+        'Gib eine Stadt oder Postleitzahl ein und wähle den passenden Vorschlag. Der Radius bezieht sich auf diesen Mittelpunkt. Du musst deinen persönlichen Standort nicht freigeben.',
+      ],
+      [
+        'Ergebnisse eingrenzen',
+        'Nutze Kategorien und Radius, um die Liste einzugrenzen. Die Listenansicht enthält dieselben Orte wie die Karte und bleibt ohne externe Kartenbilder nutzbar.',
+      ],
+      [
+        'Vor dem Besuch nachsehen',
+        'Öffnungszeiten und Telefonnummern sind nicht überall erfasst. Prüfe die Website des Ortes oder ruf an. Ein Eintrag als Tierarzt ist keine Bestätigung eines aktuellen Notdienstes. Bei Auslaufgebieten gelten die örtlichen Schilder und kommunalen Regeln.',
+      ],
+    ],
+    source: 'https://www.openstreetmap.org/about',
+    sourceName: 'OpenStreetMap · Über die Daten',
+    tool: 'map' as const,
+    action: 'Hunde-Orte finden',
+  },
+  'reise-vorbereiten': {
+    title: 'Mit Hund verreisen: die Vorbereitung',
+    category: 'Zusammen reisen',
+    image: 'travel-human-dog-sunset',
+    intro:
+      'Ein guter Reiseplan beginnt mit dem Ziel, dem Transport und den Angaben zu deinem Tier. Der Reisecheck hilft dir, offene Punkte geordnet zu sammeln.',
+    sections: [
+      [
+        'Reise und Tier festhalten',
+        'Wähle im Reisecheck eines der unterstützten Ziele und gib die vorhandenen Informationen zu deinem Tier ein. Unbekannte Angaben solltest du offenlassen, statt sie zu schätzen.',
+      ],
+      [
+        'Unterlagen und Quellen prüfen',
+        'Die Auswertung zeigt Hinweise und Fundstellen. Sie ist noch nicht fachlich freigegeben und bestätigt keine Einreiseberechtigung. Prüfe die aktuellen Informationen des Ziellandes und kläre Tiergesundheitsfragen mit deiner Tierarztpraxis.',
+      ],
+      [
+        'Packliste anpassen',
+        'Nutze die lokale Packliste für Dokumente und Alltagsausstattung. Ergänze die Vorgaben der Unterkunft und des Transportanbieters. Änderungen bleiben auf diesem Gerät; ein Profil ist kein Onlinekonto.',
+      ],
+    ],
+    source:
+      'https://europa.eu/youreurope/citizens/travel/carry/pets-and-other-animals/index_de.htm',
+    sourceName: 'Your Europe · Reisen mit Heimtieren',
+    tool: 'travel' as const,
+    action: 'Reisecheck öffnen',
+  },
+};
+const article = texts[slug as keyof typeof texts];
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+---
+
+<BaseLayout title={article.title} canonicalPfad={`/de-de/ratgeber/${slug}/`}>
+  <Breadcrumbs market={market} stufen={[{ label: article.title }]} />
+  <a href="/de-de/#ratgeber">← Alle Ratgeber</a><p class="eyebrow">{article.category}</p><h1>
+    {article.title}
+  </h1><p>{article.intro}</p><p class="article-meta">
+    PetAtlas · Redaktionelle Orientierung · 09.09.2026
+  </p><BrandImage name={article.image} sizes="(max-width: 768px) 100vw, 760px" />
+  {
+    article.sections.map(([title, text]) => (
+      <section>
+        <>
+          <h2>{title}</h2>
+          <p>{text}</p>
+        </>
+      </section>
+    ))
+  }
+  {
+    routeExists(market, article.tool) && (
+      <p>
+        <a class="article-action" href={routePath(market, article.tool)}>
+          {article.action} →
+        </a>
+      </p>
+    )
+  }
+  <h2>Quelle und Einordnung</h2><p>
+    <a href={article.source} rel="noopener">{article.sourceName} ↗</a>
+  </p><p>
+    Diese Seite erklärt die Bedienung und Grenzen unserer Werkzeuge. Sie ersetzt weder eine
+    individuelle tierärztliche Beratung noch die Prüfung aktueller Reisevorgaben.
+  </p>
+</BaseLayout>
+<style>
+  .eyebrow {
+    margin-top: var(--space-8);
+  }
+  .article-meta {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  :global(picture) {
+    border-radius: var(--radius-xl);
+    aspect-ratio: 1.7;
+  }
+  .article-action {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: var(--space-6);
+  }
+</style>

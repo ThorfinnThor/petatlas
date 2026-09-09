@@ -17,7 +17,7 @@
  *
  * Ausführen: `npm run build:commerce`
  */
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 
 import feeds from '../../config/commerce/feeds.json' with { type: 'json' };
@@ -248,35 +248,31 @@ export function schreibeAusgabe(pfad: string, inhalt: JsonValue): void {
 
 const ZIEL = 'dist/data/v1/commerce/de/offers.json';
 
-function main(): number {
-  const stand = secretStand(process.env);
-  for (const eintrag of stand) console.log(eintrag.meldung);
-
-  const ohneSecret = stand.filter((eintrag) => !eintrag.vorhanden);
-  if (ohneSecret.length === stand.length) {
-    console.log(
-      'Kein Feed-Secret gesetzt: es werden keine Angebote gebaut. Das ist der Normalzustand, ' +
-        'solange kein Partnervertrag besteht.',
+/** No partner contract is configured. Remove stale offers on every build. */
+export async function prepareCommerce(
+  env: Readonly<Record<string, string | undefined>>,
+): Promise<void> {
+  rmSync(ZIEL, { force: true });
+  rmSync('.generated/commerce.json', { force: true });
+  if (secretStand(env).some((entry) => entry.vorhanden)) {
+    throw new CommerceBuildError(
+      'Feed-Secret gesetzt, aber kein Partnervertrag freigegeben. Bitte zuerst Vertrag und Ausgabeformen konfigurieren.',
     );
-    return 0;
   }
-
-  // Ab hier gäbe es einen Abruf. Er bleibt aus, solange kein Partnervertrag
-  // besteht: ohne Anzeigeerlaubnis entstünde ohnehin keine Ausgabe, und ein
-  // Abruf ohne Zweck belastet nur die Gegenseite.
   console.log(
-    'Ein Feed-Secret ist gesetzt, aber es besteht kein freigegebener Partnervertrag ' +
-      '(config/publishers/). Es wird nicht abgerufen und nichts geschrieben.',
+    'Keine Partnerangebote konfiguriert; redaktionelle Herstellerangaben bleiben verfügbar.',
   );
-  try {
-    readFileSync(ZIEL);
-    console.warn(`${ZIEL} existiert aus einem früheren Lauf und wird nicht überschrieben.`);
-  } catch {
-    // Keine Ausgabe vorhanden: alles in Ordnung.
-  }
-  return 0;
+}
+
+export function publishCommerce(): void {
+  rmSync(ZIEL, { force: true });
 }
 
 if (import.meta.filename === process.argv[1]) {
-  process.exit(main());
+  prepareCommerce(process.env).catch((error: unknown) => {
+    console.error(
+      error instanceof CommerceBuildError ? error.message : 'Commerce-Build fehlgeschlagen.',
+    );
+    process.exitCode = 1;
+  });
 }

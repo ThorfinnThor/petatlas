@@ -1,286 +1,780 @@
 ---
-/**
- * Startseite nach `docs/DESIGN_SPECIFICATIONS.md` Abschnitt 23.
- *
- * Aufbau: Hero mit zwei Aktionen, Werkzeugraster, „So arbeiten unsere
- * Daten“, Produkteinstieg **nach** den Werkzeugen, Transparenzbereich.
- *
- * Die Karten nennen, was ein Werkzeug **tut**. Wo eine Funktion ohne
- * Freigabe leer bleibt, steht das in der Karte — Abschnitt 55 verlangt,
- * Vertrauen zu belegen statt zu behaupten.
- */
-import type { MarketConfig } from '../../domain/market.ts';
-import { translate, type LocaleId } from '../../domain/i18n.ts';
-import {
-  navigationFor,
-  routeExists,
-  routePath,
-  type NavigationItem,
-  type RouteKey,
-} from '../../lib/routes.ts';
-import Notice from '../Notice.astro';
-import Button from '../ui/Button.astro';
-import Card from '../ui/Card.astro';
-import PageHeader from '../ui/PageHeader.astro';
+import { devFeatureOverrides } from '../../../config/build.ts';
+import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
+import { routeExists, routePath, type RouteKey } from '../../lib/routes.ts';
+import HeroFeature from '../HeroFeature.astro';
+import BrandImage from '../BrandImage.astro';
+import Icon from '../ui/Icon.astro';
 import Search from '../Search.astro';
-
-interface Props {
-  market: MarketConfig;
-}
-
-const { market } = Astro.props;
-const locale = market.locale as LocaleId;
-const alle = navigationFor(market, 'main').filter((item) => item.key !== 'home');
-
-const BESCHREIBUNG: Partial<Record<RouteKey, string>> = {
-  costs:
-    'Rechne eine Position der amtlichen Gebührenordnung nach — mit Fundstelle, Faktor und Umsatzsteuer.',
-  map: 'Finde Tierärztinnen, Tierärzte und tierbezogene Orte aus OpenStreetMap, als Liste und auf einer Karte.',
-  travel:
-    'Prüfe die Anforderungen für eine Reise mit Hund oder Katze innerhalb der EU, mit Fundstelle je Punkt.',
-  food: 'Vergleiche Futter nach Menge, deklarierten Nährwerten und Grundpreis je Kilogramm.',
-  care: 'Filtere Pflegeprodukte nach belegten Eigenschaften, nicht nach erfundener Eignung.',
-  toys: 'Filtere Spielzeug nach Material, Größe und Herstellerangaben.',
-  catalog:
-    'Angebote erscheinen hier, sobald ein Partnerprogramm freigegeben ist. Bis dahin bleibt die Liste leer.',
-  profile:
-    'Lege ein Tierprofil an, das ausschließlich in diesem Browser liegt. Kein Konto, kein Server.',
-  favorites: 'Merke dir Orte und Produkte — ebenfalls nur auf diesem Gerät.',
-};
-
-const WERKZEUG_KEYS: readonly RouteKey[] = ['costs', 'map', 'travel', 'profile', 'favorites'];
-const PRODUKT_KEYS: readonly RouteKey[] = ['toys', 'care', 'food', 'catalog'];
-
-function auswahl(keys: readonly RouteKey[]): readonly NavigationItem[] {
-  return keys
-    .map((key) => alle.find((eintrag) => eintrag.key === key))
-    .filter((eintrag): eintrag is NavigationItem => eintrag !== undefined);
-}
-
-const werkzeuge = auswahl(WERKZEUG_KEYS);
-const produkte = auswahl(PRODUKT_KEYS);
-
-const primaer = routeExists(market, 'costs') ? routePath(market, 'costs') : null;
-const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : null;
+import foods from '../../../content-data/food/real-products.json';
+import products from '../../../content-data/products/editorial.json';
+import places from '../../../data-snapshots/places/places-de.json';
+import fees from '../../../data-snapshots/got/got-2022.json';
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const path = (key: RouteKey) => routePath(market, key);
+const has = (key: RouteKey) => routeExists(market, key);
+const tools: { key: RouteKey; name: string; help: string; icon: string }[] = [
+  { key: 'costs', name: 'Tierarztkosten', help: 'Kosten besser verstehen', icon: 'costs' },
+  { key: 'map', name: 'Hunde-Karte', help: 'Gute Orte in deiner Nähe', icon: 'map' },
+  { key: 'travel', name: 'Reisecheck', help: 'Gut vorbereitet losziehen', icon: 'travel' },
+  { key: 'food', name: 'Futter', help: 'Deklarationen vergleichen', icon: 'food' },
+  { key: 'toys', name: 'Spielzeug', help: 'Nach Eigenschaften finden', icon: 'toys' },
+  { key: 'care', name: 'Gesundheit & Pflege', help: 'Praktisches für den Alltag', icon: 'care' },
+];
+const guides = [
+  {
+    slug: 'tierarztrechnung-verstehen',
+    title: 'Was steht auf deiner Tierarztrechnung?',
+    category: 'Kosten verstehen',
+    image: 'health-dog-home',
+  },
+  {
+    slug: 'hundeorte-finden',
+    title: 'Dein nächster guter Ort ist ganz nah.',
+    category: 'Draußen unterwegs',
+    image: 'play-dog-alpine-lake',
+  },
+  {
+    slug: 'reise-vorbereiten',
+    title: 'Mit Hund verreisen: gut vorbereitet starten.',
+    category: 'Zusammen reisen',
+    image: 'travel-human-dog-sunset',
+  },
+];
+const picks = [
+  ...products.products.slice(0, 3).map((p) => ({
+    name: p.name,
+    brand: p.brand,
+    tag: p.category,
+    facts: p.facts,
+    url: p.sourceUrl,
+    icon: p.category === 'Pflege' ? 'care' : 'toys',
+  })),
+  {
+    name: 'Mini Adult · 2 kg',
+    brand: 'Royal Canin',
+    tag: 'Futter',
+    facts: ['27 % Protein laut Deklaration', '16 % Fett laut Deklaration'],
+    url: foods.products[0]!.declarationSourceUrl,
+    icon: 'food',
+  },
+];
 ---
 
-<PageHeader
-  variante="hero"
-  eyebrow="Praktische Daten für Tierhalter"
-  titel="Besser entscheiden für dein Tier"
-  lead="Kosten, Orte, Reisen und Produkte — verständlich aufbereitet aus offenen Quellen. Jede Angabe nennt ihren Stand und ihre Herkunft."
+<HeroFeature
+  eyebrow="Bessere Entscheidungen. Glücklichere Hunde."
+  title="Alles für ein gesundes & glückliches Hundeleben."
+  description="Finde Hunde-Orte, verstehe Tierarztkosten und bereite eure nächste Reise vor. Mit echten Daten und Quellen, die du nachlesen kannst."
+  image="hero-dog-alpine-lake"
+  annotation="Gemeinsam mehr erleben."
 >
   {
-    primaer !== null && (
-      <Fragment slot="aktionen">
-        <Button variante="primaer" groesse="gross" href={primaer}>
-          Tierarztkosten berechnen
-        </Button>
-      </Fragment>
+    has('costs') && (
+      <a class="action action--orange" href={path('costs')}>
+        Tierarztkosten berechnen <Icon name="arrow" size={16} />
+      </a>
     )
   }
   {
-    sekundaer !== null && (
-      <Fragment slot="aktionen">
-        <Button groesse="gross" href={sekundaer}>
-          Reisecheck starten
-        </Button>
-      </Fragment>
+    has('map') && (
+      <a class="action" href={path('map')}>
+        Hunde-Orte finden
+      </a>
     )
   }
-  <p class="belege">Offene Quellen · Datenstand an jeder Angabe · keine Anmeldung nötig</p>
-</PageHeader>
-
-{
-  werkzeuge.length > 0 ? (
-    <section aria-labelledby="werkzeuge-titel">
-      <h2 id="werkzeuge-titel">Werkzeuge</h2>
-      <ul class="karten">
-        {werkzeuge.map((item) => (
-          <Card als="li" klickbar class="werkzeugkarte">
-            <h3 class="karte__titel">
-              <a href={item.path}>{translate(locale, item.labelKey)}</a>
-            </h3>
-            {BESCHREIBUNG[item.key] !== undefined && (
-              <p class="karte__text">{BESCHREIBUNG[item.key]}</p>
-            )}
-            <p class="karte__pfeil" aria-hidden="true">
-              Ansehen →
-            </p>
-          </Card>
-        ))}
-      </ul>
-    </section>
-  ) : (
-    <Notice variante="hinweis" titel="Noch keine Funktion freigegeben">
-      <p>
-        Es ist bisher kein Werkzeug freigeschaltet. Eine Funktion erscheint hier erst, wenn ihre
-        Daten vorliegen und fachlich geprüft sind — nicht als leere Ankündigung.
-      </p>
-    </Notice>
-  )
-}
-
-<section aria-labelledby="daten-titel">
-  <h2 id="daten-titel">So arbeiten unsere Daten</h2>
-  <ol class="schritte">
-    <Card als="li" variante="soft" class="ablaufschritt">
-      <p class="schritt__nummer" aria-hidden="true">1</p>
-      <h3 class="schritt__titel">Offene und amtliche Quellen</h3>
-      <p class="schritt__text">
-        Gebührenordnung, OpenStreetMap, kommunale Abgaben und Rechtsakte der EU — jede Quelle mit
-        geprüften Nutzungsrechten.
-      </p>
-    </Card>
-    <Card als="li" variante="soft" class="ablaufschritt">
-      <p class="schritt__nummer" aria-hidden="true">2</p>
-      <h3 class="schritt__titel">Nachvollziehbar aufbereitet</h3>
-      <p class="schritt__text">
-        Keine erfundenen Zahlen. Was unbekannt ist, steht als unbekannt da — nicht als Null und
-        nicht als „nein“.
-      </p>
-    </Card>
-    <Card als="li" variante="soft" class="ablaufschritt">
-      <p class="schritt__nummer" aria-hidden="true">3</p>
-      <h3 class="schritt__titel">Mit Stand und Herkunft</h3>
-      <p class="schritt__text">
-        Jede Angabe nennt, woher sie stammt und wie alt sie ist. Der Gesamtstand steht auf der
-        Datenstandseite.
-      </p>
-    </Card>
-  </ol>
+  {
+    has('travel') && (
+      <a class="action" href={path('travel')}>
+        Reisecheck starten
+      </a>
+    )
+  }
+</HeroFeature>
+<section class="tool-dock" id="tools" aria-label="Werkzeuge">
+  {
+    tools
+      .filter((t) => has(t.key))
+      .map((tool) => (
+        <a class:list={['tool-card', `tone-${tool.icon}`]} href={path(tool.key)}>
+          <>
+            <span class="tool-icon">
+              <Icon name={tool.icon} />
+            </span>
+            <strong>{tool.name}</strong>
+            <span>{tool.help}</span>
+          </>
+        </a>
+      ))
+  }
 </section>
-
+<section class="section" aria-labelledby="alltag-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Weniger suchen. Mehr wissen.</p><h2 id="alltag-title">
+        Für die Fragen im Hundealltag.
+      </h2>
+    </div><span class="small-note">Nützliches Wissen, direkt anwendbar.</span>
+  </div>
+  <div class="feature-grid">
+    <article class="feature feature--costs">
+      <span class="category"><Icon name="costs" size={18} />Kosten verstehen</span><h3>
+        Was kostet der<br />Tierarztbesuch?
+      </h3><p>Schau Gebühren nach und rechne einzelne Leistungen mit dem gewählten Faktor nach.</p>{
+        has('costs') && (
+          <a class="action action--primary" href={path('costs')}>
+            Zum Kostenrechner <Icon name="arrow" size={16} />
+          </a>
+        )
+      }<BrandImage
+        name="health-dog-home"
+        class="cost-photo"
+        sizes="(max-width: 768px) 80vw, 25vw"
+      /><div class="trust-facts">
+        <span>GOT als Grundlage</span><span>Quelle je Position</span><span>Ohne Anmeldung</span>
+      </div>
+    </article>
+    <article class="feature feature--map">
+      <span class="category"><Icon name="map" size={18} />Hier bist du richtig</span><h3>
+        Gute Orte.<br />Ganz in deiner Nähe.
+      </h3><p>Tierärzte, Auslauf und mehr: echte Ortsdaten aus OpenStreetMap.</p><div
+        class="map-illustration"
+        aria-hidden="true"
+      >
+        <span class="map-line one"></span><span class="map-line two"></span><span
+          class="map-pin first"><Icon name="map" /></span
+        ><span class="map-pin second"><Icon name="map" /></span><span class="map-pin third"
+          ><Icon name="map" /></span
+        ><span class="map-label">DEUTSCHLAND</span>
+      </div>{
+        has('map') && (
+          <form action={path('map')} method="get" class="quick-search">
+            <>
+              <label for="home-location">PLZ oder Ort</label>
+              <div>
+                <>
+                  <input
+                    id="home-location"
+                    name="q"
+                    placeholder="z. B. Berlin oder 10115"
+                    required
+                    minlength="2"
+                  />
+                  <button type="submit" aria-label="Hunde-Orte suchen">
+                    <Icon name="search" size={20} />
+                  </button>
+                </>
+              </div>
+            </>
+          </form>
+        )
+      }
+    </article>
+    <div class="editorial-feature" id="ratgeber">
+      <p class="eyebrow">Gut zu wissen</p><h3>Kleine Lektüre.<br />Großer Unterschied.</h3>{
+        guides.map((g) => (
+          <a class="editorial-card" href={`/de-de/ratgeber/${g.slug}/`}>
+            <>
+              <BrandImage name={g.image} sizes="96px" />
+              <div>
+                <>
+                  <span>{g.category}</span>
+                  <h4>{g.title}</h4>
+                  <small>Quellen & praktische Schritte →</small>
+                </>
+              </div>
+            </>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
 {
-  produkte.length > 0 && (
-    <section aria-labelledby="produkte-titel">
-      <h2 id="produkte-titel">Produkte nach nachvollziehbaren Eigenschaften finden</h2>
-      <p>
-        Gefiltert wird nach belegten Produktangaben. Keine Bewertungen, keine Testsieger, keine
-        medizinischen Versprechen.
-      </p>
-      <ul class="karten">
-        {produkte.map((item) => (
-          <Card als="li" klickbar class="werkzeugkarte">
-            <h3 class="karte__titel">
-              <a href={item.path}>{translate(locale, item.labelKey)}</a>
-            </h3>
-            {BESCHREIBUNG[item.key] !== undefined && (
-              <p class="karte__text">{BESCHREIBUNG[item.key]}</p>
-            )}
-          </Card>
-        ))}
-      </ul>
+  has('food') && (
+    <section class="section" id="produkte" aria-labelledby="products-title">
+      <>
+        <div class="section-heading">
+          <>
+            <div>
+              <>
+                <p class="eyebrow">Fakten statt Verkaufsversprechen</p>
+                <h2 id="products-title">Ein genauerer Blick lohnt sich.</h2>
+                <p>
+                  Eine kleine Auswahl echter Produkte mit belegten Herstellerangaben. Keine
+                  Rangliste, keine bezahlten Empfehlungen.
+                </p>
+              </>
+            </div>
+            <a class="text-link" href={path('food')}>
+              Zum Futtervergleich →
+            </a>
+          </>
+        </div>
+        <div class="product-grid">
+          {picks.map((p) => (
+            <article class="editorial-product">
+              <span class:list={['product-category', `tone-${p.icon}`]}>
+                <Icon name={p.icon} size={22} />
+                {p.tag}
+              </span>
+              <p class="product-brand">{p.brand}</p>
+              <h3>{p.name}</h3>
+              <ul>
+                {p.facts.map((f) => (
+                  <li>{f}</li>
+                ))}
+              </ul>
+              <p class="price-status">Kein aktuelles Preisangebot erfasst</p>
+              <a href={p.url} class="text-link" rel="noopener">
+                Herstellerangaben ansehen ↗
+              </a>
+              <small>Quelle geprüft: 09.09.2026 · kein Werbelink</small>
+            </article>
+          ))}
+        </div>
+      </>
     </section>
   )
 }
-
+{
+  has('travel') && (
+    <section class="travel-banner">
+      <>
+        <BrandImage name="travel-human-dog-sunset" sizes="100vw" />
+        <div class="travel-copy">
+          <>
+            <p class="annotation">Neue Orte. Neue Erinnerungen.</p>
+            <h2>
+              Gemeinsam die
+              <br />
+              Welt entdecken.
+            </h2>
+            <p>Was ihr für eure Reise braucht, gehört schon vor der Abfahrt auf die Liste.</p>
+            <a class="action action--orange" href={path('travel')}>
+              Zum Reisecheck <Icon name="arrow" size={18} />
+            </a>
+          </>
+        </div>
+      </>
+    </section>
+  )
+}
+<section class="data-trust section" aria-labelledby="data-title">
+  <div>
+    <p class="eyebrow">Du musst uns nicht blind vertrauen</p><h2 id="data-title">
+      Unsere Quellen sind offen.
+    </h2><p>
+      Unbekanntes bleibt unbekannt. Jede Datenseite zeigt Herkunft und Stand. Kosten- und
+      Reiseregeln tragen ihren Prüfstatus sichtbar.
+    </p><a class="text-link" href={path('dataStatus')}>Datenstand ansehen →</a>
+  </div><div class="data-number">
+    <strong>{places.places.length.toLocaleString('de-DE')}</strong><span
+      >erfasste Orte in Deutschland</span
+    >
+  </div><div class="data-number">
+    <strong>{fees.itemCount.toLocaleString('de-DE')}</strong><span>Positionen im GOT-Katalog</span>
+  </div>
+</section>
 <Search />
-
 <style>
-  .belege {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-  }
-
-  .karten {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  @media (min-width: 560px) {
-    .karten {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  /* Abschnitt 23.2: Desktop 2x2 oder 3+2 — bei fünf Karten also drei Spalten. */
-  @media (min-width: 1024px) {
-    .karten {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  /* Die Karte selbst ist eine eigene Komponente und trägt deshalb den Scope
-     dieser Datei nicht. Angeordnet wird sie hier trotzdem — über den
-     Listencontainer, der den Scope hat. */
-  .karten > :global(.werkzeugkarte) {
-    margin: 0;
-    max-inline-size: none;
-    display: flex;
-    flex-direction: column;
+  .action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     gap: var(--space-2);
-  }
-
-  .karte__titel {
-    margin: 0;
-    font-size: var(--text-h4);
-    font-weight: var(--weight-h4);
-  }
-
-  .karte__titel a {
+    min-height: 48px;
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-size: 0.8125rem;
+    font-weight: 750;
     text-decoration: none;
   }
-
-  .karte__titel a:hover {
-    text-decoration: underline;
+  .action--orange {
+    background: var(--color-orange-500);
+    border-color: var(--color-orange-500);
+    color: var(--color-ink);
   }
-
-  .karte__text {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-    max-inline-size: none;
+  .action--primary {
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    border-color: var(--color-primary);
   }
-
-  .karte__pfeil {
-    margin: auto 0 0;
-    color: var(--color-primary);
-    font-size: var(--text-small);
-    font-weight: var(--weight-label);
+  .action:hover {
+    box-shadow: var(--shadow-sm);
   }
-
-  .schritte {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .tool-dock {
     display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin-block: var(--space-5) var(--space-16);
+  }
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-ink);
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform 180ms,
+      box-shadow 180ms;
+  }
+  .tool-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .tool-card strong {
+    font-size: 0.875rem;
+  }
+  .tool-card > span:last-child {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+  .tool-icon {
+    height: 40px;
+    display: grid;
+    place-items: center;
+  }
+  .tone-map .tool-icon,
+  .tone-map {
+    color: var(--color-blue-600);
+  }
+  .tone-travel .tool-icon {
+    color: var(--color-purple-600);
+  }
+  .tone-food .tool-icon,
+  .tone-food {
+    color: var(--color-orange-600);
+  }
+  .tone-toys .tool-icon,
+  .tone-toys {
+    color: var(--color-coral-600);
+  }
+  .tone-care .tool-icon,
+  .tone-care {
+    color: var(--color-green-600);
+  }
+  .tone-costs .tool-icon {
+    color: var(--color-primary);
+  }
+  .section {
+    margin-block: var(--space-16);
+  }
+  .section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+  .section-heading h2,
+  .data-trust h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+  }
+  .section-heading p {
+    margin-bottom: var(--space-2);
+  }
+  .section-heading > div > p:last-child:not(.eyebrow) {
+    margin-top: var(--space-4);
+    max-width: 64ch;
+    font-size: 0.9375rem;
+  }
+  .small-note {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 5fr 4fr 3fr;
+    gap: var(--space-5);
+  }
+  .feature {
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    overflow: hidden;
+    min-width: 0;
+  }
+  .feature--costs {
+    background: var(--color-brand-100);
+  }
+  .feature--map {
+    background: var(--color-blue-100);
+  }
+  .category {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--color-primary-hover);
+  }
+  .feature h3,
+  .editorial-feature > h3 {
+    font-size: 1.75rem;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    margin: var(--space-4) 0;
+  }
+  .feature p {
+    font-size: 0.875rem;
+    max-width: 34ch;
+  }
+  .cost-photo {
+    margin-top: var(--space-6);
+    aspect-ratio: 2.1;
+    border-radius: var(--radius-lg);
+  }
+  .trust-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    font-size: 0.6875rem;
+    font-weight: 650;
+    color: var(--color-primary-hover);
+  }
+  .trust-facts span::before {
+    content: '✓ ';
+  }
+  .map-illustration {
+    height: 180px;
+    background: var(--color-surface-blue);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    margin: var(--space-4) 0;
+  }
+  .map-line {
+    position: absolute;
+    width: 240px;
+    height: 200px;
+    border: 8px solid var(--color-surface);
+    border-radius: 40%;
+    left: 20%;
+    top: -40%;
+    transform: rotate(25deg);
+  }
+  .map-line.two {
+    transform: rotate(-30deg);
+    top: 20%;
+    left: -15%;
+  }
+  .map-pin {
+    position: absolute;
+    color: var(--color-primary);
+  }
+  .first {
+    left: 60%;
+    top: 20%;
+  }
+  .second {
+    left: 35%;
+    top: 45%;
+    color: var(--color-orange-600);
+  }
+  .third {
+    left: 62%;
+    top: 67%;
+  }
+  .map-label {
+    position: absolute;
+    bottom: 8%;
+    left: 5%;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+  }
+  .quick-search label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+  .quick-search > div {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+  .quick-search input {
+    width: 100%;
+    min-width: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+  }
+  .quick-search button {
+    flex-shrink: 0;
+    width: 48px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+  .editorial-feature {
+    padding-block: var(--space-2);
+  }
+  .editorial-feature .eyebrow {
+    font-size: 0.6875rem;
+  }
+  .editorial-feature > h3 {
+    font-size: 1.5rem;
+  }
+  .editorial-card {
+    display: flex;
+    gap: var(--space-3);
+    text-decoration: none;
+    color: var(--color-ink);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .editorial-card :global(picture) {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+  }
+  .editorial-card span {
+    font-size: 0.625rem;
+    color: var(--color-primary-hover);
+    font-weight: 700;
+  }
+  .editorial-card h4 {
+    font-size: 0.875rem;
+    line-height: 1.35;
+    margin: var(--space-1) 0;
+  }
+  .editorial-card small {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-4);
   }
-
-  @media (min-width: 768px) {
-    .schritte {
+  .editorial-product {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+  .product-category {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+  .product-brand {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin: var(--space-6) 0 var(--space-1);
+  }
+  .editorial-product h3 {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-4);
+  }
+  .editorial-product ul {
+    font-size: 0.8125rem;
+    padding-left: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  .price-status {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: auto;
+  }
+  .text-link {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+  .editorial-product small {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-3);
+  }
+  .travel-banner {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    min-height: 380px;
+    background: var(--color-brand-900);
+  }
+  .travel-banner :global(picture) {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+  .travel-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--color-brand-900), transparent);
+  }
+  .travel-copy {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-12);
+    max-width: 560px;
+    color: var(--color-on-dark);
+  }
+  .travel-copy h2 {
+    color: var(--color-on-dark);
+    font-size: 2.75rem;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin: var(--space-2) 0 var(--space-5);
+  }
+  .travel-copy p {
+    font-size: 0.9375rem;
+    max-width: 34ch;
+  }
+  .travel-copy .annotation {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  .data-trust {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--space-10);
+    align-items: center;
+  }
+  .data-trust p:not(.eyebrow) {
+    font-size: 0.875rem;
+    margin-top: var(--space-4);
+  }
+  .data-number {
+    border-left: 1px solid var(--color-border-strong);
+    padding-left: var(--space-6);
+  }
+  .data-number strong {
+    display: block;
+    font-size: 2.75rem;
+    font-weight: 750;
+    letter-spacing: -0.04em;
+    color: var(--color-primary);
+  }
+  .data-number span {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+  @media (max-width: 1100px) {
+    .feature-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .editorial-feature {
+      grid-column: 1/-1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    .editorial-feature > .eyebrow,
+    .editorial-feature > h3 {
+      grid-column: 1/-1;
+      margin: 0;
+    }
+    .product-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tool-dock {
       grid-template-columns: repeat(3, 1fr);
     }
+    .small-note {
+      display: none;
+    }
   }
-
-  .schritte > :global(.ablaufschritt) {
-    margin: 0;
-    max-inline-size: none;
-  }
-
-  .schritt__nummer {
-    margin: 0 0 var(--space-2);
-    color: var(--color-primary);
-    font-size: var(--text-h3);
-    font-weight: var(--weight-h2);
-    line-height: 1;
-  }
-
-  .schritt__titel {
-    margin: 0 0 var(--space-2);
-    font-size: var(--text-body);
-    font-weight: var(--weight-label);
-  }
-
-  .schritt__text {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-    max-inline-size: none;
+  @media (max-width: 767px) {
+    .tool-dock {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-bottom: var(--space-12);
+    }
+    .tool-card {
+      padding: var(--space-4);
+    }
+    .tool-card > span:last-child {
+      font-size: 0.875rem;
+    }
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+    .editorial-feature {
+      grid-template-columns: 1fr;
+    }
+    .editorial-card :global(picture) {
+      width: 96px;
+      height: 90px;
+    }
+    .editorial-card span,
+    .editorial-card small {
+      font-size: 0.875rem;
+    }
+    .editorial-card h4 {
+      font-size: 1rem;
+    }
+    .section {
+      margin-block: var(--space-12);
+    }
+    .section-heading {
+      display: block;
+    }
+    .section-heading > .text-link {
+      display: inline-block;
+      margin-top: var(--space-4);
+    }
+    .product-grid {
+      grid-template-columns: 1fr;
+    }
+    .editorial-product {
+      padding: var(--space-5);
+    }
+    .editorial-product small,
+    .price-status,
+    .product-brand,
+    .editorial-product ul {
+      font-size: 0.875rem;
+    }
+    .travel-banner {
+      min-height: 460px;
+    }
+    .travel-banner::after {
+      background: linear-gradient(90deg, var(--color-brand-900), transparent 160%);
+    }
+    .travel-copy {
+      padding: var(--space-8) var(--space-5);
+    }
+    .travel-copy h2 {
+      font-size: 2.25rem;
+    }
+    .data-trust {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+    .data-trust > div:first-child {
+      grid-column: 1/-1;
+    }
+    .data-number strong {
+      font-size: 2.25rem;
+    }
+    .trust-facts {
+      font-size: 0.875rem;
+    }
   }
 </style>

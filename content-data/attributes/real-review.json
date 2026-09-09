@@ -1,0 +1,75 @@
+{
+  "reviewId": "manufacturer-attributes-2026-09",
+  "lastEditedAt": "2026-09-09",
+  "dataKind": "real",
+  "products": [
+    {
+      "productId": "kong-classic",
+      "categoryId": "chew-toy",
+      "attributes": [
+        {
+          "attribute": "material",
+          "value": "Naturkautschuk",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.kongcompany.com/kong-classic/",
+          "sourceLabel": "KONG · Hersteller",
+          "checkedAt": "2026-09-09"
+        }
+      ]
+    },
+    {
+      "productId": "west-paw-toppl-large",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "material",
+          "value": "Zogoflex",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/toppl-eggplant",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "attribute": "dishwasherSafe",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/toppl-eggplant",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-09"
+        }
+      ]
+    },
+    {
+      "productId": "trixie-buerste-2315",
+      "categoryId": "grooming-brush",
+      "attributes": [
+        {
+          "attribute": "material",
+          "value": "Holz, Nylon- und Metallborsten",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.trixie.de/en/productworld/dog/care-health-cleaning/brushes-combs/brush-double-sided-1001435651-1001465612",
+          "sourceLabel": "TRIXIE · Hersteller",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "attribute": "lengthCentimeters",
+          "value": 21,
+          "unit": "cm",
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.trixie.de/en/productworld/dog/care-health-cleaning/brushes-combs/brush-double-sided-1001435651-1001465612",
+          "sourceLabel": "TRIXIE · Hersteller",
+          "checkedAt": "2026-09-09"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Manuell erfasste Herstellerfakten mit Fundstelle. Keine unabhängige Produktprüfung und keine Eignungs- oder Gesundheitsfreigabe.",
+    "Keine Annahmen zu Körpergewicht, Sicherheit, Kauintensität oder Fellverträglichkeit.",
+    "Produktbilder und Herstellertexte werden nicht übernommen."
+  ]
+}

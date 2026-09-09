@@ -1,5 +1,5 @@
 // M15-03 — Suche über Name, Marke und die Nummer vom Etikett.
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import {
   alleFutter,
@@ -80,3 +80,8 @@ describe('Varianten', () => {
     expect(gleicheVariante(klein!).map((e) => e.foodId)).toEqual(['synthetisch:trocken-1kg']);
   });
 });
+
+// These algorithm cases deliberately use fixed fixtures; live records have separate coverage.
+vi.mock('../../content-data/food/real-products.json', async () => ({
+  default: (await import('../../content-data/food/synthetic-products.json')).default,
+}));

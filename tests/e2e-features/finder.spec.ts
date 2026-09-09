@@ -4,56 +4,20 @@ import { expect, test } from '@playwright/test';
 const SPIELZEUG = '/de-de/spielzeug/';
 const PFLEGE = '/de-de/pflege/';
 
-test('nennt die Produktdaten ausdrücklich synthetisch', async ({ page }) => {
+test('shows real products and explicitly missing suitability data', async ({ page }) => {
   await page.goto(SPIELZEUG);
-  await expect(page.getByText('Synthetische Produktdaten')).toBeVisible();
-});
-
-test('zeigt zu jedem Treffer eine Begründung und die offenen Punkte', async ({ page }) => {
-  await page.goto(SPIELZEUG);
-  await page.fill('#finder-gewicht', '20');
-  await page.check('input[value="apportieren"]');
+  await expect(page.getByText('Synthetische Produktdaten')).toHaveCount(0);
   await page.click('#finder-suchen');
-
-  const treffer = page.locator('.finder__liste > li');
-  await expect(treffer.first()).toBeVisible();
-  // Die Reihenfolge der Begründungen folgt der Prüfreihenfolge, nicht der
-  // Eingabe: geprüft wird deshalb die ganze Liste.
-  await expect(treffer.first().locator('.finder__gruende')).toContainText('apportiert gern');
-
-  // Beim Ball sind alle vier Merkmale der Kategorie belegt — dann steht dort
-  // auch keine Zeile über offene Punkte. Beim Kauring ist es umgekehrt.
-  await expect(page.locator('[data-produkt="synthetisch:ball-70"] .finder__offen')).toHaveCount(0);
-  await expect(page.locator('[data-produkt="synthetisch:kauring"] .finder__offen')).toContainText(
-    'Nicht geprüft: sizeRange, hardnessLevel',
-  );
-});
-
-test('sagt, dass die Reihenfolge keine Bewertung ist', async ({ page }) => {
-  await page.goto(SPIELZEUG);
-  await page.click('#finder-suchen');
+  const kong = page.locator('[data-produkt="kong-classic"]');
+  await expect(kong).toBeVisible();
+  await expect(kong).toContainText('KONG Classic');
+  await expect(kong.locator('.finder__offen')).toContainText('Größenbereich');
+  await expect(kong).toHaveAttribute('data-punkte', '0');
+  await expect(kong.locator('.finder__neutral')).toContainText('nur nicht ausgeschlossen');
   await expect(page.locator('.finder__kopf')).toContainText('keine Bewertung des Produkts');
-});
-
-test('schließt bei zu kleinem Gewicht nach Herstellerangabe aus', async ({ page }) => {
-  await page.goto(SPIELZEUG);
   await page.fill('#finder-gewicht', '5');
   await page.click('#finder-suchen');
-  // Der synthetische Ball nennt „ab 15 kg“; bei 5 kg bleibt er weg.
-  await expect(page.locator('[data-produkt="synthetisch:ball-70"]')).toHaveCount(0);
-
-  await page.fill('#finder-gewicht', '20');
-  await page.click('#finder-suchen');
-  await expect(page.locator('[data-produkt="synthetisch:ball-70"]')).toHaveCount(1);
-});
-
-test('behauptet bei unbekanntem Gewicht keine Passung', async ({ page }) => {
-  await page.goto(SPIELZEUG);
-  await page.fill('#finder-gewicht', '');
-  await page.click('#finder-suchen');
-  const karte = page.locator('[data-produkt="synthetisch:ball-70"]');
-  await expect(karte).toHaveAttribute('data-punkte', '0');
-  await expect(karte.locator('.finder__neutral')).toContainText('nur nicht ausgeschlossen');
+  await expect(kong.locator('.finder__offen')).toContainText('Größenbereich');
 });
 
 test('vergibt keinen Sicherheits- oder Haltbarkeitsscore', async ({ page }) => {

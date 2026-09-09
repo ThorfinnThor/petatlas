@@ -73,7 +73,11 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
   erfasst — es ist deshalb nicht unbedingt nicht vorhanden.
 </p>
 
-<DataStatus stand={null} quelle={`${quelle.name} · ${quelle.licenseId}`} locale={market.locale} />
+<DataStatus
+  stand={snapshot.source.retrievalDate}
+  quelle={`${quelle.name} · ${quelle.licenseId}`}
+  locale={market.locale}
+/>
 
 <Notice variante="warnung" titel="Kein Notdienstverzeichnis">
   <p>
@@ -83,129 +87,139 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
   </p>
 </Notice>
 
-<form id="ortsfilter" aria-labelledby="filter-titel">
-  <h2 id="filter-titel">Suchen</h2>
+<div class="map-workspace">
+  <form id="ortsfilter" aria-labelledby="filter-titel">
+    <h2 id="filter-titel">Suchen</h2>
 
-  <div class="feld">
-    <label for="ort">Ort</label>
-    <input
-      id="ort"
-      type="search"
-      autocomplete="off"
-      placeholder="z. B. Bremen"
-      aria-describedby="ort-hinweis"
-    />
-    <p id="ort-hinweis" class="hilfe" role="status" aria-live="polite">
-      Ohne Auswahl zeigt die Liste den Ausschnitt um {STANDARD.name}.
-    </p>
-    <ul id="ort-treffer" class="ortstreffer"></ul>
-    <p>
-      <button type="button" id="standort">Meinen Standort verwenden</button>
-    </p>
-    <p class="hilfe">{STANDORT_TEXTE.hinweisVorher}</p>
-    <p id="standort-status" role="status" aria-live="polite"></p>
-  </div>
+    <div class="feld">
+      <label for="ort">Ort</label>
+      <input
+        id="ort"
+        type="search"
+        autocomplete="off"
+        placeholder="z. B. Bremen"
+        aria-describedby="ort-hinweis"
+      />
+      <p id="ort-hinweis" class="hilfe" role="status" aria-live="polite">
+        Ohne Auswahl zeigt die Liste den Ausschnitt um {STANDARD.name}.
+      </p>
+      <ul id="ort-treffer" class="ortstreffer"></ul>
+      <p>
+        <button type="button" id="standort">Meinen Standort verwenden</button>
+      </p>
+      <p class="hilfe">{STANDORT_TEXTE.hinweisVorher}</p>
+      <p id="standort-status" role="status" aria-live="polite"></p>
+    </div>
 
-  <fieldset>
-    <legend>Kategorie</legend>
-    {
-      Object.entries(KATEGORIE_LABEL).map(([schluessel, label]) => (
-        <label class="wahl">
-          <input type="checkbox" name="kategorie" value={schluessel} />
-          {label} ({(abdeckung.byCategory[schluessel] ?? 0).toLocaleString('de-DE')})
-        </label>
-      ))
-    }
-    <p class="hilfe">Keine Auswahl bedeutet alle Kategorien.</p>
-  </fieldset>
-
-  <div class="feld">
-    <label for="radius">Umkreis</label>
-    <select id="radius">
+    <fieldset>
+      <legend>Kategorie</legend>
       {
-        RADIEN_METER.map((meter) => (
-          <option value={meter} selected={meter === STANDARD.radius}>
-            {formatiereEntfernung(meter)}
-          </option>
+        Object.entries(KATEGORIE_LABEL).map(([schluessel, label]) => (
+          <label class="wahl">
+            <input type="checkbox" name="kategorie" value={schluessel} />
+            {label} ({(abdeckung.byCategory[schluessel] ?? 0).toLocaleString('de-DE')})
+          </label>
         ))
       }
-    </select>
-  </div>
-</form>
+      <p class="hilfe">Keine Auswahl bedeutet alle Kategorien.</p>
+    </fieldset>
 
-<section aria-labelledby="karte-titel">
-  <h2 id="karte-titel">Karte</h2>
-  <p>
-    Die Karte lädt erst, wenn Sie sie anfordern. Vorher wird keine einzige Kachel geladen und Ihre
-    IP-Adresse geht an keinen Kartendienst.
-  </p>
-  <p class="kartenhinweis">{TILES.noticeText}</p>
-  <p>
-    <button type="button" id="karte-anzeigen">Karte anzeigen</button>
-  </p>
-  <div id="karte" class="karte" hidden></div>
-  <p id="karte-status" role="status" aria-live="polite"></p>
-  <p class="hilfe">
-    Die Karte ist eine Ergänzung. Alles, was sie zeigt, steht auch in der Liste darunter.
-  </p>
-</section>
+    <div class="feld">
+      <label for="radius">Umkreis</label>
+      <select id="radius">
+        {
+          RADIEN_METER.map((meter) => (
+            <option value={meter} selected={meter === STANDARD.radius}>
+              {formatiereEntfernung(meter)}
+            </option>
+          ))
+        }
+      </select>
+    </div>
+  </form>
 
-<section aria-labelledby="treffer-titel">
-  <h2 id="treffer-titel">Treffer</h2>
-  <p id="treffer-status" role="status" aria-live="polite">
-    {standardTreffer.length} erfasste Orte im Umkreis von {formatiereEntfernung(STANDARD.radius)} um
-    {' '}{STANDARD.name}.
-  </p>
+  <div class="map-output">
+    <nav class="map-view" aria-label="Ansicht wählen">
+      <a href="#treffer-titel">Trefferliste</a><a href="#karte-titel">Karte</a>
+    </nav>
+    <section aria-labelledby="karte-titel">
+      <h2 id="karte-titel">Karte</h2>
+      <p>
+        Die Karte lädt erst, wenn Sie sie anfordern. Vorher wird keine einzige Kachel geladen und
+        Ihre IP-Adresse geht an keinen Kartendienst.
+      </p>
+      <p class="kartenhinweis">{TILES.noticeText}</p>
+      <p>
+        <button type="button" id="karte-anzeigen">Karte anzeigen</button>
+      </p>
+      <div id="karte" class="karte" hidden></div>
+      <p id="karte-status" role="status" aria-live="polite"></p>
+      <p class="hilfe">
+        Die Karte ist eine Ergänzung. Alles, was sie zeigt, steht auch in der Liste darunter.
+      </p>
+    </section>
 
-  <ul id="trefferliste" class="treffer">
-    {
-      standardTreffer.map((treffer) => (
-        <li>
-          <h3>{treffer.ort.name}</h3>
-          <p class="meta">
-            {KATEGORIE_LABEL[treffer.ort.category] ?? treffer.ort.category} ·{' '}
-            {formatiereEntfernung(treffer.entfernungMeter)} · {treffer.ortsLabel}
-            {treffer.punktBerechnet && ' · Position berechnet'}
-          </p>
-          {treffer.ort.openingHours !== null && <p>Öffnungszeiten: {treffer.ort.openingHours}</p>}
-          {treffer.ort.openingHours === null && (
-            <p class="unbekannt">Öffnungszeiten nicht erfasst</p>
-          )}
-          {treffer.ort.phone !== null && (
-            <p>
-              Telefon:{' '}
-              <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
-            </p>
-          )}
-          {(() => {
-            const web = darstellung(treffer.ort.website);
-            if (web.art === 'link') {
-              return (
+    <section aria-labelledby="treffer-titel">
+      <h2 id="treffer-titel">Treffer</h2>
+      <p id="treffer-status" role="status" aria-live="polite">
+        {standardTreffer.length} erfasste Orte im Umkreis von {
+          formatiereEntfernung(STANDARD.radius)
+        } um
+        {' '}{STANDARD.name}.
+      </p>
+
+      <ul id="trefferliste" class="treffer">
+        {
+          standardTreffer.map((treffer) => (
+            <li>
+              <h3>{treffer.ort.name}</h3>
+              <p class="meta">
+                {KATEGORIE_LABEL[treffer.ort.category] ?? treffer.ort.category} ·{' '}
+                {formatiereEntfernung(treffer.entfernungMeter)} · {treffer.ortsLabel}
+                {treffer.punktBerechnet && ' · Position berechnet'}
+              </p>
+              {treffer.ort.openingHours !== null && (
+                <p>Öffnungszeiten: {treffer.ort.openingHours}</p>
+              )}
+              {treffer.ort.openingHours === null && (
+                <p class="unbekannt">Öffnungszeiten nicht erfasst</p>
+              )}
+              {treffer.ort.phone !== null && (
                 <p>
-                  <a href={web.url} rel="nofollow noopener">
-                    Website
-                  </a>
+                  Telefon:{' '}
+                  <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
                 </p>
-              );
-            }
-            if (web.art === 'text') {
-              return (
-                <p class="unbekannt">
-                  Website: {web.adresse} ({web.hinweis})
-                </p>
-              );
-            }
-            return null;
-          })()}
-          {notdienstHinweis(treffer.ort.emergency) !== null && (
-            <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
-          )}
-        </li>
-      ))
-    }
-  </ul>
-</section>
-
+              )}
+              {(() => {
+                const web = darstellung(treffer.ort.website);
+                if (web.art === 'link') {
+                  return (
+                    <p>
+                      <a href={web.url} rel="nofollow noopener">
+                        Website
+                      </a>
+                    </p>
+                  );
+                }
+                if (web.art === 'text') {
+                  return (
+                    <p class="unbekannt">
+                      Website: {web.adresse} ({web.hinweis})
+                    </p>
+                  );
+                }
+                return null;
+              })()}
+              {notdienstHinweis(treffer.ort.emergency) !== null && (
+                <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</div>
 <section aria-labelledby="staedte-titel">
   <h2 id="staedte-titel">Städte mit eigener Seite</h2>
   <p>
@@ -360,3 +374,50 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
 
   listeStarten();
 </script>
+
+<style>
+  .map-workspace {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+    margin-block: var(--space-8);
+  }
+  #ortsfilter {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    position: sticky;
+    top: 6rem;
+  }
+  #filter-titel {
+    margin-top: 0;
+  }
+  .map-output {
+    min-width: 0;
+  }
+  .map-view {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .map-view a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    text-decoration: none;
+  }
+  @media (max-width: 900px) {
+    .map-workspace {
+      grid-template-columns: 1fr;
+    }
+    #ortsfilter {
+      position: static;
+    }
+  }
+</style>

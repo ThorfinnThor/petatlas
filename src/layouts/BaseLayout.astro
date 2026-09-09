@@ -66,7 +66,7 @@ const canonical = canonicalPfad
     <meta name="robots" content={robots} />
     {canonical && <link rel="canonical" href={canonical} />}
   </head>
-  <body data-pagefind-ignore={neverIndex ? 'all' : undefined}>
+  <body data-route={route} data-pagefind-ignore={neverIndex ? 'all' : undefined}>
     {
       /*
       M18-04 — Sprungmarke. Ohne sie muss jemand, der mit der Tastatur
@@ -76,6 +76,13 @@ const canonical = canonicalPfad
     }
     <a class="sprungmarke" href="#inhalt">Zum Hauptinhalt springen</a>
     <SiteHeader market={market} brandName={site.brandName} aktuellerPfad={Astro.url.pathname} />
+    {
+      build.mode === 'preview' && (
+        <div class="preview-bar">
+          Vorschau · Echte Daten, ohne Werbung. Kosten- und Reiseregeln noch ohne Fachfreigabe.
+        </div>
+      )
+    }
     {
       build.showTestDataBanner && (
         <div class:list={['randbreite', weit ? 'page-container' : 'reading-container']}>
@@ -123,7 +130,7 @@ const canonical = canonicalPfad
     position: absolute;
     inset-inline-start: var(--space-3);
     inset-block-start: var(--space-3);
-    z-index: 20;
+    z-index: 200;
     padding: var(--space-3) var(--space-4);
     background: var(--color-surface);
     border: 2px solid var(--color-primary);
@@ -145,5 +152,13 @@ const canonical = canonicalPfad
 
   .randbreite {
     padding-block-start: var(--space-6);
+  }
+  .preview-bar {
+    background: var(--color-brand-050);
+    color: var(--color-primary-hover);
+    padding: var(--space-2) var(--space-4);
+    text-align: center;
+    font-size: 0.875rem;
+    border-bottom: 1px solid var(--color-border);
   }
 </style>

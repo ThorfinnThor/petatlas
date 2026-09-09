@@ -263,3 +263,42 @@ td.zahl {
   text-align: end;
   font-variant-numeric: tabular-nums;
 }
+
+/* V2: consistent targets, clear focus and comfortable utility surfaces. */
+input:not([type='checkbox']):not([type='radio']),
+select {
+  min-block-size: 3rem;
+}
+button:not(.leaflet-control-zoom-in):not(.leaflet-control-zoom-out) {
+  min-block-size: 2.75rem;
+}
+button,
+.knopf {
+  border-radius: var(--radius-pill);
+}
+html {
+  scroll-padding-top: 6rem;
+}
+section[id] {
+  scroll-margin-top: 6rem;
+}
+.annotation {
+  font-family: var(--font-hand);
+  font-size: 1.75rem;
+}
+.eyebrow {
+  font-size: var(--text-small);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary-hover);
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

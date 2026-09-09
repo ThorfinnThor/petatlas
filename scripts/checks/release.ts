@@ -21,6 +21,14 @@
 import { existsSync } from 'node:fs';
 
 import launch from '../../config/launch.json' with { type: 'json' };
+import experience from '../../config/experience.json' with { type: 'json' };
+import legalReviews from '../../config/legal-review.json' with { type: 'json' };
+import {
+  requiredGates,
+  releaseProblems,
+  validReviewDate,
+  type LegalReview,
+} from '../../config/release-policy.ts';
 import { PFLICHTANGABEN, werbeStand } from '../../config/legal.ts';
 
 export interface Gate {
@@ -83,6 +91,12 @@ export function pruefeGates(
       beanstandungen.push({ gate: name, problem: 'Freigegeben, aber ohne Datum.' });
     }
   }
+  for (const [name, gate] of Object.entries(gates)) {
+    if (gate.approved && gate.approvedAt && !validReviewDate(gate.approvedAt))
+      beanstandungen.push({ gate: name, problem: 'Ungültiges oder zukünftiges Freigabedatum.' });
+    if (gate.approved && gate.evidence && !vorhanden(gate.evidence))
+      beanstandungen.push({ gate: name, problem: 'Genannter Nachweis fehlt.' });
+  }
   return beanstandungen;
 }
 
@@ -99,7 +113,7 @@ export function freigabestand(
   vorhanden: (pfad: string) => boolean = existsSync,
 ): Freigabestand {
   const offeneGates = Object.entries(gates)
-    .filter(([, gate]) => !gate.approved)
+    .filter(([name, gate]) => requiredGates(experience.features).includes(name) && !gate.approved)
     .map(([name]) => name);
   const offenePflichten = PFLICHTANGABEN.filter((pflicht) => pflicht.status === 'offen').map(
     (pflicht) => pflicht.id,
@@ -127,6 +141,17 @@ export function freigabestand(
 function main(): number {
   const stand = freigabestand();
   const werbung = werbeStand();
+  if (launch.publicRelease.approved) {
+    const problems = releaseProblems(launch, experience.features);
+    for (const review of Object.values(legalReviews) as LegalReview[]) {
+      if (review.evidence && !existsSync(review.evidence))
+        problems.push('Rechtlicher Nachweis fehlt: ' + review.evidence);
+    }
+    if (problems.length) {
+      problems.forEach((p) => console.error(p));
+      return 1;
+    }
+  }
 
   console.log(`Öffentliche Freigabe: ${stand.oeffentlichFreigegeben ? 'ja' : 'nein'}.`);
   console.log(stand.begruendung);

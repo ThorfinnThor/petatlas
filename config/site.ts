@@ -59,10 +59,24 @@ export function readBuildMode(env: Record<string, string | undefined>): BuildMod
 export function createSiteConfig(
   mode: BuildMode,
   env: Record<string, string | undefined>,
-  operator: OperatorInfo = OPERATOR_UNKNOWN,
+  operator: OperatorInfo = readOperator(env),
 ): SiteConfig {
   const configuredUrl = env.PUBLIC_SITE_URL?.trim();
-  const isPlaceholder = !configuredUrl || configuredUrl === DEVELOPMENT_BASE_URL;
+  let parsed: URL | null = null;
+  try {
+    parsed = configuredUrl ? new URL(configuredUrl) : null;
+  } catch {
+    /* validated below */
+  }
+  const isPlaceholder =
+    !parsed ||
+    parsed.protocol !== 'https:' ||
+    parsed.hostname.endsWith('.invalid') ||
+    parsed.username !== '' ||
+    parsed.password !== '' ||
+    parsed.search !== '' ||
+    parsed.hash !== '' ||
+    parsed.pathname !== '/';
 
   if (mode === 'production') {
     if (isPlaceholder) {
@@ -71,8 +85,11 @@ export function createSiteConfig(
       );
     }
     const missing = (Object.keys(operator) as (keyof OperatorInfo)[]).filter(
-      (key) => operator[key] === null && key !== 'registerEntry' && key !== 'vatId',
+      (key) => !operator[key]?.trim() && key !== 'registerEntry' && key !== 'vatId',
     );
+    if (operator.contactEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(operator.contactEmail)) {
+      throw new Error('Betreiberangaben: contactEmail ist ungültig.');
+    }
     if (missing.length > 0) {
       throw new Error(
         `production benötigt echte Betreiberangaben. Fehlend: ${missing.join(', ')}. Keine erfundenen Rechtsangaben (ADR-015).`,
@@ -81,10 +98,28 @@ export function createSiteConfig(
   }
 
   return {
-    brandName: 'PetAtlas',
+    brandName: env.PUBLIC_BRAND_NAME?.trim() || 'PetAtlas',
     brandNameIsWorkingTitle: true,
     defaultMarketId: 'DE',
-    baseUrl: isPlaceholder ? DEVELOPMENT_BASE_URL : configuredUrl,
+    baseUrl: isPlaceholder ? DEVELOPMENT_BASE_URL : (configuredUrl ?? DEVELOPMENT_BASE_URL),
     operator,
   };
+}
+
+/** Public business information only; never credentials. */
+export function readOperator(env: Record<string, string | undefined>): OperatorInfo {
+  const keys: Record<keyof OperatorInfo, string> = {
+    legalName: 'OPERATOR_LEGAL_NAME',
+    address: 'OPERATOR_ADDRESS',
+    contactEmail: 'OPERATOR_CONTACT_EMAIL',
+    responsibleForContent: 'OPERATOR_RESPONSIBLE',
+    registerEntry: 'OPERATOR_REGISTER_ENTRY',
+    vatId: 'OPERATOR_VAT_ID',
+  };
+  return Object.fromEntries(
+    Object.entries(keys).map(([key, name]) => [
+      key,
+      env[name]?.trim() || OPERATOR_UNKNOWN[key as keyof OperatorInfo],
+    ]),
+  ) as unknown as OperatorInfo;
 }

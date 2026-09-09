@@ -26,8 +26,9 @@ const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
 <h1>Futter</h1>
 
 <p>
-  Suchen Sie nach Marke, Produktname oder der Nummer vom Etikett. Verglichen werden Menge und Preis
-  — nicht die Qualität einer Zusammensetzung.
+  Vergleiche deklarierte Inhaltswerte und Packungsgrößen einer kleinen Auswahl echter Hundefutter.
+  Die Werte stammen von den verlinkten Herstellerseiten; aktuelle Händlerpreise sind noch nicht
+  erfasst.
 </p>
 
 {
@@ -49,11 +50,11 @@ const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
       type="search"
       autocomplete="off"
       inputmode="text"
-      placeholder="z. B. Nassfutter oder 4006381333931"
+      placeholder="z. B. Royal Canin oder Mini Adult"
     />
     <p class="hilfe">
-      Die Nummer können Sie abtippen; eine Kamera ist nicht nötig. Bindestriche und Leerzeichen
-      stören nicht.
+      Suche nach Marke oder Name. Für die aktuelle Auswahl sind noch keine verifizierten Barcodes
+      hinterlegt.
     </p>
   </div>
   <p id="futter-ohne-js" class="hilfe">

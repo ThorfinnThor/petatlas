@@ -1,7 +1,7 @@
 // M14-02 — Jedes Attribut, das zählt, hat Quelle und Verifikationsstatus.
 import { readFileSync } from 'node:fs';
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import {
   AttributeReviewSchema,
@@ -141,3 +141,8 @@ describe('Geprüfte Daten', () => {
     expect(herkunftsText(offen)).toContain('keine belastbare Angabe');
   });
 });
+
+// These algorithm cases deliberately use fixed fixtures; live records have separate coverage.
+vi.mock('../../content-data/attributes/real-review.json', async () => ({
+  default: (await import('../../content-data/attributes/synthetic-review.json')).default,
+}));

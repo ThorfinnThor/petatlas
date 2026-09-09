@@ -64,7 +64,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   locale={market.locale}
 />
 
-<ToolShell eingabeTitel="Eingaben" ergebnisTitel="Rechnung" ergebnisId="ergebnis-titel">
+<ToolShell eingabeTitel="Eingaben" ergebnisTitel="Rechnung" ergebnisId="ergebnis-titel" sticky>
   <Fragment slot="eingabe">
     <ErrorSummary id="rechner-fehler" />
 
@@ -106,18 +106,19 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
             name="tierart"
             value="dog"
             label="Hund"
-            erlaeuterung="Blendet Positionen aus, die ausdrücklich eine andere Tierart nennen."
+            erlaeuterung="Filtert eindeutig als Hund oder Katze zugeordnete Positionen."
           />
           <RadioCard
             name="tierart"
             value="cat"
             label="Katze"
-            erlaeuterung="Blendet Positionen aus, die ausdrücklich eine andere Tierart nennen."
+            erlaeuterung="Filtert eindeutig als Hund oder Katze zugeordnete Positionen."
           />
         </div>
         <p class="hilfe">
-          Die Verordnung ordnet die meisten Positionen keiner Tierart zu. Eine Angabe schließt hier
-          nur Positionen aus, die im Originaltext ausdrücklich eine andere Tierart nennen.
+          Der Filter erkennt nur eindeutig zugeordnete Hund- und Katzenpositionen. Gemischte und
+          nicht zugeordnete Positionen bleiben sichtbar, auch für andere Tierarten. Prüfe deshalb
+          immer den vollständigen Leistungstext.
         </p>
       </fieldset>
 
@@ -161,7 +162,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     <p id="rechner-status" role="status" aria-live="polite">Noch keine Position ausgewählt.</p>
     <div id="ergebnis" data-testid="rechner-ergebnis"></div>
     <div class="drucken">
-      <button type="button" id="drucken">Rechnung drucken</button>
+      <button type="button" id="drucken" disabled>Rechnung drucken</button>
       <p class="hilfe">
         Auf dem Ausdruck stehen Quelle, Fassung und die Fundstelle jeder Position.
       </p>

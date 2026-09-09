@@ -1,0 +1,43 @@
+{
+  "dataKind": "real",
+  "checkedAt": "2026-09-09",
+  "products": [
+    {
+      "id": "kong-classic",
+      "name": "KONG Classic",
+      "brand": "KONG",
+      "category": "Spielzeug",
+      "categoryId": "chew-toy",
+      "sourceUrl": "https://www.kongcompany.com/kong-classic/",
+      "sourceLabel": "KONG · Hersteller",
+      "checkedAt": "2026-09-09",
+      "facts": ["Naturkautschuk", "Befüllbares Spielzeug"],
+      "image": null
+    },
+    {
+      "id": "west-paw-toppl-large",
+      "name": "Toppl Large · Eggplant",
+      "brand": "West Paw",
+      "category": "Spielzeug",
+      "categoryId": "puzzle-toy",
+      "sourceUrl": "https://www.westpaw.com/products/toppl-eggplant",
+      "sourceLabel": "West Paw · Hersteller",
+      "checkedAt": "2026-09-09",
+      "facts": ["Zogoflex-Material", "Spülmaschinengeeignet, oberes Fach"],
+      "image": null
+    },
+    {
+      "id": "trixie-buerste-2315",
+      "name": "Doppelseitige Bürste · 2315",
+      "brand": "TRIXIE",
+      "category": "Pflege",
+      "categoryId": "grooming-brush",
+      "sourceUrl": "https://www.trixie.de/en/productworld/dog/care-health-cleaning/brushes-combs/brush-double-sided-1001435651-1001465612",
+      "sourceLabel": "TRIXIE · Hersteller",
+      "checkedAt": "2026-09-09",
+      "facts": ["Holzgriff", "Nylon- und Metallborsten"],
+      "image": null
+    }
+  ],
+  "note": "Redaktionelle Faktenauswahl. Keine Vergütung, Affiliate-Links, Testurteile, Preisangebote oder übernommenen Produktbilder."
+}

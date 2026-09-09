@@ -60,7 +60,10 @@
     "schema:sources": "node scripts/generate-source-schema.ts",
     "status": "python3 scripts/project_status.py",
     "status:json": "python3 scripts/project_status.py --json",
-    "status:validate": "python3 scripts/project_status.py --validate"
+    "status:validate": "python3 scripts/project_status.py --validate",
+    "design:images": "node scripts/design/images.ts",
+    "build:app": "APP_PROFILE=real BUILD_MODE=preview npm run build:cloudflare",
+    "dev:app": "APP_PROFILE=real BUILD_MODE=preview astro dev"
   },
   "dependencies": {
     "astro": "7.3.1",

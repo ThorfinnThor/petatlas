@@ -1,0 +1,45 @@
+---
+interface Props {
+  name: string;
+  alt?: string;
+  priority?: boolean;
+  sizes?: string;
+  class?: string;
+}
+const {
+  name,
+  alt = '',
+  priority = false,
+  sizes = '(max-width: 768px) 100vw, 50vw',
+  class: className,
+} = Astro.props;
+const srcset = (format: string) =>
+  [480, 800, 1200, 1536].map((w) => `/images/brand/${name}-${w}.${format} ${w}w`).join(', ');
+---
+
+<picture class={className}>
+  <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+  <img
+    src={`/images/brand/${name}-800.webp`}
+    srcset={srcset('webp')}
+    sizes={sizes}
+    width="1536"
+    height="1024"
+    alt={alt}
+    loading={priority ? 'eager' : 'lazy'}
+    decoding="async"
+    fetchpriority={priority ? 'high' : 'auto'}
+  />
+</picture>
+<style>
+  picture {
+    display: block;
+    overflow: hidden;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

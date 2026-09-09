@@ -24,6 +24,8 @@
  */
 import { execFileSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
+import { prepareCommerce, publishCommerce } from './build/commerce.ts';
+import { productionFeatures } from '../config/build.ts';
 import { join } from 'node:path';
 
 import { resolveBuildConfig } from '../config/build.ts';
@@ -96,7 +98,7 @@ export function erstelleBuildInfo(options: {
   };
 }
 
-function main(): number {
+async function main(): Promise<number> {
   console.log('Cloudflare-Build\n════════════════');
 
   // Schritt 1 — Konfiguration und Freigabestatus.
@@ -114,7 +116,11 @@ function main(): number {
   }
 
   // Zulässige Quellen: eine ungeprüfte Quelle darf nichts beitragen.
-  const offen = pendingSources();
+  const offen = pendingSources().filter(
+    (source) =>
+      source.sourceId !== 'opff-products-csv-export' ||
+      productionFeatures().includes('foodEnrichment'),
+  );
   if (offen.length > 0 && build.mode === 'production') {
     throw new Error(
       `Ungeprüfte Quellen im Produktionsbuild: ${offen.map((q) => q.sourceId).join(', ')}.`,
@@ -124,21 +130,22 @@ function main(): number {
 
   // Schritt 2 — Daten-Commit einmal auflösen.
   const gitCommit = aufloesenGitCommit();
-  const openDataRef = process.env.OPEN_DATA_REF?.trim() || null;
+  const requestedDataRef = process.env.OPEN_DATA_REF?.trim();
+  if (requestedDataRef && requestedDataRef !== gitCommit)
+    throw new Error(
+      'OPEN_DATA_REF muss dem ausgecheckten Code-/Snapshot-Commit entsprechen. Datenupdates werden als validierter Snapshot-PR übernommen (ADR-019).',
+    );
+  const openDataRef = gitCommit;
   console.log(`Commit: ${gitCommit ?? 'unbekannt'} · Datenstand: ${openDataRef ?? 'noch keiner'}`);
 
   // Schritt 3 — Rechte je Ausgabeform.
+  fuehreAus('Release-Konfiguration', 'npm', ['run', 'check:release']);
+  fuehreAus('Inhaltsdaten', 'npm', ['run', 'check:content']);
   fuehreAus('Rechteprüfung der Quellen', 'npm', ['run', 'check:licenses']);
 
-  // Schritt 4 — Vertrauliche Feeds.
-  // Es gibt noch keinen Partnervertrag. Ein gesetztes Feed-Secret wäre
-  // deshalb ein Konfigurationsfehler und kein Grund, etwas abzurufen.
-  if (process.env.AWIN_FEED_URL) {
-    throw new Error(
-      'AWIN_FEED_URL ist gesetzt, aber es ist kein Partnervertrag freigegeben. Build abgebrochen.',
-    );
-  }
-  console.log('\n▸ Vertragliche Feeds: keiner freigegeben, kein Abruf.');
+  // Contract-specific ingestion completes before Astro renders the catalog.
+  // Preview never fetches feeds; missing contracts never enable offers.
+  await prepareCommerce(process.env);
 
   // Schritt 5 und 6 — bauen, Daten, Suchindex, Sitemap, Header.
   //
@@ -148,6 +155,7 @@ function main(): number {
   // Datenstandseite hätte nichts zu prüfen gehabt. Aufgefallen ist es an der
   // Rauchprobe über das gebaute Verzeichnis — genau dafür gibt es sie.
   fuehreAus('Statischer Build', 'npm', ['run', 'build']);
+  publishCommerce();
   fuehreAus('Gebührendaten', 'npm', ['run', 'build:fees']);
   fuehreAus('Ortsdaten', 'npm', ['run', 'build:places']);
   fuehreAus('Datenstand', 'npm', ['run', 'build:health']);
@@ -157,6 +165,11 @@ function main(): number {
 
   // Schritt 7 — fertiges dist auditieren.
   fuehreAus('Secret- und Fixture-Audit über dist', 'npm', ['run', 'check:security']);
+
+  fuehreAus('Output-Audit', 'npm', ['run', 'check:dist']);
+  fuehreAus('Interne Verweise', 'npm', ['run', 'check:links']);
+  fuehreAus('SEO', 'npm', ['run', 'check:seo']);
+  fuehreAus('Budgets', 'npm', ['run', 'check:budgets']);
 
   // Schritt 8 — Build-Metadaten mit den exakten Eingaben.
   const info = erstelleBuildInfo({
@@ -174,10 +187,17 @@ function main(): number {
 }
 
 if (import.meta.filename === process.argv[1]) {
-  try {
-    process.exit(main());
-  } catch (fehler) {
-    console.error(`\n✗ ${(fehler as Error).message}`);
-    process.exit(1);
-  }
+  main()
+    .then((code) => {
+      process.exitCode = code;
+    })
+    .catch((error: unknown) => {
+      // The individual steps print safe diagnostics. Never log fetch errors containing credentials.
+      console.error(
+        error instanceof Error
+          ? error.message
+          : 'Build abgebrochen; es wird nichts veröffentlicht.',
+      );
+      process.exitCode = 1;
+    });
 }

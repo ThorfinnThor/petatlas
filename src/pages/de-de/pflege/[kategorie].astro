@@ -10,6 +10,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import ProductCard from '../../../components/commerce/ProductCard.astro';
+import { productIdentity } from '../../../features/care/attributes.ts';
 import Notice from '../../../components/Notice.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
@@ -91,8 +92,8 @@ const synthetisch = attributPruefung().dataKind === 'synthetic';
         {produkte.map((produkt) => (
           <li>
             <ProductCard
-              name={produkt.productId}
-              marke={null}
+              name={productIdentity(produkt.productId)?.name ?? produkt.productId}
+              marke={productIdentity(produkt.productId)?.brand ?? null}
               merkmale={kartenMerkmale(produkt)}
               nichtGeprueft={ungepruefteAttribute(produkt)}
               testId={`produkt-${produkt.productId}`}

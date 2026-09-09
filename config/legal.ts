@@ -11,6 +11,7 @@
  * Platzhalter wäre eine erfundene Rechtsangabe.
  */
 import launch from './launch.json' with { type: 'json' };
+import legalReviews from './legal-review.json' with { type: 'json' };
 
 export type PflichtStatus = 'erfuellt' | 'offen' | 'entfaellt';
 
@@ -62,7 +63,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     id: 'impressum',
     titel: 'Anbieterkennzeichnung',
     grundlage: '§ 5 DDG, § 18 Abs. 2 MStV',
-    status: 'offen',
+    status: legalReviews.impressum.status as PflichtStatus,
     ort: '/de-de/impressum/',
     zustaendig: 'Betreiber',
     bemerkung:
@@ -72,7 +73,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     id: 'datenschutzerklaerung',
     titel: 'Datenschutzerklärung',
     grundlage: 'Art. 13 DSGVO',
-    status: 'offen',
+    status: legalReviews.datenschutzerklaerung.status as PflichtStatus,
     ort: '/de-de/datenschutz/',
     zustaendig: 'Betreiber mit Rechtsprüfung',
     bemerkung:
@@ -102,7 +103,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     id: 'barrierefreiheitserklaerung',
     titel: 'Erklärung zur Barrierefreiheit',
     grundlage: 'BFSG i. V. m. BFSGV; Geltung ab 28.06.2025',
-    status: 'offen',
+    status: legalReviews.barrierefreiheitserklaerung.status as PflichtStatus,
     ort: '/de-de/barrierefreiheit/',
     zustaendig: 'Betreiber mit fachlicher Bewertung',
     bemerkung:
@@ -122,7 +123,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     id: 'streitbeilegung',
     titel: 'Hinweis zur Verbraucherstreitbeilegung',
     grundlage: '§ 36 VSBG',
-    status: 'offen',
+    status: legalReviews.streitbeilegung.status as PflichtStatus,
     ort: '/de-de/impressum/',
     zustaendig: 'Betreiber',
     bemerkung:

@@ -68,12 +68,12 @@ export const PRUEFSTUECKE: readonly Pruefstueck[] = [
     zweck: 'Futterkategorien',
   },
   {
-    datei: 'content-data/attributes/synthetic-review.json',
+    datei: 'content-data/attributes/real-review.json',
     schema: AttributeReviewSchema,
     zweck: 'Produkteigenschaften mit Herkunft',
   },
   {
-    datei: 'content-data/food/synthetic-products.json',
+    datei: 'content-data/food/real-products.json',
     schema: FUTTER_DATENSATZ_SCHEMA,
     zweck: 'Futterprodukte',
   },
@@ -250,7 +250,7 @@ export function pruefeQuerbezuege(): Befund[] {
   for (const produkt of attributPruefung().products) {
     if (!bekannteKategorien.has(produkt.categoryId)) {
       befunde.push({
-        datei: 'content-data/attributes/synthetic-review.json',
+        datei: 'content-data/attributes/real-review.json',
         problem:
           `Produkt ${produkt.productId} nennt die unbekannte Kategorie ` +
           `"${produkt.categoryId}".`,

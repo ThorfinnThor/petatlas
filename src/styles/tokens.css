@@ -1,5 +1,5 @@
 /*
- * Design Tokens — verbindlich nach `docs/DESIGN_SPECIFICATIONS.md` Abschnitt 3.2.
+ * Design Tokens — DESIGN_SPECIFICATIONS_V2.md. Existing semantic aliases retained.
  *
  * Die Werte stammen unverändert aus dem Designvertrag. Ergänzt sind nur
  * Tokens, die der Vertrag zwar in Prosa vorgibt (Typografie in Abschnitt 4,
@@ -17,37 +17,37 @@
 :root {
   color-scheme: light;
 
-  --color-ink: #19231f;
-  --color-text: #27332e;
-  --color-text-muted: #64726c;
+  --color-ink: #102e34;
+  --color-text: #355057;
+  --color-text-muted: #52686e;
 
-  --color-bg: #f7f8f5;
+  --color-bg: #fbf8f2;
   --color-surface: #ffffff;
-  --color-surface-subtle: #f0f3f1;
+  --color-surface-subtle: #f7f8f6;
 
-  --color-border: #dde3df;
-  --color-border-strong: #c8d1cc;
+  --color-border: #e3e9e7;
+  --color-border-strong: #cdd7d4;
 
-  --color-primary: #0e6b55;
-  --color-primary-hover: #0a5745;
-  --color-primary-active: #074537;
-  --color-primary-soft: #eaf6f1;
-  --color-primary-border: #bfdccd;
+  --color-primary: #073637;
+  --color-primary-hover: #0b4745;
+  --color-primary-active: #12685f;
+  --color-primary-soft: #eff9f5;
+  --color-primary-border: #bddbd0;
 
-  --color-success: #12633e;
-  --color-success-soft: #eaf7f0;
+  --color-success: #147866;
+  --color-success-soft: #e6f6f1;
   --color-success-border: #bfe3ce;
 
-  --color-info: #1e5c98;
-  --color-info-soft: #edf5fc;
+  --color-info: #2167ab;
+  --color-info-soft: #e8f3ff;
   --color-info-border: #c9dff2;
 
-  --color-warning: #7a4a00;
-  --color-warning-soft: #fff5dc;
+  --color-warning: #9a4d00;
+  --color-warning-soft: #fff0dd;
   --color-warning-border: #edd49b;
 
-  --color-danger: #9b1c1c;
-  --color-danger-soft: #fdecec;
+  --color-danger: #b83e4c;
+  --color-danger-soft: #fdecef;
   --color-danger-border: #e9b9b9;
 
   /* Ergänzung: Abschnitt 11.2 verlangt weißen Text auf der Primärfläche,
@@ -68,18 +68,18 @@
   --space-24: 6rem;
   --space-32: 8rem;
 
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
   --radius-pill: 999px;
 
   --shadow-xs: 0 1px 2px rgb(18 31 25 / 6%);
   --shadow-sm: 0 4px 14px rgb(18 31 25 / 7%);
   --shadow-md: 0 12px 32px rgb(18 31 25 / 10%);
 
-  --content-max: 74rem;
-  --content-reading: 46rem;
+  --content-max: 82.5rem;
+  --content-reading: 47.5rem;
   --header-height-mobile: 4rem;
   --header-height-desktop: 4.5rem;
 
@@ -93,7 +93,8 @@
    * Gewichte, aber keine Variablennamen; ohne Tokens stünden die Werte
    * verstreut in den Komponenten.
    */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans:
+    'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
 
   --text-micro: 0.8125rem;
@@ -124,4 +125,37 @@
     --text-h1: 3rem;
     --text-h2: 2.25rem;
   }
+}
+
+:root {
+  --color-brand-900: #073637;
+  --color-brand-800: #0b4745;
+  --color-brand-700: #12685f;
+  --color-brand-600: #168b78;
+  --color-brand-100: #ddf3ec;
+  --color-brand-050: #eff9f5;
+  --color-orange-600: #c15000;
+  --color-orange-500: #f58a1f;
+  --color-orange-100: #fff0dd;
+  --color-blue-600: #2679c8;
+  --color-blue-500: #409bf5;
+  --color-blue-100: #e8f3ff;
+  --color-purple-600: #6d56c6;
+  --color-purple-500: #8b72ea;
+  --color-purple-100: #f0ecff;
+  --color-coral-600: #c84c5d;
+  --color-coral-500: #e96576;
+  --color-coral-100: #fdecef;
+  --color-green-600: #147866;
+  --color-green-500: #35a987;
+  --color-green-100: #e6f6f1;
+  --color-surface-warm: #fbf8f2;
+  --color-surface-blue: #f2f8fc;
+  --color-ink-muted: #6b7d82;
+  --color-on-dark: #eff9f5;
+  --color-on-dark-muted: #b8d2cd;
+  --shadow-sm: 0 1px 2px rgb(10 45 47 / 5%), 0 5px 18px rgb(10 45 47 / 5%);
+  --shadow-md: 0 10px 30px rgb(10 45 47 / 8%);
+  --shadow-float: 0 18px 45px rgb(10 45 47 / 12%);
+  --font-hand: 'Kalam', cursive;
 }

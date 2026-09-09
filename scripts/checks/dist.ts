@@ -36,6 +36,7 @@ export const ERLAUBTE_ENDUNGEN: readonly string[] = [
   '.pf_index',
   '.pf_meta',
   '.pagefind',
+  '.woff2',
 ];
 
 /** Dateien ohne Endung, die dazugehören. */
@@ -68,6 +69,12 @@ export const BILDENDUNGEN: readonly string[] = [
  * eine Lücke.
  */
 export const ERLAUBTE_BILDER: readonly { readonly muster: RegExp; readonly grund: string }[] = [
+  {
+    muster:
+      /^images\/brand\/(hero-dog-alpine-lake|travel-human-dog-sunset|play-dog-alpine-lake|health-dog-home)-(480|800|1200|1536)\.(avif|webp)$/,
+    grund:
+      'AI-generated editorial brand photographs; source and prompts in design-assets/README.md. Not product photos.',
+  },
   {
     // Leaflet bringt seine Bedienbilder selbst mit; sie stehen unter
     // BSD-2-Clause (node_modules/leaflet/LICENSE) und werden unverändert

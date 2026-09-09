@@ -1,208 +1,312 @@
 ---
-/**
- * M04-02 — Kopfbereich mit Hauptnavigation.
- *
- * Die Navigation kommt aus der Route Registry. Sie enthält deshalb nur
- * Seiten, die im aktuellen Markt tatsächlich existieren.
- */
 import type { MarketConfig } from '../domain/market.ts';
 import { translate, type LocaleId } from '../domain/i18n.ts';
-import { navigationFor, routePath } from '../lib/routes.ts';
-
+import { routeExists, routePath, type RouteKey } from '../lib/routes.ts';
+import Icon from './ui/Icon.astro';
 interface Props {
   market: MarketConfig;
   brandName: string;
   aktuellerPfad?: string;
 }
-
 const { market, brandName, aktuellerPfad } = Astro.props;
-const locale = market.locale as LocaleId;
-const eintraege = navigationFor(market, 'main').filter((item) => item.key !== 'home');
+const home = routePath(market, 'home');
+const groups: { label: string; keys: RouteKey[] }[] = [
+  { label: 'Tools', keys: ['costs', 'travel', 'map'] },
+  { label: 'Produkte', keys: ['food', 'toys', 'care', 'catalog'] },
+  { label: 'Wissen', keys: ['method', 'sources', 'dataStatus'] },
+];
 ---
 
 <header class="kopf">
   <div class="kopf__inhalt page-container">
-    <a class="kopf__marke" href={routePath(market, 'home')}>{brandName}</a>
-    {
-      eintraege.length > 0 && (
-        <>
-          {/*
-            Abschnitt 9.2: auf dem Telefon ein Menüknopf statt einer über
-            mehrere Zeilen umbrechenden Linkliste. Der Knopf ist zunächst
-            versteckt und wird erst vom Skript eingeblendet — ohne
-            JavaScript bleibt die vollständige Liste sichtbar, statt dass
-            ein toter Knopf dasteht.
-          */}
-          <button
-            id="menue-knopf"
-            class="kopf__menueknopf"
-            type="button"
-            aria-expanded="false"
-            aria-controls="hauptnavigation"
-            hidden
-          >
-            Menü
-          </button>
-          <nav aria-label="Hauptnavigation" class="kopf__nav" id="hauptnavigation">
-            <ul class="kopf__liste">
-              {eintraege.map((item) => (
-                <li>
-                  <a
-                    href={item.path}
-                    aria-current={item.path === aktuellerPfad ? 'page' : undefined}
-                  >
-                    {translate(locale, item.labelKey)}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </>
-      )
-    }
+    <a class="kopf__marke" href={home} aria-label={brandName}
+      ><Icon name="paw" size={30} /><span>{brandName}<small>Gute Hunde. Gute Tage.</small></span></a
+    >
+    <a class="kopf__suche" href={`${home}#suche-titel`} aria-label="Suche öffnen"
+      ><Icon name="search" /></a
+    >
+    <button
+      id="menue-knopf"
+      class="kopf__menueknopf"
+      type="button"
+      aria-expanded="false"
+      aria-controls="hauptnavigation"
+      hidden>Menü <span aria-hidden="true">☰</span></button
+    >
+    <nav aria-label="Hauptnavigation" class="kopf__nav" id="hauptnavigation">
+      <ul class="kopf__liste">
+        {
+          groups
+            .slice(0, 1)
+            .filter((group) => group.keys.some((key) => routeExists(market, key)))
+            .map((group) => (
+              <li>
+                <details>
+                  <>
+                    <summary>
+                      {group.label} <span aria-hidden="true">⌄</span>
+                    </summary>
+                    <ul>
+                      {group.keys
+                        .filter((k) => routeExists(market, k))
+                        .map((key) => (
+                          <li>
+                            <a
+                              href={routePath(market, key)}
+                              aria-current={
+                                routePath(market, key) === aktuellerPfad ? 'page' : undefined
+                              }
+                            >
+                              {translate(market.locale as LocaleId, `nav.${key}`)}
+                            </a>
+                          </li>
+                        ))}
+                    </ul>
+                  </>
+                </details>
+              </li>
+            ))
+        }
+        <li><a href={`${home}#ratgeber`}>Ratgeber</a></li>
+        {
+          routeExists(market, 'map') && (
+            <li>
+              <a href={routePath(market, 'map')}>Karte</a>
+            </li>
+          )
+        }
+        {
+          groups
+            .slice(1)
+            .filter((group) => group.keys.some((key) => routeExists(market, key)))
+            .map((group) => (
+              <li>
+                <details>
+                  <>
+                    <summary>
+                      {group.label} <span aria-hidden="true">⌄</span>
+                    </summary>
+                    <ul>
+                      {group.keys
+                        .filter((k) => routeExists(market, k))
+                        .map((key) => (
+                          <li>
+                            <a
+                              href={routePath(market, key)}
+                              aria-current={
+                                routePath(market, key) === aktuellerPfad ? 'page' : undefined
+                              }
+                            >
+                              {translate(market.locale as LocaleId, `nav.${key}`)}
+                            </a>
+                          </li>
+                        ))}
+                    </ul>
+                  </>
+                </details>
+              </li>
+            ))
+        }
+        {
+          routeExists(market, 'favorites') && (
+            <li>
+              <a class="kopf__save" href={routePath(market, 'favorites')} aria-label="Merkliste">
+                <Icon name="save" />
+              </a>
+            </li>
+          )
+        }
+        {
+          routeExists(market, 'profile') && (
+            <li>
+              <a class="kopf__profil" href={routePath(market, 'profile')}>
+                <Icon name="user" size={18} />
+                Mein Hund
+              </a>
+            </li>
+          )
+        }
+      </ul>
+    </nav>
   </div>
 </header>
-
 <script>
   import { menueStarten } from '../features/navigation/mobile-menu.ts';
-
   menueStarten();
+  document.querySelectorAll('.kopf details').forEach((detail) => {
+    detail.addEventListener('toggle', () => {
+      if ((detail as HTMLDetailsElement).open)
+        document.querySelectorAll('.kopf details').forEach((other) => {
+          if (other !== detail) (other as HTMLDetailsElement).open = false;
+        });
+    });
+    detail.addEventListener('keydown', (event) => {
+      if ((event as KeyboardEvent).key === 'Escape') {
+        (detail as HTMLDetailsElement).open = false;
+        detail.querySelector('summary')?.focus();
+      }
+    });
+  });
 </script>
-
 <style>
-  /*
-   * Abschnitt 9.1 und 9.2: weißer Kopf mit unterer Kante, Wortmarke links,
-   * Navigation daneben. 64 px mobil, 72 px ab Tablet. Sticky, damit die
-   * Navigation auf langen Toolseiten erreichbar bleibt — und mit einem
-   * z-index unterhalb von Dialogen.
-   */
   .kopf {
     position: sticky;
-    inset-block-start: 0;
-    z-index: 10;
+    top: 0;
+    z-index: 100;
     background: var(--color-surface);
-    border-block-end: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
   }
-
   .kopf__inhalt {
+    min-height: 76px;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-2) var(--space-6);
-    min-block-size: var(--header-height-mobile);
-    padding-block: var(--space-2);
+    gap: var(--space-6);
   }
-
-  @media (min-width: 768px) {
-    .kopf__inhalt {
-      min-block-size: var(--header-height-desktop);
-      flex-wrap: nowrap;
-    }
-  }
-
-  /* Abschnitt 8.4: schlichte Wortmarke, kein Emoji, kein Bild. */
   .kopf__marke {
-    font-size: var(--text-h4);
-    font-weight: var(--weight-h2);
-    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    color: var(--color-brand-900);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+  }
+  .kopf__marke small {
+    display: block;
+    font-size: 0.625rem;
+    letter-spacing: 0.025em;
+    font-weight: 500;
+    margin-top: -0.2rem;
+  }
+  .kopf__nav {
+    margin-left: auto;
+  }
+  .kopf__liste {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .kopf li {
+    margin: 0;
+  }
+  .kopf a,
+  .kopf summary {
+    font-weight: 650;
+  }
+  .kopf__liste > li > a,
+  summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
     color: var(--color-ink);
+    min-height: 44px;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  details {
+    position: relative;
+  }
+  details ul {
+    list-style: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    padding: var(--space-3);
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+  details a {
+    display: block;
+    padding: var(--space-3);
+    font-size: 0.875rem;
     text-decoration: none;
   }
-
-  .kopf__nav {
-    /* Abschnitt 54: Navlabels bekommen keine feste Breite. */
-    min-inline-size: 0;
+  details a:hover {
+    background: var(--color-primary-soft);
+    border-radius: var(--radius-sm);
   }
-
-  /*
-   * Abschnitt 9.2: der Menüknopf gilt nur bis zum Tablet. Er ist mindestens
-   * 44 px hoch (Abschnitt 39.4) und sagt über `aria-expanded`, in welchem
-   * Zustand er ist.
-   */
+  .kopf__liste > li > a.kopf__profil {
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    padding: 0 var(--space-5);
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+  .kopf__suche {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    color: var(--color-primary);
+  }
   .kopf__menueknopf {
-    margin-inline-start: auto;
-    min-block-size: 44px;
-    padding-inline: var(--space-4);
+    display: none;
   }
-
-  @media (min-width: 768px) {
-    .kopf__menueknopf {
-      display: none;
+  @media (max-width: 1023px) {
+    .kopf__inhalt {
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      min-height: 68px;
+      padding-block: var(--space-2);
     }
-  }
-
-  /* Eingeklappt nur dort, wo der Knopf sichtbar ist. */
-  @media (max-width: 767px) {
+    .kopf__marke {
+      font-size: 1.375rem;
+    }
+    .kopf__menueknopf:not([hidden]) {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+    }
+    .kopf__nav {
+      width: 100%;
+      margin: 0;
+      max-height: calc(100dvh - 90px);
+      overflow: auto;
+    }
     .kopf__nav[data-eingeklappt='true'] {
       display: none;
     }
-
-    .kopf__nav {
-      flex-basis: 100%;
-      padding-block-end: var(--space-2);
-    }
-
     .kopf__liste {
+      display: flex;
       flex-direction: column;
       align-items: stretch;
+      padding: var(--space-4) 0;
+      gap: var(--space-2);
     }
-
-    .kopf__liste a {
-      display: block;
-      padding: var(--space-3);
-      border-block-end: 1px solid var(--color-border);
-      border-radius: 0;
+    .kopf__liste > li > a,
+    summary {
+      padding: var(--space-2) var(--space-3);
+      font-size: 1rem;
     }
-
-    .kopf__liste [aria-current='page'] {
-      border-inline-start: 3px solid var(--color-primary);
-      border-block-end-color: var(--color-border);
-      padding-inline-start: var(--space-3);
-      background: var(--color-primary-soft);
+    .kopf details ul {
+      position: static;
+      box-shadow: none;
+      border: 0;
+      padding-block: 0;
     }
-  }
-
-  .kopf__liste {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1) var(--space-1);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .kopf__liste li {
-    margin: 0;
-    max-inline-size: none;
-  }
-
-  .kopf__liste a {
-    display: inline-block;
-    padding: var(--space-2) var(--space-3);
-    border-block-end: 2px solid transparent;
-    color: var(--color-text);
-    font-size: var(--text-small);
-    text-decoration: none;
-  }
-
-  .kopf__liste a:hover {
-    color: var(--color-primary-hover);
-    border-block-end-color: var(--color-border-strong);
-  }
-
-  /*
-   * Abschnitt 9.1: der aktive Bereich wird über Textfarbe **und** eine
-   * 2-px-Kante angezeigt, nicht allein über eine Hintergrundfarbe.
-   */
-  .kopf__liste [aria-current='page'] {
-    color: var(--color-primary-hover);
-    font-weight: var(--weight-label);
-    border-block-end-color: var(--color-primary);
-  }
-
-  @media (min-width: 768px) {
-    .kopf__liste {
-      margin-inline-start: auto;
+    .kopf__profil {
+      justify-content: center;
+    }
+    .kopf__save {
+      justify-content: center;
     }
   }
 </style>
