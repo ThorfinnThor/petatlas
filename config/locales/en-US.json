@@ -23,7 +23,8 @@
     "nav.imprint": "Imprint",
     "nav.privacy": "Privacy",
     "nav.method": "Method",
-    "nav.accessibility": "Accessibility"
+    "nav.accessibility": "Accessibility",
+    "nav.supplements": "Supplements"
   },
   "slugs": {
     "home": "",
@@ -41,7 +42,8 @@
     "profile": "my-pet",
     "favorites": "saved",
     "method": "method",
-    "accessibility": "accessibility"
+    "accessibility": "accessibility",
+    "supplements": "supplements"
   },
   "legacySlugs": {}
 }

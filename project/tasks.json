@@ -3,8 +3,8 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": null,
-  "note": "Practical real-data user flows and failure recovery verified. Public deployment remains pending the documented owner, expert-review and hosting prerequisites.",
+  "current_task": "M23-03",
+  "note": "Implement source-checked GOT exceptions, travel details, national guidance, supplements and Amazon/Awin partner plan; owner details deferred per user.",
   "status_values": [
     "todo",
     "in_progress",
@@ -4488,6 +4488,27 @@
           "exit_code": 0
         }
       ],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M23-03",
+      "milestone": "M23",
+      "title": "Source-checked practical extensions and affiliate plan",
+      "implementation": "Implement verified cost exceptions, travel inputs and national guidance, supplements page and Amazon-first affiliate plan.",
+      "deliverables": [
+        "docs/IMPLEMENTATION_REVIEW_2026-09-09.md",
+        "docs/AFFILIATE_PLAN.md"
+      ],
+      "acceptance": [
+        "New calculations and input boundaries pass tests; source limits are visible; no fabricated expert or partner approvals."
+      ],
+      "depends_on": [
+        "M23-02"
+      ],
+      "kind": "implementation",
+      "status": "in_progress",
+      "evidence": [],
       "blocker": null,
       "notes": []
     }

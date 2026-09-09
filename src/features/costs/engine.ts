@@ -110,6 +110,12 @@ export interface CostRequest {
    * trotzdem nur einmal an.
    */
   readonly animals?: number;
+  readonly specialTerms?: {
+    readonly confirmed: boolean;
+    readonly agreedFactors?: boolean;
+    readonly waiveEmergencyFee?: boolean;
+    readonly vatPercent?: 0 | 7 | 19;
+  };
 }
 
 export interface CostResultLine {
@@ -134,6 +140,7 @@ export interface CostResult {
   readonly grossTotal: Money;
   /** Was ausdrücklich nicht enthalten ist. */
   readonly notIncluded: readonly string[];
+  readonly warnings?: readonly string[];
   /** Darf aus diesem Ergebnis eine Gesamtschätzung angezeigt werden? */
   readonly clinicalReview: CostConfig['clinicalReview'];
 }
@@ -205,6 +212,23 @@ export function calculateCosts(
     throw new CostError('leer', 'Es ist keine Position ausgewählt.');
   }
 
+  const special = request.specialTerms;
+  if (special && !special.confirmed)
+    throw new CostError(
+      'sonderfall_unbestaetigt',
+      'Abweichende Behandlung muss mit der Praxis geklärt sein.',
+    );
+  const vatPercent = special?.vatPercent ?? config.vatPercent;
+  if (![0, 7, 19].includes(vatPercent))
+    throw new CostError(
+      'steuer_ungueltig',
+      'Unterstützt sind 0, 7 oder 19 Prozent; maßgeblich ist die bestätigte Behandlung der Praxis.',
+    );
+  if (special?.waiveEmergencyFee && request.context !== 'emergency')
+    throw new CostError(
+      'erlass_ohne_notdienst',
+      'Ein Gebührenerlass setzt den Notdienstkontext voraus.',
+    );
   const animals = request.animals ?? 1;
   if (!Number.isSafeInteger(animals) || animals < 1) {
     throw new CostError('tierzahl_ungueltig', `Anzahl der Tiere muss mindestens 1 sein.`);
@@ -260,7 +284,18 @@ export function calculateCosts(
     katalogVersion = item.catalogVersion;
 
     pruefeMenge(anfrage.quantity);
-    pruefeFaktor(anfrage.factor, request.context, config);
+    if (special?.agreedFactors) {
+      if (
+        !Number.isFinite(anfrage.factor) ||
+        anfrage.factor < 0 ||
+        Math.abs(anfrage.factor * 100 - Math.round(anfrage.factor * 100)) > 1e-9
+      ) {
+        throw new CostError(
+          'vereinbarung_ungueltig',
+          'Der bestätigte Faktor muss nichtnegativ sein und höchstens zwei Nachkommastellen haben.',
+        );
+      }
+    } else pruefeFaktor(anfrage.factor, request.context, config);
     pruefeTierart(item, request.species);
 
     const basis = money(item.baseAmountMinor, item.currency);
@@ -288,10 +323,12 @@ export function calculateCosts(
   // Einmal je Angelegenheit, unabhängig von der Zahl der Tiere und der
   // Positionen.
   const emergencyFee =
-    request.context === 'emergency' ? money(config.emergencyFeeMinor, config.currency) : null;
+    request.context === 'emergency' && !special?.waiveEmergencyFee
+      ? money(config.emergencyFeeMinor, config.currency)
+      : null;
 
   const netTotal = emergencyFee === null ? positionenNetto : add(positionenNetto, emergencyFee);
-  const vatAmount = percentageOf(netTotal, config.vatPercent);
+  const vatAmount = percentageOf(netTotal, vatPercent);
   const grossTotal = add(netTotal, vatAmount);
 
   return {
@@ -300,10 +337,26 @@ export function calculateCosts(
     lines,
     emergencyFee,
     netTotal,
-    vatPercent: config.vatPercent,
+    vatPercent,
     vatAmount,
     grossTotal,
     notIncluded: NICHT_ENTHALTEN,
+    warnings: [
+      ...(special
+        ? [
+            'Abweichende Berechnung nach den von Ihnen bestätigten Praxisangaben; keine automatische Prüfung der rechtlichen Voraussetzungen.',
+          ]
+        : []),
+      ...(special?.waiveEmergencyFee
+        ? ['Notdienstgebühr auf Ihre Angabe hin nicht berechnet.']
+        : []),
+      ...(lines.some((line) => line.officialItemId === '1') &&
+      lines.some((line) => line.label.includes('mit Beratung'))
+        ? [
+            'Mögliche Doppelbewertung: Beratung ist in einer ausgewählten Leistung enthalten. Für dieselbe Leistung darf sie nach § 6 GOT nicht zusätzlich berechnet werden. Prüfen Sie, ob die Beratung eine eigenständige andere Leistung betrifft.',
+          ]
+        : []),
+    ],
     clinicalReview: config.clinicalReview,
   };
 }

@@ -22,7 +22,8 @@
     "nav.imprint": "Impressum",
     "nav.privacy": "Datenschutz",
     "nav.method": "Methodik",
-    "nav.accessibility": "Barrierefreiheit"
+    "nav.accessibility": "Barrierefreiheit",
+    "nav.supplements": "Nahrungsergänzung"
   },
   "slugs": {
     "home": "",
@@ -40,7 +41,8 @@
     "profile": "mein-tier",
     "favorites": "merkliste",
     "method": "methodik",
-    "accessibility": "barrierefreiheit"
+    "accessibility": "barrierefreiheit",
+    "supplements": "nahrungsergaenzung"
   },
   "legacySlugs": {}
 }

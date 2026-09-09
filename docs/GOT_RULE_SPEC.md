@@ -17,7 +17,7 @@ Der konsolidierte GOT-Text weist die Katalogbeträge als einfache Sätze ohne Um
   "emergencyFeeMinor": 5000,
   "factorPrecision": 2,
   "baseAmountsExcludeVat": true,
-  "specialAgreementsSupported": false,
+  "specialAgreementsSupported": true,
   "clinicalReview": "pending"
 }
 ```
@@ -43,3 +43,7 @@ Diese Zahlen sind Rechenfixtures, keine echten GOT-Leistungen:
 - Eine bereits im gewählten Leistungsansatz enthaltene Teilposition darf nicht automatisch zusätzlich summiert werden. Solche Regeln benötigen belegte Zuordnung; unbekannte Kombinationen offen kennzeichnen.
 
 Centgenaue Rechenarithmetik ist keine Garantie, dass eine echte Praxisrechnung identisch ausfällt. Das Ergebnis ist eine transparente modellbasierte Orientierung, kein Kostenvoranschlag der behandelnden Praxis.
+
+## Erweiterung 09.09.2026
+
+Mit der Praxis geklärte Sonderfälle können mit ausdrücklicher Bestätigung abweichende Faktoren, Steuerbehandlung und einen Erlass der Notdienstgebühr verwenden. Die Standardberechnung bleibt unverändert. Details und Grenzen: `IMPLEMENTATION_REVIEW_2026-09-09.md`.

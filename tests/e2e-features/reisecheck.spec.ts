@@ -69,6 +69,11 @@ test('rechnet lokal und gibt kein grünes Gesamtergebnis', async ({ page }) => {
   await page.fill('#chipdatum', '2020-03-01');
   await page.selectOption('#impfung', 'ja');
   await page.fill('#impfdatum', '2026-01-01');
+  await page.fill('#impfbeginn', '2026-01-01');
+  await page.fill('#impfende', '2027-01-01');
+  await page.selectOption('#chip-standard', 'ja');
+  await page.selectOption('#pass-vollstaendig', 'ja');
+  await page.selectOption('#auffrischung', 'nein');
   await page.selectOption('#ausweis', 'ja');
   await page.selectOption('#begleitung', 'ja');
   await page.click('#pruefen');

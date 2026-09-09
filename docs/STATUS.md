@@ -2,7 +2,7 @@
 
 Stand: 2026-09-09. Maßgeblich ist `project/tasks.json`.
 
-**Erledigt:** 130 von 137 Aufgaben. **In Arbeit:** keine. **Blockiert:** sieben externe Freigabe-/Veröffentlichungsaufgaben, teilweise nur für optionale Angebote.
+**Erledigt:** 130 von 138 Aufgaben. **In Arbeit:** M23-03. **Blockiert:** sieben externe Freigabe-/Veröffentlichungsaufgaben, teilweise nur für optionale Angebote.
 
 ## Tatsächlicher Stand
 

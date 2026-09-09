@@ -82,6 +82,7 @@ function ergebnisTabelle(result: CostResult): string {
          </tr>`;
 
   return `
+    ${(result.warnings ?? []).map((warning) => `<p class="hilfe">${escape(warning)}</p>`).join('')}
     <p class="bill-summary"><strong>${geld(result.grossTotal.amountMinor)}</strong><br>Brutto für die ausgewählten Positionen, inklusive ${result.vatPercent} % Umsatzsteuer.</p>
     <table>
       <caption>Rechnung, Fassung ${escape(result.catalogVersion)}</caption>
@@ -173,7 +174,10 @@ export function rechnerStarten(): void {
       label: item.originalLabel,
     };
     try {
-      calculateCosts({ context: kontext(), species: art(), lines: [position] }, katalog);
+      calculateCosts(
+        { context: kontext(), species: art(), lines: [position], specialTerms: sonderfall() },
+        katalog,
+      );
       return position;
     } catch (error) {
       status!.textContent =
@@ -212,10 +216,27 @@ export function rechnerStarten(): void {
     return wert === 'dog' || wert === 'cat' ? wert : null;
   }
 
+  function sonderfall() {
+    const checked = (id: string) =>
+      document.querySelector<HTMLInputElement>(`#${id}`)?.checked ?? false;
+    const vatPercent = Number(
+      document.querySelector<HTMLSelectElement>('#steuer')?.value ?? '19',
+    ) as 0 | 7 | 19;
+    if (!checked('vereinbarter-faktor') && !checked('notdienst-erlass') && vatPercent === 19)
+      return undefined;
+    return {
+      confirmed: checked('sonderfall-bestaetigt'),
+      agreedFactors: checked('vereinbarter-faktor'),
+      waiveEmergencyFee: checked('notdienst-erlass'),
+      vatPercent,
+    };
+  }
+
   function faktorGrenzenSetzen(): void {
     const { min, max } = factorRange(kontext());
-    faktor!.dataset.min = String(min);
-    faktor!.dataset.max = String(max);
+    faktor!.dataset.min = String(sonderfall()?.agreedFactors ? 0 : min);
+    if (sonderfall()?.agreedFactors) delete faktor!.dataset.max;
+    else faktor!.dataset.max = String(max);
     faktor!.dataset.fehlertext = `Der Faktor muss im Kontext „${kontext() === 'emergency' ? 'Notdienst' : 'regulär'}“ zwischen ${min} und ${max} liegen.`;
   }
 
@@ -231,6 +252,7 @@ export function rechnerStarten(): void {
       const result = calculateCosts(
         {
           context: kontext(),
+          specialTerms: sonderfall(),
           species: art(),
           lines: auswahl.map(({ officialItemId, quantity, factor }) => ({
             officialItemId,
@@ -296,6 +318,14 @@ export function rechnerStarten(): void {
     }
   }
 
+  for (const field of form.querySelectorAll(
+    '#sonderfall-bestaetigt, #vereinbarter-faktor, #notdienst-erlass, #steuer',
+  )) {
+    field.addEventListener('change', () => {
+      faktorGrenzenSetzen();
+      neuRechnen();
+    });
+  }
   for (const eingabe of document.querySelectorAll<HTMLInputElement>('input[name="kontext"]')) {
     eingabe.addEventListener('change', () => {
       faktorGrenzenSetzen();

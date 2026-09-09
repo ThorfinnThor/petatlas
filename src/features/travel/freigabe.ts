@@ -23,10 +23,12 @@ import freigaben from '../../../content-data/travel/approvals.json' with { type:
 import type { TravelApproval, TravelRuleSet } from '../../domain/schemas/travel.ts';
 import { bewerte, type FrischePolitik } from '../freshness/policy.ts';
 import { regelSaetze } from './rules.ts';
+import { NATIONAL } from './national.ts';
 
 /** Kanonische Textform des fachlich geprüften Inhalts. */
 export function signaturQuelle(satz: TravelRuleSet): string {
   return JSON.stringify({
+    nationalGuidance: NATIONAL,
     ruleSetId: satz.ruleSetId,
     legalBasis: satz.legalBasis,
     appliesFrom: satz.appliesFrom,

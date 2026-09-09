@@ -1,0 +1,204 @@
+---
+import Notice from '../Notice.astro';
+---
+
+<p class="eyebrow">Ernährung · Hund und Katze</p>
+<h1>Nahrungsergänzung bewusst auswählen</h1>
+<p class="lead">
+  Was steckt im Produkt, wofür ist es gedacht – und passt es überhaupt zur bisherigen Fütterung?
+  Hier ordnen Sie Ergänzungsfuttermittel ein und vergleichen die Kosten einer bereits festgelegten
+  Tagesmenge.
+</p>
+
+<Notice variante="hinweis" titel="Zuerst das Grundfutter prüfen">
+  <p>
+    Ein zur Tierart und Lebensphase passendes Alleinfuttermittel soll den Nährstoffbedarf abdecken.
+    Gesunde Hunde und Katzen brauchen dazu in der Regel keine zusätzlichen Vitamin- oder
+    Mineralstoffmischungen. Eine selbst zusammengestellte Ration benötigt dagegen eine fachlich
+    berechnete Ergänzung. Mehr ist nicht automatisch besser.
+  </p>
+  <p>
+    <a href="https://www.ukpetfood.org/resource/pet-supplements-are-they-necessary.html"
+      >Quelle: UK Pet Food, Einordnung von Ergänzungen</a
+    > · Branchenverband, keine unabhängige Produktprüfung.
+  </p>
+</Notice>
+
+<h2>Vier Produktgruppen – vier unterschiedliche Fragen</h2>
+<div class="supplement-grid">
+  <article>
+    <h3>Vitamine und Mineralstoffe</h3><p>
+      Passt die Ergänzung zur gesamten Ration? Vor allem bei selbst gekochtem Futter zählt die
+      berechnete Gesamtversorgung. Kombinieren Sie nicht mehrere Mischungen nur aufgrund ähnlicher
+      Werbeversprechen.
+    </p>
+  </article>
+  <article>
+    <h3>Öle und Fettsäuren</h3><p>
+      Vergleichen Sie die konkret deklarierten Inhaltsmengen, nicht allein „Fischöl“ oder die
+      Flaschengröße. Notieren Sie bei entsprechender Deklaration EPA und DHA je Tagesmenge; die
+      benötigte Menge lässt sich daraus nicht automatisch ableiten.
+    </p>
+  </article>
+  <article>
+    <h3>Darmprodukte</h3><p>
+      Notieren Sie Inhaltsstoffe, gegebenenfalls genaue Mikroorganismen-Stämme, Lagerung und
+      Haltbarkeit. Fragen Sie nach Belegen für genau dieses Produkt, die Tierart und den
+      vorgesehenen Zweck.
+    </p>
+  </article>
+  <article>
+    <h3>Gelenk- und Kombinationsprodukte</h3><p>
+      Eine lange Zutatenliste ist kein Wirksamkeitsnachweis. Prüfen Sie Studien zum konkreten
+      Produkt und die Mengen der einzelnen Bestandteile. Nahrungsergänzung ersetzt keine Abklärung
+      von Schmerzen oder Lahmheit.
+    </p>
+  </article>
+</div>
+<p class="hilfe">
+  Die Gruppen sind eine Einkaufshilfe, keine Wirksamkeitsrangliste. Grundlage zur Beurteilung von
+  Deklaration und Gesamtration: <a
+    href="https://wsava.org/global-guidelines/global-nutrition-guidelines/"
+    >WSAVA-Ernährungsleitlinien</a
+  > und <a href="https://www.fediaf.org/self-regulation/nutritional-guidelines/"
+    >FEDIAF-Leitlinien für Allein- und Ergänzungsfuttermittel</a
+  >.
+</p>
+
+<h2>Vor dem Kauf abhaken</h2>
+<ul class="supplement-checklist">
+  <li>Für die richtige Tierart und Lebensphase gekennzeichnet?</li>
+  <li>Konkreter Zweck und Tagesmenge aus Fütterungsplan oder Produktangaben bekannt?</li>
+  <li>Inhaltsstoffe und Mengen je Portion nachvollziehbar, statt nur ein Mischungsname?</li>
+  <li>Bereits im Futter oder in anderen Ergänzungen enthaltene Stoffe berücksichtigt?</li>
+  <li>Lagerung, Haltbarkeit nach Öffnen und erreichbarer Hersteller angegeben?</li>
+  <li>Bei Erkrankungen, Medikamenten, Wachstum oder Trächtigkeit mit der Praxis abgestimmt?</li>
+</ul>
+
+<Notice variante="warnung" titel="Humanpräparate nicht ungeprüft verwenden">
+  <p>
+    Xylit kann für Hunde lebensgefährlich sein; auch überhöhte Vitamin-D-Mengen können schaden. Bei
+    vermuteter Aufnahme eines problematischen Produkts sofort eine Tierarztpraxis oder den
+    tierärztlichen Notdienst kontaktieren und die Verpackung bereithalten.
+  </p>
+  <p>
+    <a
+      href="https://www.fda.gov/animal-veterinary/animal-health-literacy/xylitol-and-dogs-deadly-combination"
+      >FDA: Xylit</a
+    > · <a
+      href="https://www.fda.gov/animal-veterinary/outbreaks-and-advisories/fda-alerts-pet-owners-about-potentially-toxic-levels-vitamin-d-several-dry-pet-foods"
+      >FDA: Risiken überhöhter Vitamin-D-Mengen</a
+    >
+  </p>
+</Notice>
+
+<section class="supplement-tool" aria-labelledby="vergleich-titel">
+  <h2 id="vergleich-titel">Packungskosten vergleichen</h2>
+  <p>
+    Dieser Rechner berechnet Kosten und rechnerische Reichweite. Er bestimmt keine geeignete Dosis.
+    Verwenden Sie für beide Produkte dieselbe Einheit und jeweils eine bereits festgelegte
+    Tagesmenge.
+  </p>
+  <form id="supplement-vergleich">
+    {
+      ['A', 'B'].map((id) => (
+        <fieldset>
+          <legend>Produkt {id}</legend>
+          <>
+            <label for={`preis-${id}`}>Packungspreis in Euro</label>
+            <input id={`preis-${id}`} inputmode="decimal" required />
+          </>
+          <>
+            <label for={`inhalt-${id}`}>Packungsinhalt (ml, g oder Stück)</label>
+            <input id={`inhalt-${id}`} inputmode="decimal" required />
+          </>
+          <>
+            <label for={`menge-${id}`}>Festgelegte Tagesmenge in derselben Einheit</label>
+            <input id={`menge-${id}`} inputmode="decimal" required />
+          </>
+        </fieldset>
+      ))
+    }
+    <button type="submit">Kosten vergleichen</button>
+  </form>
+  <p id="supplement-ergebnis" role="status" aria-live="polite"></p>
+  <noscript
+    ><p>
+      Ohne JavaScript: Packungsinhalt durch Tagesmenge teilen; Preis durch die ermittelte Reichweite
+      teilen. Beide Ergebnisse beziehen sich nur auf die eingegebene Menge.
+    </p></noscript
+  >
+</section>
+
+<h2>Welche Produkte verlinken wir?</h2>
+<p>
+  Aktuell gibt es hier keine bezahlten Empfehlungen oder geprüften Testsieger. Künftige Händlerlinks
+  werden als Werbung gekennzeichnet. Produktmerkmale und Belege bleiben getrennt von der Wahl des
+  Händlers.
+</p>
+<p class="hilfe">
+  Quellenstand: 09.09.2026. Diese Seite bietet allgemeine Informationen für Hunde und Katzen. Für
+  andere Tierarten lassen sich Bedarf und Produkte nicht übertragen.
+</p>
+
+<script>
+  import { supplementComparison } from '../../features/food/supplements.ts';
+  const form = document.querySelector<HTMLFormElement>('#supplement-vergleich');
+  const output = document.querySelector<HTMLElement>('#supplement-ergebnis');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!output) return;
+    try {
+      const values = ['A', 'B'].map((id) => {
+        const read = (field: string) =>
+          document.querySelector<HTMLInputElement>(`#${field}-${id}`)?.value ?? '';
+        const value = supplementComparison(read('preis'), read('inhalt'), read('menge'));
+        return `Produkt ${id}: ${value.days.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Tage, ${value.dailyCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })} pro Tag.`;
+      });
+      output.textContent =
+        values.join(' ') +
+        ' Rechnerischer Vergleich; keine Aussage zu Eignung oder Wirksamkeit. Haltbarkeit nach Öffnen zusätzlich beachten.';
+    } catch {
+      output.textContent =
+        'Bitte für beide Produkte gültige positive Zahlen eingeben (z. B. 19,95). Tagesmenge und Packungsinhalt müssen dieselbe Einheit verwenden.';
+    }
+  });
+</script>
+<style>
+  .lead {
+    font-size: 1.2rem;
+  }
+  .supplement-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-block: 1.5rem;
+  }
+  article,
+  .supplement-tool {
+    background: var(--color-surface, #fff);
+    border: 1px solid #d9e3df;
+    border-radius: 1rem;
+    padding: 1.3rem;
+  }
+  article h3 {
+    margin-top: 0;
+  }
+  .supplement-checklist li {
+    margin-block: 0.7rem;
+  }
+  fieldset {
+    display: grid;
+    gap: 0.5rem;
+    margin-block: 1rem;
+  }
+  input {
+    width: 100%;
+    min-height: 44px;
+  }
+  @media (max-width: 600px) {
+    .supplement-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

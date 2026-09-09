@@ -16,6 +16,7 @@
  */
 import type { RequirementState } from '../../domain/schemas/travel.ts';
 import { pruefeReise, type Fakten, type ReiseErgebnis } from './engine.ts';
+import { nationalOutcome } from './national.ts';
 import { nurVorschau } from './freigabe.ts';
 import { alleRegeln } from './rules.ts';
 import { pruefeUmfang, type UmfangsErgebnis } from './scope.ts';
@@ -43,6 +44,13 @@ export interface WizardEingabe {
    * das Alter der Freigabe nicht bewertet.
    */
   readonly heute?: string;
+  readonly frenchCategory?: string;
+  readonly chipCompliant?: Angabe;
+  readonly chipReaderAvailable?: Angabe;
+  readonly passportComplete?: Angabe;
+  readonly continuousBooster?: Angabe;
+  readonly vaccinationStartDate?: string | null;
+  readonly vaccinationValidUntil?: string | null;
 }
 
 /** `unbekannt` wird zu `undefined`, nicht zu `false`. */
@@ -78,6 +86,18 @@ export function fakten(eingabe: WizardEingabe): Fakten {
   if (eingabe.identificationDate !== null) werte.identificationDate = eingabe.identificationDate;
   if (eingabe.rabiesVaccinationDate !== null) {
     werte.rabiesVaccinationDate = eingabe.rabiesVaccinationDate;
+  }
+  for (const key of [
+    'chipCompliant',
+    'chipReaderAvailable',
+    'passportComplete',
+    'continuousBooster',
+  ] as const) {
+    const value = alsBoolean(eingabe[key] ?? 'unbekannt');
+    if (value !== undefined) werte[key] = value;
+  }
+  for (const key of ['vaccinationStartDate', 'vaccinationValidUntil'] as const) {
+    if (eingabe[key]) werte[key] = eingabe[key];
   }
   return werte;
 }
@@ -145,10 +165,27 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
     vorschau: nurVorschau(eingabe.heute ?? null),
   });
 
+  const countries = [
+    ...new Set([
+      ...(eingabe.direction === 'outbound' ? [eingabe.destination] : []),
+      ...eingabe.transit,
+    ]),
+  ];
+  const national = countries.map((country) =>
+    nationalOutcome(country, eingabe.species, eingabe.frenchCategory),
+  );
   return {
     umfang,
     pruefung,
-    gesamt: pruefung.gesamt,
-    hinweise: pruefung.hinweise,
+    gesamt:
+      national.some((entry) => entry.state === 'not_fulfilled') ||
+      pruefung.gesamt === 'not_fulfilled'
+        ? 'not_fulfilled'
+        : 'unknown',
+    hinweise: [
+      ...pruefung.hinweise,
+      ...national.map((entry) => entry.text),
+      'Nationale und örtliche Zusatzvorgaben sind keine pauschal bestandene Einreiseprüfung. Beachten Sie die Länderhinweise und deren Quellen.',
+    ],
   };
 }
