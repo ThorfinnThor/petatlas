@@ -267,4 +267,9 @@ export function listeStarten(): void {
     ereignis.preventDefault();
     void aktualisiere();
   });
+  const requestedPlace = new URLSearchParams(window.location.search).get('q')?.trim();
+  if (requestedPlace && requestedPlace.length <= 100) {
+    ortsFeld.value = requestedPlace;
+    ortsFeld.dispatchEvent(new Event('input', { bubbles: true }));
+  }
 }

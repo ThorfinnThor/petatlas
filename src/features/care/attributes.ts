@@ -6,7 +6,8 @@
  * Matchingattribut — es darf mitgeführt und angezeigt werden, aber es
  * entscheidet nichts.
  */
-import review from '../../../content-data/attributes/synthetic-review.json' with { type: 'json' };
+import review from '../../../content-data/attributes/real-review.json' with { type: 'json' };
+import identities from '../../../content-data/products/editorial.json' with { type: 'json' };
 import { darfMatchen } from '../../domain/attribute-rules.ts';
 import type {
   AttributeReview,
@@ -111,6 +112,11 @@ export function kartenMerkmale(
  * ist hässlich und fällt auf, und genau das soll es.
  */
 export const MERKMAL_LABEL: Readonly<Record<string, string>> = {
+  difficultyLevel: 'Schwierigkeitsgrad',
+  hardnessLevel: 'Härtegrad',
+  diameterMillimeters: 'Durchmesser in Millimetern',
+  heightCentimeters: 'Höhe in Zentimetern',
+  floats: 'Schwimmfähigkeit',
   coatLength: 'Fellänge',
   dishwasherSafe: 'Spülmaschinenfest',
   lengthCentimeters: 'Länge in Zentimetern',
@@ -127,4 +133,8 @@ export const MERKMAL_LABEL: Readonly<Record<string, string>> = {
 /** Beschriftung eines Merkmals; unbekannte Bezeichner bleiben sichtbar. */
 export function merkmalLabel(attribut: string): string {
   return MERKMAL_LABEL[attribut] ?? attribut;
+}
+
+export function productIdentity(id: string) {
+  return identities.products.find((product) => product.id === id);
 }

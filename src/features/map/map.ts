@@ -93,8 +93,8 @@ export async function zeigeKarte(optionen: KartenOptionen): Promise<KartenZustan
     L.circleMarker([ort.lat, ort.lon], {
       radius: 7,
       weight: 2,
-      color: '#1d4ed8',
-      fillColor: '#1d4ed8',
+      color: '#073637',
+      fillColor: '#073637',
       fillOpacity: 0.6,
     }).bindPopup(
       `<strong>${escape(ort.name)}</strong><br>${escape(
@@ -102,6 +102,14 @@ export async function zeigeKarte(optionen: KartenOptionen): Promise<KartenZustan
       )}`,
     ),
   );
+  for (const pin of marker) {
+    pin.on('popupopen', () =>
+      pin.setStyle({ color: '#ed9237', fillColor: '#ed9237', fillOpacity: 1 }),
+    );
+    pin.on('popupclose', () =>
+      pin.setStyle({ color: '#073637', fillColor: '#073637', fillOpacity: 0.6 }),
+    );
+  }
   const ebene = L.layerGroup(marker).addTo(karte);
 
   return { karte, markerEbene: ebene as unknown as KartenZustand['markerEbene'] };

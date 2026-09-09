@@ -29,6 +29,8 @@ test('keine Seite läuft horizontal über', async ({ page }) => {
 
 test('auch die geöffnete Karte bleibt in der Breite', async ({ page }) => {
   await page.goto(KARTE);
+  const mapToggle = page.locator('[data-map-view=map]');
+  if (await mapToggle.isVisible()) await mapToggle.click();
   await page.click('#karte-anzeigen');
   await expect(page.locator('#karte.leaflet-container')).toBeVisible({ timeout: 30_000 });
 
@@ -45,6 +47,11 @@ test('auch die geöffnete Karte bleibt in der Breite', async ({ page }) => {
 
 test('die Karte lässt sich ohne Maus öffnen', async ({ page }) => {
   await page.goto(KARTE);
+  const mapToggle = page.locator('[data-map-view=map]');
+  if (await mapToggle.isVisible()) {
+    await mapToggle.focus();
+    await page.keyboard.press('Enter');
+  }
   await page.locator('#karte-anzeigen').focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('#karte.leaflet-container')).toBeVisible({ timeout: 30_000 });
@@ -55,6 +62,8 @@ test('die Karte lässt sich ohne Maus öffnen', async ({ page }) => {
 test('bei ausgefallenem Kacheldienst bleibt die Attribution vollständig', async ({ page }) => {
   await page.route(KACHELN, (route) => route.abort());
   await page.goto(KARTE);
+  const mapToggle = page.locator('[data-map-view=map]');
+  if (await mapToggle.isVisible()) await mapToggle.click();
   await page.click('#karte-anzeigen');
 
   await expect(page.locator('#karte-status')).toContainText(/keine Kacheln|nicht geladen/, {
@@ -63,6 +72,8 @@ test('bei ausgefallenem Kacheldienst bleibt die Attribution vollständig', async
   // Der Ausfall betrifft die Kacheln, nicht die Pflichthinweise zu den Daten.
   await expect(page.getByText('OpenStreetMap contributors').first()).toBeVisible();
   await expect(page.getByText('Open Database License')).toBeVisible();
+  const listToggle = page.locator('[data-map-view=list]');
+  if (await listToggle.isVisible()) await listToggle.click();
   await expect(page.locator('#trefferliste li').first()).toBeVisible();
 });
 

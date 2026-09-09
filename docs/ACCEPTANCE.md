@@ -1,77 +1,32 @@
-# Abnahmebericht
+# Abnahmebericht V2
 
-Stand **2026-09-08**. Dieser Bericht sagt, **was da ist**, was blockiert ist und was ausgeliefert würde. Er erklärt nichts für fertig.
+Stand: 2026-09-09. Dieser Bericht ersetzt den früheren V1-Zustand; dessen Nachweise bleiben in der Git-Historie.
 
-## Aufgabenstand
+## Gebaut und geprüft
 
-| Zustand | Anzahl |
-|---|---|
-| erledigt, mit Nachweis | 114 |
-| blockiert durch eine externe Voraussetzung | 7 |
-| offen und ausführbar | 0 |
-| **gesamt** | **121** |
+Die echte Vorschau aktiviert Gebührenrechner, Ortskarte, Reisecheck, Pflege, Spielzeug, Futter, Tierprofile und Ratgeber. Sie verwendet reale Snapshots und belegte Herstellerdaten. Alle Seiten bleiben vor der öffentlichen Freigabe nicht indexierbar. Kommerzielle Angebote sind ohne Vertrag nicht verfügbar.
 
-Jede erledigte Aufgabe trägt einen Nachweis mit Beschreibung, Fundstelle und Prüfdatum; jede blockierte nennt Ursache, benötigte Handlung und zuständige Person. `tests/status-consistency.test.ts` prüft beides — und dass diese Zahlen mit `project/tasks.json` übereinstimmen.
+Auf `eb38edb` bestanden lokal:
 
-**Keine Hundert-Prozent-Aussage.** 114 von 121 Aufgaben sind erledigt; sieben sind blockiert, und die Blockade liegt jedes Mal außerhalb dieses Repositories: eine Freigabe, eine Prüfung oder eine Betreiberangabe, die ein Mensch beibringen muss. Es gibt keine ausführbare Aufgabe mehr.
+- `npm run verify`: 1.431 Tests in 94 Dateien; Lint, Typecheck, Formatierung, Secret-, Workflow-, Lizenz-, Inhalts- und Handoff-Prüfung.
+- `npm run build:app`: 15 Prüfschritte einschließlich Quellenrechte, Inhaltsdaten, Release-Konsistenz, Output, interner Links, SEO und Größenbudgets.
+- 2.877 ausgelieferte Dateien; größte Datei 0,46 MiB; kein Größenbudget überschritten.
 
-## Was ein Besucher heute sähe
+Der abschließende CI-Lauf ist [34369711865](https://github.com/ThorfinnThor/petatlas/actions/runs/34369711865). CI und Security sind erfolgreich. Die Browserläufe bestanden mit 228 Basis-, 107 Zugänglichkeits-, 298 Feature-, 11 App- und 12 Leistungsprüfungen. Sieben Zugänglichkeitsfälle und vier Featurefälle wurden von den bestehenden Konfigurationen übersprungen.
 
-Der Standardbuild erzeugt **13 HTML-Dateien**: sieben Inhaltsseiten (Start, Quellen, Datenstand, Methodik, Impressum, Datenschutz, Barrierefreiheit), die Weiterleitung von `/`, eine Fehlerseite und vier technische Probeseiten unter `/entwicklung/`, die in `production` nicht ausgeliefert werden. Insgesamt 346 Dateien, davon der größte Teil Datenchunks.
+Die Homepage lädt initial 304,9 KiB auf Desktop bzw. 317,2 KiB im mobilen Profil, davon 3,7 KiB JavaScript. Die fünf gemessenen Seiten bleiben jeweils unter 32 KiB JavaScript und unter allen gesetzten Stopp-Budgets. Das sind Messwerte vom gebauten Output im CI-Browser, keine Felddaten.
 
-Alle Seiten tragen `noindex`, und `robots.txt` verbietet die Indexierung — die Launch-Gates sind offen.
+## Konkrete Nutzerabläufe
 
-**Kein einziges Fachwerkzeug ist eingeschaltet.** Rechner, Karte, Reisecheck, Katalog, Pflege, Spielzeug, Futter und Profil liegen hinter Feature Flags, die in `config/markets/DE.json` auf `false` stehen.
+- Hamburger Ortsuche lädt echte Treffer mit Quelle und Erfassungsstand.
+- Eine allgemeine Untersuchung für Hund/Katze/Frettchen liefert bei einfachem Satz 23,62 Euro netto und 28,11 Euro einschließlich 19 Prozent Umsatzsteuer. Entfernen und Drucksteuerung sind implementiert.
+- Der Reisecheck zeigt unvollständige Angaben ausdrücklich als unbekannt; ohne Fachfreigabe entsteht kein positives Gesamtergebnis.
+- Zwei echte Futterlinien lassen sich anhand deklarierter Nährwerte vergleichen; fehlende Preise erscheinen mit Erklärung.
+- Profile überleben Navigation und Neuladen. Übernahme in passende Formulare geschieht erst auf Aktion; sensible Reiseantworten bleiben unbeantwortet.
+- Mobile Kartenansicht und Liste lassen sich umschalten; Kacheln laden erst nach separater Aktion.
 
-## Was gebaut, geprüft und abgeschaltet ist
+## Noch keine öffentliche Veröffentlichung
 
-| Funktion | Zustand | Warum aus |
-|---|---|---|
-| Gebührenrechner | fertig, 1006 Positionen, im Browser rechenbar | fachliche Abnahme fehlt (B-002) |
-| Tierarztkarte und Ortsliste | fertig, 9.381 Orte, 25 Stadtseiten | Freigabe der Datenrechte offen |
-| Reisecheck | fertig, 40 Regeln aus der Delegierten Verordnung (EU) 2026/131 | fachliche Abnahme fehlt (B-004); läuft in der Vorschau ohne positives Gesamtergebnis |
-| Versicherungshinweis | fertig | kein Vertrag, keine § 34d-Prüfung (B-003) |
-| Angebotskatalog | fertig | kein Partnerprogramm (B-005) |
-| Pflege und Spielzeug | fertig, mit synthetischen Produkten | echte Produktattribute brauchen Angebotsrechte (B-006) |
-| Futter | fertig, Suche und Detailseiten | ohne Angebote kein Grundpreis |
-| Profil, Merkliste, Packliste | fertig, ausschließlich lokal im Browser | an das Profil-Flag gebunden |
+Der bisherige Cloudflare-Link zeigt noch den alten Stand. Der lokale Cloudflare-Login ist abgelaufen; im Repository gibt es keine alternative Deployment-Anmeldung. Eine aktualisierte Veröffentlichung samt Prüfung am öffentlichen Link steht deshalb aus.
 
-Mit allen Feature Flags entstehen **60 HTML-Dateien** und 443 Dateien insgesamt. Beide Zahlen sind gemessen, nicht geschätzt.
-
-## Womit das belegt ist
-
-| Nachweis | Umfang |
-|---|---|
-| `npm run verify` | 1302 Tests |
-| End-to-End (Grundzustand) | 228 |
-| End-to-End (alle Funktionen) | 294 |
-| Zugänglichkeit (axe und Bedienung) | 107 bestanden, 7 übersprungen |
-| Leistung | 12 Messungen |
-| Prüfungen in der CI | Lint, Typecheck, Format, Secrets, Workflow-Härtung, Lizenzen, Handoff, SEO (zweimal), Output-Audit, Budgets, Rollback-Zulässigkeit, Freigabestand |
-
-Berichte: `docs/RELEASE_TESTS.md`, `docs/ACCESSIBILITY.md`, `docs/PERFORMANCE.md`, `docs/BUDGET_REPORT.md`, `docs/DEVELOPER_SETUP.md`, `docs/EXPANSION.md`.
-
-## Was fehlt
-
-Sechs blockierte Aufgaben, alle aus demselben Grund: eine Freigabe, die ein Mensch erteilen muss.
-
-| Aufgabe | Fehlt | Wer |
-|---|---|---|
-| M08-06 | fachliche Abnahme des Gebührenrechners | Betreiber mit prüfender Person |
-| M09-06 | Versicherungsvertrag und § 34d-Prüfung | Betreiber mit Rechtsprüfung |
-| M12-06 | fachliche Abnahme der Reiseregeln | Betreiber mit prüfender Person |
-| M13-06 | Programmfreigabe eines Netzwerks | Betreiber |
-| M14-06 | echte Produktattribute nach der Programmfreigabe | Betreiber |
-| M18-06 | acht Launch-Gates und vier Rechtspflichten | Betreiber |
-| M19-06 | Veröffentlichung samt Autorisierung | Betreiber |
-
-Dazu die Grenzen, die keine Freigabe auflöst: `docs/KNOWN_LIMITATIONS.md`.
-
-## Was als Nächstes passieren müsste
-
-1. Betreiberangaben und Domain — ohne sie bricht der Produktionsbuild ab.
-2. Datenschutzerklärung auf dieser Grundlage.
-3. Freigabe der Datenrechte, dann die fachlichen Abnahmen.
-4. Erst danach Partnerverträge und die Veröffentlichung (M19-06).
-
-Die Reihenfolge und die jeweiligen Nachweise stehen in `docs/reviews/launch.md`. Eingetragen werden sie von der zuständigen Person, nicht von einem Agenten.
+Domain, Betreiberangaben, Vertragsdaten und qualifizierte Freigaben sind nach ausdrücklicher Nutzerentscheidung zurückgestellt. Vier Quellenbeobachtungs-Meldungen bleiben zur manuellen Prüfung offen. Einzelheiten: `LAUNCH_V2.md`.

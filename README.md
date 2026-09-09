@@ -1,67 +1,38 @@
-# Haustierplattform: Implementierungspaket für Claude Code
+# PetAtlas
 
-**Deutschland-first · Static-first · internationales Datenmodell**
+Eine statische deutschsprachige Web-App für Tierarztkosten, Hunde-Orte, Reisevorbereitung und belegte Produktinformationen. Astro 7 und TypeScript; Daten werden im Browser lokal verarbeitet. Kein Konto, keine Analyse-Tracker und keine Laufzeitdatenbank.
 
-Stand: 6. September 2026. Arbeitstitel: PetAtlas, kein geprüfter Markenname.
+## Lokal starten
 
-## Was dieses Paket enthält
+Node 24 verwenden (`.nvmrc`), dann:
 
-Ein umfangreicher Ausführungsplan mit **20 Meilensteinen und 120 einzeln prüfbaren Aufgaben**, eine kurze CLAUDE.md, Start-/Fortsetzungsprompts, konkrete Architektur-/Daten-/Betriebs-/Testvorgaben und ein funktionsfähiges Statuswerkzeug.
-
-Es ist **keine bereits implementierte Website**. Es wurden mit diesem Paket weder ein GitHub-Repository angelegt noch Cloudflare verbunden, Partnerverträge akzeptiert oder Produktionsdaten freigegeben. Alle Implementierungsaufgaben stehen zunächst auf todo.
-
-## Anwendung
-
-Paket in das vorgesehene Projektverzeichnis entpacken. Bestehende Dateien/CLAUDE.md nicht blind überschreiben. Claude Code in diesem Verzeichnis öffnen und den Startprompt aus STARTPROMPT.md übergeben.
-
-Der Agent beginnt mit Arbeitsverzeichnis-/Git-Prüfung, arbeitet nach den Dependencies, dokumentiert Nachweise und setzt bei externen Blockern an unabhängigen Aufgaben fort. Konto-, Kosten-, Rechte- und fachliche Freigaben bleiben echte Gates; ein langer autonomer Codinglauf ersetzt sie nicht.
-
-## Die wichtigsten Dateien
-
-| Datei | Zweck |
-|---|---|
-| IMPLEMENTIERUNGSPLAN.md | Vollständiger zusammenhängender Plan einschließlich aller Arbeitspakete und Quellen. |
-| CLAUDE.md | Kurze dauerhaft relevante Ausführungs- und Sicherheitsregeln. |
-| STARTPROMPT.md | Direkt verwendbarer Start-, Fortsetzungs- und Statusprompt. |
-| project/tasks.json | Maßgeblicher maschinenlesbarer Aufgabenstatus mit Dependencies und Nachweisen. |
-| docs/MILESTONES.md | Modulare Beschreibung der 120 Aufgaben. |
-| docs/ARCHITECTURE.md | Stack, Datenverträge, Dateistruktur und Internationalisierung. |
-| docs/DATA_SOURCES.md | Quellen, Publikationsrechte, Frische und Qualitätsgrenzen. |
-| docs/OPERATIONS.md | Cloudflare-Build, Actions, Datenbranches, Secrets, Fehler- und Rollbackpfade. |
-| docs/QUALITY_GATES.md | Konkrete Tests und Freigabestufen. |
-| docs/GOT_RULE_SPEC.md | Ausgangsregeln und synthetische Rechentests für den Gebührenrechner. |
-| docs/EXTERNAL_SETUP.md | Einmalige externe Konten-/Rechte-/Betreiberentscheidungen. |
-| docs/STATUS.md, BLOCKERS.md, HANDOFF.md | Kurze Fortschritts- und Übergabedokumente. |
-| docs/SOURCES.md | 36 geprüfte Primärquellen. |
-
-## Status abfragen
-
-```bash
-python3 scripts/project_status.py
-python3 scripts/project_status.py --milestone M12
-python3 scripts/project_status.py --json
-python3 scripts/project_status.py --validate
-python3 scripts/test_project_status.py
+```sh
+npm ci
+npm run build:app
+npm run preview
 ```
 
-Der Statushelfer benötigt Python 3.10 oder neuer und keine zusätzlichen Pakete. Er ist lauffähig und lesend. Er verändert den Aufgabenstatus nicht. Zehn Tests prüfen den Statushelfer; diese Tests sind ausdrücklich **keine Tests der noch zu implementierenden Website**.
+`build:app` baut die echte App als nicht indexierbare Vorschau und führt die Auslieferungsprüfungen aus. Die Seite liegt unter `/de-de/`. `npm run dev:app` startet die Entwicklung; Datenendpunkte und Volltextsuche sind erst im vollständigen statischen Build vorhanden.
 
-Die Unit-Tests arbeiten mit isolierten synthetischen Aufgaben. Sie bleiben dadurch verwendbar, wenn sich der echte Projektfortschritt ändert.
+## Daten und Oberfläche
 
-Eine abgeschlossene Aufgabe braucht in `evidence` mindestens einen Eintrag mit `description`, `reference` und `verified_at`; optional `command` und `exit_code`. Eine blockierte Aufgabe braucht `blocker.reason`, `blocker.required_action` und `blocker.owner`. Kein done ohne echte Nachweise und erfüllte Abhängigkeiten.
+V2-Design mit selbst gehosteten Manrope/Kalam-Schriften, responsiven Originalbildern, gruppierter Navigation, Werkzeugen und Ratgebern. Enthalten sind 9.381 OSM-Orte, 46.113 Ortsnamen, 42 Stadtübersichten, 170 kommunale Hundeflächen/-regeln und 1.006 offizielle GOT-Positionen. Die kleine Produktauswahl enthält vier Futtervarianten und drei Zubehörprodukte mit Herstellerquellen; keine erfundenen Preise oder Bewertungen.
 
-`current_task` referenziert die eine koordinierende Hauptaufgabe mit Status in_progress. Subagenten können separat untersuchen, ohne denselben Status oder dieselben Dateien konkurrierend zu überschreiben. Optional nötige Zusatzaufgaben erhalten neue stabile IDs.
+Provenienz: `docs/REAL_PRODUCT_DATA.md`, `docs/COVERAGE.md`, `docs/MUNICIPAL_SOURCES.md`, `design-assets/README.md`. Datenstand und Grenzen sind in der App sichtbar. Snapshot-Updates werden als geprüfte Pull Requests übernommen; Code und Daten werden aus demselben Commit gebaut (ADR-019).
 
-## Technische Leitentscheidung
+## Prüfen
 
-Astro erzeugt statisches HTML; kleine JSON-Dateien treiben Rechner und Filter im Browser an. GitHub Actions importiert zulässige offene Daten. Cloudflare Builds baut die Website und holt dort bei Bedarf freigegebene Affiliate-Feeds mit Secrets ab. Cloudflare Static Assets liefert das Ergebnis aus. Kein Supabase, kein D1/KV, kein SSR oder Besucher-API-Backend im Startumfang.
+```sh
+npm run verify
+npm run test:e2e
+npm run test:e2e:features
+npm run test:accessibility
+```
 
-Ein öffentliches Repository ist weder ein Geheimnisspeicher noch automatisch eine einheitlich Open-Source-lizenzierte Datenbank. Öffentliche JSON-Dateien dürfen nur enthalten, was auch öffentlich ausgegeben werden darf.
+Die Browserprüfungen benötigen die Playwright-Browser (`npx playwright install chromium webkit`). `npm run build:app` prüft zusätzlich Ausgabedateien, interne Verweise, SEO und Größenbudgets.
 
-## Dokumentpflege
+## Veröffentlichung
 
-Die modularen docs-Dateien sind für die tägliche Ausführung gedacht; IMPLEMENTIERUNGSPLAN.md ist ihre zusammengefasste Referenz. Architekturänderungen über ADRs dokumentieren und betroffene Spezifikation/Tests konsistent halten. Den Aufgabenstatus niemals aus einer alten Kopie des Plans zurücksetzen.
+Cloudflare Workers Static Assets, Konfiguration in `wrangler.preview.jsonc` und `wrangler.jsonc`. Vorschau und Produktion sind getrennt. Der Produktionsbuild verlangt echte Betreiberangaben, eine Domain und dokumentierte Einzelprüfungen. `.env.example` nennt die öffentlichen Konfigurationsfelder. Partnerangebote, Versicherungsangebote und Werbung bleiben bis zu tatsächlichen Verträgen und Freigaben ausgeschaltet.
 
-## Betriebsprobleme
-
-[problems.md](problems.md) sammelt die Fälle, die **nicht** kaputt sind, aber so aussehen — mit Ursache, Handgriff und dem, was man dabei ausdrücklich nicht tun soll. Daneben: [docs/BLOCKERS.md](docs/BLOCKERS.md) für externe Voraussetzungen, [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) für die bewussten Grenzen und [TODO.md](TODO.md) für Entscheidungen außerhalb des Codes.
+Aktueller Arbeits-/Abnahmestand: `docs/HANDOFF.md`. Bekannte Grenzen: `docs/KNOWN_LIMITATIONS.md`. Aufgabenregister: `project/tasks.json`; `npm run status` zeigt den strukturierten Stand. `CLAUDE.md` und die ursprünglichen Planungsdokumente enthalten die Projektregeln und Planungshistorie.

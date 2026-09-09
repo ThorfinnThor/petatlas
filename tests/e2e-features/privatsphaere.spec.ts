@@ -45,7 +45,7 @@ test('trägt Profilangaben in keine Anfrage — auch nicht in die eigene', async
   await expect(page.locator('.profil__hinweis')).toContainText('Gespeichert');
 
   // Danach durch die Seiten gehen, die etwas verlinken oder nachladen.
-  await page.goto(`${FUTTER}trocken-1kg/`);
+  await page.goto(`${FUTTER}royal-canin-mini-adult-2kg/`);
   await page.locator('button[data-merken="food"]').click();
   await page.goto(MERKLISTE);
   await expect(page.locator('.merk__liste > li')).toHaveCount(1);
@@ -66,7 +66,7 @@ test('schickt überhaupt nichts an fremde Hosts', async ({ page }) => {
   await page.fill('#profil-name', KANARIENVOGEL);
   await page.click('#profil-speichern');
   await page.goto(MERKLISTE);
-  await page.goto(`${FUTTER}nass-400g/`);
+  await page.goto(`${FUTTER}bosch-adult-lamm-reis-15kg/`);
 
   expect(fremde(anfragen).map((anfrage) => anfrage.url)).toEqual([]);
 });
@@ -149,7 +149,7 @@ test('speichert nur unter den eigenen Schlüsseln', async ({ page }) => {
   await page.selectOption('#profil-tierart', 'dog');
   await page.fill('#profil-name', KANARIENVOGEL);
   await page.click('#profil-speichern');
-  await page.goto(`${FUTTER}trocken-1kg/`);
+  await page.goto(`${FUTTER}royal-canin-mini-adult-2kg/`);
   await page.locator('button[data-merken="food"]').click();
   await page.goto(REISE);
   await page.locator('.packliste input[type="checkbox"]').first().check();

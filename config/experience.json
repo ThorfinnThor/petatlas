@@ -1,0 +1,4 @@
+{
+  "features": ["costs", "map", "travel", "care", "toys", "food", "profile"],
+  "note": "Real-data app profile. Preview is noindex. Production still requires all applicable release reviews; commerce and tracking remain disabled."
+}

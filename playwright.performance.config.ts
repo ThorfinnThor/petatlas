@@ -32,10 +32,9 @@ export default defineConfig({
     { name: 'chromium-mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: `npm run build:site && npx astro preview --port ${PORT} --ignore-lock`,
+    command: `npm run build:app && npx astro preview --port ${PORT} --ignore-lock`,
     env: {
       ASTRO_PREVIEW_BACKGROUND: 'false',
-      ENABLE_FEATURES: 'costs,map,travel,commerce,care,toys,food,profile',
     },
     port: PORT,
     reuseExistingServer: false,

@@ -8,6 +8,8 @@
  * `production`.
  */
 import launch from './launch.json' with { type: 'json' };
+import experience from './experience.json' with { type: 'json' };
+import { assertRelease, type ReleaseConfig } from './release-policy.ts';
 import { type BuildMode, createSiteConfig, type OperatorInfo, readBuildMode } from './site.ts';
 
 export type DataSource = 'fixtures' | 'published';
@@ -52,6 +54,7 @@ function fixturesRequested(env: Record<string, string | undefined>): boolean {
 export function resolveBuildConfig(
   env: Record<string, string | undefined> = process.env,
   operator?: OperatorInfo,
+  release: ReleaseConfig = launch,
 ): BuildConfig {
   const mode = readBuildMode(env);
 
@@ -61,13 +64,15 @@ export function resolveBuildConfig(
         'production darf keine Fixtures ausliefern. USE_FIXTURES ist in production unzulässig.',
       );
     }
-    if (launch.publicRelease.approved !== true) {
+    if (release.publicRelease.approved !== true) {
       throw new BuildConfigError(
         'production ist gesperrt: config/launch.json meldet publicRelease.approved=false. ' +
           'Die Launch-Gates aus docs/QUALITY_GATES.md sind nicht dokumentiert erfüllt.',
       );
     }
   }
+
+  if (mode === 'production') assertRelease(release, productionFeatures());
 
   // Wirft, wenn Domain oder Betreiberangaben in production fehlen.
   const site = createSiteConfig(mode, env, operator);
@@ -116,6 +121,8 @@ export function resolveBuildConfig(
 export function devFeatureOverrides(
   env: Record<string, string | undefined> = process.env,
 ): readonly string[] {
+  if (readBuildMode(env) === 'production') return productionFeatures();
+  if (env.APP_PROFILE === 'real') return experience.features;
   if (readBuildMode(env) !== 'development') return [];
   return (env.ENABLE_FEATURES ?? '')
     .split(',')
@@ -126,4 +133,8 @@ export function devFeatureOverrides(
 /** Meta-robots-Wert für eine Seite. Nicht indexierbar heißt immer `noindex`. */
 export function robotsDirective(config: BuildConfig): string {
   return config.indexable ? 'index, follow' : 'noindex, nofollow';
+}
+
+export function productionFeatures(): readonly string[] {
+  return experience.features;
 }

@@ -20,8 +20,8 @@ test.describe('Tool-Ansicht des Rechners', () => {
     expect(ergebnis.x).toBeGreaterThan(eingabe.x + eingabe.width - 1);
     expect(ergebnis.y).toBeLessThan(eingabe.y + eingabe.height);
 
-    // Abschnitt 24.2: links 5, rechts 7 Spalten — das Ergebnis ist breiter.
-    expect(ergebnis.width).toBeGreaterThan(eingabe.width);
+    // Abschnitt 24.2: V2: links 7, rechts 5 Spalten — die Eingabe ist breiter.
+    expect(eingabe.width).toBeGreaterThan(ergebnis.width);
   });
 
   test('zeigt die Ergebnisüberschrift ohne Scrollen', async ({ page }, testInfo) => {

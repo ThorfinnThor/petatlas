@@ -1,0 +1,65 @@
+<div class="saved-profile" hidden>
+  <button type="button">Gespeichertes Tierprofil übernehmen</button>
+  <p class="hilfe" role="status" aria-live="polite"></p>
+</div>
+<script>
+  import { lade } from '../../features/profile/storage.ts';
+  const panel = document.querySelector<HTMLElement>('.saved-profile');
+  if (panel) {
+    try {
+      const saved = lade(window.localStorage);
+      if (saved.ok && saved.wert) {
+        panel.hidden = false;
+        panel.querySelector('button')?.addEventListener('click', () => {
+          // Read again so deleting or changing the profile in another tab is respected.
+          try {
+            const current = lade(window.localStorage);
+            const profile = current.wert?.profile;
+            if (!current.ok || !profile) throw new Error('missing');
+            const radio = [
+              ...document.querySelectorAll<HTMLInputElement>('input[name="tierart"]'),
+            ].find((input) => input.value === profile.species);
+            if (radio) {
+              radio.checked = true;
+              radio.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            const fields: [string, string][] = [
+              ['#finder-tierart', profile.species],
+              [
+                '#finder-gewicht',
+                profile.weightGrams === null ? '' : String(profile.weightGrams / 1000),
+              ],
+              ['#geburtsdatum', profile.birthDate ?? ''],
+            ];
+            for (const [selector, value] of fields) {
+              const field = document.querySelector<HTMLInputElement | HTMLSelectElement>(selector);
+              if (field) {
+                field.value = value;
+                field.dispatchEvent(new Event('change', { bubbles: true }));
+              }
+            }
+            panel.querySelector('p')!.textContent =
+              'Gespeicherte Angaben übernommen. Bitte vor der Auswertung prüfen. Alles bleibt auf diesem Gerät.';
+          } catch {
+            panel.querySelector('p')!.textContent =
+              'Kein lesbares Profil vorhanden. Die Angaben können direkt eingegeben werden.';
+          }
+        });
+      }
+    } catch {
+      /* Optional local storage is unavailable; the tool remains fully usable. */
+    }
+  }
+</script>
+<style>
+  .saved-profile {
+    margin-block: var(--space-4);
+  }
+  .saved-profile[hidden] {
+    display: none;
+  }
+  .hilfe {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+</style>

@@ -46,8 +46,8 @@ describe('vorschauBestand', () => {
 
   it('nennt genau die erfundenen Bestände', () => {
     const bestand = vorschauBestand(ALLES);
-    expect(bestand.synthetisch).toContain('Futterprodukte');
-    expect(bestand.synthetisch).toContain('Produkteigenschaften für Pflege und Spielzeug');
+    expect(bestand.synthetisch).not.toContain('Futterprodukte');
+    expect(bestand.synthetisch).not.toContain('Produkteigenschaften für Pflege und Spielzeug');
     expect(bestand.synthetisch).toContain('Angebote mit Preisen');
   });
 

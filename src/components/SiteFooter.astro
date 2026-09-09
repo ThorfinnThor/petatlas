@@ -8,6 +8,7 @@
  * Die Gruppen entstehen aus der Route Registry. Eine Funktion, die es im
  * Markt nicht gibt, taucht hier nicht auf — der Fuß verlinkt nichts Leeres.
  */
+import { createSiteConfig, readBuildMode } from '../../config/site.ts';
 import type { MarketConfig } from '../domain/market.ts';
 import { translate, type LocaleId } from '../domain/i18n.ts';
 import { navigationFor, type NavigationItem, type RouteKey } from '../lib/routes.ts';
@@ -38,6 +39,7 @@ const transparenz = gruppe([
   'imprint',
   'accessibility',
 ]);
+const brandName = createSiteConfig(readBuildMode(process.env), process.env).brandName;
 const jahr = new Date().getFullYear();
 
 const SPALTEN = [
@@ -51,9 +53,9 @@ const SPALTEN = [
   <div class="fuss__inhalt page-container">
     <div class="fuss__raster">
       <div class="fuss__marke">
-        <p class="fuss__name">PetAtlas</p>
+        <p class="fuss__name">{brandName}</p>
         <p class="fuss__satz">
-          Daten aus offenen Quellen, mit Stand und Herkunft an jeder Angabe. Ohne Konto, ohne
+          Nachvollziehbare Quellen, mit Stand und Herkunft an jeder Angabe. Ohne Konto, ohne
           Tracking.
         </p>
       </div>
@@ -75,7 +77,7 @@ const SPALTEN = [
     </div>
 
     <p class="fuss__unterkante">
-      © {jahr} PetAtlas · Datenstände je Werkzeug können abweichen ·{' '}
+      © {jahr}{' '}{brandName} · Datenstände je Werkzeug können abweichen ·{' '}
       {betreiber ?? 'Betreiberangaben liegen noch nicht vor.'}
     </p>
   </div>
@@ -84,8 +86,8 @@ const SPALTEN = [
 <style>
   .fuss {
     border-block-start: 1px solid var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text-muted);
+    background: var(--color-brand-900);
+    color: var(--color-on-dark-muted);
     font-size: var(--text-small);
   }
 
@@ -108,7 +110,7 @@ const SPALTEN = [
 
   .fuss__name {
     margin: 0 0 var(--space-2);
-    color: var(--color-ink);
+    color: var(--color-on-dark);
     font-size: var(--text-h4);
     font-weight: var(--weight-h2);
   }
@@ -120,7 +122,7 @@ const SPALTEN = [
 
   .fuss__titel {
     margin: 0 0 var(--space-3);
-    color: var(--color-ink);
+    color: var(--color-on-dark);
     font-size: var(--text-micro);
     font-weight: var(--weight-label);
     text-transform: none;
@@ -138,7 +140,7 @@ const SPALTEN = [
   }
 
   .fuss__liste a {
-    color: var(--color-text);
+    color: var(--color-on-dark);
     text-decoration-color: var(--color-border-strong);
   }
 
@@ -153,5 +155,14 @@ const SPALTEN = [
     border-block-start: 1px solid var(--color-border);
     max-inline-size: none;
     font-size: var(--text-micro);
+  }
+  .fuss a {
+    color: var(--color-on-dark);
+  }
+  @media (max-width: 767px) {
+    .fuss__titel,
+    .fuss__unterkante {
+      font-size: 0.875rem;
+    }
   }
 </style>

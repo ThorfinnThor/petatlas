@@ -18,7 +18,7 @@ test('Startseite des Marktes lädt', async ({ page }) => {
   expect(antwort?.status()).toBe(200);
   // Die H1 nennt seit dem Designdurchgang das Thema; die Marke steht in
   // Kopfbereich und Seitentitel.
-  await expect(page.locator('h1')).toHaveText('Besser entscheiden für dein Tier');
+  await expect(page.locator('h1')).toHaveText('Alles für ein gesundes & glückliches Hundeleben.');
 });
 
 test('Die Wurzel leitet auf den aktiven Markt', async ({ page }) => {
@@ -32,7 +32,8 @@ test('Jeder Navigationseintrag führt auf eine vorhandene Seite', async ({ page 
   expect(links.length).toBeGreaterThan(0);
 
   for (const href of links) {
-    const antwort = await page.goto(href);
+    const antwort = await page.request.get(href.split('#')[0] ?? href);
+    await page.goto(href);
     expect(antwort?.status(), `${href} antwortet nicht mit 200`).toBe(200);
     // Keine leere Seite: eine Überschrift muss vorhanden sein.
     await expect(page.locator('h1')).toBeVisible();

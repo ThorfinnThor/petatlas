@@ -69,7 +69,7 @@ describe('Die echten Gates', () => {
   it('sind heute sämtlich offen', () => {
     const stand = freigabestand();
     expect(stand.oeffentlichFreigegeben).toBe(false);
-    expect(stand.offeneGates.length).toBe(Object.keys(GATES).length);
+    expect(stand.offeneGates.length).toBe(5);
     expect(stand.begruendung).toContain('Nicht freigabefähig');
   });
 

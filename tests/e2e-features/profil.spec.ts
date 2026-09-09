@@ -100,7 +100,9 @@ test('überträgt auch beim Speichern nichts', async ({ page }) => {
 
 test('sagt, dass es keinen Geräteabgleich gibt', async ({ page }) => {
   await page.goto(PROFIL);
-  await expect(page.locator('main')).toContainText('keinen Abgleich mit anderen Geräten');
+  await expect(page.locator('main')).toContainText(
+    'keinen automatischen Abgleich mit anderen Geräten',
+  );
 });
 
 test('vergisst ungespeicherte Angaben beim Neuladen', async ({ page }) => {

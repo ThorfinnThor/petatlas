@@ -1,0 +1,114 @@
+---
+import BrandImage from './BrandImage.astro';
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: string;
+  annotation?: string;
+}
+const { eyebrow, title, description, image, annotation } = Astro.props;
+---
+
+<section class="hero-feature">
+  <div class="hero-copy">
+    <p class="eyebrow">{eyebrow}</p><h1>{title}</h1><p class="hero-lead">{description}</p><div
+      class="hero-actions"
+    >
+      <slot />
+    </div><p class="hero-proof">Offene Quellen. Klare Antworten. Ohne Anmeldung.</p>
+  </div>
+  <div class="hero-visual">
+    <BrandImage name={image} priority />{
+      annotation && <span class="hero-note annotation">{annotation}</span>
+    }
+  </div>
+</section>
+<style>
+  .hero-feature {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    border-radius: var(--radius-xl);
+    background: var(--color-brand-050);
+    overflow: hidden;
+    min-height: 510px;
+  }
+  .hero-copy {
+    padding: var(--space-12) var(--space-10);
+    align-self: center;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-copy .eyebrow {
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 4.1vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+    font-weight: 750;
+    max-width: 16ch;
+    margin: var(--space-4) 0 var(--space-6);
+  }
+  .hero-lead {
+    font-size: 1rem;
+    max-width: 40ch;
+    color: var(--color-text);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block: var(--space-6);
+  }
+  .hero-proof {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  .hero-visual {
+    position: relative;
+    min-width: 0;
+  }
+  .hero-visual :global(picture) {
+    height: 100%;
+  }
+  .hero-visual :global(img) {
+    object-position: 65% center;
+  }
+  .hero-note {
+    position: absolute;
+    bottom: var(--space-8);
+    left: var(--space-8);
+    transform: rotate(-5deg);
+    background: var(--color-surface-warm);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    color: var(--color-brand-900);
+    box-shadow: var(--shadow-sm);
+  }
+  @media (max-width: 767px) {
+    .hero-feature {
+      grid-template-columns: 1fr;
+    }
+    .hero-copy {
+      padding: var(--space-8) var(--space-5);
+    }
+    h1 {
+      font-size: 2.625rem;
+      max-width: 13ch;
+    }
+    .hero-visual {
+      height: 280px;
+    }
+    .hero-note {
+      bottom: var(--space-5);
+      left: var(--space-5);
+      font-size: 1.4rem;
+    }
+    .hero-actions :global(a:first-child) {
+      flex-basis: 100%;
+    }
+  }
+</style>

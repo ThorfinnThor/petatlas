@@ -1,0 +1,228 @@
+{
+  "datasetId": "manufacturer-food-de-2026-09",
+  "lastEditedAt": "2026-09-09",
+  "dataKind": "real",
+  "products": [
+    {
+      "foodId": "royal-canin-mini-adult-2kg",
+      "productId": "royal-canin-mini-adult-2kg",
+      "species": "dog",
+      "brand": "Royal Canin",
+      "productName": "Mini Adult",
+      "gtin": null,
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 2000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 27,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "fat",
+          "value": 16,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "fiber",
+          "value": 1.7,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "ash",
+          "value": 6.8,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+      "declarationCheckedAt": "2026-09-09",
+      "categoryId": "dry-food"
+    },
+    {
+      "foodId": "royal-canin-mini-adult-4kg",
+      "productId": "royal-canin-mini-adult-4kg",
+      "species": "dog",
+      "brand": "Royal Canin",
+      "productName": "Mini Adult",
+      "gtin": null,
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 4000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 27,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "fat",
+          "value": 16,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "fiber",
+          "value": 1.7,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "ash",
+          "value": 6.8,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+      "declarationCheckedAt": "2026-09-09",
+      "categoryId": "dry-food"
+    },
+    {
+      "foodId": "royal-canin-mini-adult-8kg",
+      "productId": "royal-canin-mini-adult-8kg",
+      "species": "dog",
+      "brand": "Royal Canin",
+      "productName": "Mini Adult",
+      "gtin": null,
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 8000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 27,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "fat",
+          "value": 16,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "fiber",
+          "value": 1.7,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "ash",
+          "value": 6.8,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+          "checkedAt": "2026-09-09"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://www.royalcanin.com/de/dogs/products/retail-products/mini-adult-3001",
+      "declarationCheckedAt": "2026-09-09",
+      "categoryId": "dry-food"
+    },
+    {
+      "foodId": "bosch-adult-lamm-reis-15kg",
+      "productId": "bosch-adult-lamm-reis-15kg",
+      "species": "dog",
+      "brand": "bosch",
+      "productName": "Adult mit Lamm & Reis",
+      "gtin": null,
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 15000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 21.5,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "bosch · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.bosch-tiernahrung.de/bosch_de_de/hpc-adult-lamm-reis.html",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "fat",
+          "value": 10.5,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "bosch · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.bosch-tiernahrung.de/bosch_de_de/hpc-adult-lamm-reis.html",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "fiber",
+          "value": 2.5,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "bosch · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.bosch-tiernahrung.de/bosch_de_de/hpc-adult-lamm-reis.html",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "nutrient": "ash",
+          "value": 5.8,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "bosch · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.bosch-tiernahrung.de/bosch_de_de/hpc-adult-lamm-reis.html",
+          "checkedAt": "2026-09-09"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://www.bosch-tiernahrung.de/bosch_de_de/hpc-adult-lamm-reis.html",
+      "declarationCheckedAt": "2026-09-09",
+      "categoryId": "dry-food"
+    }
+  ],
+  "notes": [
+    "Kleine redaktionelle Auswahl, kein vollständiger Marktvergleich. Herstellerangaben, nicht unabhängig gemessen.",
+    "Keine Preise, Bilder oder Werbetexte übernommen. Nicht belegte GTINs bleiben leer.",
+    "Nährwerte sind Prozent der Frischmasse; verschiedene Packungsgrößen sind getrennte Varianten."
+  ]
+}

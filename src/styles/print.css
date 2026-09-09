@@ -15,6 +15,7 @@
    * Druckknopf selbst verschwinden. */
   #reiseform,
   #drucken,
+  [data-remove-cost],
   #packliste-zuruecksetzen,
   #ohne-javascript {
     display: none !important;

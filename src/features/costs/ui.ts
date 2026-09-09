@@ -58,11 +58,12 @@ function geld(minor: number): string {
 function ergebnisTabelle(result: CostResult): string {
   const zeilen = result.lines
     .map(
-      (zeile) => `
+      (zeile, index) => `
         <tr>
           <td>
             ${escape(zeile.label)}
             <span class="fundstelle">${escape(zeile.sourceReference)}</span>
+            <button type="button" data-remove-cost="${index}" aria-label="Position entfernen: ${escape(zeile.label)}">Entfernen</button>
           </td>
           <td class="zahl">${geld(zeile.baseAmount.amountMinor)}</td>
           <td class="zahl">${zeile.factor.toLocaleString(LOCALE, { minimumFractionDigits: 2 })}</td>
@@ -81,6 +82,7 @@ function ergebnisTabelle(result: CostResult): string {
          </tr>`;
 
   return `
+    <p class="bill-summary"><strong>${geld(result.grossTotal.amountMinor)}</strong><br>Brutto für die ausgewählten Positionen, inklusive ${result.vatPercent} % Umsatzsteuer.</p>
     <table>
       <caption>Rechnung, Fassung ${escape(result.catalogVersion)}</caption>
       <thead>
@@ -160,6 +162,8 @@ export function rechnerStarten(): void {
   }
 
   function neuRechnen(): void {
+    const printButton = element<HTMLButtonElement>('#drucken');
+    if (printButton) printButton.disabled = true;
     if (auswahl.length === 0) {
       status!.textContent = 'Noch keine Position ausgewählt.';
       ergebnis!.replaceChildren();
@@ -180,6 +184,7 @@ export function rechnerStarten(): void {
       );
       status!.textContent = `${result.lines.length} Position(en), Summe brutto ${geld(result.grossTotal.amountMinor)}.`;
       ergebnis!.innerHTML = ergebnisTabelle(result);
+      if (printButton) printButton.disabled = false;
     } catch (fehler) {
       // Ein Rechenfehler wird benannt, nicht verschluckt.
       const meldung =
@@ -250,6 +255,19 @@ export function rechnerStarten(): void {
   }
   suche.addEventListener('input', trefferZeigen);
   form.addEventListener('formular:gueltig', trefferZeigen);
+
+  ergebnis.addEventListener('click', (event) => {
+    const button =
+      event.target instanceof Element
+        ? event.target.closest<HTMLButtonElement>('[data-remove-cost]')
+        : null;
+    if (!button) return;
+    const index = Number(button.dataset.removeCost);
+    if (!Number.isInteger(index) || index < 0 || index >= auswahl.length) return;
+    auswahl.splice(index, 1);
+    neuRechnen();
+    suche.focus();
+  });
 
   element<HTMLButtonElement>('#drucken')?.addEventListener('click', () => {
     window.print();

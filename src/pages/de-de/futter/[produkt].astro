@@ -125,7 +125,7 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
             <tr data-naehrwert={eintrag.nutrient}>
               <th scope="row">{eintrag.nutrient}</th>
               <td>
-                {eintrag.value} {eintrag.unit}
+                {eintrag.value?.toLocaleString('de-DE')} {eintrag.unit}
               </td>
               <td>{eintrag.basis === null ? '—' : (BASIS_TEXT[eintrag.basis] ?? eintrag.basis)}</td>
               <td>

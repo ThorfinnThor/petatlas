@@ -63,10 +63,6 @@ jobs:
         id: partner
         run: node scripts/publish/commerce-rebuild.ts
 
-      - name: Katalog bauen
-        if: ${{ steps.partner.outputs.noetig == 'true' }}
-        run: npm run build:commerce
-
       # Der Hook wird nur aufgerufen, wenn es etwas Neues gibt. Fehlt das
       # Secret, endet der Schritt mit einer klaren Meldung statt mit einem
       # Fehler: ein Repository ohne hinterlegten Hook ist kein kaputtes
@@ -84,7 +80,7 @@ jobs:
             echo '## Warenkatalog'
             echo
             if [ "${{ steps.partner.outputs.noetig }}" = 'true' ]; then
-              echo 'Es gibt mindestens ein zugelassenes Warenprogramm; der Katalog wurde gebaut.'
+              echo 'Es gibt ein zugelassenes Warenprogramm; der Hookstatus steht im vorigen Schritt. Gebaut wird ausschließlich bei Cloudflare.'
             else
               echo 'Kein zugelassenes Warenprogramm. Kein Feedabruf, kein Rebuild, kein Hook.'
             fi

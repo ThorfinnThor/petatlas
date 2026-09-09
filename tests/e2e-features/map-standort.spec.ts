@@ -117,6 +117,8 @@ test('bleibt bei einem dichten Ausschnitt bedienbar', async ({ page }) => {
   await page.selectOption('#radius', '50000');
   await expect(page.locator('#treffer-status')).toContainText('um Berlin', { timeout: 20_000 });
 
+  const toggle = page.locator('[data-map-view=map]');
+  if (await toggle.isVisible()) await toggle.click();
   await page.click('#karte-anzeigen');
   await expect(page.locator('#karte.leaflet-container')).toBeVisible({ timeout: 30_000 });
 

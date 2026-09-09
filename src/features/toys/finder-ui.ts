@@ -1,3 +1,4 @@
+import { productIdentity, merkmalLabel } from '../care/attributes.ts';
 /**
  * M14-04 — Spielzeugfinder im Browser.
  *
@@ -35,6 +36,10 @@ function bedarfLesen(): Bedarf {
 }
 
 function trefferMarkup(treffer: Treffer): string {
+  const identity = productIdentity(treffer.productId);
+  const source = identity
+    ? `<p><a href="${escape(identity.sourceUrl)}" rel="noopener">Herstellerangaben ansehen</a> · ${escape(identity.checkedAt)}</p>`
+    : '';
   const begruendung =
     treffer.begruendung.length === 0
       ? '<p class="finder__neutral">Keine belegte Übereinstimmung mit Ihren Angaben — das Produkt ' +
@@ -46,14 +51,15 @@ function trefferMarkup(treffer: Treffer): string {
   const offen =
     treffer.ungeprueft.length === 0
       ? ''
-      : `<p class="finder__offen">Nicht geprüft: ${treffer.ungeprueft.map(escape).join(', ')}.</p>`;
+      : `<p class="finder__offen">Nicht geprüft: ${treffer.ungeprueft.map(merkmalLabel).map(escape).join(', ')}.</p>`;
 
   return `
     <li data-produkt="${escape(treffer.productId)}" data-punkte="${treffer.punkte}">
-      <h3>${escape(treffer.productId)}</h3>
+      <h3>${escape(productIdentity(treffer.productId)?.name ?? treffer.productId)}</h3>
       <p class="finder__kategorie">Kategorie: ${escape(treffer.categoryId)}</p>
       ${begruendung}
       ${offen}
+      ${source}
     </li>`;
 }
 

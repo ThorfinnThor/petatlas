@@ -1,40 +1,105 @@
 ---
-/**
- * M04-03 — Datenschutzseite.
- *
- * Beschreibt nur, was der aktuelle Build tatsächlich tut. Es wird nicht
- * behauptet, es gebe keine Cookies, solange nicht alle aktiven Integrationen
- * geprüft sind — im Startumfang gibt es schlicht keine.
- */
-import { resolveBuildConfig } from '../../../config/build.ts';
+import { resolveBuildConfig, devFeatureOverrides } from '../../../config/build.ts';
+import { createSiteConfig } from '../../../config/site.ts';
+import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import Notice from '../Notice.astro';
-
 const build = resolveBuildConfig();
+const site = createSiteConfig(build.mode, process.env);
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 ---
 
 <h1>Datenschutz</h1>
-
-<h2>Was dieser Aufbaustand tut</h2>
-<ul>
-  <li>Die Seiten sind statisches HTML ohne Serverlogik und ohne Datenbank.</li>
-  <li>Es gibt keine Anmeldung, kein Konto und keine Formularübertragung an einen Server.</li>
-  <li>Es sind keine Analyse-, Werbe- oder Trackingdienste eingebunden.</li>
-  <li>Es wird kein Standort abgefragt.</li>
-  <li>Der Build setzt keine Cookies und lädt keine Inhalte von Drittanbietern.</li>
-</ul>
-
-<Notice variante="hinweis" titel="Gilt für den aktuellen Stand">
-  <p>
-    Diese Beschreibung bezieht sich auf den Funktionsumfang dieses Builds (<strong
-      >{build.mode}</strong
-    >). Kommen Karte, Partnerangebote oder Bilder Dritter hinzu, wird sie vor deren Freigabe
-    überarbeitet und geprüft.
-  </p>
-</Notice>
-
+<p>
+  Hier erfährst du, welche Daten diese Website für ihre Funktionen verwendet. Stand: 9. September
+  2026.
+</p>
+<h2>Verantwortlicher und Kontakt</h2>
+{
+  site.operator.legalName ? (
+    <p>
+      {site.operator.legalName}
+      <br />
+      {site.operator.address}
+      <br />
+      <a href={`mailto:${site.operator.contactEmail}`}>{site.operator.contactEmail}</a>
+    </p>
+  ) : (
+    <Notice variante="hinweis" titel="Vorschau ohne vollständige Betreiberangaben">
+      <p>
+        Die Betreiber- und Kontaktangaben werden vor der öffentlichen Freigabe ergänzt. Diese
+        Vorschau enthält noch keine abgeschlossene rechtliche Bewertung.
+      </p>
+    </Notice>
+  )
+}
+<h2>Website und Hosting</h2>
+<p>
+  Die Website liefert statische Seiten über Cloudflare aus. Beim Abruf verarbeitet der
+  Hostinganbieter insbesondere die IP-Adresse und technische Verbindungsdaten, um die angeforderten
+  Dateien auszuliefern und den Dienst zu schützen. Es gibt keine Anmeldung und keine eigene
+  Besucherdatenbank.
+</p>
+<p>
+  Weitere Angaben zum Hostinganbieter: <a
+    href="https://www.cloudflare.com/privacypolicy/"
+    rel="noopener">Cloudflare-Datenschutzhinweise</a
+  >.
+</p>
+<h2>Suche und Rechner</h2>
+<p>
+  Suchbegriffe und Recheneingaben werden im Browser verarbeitet. Orts- und Gebührendaten werden als
+  statische Dateien geladen. Suchbegriffe in einer Seitenadresse können wie andere URL-Bestandteile
+  in Verbindungsdaten auftauchen. Deshalb gehören keine vertraulichen Informationen in diese Felder.
+</p>
+{
+  market.featureFlags.map && (
+    <>
+      <>
+        <h2>Karte und Standort</h2>
+        <p>
+          Die Ortsliste funktioniert ohne externe Kartenkacheln. Erst wenn du die Karte anforderst,
+          lädt der Browser Kartenbilder von tile.openstreetmap.org. Dabei erhält der Kacheldienst
+          unter anderem deine IP-Adresse und die angeforderten Kartenausschnitte.{' '}
+          <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">
+            Datenschutzhinweise der OpenStreetMap Foundation
+          </a>
+          .
+        </p>
+        <p>
+          „Meinen Standort verwenden“ fragt die Position erst nach deiner ausdrücklichen Aktion und
+          der Browserfreigabe ab. Die Website verwendet sie für die Suche im Browser. Du kannst
+          stattdessen jederzeit einen Ort eingeben. Standortberechtigungen kannst du in den
+          Browsereinstellungen widerrufen.
+        </p>
+      </>
+    </>
+  )
+}
+{
+  market.featureFlags.profile && (
+    <>
+      <>
+        <h2>Mein Tier, Merkliste und Packliste</h2>
+        <p>
+          Wenn du diese Funktionen benutzt, speichert dein Browser deine Auswahl lokal auf diesem
+          Gerät. Das Profil wird nicht an einen PetAtlas-Server übertragen und nicht zwischen
+          Geräten synchronisiert. Du kannst die Daten in den Werkzeugen löschen oder über die
+          Website-Datenverwaltung deines Browsers entfernen. Ein von dir exportiertes Profil liegt
+          als Datei auf deinem Gerät; du entscheidest, ob du es weitergibst.
+        </p>
+      </>
+    </>
+  )
+}
+<h2>Externe Links, Bilder und Schriftarten</h2>
+<p>
+  Hersteller- und Quellenlinks öffnen fremde Websites erst auf deinen Klick. Es sind keine Analyse-,
+  Werbe- oder Trackingdienste eingebunden. Die Website setzt keine eigenen Tracking-Cookies.
+  Schriftarten und redaktionelle Bilder werden lokal mit der Website ausgeliefert.
+</p>
 <h2>Rechtliche Angaben</h2>
 <p>
-  Eine vollständige Datenschutzerklärung mit Verantwortlichem, Rechtsgrundlagen und
-  Betroffenenrechten setzt Betreiberangaben und eine rechtliche Prüfung voraus. Beides liegt für
-  diesen Aufbaustand nicht vor; es wird hier bewusst kein Platzhaltertext ausgegeben.
+  Vor der öffentlichen Freigabe werden Rechtsgrundlagen, Speicherdauer beim Hosting, mögliche
+  internationale Übermittlungen, deine Betroffenenrechte und die zuständige Aufsichtsbehörde anhand
+  des tatsächlichen Betreibers und der Hostingvereinbarung ergänzt und geprüft.
 </p>

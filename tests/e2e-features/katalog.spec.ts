@@ -39,5 +39,6 @@ test('taucht in der Navigation auf, wenn die Funktion an ist', async ({ page }) 
   await page.goto('/de-de/');
   // Auf schmalen Geräten steckt die Navigation hinter dem Menüknopf.
   await hauptnavigationOeffnen(page);
+  await page.locator('header summary').filter({ hasText: 'Produkte' }).click();
   await expect(page.locator(`header nav a[href="${KATALOG}"]`)).toBeVisible();
 });

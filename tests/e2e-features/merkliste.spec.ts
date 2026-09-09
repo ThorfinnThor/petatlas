@@ -11,7 +11,7 @@ test('ist zunächst leer und sagt, wo sie liegt', async ({ page }) => {
 });
 
 test('merkt ein Produkt und zeigt es mit aktuellen Daten', async ({ page }) => {
-  await page.goto(`${FUTTER}trocken-1kg/`);
+  await page.goto(`${FUTTER}royal-canin-mini-adult-2kg/`);
   const knopf = page.locator('button[data-merken="food"]');
   await expect(knopf).toBeVisible();
   await expect(knopf).toHaveText('Merken');
@@ -19,16 +19,16 @@ test('merkt ein Produkt und zeigt es mit aktuellen Daten', async ({ page }) => {
   await expect(knopf).toHaveAttribute('aria-pressed', 'true');
 
   await page.goto(MERKLISTE);
-  const eintrag = page.locator('[data-eintrag="food:synthetisch:trocken-1kg"]');
+  const eintrag = page.locator('[data-eintrag="food:royal-canin-mini-adult-2kg"]');
   await expect(eintrag).toBeVisible();
   await expect(eintrag).toHaveAttribute('data-stand', 'vorhanden');
   // Name und Menge kommen aus den aktuellen Daten, nicht aus dem Speicher.
-  await expect(eintrag).toContainText('Trockenfutter Adult Huhn');
-  await expect(eintrag).toContainText('1 kg');
+  await expect(eintrag).toContainText('Mini Adult');
+  await expect(eintrag).toContainText('2 kg');
 });
 
 test('speichert nur Kennung, Art und Zeitpunkt', async ({ page }) => {
-  await page.goto(`${FUTTER}nass-400g/`);
+  await page.goto(`${FUTTER}bosch-adult-lamm-reis-15kg/`);
   await page.locator('button[data-merken="food"]').click();
 
   const gespeichert = await page.evaluate(() =>
@@ -47,7 +47,7 @@ test('speichert nur Kennung, Art und Zeitpunkt', async ({ page }) => {
 });
 
 test('entfernt einen Eintrag über die Merkliste', async ({ page }) => {
-  await page.goto(`${FUTTER}trocken-1kg/`);
+  await page.goto(`${FUTTER}royal-canin-mini-adult-2kg/`);
   await page.locator('button[data-merken="food"]').click();
   await page.goto(MERKLISTE);
   await page.locator('button[data-entfernen]').first().click();
@@ -90,7 +90,7 @@ test('überträgt nichts', async ({ page }) => {
       anfragen.push(`${anfrage.method()} ${anfrage.url()}`);
     }
   });
-  await page.goto(`${FUTTER}trocken-1kg/`);
+  await page.goto(`${FUTTER}royal-canin-mini-adult-2kg/`);
   await page.locator('button[data-merken="food"]').click();
   await page.goto(MERKLISTE);
   await expect(page.locator('.merk__liste > li')).toHaveCount(1);
@@ -98,7 +98,7 @@ test('überträgt nichts', async ({ page }) => {
 });
 
 test('benutzt einen eigenen Speicherschlüssel neben dem Profil', async ({ page }) => {
-  await page.goto(`${FUTTER}trocken-1kg/`);
+  await page.goto(`${FUTTER}royal-canin-mini-adult-2kg/`);
   await page.locator('button[data-merken="food"]').click();
   const schluessel = await page.evaluate(() => Object.keys(window.localStorage));
   expect(schluessel).toEqual(['petatlas.favorites.v1']);

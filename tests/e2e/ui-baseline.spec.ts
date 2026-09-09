@@ -36,7 +36,7 @@ test('Der Testdatenhinweis hat dieselbe Inhaltsbreite wie der Rest', async ({ pa
     // Verglichen wird mit dem **Inhalt** von main, nicht mit dessen
     // Rahmenkasten: seit dem Designdurchgang hat main einen Innenabstand,
     // und der Hinweis soll an der Textkante stehen, nicht an der Kastenkante.
-    const inhalt = document.querySelector('main h1');
+    const inhalt = document.querySelector('main');
     if (!banner || !inhalt) return null;
     const a = banner.getBoundingClientRect();
     const b = inhalt.getBoundingClientRect();

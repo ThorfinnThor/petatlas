@@ -9,7 +9,7 @@
  * dann Treffer im Namen, dann in der Marke — und innerhalb dessen
  * alphabetisch, damit die Liste reproduzierbar bleibt.
  */
-import datensatz from '../../../content-data/food/synthetic-products.json' with { type: 'json' };
+import datensatz from '../../../content-data/food/real-products.json' with { type: 'json' };
 import type { FoodProduct } from '../../domain/schemas/food.ts';
 
 export type FutterEintrag = FoodProduct & { readonly categoryId: string };
