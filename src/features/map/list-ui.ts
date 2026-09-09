@@ -17,7 +17,7 @@ import {
   type ListenOrt,
 } from './list.ts';
 import { frageStandort, standortLabel } from './geolocation.ts';
-import { zeigeKarte, waehleMarker } from './map.ts';
+import { zeigeKarte, waehleMarker, type KartenZustand } from './map.ts';
 import { normalisiere, sucheOrte, type OrtsEintrag } from './place-search.ts';
 import { ladeManifest, ladeZellenUm } from './data.ts';
 import { darstellung } from './website.ts';
@@ -117,6 +117,9 @@ export function listeStarten(): void {
   let gewaehlt: { name: string; latitude: number; longitude: number } | null = null;
   let letzteOrte: readonly ListenOrt[] = [];
   let karteAktiv = false;
+  let kartenZustand: KartenZustand | undefined;
+  let kartenLauf: Promise<void> = Promise.resolve();
+  let suchLauf = 0;
 
   function kategorien(): string[] {
     return [...document.querySelectorAll<HTMLInputElement>('input[name="kategorie"]:checked')].map(
@@ -126,11 +129,13 @@ export function listeStarten(): void {
 
   async function aktualisiere(): Promise<void> {
     if (gewaehlt === null) return;
+    const lauf = ++suchLauf;
     const radiusMeter = Number(radius!.value);
     status!.textContent = 'Wird geladen …';
 
     try {
       const orte = await ladeZellenUm(gewaehlt.latitude, gewaehlt.longitude, radiusMeter);
+      if (lauf !== suchLauf) return;
       const treffer = filtereOrte(orte, {
         mitte: { latitude: gewaehlt.latitude, longitude: gewaehlt.longitude },
         gemeinde: gewaehlt.name,
@@ -147,29 +152,39 @@ export function listeStarten(): void {
           ? leereListeHinweis(gewaehlt.name, radiusMeter)
           : `${treffer.length} erfasste Orte im Umkreis von ${formatiereEntfernung(radiusMeter)} um ${gewaehlt.name}.`;
     } catch (fehler) {
+      if (lauf !== suchLauf) return;
       // Ein Ladefehler wird benannt; die vorherige Liste bleibt stehen.
       status!.textContent = 'Die Ortsdaten konnten nicht geladen werden.';
       console.error('Ortsdaten:', fehler);
     }
   }
 
-  async function zeichneKarte(): Promise<void> {
+  function zeichneKarte(): Promise<void> {
+    // Leaflet bleibt an denselben Container gebunden. Auch während des ersten
+    // Imports dürfen schnelle Orts-/Filterwechsel keine zweite Instanz erzeugen.
+    kartenLauf = kartenLauf.then(zeichneKarteJetzt);
+    return kartenLauf;
+  }
+
+  async function zeichneKarteJetzt(): Promise<void> {
     if (!karteBehaelter || !karteStatus || gewaehlt === null) return;
     karteBehaelter.hidden = false;
-    karteBehaelter.replaceChildren();
 
     const { gezeigt, ausgelassen } = waehleMarker(letzteOrte);
     try {
-      await zeigeKarte({
-        container: karteBehaelter,
-        mitte: { latitude: gewaehlt.latitude, longitude: gewaehlt.longitude },
-        orte: letzteOrte,
-        // Ein Ausfall des Kacheldienstes betrifft nur die Karte.
-        beiKachelfehler: () => {
-          karteStatus.textContent =
-            'Der Kartendienst liefert gerade keine Kacheln. Die Liste unten bleibt vollständig.';
+      kartenZustand = await zeigeKarte(
+        {
+          container: karteBehaelter,
+          mitte: { latitude: gewaehlt.latitude, longitude: gewaehlt.longitude },
+          orte: letzteOrte,
+          // Ein Ausfall des Kacheldienstes betrifft nur die Karte.
+          beiKachelfehler: () => {
+            karteStatus.textContent =
+              'Der Kartendienst liefert gerade keine Kacheln. Die Liste unten bleibt vollständig.';
+          },
         },
-      });
+        kartenZustand,
+      );
       karteStatus.textContent =
         ausgelassen === 0
           ? `${gezeigt.length} Orte auf der Karte.`
