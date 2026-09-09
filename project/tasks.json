@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M21-06",
+  "current_task": "M22-02",
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -4268,8 +4268,16 @@
         "M21-05"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Produktkarte nach Abschnitt 20 (src/components/commerce/ProductCard.astro) mit der Reihenfolge aus 20.3 - Produktname, belegte Merkmale, Preis, Haendler, Aktion, Kennzeichnung; ein Test prueft die Reihenfolge im gerenderten HTML, einschliesslich dessen, dass die Werbekennzeichnung nach der Aktion kommt und nicht davor. Nur belegte Merkmale erscheinen als Merkmal: ein Attribut ohne Fundstelle ist kein schwacher Beleg, sondern keiner. Ein unbekannter Wert wird als unbekannt gezeigt statt weggelassen - Weglassen saehe aus wie 'trifft nicht zu'. Ohne belegte Uebereinstimmung sagt die Karte genau das, statt so zu tun, als sei ausgewaehlt worden (Abschnitt 20.5). Kein Bildplatz: es gibt keine Bildrechte, und ein leerer Rahmen waere ein Versprechen. Verwendet auf der Pflegekategorieseite und in drei Zustaenden auf der Angebotsprobe. Bildschirmmappe nach Abschnitt 57: 'npm run design:screenshots' erzeugt 20 Aufnahmen (10 Seiten x mobile 390x844 und desktop 1440x900, ganze Seite, Bewegung abgeschaltet) aus dem tatsaechlichen Build; die Bilder liegen unter reports/ und sind bewusst nicht versioniert. Ich habe sie tatsaechlich angesehen, wie Abschnitt 57 es verlangt, und dabei fuenf sichtbare Probleme gefunden und behoben: (1) der Rechner lief in Lesebreite, wodurch die neue zweispaltige Ansicht auf zweimal rund 300 px gequetscht war - Rechner und Reisecheck stehen jetzt im Seitencontainer; (2) Druckknopf und Hinweis lagen auf einer Zeile und ueberlappten; (3) auf den Pflege- und Spielzeugseiten standen rohe Feldbezeichner wie 'coatLength, toolWidthMillimeters' - merkmalLabel() uebersetzt sie, ein unbekannter Bezeichner bleibt sichtbar wie er heisst; (4) die Kategorienliste liess die halbe Seite leer und ist jetzt ein Raster; (5) print.css entfaerbte Hinweisboxen ueber die Klasse .notiz, die es seit der Komponentenbibliothek nicht mehr gibt - beim Drucken waeren die Farbflaechen mitgekommen. Nebenbefund derselben Umbenennung: ein Playwright-Test blendete vor einer Wortpruefung .notiz aus, also seit der Umbenennung nichts mehr; er lief gruen, ohne noch zu pruefen, was er pruefen sollte. Ausserdem hat die SEO-Pruefung eine zweite H1 auf der Designprobe gefunden, weil der Seitenkopf dort vorgefuehrt wurde - die Vorfuehrung ist raus, mit Begruendung. Befunde, Behebungen und vier Restpunkte stehen mit Viewport und Commit in docs/DESIGN_REVIEW.md. Geprueft: 7 neue Unit-Tests (1395 gesamt), 'npm run verify' exit 0, Playwright 228 / 323 / 107 / 12 gruen, check:dist 356 Dateien ohne Beanstandung, check:seo 1234 Seiten ohne Beanstandung, check:budgets eingehalten.",
+          "reference": "src/components/commerce/ProductCard.astro, src/features/care/attributes.ts, src/pages/de-de/pflege/[kategorie].astro, src/pages/entwicklung/angebotsprobe.astro, src/pages/[...pfad].astro, src/styles/print.css, scripts/design/screenshots.ts, docs/DESIGN_REVIEW.md, tests/design-system.test.ts",
+          "verified_at": "2026-09-09",
+          "command": "npm run design:screenshots && npm run verify",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4318,7 +4326,7 @@
         "M22-01"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "in_progress",
       "evidence": [],
       "blocker": null,
       "notes": []

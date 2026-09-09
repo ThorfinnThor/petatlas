@@ -25,6 +25,7 @@
     "build:fixture": "BUILD_MODE=development USE_FIXTURES=true astro build",
     "build:production": "BUILD_MODE=production astro build",
     "build:cloudflare": "node scripts/build-cloudflare.ts",
+    "design:screenshots": "node scripts/design/screenshots.ts",
     "preview": "astro preview",
     "snapshot:got": "node scripts/ingest/snapshot-got.ts",
     "snapshot:places": "node scripts/ingest/snapshot-places.ts",

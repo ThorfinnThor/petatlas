@@ -64,8 +64,22 @@ const titel = translate(locale, `nav.${routeKey}`);
  * Breite Seiten nutzen den Seitencontainer statt der Lesebreite
  * (Designvertrag Abschnitt 6.2 und 6.3): Startseite, Karte und die
  * Produktübersichten zeigen Raster, keine Fließtexte.
+ *
+ * Seit M21-03 gehören Rechner und Reisecheck dazu: eine zweispaltige
+ * Tool-Ansicht in Lesebreite ist keine — sie quetscht beide Spalten auf je
+ * 300 px. Die Fließtexte bleiben trotzdem bei 68ch, das regelt die
+ * Typografie und nicht der Container.
  */
-const WEITE_SEITEN: readonly RouteKey[] = ['home', 'map', 'catalog', 'care', 'toys', 'food'];
+const WEITE_SEITEN: readonly RouteKey[] = [
+  'home',
+  'costs',
+  'map',
+  'travel',
+  'catalog',
+  'care',
+  'toys',
+  'food',
+];
 ---
 
 <BaseLayout title={titel} route={routeKey} weit={WEITE_SEITEN.includes(routeKey)}>

@@ -10,6 +10,7 @@
  * geprüft ist. Ohne die zweite Angabe wäre die Liste eine Empfehlung.
  */
 import Notice from '../Notice.astro';
+import { merkmalLabel } from '../../features/care/attributes.ts';
 import { BEDUERFNISSE } from '../../features/care/matching.ts';
 import { attributPruefung } from '../../features/care/attributes.ts';
 import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
@@ -84,7 +85,9 @@ const synthetisch = pruefung.dataKind === 'synthetic';
     taxonomie.categories.map((kategorie) => (
       <li data-kategorie={kategorie.categoryId}>
         <strong>{kategorie.label}.</strong> {kategorie.description}
-        <p class="hilfe">Gefiltert wird nach: {kategorie.matchAttributes.join(', ')}.</p>
+        <p class="hilfe">
+          Gefiltert wird nach: {kategorie.matchAttributes.map(merkmalLabel).join(', ')}.
+        </p>
       </li>
     ))
   }

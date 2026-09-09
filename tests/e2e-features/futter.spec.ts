@@ -100,7 +100,7 @@ test.describe('Abnahme der Darstellung', () => {
       const text = await page.evaluate(() => {
         const haupt = document.querySelector('main')?.cloneNode(true) as HTMLElement | null;
         if (haupt === null) return '';
-        for (const element of haupt.querySelectorAll('[data-ausschluss], .notiz')) {
+        for (const element of haupt.querySelectorAll('[data-ausschluss], .hinweisbox')) {
           element.remove();
         }
         return haupt.innerText.toLowerCase();

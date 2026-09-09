@@ -15,7 +15,9 @@ import Button from '../src/components/ui/Button.astro';
 import Card from '../src/components/ui/Card.astro';
 import { defaultMarket, withEnabledFeatures } from '../src/domain/market.ts';
 import EmptyState from '../src/components/ui/EmptyState.astro';
+import ProductCard from '../src/components/commerce/ProductCard.astro';
 import RadioCard from '../src/components/forms/RadioCard.astro';
+import { merkmalLabel } from '../src/features/care/attributes.ts';
 import PageHeader from '../src/components/ui/PageHeader.astro';
 import ToolShell from '../src/components/tools/ToolShell.astro';
 import ToolStepper from '../src/components/tools/ToolStepper.astro';
@@ -439,5 +441,84 @@ describe('RadioCard (M21-05)', () => {
     // Der Radiopunkt wird nicht versteckt; er ist die eigentliche Anzeige.
     expect(quelle).not.toMatch(/input[^{]*\{[^}]*(display:\s*none|visibility:\s*hidden)/);
     expect(quelle).not.toContain('appearance: none');
+  });
+});
+
+describe('ProductCard (M21-06)', () => {
+  it('hält die Reihenfolge aus Abschnitt 20.3 ein', async () => {
+    const html = await render(
+      ProductCard,
+      {
+        name: 'Beispielball',
+        marke: 'Beispielmarke',
+        merkmale: [{ label: 'Größe', wert: 'M', beleg: 'Herstellerangabe' }],
+        passtZu: ['10–25 kg'],
+        werbelink: true,
+      },
+      { preis: '<p>ab 29,99 €</p>', aktion: '<a href="https://x.invalid/">Angebot ansehen</a>' },
+    );
+    const reihenfolge = [
+      'Beispielball',
+      'Beispielmarke',
+      'Größe',
+      'Warum angezeigt?',
+      'ab 29,99 €',
+    ];
+    let letzte = -1;
+    for (const teil of reihenfolge) {
+      const stelle = html.indexOf(teil);
+      expect(stelle, teil).toBeGreaterThan(letzte);
+      letzte = stelle;
+    }
+    // Die Kennzeichnung steht zuletzt, nicht zuerst.
+    expect(html.indexOf('Werbelink')).toBeGreaterThan(html.indexOf('Angebot ansehen'));
+  });
+
+  it('zeigt einen unbekannten Wert als unbekannt statt ihn wegzulassen', async () => {
+    const html = await render(
+      ProductCard,
+      {
+        name: 'Beispielbürste',
+        marke: null,
+        merkmale: [{ label: 'Borstenlänge', wert: null, beleg: 'Händlerfeed' }],
+      },
+      {},
+    );
+    expect(html).toContain('Borstenlänge');
+    expect(html).toContain('unbekannt');
+    expect(html).toContain('Marke nicht angegeben');
+  });
+
+  it('sagt es, wenn kein Merkmal belegt ist', async () => {
+    const html = await render(ProductCard, { name: 'Beispielseil', marke: null, merkmale: [] }, {});
+    expect(html).toContain('kein Merkmal belegt');
+    expect(html).toContain('heißt nicht, dass es keine hat');
+  });
+
+  it('behauptet keine Übereinstimmung, wenn es keine gibt', async () => {
+    const html = await render(
+      ProductCard,
+      { name: 'X', marke: null, merkmale: [], passtZu: [], nichtGeprueft: ['Größe'] },
+      {},
+    );
+    expect(html).toContain('Keine belegte Übereinstimmung');
+    expect(html).toContain('Nicht geprüft: Größe');
+  });
+
+  it('verweigert eine Karte ohne Produktnamen', async () => {
+    await expect(
+      render(ProductCard, { name: '  ', marke: null, merkmale: [] }, {}),
+    ).rejects.toThrow(/ohne Produktnamen/);
+  });
+});
+
+describe('Merkmalsbeschriftungen (M21-06)', () => {
+  it('übersetzt die Bezeichner des Datenmodells', () => {
+    expect(merkmalLabel('coatLength')).toBe('Fellänge');
+    expect(merkmalLabel('washableAtCelsius')).toBe('Waschbar bei Grad Celsius');
+  });
+
+  it('lässt einen unbekannten Bezeichner sichtbar stehen, statt ihn zu erfinden', () => {
+    expect(merkmalLabel('gibtEsNicht')).toBe('gibtEsNicht');
   });
 });

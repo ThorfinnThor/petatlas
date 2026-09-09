@@ -17,7 +17,6 @@ import Badge from '../../components/ui/Badge.astro';
 import Button from '../../components/ui/Button.astro';
 import Card from '../../components/ui/Card.astro';
 import EmptyState from '../../components/ui/EmptyState.astro';
-import PageHeader from '../../components/ui/PageHeader.astro';
 import { BADGE_ARTEN, BUTTON_VARIANTEN, type BadgeArt } from '../../components/ui/varianten.ts';
 import { resolveBuildConfig } from '../../../config/build.ts';
 import { defaultMarket } from '../../domain/market.ts';
@@ -134,17 +133,11 @@ const marktMitAnzeige = {
         </EmptyState>
 
         <h2>Seitenkopf (Abschnitt 23.1)</h2>
-        <Card variante="soft">
-          <PageHeader
-            eyebrow="Bereich"
-            titel="Titel der Seite"
-            lead="Ein Satz, der sagt, was die Seite für den Leser tut."
-          >
-            <Fragment slot="aktionen">
-              <Button variante="primaer">Kosten berechnen</Button>
-            </Fragment>
-          </PageHeader>
-        </Card>
+        <p>
+          Der Seitenkopf erzeugt die H1 der Seite. Er kann hier deshalb nicht vorgeführt werden —
+          zwei H1 auf einer Seite wären genau der Fehler, den die Komponente verhindern soll. Zu
+          sehen ist er auf der <a href="/de-de/">Startseite</a> in der Variante „hero“.
+        </p>
 
         <h2>Werbefläche</h2>
         <p>

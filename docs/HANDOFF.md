@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**Der ursprüngliche Plan (M00–M19) ist abgearbeitet; seit dem 2026-09-08 läuft der Block M20 bis M22 für Inhaltstiefe, Designvertrag und Datenqualität. M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 5/6, die sechste blockiert (123 von 134 Aufgaben, 7 blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**Der ursprüngliche Plan (M00–M19) ist abgearbeitet; seit dem 2026-09-08 läuft der Block M20 bis M22 für Inhaltstiefe, Designvertrag und Datenqualität. M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 5/6, die sechste blockiert (124 von 134 Aufgaben, 7 blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -40,9 +40,11 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**M21-06 — Produktkarte und Bildschirmmappe.** Produktkarte nach Abschnitt 20 mit Merkmalszeile und Matching-Begründung; Screenshots je Hauptseite in zwei Formaten nach Abschnitt 57.
+**M22-02 — Schemaprüfung im Browser verkleinern.** Die Laufzeitprüfung der nachgeladenen Datenchunks so umbauen, dass die große Schemabibliothek nicht mehr im Browser landet — ohne die Prüfung aufzugeben.
 
-Danach M22-02 bis M22-04 (Datenqualität). Der Block ist in `docs/MILESTONES.md` und im Manifest beschrieben.
+Danach M22-03 (belegte Quellenadressen für AT und NL) und M22-04 (Futterquelle klären).
+
+**Bildschirmmappe:** `npm run design:screenshots` erzeugt sie aus dem vorhandenen Build nach `reports/screenshots/`; die Bilder sind nicht versioniert, die Befunde stehen in `docs/DESIGN_REVIEW.md`. Der Block ist in `docs/MILESTONES.md` und im Manifest beschrieben.
 
 **Fallstrick aus der letzten Aufgabe:** eine statische `.astro`-Seite unter einer abschaltbaren Funktion wird trotzdem gebaut — `getStaticPaths` wirkt dort nicht. `npm run build` brach deshalb seit dem Katalogeinstieg ab, ohne dass `npm run verify` es merkte (die Kette baut die Seiten nicht). Solche Seiten gehören als Restroute (`katalog/[...rest].astro`) angelegt, und `npm run build` **ohne** `ENABLE_FEATURES` gehört zur Prüfung dazu.
 

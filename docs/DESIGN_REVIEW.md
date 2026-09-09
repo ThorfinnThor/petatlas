@@ -35,9 +35,9 @@ Durchgeführt am **2026-09-08** gegen `docs/DESIGN_SPECIFICATIONS.md` (Fassung 1
 
 Diese Punkte des Vertrags sind **nicht** umgesetzt und stehen als nächste Schritte:
 
-1. **ToolShell mit zweispaltigem Desktoplayout** (Abschnitt 22, 24.2): Eingaben links, Ergebnis rechts. Heute läuft der Rechner einspaltig in Lesebreite.
-2. **Wizard-Stepper für den Reisecheck** (Abschnitt 28.2) mit vier benannten Schritten.
-3. **Komponentenbibliothek** (Abschnitt 48): `Breadcrumbs`, `PageHeader`, `Button`, `Card`, `Badge`, `Alert`, `DataSourceDisclosure`, `AffiliateDisclosure`, `ResultSummary`, `EmptyState` als eigene Komponenten statt globaler Klassen.
+1. ~~**ToolShell mit zweispaltigem Desktoplayout** (Abschnitt 22, 24.2)~~ — erledigt in M21-03.
+2. ~~**Wizard-Stepper für den Reisecheck** (Abschnitt 28.2)~~ — erledigt in M21-04.
+3. **Komponentenbibliothek** (Abschnitt 48) — weitgehend erledigt in M21-01 und M21-02: `Button`, `Card`, `Badge`, `Alert`, `PageHeader`, `EmptyState`, `Breadcrumbs`, dazu `ToolShell`, `ToolStepper`, `RadioCard` und `ProductCard`. Offen bleiben `DataSourceDisclosure` und `ResultSummary`; für beide gibt es heute je eine gewachsene Entsprechung (`DataStatus`, die Ergebnisbox des Rechners), die zusammengeführt gehören.
 4. **Breadcrumbs** (Abschnitt 9.3) auf Unterseiten.
 5. **Radio Cards** (Abschnitt 13.6) für Tierart und Spielart.
 6. **Produktkarte nach Abschnitt 20** mit Bildfläche, Merkmalszeile und Matching-Begründung.
@@ -72,3 +72,53 @@ Diese Punkte des Vertrags sind **nicht** umgesetzt und stehen als nächste Schri
 | `npm run check:dist` | 444 Dateien, keine Beanstandung |
 | `npm run check:seo` | 60 Seiten, keine Beanstandung |
 | `npm run check:budgets` | alle Budgets eingehalten |
+
+---
+
+# Zweiter Durchgang: Bildschirmmappe (M21-06, 2026-09-09)
+
+Abschnitt 57 verlangt Aufnahmen je Hauptseite in zwei Formaten und einen Review, der Viewport, Commit, sichtbare Probleme, behobene Probleme und Restpunkte nennt. Dieser Abschnitt ist dieser Review.
+
+## Wie die Mappe entsteht
+
+```
+npm run design:screenshots
+```
+
+Das Skript baut nichts: es startet die Vorschau über den **vorhandenen** Build, damit die Aufnahmen zeigen, was ausgeliefert würde, und nicht, was der Entwicklungsserver daraus macht. Bewegung ist abgeschaltet (`prefers-reduced-motion`), damit zwei Läufe vergleichbar bleiben.
+
+| | |
+|---|---|
+| Ausgabe | `reports/screenshots/` — **nicht versioniert** (siehe `.gitignore`); die Bilder sind ein Prüfmittel, kein Inhalt |
+| Viewports | mobile 390x844, desktop 1440x900, jeweils ganze Seite |
+| Commit dieses Durchgangs | `69b2433` |
+| Seiten | Start, Tierarztkosten, Gebührenkatalog, Karte, Stadtseite Hamburg, Reisecheck, Angebote, Pflege, Quellen, Datenstand |
+| Aufnahmen | 20 |
+
+Die Mappe selbst listet nur, was aufgenommen wurde (`reports/screenshots/mappe.md`). Eine Aufnahme gilt nicht als geprüft, weil sie existiert — die Befunde stehen hier.
+
+## Sichtbare Probleme, gefunden beim Ansehen
+
+1. **Der Rechner lief in Lesebreite.** Die neue zweispaltige Tool-Ansicht wurde dadurch auf zweimal rund 300 px gequetscht: die Auswahlkarten standen untereinander statt nebeneinander, die Hilfetexte brachen nach drei Wörtern um, und rechts stand ein fast leeres Ergebnispanel. Zweispaltig war es formal, brauchbar nicht.
+2. **Der Druckknopf und sein Hinweis lagen auf einer Zeile.** Auf dem Desktop schob sich der Hinweistext neben den Knopf und lief unter ihm weiter — es sah aus wie ein Textfehler.
+3. **Rohe Bezeichner in der Oberfläche.** Auf den Pflege- und Spielzeugseiten stand „Gefiltert wird nach: coatLength, toolWidthMillimeters, material.“ Das sind Feldnamen aus dem Datenmodell, keine Sprache.
+4. **Die Kategorienliste ließ die halbe Seite leer.** Auf `/de-de/pflege/` stand eine einspaltige Liste in einer breiten Seite.
+5. **Der Druck-Stylesheet griff ins Leere.** `print.css` entfärbte Hinweisboxen über die Klasse `.notiz`, die es seit der Komponentenbibliothek nicht mehr gibt. Beim Drucken wären die Farbflächen mitgekommen.
+
+## Behoben
+
+| Befund | Behebung |
+|---|---|
+| 1 | Rechner und Reisecheck stehen jetzt im Seitencontainer statt in Lesebreite (`WEITE_SEITEN` in `src/pages/[...pfad].astro`). Die Fließtexte bleiben bei 68ch — das regelt die Typografie, nicht der Container. |
+| 2 | Der Druckknopf steht in einem eigenen Block, der Hinweis darunter. |
+| 3 | `merkmalLabel()` in `src/features/care/attributes.ts` übersetzt die Bezeichner. Ein unbekannter Bezeichner bleibt sichtbar, wie er heißt — das fällt auf, und genau das soll es. |
+| 4 | `.kategorien` ist ab 640 px ein Raster. |
+| 5 | Die Regel greift jetzt `.hinweisbox`. Nebenbefund derselben Umbenennung: ein Playwright-Test blendete vor einer Wortprüfung `.notiz` aus — also seit der Umbenennung nichts mehr. Der Test lief grün, ohne noch zu prüfen, was er prüfen sollte; der Selektor ist korrigiert. |
+
+## Bekannte Restpunkte
+
+1. **Die Hauptnavigation führt neun Einträge.** Abschnitt 9.1 nennt sechs bis sieben. Welche zusammengefasst oder in den Fuß wandern, ist eine inhaltliche Entscheidung über den Zuschnitt der Produkte, keine Designfrage — sie gehört zusammen mit der Routenfrage aus dem ersten Durchgang entschieden.
+2. **Der Druckknopf steht auch ohne ausgewählte Position da.** Ein leerer Ausdruck ist sinnlos, aber ein Knopf, der ohne Erklärung verschwindet, ist es auch. Vorschlag: sichtbar lassen und beim Klick ohne Auswahl einen Satz statt eines Ausdrucks.
+3. **Kein Produktbild.** Abschnitt 20.1 sieht 120x120 px vor. Es gibt keine Bildrechte; die Karte hält die Fläche deshalb auch nicht frei — ein leerer Rahmen wäre ein Versprechen.
+4. **Die Punkte des ersten Durchgangs** zu Routen und Ansprache stehen weiterhin offen.
+

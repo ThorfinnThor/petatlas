@@ -9,12 +9,18 @@
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import ProductCard from '../../../components/commerce/ProductCard.astro';
 import Notice from '../../../components/Notice.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
 import { pflegeTaxonomie } from '../../../features/care/taxonomy.ts';
-import { attributPruefung } from '../../../features/care/attributes.ts';
+import {
+  attributPruefung,
+  kartenMerkmale,
+  merkmalLabel,
+  ungepruefteAttribute,
+} from '../../../features/care/attributes.ts';
 import type { TaxonomyCategory } from '../../../domain/schemas/taxonomy.ts';
 
 export function getStaticPaths() {
@@ -58,7 +64,11 @@ const synthetisch = attributPruefung().dataKind === 'synthetic';
 
   <h2>Wonach hier gefiltert wird</h2>
   <ul class="merkmale">
-    {kategorie.matchAttributes.map((merkmal) => <li data-merkmal={merkmal}>{merkmal}</li>)}
+    {
+      kategorie.matchAttributes.map((merkmal) => (
+        <li data-merkmal={merkmal}>{merkmalLabel(merkmal)}</li>
+      ))
+    }
   </ul>
   <p class="hilfe">
     Nur diese Merkmale entscheiden, ob ein Produkt in dieser Kategorie als passend gilt — und auch
@@ -79,7 +89,15 @@ const synthetisch = attributPruefung().dataKind === 'synthetic';
     ) : (
       <ul class="produkte">
         {produkte.map((produkt) => (
-          <li>{produkt.productId}</li>
+          <li>
+            <ProductCard
+              name={produkt.productId}
+              marke={null}
+              merkmale={kartenMerkmale(produkt)}
+              nichtGeprueft={ungepruefteAttribute(produkt)}
+              testId={`produkt-${produkt.productId}`}
+            />
+          </li>
         ))}
       </ul>
     )

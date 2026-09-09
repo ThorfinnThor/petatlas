@@ -82,8 +82,10 @@
     word-break: break-all;
   }
 
-  /* Warn- und Hinweisboxen bleiben, aber ohne Farbflächen. */
-  .notiz {
+  /* Warn- und Hinweisboxen bleiben, aber ohne Farbflächen. Die Klasse heißt
+     seit M21-01 `hinweisbox`; die alte Regel griff nach der Umbenennung ins
+     Leere und hat die Farbflächen mitgedruckt. */
+  .hinweisbox {
     border: 1pt solid #000;
     background: none !important;
   }

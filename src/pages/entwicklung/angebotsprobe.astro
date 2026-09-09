@@ -13,6 +13,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Notice from '../../components/Notice.astro';
 import OfferCard from '../../components/OfferCard.astro';
+import ProductCard from '../../components/commerce/ProductCard.astro';
 import { resolveBuildConfig } from '../../../config/build.ts';
 import { OfferSchema, ProductSchema } from '../../domain/schemas/catalog.ts';
 import { vergleicheAngebote } from '../../features/commerce/pricing.ts';
@@ -144,6 +145,66 @@ const vergleich = vergleicheAngebote(angebote.slice(0, 2), [produkt], 'DE');
           />
         ))}
 
+        <h2>Produktkarte (Abschnitt 20)</h2>
+        <p>
+          Dieselbe Karte in drei Zuständen: mit belegten Merkmalen, mit einem unbekannten Wert und
+          ohne jede belegte Übereinstimmung. Alle Angaben sind erfunden.
+        </p>
+        <div class="produktproben">
+          <ProductCard
+            name="Beispielball (synthetisch)"
+            marke="Beispielmarke"
+            merkmale={[
+              {
+                label: 'Größe',
+                wert: 'M',
+                beleg: 'Herstellerangabe, beispiel.invalid, geprüft am 2026-09-01.',
+              },
+              {
+                label: 'Waschbar',
+                wert: 'ja',
+                beleg: 'Herstellerangabe, beispiel.invalid, geprüft am 2026-09-01.',
+              },
+            ]}
+            passtZu={['10–25 kg', 'Apportieren']}
+            nichtGeprueft={['Haltbarkeit bei sehr starkem Kauen']}
+            werbelink
+          >
+            <p slot="preis" class="produktproben__preis">
+              ab 29,99 € bei Beispielhändler
+            </p>
+            <a
+              slot="aktion"
+              class="produktproben__cta"
+              href="https://beispiel.invalid/"
+              rel="nofollow noopener sponsored"
+            >
+              Angebot ansehen
+            </a>
+          </ProductCard>
+
+          <ProductCard
+            name="Beispielbürste (synthetisch)"
+            marke={null}
+            merkmale={[
+              {
+                label: 'Borstenlänge',
+                wert: null,
+                beleg: 'Angabe aus dem Händlerfeed, beispiel.invalid, geprüft am 2026-09-01.',
+              },
+            ]}
+            nichtGeprueft={['Hautverträglichkeit']}
+          />
+
+          <ProductCard
+            name="Beispielseil (synthetisch)"
+            marke="Beispielmarke"
+            merkmale={[]}
+            passtZu={[]}
+            nichtGeprueft={['Größe', 'Material']}
+          />
+        </div>
+
         <h2>Vergleich</h2>
         <p data-testid="vergleich-grund">{vergleich.grund}</p>
         <p data-testid="vergleich-bezug">Bezug: {vergleich.bezug}</p>
@@ -154,3 +215,34 @@ const vergleich = vergleicheAngebote(angebote.slice(0, 2), [produkt], 'DE');
     )
   }
 </BaseLayout>
+
+<style>
+  .produktproben {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .produktproben {
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    }
+  }
+
+  .produktproben__preis {
+    margin-block: var(--space-3) 0;
+    font-weight: 700;
+  }
+
+  .produktproben__cta {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+    padding-inline: 18px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    text-decoration: none;
+    font-weight: var(--weight-button);
+  }
+</style>

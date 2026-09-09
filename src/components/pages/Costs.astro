@@ -160,12 +160,12 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   <Fragment slot="ergebnis">
     <p id="rechner-status" role="status" aria-live="polite">Noch keine Position ausgewählt.</p>
     <div id="ergebnis" data-testid="rechner-ergebnis"></div>
-    <p class="drucken">
+    <div class="drucken">
       <button type="button" id="drucken">Rechnung drucken</button>
-      <span class="hilfe">
+      <p class="hilfe">
         Auf dem Ausdruck stehen Quelle, Fassung und die Fundstelle jeder Position.
-      </span>
-    </p>
+      </p>
+    </div>
   </Fragment>
 </ToolShell>
 
@@ -211,6 +211,14 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     color: var(--color-text-muted);
     font-size: var(--text-small);
     margin-block: var(--space-1);
+  }
+
+  .drucken {
+    margin-block-start: var(--space-5);
+  }
+
+  .drucken .hilfe {
+    margin-block: var(--space-2) 0;
   }
 
   .karten {

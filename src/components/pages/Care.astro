@@ -8,6 +8,7 @@
  * Gesundheitsbedarf eines Tieres ab.
  */
 import Notice from '../Notice.astro';
+import { merkmalLabel } from '../../features/care/attributes.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { subroutePath } from '../../lib/routes.ts';
@@ -42,7 +43,9 @@ const taxonomie = pflegeTaxonomie();
           <a href={subroutePath(markt, 'care', kategorie.categoryId)}>{kategorie.label}</a>
         </h3>
         <p>{kategorie.description}</p>
-        <p class="hilfe">Gefiltert wird nach: {kategorie.matchAttributes.join(', ')}.</p>
+        <p class="hilfe">
+          Gefiltert wird nach: {kategorie.matchAttributes.map(merkmalLabel).join(', ')}.
+        </p>
       </li>
     ))
   }
@@ -66,11 +69,26 @@ const taxonomie = pflegeTaxonomie();
     padding: 0;
   }
 
+  /* Abschnitt 23.2: auf breiten Seiten ein Raster, keine Spalte, die die
+     halbe Fläche leer lässt. */
+  .kategorien {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .kategorien {
+      grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    }
+  }
+
   .kategorien > li {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-    margin-block: var(--space-3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    margin-block: 0;
+    background: var(--color-surface);
   }
 
   .kategorien h3 {

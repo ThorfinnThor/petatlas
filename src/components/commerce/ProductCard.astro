@@ -1,0 +1,196 @@
+---
+/**
+ * M21-06 — Produktkarte nach Designvertrag Abschnitt 20.
+ *
+ * Die Reihenfolge aus 20.3 ist keine Geschmacksfrage, sondern die Aussage
+ * der Karte: erst das Produkt, dann seine **belegten** Merkmale, dann der
+ * Preis, dann der Händler, dann die Aktion, zuletzt die Kennzeichnung.
+ * Nicht zuerst ein Rabattbanner.
+ *
+ * Drei Regeln, die hier durchgesetzt und nicht nur beschrieben werden:
+ *
+ * 1. **Nur belegte Merkmale erscheinen als Merkmal.** Ein Attribut ohne
+ *    Fundstelle (`unverified`) ist kein schwacher Beleg, sondern keiner. Es
+ *    steht deshalb nicht in der Merkmalszeile, sondern — wenn überhaupt —
+ *    unter „nicht geprüft“.
+ * 2. **Unbekanntes bleibt unbekannt.** Ein fehlender Wert wird nicht
+ *    weggelassen, als gäbe es ihn nicht, sondern als unbekannt gezeigt
+ *    (UX-05). Weglassen sähe aus wie „trifft nicht zu“.
+ * 3. **Keine Matching-Begründung ohne Grund.** Steht ein Produkt ohne
+ *    einzige belegte Übereinstimmung in der Liste, sagt die Karte genau
+ *    das — statt so zu tun, als sei es ausgewählt worden.
+ *
+ * Bild: Abschnitt 20.1 sieht 120x120 px vor. Es gibt heute keine Bildrechte
+ * (siehe `docs/SOURCE_REVIEWS.md`), deshalb rendert die Karte kein Bild und
+ * hält die Fläche auch nicht frei — ein leerer Rahmen wäre ein Versprechen.
+ */
+import Badge from '../ui/Badge.astro';
+
+export interface Merkmal {
+  readonly label: string;
+  /** Bereits formatierter Wert. `null` heißt unbekannt und wird gezeigt. */
+  readonly wert: string | null;
+  /** Wer die Angabe macht — Hersteller, Händler, eigene Messung. */
+  readonly beleg: string;
+}
+
+interface Props {
+  name: string;
+  marke: string | null;
+  /** Belegte Merkmale. Unbelegte gehören nicht hierher. */
+  merkmale: readonly Merkmal[];
+  /** Abschnitt 20.5: worauf die Anzeige beruht. */
+  passtZu?: readonly string[];
+  /** Abschnitt 20.5: was ausdrücklich **nicht** geprüft ist. */
+  nichtGeprueft?: readonly string[];
+  /** Kennzeichnung nach Abschnitt 18, wenn ein Partnerlink dabei ist. */
+  werbelink?: boolean;
+  testId?: string;
+}
+
+const {
+  name,
+  marke,
+  merkmale,
+  passtZu = [],
+  nichtGeprueft = [],
+  werbelink = false,
+  testId,
+} = Astro.props;
+
+if (name.trim() === '') {
+  throw new Error('Eine Produktkarte ohne Produktnamen ist keine.');
+}
+const zeigtBegruendung = passtZu.length > 0 || nichtGeprueft.length > 0;
+---
+
+<article class="produkt" data-testid={testId}>
+  <h3 class="produkt__name">{name}</h3>
+  {
+    marke === null ? (
+      <p class="produkt__marke produkt__unbekannt">Marke nicht angegeben</p>
+    ) : (
+      <p class="produkt__marke">{marke}</p>
+    )
+  }
+
+  {
+    merkmale.length === 0 ? (
+      <p class="produkt__unbekannt">
+        Zu diesem Produkt ist kein Merkmal belegt. Das heißt nicht, dass es keine hat.
+      </p>
+    ) : (
+      <ul class="produkt__merkmale">
+        {merkmale.map((merkmal) => (
+          <li>
+            <span class="produkt__merkmalLabel">{merkmal.label}:</span>{' '}
+            {merkmal.wert === null ? (
+              <span class="produkt__unbekannt">unbekannt</span>
+            ) : (
+              <span>{merkmal.wert}</span>
+            )}
+            <span class="produkt__beleg"> · {merkmal.beleg}</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    zeigtBegruendung && (
+      <div class="produkt__begruendung">
+        <p class="produkt__begruendungTitel">Warum angezeigt?</p>
+        {passtZu.length === 0 ? (
+          <p class="produkt__unbekannt">
+            Keine belegte Übereinstimmung mit Ihren Angaben — das Produkt ist nur nicht
+            ausgeschlossen.
+          </p>
+        ) : (
+          <p>Passt zu: {passtZu.join(' · ')}</p>
+        )}
+        {nichtGeprueft.length > 0 && (
+          <p class="produkt__offen">Nicht geprüft: {nichtGeprueft.join(' · ')}</p>
+        )}
+      </div>
+    )
+  }
+
+  <slot name="preis" />
+
+  <div class="produkt__aktion">
+    <slot name="aktion" />
+    {werbelink && <Badge art="werbelink" />}
+  </div>
+</article>
+
+<style>
+  .produkt {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    background: var(--color-surface);
+  }
+
+  .produkt__name {
+    margin: 0;
+    font-size: var(--text-h4);
+    font-weight: var(--weight-h4);
+  }
+
+  .produkt__marke {
+    margin: var(--space-1) 0 var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  /* Abschnitt 15.2: kurze Text-/Iconzeile statt acht bunter Pills. */
+  .produkt__merkmale {
+    list-style: none;
+    margin: 0 0 var(--space-3);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-size: var(--text-small);
+  }
+
+  .produkt__merkmalLabel {
+    font-weight: var(--weight-label);
+  }
+
+  .produkt__beleg {
+    color: var(--color-text-muted);
+  }
+
+  .produkt__unbekannt {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .produkt__begruendung {
+    border-inline-start: 3px solid var(--color-primary-border);
+    padding-inline-start: var(--space-3);
+    margin-block: var(--space-4);
+    font-size: var(--text-small);
+  }
+
+  .produkt__begruendung p {
+    margin-block: var(--space-1);
+  }
+
+  .produkt__begruendungTitel {
+    font-weight: var(--weight-label);
+  }
+
+  .produkt__offen {
+    color: var(--color-text-muted);
+  }
+
+  .produkt__aktion {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-block-start: var(--space-4);
+  }
+</style>
