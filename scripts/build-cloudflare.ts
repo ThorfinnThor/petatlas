@@ -140,9 +140,19 @@ function main(): number {
   }
   console.log('\n▸ Vertragliche Feeds: keiner freigegeben, kein Abruf.');
 
-  // Schritt 5 und 6 — bauen, Suchindex, Header.
+  // Schritt 5 und 6 — bauen, Daten, Suchindex, Sitemap, Header.
+  //
+  // Die Datenschritte standen hier bis zum 09.09.2026 nicht drin. Ein Build
+  // allein aus dieser Datei lieferte deshalb kein `/data/v1/…` aus: Rechner,
+  // Karte und Futtersuche hätten ihre Daten nicht gefunden, und die
+  // Datenstandseite hätte nichts zu prüfen gehabt. Aufgefallen ist es an der
+  // Rauchprobe über das gebaute Verzeichnis — genau dafür gibt es sie.
   fuehreAus('Statischer Build', 'npm', ['run', 'build']);
+  fuehreAus('Gebührendaten', 'npm', ['run', 'build:fees']);
+  fuehreAus('Ortsdaten', 'npm', ['run', 'build:places']);
+  fuehreAus('Datenstand', 'npm', ['run', 'build:health']);
   fuehreAus('Suchindex', 'npm', ['run', 'build:search']);
+  fuehreAus('Sitemap und robots.txt', 'npm', ['run', 'build:sitemap']);
   fuehreAus('Header', 'npm', ['run', 'build:headers']);
 
   // Schritt 7 — fertiges dist auditieren.
