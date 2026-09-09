@@ -2,7 +2,7 @@
 
 ## Tatsächlicher Zustand
 
-M23-01 ist abgeschlossen: Design V2, reale Produktdaten, Release-Pipeline und Browserabnahme. 129 von 136 Aufgaben sind erledigt; sieben externe Freigaben bleiben blockiert. Umsetzung in PR #5 auf codex/launch-readiness-design-v2. Abnahme: docs/ACCEPTANCE.md; Umfang und Grenzen: docs/LAUNCH_V2.md.
+M23-01 ist abgeschlossen: Design V2, reale Produktdaten, Release-Pipeline und Browserabnahme. Arbeitsstand (129 von 136 Aufgaben, 7 blockiert). Die Blockaden sind externe Freigaben. Umsetzung in PR #5 auf codex/launch-readiness-design-v2. Abnahme: docs/ACCEPTANCE.md; Umfang und Grenzen: docs/LAUNCH_V2.md.
 
 ## Nächster ausführbarer Schritt
 
