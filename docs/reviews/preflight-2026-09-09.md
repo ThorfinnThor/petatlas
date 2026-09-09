@@ -1,5 +1,7 @@
 # Fach- und Rechtsvorprüfung PetAtlas
 
+Historischer Vorprüfstand: Die nachfolgende technische Umsetzung ist in `docs/IMPLEMENTATION_REVIEW_2026-09-09.md` dokumentiert. Dieser frühere Bericht erteilt weiterhin keine persönliche Freigabe.
+
 Stand: 09.09.2026. Prüfbasis: Anwendung auf Commit `9f2cb42`, ergänzt um die Klarstellungen im Branch `codex/fach-rechts-vorpruefung`. Methode: Quellcode- und Dokumentenprüfung durch Codex sowie Abgleich mit den unten verlinkten Originalquellen. **Keine persönliche Fach- oder Rechtsfreigabe erteilt.**
 
 Die fachlichen Freigaben sind eine Anforderung dieses Projekts. Dieser Bericht behauptet keine allgemeine gesetzliche Pflicht, jede Informationswebsite vor Veröffentlichung durch einen Anwalt oder Tierarzt freigeben zu lassen. Die tatsächliche Anwendbarkeit der einzelnen Gesetze ist gesondert zu bestimmen.

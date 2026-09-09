@@ -2,9 +2,11 @@
 
 Stand: 2026-09-09. Maßgeblich ist `project/tasks.json`.
 
-**Erledigt:** 130 von 138 Aufgaben. **In Arbeit:** M23-03. **Blockiert:** sieben externe Freigabe-/Veröffentlichungsaufgaben, teilweise nur für optionale Angebote.
+**Erledigt:** 131 von 138 Aufgaben. **In Arbeit:** keine. **Blockiert:** sieben externe Freigabe-/Veröffentlichungsaufgaben, teilweise nur für optionale Angebote.
 
 ## Tatsächlicher Stand
+
+Neu umgesetzt und lokal geprüft: bestätigte GOT-Sonderabrechnung, erweiterte Reiseangaben, nationale Länderhinweise und Nahrungsergänzung. 1.448 Tests in 95 Dateien; 15 Build-Prüfschritte. Browserintegration auf finaler Revision über PR 8, vor Merge vollständig grün erforderlich. Details: `IMPLEMENTATION_REVIEW_2026-09-09.md`; Partnerplan: `AFFILIATE_PLAN.md`. Die folgenden früheren CI-Zahlen belegen den vorherigen Basisstand.
 
 Die V2-App und die nach Nutzerrückmeldung gefundenen Funktionsfehler sind implementiert und geprüft. Umfang: Gebührenrechner, Karte, Reisecheck, Pflege, Spielzeug, Futtervergleich, Ratgeber, lokale Profile und Sicherungsdateien. `npm run build:app` baut die echte, nicht indexierbare Vorschau.
 

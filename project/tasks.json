@@ -3,8 +3,8 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M23-03",
-  "note": "Implement source-checked GOT exceptions, travel details, national guidance, supplements and Amazon/Awin partner plan; owner details deferred per user.",
+  "current_task": null,
+  "note": "Requested extensions implemented and locally verified. CI integration is tracked in PR 8. Owner details remain deferred; no expert or partner approvals fabricated.",
   "status_values": [
     "todo",
     "in_progress",
@@ -4507,8 +4507,16 @@
         "M23-02"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Implemented confirmed GOT exceptions, detailed travel inputs, national guidance with explicit Italy source gap, supplements page and Amazon/Awin application plan. Local verify: 1448 tests; real-data build: 15 checks. Manual browser: exception confirmation, comma-decimal comparison and invalid-value recovery, rabies expiry and French category exclusion. Full CI on final PR revision is a required merge check, not claimed complete here.",
+          "reference": "docs/IMPLEMENTATION_REVIEW_2026-09-09.md, docs/AFFILIATE_PLAN.md, https://github.com/ThorfinnThor/petatlas/pull/8",
+          "verified_at": "2026-09-09",
+          "command": "npm run verify; npm run build:app; manual browser verification",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     }
