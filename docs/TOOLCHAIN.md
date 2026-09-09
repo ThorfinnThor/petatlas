@@ -125,3 +125,28 @@ Screenshots liegen unter `reports/screenshots/` (Start, Formularprobe, 404; je D
 ### Betriebshinweis Preview-Server
 
 Astro 7 startet `astro preview` in erkannten Agent-Umgebungen automatisch im Hintergrund. Playwright braucht den Server im Vordergrund; die Playwright-Konfiguration setzt deshalb `ASTRO_PREVIEW_BACKGROUND=false` für den `webServer`. Ein hängengebliebener Hintergrundserver wird mit `npx astro preview stop` beendet.
+
+## Aufgezwungene Fassung: `sharp` (09.09.2026)
+
+`npm audit` meldete am 09.09.2026 drei Funde mit hoher Einstufung:
+`sharp < 0.35.4` wegen zweier Lücken in `libheif`
+(GHSA-g89c-p67h-r497, GHSA-2jg2-4ch7-h545). Der Weg dorthin ist
+`wrangler → miniflare → sharp`.
+
+**Was nicht ging.** `npm audit fix --force` schlägt einen Rückschritt auf
+`wrangler@4.15.2` vor — hunderte Fassungen zurück, um eine Lücke zu
+umgehen. Und auch die neueste Fassung (`4.130.0`, ebenfalls am 09.09.2026
+eingespielt) bringt weiterhin `miniflare` mit `sharp 0.35.2` mit; oben gibt
+es also noch keine Behebung.
+
+**Was gemacht wurde.** Ein `overrides`-Eintrag in `package.json` erzwingt
+`sharp 0.35.4` im gesamten Baum. Das ist keine Ausnahme und kein
+unterdrückter Fund: die verwundbare Fassung ist danach nicht mehr
+installiert, `npm ls sharp` zeigt beide Zweige auf `0.35.4`, und
+`npm audit` meldet null Funde. Astro brachte diese Fassung ohnehin schon
+mit; der Override führt beide Zweige zusammen.
+
+**Wann er wieder verschwinden soll.** Sobald `wrangler` ein `miniflare`
+mitbringt, das selbst `sharp ≥ 0.35.4` verlangt. Dann ist der Eintrag
+überflüssig — geprüft mit `npm ls sharp` ohne Override.
+
