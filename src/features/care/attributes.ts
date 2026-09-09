@@ -7,32 +7,21 @@
  * entscheidet nichts.
  */
 import review from '../../../content-data/attributes/synthetic-review.json' with { type: 'json' };
-import {
-  AttributeReviewSchema,
-  darfMatchen,
-  type AttributeReview,
-  type ProductAttribute,
-  type ProductAttributes,
+import { darfMatchen } from '../../domain/attribute-rules.ts';
+import type {
+  AttributeReview,
+  ProductAttribute,
+  ProductAttributes,
 } from '../../domain/schemas/product-attributes.ts';
 import { attributErlaubt, kategorie } from './taxonomy.ts';
 
-function lade(roh: unknown, quelle: string): AttributeReview {
-  const ergebnis = AttributeReviewSchema.safeParse(roh);
-  if (!ergebnis.success) {
-    throw new Error(`${quelle} ist ungültig: ${ergebnis.error.message}`);
-  }
-  for (const produkt of ergebnis.data.products) {
-    if (kategorie(produkt.categoryId) === undefined) {
-      throw new Error(
-        `${quelle}: Produkt ${produkt.productId} nennt die unbekannte Kategorie ` +
-          `"${produkt.categoryId}".`,
-      );
-    }
-  }
-  return ergebnis.data;
-}
-
-const PRUEFUNG = lade(review, 'content-data/attributes/synthetic-review.json');
+/**
+ * M22-02: Die Datei liegt im Repository und ist zur Bauzeit unveränderlich.
+ * Geprüft wird sie dort — `npm run check:content` hält sie gegen
+ * `AttributeReviewSchema` und prüft zusätzlich, dass jedes Produkt eine
+ * Kategorie nennt, die es gibt.
+ */
+const PRUEFUNG = review as unknown as AttributeReview;
 
 export function attributPruefung(): AttributeReview {
   return PRUEFUNG;

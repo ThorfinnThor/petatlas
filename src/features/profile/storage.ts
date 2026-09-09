@@ -19,11 +19,9 @@
  * 4. **Löschen heißt löschen.** Kein Papierkorb, kein zweiter Schlüssel, kein
  *    Rest.
  */
-import {
-  PetProfileSchema,
-  PROFILE_STORAGE_KEY,
-  type PetProfile,
-} from '../../domain/schemas/profile.ts';
+import { istTierprofil } from '../../domain/runtime-guards.ts';
+import { PROFILE_STORAGE_KEY } from '../../domain/domain-rules.ts';
+import type { PetProfile } from '../../domain/schemas/profile.ts';
 import { bereinigeInteressen } from './state.ts';
 
 /** Aktuelle Fassung des gespeicherten Standes. */
@@ -184,8 +182,8 @@ export function lade(speicher: Speicher | null): SpeicherErgebnis<GespeicherterS
     };
   }
 
-  const profil = PetProfileSchema.safeParse(migriert.profile);
-  if (!profil.success) {
+  // M22-02: handgeschriebene Prüfung statt Schemabibliothek im Browser.
+  if (!istTierprofil(migriert.profile)) {
     return {
       ok: false,
       wert: null,
@@ -204,7 +202,7 @@ export function lade(speicher: Speicher | null): SpeicherErgebnis<GespeicherterS
     ok: true,
     wert: {
       version: SPEICHER_VERSION,
-      profile: profil.data,
+      profile: migriert.profile as PetProfile,
       interests: interessen,
       savedAt: typeof migriert.savedAt === 'string' ? migriert.savedAt : '',
     },

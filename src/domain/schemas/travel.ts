@@ -308,26 +308,5 @@ export const TravelRuleSetSchema = z
   });
 export type TravelRuleSet = z.infer<typeof TravelRuleSetSchema>;
 
-/**
- * Darf diese Regel öffentlich ausgewertet werden? Ohne Fachfreigabe und ohne
- * gültigen Zeitraum lautet die Antwort nein — unabhängig davon, ob der
- * Abruf der Quelle technisch funktioniert hat.
- */
-export function isRuleLive(rule: TravelRule, today: string): boolean {
-  if (rule.reviewedAt === null || rule.reviewedBy === null) return false;
-  if (today < rule.validity.from) return false;
-  if (rule.validity.until !== null && today > rule.validity.until) return false;
-  return true;
-}
-
-/**
- * Gesamtstatus einer Checkliste. „Alle geprüften Voraussetzungen erfüllt“ ist
- * nur zulässig, wenn keine Position `unknown` ist — und bleibt auch dann
- * keine Einreisegarantie.
- */
-export function overallState(states: readonly RequirementState[]): RequirementState {
-  if (states.some((state) => state === 'not_fulfilled')) return 'not_fulfilled';
-  if (states.some((state) => state === 'unknown')) return 'unknown';
-  if (states.every((state) => state === 'not_applicable')) return 'not_applicable';
-  return 'fulfilled';
-}
+// Beide Regeln liegen seit M22-02 in `../domain-rules.ts`.
+export { isRuleLive, overallState } from '../domain-rules.ts';

@@ -5,7 +5,6 @@ import {
   FAVORITES_STORAGE_KEY,
   LEERE_MERKLISTE,
   MAX_EINTRAEGE,
-  MerkEintragSchema,
   istGemerkt,
   lese,
   loeseAuf,
@@ -14,6 +13,7 @@ import {
   vergiss,
   type MerkEintrag,
 } from '../../src/features/profile/favorites.ts';
+import { MerkEintragSchema } from '../../src/features/profile/storage-schemas.ts';
 
 function ort(id = 'osm:node:1', zeit = '2026-09-08T10:00:00+00:00'): MerkEintrag {
   return {

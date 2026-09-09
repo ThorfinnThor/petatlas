@@ -122,16 +122,6 @@ export const FoodProductSchema = z
   });
 export type FoodProduct = z.infer<typeof FoodProductSchema>;
 
-/** Gesamtmenge eines Gebindes in Gramm. `null`, sobald etwas fehlt. */
-export function gesamtmengeGramm(futter: FoodProduct): number | null {
-  if (futter.netContentGrams === null || futter.packUnits === null) return null;
-  return futter.netContentGrams * futter.packUnits;
-}
-
-/**
- * Deklarierter Nährwert. `null` heißt: nicht deklariert — und nicht 0.
- */
-export function naehrwert(futter: FoodProduct, nutrient: string): NutrientValue | null {
-  const treffer = futter.nutrients.find((eintrag) => eintrag.nutrient === nutrient);
-  return treffer === undefined || treffer.value === null ? null : treffer;
-}
+// Die beiden Rechenregeln liegen seit M22-02 in `../domain-rules.ts`, damit
+// sie ohne Schemabibliothek zu haben sind. Hier bleiben sie erreichbar.
+export { gesamtmengeGramm, naehrwert } from '../domain-rules.ts';

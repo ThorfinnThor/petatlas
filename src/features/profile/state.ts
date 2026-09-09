@@ -13,7 +13,8 @@
  *    keine Telefonnummer und kein Freitextfeld ohne Längenbegrenzung. Was
  *    nicht erhoben wird, kann auch nicht verloren gehen.
  */
-import { PetProfileSchema, type PetProfile } from '../../domain/schemas/profile.ts';
+import { istTierprofil } from '../../domain/runtime-guards.ts';
+import type { PetProfile } from '../../domain/schemas/profile.ts';
 
 /** Interessen, die die Oberfläche anbietet. Feste Liste, keine Freitexte. */
 export const INTERESSEN: Readonly<Record<string, string>> = {
@@ -95,8 +96,10 @@ export function alsProfil(entwurf: ProfilEntwurf, profileId?: string): PetProfil
     weightGrams: entwurf.weightGrams,
     breed: entwurf.breed === null || entwurf.breed.trim() === '' ? null : entwurf.breed.trim(),
   };
-  const geprueft = PetProfileSchema.safeParse(kandidat);
-  return geprueft.success ? geprueft.data : null;
+  // M22-02: geprüft wird mit der handgeschriebenen Fassung, damit die
+  // Schemabibliothek nicht im Browser landet. Dass beide dasselbe sagen,
+  // prüft `tests/runtime-guards.test.ts`.
+  return istTierprofil(kandidat) ? (kandidat as PetProfile) : null;
 }
 
 /** Nur bekannte Interessen; alles andere wird verworfen. */

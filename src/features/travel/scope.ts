@@ -10,21 +10,13 @@
  * Anwendung sie nur nicht beurteilt — und das ist ein großer Unterschied.
  */
 import scope from '../../../content-data/travel/scope.json' with { type: 'json' };
-import {
-  TravelScopeSchema,
-  type TravelDirection,
-  type TravelScope,
-} from '../../domain/schemas/travel.ts';
+import type { TravelDirection, TravelScope } from '../../domain/schemas/travel.ts';
 
-function lade(): TravelScope {
-  const ergebnis = TravelScopeSchema.safeParse(scope);
-  if (!ergebnis.success) {
-    throw new Error(`content-data/travel/scope.json ist ungültig: ${ergebnis.error.message}`);
-  }
-  return ergebnis.data;
-}
-
-const UMFANG = lade();
+/**
+ * M22-02: Die Datei liegt im Repository und ist zur Bauzeit unveränderlich.
+ * Geprüft wird sie dort (`npm run check:content`), nicht im Browser.
+ */
+const UMFANG = scope as unknown as TravelScope;
 
 export function reiseUmfang(): TravelScope {
   return UMFANG;

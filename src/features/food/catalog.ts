@@ -10,32 +10,24 @@
  * alphabetisch, damit die Liste reproduzierbar bleibt.
  */
 import datensatz from '../../../content-data/food/synthetic-products.json' with { type: 'json' };
-import { FoodProductSchema, type FoodProduct } from '../../domain/schemas/food.ts';
-import { z } from 'zod';
-
-const DatensatzSchema = z
-  .object({
-    datasetId: z.string().min(1),
-    lastEditedAt: z.string().min(1),
-    dataKind: z.enum(['synthetic', 'real']),
-    products: z.array(FoodProductSchema.and(z.object({ categoryId: z.string().min(1) }))),
-    notes: z.array(z.string()),
-  })
-  .strict();
+import type { FoodProduct } from '../../domain/schemas/food.ts';
 
 export type FutterEintrag = FoodProduct & { readonly categoryId: string };
 
+/**
+ * M22-02: Der Datensatz liegt im Repository und ist zur Bauzeit
+ * unveränderlich. Geprüft wird er dort gegen `FUTTER_DATENSATZ_SCHEMA`
+ * (`npm run check:content`), nicht bei jedem Seitenaufruf im Browser.
+ */
 function lade(): {
   readonly dataKind: 'synthetic' | 'real';
   readonly products: readonly FutterEintrag[];
 } {
-  const ergebnis = DatensatzSchema.safeParse(datensatz);
-  if (!ergebnis.success) {
-    throw new Error(
-      `content-data/food/synthetic-products.json ist ungültig: ${ergebnis.error.message}`,
-    );
-  }
-  return { dataKind: ergebnis.data.dataKind, products: ergebnis.data.products as FutterEintrag[] };
+  const daten = datensatz as unknown as {
+    dataKind: 'synthetic' | 'real';
+    products: FutterEintrag[];
+  };
+  return { dataKind: daten.dataKind, products: daten.products };
 }
 
 const DATEN = lade();

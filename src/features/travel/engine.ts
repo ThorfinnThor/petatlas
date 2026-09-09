@@ -18,12 +18,8 @@
  * 3. **Kein Stichtag aus der Uhr.** Der Prüftag kommt von außen. Sonst hinge
  *    das Ergebnis an der Systemzeit des Browsers.
  */
-import {
-  isRuleLive,
-  overallState,
-  type RequirementState,
-  type TravelRule,
-} from '../../domain/schemas/travel.ts';
+import { isRuleLive, overallState } from '../../domain/domain-rules.ts';
+import type { RequirementState, TravelRule } from '../../domain/schemas/travel.ts';
 
 export type Fakten = Readonly<Record<string, unknown>>;
 

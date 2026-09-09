@@ -226,6 +226,37 @@ export function pruefeHtml(pfad: string, html: string, erlaubteHosts: readonly s
   return funde;
 }
 
+/**
+ * M22-02 — Spuren einer Schemabibliothek im ausgelieferten JavaScript.
+ *
+ * Die Laufzeitprüfungen im Browser stehen in `src/domain/runtime-guards.ts`
+ * und kommen ohne Bibliothek aus. Landet `zod` trotzdem wieder im Bundle,
+ * heißt das: irgendwo importiert Browsercode eine Schemadatei — und 87 KiB
+ * wandern still zurück in jede Seite. Diese Prüfung fängt genau das.
+ *
+ * Gesucht wird nach Zeichenketten, die die Minifizierung überstehen: Namen
+ * von Fehlerklassen und Meldungstexte, keine Variablennamen.
+ */
+export const SCHEMA_SPUREN: readonly string[] = [
+  'ZodError',
+  '$ZodType',
+  'invalid_union',
+  'Invalid input: expected',
+];
+
+export function pruefeJavaScript(pfad: string, inhalt: string): Fund[] {
+  const gefunden = SCHEMA_SPUREN.filter((spur) => inhalt.includes(spur));
+  if (gefunden.length === 0) return [];
+  return [
+    {
+      datei: pfad,
+      problem:
+        `Schemabibliothek im Browser-JavaScript (${gefunden.join(', ')}). ` +
+        'Laufzeitprüfungen gehören in src/domain/runtime-guards.ts (M22-02).',
+    },
+  ];
+}
+
 export function pruefeJson(pfad: string, inhalt: string): Fund[] {
   const funde: Fund[] = [];
   let daten: unknown;
@@ -303,6 +334,9 @@ export function pruefeVerzeichnis(wurzel: string): Fund[] {
     }
     if (endung === '.json' && relativ.startsWith('data/')) {
       funde.push(...pruefeJson(relativ, readFileSync(datei, 'utf8')));
+    }
+    if (endung === '.js') {
+      funde.push(...pruefeJavaScript(relativ, readFileSync(datei, 'utf8')));
     }
   }
 

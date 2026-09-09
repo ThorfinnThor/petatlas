@@ -8,25 +8,23 @@
  * Ohne JavaScript bleiben die Kästchen anklickbar — sie werden dann nur nicht
  * gespeichert. Das ist ein Unterschied, den die Seite auch sagt.
  */
-import { z } from 'zod';
+import { istPackStand } from '../../domain/runtime-guards.ts';
 
 export const PACKING_STORAGE_KEY = 'petatlas.packing.v1';
 
 /** Höchstzahl gespeicherter Ziele. Eine Packliste ist kein Reisetagebuch. */
 export const MAX_ZIELE = 10;
 
-export const PackStandSchema = z
-  .object({
-    version: z.literal(1),
-    /** Je Ziel die Kennungen der abgehakten Einträge. */
-    ziele: z.record(
-      z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/),
-      z.array(z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/)).max(200),
-    ),
-    updatedAt: z.iso.datetime({ offset: true }),
-  })
-  .strict();
-export type PackStand = z.infer<typeof PackStandSchema>;
+/**
+ * M22-02: Der Typ steht von Hand hier, das Schema in `storage-schemas.ts`.
+ * Grund und Absicherung siehe `favorites.ts`.
+ */
+export interface PackStand {
+  readonly version: 1;
+  /** Je Ziel die Kennungen der abgehakten Einträge. */
+  readonly ziele: Readonly<Record<string, readonly string[]>>;
+  readonly updatedAt: string;
+}
 
 export function leererStand(jetzt: string): PackStand {
   return { version: 1, ziele: {}, updatedAt: jetzt };
@@ -36,8 +34,8 @@ export function leererStand(jetzt: string): PackStand {
 export function lese(roh: string | null, jetzt: string): PackStand {
   if (roh === null) return leererStand(jetzt);
   try {
-    const geprueft = PackStandSchema.safeParse(JSON.parse(roh));
-    return geprueft.success ? geprueft.data : leererStand(jetzt);
+    const gelesen: unknown = JSON.parse(roh);
+    return istPackStand(gelesen) ? (gelesen as PackStand) : leererStand(jetzt);
   } catch {
     return leererStand(jetzt);
   }
@@ -69,7 +67,9 @@ export function setze(
     ? [...new Set([...vorhanden, eintrag])].sort()
     : vorhanden.filter((vorhandener) => vorhandener !== eintrag);
 
-  const ziele: Record<string, string[]> = { ...stand.ziele };
+  const ziele: Record<string, string[]> = Object.fromEntries(
+    Object.entries(stand.ziele).map(([ziel, eintraege]) => [ziel, [...eintraege]]),
+  );
   if (neu.length === 0) delete ziele[ziel];
   else ziele[ziel] = neu;
 
@@ -80,8 +80,7 @@ export function setze(
   }
 
   const kandidat = { version: 1 as const, ziele, updatedAt: jetzt };
-  const geprueft = PackStandSchema.safeParse(kandidat);
-  return geprueft.success ? geprueft.data : stand;
+  return istPackStand(kandidat) ? kandidat : stand;
 }
 
 /** Löscht den Stand eines Ziels. */

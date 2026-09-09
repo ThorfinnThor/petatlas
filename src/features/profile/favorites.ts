@@ -14,46 +14,36 @@
  * Was nicht mehr gefunden wird, verschwindet nicht still: es steht als
  * „nicht mehr erfasst“ da, mit einem Knopf zum Entfernen.
  */
-import { z } from 'zod';
-
-import { Coordinates } from '../../domain/schemas/common.ts';
+import { istMerkEintrag, istMerkliste } from '../../domain/runtime-guards.ts';
+import type { Coordinates } from '../../domain/schemas/common.ts';
 
 export const FAVORITES_STORAGE_KEY = 'petatlas.favorites.v1';
 
 /** Wie viele Einträge höchstens. Eine Merkliste ist kein Archiv. */
 export const MAX_EINTRAEGE = 200;
 
-export const MerkArt = z.enum(['place', 'food']);
-export type MerkArt = z.infer<typeof MerkArt>;
+export type MerkArt = 'place' | 'food';
 
-export const MerkEintragSchema = z
-  .object({
-    kind: MerkArt,
-    /** Stabile Kennung des Gegenstands, etwa `osm:node:1` oder eine foodId. */
-    id: z.string().min(1).max(120),
-    /** Nur bei Orten: Schlüssel zur Datenzelle, kein Inhalt. */
-    coordinates: Coordinates.nullable(),
-    addedAt: z.iso.datetime({ offset: true }),
-  })
-  .strict()
-  .superRefine((wert, ctx) => {
-    if (wert.kind === 'place' && wert.coordinates === null) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Ein gemerkter Ort braucht seine Koordinate, sonst ist er nicht wiederzufinden.',
-        path: ['coordinates'],
-      });
-    }
-  });
-export type MerkEintrag = z.infer<typeof MerkEintragSchema>;
+/**
+ * M22-02: Form und Regeln stehen weiterhin als Schema in
+ * `storage-schemas.ts`; hier steht der Typ von Hand, damit die
+ * Schemabibliothek nicht in den Browser wandert. Beide werden gegeneinander
+ * geprüft — als Typ beim `astro check` und als Verhalten in
+ * `tests/runtime-guards.test.ts`.
+ */
+export interface MerkEintrag {
+  readonly kind: MerkArt;
+  /** Stabile Kennung des Gegenstands, etwa `osm:node:1` oder eine foodId. */
+  readonly id: string;
+  /** Nur bei Orten: Schlüssel zur Datenzelle, kein Inhalt. */
+  readonly coordinates: Coordinates | null;
+  readonly addedAt: string;
+}
 
-export const MerklisteSchema = z
-  .object({
-    version: z.literal(1),
-    entries: z.array(MerkEintragSchema).max(MAX_EINTRAEGE),
-  })
-  .strict();
-export type Merkliste = z.infer<typeof MerklisteSchema>;
+export interface Merkliste {
+  readonly version: 1;
+  readonly entries: readonly MerkEintrag[];
+}
 
 export const LEERE_MERKLISTE: Merkliste = { version: 1, entries: [] };
 
@@ -66,13 +56,12 @@ function schluessel(eintrag: Pick<MerkEintrag, 'kind' | 'id'>): string {
  * wächst nicht über ihre Grenze: der älteste Eintrag fällt heraus.
  */
 export function merke(liste: Merkliste, eintrag: MerkEintrag): Merkliste {
-  const geprueft = MerkEintragSchema.safeParse(eintrag);
-  if (!geprueft.success) return liste;
+  if (!istMerkEintrag(eintrag)) return liste;
 
   const ohneDoppel = liste.entries.filter(
-    (vorhanden) => schluessel(vorhanden) !== schluessel(geprueft.data),
+    (vorhanden) => schluessel(vorhanden) !== schluessel(eintrag),
   );
-  const neu = [...ohneDoppel, geprueft.data].sort((a, b) =>
+  const neu = [...ohneDoppel, eintrag].sort((a, b) =>
     a.addedAt === b.addedAt
       ? schluessel(a) < schluessel(b)
         ? -1
@@ -104,8 +93,7 @@ export function lese(roh: string | null): Merkliste {
   } catch {
     return LEERE_MERKLISTE;
   }
-  const geprueft = MerklisteSchema.safeParse(gelesen);
-  if (geprueft.success) return geprueft.data;
+  if (istMerkliste(gelesen, MAX_EINTRAEGE)) return gelesen as Merkliste;
 
   // Teilweise brauchbar: gültige Einträge behalten, kaputte verwerfen. Eine
   // Merkliste ganz wegzuwerfen, weil ein Eintrag falsch ist, wäre unnötig
@@ -115,10 +103,9 @@ export function lese(roh: string | null): Merkliste {
     gelesen !== null &&
     Array.isArray((gelesen as { entries?: unknown }).entries)
   ) {
-    const einzeln = (gelesen as { entries: unknown[] }).entries
-      .map((eintrag) => MerkEintragSchema.safeParse(eintrag))
-      .filter((ergebnis) => ergebnis.success)
-      .map((ergebnis) => ergebnis.data);
+    const einzeln = (gelesen as { entries: unknown[] }).entries.filter((eintrag) =>
+      istMerkEintrag(eintrag),
+    ) as MerkEintrag[];
     return { version: 1, entries: einzeln.slice(0, MAX_EINTRAEGE) };
   }
   return LEERE_MERKLISTE;

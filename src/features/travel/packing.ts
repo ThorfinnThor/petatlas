@@ -11,33 +11,14 @@
  *    `tests/travel/packing.test.ts` am Wortlaut.
  */
 import packliste from '../../../content-data/travel/packing-list.json' with { type: 'json' };
-import {
-  PackingListSchema,
-  type PackingItem,
-  type PackingList,
-} from '../../domain/schemas/travel.ts';
-import { alleRegeln } from './rules.ts';
+import type { PackingItem, PackingList } from '../../domain/schemas/travel.ts';
 
-function lade(): PackingList {
-  const ergebnis = PackingListSchema.safeParse(packliste);
-  if (!ergebnis.success) {
-    throw new Error(
-      `content-data/travel/packing-list.json ist ungültig: ${ergebnis.error.message}`,
-    );
-  }
-  const bekannt = new Set(alleRegeln().map((regel) => regel.requirementId));
-  for (const eintrag of ergebnis.data.items) {
-    if (eintrag.requirementId !== null && !bekannt.has(eintrag.requirementId)) {
-      throw new Error(
-        `Packlisteneintrag ${eintrag.itemId} verweist auf die unbekannte Anforderung ` +
-          `"${eintrag.requirementId}".`,
-      );
-    }
-  }
-  return ergebnis.data;
-}
-
-const LISTE = lade();
+/**
+ * M22-02: Die Datei liegt im Repository und ist zur Bauzeit unveränderlich.
+ * Geprüft wird sie dort (`npm run check:content`) — einschließlich der
+ * Querbezüge, die vorher hier beim Laden geprüft wurden.
+ */
+const LISTE = packliste as unknown as PackingList;
 
 export function reisePackliste(): PackingList {
   return LISTE;

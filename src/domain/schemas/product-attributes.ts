@@ -103,11 +103,8 @@ export const AttributeReviewSchema = z
 export type AttributeReview = z.infer<typeof AttributeReviewSchema>;
 
 /**
- * Darf dieses Attribut ein Produkt als passend erscheinen lassen?
- *
- * Nein bei unbekanntem Wert und nein ohne Beleg. Beides ist derselbe
- * Gedanke: was niemand weiß, spricht weder für noch gegen ein Produkt.
+ * Die Regel selbst steht seit M22-02 in `../attribute-rules.ts`, damit sie
+ * ohne Schemabibliothek zu haben ist. Hier bleibt sie erreichbar, wo man sie
+ * sucht.
  */
-export function darfMatchen(attribut: ProductAttribute): boolean {
-  return attribut.value !== null && attribut.verification !== 'unverified';
-}
+export { darfMatchen } from '../attribute-rules.ts';

@@ -9,7 +9,8 @@
  * keinen Server und keine Anfrage an Dritte.
  */
 import { formatMoney } from '../../domain/money.ts';
-import { FeeItemSchema, type FeeItem } from '../../domain/schemas/costs.ts';
+import { istGebuehrenposition } from '../../domain/runtime-guards.ts';
+import type { FeeItem } from '../../domain/schemas/costs.ts';
 import type { Species } from '../../domain/schemas/common.ts';
 import {
   CostError,
@@ -37,9 +38,10 @@ async function ladeKatalog(): Promise<readonly FeeItem[]> {
   const daten = (await (await fetch(chunk.path)).json()) as { records: unknown[] };
   const items: FeeItem[] = [];
   for (const roh of daten.records) {
-    const ergebnis = FeeItemSchema.safeParse(roh);
-    // Ein ungültiger Datensatz wird übersprungen, nicht repariert.
-    if (ergebnis.success) items.push(ergebnis.data);
+    // Ein ungültiger Datensatz wird übersprungen, nicht repariert. Geprüft
+    // wird mit der handgeschriebenen Fassung (M22-02); dass sie dasselbe
+    // sagt wie `FeeItemSchema`, prüft `tests/runtime-guards.test.ts`.
+    if (istGebuehrenposition(roh)) items.push(roh as FeeItem);
   }
   if (items.length === 0) throw new Error('Die Gebührendatei enthält keine gültige Position.');
   return items;

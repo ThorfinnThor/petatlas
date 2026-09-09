@@ -15,7 +15,8 @@
  *   einmal am Ende und kaufmännisch.
  */
 import type { Offer } from '../../domain/schemas/catalog.ts';
-import { gesamtmengeGramm, type FoodProduct } from '../../domain/schemas/food.ts';
+import { gesamtmengeGramm } from '../../domain/domain-rules.ts';
+import type { FoodProduct } from '../../domain/schemas/food.ts';
 
 export interface Grundpreis {
   /** Preis je Kilogramm in Untereinheiten der Angebotswährung. */

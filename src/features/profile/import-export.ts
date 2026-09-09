@@ -17,11 +17,9 @@
  *   wird nirgends als HTML eingesetzt.
  * - **Nichts wird nachgeladen.** Der Import löst keinen Abruf aus.
  */
-import { z } from 'zod';
-
-import { PetProfileSchema } from '../../domain/schemas/profile.ts';
-import { MerklisteSchema, type Merkliste } from './favorites.ts';
-import { PackStandSchema, type PackStand } from './packing-state.ts';
+import { istExportDatei } from '../../domain/runtime-guards.ts';
+import { MAX_EINTRAEGE, type Merkliste } from './favorites.ts';
+import type { PackStand } from './packing-state.ts';
 import { bereinigeInteressen } from './state.ts';
 import type { PetProfile } from '../../domain/schemas/profile.ts';
 
@@ -31,18 +29,20 @@ export const MAX_IMPORT_BYTES = 256 * 1024;
 export const EXPORT_FORMAT = 'petatlas-lokal';
 export const EXPORT_VERSION = 1;
 
-export const ExportSchema = z
-  .object({
-    format: z.literal(EXPORT_FORMAT),
-    version: z.literal(EXPORT_VERSION),
-    exportedAt: z.iso.datetime({ offset: true }),
-    profile: PetProfileSchema.nullable(),
-    interests: z.array(z.string()),
-    favorites: MerklisteSchema.nullable(),
-    packing: PackStandSchema.nullable(),
-  })
-  .strict();
-export type ExportDatei = z.infer<typeof ExportSchema>;
+/**
+ * M22-02: Der Typ steht von Hand hier, das Schema in `storage-schemas.ts`.
+ * Eine Datei aus fremder Hand wird trotzdem vollständig geprüft — nur eben
+ * ohne 87 KiB Bibliothek im Browser.
+ */
+export interface ExportDatei {
+  readonly format: typeof EXPORT_FORMAT;
+  readonly version: typeof EXPORT_VERSION;
+  readonly exportedAt: string;
+  readonly profile: PetProfile | null;
+  readonly interests: readonly string[];
+  readonly favorites: Merkliste | null;
+  readonly packing: PackStand | null;
+}
 
 export interface ExportEingabe {
   readonly profile: PetProfile | null;
@@ -122,8 +122,7 @@ export function pruefeImport(text: string, maxBytes = MAX_IMPORT_BYTES): ImportE
     );
   }
 
-  const geprueft = ExportSchema.safeParse(roh);
-  if (!geprueft.success) {
+  if (!istExportDatei(roh, EXPORT_FORMAT, EXPORT_VERSION, MAX_EINTRAEGE)) {
     return fehlschlag(
       'ungueltig',
       'Die Datei passt nicht zum Format. Es wurde nichts übernommen — auch nicht teilweise.',
@@ -131,9 +130,10 @@ export function pruefeImport(text: string, maxBytes = MAX_IMPORT_BYTES): ImportE
   }
 
   // Interessen werden auch hier auf die bekannte Liste beschränkt.
+  const gepruefte = roh as unknown as ExportDatei;
   const daten: ExportDatei = {
-    ...geprueft.data,
-    interests: [...bereinigeInteressen(geprueft.data.interests)],
+    ...gepruefte,
+    interests: [...bereinigeInteressen(gepruefte.interests)],
   };
 
   return {

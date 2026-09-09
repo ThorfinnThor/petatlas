@@ -14,8 +14,10 @@ import {
   pruefeDateityp,
   pruefeHeader,
   pruefeHtml,
+  pruefeJavaScript,
   pruefeJson,
   pruefeVerzeichnis,
+  SCHEMA_SPUREN,
 } from '../../scripts/checks/dist.ts';
 
 const HOSTS = erlaubteSubressourcenHosts();
@@ -184,5 +186,28 @@ describe('Ganzes Verzeichnis', () => {
     const funde = pruefeVerzeichnis(wurzel);
     expect(funde.length).toBe(1);
     expect(funde[0]?.datei).toBe('vergessen.ts');
+  });
+});
+
+describe('Schemabibliothek im Browser (M22-02)', () => {
+  it('erkennt jede Spur, die die Minifizierung übersteht', () => {
+    for (const spur of SCHEMA_SPUREN) {
+      const funde = pruefeJavaScript('_astro/x.js', `const a=1;/*${spur}*/`);
+      expect(funde, spur).toHaveLength(1);
+      expect(funde[0]?.problem).toContain('runtime-guards');
+    }
+  });
+
+  it('lässt gewöhnliches Browser-JavaScript in Ruhe', () => {
+    expect(pruefeJavaScript('_astro/x.js', 'export function a(){return 1}')).toEqual([]);
+  });
+
+  it('sieht sich jede .js-Datei des Verzeichnisses an', () => {
+    const wurzel = mkdtempSync(join(tmpdir(), 'dist-js-'));
+    mkdirSync(join(wurzel, '_astro'), { recursive: true });
+    writeFileSync(join(wurzel, 'index.html'), '<!doctype html><title>x</title>');
+    writeFileSync(join(wurzel, '_astro', 'app.js'), 'throw new ZodError("x");');
+    const funde = pruefeVerzeichnis(wurzel);
+    expect(funde.some((fund) => fund.problem.includes('Schemabibliothek'))).toBe(true);
   });
 });

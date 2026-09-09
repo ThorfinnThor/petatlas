@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M22-02",
+  "current_task": "M22-03",
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -4326,8 +4326,16 @@
         "M22-01"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Die Schemabibliothek ist aus dem Browser verschwunden, ohne dass eine Pruefung entfaellt. Gemessen mit 'npm run test:performance' vorher und nachher: Kostenrechner 98,0 auf 13,4 KiB JavaScript, Reisecheck 113,8 auf 23,2 KiB, Futter 95,6 auf 7,6 KiB; Seitengesamtgroessen 162,1 auf 77,5 / 183,9 auf 93,4 / 155,2 auf 67,2 KiB. Vorher lagen drei Seiten ueber der Warnschwelle von 60 KiB, jetzt keine. Der Umbau trennt zwei Faelle, die vorher gleich behandelt wurden: (1) Daten, die zur Bauzeit feststehen - Taxonomien, Reiseregeln samt entfalteten Einzelregeln, Freigaben, Packliste, Futterdatensatz, Produkteigenschaften, Stadt-Allowlist, Kostenszenarien, Offenlegungen - koennen sich zwischen Build und Seitenaufruf nicht aendern; sie werden jetzt zur Bauzeit geprueft ('npm run check:content', 17 Dateien gegen dieselben Schemas, Teil von verify und CI, mit den Querbezuegen, die vorher beim Laden geprueft wurden: Produkt zu Kategorie, Packlisteneintrag zu Anforderung, entfaltete Regel gegen TravelRuleSchema). Eine kaputte Datei bricht damit den Lauf ab, statt in einer fremden Browsersitzung aufzufallen - gegengeprueft, indem ich ein Pflichtfeld entfernt habe: Exitcode 1. (2) Daten, die zur Laufzeit ankommen - nachgeladene Gebuehrenchunks, lokaler Speicher, gewaehlte Importdatei - werden weiterhin im Browser geprueft, mit handgeschriebenen Pruefungen in src/domain/runtime-guards.ts (2,9 KiB statt 85 KiB). Dass die kleine Fassung dasselbe sagt wie das Schema, ist nicht behauptet, sondern geprueft: tests/runtime-guards.test.ts legt beiden dieselben Werte vor - alle 1006 echten Gebuehrenpositionen und rund 250 gezielt kaputt gemachte Fassungen von Profil, Merkliste, Packstand und Exportdatei - und verlangt dasselbe Urteil. Zusaetzlich behauptet src/features/profile/storage-schemas.ts die Typgleichheit von Schema und handgeschriebenem Typ in beide Richtungen; 'astro check' prueft sie. Nebenbefund aus genau diesem Vergleich und behoben: die handgeschriebene Pruefung war beim Datum strenger als das Schema - '2022-13-01' passierte IsoDate, weil nur die Form geprueft wurde. IsoDate prueft jetzt den Tag; alle 1404 vorhandenen Tests blieben gruen. Damit die Bibliothek nicht unbemerkt zurueckkehrt, sucht 'npm run check:dist' in jeder ausgelieferten .js-Datei nach ihren Spuren; die Erkennung selbst ist mit vier Spurmustern und einem Verzeichnislauf getestet. Geprueft: 'npm run verify' exit 0 mit 1407 Unit-Tests, Playwright 228 / 323 / 107 gruen, check:dist 2836 Dateien ohne Beanstandung, check:seo und check:places ohne Beanstandung, check:budgets eingehalten.",
+          "reference": "src/domain/runtime-guards.ts, src/domain/domain-rules.ts, src/domain/attribute-rules.ts, src/features/profile/storage-schemas.ts, src/features/food/dataset-schema.ts, scripts/checks/content-data.ts, scripts/checks/dist.ts, tests/runtime-guards.test.ts, tests/checks/dist-audit.test.ts, docs/PERFORMANCE.md",
+          "verified_at": "2026-09-09",
+          "command": "npm run verify && npm run test:performance",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4347,7 +4355,7 @@
         "M22-02"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "in_progress",
       "evidence": [],
       "blocker": null,
       "notes": []

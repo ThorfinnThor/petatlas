@@ -7,23 +7,20 @@
  */
 import care from '../../../content-data/taxonomy/care.json' with { type: 'json' };
 import toys from '../../../content-data/taxonomy/toys.json' with { type: 'json' };
-import {
-  TaxonomySchema,
-  type Taxonomy,
-  type TaxonomyCategory,
-  type TaxonomyExclusion,
+import type {
+  Taxonomy,
+  TaxonomyCategory,
+  TaxonomyExclusion,
 } from '../../domain/schemas/taxonomy.ts';
 
-function lade(roh: unknown, quelle: string): Taxonomy {
-  const ergebnis = TaxonomySchema.safeParse(roh);
-  if (!ergebnis.success) {
-    throw new Error(`${quelle} ist ungültig: ${ergebnis.error.message}`);
-  }
-  return ergebnis.data;
-}
-
-const PFLEGE = lade(care, 'content-data/taxonomy/care.json');
-const SPIELZEUG = lade(toys, 'content-data/taxonomy/toys.json');
+/**
+ * M22-02: Diese Dateien liegen im Repository und sind zur Bauzeit
+ * unveränderlich. Geprüft werden sie deshalb dort — `npm run check:content`
+ * hält sie gegen `TaxonomySchema` — und nicht bei jedem Seitenaufruf im
+ * Browser. Die Prüfung ist nicht weg, sie ist früher.
+ */
+const PFLEGE = care as unknown as Taxonomy;
+const SPIELZEUG = toys as unknown as Taxonomy;
 
 export function pflegeTaxonomie(): Taxonomy {
   return PFLEGE;

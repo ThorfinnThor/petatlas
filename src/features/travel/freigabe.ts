@@ -20,11 +20,7 @@
  * Manipulation im eigenen Repository schützt sie nicht und soll es nicht.
  */
 import freigaben from '../../../content-data/travel/approvals.json' with { type: 'json' };
-import {
-  TravelApprovalListSchema,
-  type TravelApproval,
-  type TravelRuleSet,
-} from '../../domain/schemas/travel.ts';
+import type { TravelApproval, TravelRuleSet } from '../../domain/schemas/travel.ts';
 import { bewerte, type FrischePolitik } from '../freshness/policy.ts';
 import { regelSaetze } from './rules.ts';
 
@@ -69,15 +65,12 @@ export function inhaltsSignatur(satz: TravelRuleSet): string {
   return `${hoch.toString(16).padStart(8, '0')}${tief.toString(16).padStart(8, '0')}`;
 }
 
-function ladeFreigaben(): readonly TravelApproval[] {
-  const ergebnis = TravelApprovalListSchema.safeParse(freigaben);
-  if (!ergebnis.success) {
-    throw new Error(`content-data/travel/approvals.json ist ungültig: ${ergebnis.error.message}`);
-  }
-  return ergebnis.data.approvals;
-}
-
-const FREIGABEN = ladeFreigaben();
+/**
+ * M22-02: Die Datei liegt im Repository und ist zur Bauzeit unveränderlich.
+ * Geprüft wird sie dort (`npm run check:content`) — einschließlich der
+ * Querbezüge, die vorher hier beim Laden geprüft wurden.
+ */
+const FREIGABEN = (freigaben as unknown as { approvals: TravelApproval[] }).approvals;
 
 export interface FreigabeStand {
   readonly ruleSetId: string;

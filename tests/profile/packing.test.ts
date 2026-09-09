@@ -4,7 +4,6 @@ import { describe, expect, it } from 'vitest';
 import {
   MAX_ZIELE,
   PACKING_STORAGE_KEY,
-  PackStandSchema,
   abgehakt,
   fortschritt,
   leere,
@@ -13,6 +12,7 @@ import {
   schreibe,
   setze,
 } from '../../src/features/profile/packing-state.ts';
+import { PackStandSchema } from '../../src/features/profile/storage-schemas.ts';
 
 const JETZT = '2026-09-08T10:00:00+00:00';
 

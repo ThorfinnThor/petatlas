@@ -27,5 +27,5 @@ export const PetProfileSchema = z
   .strict();
 export type PetProfile = z.infer<typeof PetProfileSchema>;
 
-/** Ein Profil ist nur lokal gültig; es wird nie automatisch veröffentlicht. */
-export const PROFILE_STORAGE_KEY = 'petatlas.profile.v1';
+// Der Speicherschlüssel liegt seit M22-02 in `../domain-rules.ts`.
+export { PROFILE_STORAGE_KEY } from '../domain-rules.ts';

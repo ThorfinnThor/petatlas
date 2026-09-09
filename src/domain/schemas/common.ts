@@ -4,7 +4,21 @@
 import { z } from 'zod';
 
 export const IsoTimestamp = z.iso.datetime({ offset: true });
-export const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Erwartet wird YYYY-MM-DD.');
+/**
+ * Kalenderdatum `YYYY-MM-DD`.
+ *
+ * Geprüft wird nicht nur die Form, sondern der Tag: `2022-13-01` sieht aus
+ * wie ein Datum und ist keines. Der Fund stammt aus M22-02 — die von Hand
+ * geschriebene Laufzeitprüfung war an dieser Stelle strenger als das Schema,
+ * und strenger hatte recht.
+ */
+export const IsoDate = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, 'Erwartet wird YYYY-MM-DD.')
+  .refine((wert) => {
+    const zeit = Date.parse(`${wert}T00:00:00Z`);
+    return !Number.isNaN(zeit) && new Date(zeit).toISOString().slice(0, 10) === wert;
+  }, 'Diesen Tag gibt es nicht.');
 export const CountryCode = z.string().regex(/^[A-Z]{2}$/, 'Erwartet wird ein Ländercode wie DE.');
 export const CurrencyCode = z.string().regex(/^[A-Z]{3}$/, 'Erwartet wird eine Währung wie EUR.');
 export const MarketId = CountryCode;
