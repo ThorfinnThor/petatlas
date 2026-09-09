@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M21-03",
+  "current_task": "M21-05",
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -4181,8 +4181,16 @@
         "M21-01"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Der Rechner steht in einer zweispaltigen Tool-Ansicht (src/components/tools/ToolShell.astro, Abschnitt 22 und 24.2): ab 768 px Eingaben links und Ergebnis rechts im Verhaeltnis 5 zu 7, darunter einspaltig. Gemessen am Desktop mit 1280x800: Eingabe 293 px breit ab x=272, Ergebnis 411 px ab x=597, die Ergebnisueberschrift steht ohne Scrollen im Blick (scrollY 0). Umsortiert wird nichts per CSS - die Quelltextreihenfolge ist die sichtbare, sonst liefe die Tastaturreihenfolge davon; ein Test prueft das ausdruecklich. Sticky ist das Ergebnis bewusst nicht: erlaubt waere es nur, solange das Panel kuerzer als der Viewport ist, und eine Rechnung mit dreissig Positionen ist das nicht - deshalb ist sticky eine ausdrueckliche Entscheidung der Seite und keine Voreinstellung. Die Komponente lehnt eine fehlende Spalte ab, statt eine leere zu zeigen. Geprueft: 3 neue Unit-Tests, 4 neue Playwright-Tests in tests/e2e-features/tool-shell.spec.ts (Nebeneinander, Breitenverhaeltnis, Sichtbarkeit ohne Scrollen, Reihenfolge auf dem Telefon), Funktionslauf 306 Tests gruen, 'npm run verify' exit 0.",
+          "reference": "src/components/tools/ToolShell.astro, src/components/pages/Costs.astro, tests/design-system.test.ts, tests/e2e-features/tool-shell.spec.ts",
+          "verified_at": "2026-09-09",
+          "command": "npx playwright test --config playwright.features.config.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4202,8 +4210,16 @@
         "M21-03"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Der Reisecheck hat vier benannte Schritte: Reise, Tier, Angaben, Ergebnis (Abschnitt 28.2). Die Anzeige (src/components/tools/ToolStepper.astro) zeigt Nummer und Text, keinen Fortschrittsbalken; der aktuelle Schritt traegt aria-current='step' und einen kraeftigeren Rahmen, nicht nur eine Farbe (Farbregel 5). Die Felder wurden dafuer neu gruppiert - Tierart und Anzahl gehoeren zum Tier, nicht zur Reise. Entscheidend fuer 'Zurueckgehen verliert keine Eingabe': es wird nichts ein- oder ausgeblendet. Alle Abschnitte bleiben im Dokument, die Anzeige ist eine Sprungnavigation und funktioniert deshalb auch ohne JavaScript; mit JavaScript markiert schritteVerfolgen() zusaetzlich den Abschnitt, in dem gelesen wird. Ein Playwright-Test fuellt Reisedatum, Geburtsdatum und Chipangabe, springt ueber die Anzeige zurueck zu Schritt 1 und wieder vor und prueft alle drei Werte. Ein zweiter prueft, dass die Markierung beim Scrollen mitwandert, ein dritter, dass es keinen progress-Balken gibt. Die Komponente lehnt doppelte Schritt-Ids und einen aktiven Schritt ab, den es nicht gibt. Geprueft: 4 neue Unit-Tests fuer die Komponente, 3 fuer die Positionsberechnung, 3 neue Playwright-Tests; Reisecheck-Lauf 48 Tests gruen, 'npm run verify' exit 0, Barrierefreiheitslauf 107 gruen.",
+          "reference": "src/components/tools/ToolStepper.astro, src/features/travel/stepper.ts, src/components/pages/Travel.astro, tests/travel/stepper.test.ts, tests/design-system.test.ts, tests/e2e-features/tool-shell.spec.ts",
+          "verified_at": "2026-09-09",
+          "command": "npx playwright test --config playwright.features.config.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4222,7 +4238,7 @@
         "M21-01"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "in_progress",
       "evidence": [],
       "blocker": null,
       "notes": []

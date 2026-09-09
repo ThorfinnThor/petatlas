@@ -1,0 +1,126 @@
+---
+/**
+ * M21-04 — Schrittanzeige nach Designvertrag Abschnitt 28.2.
+ *
+ * Nummer **und** Text, kein reiner Fortschrittsbalken: „73 Prozent“ sagt
+ * niemandem, was noch kommt. Die vier Schritte stehen als Liste da, jeder
+ * mit einem Sprungziel.
+ *
+ * Ohne JavaScript ist das eine echte Sprungnavigation: alle Abschnitte
+ * stehen untereinander, die Anzeige führt hin. Mit JavaScript markiert
+ * `schritteVerfolgen()` zusätzlich, wo man gerade ist. Beides zeigt
+ * dieselben Schritte — die Anzeige verspricht nichts, was ohne JavaScript
+ * fehlt.
+ *
+ * Was hier bewusst **nicht** passiert: Felder ausblenden. Ein Schritt, der
+ * seine Eingaben aus dem Dokument nimmt, verliert sie beim Zurückgehen.
+ * Deshalb bleiben alle Abschnitte im Dokument, und die Anzeige ist eine
+ * Orientierung, kein Käfig.
+ */
+export interface Schritt {
+  /** Id des zugehörigen Abschnitts auf der Seite. */
+  readonly id: string;
+  readonly titel: string;
+}
+
+interface Props {
+  schritte: readonly Schritt[];
+  /** Beschriftung der Schrittleiste für Screenreader. */
+  label: string;
+  /** Id des Schritts, auf dem man beim Laden steht. */
+  aktiv?: string;
+}
+
+const { schritte, label, aktiv } = Astro.props;
+
+if (schritte.length < 2) {
+  throw new Error('Eine Schrittanzeige mit weniger als zwei Schritten ist keine.');
+}
+const doppelt = schritte.length !== new Set(schritte.map((schritt) => schritt.id)).size;
+if (doppelt) {
+  throw new Error('Zwei Schritte mit derselben Id: das Sprungziel wäre nicht eindeutig.');
+}
+if (aktiv !== undefined && !schritte.some((schritt) => schritt.id === aktiv)) {
+  throw new Error(`Der aktive Schritt "${aktiv}" steht nicht in der Liste.`);
+}
+---
+
+<nav class="schritte" aria-label={label} data-schrittanzeige>
+  <ol>
+    {
+      schritte.map((schritt, index) => (
+        <li>
+          <a
+            href={`#${schritt.id}`}
+            data-schritt={schritt.id}
+            aria-current={schritt.id === aktiv ? 'step' : undefined}
+          >
+            <span class="schritte__nummer" aria-hidden="true">
+              {index + 1}
+            </span>
+            <span class="schritte__titel">{schritt.titel}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .schritte {
+    margin-block: var(--space-6);
+  }
+
+  .schritte ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .schritte a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: 44px;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: var(--text-small);
+  }
+
+  .schritte a:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .schritte__nummer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-subtle);
+    color: var(--color-text-muted);
+    font-weight: var(--weight-label);
+  }
+
+  /* Der aktuelle Schritt ist nicht nur eingefärbt: er trägt aria-current und
+     einen kräftigeren Rahmen (Farbregel 5). */
+  .schritte a[aria-current='step'] {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+    color: var(--color-primary-hover);
+    font-weight: var(--weight-label);
+  }
+
+  .schritte a[aria-current='step'] .schritte__nummer {
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+</style>

@@ -16,6 +16,8 @@ import Card from '../src/components/ui/Card.astro';
 import { defaultMarket, withEnabledFeatures } from '../src/domain/market.ts';
 import EmptyState from '../src/components/ui/EmptyState.astro';
 import PageHeader from '../src/components/ui/PageHeader.astro';
+import ToolShell from '../src/components/tools/ToolShell.astro';
+import ToolStepper from '../src/components/tools/ToolStepper.astro';
 import {
   BADGE_ARTEN,
   BUTTON_GROESSEN,
@@ -317,5 +319,88 @@ describe('Breadcrumbs (M21-02)', () => {
 
     const ohne = unterseiten.filter((pfad) => !readFileSync(pfad, 'utf8').includes('<Breadcrumbs'));
     expect(ohne).toEqual([]);
+  });
+});
+
+describe('ToolShell (M21-03)', () => {
+  it('verlangt beide Bereiche — eine leere Spalte ist keine zweispaltige Ansicht', async () => {
+    await expect(
+      render(
+        ToolShell,
+        { eingabeTitel: 'Eingaben', ergebnisTitel: 'Rechnung' },
+        { eingabe: '<p>x</p>' },
+      ),
+    ).rejects.toThrow(/braucht beide Bereiche/);
+  });
+
+  it('beschriftet beide Bereiche über ihre Überschrift', async () => {
+    const html = await render(
+      ToolShell,
+      { eingabeTitel: 'Eingaben', ergebnisTitel: 'Rechnung', ergebnisId: 'ergebnis-titel' },
+      { eingabe: '<p>Formular</p>', ergebnis: '<p>Summe</p>' },
+    );
+    expect(html).toContain('aria-labelledby="werkzeug-eingabe-titel"');
+    expect(html).toContain('aria-labelledby="ergebnis-titel"');
+    expect(html.indexOf('werkzeug__eingabe')).toBeLessThan(html.indexOf('werkzeug__ergebnis'));
+  });
+
+  it('ist ohne ausdrückliche Entscheidung nicht sticky', async () => {
+    const html = await render(
+      ToolShell,
+      { eingabeTitel: 'E', ergebnisTitel: 'R' },
+      { eingabe: 'a', ergebnis: 'b' },
+    );
+    expect(html).not.toContain('werkzeug__ergebnis--sticky');
+  });
+});
+
+describe('ToolStepper (M21-04)', () => {
+  const SCHRITTE = [
+    { id: 'schritt-reise', titel: 'Reise' },
+    { id: 'schritt-tier', titel: 'Tier' },
+    { id: 'schritt-angaben', titel: 'Angaben' },
+    { id: 'schritt-ergebnis', titel: 'Ergebnis' },
+  ];
+
+  it('zeigt Nummer und Text, nicht nur einen Balken', async () => {
+    const html = await render(ToolStepper, { schritte: SCHRITTE, label: 'Schritte' }, {});
+    for (const [index, schritt] of SCHRITTE.entries()) {
+      expect(html).toContain(schritt.titel);
+      expect(html).toContain(`>${index + 1}`);
+    }
+    expect(html).not.toContain('<progress');
+  });
+
+  it('benennt den aktuellen Schritt mit aria-current', async () => {
+    const html = await render(
+      ToolStepper,
+      { schritte: SCHRITTE, label: 'Schritte', aktiv: 'schritt-tier' },
+      {},
+    );
+    expect(html).toMatch(/aria-current="step"[^>]*>\s*<span[^>]*>2/);
+  });
+
+  it('bleibt ohne JavaScript eine echte Sprungnavigation', async () => {
+    const html = await render(ToolStepper, { schritte: SCHRITTE, label: 'Schritte' }, {});
+    for (const schritt of SCHRITTE) expect(html).toContain(`href="#${schritt.id}"`);
+  });
+
+  it('verweigert doppelte Ids und einen unbekannten aktiven Schritt', async () => {
+    await expect(
+      render(
+        ToolStepper,
+        {
+          schritte: [
+            { id: 'a', titel: 'A' },
+            { id: 'a', titel: 'B' },
+          ],
+          label: 'x',
+        },
+        {},
+      ),
+    ).rejects.toThrow(/nicht eindeutig/);
+    await expect(
+      render(ToolStepper, { schritte: SCHRITTE, label: 'x', aktiv: 'gibt-es-nicht' }, {}),
+    ).rejects.toThrow(/steht nicht in der Liste/);
   });
 });

@@ -11,6 +11,7 @@
  * nachgebaut, damit die Regeln nicht auseinanderlaufen können.
  */
 import Notice from '../Notice.astro';
+import ToolShell from '../tools/ToolShell.astro';
 import DataStatus from '../DataStatus.astro';
 import ErrorSummary from '../forms/ErrorSummary.astro';
 import Field from '../forms/Field.astro';
@@ -62,86 +63,89 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   locale={market.locale}
 />
 
-<ErrorSummary id="rechner-fehler" />
+<ToolShell eingabeTitel="Eingaben" ergebnisTitel="Rechnung" ergebnisId="ergebnis-titel">
+  <Fragment slot="eingabe">
+    <ErrorSummary id="rechner-fehler" />
 
-<form id="rechner" data-validierung data-fehlerliste="rechner-fehler" novalidate>
-  <fieldset>
-    <legend>Behandlungskontext</legend>
-    <p class="hilfe">
-      Der Kontext wird nicht aus der Uhrzeit abgeleitet. Wählen Sie, was tatsächlich zutrifft; im
-      Zweifel fragen Sie in der Praxis nach.
+    <form id="rechner" data-validierung data-fehlerliste="rechner-fehler" novalidate>
+      <fieldset>
+        <legend>Behandlungskontext</legend>
+        <p class="hilfe">
+          Der Kontext wird nicht aus der Uhrzeit abgeleitet. Wählen Sie, was tatsächlich zutrifft;
+          im Zweifel fragen Sie in der Praxis nach.
+        </p>
+        <label class="wahl">
+          <input type="radio" name="kontext" value="regular" checked />
+          Regulär — Faktor {COST_CONFIG.standardFactorMin} bis {COST_CONFIG.standardFactorMax}
+        </label>
+        <label class="wahl">
+          <input type="radio" name="kontext" value="emergency" />
+          Notdienst — Faktor {COST_CONFIG.emergencyFactorMin} bis {COST_CONFIG.emergencyFactorMax},
+          zuzüglich Notdienstgebühr
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Tier</legend>
+        <label for="tierart">Tierart</label>
+        <select id="tierart" name="tierart">
+          <option value="">keine Angabe</option>
+          <option value="dog">Hund</option>
+          <option value="cat">Katze</option>
+        </select>
+        <p class="hilfe">
+          Die Verordnung ordnet die meisten Positionen keiner Tierart zu. Eine Angabe schließt hier
+          nur Positionen aus, die im Originaltext ausdrücklich eine andere Tierart nennen.
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Position hinzufügen</legend>
+        <label for="suche">Leistung suchen</label>
+        <input id="suche" type="search" autocomplete="off" placeholder="z. B. Untersuchung" />
+        <p id="suche-hinweis" class="hilfe" role="status" aria-live="polite"></p>
+        <ul id="treffer" class="treffer"></ul>
+
+        <Field
+          id="menge"
+          name="menge"
+          label="Menge"
+          hilfe="Ganze Zahl, mindestens 1."
+          fehlertext="Die Menge muss eine ganze Zahl größer als 0 sein."
+          regel="zahl-positiv"
+          inputmode="numeric"
+          pflicht
+        />
+        <Field
+          id="faktor"
+          name="faktor"
+          label="Faktor"
+          hilfe="Höchstens zwei Nachkommastellen. Der zulässige Bereich hängt vom Kontext ab."
+          fehlertext="Der Faktor liegt außerhalb des für diesen Kontext zulässigen Bereichs."
+          regel="zahl-bereich"
+          inputmode="decimal"
+          min={1}
+          max={4}
+          pflicht
+        />
+        <p>
+          <button type="submit">Position übernehmen</button>
+        </p>
+      </fieldset>
+    </form>
+  </Fragment>
+
+  <Fragment slot="ergebnis">
+    <p id="rechner-status" role="status" aria-live="polite">Noch keine Position ausgewählt.</p>
+    <div id="ergebnis" data-testid="rechner-ergebnis"></div>
+    <p class="drucken">
+      <button type="button" id="drucken">Rechnung drucken</button>
+      <span class="hilfe">
+        Auf dem Ausdruck stehen Quelle, Fassung und die Fundstelle jeder Position.
+      </span>
     </p>
-    <label class="wahl">
-      <input type="radio" name="kontext" value="regular" checked />
-      Regulär — Faktor {COST_CONFIG.standardFactorMin} bis {COST_CONFIG.standardFactorMax}
-    </label>
-    <label class="wahl">
-      <input type="radio" name="kontext" value="emergency" />
-      Notdienst — Faktor {COST_CONFIG.emergencyFactorMin} bis {COST_CONFIG.emergencyFactorMax},
-      zuzüglich Notdienstgebühr
-    </label>
-  </fieldset>
-
-  <fieldset>
-    <legend>Tier</legend>
-    <label for="tierart">Tierart</label>
-    <select id="tierart" name="tierart">
-      <option value="">keine Angabe</option>
-      <option value="dog">Hund</option>
-      <option value="cat">Katze</option>
-    </select>
-    <p class="hilfe">
-      Die Verordnung ordnet die meisten Positionen keiner Tierart zu. Eine Angabe schließt hier nur
-      Positionen aus, die im Originaltext ausdrücklich eine andere Tierart nennen.
-    </p>
-  </fieldset>
-
-  <fieldset>
-    <legend>Position hinzufügen</legend>
-    <label for="suche">Leistung suchen</label>
-    <input id="suche" type="search" autocomplete="off" placeholder="z. B. Untersuchung" />
-    <p id="suche-hinweis" class="hilfe" role="status" aria-live="polite"></p>
-    <ul id="treffer" class="treffer"></ul>
-
-    <Field
-      id="menge"
-      name="menge"
-      label="Menge"
-      hilfe="Ganze Zahl, mindestens 1."
-      fehlertext="Die Menge muss eine ganze Zahl größer als 0 sein."
-      regel="zahl-positiv"
-      inputmode="numeric"
-      pflicht
-    />
-    <Field
-      id="faktor"
-      name="faktor"
-      label="Faktor"
-      hilfe="Höchstens zwei Nachkommastellen. Der zulässige Bereich hängt vom Kontext ab."
-      fehlertext="Der Faktor liegt außerhalb des für diesen Kontext zulässigen Bereichs."
-      regel="zahl-bereich"
-      inputmode="decimal"
-      min={1}
-      max={4}
-      pflicht
-    />
-    <p>
-      <button type="submit">Position übernehmen</button>
-    </p>
-  </fieldset>
-</form>
-
-<section aria-labelledby="ergebnis-titel">
-  <h2 id="ergebnis-titel">Rechnung</h2>
-  <p class="drucken">
-    <button type="button" id="drucken">Rechnung drucken</button>
-    <span class="hilfe">
-      Auf dem Ausdruck stehen Quelle, Fassung und die Fundstelle jeder Position.
-    </span>
-  </p>
-  <p id="rechner-status" role="status" aria-live="polite">Noch keine Position ausgewählt.</p>
-  <div id="ergebnis" data-testid="rechner-ergebnis"></div>
-</section>
+  </Fragment>
+</ToolShell>
 
 <Notice variante="warnung" titel="Was der Rechner nicht kann">
   <p>Nicht enthalten sind:</p>

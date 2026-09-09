@@ -1,0 +1,105 @@
+---
+/**
+ * M21-03 — Zweispaltige Tool-Ansicht nach Designvertrag Abschnitt 22 und 24.2.
+ *
+ * Ab Tablet stehen Eingaben und Ergebnis nebeneinander, damit sichtbar
+ * bleibt, was die Eingabe bewirkt. Darunter — und das ist der eigentliche
+ * Punkt — bleibt die Reihenfolge im Quelltext dieselbe: Eingabe, Aktion,
+ * Ergebnis. Es gibt keine Umsortierung per CSS, weil sonst Tastatur- und
+ * Screenreader-Reihenfolge von der sichtbaren abwiche.
+ *
+ * Zum Sticky-Ergebnis (Abschnitt 22): erlaubt ist es nur, solange das Panel
+ * kürzer als der Viewport ist. Ob das zutrifft, weiß ein statischer Build
+ * nicht — eine Rechnung mit dreißig Positionen ist länger als jeder
+ * Bildschirm. Deshalb ist `sticky` eine ausdrückliche Entscheidung der
+ * aufrufenden Seite und keine Voreinstellung.
+ */
+interface Props {
+  /** Überschrift der Eingabespalte. Sie ist die Beschriftung des Bereichs. */
+  eingabeTitel: string;
+  ergebnisTitel: string;
+  /** Ids der Überschriften, falls die Seite darauf verweist. */
+  eingabeId?: string;
+  ergebnisId?: string;
+  /** Nur setzen, wenn das Ergebnis nachweislich kurz bleibt. */
+  sticky?: boolean;
+}
+
+const {
+  eingabeTitel,
+  ergebnisTitel,
+  eingabeId = 'werkzeug-eingabe-titel',
+  ergebnisId = 'werkzeug-ergebnis-titel',
+  sticky = false,
+} = Astro.props;
+
+for (const [name, wert] of Object.entries({ eingabeTitel, ergebnisTitel })) {
+  if (wert.trim() === '') {
+    throw new Error(`${name} ist leer. Ein Bereich ohne Überschrift ist nicht ansteuerbar.`);
+  }
+}
+if (!Astro.slots.has('eingabe') || !Astro.slots.has('ergebnis')) {
+  throw new Error(
+    'Die Tool-Ansicht braucht beide Bereiche. Eine leere Spalte ist keine zweispaltige Ansicht.',
+  );
+}
+---
+
+<div class="werkzeug">
+  <section class="werkzeug__eingabe" aria-labelledby={eingabeId}>
+    <h2 id={eingabeId}>{eingabeTitel}</h2>
+    <slot name="eingabe" />
+  </section>
+
+  <section
+    class:list={['werkzeug__ergebnis', sticky ? 'werkzeug__ergebnis--sticky' : null]}
+    aria-labelledby={ergebnisId}
+  >
+    <h2 id={ergebnisId}>{ergebnisTitel}</h2>
+    <slot name="ergebnis" />
+  </section>
+</div>
+
+<slot />
+
+<style>
+  .werkzeug {
+    display: grid;
+    gap: var(--space-6);
+    margin-block: var(--space-8);
+  }
+
+  /* Abschnitt 6.1: ab Tablet zwei Spalten, Abschnitt 24.2: 5 zu 7. */
+  @media (min-width: 768px) {
+    .werkzeug {
+      grid-template-columns: 5fr 7fr;
+      gap: var(--space-8);
+      align-items: start;
+    }
+  }
+
+  .werkzeug h2 {
+    margin-block-start: 0;
+  }
+
+  .werkzeug__ergebnis {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    background: var(--color-surface);
+  }
+
+  @media (min-width: 768px) {
+    .werkzeug__ergebnis {
+      padding: var(--space-6);
+    }
+
+    /* Abschnitt 7.2: das Ergebnis-Panel bekommt Rahmen oder --shadow-xs,
+       nicht beides und nichts Größeres. */
+    .werkzeug__ergebnis--sticky {
+      position: sticky;
+      inset-block-start: var(--space-6);
+      box-shadow: var(--shadow-xs);
+    }
+  }
+</style>
