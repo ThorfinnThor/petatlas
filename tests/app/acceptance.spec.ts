@@ -179,7 +179,7 @@ test('a failed favorite write never claims success', async ({ page }) => {
 test('global search opens a real indexed result and works again after navigation', async ({
   page,
 }) => {
-  await page.goto('/de-de/suche/');
+  await page.goto('/de-de/');
   await page.fill('#suche-feld', 'Hund');
   await expect(page.locator('#suche-treffer a').first()).toBeVisible();
   const destination = await page.locator('#suche-treffer a').first().getAttribute('href');
