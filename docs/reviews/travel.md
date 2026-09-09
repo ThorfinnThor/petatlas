@@ -29,14 +29,14 @@ Sie ist ein **Änderungsmelder, keine Sicherheitsmaßnahme**. Gegen ein versehen
 3. **Die Umrechnung.** „Mindestens zwölf Wochen alt“ ist als 84 Tage gerechnet, die Wartezeit als 21 Tage zwischen Impfung und Reisetag. Ist beides so zutreffend?
 4. **Fehlende Anforderungen.** Fehlt für die vier Ziele etwas — Bandwurmbehandlung (nach Art. 10 hier nicht einschlägig), Übergangsregeln für ältere Ausweise, Sonderfälle?
 5. **Nationale Sonderregeln.** Welche Vorschriften der vier Zielstaaten kommen hinzu, insbesondere Rasse-, Leinen- oder Maulkorbvorschriften? Die gelesenen Quellen reichten dafür nicht (siehe `docs/reviews/travel-sources.md`). **Dazu seit M22-03:** die offizielle österreichische Seite nennt weiterhin die aufgehobene Verordnung (EU) Nr. 576/2013 — für Österreich ist damit keine aktuelle nationale Auskunft belegt.
-6. **Zwei weitere Rechtsakte.** Die niederländische NVWA nennt als Grundlage außer 2016/429 und 2026/131 auch die Verordnungen **(EU) 2026/636** und **(EU) 2026/705** (M22-03, gelesen am 2026-09-09). 2026/705 ist im Regelsatz als Fundstelle für das Passmodell genannt; **2026/636 ist bisher nirgends geprüft**. Was regelt sie, und ändert sie an den fünf Anforderungen etwas?
+6. **Zwei weitere Rechtsakte.** Die niederländische NVWA nennt als Grundlage außer 2016/429 und 2026/131 auch die Verordnungen **(EU) 2026/636** und **(EU) 2026/705** (M22-03, gelesen am 2026-09-09). 2026/705 ist im Regelsatz als Fundstelle für das Passmodell genannt; **2026/636 wurde in der Vorprüfung vom 09.09.2026 als Drittstaatenlisten-Verordnung eingeordnet**. Für den reinen innergemeinschaftlichen Startumfang wurde daraus keine zusätzliche Regel abgeleitet. Drittstaatentransit bleibt ausgeschlossen; die konsolidierte Länderlisten-Fassung wurde nicht vollständig geprüft. Details und übrige Entscheidungen: `docs/reviews/preflight-2026-09-09.md`.
 7. **Umfang.** Ist der Zuschnitt vertretbar — vier Ziele, private begleitete Reise, Tiere ab zwölf Monaten, bis zu fünf Tiere —, und sind die zehn ausgeschlossenen Fälle richtig ausgeschlossen?
 8. **Darstellung.** Genügen die Hinweise, dass nicht geprüft nicht unzulässig heißt und dass die verbindliche Auskunft von der Behörde kommt?
 9. **Testmatrix.** Deckt sie ab: je Ziel und Tierart alle fünf Anforderungen, je Anforderung erfüllt / nicht erfüllt / unbekannt, Fristen am Grenztag, Geltung vor Beginn und nach Ende, nicht unterstützte Fälle?
 
 ## Freigabeschritte
 
-1. Die acht Prüfpunkte hier beantworten, mit Datum, Namen der prüfenden Person und der ausdrücklichen Angabe, worauf sich die Prüfung stützt.
+1. Die neun Prüfpunkte hier beantworten, mit Datum, Namen der prüfenden Person und der ausdrücklichen Angabe, worauf sich die Prüfung stützt.
 2. Signatur des geprüften Regelsatzes bestimmen: `node --input-type=module -e "const f = await import('./src/features/travel/freigabe.ts'); console.log(f.freigabeStand());"`
 3. Eintrag in `content-data/travel/approvals.json` anlegen: `ruleSetId`, `approvedAt`, `approvedBy`, `sourceDigest` (genau diese Signatur) und `evidence` (Verweis auf dieses Dokument).
 4. `npx vitest run tests/travel` ausführen. Die Tests dürfen dafür nicht geändert werden.

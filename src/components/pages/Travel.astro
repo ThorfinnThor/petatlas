@@ -138,7 +138,18 @@ const transit = umfang.transitCountries.map(name);
 
       <div class="feld">
         <label for="anzahl">Anzahl der Tiere</label>
-        <input id="anzahl" type="number" min="1" max="20" value="1" />
+        <input
+          id="anzahl"
+          type="number"
+          min="1"
+          max="20"
+          value="1"
+          aria-describedby="anzahl-hilfe"
+        />
+        <p class="hilfe" id="anzahl-hilfe">
+          Bei einer gemeinsamen Fahrt alle mitgeführten Hunde, Katzen und Frettchen im Fahrzeug
+          zählen, auch die anderer Halter.
+        </p>
       </div>
 
       <div class="feld">
@@ -180,7 +191,13 @@ const transit = umfang.transitCountries.map(name);
 
       <div class="feld">
         <label for="impfdatum">Datum der Erstimpfung</label>
-        <input id="impfdatum" type="date" />
+        <input id="impfdatum" type="date" aria-describedby="impfdatum-hilfe" />
+        <p class="hilfe" id="impfdatum-hilfe">
+          Gemeint ist der Abschluss der vollständigen Erstimpfung, nicht die erste Dosis einer
+          mehrteiligen Impfserie. „Gültig“ muss die Impfung am Reisetag sein. Nach einer lückenlosen
+          Auffrischung beginnt die Wartezeit nicht erneut; nach einer Unterbrechung lassen Sie das
+          maßgebliche Datum in der Tierarztpraxis bestätigen.
+        </p>
       </div>
 
       <div class="feld">

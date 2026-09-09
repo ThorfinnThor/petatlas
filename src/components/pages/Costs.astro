@@ -65,6 +65,20 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   locale={market.locale}
 />
 
+<Notice variante="hinweis" titel="Grenzen der Berechnung">
+  <p>
+    Berechnet werden ausgewählte Gebühren mit 19 % Umsatzsteuer. Sonderfälle der Nutztierhaltung und
+    Tierzucht, abweichende Steuersätze, besondere Gebührenvereinbarungen und ein Erlass der
+    Notdienstgebühr werden nicht berechnet. Eine reguläre Sprechstunde am Abend oder Wochenende ist
+    nicht automatisch Notdienst.
+  </p>
+  <p>
+    Der Rechner prüft nicht, ob eine Leistung bereits in einer anderen enthalten ist (§ 6 GOT). Die
+    Menge richtet sich nach der Einheit der gewählten Gebührenposition, etwa je Behandlung oder
+    Zeitabschnitt. Die Praxis muss die Auswahl und Kombination der Leistungen bestätigen.
+  </p>
+</Notice>
+
 <SavedProfileButton />
 <ToolShell eingabeTitel="Eingaben" ergebnisTitel="Rechnung" ergebnisId="ergebnis-titel" sticky>
   <Fragment slot="eingabe">

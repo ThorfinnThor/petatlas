@@ -1,6 +1,6 @@
 # Rechtliche Prüfliste
 
-Stand **2026-09-08**. Diese Liste ist **kein Rechtsrat** und ersetzt keine Prüfung durch eine dazu befugte Person. Sie zählt auf, was zu klären ist, wer entscheidet und was heute fehlt. Kein Eintrag hier behauptet eine erfolgte Freigabe; die Freigaben stehen in `config/launch.json` und werden nur von der zuständigen Person mit Nachweis eingetragen.
+Stand **2026-09-09**. Quellen-Vorprüfung und konkrete Abnahmeentscheidungen: `docs/reviews/preflight-2026-09-09.md`. Diese Liste ist **kein Rechtsrat** und ersetzt keine Prüfung durch eine dazu befugte Person. Sie zählt auf, was zu klären ist, wer entscheidet und was heute fehlt. Kein Eintrag hier behauptet eine erfolgte Freigabe; die Freigaben stehen in `config/launch.json` und werden nur von der zuständigen Person mit Nachweis eingetragen.
 
 Maschinenlesbar steht dieselbe Aufstellung in `config/legal.ts` und wird von `tests/legal.test.ts` gegen die Launch-Gates geprüft.
 
@@ -14,12 +14,12 @@ Maschinenlesbar steht dieselbe Aufstellung in `config/legal.ts` und wird von `te
 | Nachvollziehbarkeit der Angaben | redaktionelle Sorgfalt | erfüllt | Betreiber | — Methodikseite und `/data/v1/health.json` |
 | Erklärung zur Barrierefreiheit | BFSG/BFSGV | **offen** | Betreiber mit fachlicher Bewertung | Geltungsbereich, Rückmeldeweg, Bewertung |
 | Einwilligung für Zugriffe auf das Endgerät | § 25 TDDDG | entfällt derzeit | Betreiber | — kein Tracking, keine fremden Einbettungen beim Aufruf |
-| Verbraucherstreitbeilegung | § 36 VSBG | **offen** | Betreiber | Erst nötig bei Verträgen mit Verbrauchern |
+| Verbraucherstreitbeilegung | § 36 VSBG | **offen** | Betreiber | Unternehmereigenschaft, Beschäftigtenzahl und Teilnahmeverpflichtung/-zusage prüfen |
 
 ## Was heute nachweislich gilt
 
 - **Keine Werbung, kein Tracking, keine Cookies.** Kein Partnerprogramm ist freigegeben, `adsTracking` steht auf `false`, und es gibt keine Analysedienste. Der Zustand wird nicht behauptet, sondern aus den Launch-Gates abgeleitet (`werbeStand()`); ein Test hält beide Seiten zusammen.
-- **Kartenkacheln werden erst auf Anforderung geladen.** Vor der Anforderung sieht der Kacheldienst keine IP-Adresse. Das ist gemessen (`tests/performance/seitenbudgets.spec.ts`, `tests/e2e-features/map.spec.ts`) und der Grund, warum § 25 TDDDG hier derzeit nicht greift.
+- **Kartenkacheln werden erst auf Anforderung geladen.** Vor der Anforderung sieht der Kacheldienst keine IP-Adresse. Das ist technisch geprüft (`tests/performance/seitenbudgets.spec.ts`, `tests/e2e-features/map.spec.ts`). Daraus folgt keine pauschale rechtliche Freistellung: Endgerätezugriffe nach § 25 TDDDG und personenbezogene Übermittlungen nach DSGVO sind getrennt zu bewerten.
 - **Kein Platzhaltertext.** Impressum, Datenschutz und Barrierefreiheitsseite sagen, dass Angaben fehlen, statt erfundene zu zeigen. Der Produktionsbuild bricht ohne echte Betreiberangaben ab (`config/site.ts`, ADR-015).
 - **Keine erfundenen Bewertungen.** Der SEO-Gate weist Bewertungs-Markup zurück (`scripts/checks/seo.ts`).
 
@@ -29,7 +29,7 @@ Maschinenlesbar steht dieselbe Aufstellung in `config/legal.ts` und wird von `te
 2. **Die datenschutzrechtliche Bewertung der Kartenkacheln.** Der Abruf geschieht auf Anforderung; ob das im konkreten Fall genügt oder ob eine Einwilligung nötig ist, gehört in die Rechtsprüfung. Der Hinweistext auf der Kartenseite nennt den Vorgang bereits.
 3. **Die Ausgestaltung der Affiliatekennzeichnung** im konkreten Partnervertrag. Der Wortlaut steht je Programm in `config/publishers/`; es gibt noch keinen Vertrag.
 4. **Versicherungsvermittlung.** Sobald ein Versicherungshinweis erscheint, stellt sich die Frage nach § 34d GewO. Der Slot ist deshalb aus (B-003, `docs/reviews/insurance.md`).
-5. **Verträge mit Verbrauchern** und damit § 36 VSBG, Widerrufsbelehrung und AGB. Es gibt kein Geschäftsmodell mit Vertragsschluss im Startumfang.
+5. **Verbraucherpflichten:** § 36 VSBG gesondert nach Unternehmereigenschaft, Website/AGB, Beschäftigtenzahl und Teilnahmezusage/-verpflichtung prüfen. Widerruf und Vertragsinformationen hängen zusätzlich vom konkreten Vertragsschluss ab; ein solcher ist im Startumfang nicht vorgesehen.
 
 ## Reihenfolge
 
