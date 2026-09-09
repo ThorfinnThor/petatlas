@@ -1,5 +1,7 @@
 # Abnahmebericht V2
 
+Aktuelle technische Nachprüfung: `PUBLIC_RELEASE_ACCEPTANCE.md` (CI auf `f67dddf`, 1.432 Unit-Tests, 671 Browser-/Leistungsprüfungen bestanden). Die folgenden V2-Nachweise dokumentieren den früheren Übergabestand.
+
 Stand: 2026-09-09. Dieser Bericht ersetzt den früheren V1-Zustand; dessen Nachweise bleiben in der Git-Historie.
 
 ## Gebaut und geprüft
@@ -35,6 +37,6 @@ Domain, Betreiberangaben, Vertragsdaten und qualifizierte Freigaben sind nach au
 
 Am 09.09.2026 wurde nach der V2-Übergabe ein Funktionsfehler im tatsächlichen Browser reproduziert: Nach dem Öffnen der Karte führten Orts- und Kategoriewechsel zum Ausfall der Kartenansicht, während die Trefferliste weiterlief. Die zuvor bestandenen Tests deckten diese Abfolge nicht ab; aus ihnen darf keine vollständige Funktionsabnahme abgeleitet werden.
 
-Die Korrektur erhält die Leaflet-Instanz, aktualisiert deren Marker und Mittelpunkt und verarbeitet Kartenaktualisierungen nacheinander. Überholte Suchantworten werden verworfen. Lokal erneut geprüft: Hamburg/Tierarzt/5 km mit 21 Treffern und Markern; danach 10 km mit 49 Treffern und Markern, jeweils geladene Kacheln und nur eine Karteninstanz. `npm run verify` und `npm run build:app` bestanden. Ein eigener Regressionstest ergänzt diese Abfolge in `tests/app/design-v2.spec.ts`; die Remote-Abnahme der Korrektur steht beim Anlegen des Folge-PR noch aus.
+Die Korrektur erhält die Leaflet-Instanz, aktualisiert deren Marker und Mittelpunkt und verarbeitet Kartenaktualisierungen nacheinander. Überholte Suchantworten werden verworfen. Lokal erneut geprüft: Hamburg/Tierarzt/5 km mit 21 Treffern und Markern; danach 10 km mit 49 Treffern und Markern, jeweils geladene Kacheln und nur eine Karteninstanz. `npm run verify` und `npm run build:app` bestanden. Ein eigener Regressionstest ergänzt diese Abfolge in `tests/app/design-v2.spec.ts`; die Remote-Abnahme der Korrektur bestand, und PR #6 ist in main.
 
-Nächster Abnahmeschritt: vollständige Nutzerabläufe mit wiederholten Eingaben, Orts- und Filterwechseln, Zurücknavigation und mobilen Ansichten prüfen. Die öffentliche Veröffentlichung bleibt bis zur korrigierten Funktionsabnahme und den bestehenden externen Voraussetzungen offen.
+Die anschließende praktische Funktionsabnahme ist abgeschlossen und in `PUBLIC_RELEASE_ACCEPTANCE.md` dokumentiert. Sie fand und behob weitere konkrete Fehler. Die öffentliche Veröffentlichung bleibt wegen der dort benannten externen Voraussetzungen offen.

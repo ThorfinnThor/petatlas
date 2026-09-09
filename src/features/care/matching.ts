@@ -134,6 +134,14 @@ export function bewerte(produkt: ProductAttributes, bedarf: Bedarf): Treffer {
   }
 
   const belegt = matchbareAttribute(produkt);
+  const produktTierart = wert(belegt, 'species');
+  if (
+    produktTierart &&
+    typeof produktTierart.value === 'string' &&
+    produktTierart.value !== bedarf.species
+  ) {
+    ausschluss.push('Der Hersteller nennt für dieses Produkt eine andere Tierart.');
+  }
 
   // Herstellergrenze: nur mit belegtem Wert und bekanntem Gewicht.
   const maxLast = wert(belegt, 'maxLoadKilograms');

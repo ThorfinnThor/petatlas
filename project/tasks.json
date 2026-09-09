@@ -4,7 +4,7 @@
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
   "current_task": null,
-  "note": "V2 application implemented and verified with real data. Public release and deployment authorization remain separate external prerequisites.",
+  "note": "Practical real-data user flows and failure recovery verified. Public deployment remains pending the documented owner, expert-review and hosting prerequisites.",
   "status_values": [
     "todo",
     "in_progress",
@@ -3024,8 +3024,8 @@
       "status": "blocked",
       "evidence": [],
       "blocker": {
-        "reason": "Echte Produkte lassen sich attributseitig nicht abnehmen, solange keine Angebotsrechte bestehen (B-005). Fehlende Herstellerangaben werden nicht ergaenzt - weder aus der Produktbeschreibung noch aus einem Vergleichsprodukt noch aus einem Sprachmodell.",
-        "required_action": "Nach der Programmfreigabe je Produkt die Herstellerangaben mit Fundstelle, Verifikationsstatus und Pruefdatum eintragen, dem Ablauf in docs/reviews/care-toys.md folgen und dataKind der Datei auf real setzen.",
+        "reason": "Drei reale Produkte mit sieben Herstellerattributen sind redaktionell erfasst und in der Vorschau nutzbar. Offen bleibt die öffentliche Datenrechte-/Angebotsfreigabe; eine unabhängige Produktprüfung wird nicht behauptet.",
+        "required_action": "Den tatsächlichen öffentlichen Nutzungsumfang und die Datenrechte dokumentieren. Nur für spätere Händlerangebote zusätzlich Programmfreigabe und erlaubte Feed-/Bildfelder eintragen. Die vorhandenen Herstellerattribute mit Fundstellen stehen in content-data/attributes/real-review.json; Ablauf in docs/reviews/care-toys.md.",
         "owner": "Betreiber"
       },
       "notes": []
@@ -3834,8 +3834,8 @@
         }
       ],
       "blocker": {
-        "reason": "Die acht Launch-Gates verlangen fachliche und rechtliche Freigaben, die ausserhalb dieses Repositories entstehen: echte Betreiberangaben, eine Domain, die Bestaetigung der Publikationsrechte, eine fachliche Abnahme von Gebuehrenrechner und Reiseregeln, eine Pruefung nach § 34d GewO und mindestens eine Programmfreigabe eines Netzwerks. Keine dieser Pruefungen wird erfunden, und ein gruener Pruflauf ersetzt keine.",
-        "required_action": "Je Gate die Pruefpunkte im benannten Nachweis beantworten lassen, das Ergebnis dort mit Datum und Namen eintragen und danach das Gate in config/launch.json auf approved mit approvedBy und approvedAt setzen. Reihenfolge und Zustaendigkeiten stehen in docs/reviews/launch.md; die vier offenen Rechtspflichten in docs/LEGAL_CHECKLIST.md.",
+        "reason": "Für die aktuelle App fehlen echte Betreiberangaben, Domain, dokumentierte Datenrechte-/Rechtsprüfungen und die Fachabnahmen für Kosten und Reisen. Die Freigabeprüfung ist funktionsabhängig; ausgeschaltete Versicherung, Commerce und Tracking benötigen vor diesem Start keine Partnerfreigaben.",
+        "required_action": "Die für config/experience.json erforderlichen Gates und Rechtsprüfungen mit tatsächlicher Person, Datum und Nachweis dokumentieren; Ablauf in docs/reviews/launch.md. Optionale Partnerverträge erst vor Aktivierung des jeweiligen Moduls.",
         "owner": "Betreiber, fuer die fachlichen Gates mit jeweils qualifizierter pruefender Person"
       },
       "notes": []
@@ -4021,8 +4021,8 @@
         }
       ],
       "blocker": {
-        "reason": "Eine Veroeffentlichung setzt voraus, was es nicht gibt: echte Betreiberangaben, eine Domain, freigegebene Datenrechte, fachliche Abnahmen fuer Gebuehren und Reiseregeln sowie eine dokumentierte Veroeffentlichungsautorisierung. Alle acht Launch-Gates stehen auf offen, vier Rechtspflichten sind unerfuellt, und der Produktionsbuild bricht ohne Betreiberangaben ab - technisch erzwungen, nicht nur vereinbart. Ohne diese Voraussetzungen wird nicht deployed, und es wird keine erfunden.",
-        "required_action": "Die Reihenfolge in docs/reviews/launch.md abarbeiten: zuerst Betreiberangaben und Domain, dann die Datenschutzerklaerung, dann die Datenrechte, dann die fachlichen Abnahmen, zuletzt Partnervertraege. Jede Freigabe traegt die zustaendige Person mit Datum und Nachweis in config/launch.json ein; npm run check:release prueft danach die Form. Erst wenn publicRelease freigegeben ist, folgt der Deploy ueber Cloudflare, und danach werden URL, Build-ID, Code- und Daten-Commit sowie das Ergebnis von scripts/monitor/smoke.ts --base <adresse> in docs/DEPLOYMENT_EVIDENCE.md festgehalten.",
+        "reason": "Die tatsächlichen Voraussetzungen aus M18-06 sind offen; zusätzlich ist der Cloudflare-Login abgelaufen. Die öffentliche Freigabe und ein aktualisierter Deploy können deshalb noch nicht dokumentiert werden.",
+        "required_action": "Erforderliche Freigaben dokumentieren und Hosting-Anmeldung erneuern. Anschließend den geprüften Build veröffentlichen und URL, Build-ID, Code-/Datenrevision sowie den Smoke-Test am tatsächlichen Ziel dokumentieren.",
         "owner": "Betreiber"
       },
       "notes": []
@@ -4462,6 +4462,34 @@
       "notes": [
         "Deployment and public-release prerequisites remain tracked separately; no approval was fabricated."
       ]
+    },
+    {
+      "id": "M23-02",
+      "milestone": "M23",
+      "title": "Practical user-flow acceptance before public release",
+      "implementation": "Verify complete real-data user journeys, repair interaction and recovery defects, and record concrete release prerequisites.",
+      "deliverables": [
+        "docs/PUBLIC_RELEASE_ACCEPTANCE.md"
+      ],
+      "acceptance": [
+        "Real-data core journeys and recovery paths pass browser verification; remaining external release conditions are reported without fabricated approvals."
+      ],
+      "depends_on": [
+        "M23-01"
+      ],
+      "kind": "implementation",
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Repaired bill editing and validation click loss, initial map filters, recoverable data/name/tile failures, actual place favorites, failed storage writes, product species filtering and readable labels. Real-app acceptance: 26 browser cases including mobile/desktop and failed-search recovery. CI at f67dddf: 1432 unit tests, 228 base, 107 accessibility, 298 feature, 26 app, 12 performance checks passed; 11 existing skips. Main now requires all five CI/Security checks. Cloudflare authentication rechecked and still expired; no public release claimed.",
+          "reference": "docs/PUBLIC_RELEASE_ACCEPTANCE.md, https://github.com/ThorfinnThor/petatlas/actions/runs/34379784980",
+          "verified_at": "2026-09-09",
+          "command": "npm run verify && npm run build:app; GitHub CI full browser matrix",
+          "exit_code": 0
+        }
+      ],
+      "blocker": null,
+      "notes": []
     }
   ]
 }

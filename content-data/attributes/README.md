@@ -2,7 +2,7 @@
 
 Ein Attribut ohne Herkunft ist eine Behauptung. Jede Angabe hier trägt deshalb `verification`, `sourceLabel`, `sourceUrl` und `checkedAt`.
 
-`dataKind` sagt, ob eine Datei echte oder synthetische Daten enthält. Derzeit gibt es nur **synthetische**: echte Produktdaten setzen echte Angebotsrechte voraus (M13-06, M14-06), und ohne sie würde eine „geprüfte“ Produktliste eine Sorgfalt vortäuschen, die nur aus einem Feed abgeschrieben wäre.
+`real-review.json` enthält sieben belegte Herstellerattribute zu drei realen Produkten: KONG Classic, West Paw Toppl Large und TRIXIE Bürste 2315. `synthetic-review.json` bleibt ausschließlich Testmaterial. Die echte App verwendet die realen Daten. Herstellerfakten sind keine unabhängigen Produkttests, Sicherheits- oder Eignungsfreigaben. Preise, Angebote, Bilder und Partnerfeeds sind ohne entsprechende Rechte nicht Bestandteil dieser redaktionellen Auswahl.
 
 ## Regeln
 

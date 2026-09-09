@@ -647,3 +647,8 @@ M14 ist damit inhaltlich fertig. Der offene Punkt ist kein technischer: echte Pr
 - Der Produktionsbuild bricht ohne Betreiberangaben ab. Das ist technisch erzwungen, nicht nur vereinbart, und die CI prüft, dass die Sperre hält.
 - Damit ist jede ausführbare Aufgabe des Plans erledigt: 114 von 121, sieben blockiert, keine offen.
 - Die Handoff-Prüfung kannte den Endzustand nicht: sie verlangte immer eine ausführbare Aufgabe. Jetzt verlangt sie bei keiner, dass der Handoff das **ausdrücklich sagt** — sonst liest eine frische Sitzung eine Lücke und sucht sich selbst etwas. Gegengeprüft: ohne den Satz schlägt sie an.
+
+
+## 2026-09-09 — M23-02: praktische Funktionsabnahme
+
+Nach dem gemeldeten Kartenfehler vollständige Nutzerabläufe statt nur Erstaufrufe geprüft. Gebührenbearbeitung, verlorener Submit-Klick durch Blur-Layoutsprung, initiale Kartenfilter, Wiederholungen nach Ladeausfällen, echte Ortsfavoriten, Speicherfehler, Suchfragmente und produktspezifische Tierarten korrigiert. Main-Branchschutz mit fünf verbindlichen Checks eingerichtet. CI auf `f67dddf`: 1.432 Unit-Tests und 671 Browser-/Leistungsprüfungen bestanden, elf bestehende Skips. Nachweise in `PUBLIC_RELEASE_ACCEPTANCE.md`. Stand: 130 von 137 Aufgaben erledigt; sieben externe/optionale Freigabeaufgaben bleiben blockiert. Hosting-Anmeldung erneut geprüft: abgelaufen; keine aktualisierte öffentliche Veröffentlichung behauptet.

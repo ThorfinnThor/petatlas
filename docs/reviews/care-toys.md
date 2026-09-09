@@ -1,8 +1,8 @@
 # Abnahme von Produkteigenschaften (Pflege und Spielzeug)
 
-**Status: keine echten Produkte abgenommen.** `content-data/attributes/` enthält ausschließlich synthetische Daten (`dataKind: "synthetic"`), und es bestehen keine Angebotsrechte (B-005). Deshalb erscheint im Finder und auf den Pflegeseiten kein echtes Produkt.
+**Stand 2026-09-09:** Drei reale Produkte sind redaktionell anhand ihrer Herstellerquellen erfasst (`content-data/attributes/real-review.json`). KONG Classic: Naturkautschuk und Tierart Hund; West Paw Toppl Large: Zogoflex, Spülmaschineneignung und Tierart Hund; TRIXIE Bürste 2315: Material und Länge. Jedes Attribut trägt Quelle und Erfassungsdatum. Es handelt sich um Herstellerangaben, nicht um eigene Messungen oder eine unabhängige Sicherheits-/Eignungsprüfung.
 
-Das ist kein Zwischenstand, den man überspringen kann: eine Produktliste aus einem Händlerfeed abzuschreiben wäre schneller und würde eine Sorgfalt vortäuschen, die es nicht gab.
+Die App zeigt diese kleine Auswahl mit erklärten Grenzen. Synthetische Datensätze sind isoliertes Testmaterial. Ohne Partnerfreigabe gibt es weiterhin keine Händlerangebote oder übernommenen Produktbilder. Die übergreifende öffentliche Datenrechte-Freigabe bleibt offen; M14-06 dokumentiert diesen verbleibenden Veröffentlichungs-/Angebotsumfang und bedeutet nicht mehr, dass die realen Attribute technisch fehlen.
 
 ## Was technisch bereits steht (M14-01 bis M14-05)
 
@@ -18,7 +18,7 @@ Das ist kein Zwischenstand, den man überspringen kann: eine Produktliste aus ei
 
 Für jedes Produkt, das aufgenommen werden soll:
 
-1. **Angebotsrechte prüfen.** Ohne freigegebenes Warenprogramm (B-005) gibt es kein Angebot und damit keinen Anlass für eine Attributprüfung.
+1. **Nutzungsumfang prüfen.** Redaktionelle Herstellerfakten und kommerzielle Angebote sind getrennt zu behandeln. Für Angebote, Feedfelder und übernommene Bilder werden die jeweiligen Programmrechte benötigt; sie werden durch eine redaktionelle Erfassung nicht erteilt.
 2. **Herstellerseite aufrufen** und die Fundstelle notieren — nicht die Händlerseite, wenn es die Herstellerangabe gibt.
 3. **Je Attribut eintragen:** Wert, Einheit, `verification` (`manufacturer_stated`, `merchant_feed` oder `measured`), `sourceUrl`, `sourceLabel`, `checkedAt`.
 4. **Fehlt eine Angabe, bleibt sie leer** — mit `value: null` und `verification: "unverified"`. Sie wird nicht aus der Produktbeschreibung, dem Namen, einem Vergleichsprodukt oder einem Sprachmodell ergänzt.

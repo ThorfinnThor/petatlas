@@ -125,11 +125,26 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
       </fieldset>
 
       <fieldset>
-        <legend>Position hinzufügen</legend>
+        <legend>Position hinzufügen oder ändern</legend>
+        <p class="hilfe">
+          Ein Suchtreffer fügt die Leistung mit der eingetragenen Menge und dem Faktor hinzu.
+          Bereits ausgewählte Positionen können Sie darunter ändern.
+        </p>
         <label for="suche">Leistung suchen</label>
-        <input id="suche" type="search" autocomplete="off" placeholder="z. B. Untersuchung" />
+        <input
+          id="suche"
+          type="search"
+          autocomplete="off"
+          placeholder="z. B. Untersuchung"
+          disabled
+        />
         <p id="suche-hinweis" class="hilfe" role="status" aria-live="polite"></p>
         <ul id="treffer" class="treffer"></ul>
+        <div id="auswahl-steuerung" hidden>
+          <label for="position-bearbeiten">Ausgewählte Position bearbeiten</label>
+          <select id="position-bearbeiten"></select>
+          <p id="auswahl-hinweis" class="hilfe"></p>
+        </div>
 
         <Field
           id="menge"
@@ -154,7 +169,9 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
           pflicht
         />
         <p>
-          <button type="submit">Position übernehmen</button>
+          <button type="submit" id="position-uebernehmen" disabled>Änderungen übernehmen</button>
+          <button type="button" id="auswahl-entfernen" hidden>Ausgewählte Position entfernen</button
+          >
         </p>
       </fieldset>
     </form>
@@ -344,3 +361,12 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     }
   }
 </style>
+
+<script is:inline src="/formular.js" defer></script>
+<noscript
+  ><p>
+    Suche und Berechnung benötigen JavaScript. Alle Gebührenpositionen können Sie im <a
+      href="/de-de/tierarztkosten/katalog/">Gebührenkatalog</a
+    > nachlesen.
+  </p></noscript
+>

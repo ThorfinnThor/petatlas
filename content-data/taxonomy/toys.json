@@ -1,6 +1,6 @@
 {
   "taxonomyId": "toys",
-  "lastEditedAt": "2026-09-07",
+  "lastEditedAt": "2026-09-09",
   "categories": [
     {
       "categoryId": "fetch-toy",
@@ -14,14 +14,14 @@
       "label": "Kauspielzeug",
       "species": ["dog"],
       "description": "Kauartikel aus Gummi oder Naturkautschuk, ohne Futterbestandteile.",
-      "matchAttributes": ["sizeRange", "material", "hardnessLevel"]
+      "matchAttributes": ["sizeRange", "material", "hardnessLevel", "species"]
     },
     {
       "categoryId": "puzzle-toy",
       "label": "Beschäftigungsspielzeug",
       "species": ["dog", "cat"],
       "description": "Schnüffelteppiche, Futterlabyrinthe und Denkspiele.",
-      "matchAttributes": ["difficultyLevel", "dishwasherSafe", "material"]
+      "matchAttributes": ["difficultyLevel", "dishwasherSafe", "material", "species"]
     },
     {
       "categoryId": "indoor-cat-toy",

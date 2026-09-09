@@ -106,9 +106,8 @@ function initialisiere(form) {
     feld.addEventListener('input', () => {
       if (feld.getAttribute('aria-invalid') === 'true') zeigeFeldfehler(feld, pruefeFeld(feld));
     });
-    feld.addEventListener('blur', () => {
-      if (feld.value.trim() !== '') zeigeFeldfehler(feld, pruefeFeld(feld));
-    });
+    // Erst beim Absenden neue Fehler einblenden: ein Layoutsprung während
+    // mousedown/blur kann sonst den folgenden Klick auf den Submit-Button verlieren.
   }
 
   form.addEventListener('submit', (event) => {

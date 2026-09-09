@@ -15,6 +15,15 @@
           "sourceUrl": "https://www.kongcompany.com/kong-classic/",
           "sourceLabel": "KONG · Hersteller",
           "checkedAt": "2026-09-09"
+        },
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.kongcompany.com/kong-classic/",
+          "sourceLabel": "KONG · Hersteller",
+          "checkedAt": "2026-09-09"
         }
       ]
     },
@@ -34,6 +43,15 @@
         {
           "attribute": "dishwasherSafe",
           "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/toppl-eggplant",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "attribute": "species",
+          "value": "dog",
           "unit": null,
           "verification": "manufacturer_stated",
           "sourceUrl": "https://www.westpaw.com/products/toppl-eggplant",
