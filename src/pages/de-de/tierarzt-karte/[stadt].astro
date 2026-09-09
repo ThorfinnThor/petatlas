@@ -12,6 +12,7 @@
  * `subroutePath`, damit kein zweiter Ort entsteht, an dem Pfade entstehen.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Notice from '../../../components/Notice.astro';
 import DataStatus from '../../../components/DataStatus.astro';
 import { darstellung } from '../../../features/map/website.ts';
@@ -104,6 +105,11 @@ const KOMMUNAL_MAX = 30;
   route="map"
   canonicalPfad={eigenerPfad}
 >
+  <Breadcrumbs
+    market={withEnabledFeatures(market, devFeatureOverrides())}
+    stufen={[{ label: 'Tierärzte in der Nähe', route: 'map' }, { label: seite.stadt.name }]}
+  />
+
   <h1>Tierärzte und Tierbedarf in {seite.stadt.name}</h1>
 
   <p>

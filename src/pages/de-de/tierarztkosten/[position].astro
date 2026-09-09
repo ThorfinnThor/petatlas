@@ -11,6 +11,8 @@
  * steht in der Verordnung, und nichts davon wird erfunden.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import Button from '../../../components/ui/Button.astro';
 import Notice from '../../../components/Notice.astro';
 import DataStatus from '../../../components/DataStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
@@ -69,11 +71,14 @@ function betrag(minor: number): string {
   route="costs"
   canonicalPfad={eigenerPfad}
 >
-  <nav aria-label="Brotkrumen" class="krumen">
-    <a href={routePath(market, 'home')}>Start</a> ›
-    <a href={rechner}>Tierarztkosten</a> › <span aria-current="page">Nr. {item.officialItemId}</span
-    >
-  </nav>
+  <Breadcrumbs
+    market={market}
+    stufen={[
+      { label: 'Tierarztkosten', route: 'costs' },
+      { label: 'Gebührenkatalog', route: 'costs', slugs: ['katalog'] },
+      { label: `Nr. ${item.officialItemId}` },
+    ]}
+  />
 
   <h1>{item.originalLabel}</h1>
   <p>
@@ -153,7 +158,7 @@ function betrag(minor: number): string {
   </p>
 
   <p>
-    <a class="button button--primary" href={rechner}>Im Rechner verwenden</a>
+    <Button variante="primaer" href={rechner}>Im Rechner verwenden</Button>
   </p>
 
   <Notice variante="warnung" titel="Fachlich noch nicht geprüft">
@@ -200,12 +205,6 @@ function betrag(minor: number): string {
 </BaseLayout>
 
 <style>
-  .krumen {
-    margin-block-end: var(--space-6);
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-  }
-
   .gebuehr {
     margin-block: var(--space-6);
     max-inline-size: 22rem;

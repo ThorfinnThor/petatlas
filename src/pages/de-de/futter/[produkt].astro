@@ -10,6 +10,7 @@
  * keine, und dann steht der Preisvergleich als das da, was er ist: leer.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Notice from '../../../components/Notice.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
@@ -67,6 +68,14 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
 ---
 
 <BaseLayout title={seitentitel} route="food" canonicalPfad={eigenerPfad}>
+  <Breadcrumbs
+    market={markt}
+    stufen={[
+      { label: 'Futter', route: 'food' },
+      { label: `${produkt.brand} — ${produkt.productName}` },
+    ]}
+  />
+
   <h1>{produkt.brand} — {produkt.productName}</h1>
 
   {

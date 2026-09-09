@@ -1,0 +1,72 @@
+---
+/**
+ * M21-01 — Leerzustand nach Designvertrag Abschnitt 36.1.
+ *
+ * Vier Teile: benannter Zustand, Erklärung, sinnvolle Aktion, kein
+ * trauriges Cartoontier. Die Erklärung ist Pflicht und wird erzwungen —
+ * denn genau hier entscheidet sich, ob „keine Treffer“ als „gibt es dort
+ * nicht“ gelesen wird (UX-05). Ein Leerzustand ohne diesen Satz wäre eine
+ * stille Falschaussage.
+ */
+interface Props {
+  /** Der Zustand, konkret benannt. Nicht „Nichts gefunden“. */
+  titel: string;
+  testId?: string;
+}
+
+const { titel, testId } = Astro.props;
+
+if (titel.trim() === '') {
+  throw new Error('Ein Leerzustand ohne benannten Zustand hilft niemandem.');
+}
+if (!Astro.slots.has('default')) {
+  throw new Error(
+    'Ein Leerzustand braucht die Erklärung, warum hier nichts steht. Ohne sie liest sich „keine Treffer“ wie „gibt es nicht“.',
+  );
+}
+---
+
+<div class="leerzustand" data-testid={testId}>
+  <p class="leerzustand__titel">{titel}</p>
+  <div class="leerzustand__text">
+    <slot />
+  </div>
+  {
+    Astro.slots.has('aktionen') && (
+      <div class="leerzustand__aktionen">
+        <slot name="aktionen" />
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .leerzustand {
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    background: var(--color-surface-subtle);
+    margin-block: var(--space-6);
+  }
+
+  .leerzustand__titel {
+    margin: 0 0 var(--space-2);
+    font-weight: 600;
+  }
+
+  .leerzustand__text {
+    color: var(--color-text);
+    max-inline-size: 65ch;
+  }
+
+  .leerzustand__text :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .leerzustand__aktionen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+  }
+</style>

@@ -6,10 +6,11 @@
  * Reihenfolge ist die der Verordnung, nicht eine Rangfolge.
  */
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../../components/ui/Breadcrumbs.astro';
 import DataStatus from '../../../../components/DataStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../../config/build.ts';
-import { routePath, subroutePath } from '../../../../lib/routes.ts';
+import { subroutePath } from '../../../../lib/routes.ts';
 import { formatMoney, money } from '../../../../domain/money.ts';
 import { gruppen, type Gruppe } from '../../../../features/costs/detail.ts';
 import snapshot from '../../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
@@ -31,12 +32,14 @@ const eigenerPfad = subroutePath(market, 'costs', 'gruppe', gruppe.slug);
 ---
 
 <BaseLayout title={`${gruppe.name} — ${gruppe.teil}`} route="costs" canonicalPfad={eigenerPfad}>
-  <nav aria-label="Brotkrumen" class="krumen">
-    <a href={routePath(market, 'home')}>Start</a> ›
-    <a href={routePath(market, 'costs')}>Tierarztkosten</a> ›
-    <a href={subroutePath(market, 'costs', 'katalog')}>Gebührenkatalog</a> ›
-    <span aria-current="page">{gruppe.name}</span>
-  </nav>
+  <Breadcrumbs
+    market={market}
+    stufen={[
+      { label: 'Tierarztkosten', route: 'costs' },
+      { label: 'Gebührenkatalog', route: 'costs', slugs: ['katalog'] },
+      { label: gruppe.name },
+    ]}
+  />
 
   <h1>{gruppe.name}</h1>
   <p>
@@ -67,12 +70,6 @@ const eigenerPfad = subroutePath(market, 'costs', 'gruppe', gruppe.slug);
 </BaseLayout>
 
 <style>
-  .krumen {
-    margin-block-end: var(--space-6);
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-  }
-
   .positionen {
     list-style: none;
     margin: 0;

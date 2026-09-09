@@ -1,0 +1,97 @@
+---
+/**
+ * M21-01 — Karte nach Designvertrag Abschnitt 7.1.
+ *
+ * Kein Schatten im Ruhezustand. Der Hover-Zustand gilt nur für tatsächlich
+ * klickbare Karten und nur an Zeigegeräten; wer `prefers-reduced-motion`
+ * gesetzt hat, bekommt keine Bewegung.
+ */
+import { CARD_VARIANTEN, type CardVariante } from './varianten.ts';
+
+interface Props {
+  variante?: CardVariante;
+  /** Die ganze Karte führt zu einem Ziel. Nur dann gibt es einen Hover. */
+  klickbar?: boolean;
+  /** Element, das entsteht. In einer Liste `li`, sonst meist `article`. */
+  als?: 'div' | 'li' | 'article' | 'section';
+  id?: string;
+  testId?: string;
+  ariaLabelledby?: string;
+  /**
+   * Zusätzliche Klasse der aufrufenden Seite, etwa für die Anordnung im
+   * Raster. Astro hängt den Scope der Elternkomponente daran, deshalb wirken
+   * deren Stile weiterhin — ohne dass die Karte ihr Aussehen abgibt.
+   */
+  class?: string;
+}
+
+const {
+  variante = 'standard',
+  klickbar = false,
+  als = 'div',
+  id,
+  testId,
+  ariaLabelledby,
+  class: zusatzKlasse,
+} = Astro.props;
+
+if (!CARD_VARIANTEN.includes(variante)) {
+  throw new Error(`Unbekannte Karten-Variante "${variante}".`);
+}
+
+const Element = als;
+---
+
+<Element
+  class:list={['karte', `karte--${variante}`, klickbar ? 'karte--klickbar' : null, zusatzKlasse]}
+  id={id}
+  data-testid={testId}
+  aria-labelledby={ariaLabelledby}
+>
+  <slot />
+</Element>
+
+<style>
+  .karte {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    box-shadow: none;
+  }
+
+  @media (min-width: 768px) {
+    .karte {
+      padding: var(--space-6);
+    }
+  }
+
+  .karte--soft {
+    background: var(--color-surface-subtle);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .karte--klickbar {
+      transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .karte--klickbar:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .karte--klickbar {
+      transition: none;
+    }
+
+    .karte--klickbar:hover {
+      transform: none;
+    }
+  }
+</style>

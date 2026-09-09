@@ -19,6 +19,9 @@ import {
   type RouteKey,
 } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
+import Button from '../ui/Button.astro';
+import Card from '../ui/Card.astro';
+import PageHeader from '../ui/PageHeader.astro';
 import Search from '../Search.astro';
 
 interface Props {
@@ -61,33 +64,32 @@ const primaer = routeExists(market, 'costs') ? routePath(market, 'costs') : null
 const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : null;
 ---
 
-<section class="hero">
-  <p class="hero__eyebrow">Praktische Daten für Tierhalter</p>
-  <h1>Besser entscheiden für dein Tier</h1>
-  <p class="lead">
-    Kosten, Orte, Reisen und Produkte — verständlich aufbereitet aus offenen Quellen. Jede Angabe
-    nennt ihren Stand und ihre Herkunft.
-  </p>
-
+<PageHeader
+  variante="hero"
+  eyebrow="Praktische Daten für Tierhalter"
+  titel="Besser entscheiden für dein Tier"
+  lead="Kosten, Orte, Reisen und Produkte — verständlich aufbereitet aus offenen Quellen. Jede Angabe nennt ihren Stand und ihre Herkunft."
+>
   {
-    (primaer !== null || sekundaer !== null) && (
-      <p class="hero__aktionen">
-        {primaer !== null && (
-          <a class="button button--primary button--gross" href={primaer}>
-            Tierarztkosten berechnen
-          </a>
-        )}
-        {sekundaer !== null && (
-          <a class="button button--gross" href={sekundaer}>
-            Reisecheck starten
-          </a>
-        )}
-      </p>
+    primaer !== null && (
+      <Fragment slot="aktionen">
+        <Button variante="primaer" groesse="gross" href={primaer}>
+          Tierarztkosten berechnen
+        </Button>
+      </Fragment>
     )
   }
-
-  <p class="hero__belege">Offene Quellen · Datenstand an jeder Angabe · keine Anmeldung nötig</p>
-</section>
+  {
+    sekundaer !== null && (
+      <Fragment slot="aktionen">
+        <Button groesse="gross" href={sekundaer}>
+          Reisecheck starten
+        </Button>
+      </Fragment>
+    )
+  }
+  <p class="belege">Offene Quellen · Datenstand an jeder Angabe · keine Anmeldung nötig</p>
+</PageHeader>
 
 {
   werkzeuge.length > 0 ? (
@@ -95,7 +97,7 @@ const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : 
       <h2 id="werkzeuge-titel">Werkzeuge</h2>
       <ul class="karten">
         {werkzeuge.map((item) => (
-          <li class="card card--klickbar karte">
+          <Card als="li" klickbar class="werkzeugkarte">
             <h3 class="karte__titel">
               <a href={item.path}>{translate(locale, item.labelKey)}</a>
             </h3>
@@ -105,7 +107,7 @@ const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : 
             <p class="karte__pfeil" aria-hidden="true">
               Ansehen →
             </p>
-          </li>
+          </Card>
         ))}
       </ul>
     </section>
@@ -122,30 +124,30 @@ const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : 
 <section aria-labelledby="daten-titel">
   <h2 id="daten-titel">So arbeiten unsere Daten</h2>
   <ol class="schritte">
-    <li class="card card--soft schritt">
+    <Card als="li" variante="soft" class="ablaufschritt">
       <p class="schritt__nummer" aria-hidden="true">1</p>
       <h3 class="schritt__titel">Offene und amtliche Quellen</h3>
       <p class="schritt__text">
         Gebührenordnung, OpenStreetMap, kommunale Abgaben und Rechtsakte der EU — jede Quelle mit
         geprüften Nutzungsrechten.
       </p>
-    </li>
-    <li class="card card--soft schritt">
+    </Card>
+    <Card als="li" variante="soft" class="ablaufschritt">
       <p class="schritt__nummer" aria-hidden="true">2</p>
       <h3 class="schritt__titel">Nachvollziehbar aufbereitet</h3>
       <p class="schritt__text">
         Keine erfundenen Zahlen. Was unbekannt ist, steht als unbekannt da — nicht als Null und
         nicht als „nein“.
       </p>
-    </li>
-    <li class="card card--soft schritt">
+    </Card>
+    <Card als="li" variante="soft" class="ablaufschritt">
       <p class="schritt__nummer" aria-hidden="true">3</p>
       <h3 class="schritt__titel">Mit Stand und Herkunft</h3>
       <p class="schritt__text">
         Jede Angabe nennt, woher sie stammt und wie alt sie ist. Der Gesamtstand steht auf der
         Datenstandseite.
       </p>
-    </li>
+    </Card>
   </ol>
 </section>
 
@@ -159,14 +161,14 @@ const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : 
       </p>
       <ul class="karten">
         {produkte.map((item) => (
-          <li class="card card--klickbar karte">
+          <Card als="li" klickbar class="werkzeugkarte">
             <h3 class="karte__titel">
               <a href={item.path}>{translate(locale, item.labelKey)}</a>
             </h3>
             {BESCHREIBUNG[item.key] !== undefined && (
               <p class="karte__text">{BESCHREIBUNG[item.key]}</p>
             )}
-          </li>
+          </Card>
         ))}
       </ul>
     </section>
@@ -176,41 +178,7 @@ const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : 
 <Search />
 
 <style>
-  /* Abschnitt 23.1: Hero ohne Fotobühne, Text bis 760 px. */
-  .hero {
-    padding-block: var(--space-10) var(--space-12);
-  }
-
-  @media (min-width: 768px) {
-    .hero {
-      padding-block: var(--space-16) var(--space-12);
-    }
-  }
-
-  .hero__eyebrow {
-    margin: 0 0 var(--space-3);
-    color: var(--color-primary-hover);
-    font-size: var(--text-micro);
-    font-weight: var(--weight-label);
-  }
-
-  .hero h1 {
-    max-inline-size: 18ch;
-  }
-
-  .hero .lead {
-    margin-block: var(--space-4) var(--space-8);
-  }
-
-  .hero__aktionen {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin-block-end: var(--space-6);
-    max-inline-size: none;
-  }
-
-  .hero__belege {
+  .belege {
     margin: 0;
     color: var(--color-text-muted);
     font-size: var(--text-small);
@@ -237,7 +205,10 @@ const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : 
     }
   }
 
-  .karte {
+  /* Die Karte selbst ist eine eigene Komponente und trägt deshalb den Scope
+     dieser Datei nicht. Angeordnet wird sie hier trotzdem — über den
+     Listencontainer, der den Scope hat. */
+  .karten > :global(.werkzeugkarte) {
     margin: 0;
     max-inline-size: none;
     display: flex;
@@ -287,7 +258,7 @@ const sekundaer = routeExists(market, 'travel') ? routePath(market, 'travel') : 
     }
   }
 
-  .schritt {
+  .schritte > :global(.ablaufschritt) {
     margin: 0;
     max-inline-size: none;
   }

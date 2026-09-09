@@ -111,45 +111,15 @@ hr {
   border-radius: 0.2rem;
 }
 
-/* ---------- Abschnitt 7: Karten ---------- */
-
-.card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
-  box-shadow: none;
-}
-
-@media (min-width: 768px) {
-  .card {
-    padding: var(--space-6);
-  }
-}
-
-/* Abschnitt 7.1: Hover nur bei Zeigegeräten. */
-@media (hover: hover) and (pointer: fine) {
-  .card--klickbar {
-    transition:
-      border-color var(--transition-fast),
-      box-shadow var(--transition-fast),
-      transform var(--transition-fast);
-  }
-
-  .card--klickbar:hover {
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-sm);
-    transform: translateY(-1px);
-  }
-}
-
-.card--soft {
-  background: var(--color-surface-subtle);
-}
-
 /* ---------- Abschnitt 11: Buttons ---------- */
 
-.button,
+/*
+ * Nur die Grundlage für das Element selbst: Knöpfe entstehen auch dort, wo
+ * keine Komponente steht — im Formular und im nachgeladenen Karten- und
+ * Rechner-Markup. Die Varianten (primär, soft, ghost, gefahr) liegen seit
+ * M21-01 in `src/components/ui/Button.astro` und nicht mehr hier; zwei Orte
+ * für dieselbe Schaltfläche wären zwei Wahrheiten.
+ */
 button {
   display: inline-flex;
   align-items: center;
@@ -158,13 +128,15 @@ button {
   min-block-size: 44px;
   padding-inline: 18px;
   padding-block: var(--space-2);
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: inherit;
   font-size: var(--text-body);
   font-weight: var(--weight-button);
   line-height: 1.2;
   text-align: center;
-  text-decoration: none;
   cursor: pointer;
   /* Abschnitt 54: Buttons dürfen umbrechen statt Text abzuschneiden. */
   white-space: normal;
@@ -173,21 +145,12 @@ button {
     border-color var(--transition-fast);
 }
 
-/* Vorgabe ohne Variante: sekundär. Eine primäre Aktion je Bereich (UX-02). */
-.button,
-button {
-  background: var(--color-surface);
-  border-color: var(--color-border-strong);
-  color: var(--color-ink);
-}
-
-.button:hover,
 button:hover {
   background: var(--color-surface-subtle);
   border-color: var(--color-text-muted);
 }
 
-.button--primary,
+/* Abschnitt 11.2: die eine primäre Aktion eines Formulars. */
 button[type='submit'],
 button.primaer {
   background: var(--color-primary);
@@ -195,7 +158,6 @@ button.primaer {
   color: var(--color-primary-contrast);
 }
 
-.button--primary:hover,
 button[type='submit']:hover,
 button.primaer:hover {
   background: var(--color-primary-hover);
@@ -203,47 +165,12 @@ button.primaer:hover {
   color: var(--color-primary-contrast);
 }
 
-.button--primary:active,
-button[type='submit']:active {
+button[type='submit']:active,
+button.primaer:active {
   background: var(--color-primary-active);
   border-color: var(--color-primary-active);
 }
 
-.button--soft {
-  background: var(--color-primary-soft);
-  border-color: var(--color-primary-border);
-  color: var(--color-primary-hover);
-}
-
-.button--ghost {
-  background: transparent;
-  border-color: transparent;
-  color: var(--color-primary);
-}
-
-.button--ghost:hover {
-  background: var(--color-primary-soft);
-  border-color: transparent;
-}
-
-.button--danger {
-  background: var(--color-surface);
-  border-color: var(--color-danger-border);
-  color: var(--color-danger);
-}
-
-.button--danger:hover {
-  background: var(--color-danger-soft);
-  border-color: var(--color-danger);
-}
-
-.button--gross {
-  min-block-size: 52px;
-  padding-inline: 24px;
-  font-size: var(--text-lead);
-}
-
-.button[disabled],
 button[disabled] {
   opacity: 0.55;
   cursor: not-allowed;
@@ -314,41 +241,6 @@ fieldset {
 legend {
   padding-inline: var(--space-2);
   font-weight: var(--weight-label);
-}
-
-/* ---------- Abschnitt 15: Badges ---------- */
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: 2px var(--space-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  color: var(--color-text-muted);
-  font-size: var(--text-micro);
-  font-weight: var(--weight-label);
-  line-height: 1.6;
-  white-space: nowrap;
-}
-
-.badge--info {
-  background: var(--color-info-soft);
-  border-color: var(--color-info-border);
-  color: var(--color-info);
-}
-
-.badge--erfolg {
-  background: var(--color-success-soft);
-  border-color: var(--color-success-border);
-  color: var(--color-success);
-}
-
-.badge--warnung {
-  background: var(--color-warning-soft);
-  border-color: var(--color-warning-border);
-  color: var(--color-warning);
 }
 
 /* ---------- Tabellen (Abschnitt 44.1) ---------- */

@@ -12,6 +12,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AdSlot from '../../components/AdSlot.astro';
 import DataStatus from '../../components/DataStatus.astro';
 import Notice from '../../components/Notice.astro';
+import Alert from '../../components/ui/Alert.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Button from '../../components/ui/Button.astro';
+import Card from '../../components/ui/Card.astro';
+import EmptyState from '../../components/ui/EmptyState.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import { BADGE_ARTEN, BUTTON_VARIANTEN, type BadgeArt } from '../../components/ui/varianten.ts';
 import { resolveBuildConfig } from '../../../config/build.ts';
 import { defaultMarket } from '../../domain/market.ts';
 
@@ -58,6 +65,87 @@ const marktMitAnzeige = {
         <DataStatus stand="2026-09-06" quelle="synthetische Testquelle" locale={market.locale} />
         <DataStatus stand={null} quelle={null} locale={market.locale} />
 
+        <h2>Schaltflächen (Abschnitt 11)</h2>
+        <p class="probe-reihe">
+          {BUTTON_VARIANTEN.map((variante) => (
+            <Button variante={variante}>Kosten berechnen</Button>
+          ))}
+        </p>
+        <p class="probe-reihe">
+          <Button variante="primaer" groesse="gross">
+            Reise prüfen
+          </Button>
+          <Button groesse="klein">Details</Button>
+          <Button variante="primaer" deaktiviert>
+            Karte wird geladen …
+          </Button>
+        </p>
+
+        <h2>Karten (Abschnitt 7.1)</h2>
+        <div class="probe-raster">
+          <Card>
+            <h3>Standardkarte</h3>
+            <p>Kein Schatten im Ruhezustand.</p>
+          </Card>
+          <Card variante="soft">
+            <h3>Ruhige Variante</h3>
+            <p>Für Schritte und Nebeninformationen.</p>
+          </Card>
+          <Card klickbar>
+            <h3>Klickbare Karte</h3>
+            <p>Hover nur an Zeigegeräten, keine Bewegung bei reduzierter Bewegung.</p>
+          </Card>
+        </div>
+
+        <h2>Badges (Abschnitt 15)</h2>
+        <p class="probe-reihe">
+          {(Object.keys(BADGE_ARTEN) as BadgeArt[]).map((art) => (
+            <Badge art={art} wert={art === 'datenstand' ? '01.09.2026' : undefined} />
+          ))}
+        </p>
+        <p class="hilfe">
+          Die Beschriftung gehört zur Art. Ein Badge mit freiem Text ist nicht vorgesehen.
+        </p>
+
+        <h2>Hinweisboxen (Abschnitt 16)</h2>
+        <Alert variante="info" titel="Information">
+          <p>Neutrale Zusatzangabe ohne Handlungsdruck.</p>
+        </Alert>
+        <Alert variante="erfolg" titel="Ergebnis">
+          <p>Ein berechnetes Ergebnis. Wird Screenreadern angesagt.</p>
+        </Alert>
+        <Alert variante="warnung" titel="Etwas ist unbekannt">
+          <p>Unbekannt ist nicht „unbedenklich“.</p>
+        </Alert>
+        <Alert variante="fehler" titel="Das hat nicht geklappt">
+          <p>Was passiert ist, warum, und was jetzt hilft.</p>
+        </Alert>
+
+        <h2>Leerzustand (Abschnitt 36.1)</h2>
+        <EmptyState titel="Keine erfassten Treffer in diesem Bereich">
+          <p>
+            Das bedeutet nicht, dass es dort keine passenden Orte gibt — nur, dass in der Quelle
+            keine erfasst sind.
+          </p>
+          <Fragment slot="aktionen">
+            <Button>Radius erhöhen</Button>
+            <Button variante="ghost">Kategorie zurücksetzen</Button>
+          </Fragment>
+        </EmptyState>
+
+        <h2>Seitenkopf (Abschnitt 23.1)</h2>
+        <Card variante="soft">
+          <PageHeader
+            eyebrow="Bereich"
+            titel="Titel der Seite"
+            lead="Ein Satz, der sagt, was die Seite für den Leser tut."
+          >
+            <Fragment slot="aktionen">
+              <Button variante="primaer">Kosten berechnen</Button>
+            </Fragment>
+          </PageHeader>
+        </Card>
+
         <h2>Werbefläche</h2>
         <p>
           Die folgende Fläche ist optisch deutlich von den Informationsboxen getrennt und trägt
@@ -95,6 +183,31 @@ const marktMitAnzeige = {
 </BaseLayout>
 
 <style>
+  .probe-reihe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    max-inline-size: none;
+  }
+
+  .probe-raster {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .probe-raster {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .hilfe {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
   .lang {
     overflow-wrap: anywhere;
   }

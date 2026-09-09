@@ -1,0 +1,214 @@
+---
+/**
+ * M21-01 — Schaltfläche nach Designvertrag Abschnitt 11.
+ *
+ * Die Komponente hat eine fachliche Schnittstelle, keine Klassenliste: wer
+ * eine primäre Aktion will, schreibt `variante="primaer"` und nicht drei
+ * Klassennamen, die in der nächsten Datei anders heißen.
+ *
+ * Zwei Dinge werden abgelehnt statt geraten:
+ *
+ * 1. **Ein deaktivierter Link.** `<a>` kennt kein `disabled`; ein grau
+ *    gefärbter Link bleibt anklickbar. Wer eine Aktion sperren will, braucht
+ *    einen Knopf.
+ * 2. **Ein Knopf mit Ziel.** `href` und `typ` zusammen ergeben keinen Sinn.
+ */
+import {
+  BUTTON_GROESSEN,
+  BUTTON_VARIANTEN,
+  type ButtonGroesse,
+  type ButtonVariante,
+} from './varianten.ts';
+
+interface Props {
+  /** Ohne Angabe sekundär — eine primäre Aktion je Bereich (UX-02). */
+  variante?: ButtonVariante;
+  groesse?: ButtonGroesse;
+  /** Gesetzt: die Komponente rendert einen Link statt eines Knopfes. */
+  href?: string;
+  typ?: 'button' | 'submit' | 'reset';
+  deaktiviert?: boolean;
+  /** Volle Breite — auf Mobil der Regelfall bei der Hauptaktion. */
+  voll?: boolean;
+  id?: string;
+  testId?: string;
+  ariaLabel?: string;
+  ariaControls?: string;
+  rel?: string;
+  download?: boolean;
+}
+
+const {
+  variante = 'sekundaer',
+  groesse = 'mittel',
+  href,
+  typ,
+  deaktiviert = false,
+  voll = false,
+  id,
+  testId,
+  ariaLabel,
+  ariaControls,
+  rel,
+  download = false,
+} = Astro.props;
+
+if (!BUTTON_VARIANTEN.includes(variante)) {
+  throw new Error(`Unbekannte Button-Variante "${variante}".`);
+}
+if (!BUTTON_GROESSEN.includes(groesse)) {
+  throw new Error(`Unbekannte Button-Größe "${groesse}".`);
+}
+if (href !== undefined && deaktiviert) {
+  throw new Error(
+    'Ein Link lässt sich nicht deaktivieren: er bliebe anklickbar. Für eine gesperrte Aktion einen Knopf verwenden.',
+  );
+}
+if (href !== undefined && typ !== undefined) {
+  throw new Error('href und typ zusammen ergeben keinen Sinn: entweder Ziel oder Knopfart.');
+}
+
+const klassen = [
+  'knopf',
+  `knopf--${variante}`,
+  groesse === 'mittel' ? null : `knopf--${groesse}`,
+  voll ? 'knopf--voll' : null,
+];
+---
+
+{
+  href === undefined ? (
+    <button
+      class:list={klassen}
+      type={typ ?? 'button'}
+      disabled={deaktiviert}
+      id={id}
+      data-testid={testId}
+      aria-label={ariaLabel}
+      aria-controls={ariaControls}
+    >
+      <slot />
+    </button>
+  ) : (
+    <a
+      class:list={klassen}
+      href={href}
+      id={id}
+      data-testid={testId}
+      aria-label={ariaLabel}
+      rel={rel}
+      download={download ? true : undefined}
+    >
+      <slot />
+    </a>
+  )
+}
+
+<style>
+  /* Abschnitt 11.1: Grundmaß, 44 px Zielfläche. */
+  .knopf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-block-size: 44px;
+    padding-inline: 18px;
+    padding-block: var(--space-2);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: var(--text-body);
+    font-weight: var(--weight-button);
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    /* Abschnitt 54: lieber umbrechen als Text abschneiden. */
+    white-space: normal;
+    transition:
+      background-color var(--transition-fast),
+      border-color var(--transition-fast);
+  }
+
+  .knopf--gross {
+    min-block-size: 52px;
+    padding-inline: 24px;
+    font-size: var(--text-lead);
+  }
+
+  /* Abschnitt 11.1: kleiner darf die Fläche sein, das Ziel nicht. */
+  .knopf--klein {
+    min-block-size: 36px;
+    padding-inline: 12px;
+    font-size: var(--text-small);
+  }
+
+  @media (pointer: coarse) {
+    .knopf--klein {
+      min-block-size: 44px;
+    }
+  }
+
+  .knopf--voll {
+    inline-size: 100%;
+  }
+
+  .knopf--sekundaer {
+    background: var(--color-surface);
+    border-color: var(--color-border-strong);
+    color: var(--color-ink);
+  }
+
+  .knopf--sekundaer:hover {
+    background: var(--color-surface-subtle);
+    border-color: var(--color-text-muted);
+  }
+
+  .knopf--primaer {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+
+  .knopf--primaer:hover {
+    background: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+  }
+
+  .knopf--primaer:active {
+    background: var(--color-primary-active);
+    border-color: var(--color-primary-active);
+  }
+
+  .knopf--soft {
+    background: var(--color-primary-soft);
+    border-color: var(--color-primary-border);
+    color: var(--color-primary-hover);
+  }
+
+  .knopf--ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--color-primary);
+  }
+
+  .knopf--ghost:hover {
+    background: var(--color-primary-soft);
+  }
+
+  .knopf--gefahr {
+    background: var(--color-surface);
+    border-color: var(--color-danger-border);
+    color: var(--color-danger);
+  }
+
+  .knopf--gefahr:hover {
+    background: var(--color-danger-soft);
+    border-color: var(--color-danger);
+  }
+
+  .knopf[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+</style>

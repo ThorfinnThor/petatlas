@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M21-01",
+  "current_task": "M21-03",
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -4124,8 +4124,16 @@
         "M18-01"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Komponentenbibliothek unter src/components/ui/ mit fachlicher Schnittstelle statt Klassenliste: Button, Card, Badge, Alert, PageHeader, EmptyState, dazu das gemeinsame Vokabular in varianten.ts, aus dem Komponenten und Tests dieselbe Liste lesen. Die Bausteine verweigern, was der Designvertrag ausschliesst, statt es zu raten: ein deaktivierter Link wird abgelehnt (er bliebe anklickbar), href und typ zusammen ebenso, eine erfundene Variante ebenso; ein Badge traegt keinen freien Text, weil die Beschriftung zur Art gehoert (Abschnitt 15.1) - sonst entstuende ein 'Geprueft', das niemand geprueft hat; ein Datenstand-Badge ohne Datum wird abgelehnt; ein Leerzustand ohne Erklaerung wird abgelehnt, weil 'keine Treffer' sonst als 'gibt es nicht' gelesen wird (UX-05); eine Hinweisbox ohne Titel ebenso. Die Werbekennzeichnung bekommt bewusst keine eigene Verkaufsfarbe (Abschnitt 3.1). Notice.astro laeuft jetzt durch dieselbe Alert-Komponente, damit es nicht zwei Kaesten fuer dieselbe Aussage gibt; die globalen Klassen .button/.card/.badge sind aus base.css entfernt, geblieben ist nur die Grundlage fuer das Element button selbst, das auch im nachgeladenen Markup entsteht. Home und die Positionsseite sind auf die Bausteine umgestellt. Die Designprobe zeigt alle Bausteine im echten Build. Nebenbefund und behoben: das Testdatenbanner wurde durch die Vereinheitlichung zu role=status - ein Live-Bereich, in dem sich seit dem Laden nichts aendert, uebertoent die Stellen, an denen wirklich etwas passiert; Alert hat dafuer jetzt ansage={false}. Voraussetzung war der Umbau der vitest-Konfiguration auf getViteConfig: ohne die Astro-Vite-Kette liessen sich .astro-Dateien nicht importieren, und die Bibliothek waere erst am fertigen Build pruefbar gewesen. Geprueft: 25 neue Unit-Tests ueber den Astro-Container, 1369 Unit-Tests gesamt gruen; 'npm run verify' exit 0; Playwright 228 Tests, Barrierefreiheit 107, Funktionen 306 - alle gruen.",
+          "reference": "src/components/ui/varianten.ts, src/components/ui/Button.astro, src/components/ui/Card.astro, src/components/ui/Badge.astro, src/components/ui/Alert.astro, src/components/ui/PageHeader.astro, src/components/ui/EmptyState.astro, src/components/Notice.astro, src/styles/base.css, src/pages/entwicklung/designprobe.astro, tests/design-system.test.ts, vitest.config.ts",
+          "verified_at": "2026-09-09",
+          "command": "npm run verify && npx playwright test",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4144,8 +4152,16 @@
         "M21-01"
       ],
       "kind": "implementation",
-      "status": "todo",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Brotkrumen als eigener Baustein (src/components/ui/Breadcrumbs.astro) auf allen sieben Unterseitentypen: Gebuehrenposition, Gebuehrengruppe, Katalogeinstieg, Leistungsseite, Stadtseite, Reiseziel, Pflegekategorie und Futterprodukt. Die drei bisher von Hand gebauten Krumenleisten sind ersetzt. Regeln aus Abschnitt 9.3, im Baustein durchgesetzt statt nur beschrieben: die aktuelle Seite wird nie verlinkt, auch dann nicht, wenn ein Ziel mitgegeben wird; 'Start' setzt die Komponente selbst; Ziele entstehen ausschliesslich ueber routePath/subroutePath, eine Zeichenkette ergibt keinen Link, damit kein zweiter Ort fuer Adressen entsteht; auf Ebene eins wird abgelehnt statt eine leere Leiste zu zeigen. Das Trennzeichen steht im CSS, nicht im Markup - sonst laese ein Screenreader 'Start groesser als Tierarztkosten' mit vor. Mobil bricht die Leiste um (flex-wrap), sie wird nicht abgeschnitten. Geprueft: 6 neue Unit-Tests, darunter einer, der jede Seite mit dynamischem Segment auf das Vorhandensein der Krumen prueft - eine neue Unterseite ohne Brotkrumen faellt damit auf, bevor sie ausgeliefert wird.",
+          "reference": "src/components/ui/Breadcrumbs.astro, src/pages/de-de/tierarztkosten/[position].astro, src/pages/de-de/tierarztkosten/gruppe/[gruppe].astro, src/pages/de-de/tierarztkosten/katalog/[...rest].astro, src/pages/de-de/tierarztkosten/[slug].astro, src/pages/de-de/tierarzt-karte/[stadt].astro, src/pages/de-de/reisecheck/[ziel].astro, src/pages/de-de/pflege/[kategorie].astro, src/pages/de-de/futter/[produkt].astro, tests/design-system.test.ts",
+          "verified_at": "2026-09-09",
+          "command": "npx vitest run tests/design-system.test.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4165,7 +4181,7 @@
         "M21-01"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "in_progress",
       "evidence": [],
       "blocker": null,
       "notes": []

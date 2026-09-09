@@ -1,0 +1,102 @@
+---
+/**
+ * M21-01 — Seitenkopf nach Designvertrag Abschnitt 4.2 und 23.1.
+ *
+ * Eyebrow, H1, Lead, dann höchstens zwei Aktionen. Der Lead ist kein
+ * zweiter Titel: er beantwortet, was die Seite für den Leser tut.
+ *
+ * Es gibt genau eine H1 je Seite. Diese Komponente erzeugt sie, damit nicht
+ * jede Seite ihre eigene Kopfzeile erfindet.
+ */
+interface Props {
+  titel: string;
+  /** Kleine Zeile darüber, etwa der Bereich. Kein Ersatz für den Titel. */
+  eyebrow?: string;
+  lead?: string;
+  /** Auszeichnung für die H1, falls die Seite darauf verweist. */
+  id?: string;
+  /**
+   * `hero` ist der Kopf der Startseite nach Abschnitt 23.1: mehr Luft, engere
+   * Überschrift. Keine Fotobühne, kein anderer Aufbau — dieselben Teile in
+   * anderem Maß.
+   */
+  variante?: 'standard' | 'hero';
+}
+
+const { titel, eyebrow, lead, id, variante = 'standard' } = Astro.props;
+
+if (titel.trim() === '') {
+  throw new Error('Ein Seitenkopf ohne Titel ist kein Seitenkopf.');
+}
+
+const hatAktionen = Astro.slots.has('aktionen');
+---
+
+<header class:list={['seitenkopf', variante === 'hero' ? 'seitenkopf--hero' : null]}>
+  {eyebrow !== undefined && <p class="seitenkopf__eyebrow">{eyebrow}</p>}
+  <h1 id={id}>{titel}</h1>
+  {lead !== undefined && <p class="seitenkopf__lead">{lead}</p>}
+  {
+    hatAktionen && (
+      <div class="seitenkopf__aktionen">
+        <slot name="aktionen" />
+      </div>
+    )
+  }
+  <slot />
+</header>
+
+<style>
+  .seitenkopf {
+    margin-block-end: var(--space-8);
+  }
+
+  .seitenkopf__eyebrow {
+    margin: 0 0 var(--space-3);
+    color: var(--color-primary-hover);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-label);
+  }
+
+  .seitenkopf h1 {
+    margin-block: 0 var(--space-3);
+  }
+
+  .seitenkopf__lead {
+    max-inline-size: 65ch;
+    color: var(--color-text);
+    font-size: var(--text-lead);
+    line-height: 1.6;
+  }
+
+  /* Abschnitt 23.1: Padding oben 72–88 px, unten 56–72 px. */
+  .seitenkopf--hero {
+    padding-block: var(--space-10) var(--space-12);
+  }
+
+  @media (min-width: 768px) {
+    .seitenkopf--hero {
+      padding-block: var(--space-16) var(--space-12);
+    }
+  }
+
+  /* Abschnitt 23.1: H1 mit 14–16 Wörtern, also früh umbrechen. */
+  .seitenkopf--hero h1 {
+    max-inline-size: 18ch;
+  }
+
+  .seitenkopf--hero .seitenkopf__lead {
+    margin-block: var(--space-4) var(--space-8);
+  }
+
+  .seitenkopf--hero .seitenkopf__aktionen {
+    margin-block: 0 var(--space-6);
+  }
+
+  .seitenkopf__aktionen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-6);
+  }
+</style>

@@ -8,6 +8,7 @@
  * steht das da, statt einer leeren Liste.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Notice from '../../../components/Notice.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
@@ -43,6 +44,11 @@ const synthetisch = attributPruefung().dataKind === 'synthetic';
 ---
 
 <BaseLayout title={kategorie.label} route="care" canonicalPfad={eigenerPfad}>
+  <Breadcrumbs
+    market={markt}
+    stufen={[{ label: 'Pflege', route: 'care' }, { label: kategorie.label }]}
+  />
+
   <h1>{kategorie.label}</h1>
   <p>{kategorie.description}</p>
   <p class="hilfe">

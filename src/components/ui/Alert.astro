@@ -1,0 +1,94 @@
+---
+/**
+ * M21-01 — Hinweisbox nach Designvertrag Abschnitt 16.
+ *
+ * Vier Varianten, Aufbau immer gleich: Titel, ein bis drei Sätze, optional
+ * ein Link. Der Titel ist Pflicht — eine Box ohne Titel zwingt zum Lesen,
+ * bevor man weiß, ob es einen betrifft.
+ *
+ * Zur Ansage: `fehler` bekommt `role="alert"`, weil ein Fehler den Lesefluss
+ * unterbrechen darf. `erfolg` und `warnung` bekommen `role="status"` und
+ * werden höflich angesagt. `info` bekommt nichts: eine ruhige Zusatzangabe
+ * soll niemanden unterbrechen.
+ *
+ * Mit `ansage={false}` lässt sich das abschalten. Das ist kein Schalter für
+ * den Geschmack, sondern für die Wahrheit: eine Box, die seit dem Laden
+ * unverändert dasteht, ist kein Live-Bereich. Wer sie zu einem macht, lässt
+ * Screenreader Dinge ansagen, die sich nie ändern — und übertönt damit die
+ * Stellen, an denen sich wirklich etwas tut.
+ */
+import { ALERT_VARIANTEN, type AlertVariante } from './varianten.ts';
+
+interface Props {
+  variante: AlertVariante;
+  titel: string;
+  /**
+   * Ändert sich der Inhalt zur Laufzeit? Ohne Angabe entscheidet die
+   * Variante. `false` bei einer Box, die seit dem Laden unverändert dasteht.
+   */
+  ansage?: boolean;
+  testId?: string;
+}
+
+const { variante, titel, ansage, testId } = Astro.props;
+
+if (!ALERT_VARIANTEN.includes(variante)) {
+  throw new Error(`Unbekannte Alert-Variante "${variante}".`);
+}
+if (titel.trim() === '') {
+  throw new Error('Eine Hinweisbox ohne Titel zwingt zum Lesen, bevor man weiß, worum es geht.');
+}
+
+const standardAnsage = variante !== 'info';
+const angesagt = ansage ?? standardAnsage;
+const rolle = !angesagt ? undefined : variante === 'fehler' ? 'alert' : 'status';
+---
+
+<div
+  class:list={['hinweisbox', `hinweisbox--${variante}`]}
+  role={rolle}
+  aria-live={angesagt && variante === 'erfolg' ? 'polite' : undefined}
+  data-testid={testId}
+>
+  <p class="hinweisbox__titel">{titel}</p>
+  <slot />
+</div>
+
+<style>
+  .hinweisbox {
+    border: 1px solid var(--color-border);
+    border-inline-start-width: 4px;
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    margin-block: var(--space-6);
+  }
+
+  .hinweisbox__titel {
+    margin: 0 0 var(--space-2);
+    font-weight: 600;
+  }
+
+  .hinweisbox :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .hinweisbox--info {
+    background: var(--color-info-soft);
+    border-inline-start-color: var(--color-info);
+  }
+
+  .hinweisbox--erfolg {
+    background: var(--color-success-soft);
+    border-inline-start-color: var(--color-success);
+  }
+
+  .hinweisbox--warnung {
+    background: var(--color-warning-soft);
+    border-inline-start-color: var(--color-warning);
+  }
+
+  .hinweisbox--fehler {
+    background: var(--color-danger-soft);
+    border-inline-start-color: var(--color-danger);
+  }
+</style>

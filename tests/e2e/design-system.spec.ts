@@ -12,7 +12,7 @@ test('Designprobe zeigt Informations- und Werbebereich sichtbar verschieden', as
 
   const stile = await page.evaluate(() => {
     const werbung = document.querySelector('.anzeige');
-    const hinweis = document.querySelector('.notiz--hinweis');
+    const hinweis = document.querySelector('.hinweisbox--info');
     if (!werbung || !hinweis) throw new Error('Bausteine fehlen');
     const a = getComputedStyle(werbung);
     const b = getComputedStyle(hinweis);

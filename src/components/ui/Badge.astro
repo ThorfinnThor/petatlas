@@ -1,0 +1,78 @@
+---
+/**
+ * M21-01 — Badge nach Designvertrag Abschnitt 15.
+ *
+ * Ein Badge trägt **keinen** freien Text. Die Beschriftung gehört zur Art;
+ * es gibt genau die sechs Arten aus Abschnitt 15.1. Damit kann kein
+ * „Geprüft“ entstehen, das niemand geprüft hat, und kein Badge-Zoo, den
+ * Abschnitt 15.2 verbietet.
+ *
+ * Ausnahme mit Grund: `datenstand` trägt einen Wert — das Datum. Ohne Datum
+ * wäre das Badge eine Behauptung ohne Inhalt und wird deshalb abgelehnt.
+ */
+import { BADGE_ARTEN, type BadgeArt } from './varianten.ts';
+
+interface Props {
+  art: BadgeArt;
+  /** Nur für `datenstand`: das anzuzeigende Datum, bereits formatiert. */
+  wert?: string;
+  testId?: string;
+}
+
+const { art, wert, testId } = Astro.props;
+
+const eintrag = BADGE_ARTEN[art];
+if (eintrag === undefined) {
+  throw new Error(
+    `Unbekannte Badge-Art "${art}". Erlaubt sind: ${Object.keys(BADGE_ARTEN).join(', ')}.`,
+  );
+}
+if (art === 'datenstand' && (wert === undefined || wert.trim() === '')) {
+  throw new Error('Ein Datenstand-Badge ohne Datum sagt nichts aus.');
+}
+if (art !== 'datenstand' && wert !== undefined) {
+  throw new Error(`Die Badge-Art "${art}" trägt keinen freien Text.`);
+}
+
+const beschriftung = wert === undefined ? eintrag.text : `${eintrag.text}: ${wert}`;
+---
+
+<span class:list={['abzeichen', `abzeichen--${eintrag.ton}`]} data-testid={testId}>
+  {beschriftung}
+</span>
+
+<style>
+  .abzeichen {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 2px var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    /* Farbregel 6: gedämpfter Text nicht unter 14 px. */
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+
+  .abzeichen--info {
+    background: var(--color-info-soft);
+    border-color: var(--color-info-border);
+    color: var(--color-info);
+  }
+
+  .abzeichen--erfolg {
+    background: var(--color-success-soft);
+    border-color: var(--color-success-border);
+    color: var(--color-success);
+  }
+
+  .abzeichen--warnung {
+    background: var(--color-warning-soft);
+    border-color: var(--color-warning-border);
+    color: var(--color-warning);
+  }
+</style>

@@ -11,6 +11,7 @@
  * Papier nichts nützt.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Notice from '../../../components/Notice.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
@@ -43,6 +44,11 @@ const umfang = reiseUmfang();
 ---
 
 <BaseLayout title={`Mit Hund oder Katze nach ${name}`} route="travel" canonicalPfad={eigenerPfad}>
+  <Breadcrumbs
+    market={market}
+    stufen={[{ label: 'Reisecheck', route: 'travel' }, { label: name }]}
+  />
+
   <h1>Mit Hund oder Katze nach {name}</h1>
 
   <p>

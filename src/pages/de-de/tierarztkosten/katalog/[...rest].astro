@@ -7,10 +7,11 @@
  * Gliederung — Teile, Gruppen, Anzahl — und nichts darüber hinaus.
  */
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../../components/ui/Breadcrumbs.astro';
 import DataStatus from '../../../../components/DataStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../../config/build.ts';
-import { routePath, subroutePath } from '../../../../lib/routes.ts';
+import { subroutePath } from '../../../../lib/routes.ts';
 import { positionen, teile } from '../../../../features/costs/detail.ts';
 import snapshot from '../../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 
@@ -33,11 +34,10 @@ const eigenerPfad = subroutePath(market, 'costs', 'katalog');
 ---
 
 <BaseLayout title="Gebührenkatalog" route="costs" canonicalPfad={eigenerPfad}>
-  <nav aria-label="Brotkrumen" class="krumen">
-    <a href={routePath(market, 'home')}>Start</a> ›
-    <a href={routePath(market, 'costs')}>Tierarztkosten</a> ›
-    <span aria-current="page">Gebührenkatalog</span>
-  </nav>
+  <Breadcrumbs
+    market={market}
+    stufen={[{ label: 'Tierarztkosten', route: 'costs' }, { label: 'Gebührenkatalog' }]}
+  />
 
   <h1>Gebührenkatalog</h1>
   <p>
@@ -68,12 +68,6 @@ const eigenerPfad = subroutePath(market, 'costs', 'katalog');
 </BaseLayout>
 
 <style>
-  .krumen {
-    margin-block-end: var(--space-6);
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-  }
-
   .gruppen {
     list-style: none;
     margin: 0;

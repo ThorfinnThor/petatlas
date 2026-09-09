@@ -9,6 +9,7 @@
  * eine Genauigkeit vortäuschen, die es nicht gibt.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Notice from '../../../components/Notice.astro';
 import DataStatus from '../../../components/DataStatus.astro';
 import { approvedScenarios } from '../../../features/costs/scenarios.ts';
@@ -43,6 +44,11 @@ const quelle = snapshot.source as { sourceVersion: string; effectiveFrom: string
     scenario.scenarioId,
   )}
 >
+  <Breadcrumbs
+    market={withEnabledFeatures(market, devFeatureOverrides())}
+    stufen={[{ label: 'Tierarztkosten', route: 'costs' }, { label: scenario.title }]}
+  />
+
   <h1>{scenario.title}</h1>
 
   <DataStatus stand={quelle.effectiveFrom} quelle={quelle.sourceVersion} locale={market.locale} />

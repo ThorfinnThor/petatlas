@@ -1,0 +1,100 @@
+---
+/**
+ * M21-02 — Brotkrumen nach Designvertrag Abschnitt 9.3.
+ *
+ * Ab Ebene zwei. Die aktuelle Seite ist **nicht** verlinkt — ein Link auf
+ * die Seite, auf der man steht, ist eine Sackgasse mit Anlauf.
+ *
+ * Pfade entstehen ausschließlich über die Route Registry. Wer hier eine
+ * Zeichenkette übergibt, bekommt keinen Link: sonst gäbe es einen zweiten
+ * Ort, an dem Adressen entstehen, und der wäre irgendwann falsch.
+ */
+import type { MarketConfig } from '../../domain/market.ts';
+import { routePath, subroutePath, type RouteKey } from '../../lib/routes.ts';
+
+export interface Stufe {
+  readonly label: string;
+  /** Ziel in der Route Registry. Bei der aktuellen Seite entfällt es. */
+  readonly route?: RouteKey;
+  /** Unterpfade unterhalb der Route, jeweils geprüfte Slugs. */
+  readonly slugs?: readonly string[];
+}
+
+interface Props {
+  market: MarketConfig;
+  /** Stufen **ab Ebene zwei**; „Start“ setzt die Komponente selbst. */
+  stufen: readonly Stufe[];
+}
+
+const { market, stufen } = Astro.props;
+
+if (stufen.length === 0) {
+  throw new Error('Brotkrumen gibt es ab Ebene zwei. Auf einer Startseite sind sie keine Hilfe.');
+}
+
+const letzte = stufen.length - 1;
+const eintraege = stufen.map((stufe, index) => {
+  // Die aktuelle Seite bekommt nie ein Ziel, auch wenn eines mitgegeben wird.
+  if (index === letzte || stufe.route === undefined) {
+    return { label: stufe.label, href: null };
+  }
+  const href =
+    stufe.slugs === undefined || stufe.slugs.length === 0
+      ? routePath(market, stufe.route)
+      : subroutePath(market, stufe.route, ...stufe.slugs);
+  return { label: stufe.label, href };
+});
+---
+
+<nav aria-label="Brotkrumen" class="krumen">
+  <ol>
+    <li><a href={routePath(market, 'home')}>Start</a></li>
+    {
+      eintraege.map((eintrag) => (
+        <li>
+          {eintrag.href === null ? (
+            <span aria-current="page">{eintrag.label}</span>
+          ) : (
+            <a href={eintrag.href}>{eintrag.label}</a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .krumen {
+    margin-block-end: var(--space-6);
+    color: var(--color-text-muted);
+    /* Abschnitt 9.3: 14 px. */
+    font-size: var(--text-small);
+  }
+
+  .krumen ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Abschnitt 9.3: mobil umbrechen, nicht abschneiden. */
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+  }
+
+  /* Das Trennzeichen ist Dekoration und steht deshalb im CSS, nicht im
+     Text: sonst liest ein Screenreader „Start größer als Tierarztkosten“. */
+  .krumen li + li::before {
+    content: '›';
+    margin-inline-end: var(--space-2);
+    color: var(--color-border-strong);
+  }
+
+  .krumen a {
+    color: inherit;
+  }
+
+  .krumen [aria-current='page'] {
+    color: var(--color-text);
+    font-weight: var(--weight-label);
+  }
+</style>

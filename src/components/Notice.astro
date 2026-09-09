@@ -1,63 +1,46 @@
 ---
 /**
- * M04-02 — Hinweis-, Warn- und Ergebnisbox.
+ * M04-02 / M21-01 — Hinweis-, Warn- und Ergebnisbox.
  *
- * Drei Rollen mit klar unterschiedlicher Darstellung. `warnung` und
- * `ergebnis` bekommen `role="status"`, damit Screenreader ein neu
- * berechnetes Ergebnis auch ansagen.
+ * Seit der Komponentenbibliothek ist das hier nur noch die Übersetzung der
+ * gewachsenen Rollen in die vier Varianten des Designvertrags (Abschnitt
+ * 16). Die Darstellung liegt in `ui/Alert.astro`; zwei Boxen mit
+ * unterschiedlichem Aussehen für dieselbe Aussage soll es nicht geben.
+ *
+ * `testdaten` bleibt eine eigene Rolle, weil sie eine eigene Aussage ist:
+ * „was hier steht, ist erfunden“. Der Vertrag kennt dafür keine fünfte
+ * Farbe, deshalb wird sie als Warnung dargestellt — der Unterschied steht
+ * im Text, nicht in der Farbe (Farbregel 5).
+ *
+ * Angesagt wird das Testdatenbanner nicht: es steht seit dem Laden da und
+ * ändert sich nie. Ein Live-Bereich, in dem nie etwas passiert, übertönt
+ * die, in denen etwas passiert.
  */
+import Alert from './ui/Alert.astro';
+import type { AlertVariante } from './ui/varianten.ts';
+
 interface Props {
   variante: 'hinweis' | 'warnung' | 'ergebnis' | 'testdaten';
-  titel?: string;
+  titel: string;
   /** Für Tests und gezielte Ansteuerung. */
   testId?: string;
 }
 
+const ZU_ALERT: Readonly<Record<Props['variante'], AlertVariante>> = {
+  hinweis: 'info',
+  warnung: 'warnung',
+  ergebnis: 'erfolg',
+  testdaten: 'warnung',
+};
+
 const { variante, titel, testId } = Astro.props;
-const ansage = variante === 'ergebnis' || variante === 'warnung';
 ---
 
-<div
-  class:list={['notiz', `notiz--${variante}`]}
-  role={ansage ? 'status' : undefined}
-  aria-live={variante === 'ergebnis' ? 'polite' : undefined}
-  data-testid={testId}
+<Alert
+  variante={ZU_ALERT[variante]}
+  titel={titel}
+  ansage={variante === 'testdaten' ? false : undefined}
+  testId={testId}
 >
-  {titel && <p class="notiz__titel">{titel}</p>}
   <slot />
-</div>
-
-<style>
-  .notiz {
-    border: 1px solid var(--color-border);
-    border-inline-start-width: 4px;
-    border-radius: var(--radius-md);
-    padding: var(--space-4) var(--space-6);
-    margin-block: var(--space-6);
-  }
-
-  .notiz__titel {
-    margin: 0 0 var(--space-2);
-    font-weight: 600;
-  }
-
-  .notiz :global(p:last-child) {
-    margin-bottom: 0;
-  }
-
-  .notiz--hinweis {
-    background: var(--color-info-soft);
-    border-inline-start-color: var(--color-info);
-  }
-
-  .notiz--warnung,
-  .notiz--testdaten {
-    background: var(--color-warning-soft);
-    border-inline-start-color: var(--color-warning);
-  }
-
-  .notiz--ergebnis {
-    background: var(--color-success-soft);
-    border-inline-start-color: var(--color-success);
-  }
-</style>
+</Alert>
