@@ -124,6 +124,12 @@ jobs:
       - name: Output-Audit über dist
         run: npm run check:dist
 
+      # Ein toter interner Verweis führt auf eine 404-Seite, und der Leser
+      # hält das für das Ende des Angebots. Fremde Adressen werden hier nicht
+      # abgerufen — dafür gibt es source-check.yml.
+      - name: Interne Verweise im Output
+        run: npm run check:links
+
       # Die Prüfung erteilt nichts; sie widerspricht einer Behauptung ohne
       # Person, ohne Datum oder ohne Nachweis (M18-06).
       - name: Freigabestand ist widerspruchsfrei

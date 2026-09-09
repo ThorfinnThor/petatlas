@@ -34,6 +34,10 @@ import {
   TravelRuleSetSchema,
   TravelScopeSchema,
 } from '../../src/domain/schemas/travel.ts';
+import { FeeItemSchema } from '../../src/domain/schemas/costs.ts';
+import { MunicipalSnapshotSchema } from '../../src/domain/schemas/municipal.ts';
+import { PlaceSchema } from '../../src/domain/schemas/places.ts';
+import { WatchStateFileSchema } from '../../src/domain/schemas/watchlist.ts';
 import { attributPruefung } from '../../src/features/care/attributes.ts';
 import { alleKategorien } from '../../src/features/care/taxonomy.ts';
 import { alleRegeln } from '../../src/features/travel/rules.ts';
@@ -121,6 +125,116 @@ export const VERZEICHNISSE: readonly {
 export interface Befund {
   readonly datei: string;
   readonly problem: string;
+}
+
+/**
+ * Die versionierten Datenstände.
+ *
+ * Sie entstehen aus einem Importlauf und werden dabei geprüft — aber ein
+ * Snapshot kann später von Hand angefasst werden, und dann prüft ihn
+ * niemand mehr. Hier geschieht das bei jedem Lauf, gegen dieselben Schemas,
+ * mit denen er entstanden ist.
+ *
+ * Zählfelder werden mitgeprüft: eine Datei, die 1.006 Positionen ankündigt
+ * und 900 enthält, ist kaputt, auch wenn jede einzelne gültig ist.
+ */
+export function pruefeSnapshots(lies: (datei: string) => string | null): Befund[] {
+  const befunde: Befund[] = [];
+
+  const lade = (datei: string): Record<string, unknown> | null => {
+    const inhalt = lies(datei);
+    if (inhalt === null) {
+      befunde.push({ datei, problem: 'Die Datei fehlt.' });
+      return null;
+    }
+    try {
+      return JSON.parse(inhalt) as Record<string, unknown>;
+    } catch (fehler) {
+      befunde.push({ datei, problem: `Kein gültiges JSON: ${String(fehler)}` });
+      return null;
+    }
+  };
+
+  const listePruefen = (
+    datei: string,
+    liste: unknown,
+    angekuendigt: unknown,
+    schema: z.ZodType,
+    was: string,
+  ): void => {
+    if (!Array.isArray(liste)) {
+      befunde.push({ datei, problem: `${was}: keine Liste.` });
+      return;
+    }
+    if (typeof angekuendigt === 'number' && angekuendigt !== liste.length) {
+      befunde.push({
+        datei,
+        problem: `${was}: angekündigt ${angekuendigt}, enthalten ${liste.length}.`,
+      });
+    }
+    for (const [index, eintrag] of liste.entries()) {
+      const ergebnis = schema.safeParse(eintrag);
+      if (!ergebnis.success) {
+        befunde.push({ datei, problem: `${was} Nr. ${index}: ${ergebnis.error.message}` });
+        // Ein kaputter Datensatz reicht als Befund; tausend Meldungen helfen
+        // niemandem beim Lesen.
+        return;
+      }
+    }
+  };
+
+  const got = lade('data-snapshots/got/got-2022.json');
+  if (got !== null) {
+    listePruefen(
+      'data-snapshots/got/got-2022.json',
+      got.items,
+      got.itemCount,
+      FeeItemSchema,
+      'Gebührenpositionen',
+    );
+  }
+
+  const orte = lade('data-snapshots/places/places-de.json');
+  if (orte !== null) {
+    const abdeckung = (orte.coverage ?? {}) as Record<string, unknown>;
+    listePruefen(
+      'data-snapshots/places/places-de.json',
+      orte.places,
+      abdeckung.placeCount,
+      PlaceSchema,
+      'Orte',
+    );
+  }
+
+  for (const datei of [
+    'data-snapshots/municipal/berlin-hundefreilauf.json',
+    'data-snapshots/municipal/hamburg-hundeauslaufzonen.json',
+  ]) {
+    const roh = lade(datei);
+    if (roh === null) continue;
+    const ergebnis = MunicipalSnapshotSchema.safeParse(roh);
+    if (!ergebnis.success) befunde.push({ datei, problem: ergebnis.error.message });
+  }
+
+  const beobachtung = lies('data-snapshots/watch/rule-sources.json');
+  if (beobachtung !== null) {
+    try {
+      const ergebnis = WatchStateFileSchema.safeParse(JSON.parse(beobachtung));
+      if (!ergebnis.success) {
+        befunde.push({
+          datei: 'data-snapshots/watch/rule-sources.json',
+          problem: ergebnis.error.message,
+        });
+      }
+    } catch (fehler) {
+      befunde.push({
+        datei: 'data-snapshots/watch/rule-sources.json',
+        problem: `Kein gültiges JSON: ${String(fehler)}`,
+      });
+    }
+  }
+
+  return befunde;
 }
 
 /**
@@ -217,7 +331,7 @@ function main(): number {
       })),
   );
   const alle = [...PRUEFSTUECKE, ...ausVerzeichnissen];
-  const befunde = [...pruefe(alle, lies), ...pruefeQuerbezuege()];
+  const befunde = [...pruefe(alle, lies), ...pruefeSnapshots(lies), ...pruefeQuerbezuege()];
 
   for (const befund of befunde) console.error(`✗ ${befund.datei}: ${befund.problem}`);
   if (befunde.length > 0) {
@@ -225,7 +339,8 @@ function main(): number {
     return 1;
   }
   console.log(
-    `Inhaltsdaten: ${alle.length} Datei(en) gegen ihr Schema geprüft, keine Beanstandung.`,
+    `Inhaltsdaten und Datenstände: ${alle.length} Inhaltsdatei(en) und 6 Snapshot(s) ` +
+      'gegen ihr Schema geprüft, Querbezüge stimmen, keine Beanstandung.',
   );
   return 0;
 }

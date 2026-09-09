@@ -36,6 +36,16 @@ import type { FeeItem, Species } from '../../domain/schemas/index.ts';
 
 export type TreatmentContext = 'regular' | 'emergency';
 
+/**
+ * Bezugsgrößen, die der Rechner beherrscht.
+ *
+ * Die GOT 2022 führt in allen 1.006 Positionen „Einzelleistung“. Eine andere
+ * Bezugsgröße — etwa je angefangene Zeiteinheit oder je Kilogramm — ließe
+ * sich nicht einfach mit einer Menge multiplizieren; sie käme mit einer
+ * eigenen Regel. Bis es sie gibt, wird sie abgelehnt und nicht geraten.
+ */
+export const BEKANNTE_BEZUGSGROESSEN: readonly string[] = ['Einzelleistung'];
+
 export class CostError extends Error {
   readonly code: string;
   constructor(code: string, message: string) {
@@ -223,6 +233,18 @@ export function calculateCosts(
     }
     gesehen.add(item.officialItemId);
 
+    // Der Rechner multipliziert den Grundbetrag mit einer glatten Menge. Das
+    // stimmt nur, solange sich die Bezugsgröße auf eine einzelne Leistung
+    // bezieht. Stünde dort „je angefangene 15 Minuten“ oder „je kg“, wäre
+    // dieselbe Rechnung stillschweigend falsch — deshalb wird eine unbekannte
+    // Bezugsgröße abgelehnt statt behandelt, als wäre sie eine Einzelleistung.
+    if (!BEKANNTE_BEZUGSGROESSEN.includes(item.baseUnit)) {
+      throw new CostError(
+        'bezugsgroesse_unbekannt',
+        `Position ${item.officialItemId} hat die Bezugsgröße "${item.baseUnit}". ` +
+          'Der Rechner kann nur Einzelleistungen mit einer Menge multiplizieren.',
+      );
+    }
     if (item.currency !== config.currency) {
       throw new CostError(
         'waehrung_unpassend',

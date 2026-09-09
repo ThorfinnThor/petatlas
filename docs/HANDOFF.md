@@ -8,7 +8,7 @@ Eine frische Sitzung beginnt hier, nicht beim erneuten Erfinden der Architektur.
 
 Projektpfad `~/Projects/pet-platform`. Branch `main`, `origin` = https://github.com/ThorfinnThor/petatlas (public), Stand gepusht.
 
-**Der ursprüngliche Plan (M00–M19) ist abgearbeitet; seit dem 2026-09-08 läuft der Block M20 bis M22 für Inhaltstiefe, Designvertrag und Datenqualität. M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 5/6, die sechste blockiert (127 von 134 Aufgaben, 7 blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
+**Der ursprüngliche Plan (M00–M19) ist abgearbeitet; seit dem 2026-09-08 läuft der Block M20 bis M22 für Inhaltstiefe, Designvertrag und Datenqualität. M00 bis M07 vollständig, M08 bei 5/6 (M08-06 blockiert), M10 und M11 vollständig, M09 bei 5/6, M12 bei 5/6, die sechste blockiert, M13 bei 5/6, die sechste blockiert, M14 bei 5/6, die sechste blockiert, M15 vollständig, M16 vollständig, M17 vollständig, M18 bei 5/6, die sechste blockiert, M19 bei 5/6, die sechste blockiert (128 von 135 Aufgaben, 7 blockiert).** Der genaue Stand steht in `project/tasks.json`; `npm run status` gibt ihn aus.
 
 Vorhanden: Projektvertrag und Autonomierahmen; Astro 7 static mit TypeScript 6 strict und voller Prüfkette; Domänenmodelle für Markt, Geld, Einheiten, Datum, Provenienz, Rechte, Fachschemas und Provider; Route Registry, Designsystem, fünf Kernseiten, statische Suche und zugängliche Formularbausteine; Quellenregister mit Publikationsklassen, Attribution, ODbL-Datenfluss und Lizenzregression.
 
@@ -40,7 +40,7 @@ Bei UI-Änderungen zusätzlich `npx playwright test`. Ein hängengebliebener Pre
 
 ## Nächster ausführbarer Schritt
 
-**Es gibt keinen mehr.** Der Block M20 bis M22 ist abgearbeitet; 127 von 134 Aufgaben sind erledigt, und die sieben verbleibenden warten auf eine Entscheidung oder Prüfung durch einen Menschen (siehe `docs/BLOCKERS.md`). Es gibt keine ausführbare Aufgabe, die ohne eine dieser Freigaben weiterkäme.
+**Es gibt keinen mehr.** Der Block M20 bis M22 ist abgearbeitet; 128 von 135 Aufgaben sind erledigt, und die sieben verbleibenden warten auf eine Entscheidung oder Prüfung durch einen Menschen (siehe `docs/BLOCKERS.md`). Es gibt keine ausführbare Aufgabe, die ohne eine dieser Freigaben weiterkäme.
 
 Wer hier weiterarbeiten will, hat drei Wege — keiner davon ist eine offene Aufgabe im Manifest:
 

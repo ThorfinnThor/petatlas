@@ -29,11 +29,25 @@ npm run check:links
 npm run check:seo
 npm run check:security
 npm run check:workflows
+npm run check:content
 npm run check:budgets
 npm run rollback:pruefen -- HEAD
 npm run check:release
 npm run verify
 ```
+
+### Was hinter den Namen steht
+
+Der Plan nennt diese Namen; einige Fähigkeiten waren zuerst unter einem anderen Namen da, und `check:links` fehlte bis zum 09.09.2026 ganz. Beides ist eingeholt. Wer wissen will, was ein Befehl tatsächlich tut:
+
+| Befehl | Was er tut |
+|---|---|
+| `test:unit` | die gesamte Vitest-Kette, alle Testverzeichnisse |
+| `test:integration` | dieselbe Kette, beschränkt auf die Pipeline über echte Fixtures: Import, Veröffentlichung, Orte, Frische, Prüfskripte. **Ohne Netz** — Läufe gegen echte Quellen sind die zeitgesteuerten Workflows `ingest-open.yml` und `source-check.yml`. |
+| `test:contracts` | `tests/contracts/` — Schemaverträge und Provenienz-/Rechteregeln |
+| `data:validate` | Alias auf `check:content`: Inhaltsdaten **und** versionierte Datenstände gegen ihre Schemas, dazu die Querbezüge und die Zählfelder |
+| `data:license-check` | Alias auf `check:licenses` |
+| `check:links` | interne Verweise im Buildoutput. Fremde Adressen werden **nicht** abgerufen: ein Prüflauf, der bei jedem Commit fremde Server anfragt, ist weder höflich noch verlässlich. Dafür gibt es `scripts/monitor/source-drift.ts`. |
 
 `verify` führt die schnelle notwendige Gesamtkette aus. Größere OSM-Downloads sind keine Pflicht jeder PR-Prüfung. Sie werden in zeitgesteuerten oder manuellen Integrationstests mit echten Quellen geprüft. Lokale Entwicklung und Unit-Tests dürfen nicht vom Internet oder echten Credentials abhängen.
 

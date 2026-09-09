@@ -6,6 +6,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  BEKANNTE_BEZUGSGROESSEN,
   COST_CONFIG,
   CostError,
   NICHT_ENTHALTEN,
@@ -238,6 +239,31 @@ describe('Ungültige Eingaben ergeben Fehler, keine stille Korrektur', () => {
       KATALOG,
     );
     expect(ergebnis.netTotal.amountMinor).toBe(1000);
+  });
+
+  it('lehnt eine Bezugsgröße ab, die es nicht multiplizieren kann', () => {
+    // Der Plan verlangt diesen Fall ausdrücklich (Qualitätsgate 13.3,
+    // „ungültige Mengeneinheit“). Er kommt in der GOT 2022 nicht vor — alle
+    // 1.006 Positionen sind Einzelleistungen —, wäre aber genau die Art
+    // Änderung, die eine spätere Fassung still falsch rechnen ließe.
+    const nachZeit = position({
+      officialItemId: 'GOT-ZEIT',
+      baseUnit: 'je angefangene 15 Minuten',
+    });
+    expect(() =>
+      calculateCosts(
+        {
+          context: 'regular',
+          species: null,
+          lines: [{ officialItemId: 'GOT-ZEIT', quantity: 2, factor: 1 }],
+        },
+        [nachZeit],
+      ),
+    ).toThrow(/Bezugsgröße/);
+  });
+
+  it('nennt genau die Bezugsgrößen, die es beherrscht', () => {
+    expect([...BEKANNTE_BEZUGSGROESSEN]).toEqual(['Einzelleistung']);
   });
 
   it('lehnt gemischte Katalogfassungen ab', () => {

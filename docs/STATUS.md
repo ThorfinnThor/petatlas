@@ -2,8 +2,8 @@
 
 Stand: 2026-09-09, Ende Sitzung 11.
 
-**Erledigt:** 127 von 134 Aufgaben. **In Arbeit:** keine. **Blockiert:** sieben (M08-06, fachliche Abnahme des Rechners; M09-06, Partnervertrag und § 34d-Prüfung; M12-06, fachliche Prüfung der Reiseregeln; M13-06, Programmfreigabe für Warenangebote; M14-06, Attributabnahme echter Produkte; M18-06 und M19-06, Freigaben für Launch und Veröffentlichung).
-**Meilensteine vollständig:** M00 bis M07, M10, M11, M15 und M16 (je 6/6). M08 bei 5/6, die sechste blockiert. M09 bei 5/6, die sechste blockiert. M12 bei 5/6, die sechste blockiert. M13 bei 5/6, die sechste blockiert. M14 bei 5/6, die sechste blockiert. M15 vollständig. M16 vollständig. M17 vollständig (7/7). M18 bei 5/6, die sechste blockiert. M19 bei 5/6, die sechste blockiert. Block M20 bis M22 **vollständig**: M20 3/3, M21 6/6, M22 4/4. Es gibt keine ausführbare Aufgabe mehr; die sieben verbleibenden warten auf Freigaben.
+**Erledigt:** 128 von 135 Aufgaben. **In Arbeit:** keine. **Blockiert:** sieben (M08-06, fachliche Abnahme des Rechners; M09-06, Partnervertrag und § 34d-Prüfung; M12-06, fachliche Prüfung der Reiseregeln; M13-06, Programmfreigabe für Warenangebote; M14-06, Attributabnahme echter Produkte; M18-06 und M19-06, Freigaben für Launch und Veröffentlichung).
+**Meilensteine vollständig:** M00 bis M07, M10, M11, M15 und M16 (je 6/6). M08 bei 5/6, die sechste blockiert. M09 bei 5/6, die sechste blockiert. M12 bei 5/6, die sechste blockiert. M13 bei 5/6, die sechste blockiert. M14 bei 5/6, die sechste blockiert. M15 vollständig. M16 vollständig. M17 vollständig (7/7). M18 bei 5/6, die sechste blockiert. M19 bei 5/6, die sechste blockiert. Block M20 bis M22 **vollständig**: M20 3/3, M21 6/6, M22 5/5. Es gibt keine ausführbare Aufgabe mehr; die sieben verbleibenden warten auf Freigaben.
 
 **Repository:** https://github.com/ThorfinnThor/petatlas (public, Branch `main`), Projektpfad `~/Projects/pet-platform`.
 
@@ -30,7 +30,7 @@ Stand: 2026-09-09, Ende Sitzung 11.
 
 | Prüfung | Ergebnis |
 |---|---|
-| `npm run test:unit` | 1407 Tests in 92 Dateien |
+| `npm run test:unit` | 1419 Tests in 93 Dateien |
 | `npx playwright test` | 153 Tests, dazu 30 hinter dem Feature Flag |
 | `npm run lint` / `typecheck` / `format:check` | sauber |
 | `npm run check:security` | 167 Dateien, kein Fund |
