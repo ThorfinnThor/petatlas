@@ -145,6 +145,9 @@ import Notice from '../Notice.astro';
   import { supplementComparison } from '../../features/food/supplements.ts';
   const form = document.querySelector<HTMLFormElement>('#supplement-vergleich');
   const output = document.querySelector<HTMLElement>('#supplement-ergebnis');
+  form?.addEventListener('input', () => {
+    if (output?.textContent) output.textContent = 'Eingaben geändert – bitte erneut vergleichen.';
+  });
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
     if (!output) return;

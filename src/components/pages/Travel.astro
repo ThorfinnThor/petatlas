@@ -301,6 +301,24 @@ const transit = umfang.transitCountries.map(name);
   </div>
 </section>
 
+<h2>Länderregeln und Packlisten</h2>
+<ul>
+  {
+    Object.values(ZIELLAENDER).map((country) => (
+      <li>
+        <a
+          href={subroutePath(
+            withEnabledFeatures(defaultMarket(), devFeatureOverrides()),
+            'travel',
+            country.slug,
+          )}
+        >
+          {country.name}
+        </a>
+      </li>
+    ))
+  }
+</ul>
 <h2>Geprüfter Umfang (Fassung {umfang.scopeVersion})</h2>
 <dl class="umfang">
   <dt>Von</dt>
