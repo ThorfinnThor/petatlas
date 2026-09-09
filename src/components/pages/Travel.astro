@@ -17,7 +17,8 @@ import RadioCard from '../forms/RadioCard.astro';
 import { reiseUmfang, umfangsSatz } from '../../features/travel/scope.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
-import { routePath } from '../../lib/routes.ts';
+import { ZIELLAENDER } from '../../features/travel/laender.ts';
+import { routePath, subroutePath } from '../../lib/routes.ts';
 
 const umfang = reiseUmfang();
 const quellenPfad = routePath(
@@ -138,7 +139,19 @@ const transit = umfang.transitCountries.map(name);
 
       <div class="feld">
         <label for="anzahl">Anzahl der Tiere</label>
-        <input id="anzahl" type="number" min="1" max="20" value="1" />
+        <input
+          id="anzahl"
+          type="number"
+          min="1"
+          max="20"
+          value="1"
+          aria-describedby="anzahl-hilfe"
+        />
+        <p class="hilfe" id="anzahl-hilfe">
+          Bei einer gemeinsamen Fahrt im privaten Fahrzeug alle mitgeführten Hunde, Katzen und
+          Frettchen zählen, auch die anderer Halter. In öffentlichen Verkehrsmitteln zählen die
+          Tiere Ihrer eigenen Verbringung, nicht die aller Fahrgäste.
+        </p>
       </div>
 
       <div class="feld">
@@ -165,7 +178,9 @@ const transit = umfang.transitCountries.map(name);
       </div>
 
       <div class="feld">
-        <label for="chipdatum">Datum der Kennzeichnung</label>
+        <label for="chipdatum"
+          >Dokumentiertes Datum der Kennzeichnung oder des Chipablesens vor der Impfung</label
+        >
         <input id="chipdatum" type="date" />
       </div>
 
@@ -179,8 +194,14 @@ const transit = umfang.transitCountries.map(name);
       </div>
 
       <div class="feld">
-        <label for="impfdatum">Datum der Erstimpfung</label>
-        <input id="impfdatum" type="date" />
+        <label for="impfdatum">Abschluss der Impfserie oder Auffrischung</label>
+        <input id="impfdatum" type="date" aria-describedby="impfdatum-hilfe" />
+        <p class="hilfe" id="impfdatum-hilfe">
+          Gemeint ist der Abschluss der vollständigen Erstimpfung, nicht die erste Dosis einer
+          mehrteiligen Impfserie. „Gültig“ muss die Impfung am Reisetag sein. Nach einer lückenlosen
+          Auffrischung beginnt die Wartezeit nicht erneut; nach einer Unterbrechung lassen Sie das
+          maßgebliche Datum in der Tierarztpraxis bestätigen.
+        </p>
       </div>
 
       <div class="feld">
@@ -193,6 +214,71 @@ const transit = umfang.transitCountries.map(name);
       </div>
 
       <div class="feld">
+        <label for="chip-standard"
+          >Entspricht der Chip den technischen Anforderungen laut Praxis?</label
+        ><select id="chip-standard"
+          ><option value="unbekannt">weiß ich nicht</option><option value="ja">ja</option><option
+            value="nein">nein</option
+          ></select
+        >
+      </div>
+      <div class="feld">
+        <label for="chip-lesegeraet"
+          >Falls abweichend: Führen Sie ein geeignetes Chip-Lesegerät mit?</label
+        ><select id="chip-lesegeraet"
+          ><option value="unbekannt">weiß ich nicht</option><option value="ja">ja</option><option
+            value="nein">nein</option
+          ></select
+        >
+      </div>
+      <div class="feld">
+        <label for="auffrischung"
+          >Handelt es sich um eine lückenlose Auffrischung innerhalb der bisherigen Gültigkeit?</label
+        ><select id="auffrischung"
+          ><option value="unbekannt">weiß ich nicht</option><option value="ja">ja</option><option
+            value="nein">nein</option
+          ></select
+        >
+      </div>
+      <div class="feld">
+        <label for="pass-vollstaendig"
+          >Ist der Ausweis unterschrieben, vollständig und für diese Reise gültig ausgestellt?</label
+        ><select id="pass-vollstaendig"
+          ><option value="unbekannt">weiß ich nicht</option><option value="ja">ja</option><option
+            value="nein">nein</option
+          ></select
+        >
+      </div>
+      <p class="hilfe">
+        Bei der Passfrage auch Transpondernummer, Impfeinträge und Ausstellung durch eine
+        ermächtigte Praxis prüfen. Aktuelle Modelle berücksichtigen den gewöhnlichen Aufenthalt. Das
+        EU-Passmodell nach 577/2013 darf nach Artikel 6 der Verordnung 2026/705 für
+        innergemeinschaftliche Reisen weiterverwendet werden, wenn es vor dem 01.01.2028 ausgestellt
+        wurde. Die sonstigen Gültigkeitsanforderungen bleiben bestehen. Ältere Passmodelle sind
+        nicht automatisch ungültig: Übergangsfall durch die Praxis bestätigen lassen.
+      </p>
+      <div class="feld">
+        <label for="impfbeginn">Erster Impftermin der aktuellen Impfserie</label><input
+          id="impfbeginn"
+          type="date"
+        /><p class="hilfe">
+          Bei nur einer Dosis dasselbe Datum wie beim Abschluss eintragen. Bei rechtzeitiger
+          Auffrischung den Auffrischungstermin verwenden.
+        </p>
+      </div>
+      <div class="feld">
+        <label for="impfende">Im Ausweis gültig bis</label><input id="impfende" type="date" />
+      </div>
+      <div class="feld">
+        <label for="frankreich-kategorie"
+          >Für Hunde bei Einreise oder Durchreise Frankreich: bestätigte französische Kategorie</label
+        >
+        <select id="frankreich-kategorie"
+          ><option value="unknown">noch nicht geklärt</option><option value="none"
+            >keine Kategorie 1 oder 2</option
+          ><option value="1">Kategorie 1</option><option value="2">Kategorie 2</option></select
+        >
+      </div><div class="feld">
         <label for="begleitung">Reist das Tier mit Ihnen?</label>
         <select id="begleitung">
           <option value="unbekannt">weiß ich nicht</option>
@@ -215,6 +301,24 @@ const transit = umfang.transitCountries.map(name);
   </div>
 </section>
 
+<h2>Länderregeln und Packlisten</h2>
+<ul>
+  {
+    Object.values(ZIELLAENDER).map((country) => (
+      <li>
+        <a
+          href={subroutePath(
+            withEnabledFeatures(defaultMarket(), devFeatureOverrides()),
+            'travel',
+            country.slug,
+          )}
+        >
+          {country.name}
+        </a>
+      </li>
+    ))
+  }
+</ul>
 <h2>Geprüfter Umfang (Fassung {umfang.scopeVersion})</h2>
 <dl class="umfang">
   <dt>Von</dt>

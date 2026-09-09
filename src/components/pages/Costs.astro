@@ -65,6 +65,20 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   locale={market.locale}
 />
 
+<details class="rechner-grenzen">
+  <summary>Grenzen der Berechnung: Sonderfälle und enthaltene Leistungen</summary>
+  <p>
+    Standardmäßig werden ausgewählte Gebühren mit 19 % Umsatzsteuer berechnet. Für mit der Praxis
+    geklärte Sonderfälle können Sie abweichende Faktoren, Steuer und den Erlass der Notdienstgebühr
+    eingeben. Eine reguläre Sprechstunde am Abend oder Wochenende ist nicht automatisch Notdienst.
+  </p>
+  <p>
+    Der Rechner prüft nicht, ob eine Leistung bereits in einer anderen enthalten ist (§ 6 GOT). Die
+    Menge richtet sich nach der Einheit der gewählten Gebührenposition, etwa je Behandlung oder
+    Zeitabschnitt. Die Praxis muss die Auswahl und Kombination der Leistungen bestätigen.
+  </p>
+</details>
+
 <SavedProfileButton />
 <ToolShell eingabeTitel="Eingaben" ergebnisTitel="Rechnung" ergebnisId="ergebnis-titel" sticky>
   <Fragment slot="eingabe">
@@ -94,6 +108,49 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
         </div>
       </fieldset>
 
+      <details>
+        <summary>Abweichende Abrechnung mit der Praxis geklärt</summary>
+        <p>
+          Nur für einen konkret bestätigten Fall: Gebührenvereinbarungen nach § 5 GOT bedürfen
+          grundsätzlich vor der Leistung der Textform. § 3 GOT enthält besondere Sätze bei
+          öffentlich angeordneten oder geförderten Leistungen; auf Verlangen außerhalb regulärer
+          Zeiten gelten dort andere Zuschläge. Die rechtliche Einordnung trifft die Praxis.
+        </p>
+        <label
+          ><input type="checkbox" id="sonderfall-bestaetigt" /> Die abweichende Behandlung ist für diese
+          Berechnung mit der Praxis geklärt.</label
+        >
+        <label
+          ><input type="checkbox" id="vereinbarter-faktor" /> Bestätigten abweichenden Faktor verwenden
+          (auch außerhalb des Standardbereichs)</label
+        >
+        <label
+          ><input type="checkbox" id="notdienst-erlass" /> Die Praxis erhebt in diesem Fall keine Notdienstgebühr.</label
+        >
+        <label for="steuer">Bestätigte Umsatzsteuer für diese Berechnung</label><select id="steuer"
+          ><option value="19">19 % (Standard)</option><option value="7"
+            >7 % (bestätigter begünstigter Fall)</option
+          ><option value="0">Keine Umsatzsteuer laut Praxis</option></select
+        >
+        <p>
+          7 % gilt nicht pauschal für Nutztiere. Gemischte Steuersätze in einer Rechnung werden
+          nicht unterstützt: getrennt berechnen. Kein automatischer Anspruch auf einen Rabatt, eine
+          Steuerbefreiung oder einen Gebührenerlass.
+        </p>
+        <p>
+          Bei Sonderfällen nach § 3: grundsätzlich einfacher Satz; auf Verlangen nachts, am
+          Wochenende oder Feiertag 2-fach, bei landwirtschaftlich zur Erwerbstätigkeit genutzten
+          Tieren 1,75-fach. Besondere Schwierigkeiten, Vereinbarungen und Notdienst bitte
+          ausdrücklich durch die Praxis einordnen lassen.
+        </p>
+        <p>
+          Quellen: <a href="https://www.gesetze-im-internet.de/got_2022/__3.html">§ 3 GOT</a>, <a
+            href="https://www.gesetze-im-internet.de/got_2022/__4.html">§ 4 GOT</a
+          >, <a href="https://www.gesetze-im-internet.de/got_2022/__5.html">§ 5 GOT</a>, <a
+            href="https://www.gesetze-im-internet.de/ustg_1980/__12.html">§ 12 UStG</a
+          >.
+        </p>
+      </details>
       <fieldset>
         <legend>Tier</legend>
         <div class="karten">

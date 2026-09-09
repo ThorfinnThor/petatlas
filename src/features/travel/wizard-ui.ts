@@ -62,6 +62,13 @@ function eingabeLesen(): WizardEingabe {
     rabiesVaccinated: angabe('impfung'),
     rabiesVaccinationDate: datum('impfdatum'),
     euPetPassport: angabe('ausweis'),
+    frenchCategory: wert('frankreich-kategorie'),
+    chipCompliant: angabe('chip-standard'),
+    chipReaderAvailable: angabe('chip-lesegeraet'),
+    passportComplete: angabe('pass-vollstaendig'),
+    continuousBooster: angabe('auffrischung'),
+    vaccinationStartDate: datum('impfbeginn'),
+    vaccinationValidUntil: datum('impfende'),
     accompaniedByOwner: angabe('begleitung'),
     // Der Prüftag kommt aus dem Browser, nicht aus dem Build: eine
     // ausgelieferte Seite kann Wochen alt sein, und eine fachliche Freigabe

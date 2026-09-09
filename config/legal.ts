@@ -117,7 +117,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: 'keiner',
     zustaendig: 'Betreiber',
     bemerkung:
-      'Es gibt kein Tracking, keine Werbe-Cookies und keine fremden Einbettungen beim Aufruf. Die lokale Speicherung von Merkliste und Packliste geschieht erst auf ausdrückliche Handlung und ist für die verlangte Funktion erforderlich. Kartenkacheln werden erst nach Anforderung geladen; das ist die Stelle, an der eine Einwilligung nötig wäre, wenn sie automatisch lüde.',
+      'Es gibt kein Tracking, keine Werbe-Cookies und keine fremden Einbettungen beim Aufruf. Die lokale Speicherung von Merkliste und Packliste geschieht erst auf ausdrückliche Handlung und ist für die verlangte Funktion erforderlich. Kartenkacheln werden erst nach Anforderung geladen. § 25 TDDDG betrifft Speicherung und Zugriff auf dem Endgerät; die Übermittlung der IP-Adresse ist zusätzlich nach der DSGVO zu bewerten. Ein Klick allein belegt keine wirksame datenschutzrechtliche Einwilligung.',
   },
   {
     id: 'streitbeilegung',
@@ -127,7 +127,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: '/de-de/impressum/',
     zustaendig: 'Betreiber',
     bemerkung:
-      'Erst erforderlich, wenn Verträge mit Verbrauchern geschlossen werden. Ob und in welcher Form, hängt am Geschäftsmodell und ist nicht entschieden.',
+      'Anwendbarkeit anhand von Unternehmereigenschaft, Website/AGB, Beschäftigtenzahl am 31. Dezember des Vorjahres und Teilnahmeverpflichtung oder -zusage prüfen. Die Ausnahme für höchstens zehn Beschäftigte betrifft § 36 Absatz 1 Nummer 1, nicht pauschal alle Informationspflichten.',
   },
 ];
 

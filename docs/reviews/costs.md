@@ -1,12 +1,12 @@
 # Fachliche Abnahme des Kostenrechners
 
-Stand 2026-09-06 (M08-06). **Ergebnis: nicht abgenommen.** Dieses Dokument bereitet die Prüfung vor; es ist selbst keine Prüfung und keine Freigabe.
+Stand 2026-09-09 (M08-06, Quellen-Vorprüfung). **Ergebnis: nicht abgenommen.** Dieses Dokument bereitet die Prüfung vor; es ist selbst keine Prüfung und keine Freigabe.
 
 ## Was hier ausdrücklich nicht behauptet wird
 
-Es gibt keine fachliche Freigabe, keine prüfende Person und keine tierärztliche Autorität hinter diesem Rechner. Solange dieser Abschnitt so dasteht, bleibt das Feature Flag `costs` aus und der Rechner ist nicht öffentlich erreichbar.
+Es gibt keine fachliche Freigabe, keine prüfende Person und keine tierärztliche Autorität hinter diesem Rechner. Der Rechner ist im Vorschauprofil aktiviert; die Produktionsfreigabe bleibt durch `costsRules` und `clinicalReview` gesperrt.
 
-Der Code ist fertig und getestet. Offen ist ausschließlich die fachliche Abnahme.
+Der Code ist getestet. Die fachliche Abnahme muss auch über die Grenzen des Katalogs, Sonderfälle und die unten beschriebenen Rechenannahmen entscheiden. Die Quellen-Vorprüfung steht in `docs/reviews/preflight-2026-09-09.md`.
 
 ## Stand der Prüfung
 
@@ -23,7 +23,7 @@ Eine Person mit belastbarer Kenntnis der tierärztlichen Gebührenabrechnung —
 ### 1. Quellenstand
 
 - Ist `GOT 2022` in der Fassung vom 2022-08-15 mit dem Änderungsstand „Geändert durch Art. 2 V v. 15.3.2023 I Nr. 70“ noch die geltende Fassung?
-- Der Snapshot stammt aus der amtlichen XML-Datei, sha256 `c7bdcfa9b699…`, abgerufen am 2026-09-06. Der Import liest 1006 Positionen.
+- Der Snapshot stammt aus der amtlichen XML-Datei. Maßgeblich sind die Provenienzmetadaten des tatsächlich geprüften Builds; keine frühere Prüfsumme übernehmen. Der Import liest 1006 Positionen.
 
 ### 2. Faktoren
 
@@ -72,4 +72,4 @@ Jede Vorlage wird einzeln abgenommen. Ohne Abnahme zeigt der Rechner keine Gesam
 4. Feature Flag `costs` in `config/markets/DE.json` auf `true`.
 5. `costsRules` in `config/launch.json` auf `approved` mit Datum und Verweis auf dieses Dokument.
 
-Erst Schritt 4 macht den Rechner öffentlich. Die Schritte davor sind Voraussetzung, nicht Formsache.
+Ein Feature Flag allein veröffentlicht den Rechner nicht. Zusätzlich müssen der Produktionsbuild, die tatsächlich erforderlichen Launch-Gates und die Rechtsprüfung erfolgreich sein; siehe `config/release-policy.ts`.

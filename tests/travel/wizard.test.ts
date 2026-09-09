@@ -12,6 +12,11 @@ const VOLLSTAENDIG: WizardEingabe = {
   travelDate: '2026-10-01',
   birthDate: '2020-01-01',
   microchipped: 'ja',
+  chipCompliant: 'ja',
+  passportComplete: 'ja',
+  continuousBooster: 'nein',
+  vaccinationStartDate: '2026-01-01',
+  vaccinationValidUntil: '2027-01-01',
   identificationDate: '2020-03-01',
   rabiesVaccinated: 'ja',
   rabiesVaccinationDate: '2026-01-01',
@@ -133,4 +138,72 @@ describe('Stichtag', () => {
     expect(frueh.gesamt).toBe('not_fulfilled');
     expect(spaet.gesamt).toBe('unknown');
   });
+});
+
+describe('Erweiterte Reiseangaben', () => {
+  const point = (input: Partial<WizardEingabe>, id: string) =>
+    pruefeWizard({ ...VOLLSTAENDIG, ...input }).pruefung?.positionen.find(
+      (p) => p.requirementId === id,
+    )?.state;
+  it('weist eine am Reisetag abgelaufene Impfung zurück', () => {
+    expect(point({ vaccinationValidUntil: '2026-09-30' }, 'rabies-vaccination')).toBe(
+      'not_fulfilled',
+    );
+    expect(point({ vaccinationValidUntil: '2026-10-01' }, 'rabies-vaccination')).toBe('fulfilled');
+  });
+  it('unterscheidet rechtzeitige Auffrischung von neuer Impfserie', () => {
+    const booster = { vaccinationStartDate: '2026-09-30', rabiesVaccinationDate: '2026-09-30' };
+    expect(point({ ...booster, continuousBooster: 'ja' }, 'rabies-vaccination')).toBe('fulfilled');
+    expect(point({ ...booster, continuousBooster: 'nein' }, 'rabies-vaccination')).toBe(
+      'not_fulfilled',
+    );
+  });
+  it('akzeptiert passenden Leser bei technisch abweichendem Chip', () => {
+    expect(point({ chipCompliant: 'nein', chipReaderAvailable: 'ja' }, 'microchip')).toBe(
+      'fulfilled',
+    );
+    expect(point({ chipCompliant: 'nein', chipReaderAvailable: 'nein' }, 'microchip')).toBe(
+      'not_fulfilled',
+    );
+  });
+  it('macht aus vorhandenem, unvollständigem Pass keine Erfüllung', () => {
+    expect(point({ passportComplete: 'nein' }, 'identification-document')).toBe('not_fulfilled');
+    expect(point({ passportComplete: undefined }, 'identification-document')).toBe('unknown');
+  });
+  it('meldet französisches Einreiseverbot auch bei erfüllten Gesundheitsangaben', () => {
+    const result = pruefeWizard({ ...VOLLSTAENDIG, destination: 'FR', frenchCategory: '1' });
+    expect(result.gesamt).toBe('not_fulfilled');
+    expect(result.hinweise.join(' ')).toContain('Einreise und Durchreise sind untersagt');
+    expect(result.hinweise.join(' ')).not.toContain(
+      'spricht in den vorbereiteten Regeln nichts dagegen',
+    );
+  });
+});
+
+it('berücksichtigt französische Einreiseverbote auch im Transit, aber nicht als Ausreiseverbot', () => {
+  const transit = pruefeWizard({
+    ...VOLLSTAENDIG,
+    destination: 'IT',
+    transit: ['FR'],
+    frenchCategory: '1',
+  });
+  expect(transit.gesamt).toBe('not_fulfilled');
+  const returning = pruefeWizard({
+    ...VOLLSTAENDIG,
+    destination: 'FR',
+    direction: 'return',
+    frenchCategory: '1',
+  });
+  expect(returning.hinweise.join(' ')).not.toContain('Einreise und Durchreise sind untersagt');
+});
+
+it('prüft die Umfangsgrenze nach Kalendermonaten, nicht nach einer durchschnittlichen Monatslänge', () => {
+  expect(
+    pruefeWizard({ ...VOLLSTAENDIG, birthDate: '2025-10-01', travelDate: '2026-10-01' }).umfang
+      .unterstuetzt,
+  ).toBe(true);
+  expect(
+    pruefeWizard({ ...VOLLSTAENDIG, birthDate: '2025-10-01', travelDate: '2026-09-30' }).umfang
+      .unterstuetzt,
+  ).toBe(false);
 });

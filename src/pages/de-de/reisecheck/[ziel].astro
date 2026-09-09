@@ -20,6 +20,7 @@ import { reiseUmfang } from '../../../features/travel/scope.ts';
 import { regelSaetze } from '../../../features/travel/rules.ts';
 import { KATEGORIE_TITEL, packlisteNach } from '../../../features/travel/packing.ts';
 import type { TravelRuleSet } from '../../../domain/schemas/travel.ts';
+import { nationalGuidance } from '../../../features/travel/national.ts';
 import { ZIELLAENDER } from '../../../features/travel/laender.ts';
 
 export function getStaticPaths() {
@@ -41,6 +42,7 @@ const eigenerPfad = subroutePath(market, 'travel', ZIELLAENDER[code]!.slug);
 
 const satz: TravelRuleSet = regelSaetze()[0]!;
 const umfang = reiseUmfang();
+const national = nationalGuidance(code);
 ---
 
 <BaseLayout title={`Mit Hund oder Katze nach ${name}`} route="travel" canonicalPfad={eigenerPfad}>
@@ -83,6 +85,33 @@ const umfang = reiseUmfang();
     }
   </ul>
 
+  {
+    national && (
+      <section>
+        <>
+          <h2>{national.title}</h2>
+          <p>{national.text}</p>
+          <p>
+            Quellenprüfung: 09.09.2026 · <a href={national.url}>Offizielle Landesquelle</a>
+          </p>
+        </>
+        {code === 'FR' && (
+          <p>
+            <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1839">
+              Zusätzliche Voraussetzungen für Kategoriehunde
+            </a>
+          </p>
+        )}
+        {code === 'NL' && (
+          <p>
+            <a href="https://www.amsterdam.nl/leefomgeving/dieren/honden-riem-hondenpoep-opruimen/">
+              Beispiel Amsterdam: amtliche Auslaufregeln
+            </a>
+          </p>
+        )}
+      </section>
+    )
+  }
   <h2>Packliste</h2>
   <p class="hilfe">
     Zum Abhaken und Ausdrucken gedacht — die Häkchen bleiben auf diesem Gerät und werden nirgends

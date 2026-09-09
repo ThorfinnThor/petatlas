@@ -1,6 +1,6 @@
 # Launchfreigaben
 
-Stand **2026-09-08**. **Keine der hier genannten Freigaben ist erteilt.** Dieses Dokument beschreibt, was für jede Freigabe verlangt wird, wer sie erteilt und woran man erkennt, dass sie erteilt wurde. Es erteilt selbst keine.
+Stand **2026-09-09**. Quellen-Vorprüfung und konkrete Abnahmeentscheidungen: `docs/reviews/preflight-2026-09-09.md`. **Keine der hier genannten Freigaben ist erteilt.** Dieses Dokument beschreibt, was für jede Freigabe verlangt wird, wer sie erteilt und woran man erkennt, dass sie erteilt wurde. Es erteilt selbst keine.
 
 Das ist die wichtigste Aussage dieser Datei: **kein Agent und kein Skript trägt eine fachliche oder rechtliche Freigabe ein.** `npm run check:release` kann einer Behauptung widersprechen, aber keine begründen.
 
@@ -21,12 +21,12 @@ Ein Häkchen ohne Namen ist keine Freigabe, und ein Verweis auf ein Dokument, da
 | `domain` | Betreiber | `docs/CLOUDFLARE_SETUP.md` | **offen** | Domain und `PUBLIC_SITE_URL`; bis dahin nur `example.invalid` in development |
 | `dataRights` | prüfende Person | `docs/SOURCE_REVIEWS.md` | **offen** | Bestätigung der Publikationsrechte je Quelle einschließlich öffentlicher JSON-Weitergabe |
 | `costsRules` | fachlich prüfende Person | `docs/reviews/costs.md` | **offen** | acht Prüfpunkte zum Gebührenrechner (B-002) |
-| `travelRules` | fachlich prüfende Person | `docs/reviews/travel.md` | **offen** | acht Prüfpunkte zu den Reiseregeln, dazu die Inhaltssignatur in `content-data/travel/approvals.json` (B-004) |
+| `travelRules` | fachlich prüfende Person | `docs/reviews/travel.md` | **offen** | neun Prüfpunkte zu den Reiseregeln, dazu die Inhaltssignatur in `content-data/travel/approvals.json` (B-004) |
 | `insuranceAffiliate` | Betreiber mit Rechtsprüfung | `docs/reviews/insurance.md` | **offen** | Programmzulassung und Prüfung nach § 34d GewO (B-003) |
 | `commerceAffiliate` | Betreiber | `docs/reviews/commerce-partner.md` | **offen** | Programmfreigabe eines Netzwerks und geprüfte Anzeigerechte (B-005) |
 | `adsTracking` | Betreiber | `docs/LEGAL_CHECKLIST.md` | **offen** | bleibt bewusst aus; eine Freigabe wäre eine eigene Entscheidung mit eigener Datenschutzprüfung |
 
-Dazu kommen vier offene Rechtspflichten aus `docs/LEGAL_CHECKLIST.md`: Anbieterkennzeichnung, Datenschutzerklärung, Erklärung zur Barrierefreiheit und der Hinweis zur Verbraucherstreitbeilegung.
+Dazu kommen vier offene Rechtsprüfungen aus `docs/LEGAL_CHECKLIST.md`: Anbieterkennzeichnung, Datenschutz, Barrierefreiheit und Verbraucherstreitbeilegung. Ob eine Pflicht anwendbar ist, ist Teil der Prüfung; eine belegte Nichtanwendbarkeit ist ein zulässiges Ergebnis.
 
 ## Was heute belegt ist
 
@@ -47,7 +47,7 @@ Diese Punkte brauchen keine externe Freigabe mehr, weil sie gemessen und dokumen
 
 `operatorImprint` und `domain` zuerst: ohne sie bricht der Produktionsbuild ab, und ohne Produktionsbuild ist jede weitere Freigabe folgenlos. Danach `dataRights`, dann die fachlichen Gates, zuletzt die Partnergates.
 
-Die öffentliche Freigabe (`publicRelease`) steht erst, wenn **alle** Gates stehen und keine Rechtspflicht offen ist. `npm run check:release` widerspricht jedem anderen Zustand.
+Die öffentliche Freigabe (`publicRelease`) setzt die **für die aktivierten Funktionen erforderlichen** Gates und abgeschlossene Rechtsprüfungen voraus (`config/release-policy.ts`). Für den aktuellen Umfang sind Betreiber, Domain, Datenrechte, Kosten- und Reiseregeln erforderlich. Partner- und Tracking-Gates blockieren die Veröffentlichung nicht, solange diese Funktionen ausgeschaltet bleiben. `npm run check:release` widerspricht jedem anderen Zustand.
 
 ## Was ausdrücklich nicht passiert ist
 

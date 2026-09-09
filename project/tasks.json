@@ -4,7 +4,7 @@
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
   "current_task": null,
-  "note": "Practical real-data user flows and failure recovery verified. Public deployment remains pending the documented owner, expert-review and hosting prerequisites.",
+  "note": "Requested extensions implemented and locally verified. CI integration is tracked in PR 8. Owner details remain deferred; no expert or partner approvals fabricated.",
   "status_values": [
     "todo",
     "in_progress",
@@ -4485,6 +4485,35 @@
           "reference": "docs/PUBLIC_RELEASE_ACCEPTANCE.md, https://github.com/ThorfinnThor/petatlas/actions/runs/34379784980",
           "verified_at": "2026-09-09",
           "command": "npm run verify && npm run build:app; GitHub CI full browser matrix",
+          "exit_code": 0
+        }
+      ],
+      "blocker": null,
+      "notes": []
+    },
+    {
+      "id": "M23-03",
+      "milestone": "M23",
+      "title": "Source-checked practical extensions and affiliate plan",
+      "implementation": "Implement verified cost exceptions, travel inputs and national guidance, supplements page and Amazon-first affiliate plan.",
+      "deliverables": [
+        "docs/IMPLEMENTATION_REVIEW_2026-09-09.md",
+        "docs/AFFILIATE_PLAN.md"
+      ],
+      "acceptance": [
+        "New calculations and input boundaries pass tests; source limits are visible; no fabricated expert or partner approvals."
+      ],
+      "depends_on": [
+        "M23-02"
+      ],
+      "kind": "implementation",
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Implemented confirmed GOT exceptions, detailed travel inputs, national guidance with explicit Italy source gap, supplements page and Amazon/Awin application plan. Local verify: 1449 tests; real-data build: 15 checks. Manual browser: exception confirmation, comma-decimal comparison and invalid-value recovery, rabies expiry and French category exclusion. Full CI on final PR revision is a required merge check, not claimed complete here.",
+          "reference": "docs/IMPLEMENTATION_REVIEW_2026-09-09.md, docs/AFFILIATE_PLAN.md, https://github.com/ThorfinnThor/petatlas/pull/8",
+          "verified_at": "2026-09-09",
+          "command": "npm run verify; npm run build:app; manual browser verification",
           "exit_code": 0
         }
       ],

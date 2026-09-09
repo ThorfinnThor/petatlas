@@ -16,6 +16,7 @@
  */
 import type { RequirementState } from '../../domain/schemas/travel.ts';
 import { pruefeReise, type Fakten, type ReiseErgebnis } from './engine.ts';
+import { nationalOutcome } from './national.ts';
 import { nurVorschau } from './freigabe.ts';
 import { alleRegeln } from './rules.ts';
 import { pruefeUmfang, type UmfangsErgebnis } from './scope.ts';
@@ -43,6 +44,13 @@ export interface WizardEingabe {
    * das Alter der Freigabe nicht bewertet.
    */
   readonly heute?: string;
+  readonly frenchCategory?: string;
+  readonly chipCompliant?: Angabe;
+  readonly chipReaderAvailable?: Angabe;
+  readonly passportComplete?: Angabe;
+  readonly continuousBooster?: Angabe;
+  readonly vaccinationStartDate?: string | null;
+  readonly vaccinationValidUntil?: string | null;
 }
 
 /** `unbekannt` wird zu `undefined`, nicht zu `false`. */
@@ -57,7 +65,16 @@ function alterInMonaten(geburt: string | null, stichtag: string): number | null 
   const von = Date.parse(`${geburt}T00:00:00Z`);
   const bis = Date.parse(`${stichtag}T00:00:00Z`);
   if (Number.isNaN(von) || Number.isNaN(bis) || bis < von) return null;
-  return Math.floor((bis - von) / (86_400_000 * 30.436_875));
+  const birth = new Date(von);
+  const travel = new Date(bis);
+  if (birth.toISOString().slice(0, 10) !== geburt || travel.toISOString().slice(0, 10) !== stichtag)
+    return null;
+  return (
+    (travel.getUTCFullYear() - birth.getUTCFullYear()) * 12 +
+    travel.getUTCMonth() -
+    birth.getUTCMonth() -
+    (travel.getUTCDate() < birth.getUTCDate() ? 1 : 0)
+  );
 }
 
 /** Baut die Faktenlage. Was der Nutzer nicht weiß, steht hier nicht drin. */
@@ -78,6 +95,18 @@ export function fakten(eingabe: WizardEingabe): Fakten {
   if (eingabe.identificationDate !== null) werte.identificationDate = eingabe.identificationDate;
   if (eingabe.rabiesVaccinationDate !== null) {
     werte.rabiesVaccinationDate = eingabe.rabiesVaccinationDate;
+  }
+  for (const key of [
+    'chipCompliant',
+    'chipReaderAvailable',
+    'passportComplete',
+    'continuousBooster',
+  ] as const) {
+    const value = alsBoolean(eingabe[key] ?? 'unbekannt');
+    if (value !== undefined) werte[key] = value;
+  }
+  for (const key of ['vaccinationStartDate', 'vaccinationValidUntil'] as const) {
+    if (eingabe[key]) werte[key] = eingabe[key];
   }
   return werte;
 }
@@ -145,10 +174,31 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
     vorschau: nurVorschau(eingabe.heute ?? null),
   });
 
+  const countries = [
+    ...new Set([
+      ...(eingabe.direction === 'outbound' ? [eingabe.destination] : []),
+      ...eingabe.transit,
+    ]),
+  ];
+  const national = countries.map((country) =>
+    nationalOutcome(country, eingabe.species, eingabe.frenchCategory),
+  );
   return {
     umfang,
     pruefung,
-    gesamt: pruefung.gesamt,
-    hinweise: pruefung.hinweise,
+    gesamt:
+      national.some((entry) => entry.state === 'not_fulfilled') ||
+      pruefung.gesamt === 'not_fulfilled'
+        ? 'not_fulfilled'
+        : 'unknown',
+    hinweise: [
+      ...(national.some((entry) => entry.state === 'not_fulfilled')
+        ? [
+            'Eine nationale Einreisebeschränkung steht dieser Reise entgegen; erfüllte Gesundheitsangaben heben sie nicht auf.',
+          ]
+        : pruefung.hinweise),
+      ...national.map((entry) => entry.text),
+      'Nationale und örtliche Zusatzvorgaben sind keine pauschal bestandene Einreiseprüfung. Beachten Sie die Länderhinweise und deren Quellen.',
+    ],
   };
 }

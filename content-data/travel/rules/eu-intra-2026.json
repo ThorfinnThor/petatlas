@@ -27,38 +27,97 @@
       "priority": 0,
       "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
       "citation": "Artikel 7 Absatz 1 Buchstabe a",
-      "guidance": "Das Tier muss durch einen injizierbaren Transponder gekennzeichnet sein, der nach Artikel 70 der Delegierten Verordnung (EU) 2019/2035 implantiert wurde. Eine vor dem 3. Juli 2011 aufgebrachte, deutlich lesbare Tätowierung kann nach den Übergangsregeln weiter gelten; das prüft dieser Check nicht.",
-      "condition": { "op": "eq", "field": "microchipped", "value": true }
+      "guidance": "Kennzeichnung nach Artikel 70 und technische Anforderungen nach Artikel 70a der Verordnung (EU) 2019/2035. Bei technisch abweichendem Transponder muss ein geeignetes Lesegerät zur Kontrolle mitgeführt werden. Übergänge für ältere Chips und Tätowierungen mit der ausstellenden Praxis klären; der Check bestätigt keine technische Prüfung des Chips.",
+      "condition": {
+        "op": "all",
+        "of": [
+          {
+            "op": "eq",
+            "field": "microchipped",
+            "value": true
+          },
+          {
+            "op": "any",
+            "of": [
+              {
+                "op": "eq",
+                "field": "chipCompliant",
+                "value": true
+              },
+              {
+                "op": "eq",
+                "field": "chipReaderAvailable",
+                "value": true
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "requirementId": "rabies-vaccination",
       "priority": 0,
       "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
       "citation": "Artikel 8 Buchstabe a in Verbindung mit Anhang VII Teil 1 der Delegierten Verordnung (EU) 2020/688",
-      "guidance": "Das Tier muss mindestens 21 Tage vor dem Tag der Reise vollständig gegen Tollwut erstgeimpft oder innerhalb der Gültigkeit nachgeimpft sein. Bei der Impfung muss es mindestens zwölf Wochen alt gewesen sein, und die Impfung darf nicht vor der Kennzeichnung erfolgt sein.",
+      "guidance": "Die vollständige Erstimpfung benötigt mindestens 21 Tage Wartezeit. Eine rechtzeitige Auffrischung innerhalb der bisherigen Gültigkeit löst keine neue Wartezeit aus. Prüfen Sie Impfserie, Mindestalter von zwölf Wochen beim ersten Impftermin, Kennzeichnung oder dokumentiertes Chipablesen davor und die im Ausweis eingetragene Gültigkeit am Reisetag.",
       "condition": {
         "op": "all",
         "of": [
-          { "op": "eq", "field": "rabiesVaccinated", "value": true },
           {
-            "op": "daysBetween",
-            "from": "rabiesVaccinationDate",
-            "to": "travelDate",
-            "min": 21,
-            "max": null
+            "op": "eq",
+            "field": "rabiesVaccinated",
+            "value": true
+          },
+          {
+            "op": "any",
+            "of": [
+              {
+                "op": "daysBetween",
+                "from": "rabiesVaccinationDate",
+                "to": "travelDate",
+                "min": 21,
+                "max": null
+              },
+              {
+                "op": "eq",
+                "field": "continuousBooster",
+                "value": true
+              }
+            ]
           },
           {
             "op": "daysBetween",
             "from": "identificationDate",
-            "to": "rabiesVaccinationDate",
+            "to": "vaccinationStartDate",
             "min": 0,
             "max": null
           },
           {
             "op": "daysBetween",
             "from": "birthDate",
-            "to": "rabiesVaccinationDate",
+            "to": "vaccinationStartDate",
             "min": 84,
+            "max": null
+          },
+          {
+            "op": "daysBetween",
+            "from": "vaccinationStartDate",
+            "to": "rabiesVaccinationDate",
+            "min": 0,
+            "max": null
+          },
+          {
+            "op": "daysBetween",
+            "from": "rabiesVaccinationDate",
+            "to": "travelDate",
+            "min": 0,
+            "max": null
+          },
+          {
+            "op": "daysBetween",
+            "from": "travelDate",
+            "to": "vaccinationValidUntil",
+            "min": 0,
             "max": null
           }
         ]
@@ -69,8 +128,22 @@
       "priority": 0,
       "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
       "citation": "Artikel 11",
-      "guidance": "Das Tier muss von einem gültigen Identifizierungsdokument begleitet sein — dem EU-Heimtierausweis, ausgestellt von einer ermächtigten Tierärztin oder einem ermächtigten Tierarzt, mit Transpondernummer und Eintrag der Tollwutimpfung. Früher ausgestellte Ausweise gelten nach den Übergangsregeln weiter; welcher Ausweis darunterfällt, prüft dieser Check nicht.",
-      "condition": { "op": "eq", "field": "euPetPassport", "value": true }
+      "guidance": "Der Heimtierausweis muss gültig, vom Halter unterschrieben und von einer ermächtigten Praxis ordnungsgemäß ausgestellt und ausgefüllt sein. Die aktuellen Ausstellungsvorgaben berücksichtigen den gewöhnlichen Aufenthalt des Halters. Ältere Passmodelle können nach Übergangsregeln weitergelten; ein alter Ausweis muss nicht pauschal ersetzt werden. Bei unklarer Ausstellung oder einem Übergangsfall lassen Sie die Gültigkeit durch die Praxis bestätigen.",
+      "condition": {
+        "op": "all",
+        "of": [
+          {
+            "op": "eq",
+            "field": "euPetPassport",
+            "value": true
+          },
+          {
+            "op": "eq",
+            "field": "passportComplete",
+            "value": true
+          }
+        ]
+      }
     },
     {
       "requirementId": "owner-accompanied",
@@ -78,20 +151,28 @@
       "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
       "citation": "Artikel 3 in Verbindung mit Artikel 4",
       "guidance": "Die Reise muss eine Verbringung zu nichtkommerziellen Zwecken sein: das Tier reist mit seiner Halterin oder ihrem Halter. Reist eine ermächtigte Person statt ihrer, braucht es eine schriftliche Ermächtigung beim Identifizierungsdokument; diesen Fall deckt der Umfang von Fassung v1 nicht ab.",
-      "condition": { "op": "eq", "field": "accompaniedByOwner", "value": true }
+      "condition": {
+        "op": "eq",
+        "field": "accompaniedByOwner",
+        "value": true
+      }
     },
     {
       "requirementId": "max-five-animals",
       "priority": 0,
       "officialSourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32026R0131",
       "citation": "Artikel 3 in Verbindung mit Artikel 246 Absatz 1 der Verordnung (EU) 2016/429",
-      "guidance": "Höchstens fünf Tiere je Verbringung. Für mehr Tiere gelten andere Vorschriften; Ausnahmen etwa für Wettbewerbe prüft dieser Check nicht.",
-      "condition": { "op": "in", "field": "animals", "values": [1, 2, 3, 4, 5] }
+      "guidance": "Bei gemeinsamer Beförderung im privaten Fahrzeug höchstens fünf Hunde, Katzen und Frettchen zusammen zählen, auch von anderen Haltern. In öffentlichen Verkehrsmitteln bezieht sich die Zahl auf die eigene Verbringung. Ausnahmen für Wettbewerbe werden nicht geprüft.",
+      "condition": {
+        "op": "in",
+        "field": "animals",
+        "values": [1, 2, 3, 4, 5]
+      }
     }
   ],
   "notes": [
     "Bandwurmbehandlung gegen Echinococcus multilocularis ist nach Artikel 10 nur für die Einreise nach Finnland, Irland, Malta, Nordirland und Norwegen vorgeschrieben. Keines dieser Gebiete liegt im Umfang von Fassung v1; deshalb entsteht dafür keine Regel.",
     "Junge Tiere und Ausnahmen nach Artikel 9 sind nicht abgebildet: der Umfang schließt Tiere unter zwölf Monaten aus.",
-    "Keine dieser Regeln ist fachlich freigegeben. reviewedAt und reviewedBy bleiben leer, und die Regelmaschine wertet sie deshalb nicht aus."
+    "Quellengeprüfte Implementierung, keine persönliche Fachfreigabe. Einzelpunkte werden in der Vorschau ausgewertet; eine Reisegenehmigung entsteht nicht."
   ]
 }

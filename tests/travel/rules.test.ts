@@ -106,11 +106,14 @@ describe('Freigabestand', () => {
       fakten: {
         microchipped: true,
         rabiesVaccinated: true,
+        continuousBooster: false,
+        vaccinationValidUntil: '2027-12-31',
         euPetPassport: true,
         accompaniedByOwner: true,
         animals: 1,
         birthDate: '2020-01-01',
         identificationDate: '2020-03-01',
+        vaccinationStartDate: '2026-01-01',
         rabiesVaccinationDate: '2026-01-01',
         travelDate: '2026-10-01',
       },
@@ -130,12 +133,15 @@ describe('Fachlicher Gehalt der Bedingungen', () => {
     const bedingung = regel('eu-intra-2026-rabies-vaccination-de-at-dog').condition;
     const basis = {
       rabiesVaccinated: true,
+      continuousBooster: false,
+      vaccinationValidUntil: '2027-12-31',
       birthDate: '2020-01-01',
       identificationDate: '2020-03-01',
     };
     expect(
       werteAus(bedingung, {
         ...basis,
+        vaccinationStartDate: '2026-05-01',
         rabiesVaccinationDate: '2026-05-01',
         travelDate: '2026-05-22',
       }),
@@ -143,6 +149,7 @@ describe('Fachlicher Gehalt der Bedingungen', () => {
     expect(
       werteAus(bedingung, {
         ...basis,
+        vaccinationStartDate: '2026-05-01',
         rabiesVaccinationDate: '2026-05-01',
         travelDate: '2026-05-21',
       }),
@@ -153,6 +160,8 @@ describe('Fachlicher Gehalt der Bedingungen', () => {
     const bedingung = regel('eu-intra-2026-rabies-vaccination-de-at-dog').condition;
     const basis = {
       rabiesVaccinated: true,
+      continuousBooster: false,
+      vaccinationValidUntil: '2027-12-31',
       identificationDate: '2026-01-01',
       travelDate: '2026-12-01',
     };
@@ -161,6 +170,7 @@ describe('Fachlicher Gehalt der Bedingungen', () => {
       werteAus(bedingung, {
         ...basis,
         birthDate: '2026-01-01',
+        vaccinationStartDate: '2026-03-26',
         rabiesVaccinationDate: '2026-03-26',
       }),
     ).toBe('fulfilled');
@@ -168,6 +178,7 @@ describe('Fachlicher Gehalt der Bedingungen', () => {
       werteAus(bedingung, {
         ...basis,
         birthDate: '2026-01-01',
+        vaccinationStartDate: '2026-03-25',
         rabiesVaccinationDate: '2026-03-25',
       }),
     ).toBe('not_fulfilled');
@@ -178,8 +189,11 @@ describe('Fachlicher Gehalt der Bedingungen', () => {
     expect(
       werteAus(bedingung, {
         rabiesVaccinated: true,
+        continuousBooster: false,
+        vaccinationValidUntil: '2027-12-31',
         birthDate: '2020-01-01',
         identificationDate: '2026-05-02',
+        vaccinationStartDate: '2026-05-01',
         rabiesVaccinationDate: '2026-05-01',
         travelDate: '2026-12-01',
       }),

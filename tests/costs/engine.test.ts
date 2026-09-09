@@ -375,7 +375,71 @@ describe('Nachvollziehbarkeit und Freigabe', () => {
     expect(mayShowTotal(ergebnis)).toBe(false);
   });
 
-  it('unterstützt keine Sondervereinbarungen', () => {
-    expect(COST_CONFIG.specialAgreementsSupported).toBe(false);
+  it('unterstützt bestätigte Sondervereinbarungen', () => {
+    expect(COST_CONFIG.specialAgreementsSupported).toBe(true);
+  });
+});
+
+describe('Bestätigte abweichende Abrechnung', () => {
+  const request = {
+    context: 'emergency' as const,
+    species: null,
+    lines: [{ officialItemId: 'S1', quantity: 1, factor: 1.75 }],
+  };
+  it('erlaubt den abweichenden Faktor ausschließlich bei bestätigtem Sonderfall', () => {
+    expect(() => calculateCosts(request, KATALOG)).toThrow();
+    expect(() =>
+      calculateCosts(
+        { ...request, specialTerms: { confirmed: false, agreedFactors: true } },
+        KATALOG,
+      ),
+    ).toThrow();
+    const result = calculateCosts(
+      {
+        ...request,
+        specialTerms: {
+          confirmed: true,
+          agreedFactors: true,
+          waiveEmergencyFee: true,
+          vatPercent: 7,
+        },
+      },
+      KATALOG,
+    );
+    expect(result.emergencyFee).toBeNull();
+    expect(result.netTotal.amountMinor).toBe(1750);
+    expect(result.vatAmount.amountMinor).toBe(123);
+    expect(result.grossTotal.amountMinor).toBe(1873);
+  });
+  it('kann bestätigte umsatzsteuerfreie Behandlung darstellen', () => {
+    const result = calculateCosts(
+      {
+        ...request,
+        lines: [{ officialItemId: 'S1', quantity: 1, factor: 2 }],
+        specialTerms: { confirmed: true, vatPercent: 0 },
+      },
+      KATALOG,
+    );
+    expect(result.vatAmount.amountMinor).toBe(0);
+    expect(result.grossTotal.amountMinor).toBe(7000);
+  });
+  it('warnt bei Beratung neben einer Leistung mit Beratung', () => {
+    const items = [
+      position({ officialItemId: '1' }),
+      position({ officialItemId: '16', originalLabel: 'Allgemeine Untersuchung mit Beratung' }),
+    ];
+    const result = calculateCosts(
+      {
+        context: 'regular',
+        species: null,
+        lines: items.map((item) => ({
+          officialItemId: item.officialItemId,
+          quantity: 1,
+          factor: 1,
+        })),
+      },
+      items,
+    );
+    expect(result.warnings?.join(' ')).toContain('Doppelbewertung');
   });
 });

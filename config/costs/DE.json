@@ -10,6 +10,6 @@
   "factorPrecision": 2,
   "baseAmountsExcludeVat": true,
   "vatPercent": 19,
-  "specialAgreementsSupported": false,
+  "specialAgreementsSupported": true,
   "clinicalReview": "pending"
 }

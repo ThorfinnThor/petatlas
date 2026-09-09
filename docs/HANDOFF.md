@@ -2,8 +2,10 @@
 
 ## Tatsächlicher Zustand
 
-M23-02 ist technisch abgenommen. Gebührenbearbeitung, Kartenwechsel und Filter, Fehlerversuche, tatsächliche Ortsfavoriten, Suche und Spielzeugfilter sind korrigiert. Die vollständige CI auf `f67dddf` ist grün: 1.432 Unit-Tests und 671 bestandene Browser-/Leistungsprüfungen, zusätzlich elf bestehende begründete Skips. Nachweise: `PUBLIC_RELEASE_ACCEPTANCE.md`. Arbeitsstand (130 von 137 Aufgaben, 7 blockiert).
+Arbeitsstand (131 von 138 Aufgaben, 7 blockiert).
+
+M23-03 ist implementiert und lokal geprüft: bestätigte GOT-Sonderabrechnungen, Chip-/Pass-/Impfdetails, nationale Länderhinweise und Nahrungsergänzung. 1.449 Unit-Tests und 15 Real-Data-Build-Prüfschritte bestanden; neue Formulare manuell im Browser geprüft. Vollständige Browser-CI auf der finalen Revision vor Merge prüfen (PR 8). Quellen, Grenzen und Partnerplan: `IMPLEMENTATION_REVIEW_2026-09-09.md` und `AFFILIATE_PLAN.md`. Keine persönlichen Freigaben oder Partnerzulassungen erteilt.
 
 ## Nächster ausführbarer Schritt
 
-Es gibt keine ausführbare Aufgabe ohne die ausstehenden externen Eingaben. Der Nutzer liefert die zurückgestellten Betreiberangaben und Domain nach technischer Fertigstellung. Erforderliche Fach-/Rechts-/Datenrechtefreigaben dokumentieren und die abgelaufene Cloudflare-Anmeldung erneuern; danach veröffentlichen und am tatsächlichen Ziel prüfen. Partnerverträge sind nur vor Aktivierung der jeweiligen optionalen Angebote nötig. Der bisherige öffentliche Preview-Link zeigt noch den alten Stand. Keine Freigaben erfinden und die Produktionssperre nicht umgehen.
+Nach erfolgreicher PR-Integration gibt es keine ausführbare Aufgabe im Manifest ohne die verbleibenden externen Voraussetzungen. Betreiberangaben auf ausdrücklichen Nutzerwunsch erst ganz am Ende behandeln. Italien hat eine nicht belegte Verlängerung nach September 2026; keine vollständige nationale Aktualitätsfreigabe behaupten. Bestehende öffentliche Vorschau unverändert; Hosting-Anmeldung bleibt ausstehend. Amazon zuerst, danach Zooplus DE und Medpets DE über Awin; keine Partnerbewerbungen wurden versandt.

@@ -24,6 +24,7 @@ import Accessibility from '../components/pages/Accessibility.astro';
 import DataStatusPage from '../components/pages/DataStatusPage.astro';
 import Method from '../components/pages/Method.astro';
 import Favorites from '../components/pages/Favorites.astro';
+import Supplements from '../components/pages/Supplements.astro';
 import Food from '../components/pages/Food.astro';
 import Home from '../components/pages/Home.astro';
 import Imprint from '../components/pages/Imprint.astro';
@@ -93,6 +94,7 @@ const WEITE_SEITEN: readonly RouteKey[] = [
   {routeKey === 'care' && <Care />}
   {routeKey === 'toys' && <Toys />}
   {routeKey === 'food' && <Food />}
+  {routeKey === 'supplements' && <Supplements />}
   {routeKey === 'sources' && <Sources />}
   {routeKey === 'dataStatus' && <DataStatusPage />}
   {routeKey === 'imprint' && <Imprint />}
