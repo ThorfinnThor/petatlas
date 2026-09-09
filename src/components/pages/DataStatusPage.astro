@@ -11,13 +11,16 @@
  * bleiben, deshalb steht er sichtbar dabei: wer sie ansieht, soll nicht
  * raten müssen, wann sie entstand.
  */
-import { resolveBuildConfig } from '../../../config/build.ts';
+import { devFeatureOverrides, resolveBuildConfig } from '../../../config/build.ts';
+import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { formatCalendarDate } from '../../domain/dates.ts';
 import { HEALTH_PFAD, baueHealthBericht } from '../../features/freshness/health.ts';
 import { tageText } from '../../features/freshness/policy.ts';
 import Notice from '../Notice.astro';
+import { aufzaehlung, vorschauBestand } from '../../features/freshness/preview-notice.ts';
 
 const build = resolveBuildConfig();
+const bestand = vorschauBestand(withEnabledFeatures(defaultMarket(), devFeatureOverrides()));
 const jetzt = new Date();
 const bericht = baueHealthBericht(jetzt.toISOString().slice(0, 10), jetzt.toISOString());
 
@@ -41,11 +44,17 @@ const locale = 'de-DE';
 
 {
   build.dataSource === 'fixtures' && (
-    <Notice variante="testdaten" titel="Dieser Build zeigt Testdaten">
+    <Notice variante="testdaten" titel="Dieser Build ist eine Vorschau">
       <p>
-        Der aktuelle Build läuft im Modus <strong>{build.mode}</strong> mit synthetischen
-        Beispieldaten. Die angezeigten Werte sind erfunden.
+        Der Build läuft im Modus <strong>{build.mode}</strong>. Die Stände in der Tabelle sind
+        <strong> gemessen</strong>, nicht erfunden: sie stammen aus den ausgelieferten Datenständen.
       </p>
+      {bestand.synthetisch.length > 0 && (
+        <p>
+          Erfunden ist nur, was hier steht: {aufzaehlung(bestand.synthetisch)}. Diese Bestände sind
+          auch in der Tabelle als solche ausgewiesen.
+        </p>
+      )}
     </Notice>
   )
 }

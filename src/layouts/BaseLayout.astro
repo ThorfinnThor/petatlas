@@ -11,6 +11,7 @@ import { createSiteConfig } from '../../config/site.ts';
 import { defaultMarket, withEnabledFeatures } from '../domain/market.ts';
 import { canonicalUrl, type RouteKey } from '../lib/routes.ts';
 import Notice from '../components/Notice.astro';
+import { aufzaehlung, vorschauBestand } from '../features/freshness/preview-notice.ts';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import '../styles/tokens.css';
@@ -44,6 +45,11 @@ const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const robots = neverIndex ? 'noindex, nofollow' : robotsDirective(build);
+// Der Vorschauhinweis wird aus den Datenständen abgeleitet, nicht getippt:
+// ein fest geschriebener Satz stand monatelang falsch über echten Daten.
+const bestand = build.showTestDataBanner
+  ? vorschauBestand(market)
+  : { echt: [], ungeprueft: [], synthetisch: [] };
 const canonical = canonicalPfad
   ? new URL(canonicalPfad, build.baseUrl).toString()
   : route
@@ -73,10 +79,28 @@ const canonical = canonicalPfad
     {
       build.showTestDataBanner && (
         <div class:list={['randbreite', weit ? 'page-container' : 'reading-container']}>
-          <Notice variante="testdaten" titel="Testdaten" testId="test-data-banner">
+          <Notice variante="testdaten" titel="Technische Vorschau" testId="test-data-banner">
+            {bestand.echt.length > 0 && (
+              <p>
+                <strong>Echte Daten:</strong> {aufzaehlung(bestand.echt)}. Quelle und Datenstand
+                stehen an jeder Angabe.
+              </p>
+            )}
+            {bestand.ungeprueft.length > 0 && (
+              <p>
+                <strong>Echt, aber ungeprüft:</strong> {aufzaehlung(bestand.ungeprueft)}. Verlassen
+                Sie sich nicht auf die Ergebnisse.
+              </p>
+            )}
+            {bestand.synthetisch.length > 0 && (
+              <p>
+                <strong>Erfunden:</strong> {aufzaehlung(bestand.synthetisch)}. Diese Seiten zeigen
+                Platzhalter, bis echte Angaben belegt sind.
+              </p>
+            )}
             <p>
-              Dieser Build zeigt synthetische Beispieldaten. Keine echten Praxen, Preise oder
-              Regeln.
+              Dies ist eine technische Vorschau: nicht indexierbar, ohne Betreiberangaben und ohne
+              öffentliche Freigabe.
             </p>
           </Notice>
         </div>

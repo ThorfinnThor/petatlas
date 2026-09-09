@@ -88,7 +88,7 @@ test('Quellen- und Datenstandseite benennen den tatsächlichen Stand', async ({ 
   await page.goto('/de-de/datenstand/');
   await expect(page.locator('[data-testid="gesamtstand"]')).toBeVisible();
   await expect(page.locator('[data-testid^="datensatz-"]').first()).toBeVisible();
-  await expect(page.getByText('Dieser Build zeigt Testdaten')).toBeVisible();
+  await expect(page.getByText('Dieser Build ist eine Vorschau')).toBeVisible();
 });
 
 test('Jede Seite hat einen eindeutigen Titel und ein canonical', async ({ page }) => {
