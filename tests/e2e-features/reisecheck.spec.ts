@@ -15,7 +15,10 @@ test('nennt die vier Zielstaaten und keine weltweite Abdeckung', async ({ page }
   await expect(page.locator('h1')).toHaveText('Reisecheck');
   await expect(page.getByText('Keine weltweite Auskunft')).toBeVisible();
   for (const land of ['Österreich', 'Frankreich', 'Italien', 'Niederlande']) {
-    await expect(page.getByText(land, { exact: false }).first(), land).toBeVisible();
+    await expect(
+      page.locator('.umfang').getByText(land, { exact: false }).first(),
+      land,
+    ).toBeVisible();
   }
 });
 

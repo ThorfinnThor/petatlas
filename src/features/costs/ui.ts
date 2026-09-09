@@ -82,6 +82,7 @@ function ergebnisTabelle(result: CostResult): string {
          </tr>`;
 
   return `
+    <p class="bill-summary"><strong>${geld(result.grossTotal.amountMinor)}</strong><br>Brutto für die ausgewählten Positionen, inklusive ${result.vatPercent} % Umsatzsteuer.</p>
     <table>
       <caption>Rechnung, Fassung ${escape(result.catalogVersion)}</caption>
       <thead>

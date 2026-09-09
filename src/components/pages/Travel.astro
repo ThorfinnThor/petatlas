@@ -10,6 +10,7 @@
  * Regeln. Bis dahin steht hier der Umfang und sonst nichts: eine
  * Beispielprüfung mit erfundenen Regeln wäre schlimmer als keine.
  */
+import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
 import ToolStepper from '../tools/ToolStepper.astro';
 import RadioCard from '../forms/RadioCard.astro';
@@ -61,6 +62,7 @@ const transit = umfang.transitCountries.map(name);
   </p>
 </Notice>
 
+<SavedProfileButton />
 <section aria-labelledby="check-titel">
   <h2 id="check-titel">Angaben zur Reise</h2>
 

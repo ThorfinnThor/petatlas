@@ -1,8 +1,12 @@
 // M11-02 — Die Karte lädt erst auf Klick und reißt die Liste nicht mit.
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const KARTE = '/de-de/tierarzt-karte/';
 const KACHELN = /tile\.openstreetmap\.org/;
+async function mapView(page: Page) {
+  const toggle = page.locator('[data-map-view=map]');
+  if (await toggle.isVisible()) await toggle.click();
+}
 
 test('lädt beim Seitenaufruf keine einzige Kachel', async ({ page }) => {
   const kachelAnfragen: string[] = [];
@@ -19,6 +23,7 @@ test('lädt beim Seitenaufruf keine einzige Kachel', async ({ page }) => {
 
 test('sagt vorher, was beim Anzeigen passiert', async ({ page }) => {
   await page.goto(KARTE);
+  await mapView(page);
   await expect(page.getByText(/Die Karte lädt erst, wenn Sie sie anfordern/)).toBeVisible();
   // Der Hinweis steht bewusst zweimal: als Ankündigung und als Datenschutzsatz.
   await expect(page.getByText(/Ihre IP-Adresse/).first()).toBeVisible();
@@ -35,6 +40,7 @@ test('lädt Kacheln erst nach dem Klick und zeigt die Attribution', async ({ pag
   await page.goto(KARTE);
   expect(kachelAnfragen).toEqual([]);
 
+  await mapView(page);
   await page.click('#karte-anzeigen');
   await expect(page.locator('#karte.leaflet-container')).toBeVisible({ timeout: 30_000 });
   await expect(page.locator('.leaflet-control-attribution')).toContainText('OpenStreetMap');
@@ -44,6 +50,7 @@ test('lädt Kacheln erst nach dem Klick und zeigt die Attribution', async ({ pag
 
 test('lädt keine Kacheln vorrätig für andere Ausschnitte', async ({ page }) => {
   await page.goto(KARTE);
+  await mapView(page);
   await page.click('#karte-anzeigen');
   await expect(page.locator('#karte.leaflet-container')).toBeVisible({ timeout: 30_000 });
 
@@ -65,11 +72,14 @@ test('ein Ausfall des Kacheldienstes lässt die Liste unberührt', async ({ page
   const trefferVorher = await page.locator('#trefferliste li').count();
   expect(trefferVorher).toBeGreaterThan(0);
 
+  await mapView(page);
   await page.click('#karte-anzeigen');
   await expect(page.locator('#karte-status')).toContainText(/keine Kacheln|nicht geladen/, {
     timeout: 30_000,
   });
 
+  const listToggle = page.locator('[data-map-view=list]');
+  if (await listToggle.isVisible()) await listToggle.click();
   // Die Liste bleibt vollständig lesbar. Sie zeigt jetzt den gewählten
   // Ausschnitt statt des statischen Standards — aber sie ist da.
   await expect(page.locator('#trefferliste li').first()).toBeVisible();
@@ -79,5 +89,6 @@ test('ein Ausfall des Kacheldienstes lässt die Liste unberührt', async ({ page
 
 test('nennt die Kartenkacheln als Ergänzung, nicht als Voraussetzung', async ({ page }) => {
   await page.goto(KARTE);
+  await mapView(page);
   await expect(page.getByText(/Die Karte ist eine Ergänzung/)).toBeVisible();
 });

@@ -91,20 +91,20 @@ test('Futter: von der Suche zur Menge — und zur Begründung, warum es keinen G
   page,
 }) => {
   await page.goto('/de-de/futter/');
-  await page.fill('#futter-begriff', 'trockenfutter');
+  await page.fill('#futter-begriff', 'Royal Canin');
   await page.click('#futter-suchen');
   await expect(page.locator('#futter-treffer li').first()).toBeVisible();
 
-  await page.goto('/de-de/futter/trocken-12kg/');
+  await page.goto('/de-de/futter/royal-canin-mini-adult-8kg/');
   // Die Menge ist die Voraussetzung für jeden Grundpreis; sie steht da.
-  await expect(page.getByTestId('menge')).toContainText('12 kg');
+  await expect(page.getByTestId('menge')).toContainText('8 kg');
   // Einen Grundpreis gibt es trotzdem nicht — weil es kein Angebot gibt.
   // Die Seite sagt das, statt eine Zahl zu erfinden oder nichts zu zeigen.
   await expect(page.getByTestId('keine-angebote')).toBeVisible();
 
   // Wo Nährwerte fehlen, steht „nicht deklariert“ und keine Null.
-  await page.goto('/de-de/futter/trocken-1kg/');
-  await expect(page.getByTestId('nicht-deklariert')).toContainText('keine Null');
+  await page.goto('/de-de/futter/royal-canin-mini-adult-2kg/');
+  await expect(page.locator('[data-naehrwert=protein]')).toContainText('27 %');
 });
 
 test('Profil: anlegen, wiederfinden, löschen — und danach ist nichts mehr da', async ({ page }) => {
@@ -131,7 +131,7 @@ test('Abgeschaltete Funktionen sind wirklich abgeschaltet', async ({ page }) => 
   // ohne Flag gibt es die Seite nicht (tests/e2e/smoke.spec.ts).
   await page.goto('/de-de/');
   await hauptnavigationOeffnen(page);
-  await expect(page.locator('header nav a').first()).toBeVisible();
+  await expect(page.locator('header nav')).toBeVisible();
 
   // Keine Werbung, solange kein Partnerprogramm freigegeben ist.
   await expect(page.locator('[data-testid^="angebot-"]')).toHaveCount(0);

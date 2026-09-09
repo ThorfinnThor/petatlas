@@ -18,6 +18,15 @@ for (const width of [360, 390, 430, 768, 1024, 1280, 1440]) {
       expect((await page.goto(path))?.status()).toBe(200);
       await expect(page.locator('h1')).toHaveCount(1);
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+      if (path === '/de-de/tierarztkosten/') {
+        await page.fill('#suche', 'Allgemeine Untersuchung');
+        await page
+          .getByRole('button', {
+            name: /Allgemeine Untersuchung mit Beratung, Hund, Katze, Frettchen/,
+          })
+          .click();
+        await expect(page.locator('[data-testid=brutto]')).toContainText('28,11');
+      }
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth > window.innerWidth + 1,
       );
@@ -56,4 +65,21 @@ test('real homepage meets automated accessibility checks', async ({ page }) => {
       nodes: item.nodes.map((node) => node.target),
     })),
   ).toEqual([]);
+});
+
+test('saved profile is applied only on request and survives navigation', async ({ page }) => {
+  await page.goto('/de-de/mein-tier/');
+  await page.selectOption('#profil-tierart', 'dog');
+  await page.fill('#profil-name', 'Testhund');
+  await page.fill('#profil-gewicht', '12,5');
+  await page.fill('#profil-geburtsdatum', '2020-01-01');
+  await page.click('#profil-speichern');
+  await page.goto('/de-de/spielzeug/');
+  await expect(page.locator('#finder-gewicht')).toHaveValue('');
+  await page.getByRole('button', { name: 'Gespeichertes Tierprofil übernehmen' }).click();
+  await expect(page.locator('#finder-gewicht')).toHaveValue('12.5');
+  await page.goto('/de-de/reisecheck/');
+  await page.getByRole('button', { name: 'Gespeichertes Tierprofil übernehmen' }).click();
+  await expect(page.locator('#geburtsdatum')).toHaveValue('2020-01-01');
+  await expect(page.locator('#chip')).toHaveValue('unbekannt');
 });

@@ -9,6 +9,7 @@
  * Zu jedem Ergebnis stehen zwei Dinge: warum es erscheint und was nicht
  * geprüft ist. Ohne die zweite Angabe wäre die Liste eine Empfehlung.
  */
+import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
 import { merkmalLabel } from '../../features/care/attributes.ts';
 import { BEDUERFNISSE } from '../../features/care/matching.ts';
@@ -40,6 +41,7 @@ const synthetisch = pruefung.dataKind === 'synthetic';
   )
 }
 
+<SavedProfileButton />
 <form id="finder">
   <div class="feld">
     <label for="finder-tierart">Tierart</label>

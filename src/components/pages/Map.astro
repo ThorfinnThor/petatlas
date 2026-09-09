@@ -87,78 +87,61 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
   </p>
 </Notice>
 
+<nav class="map-view" aria-label="Ansicht wählen" hidden>
+  <button type="button" data-map-view="list" aria-pressed="true">Liste</button>
+  <button type="button" data-map-view="map" aria-pressed="false">Karte</button>
+</nav>
 <div class="map-workspace">
-  <form id="ortsfilter" aria-labelledby="filter-titel">
-    <h2 id="filter-titel">Suchen</h2>
+  <div class="map-sidebar">
+    <form id="ortsfilter" aria-labelledby="filter-titel">
+      <h2 id="filter-titel">Suchen</h2>
 
-    <div class="feld">
-      <label for="ort">Ort</label>
-      <input
-        id="ort"
-        type="search"
-        autocomplete="off"
-        placeholder="z. B. Bremen"
-        aria-describedby="ort-hinweis"
-      />
-      <p id="ort-hinweis" class="hilfe" role="status" aria-live="polite">
-        Ohne Auswahl zeigt die Liste den Ausschnitt um {STANDARD.name}.
-      </p>
-      <ul id="ort-treffer" class="ortstreffer"></ul>
-      <p>
-        <button type="button" id="standort">Meinen Standort verwenden</button>
-      </p>
-      <p class="hilfe">{STANDORT_TEXTE.hinweisVorher}</p>
-      <p id="standort-status" role="status" aria-live="polite"></p>
-    </div>
+      <div class="feld">
+        <label for="ort">Ort</label>
+        <input
+          id="ort"
+          type="search"
+          autocomplete="off"
+          placeholder="z. B. Bremen"
+          aria-describedby="ort-hinweis"
+        />
+        <p id="ort-hinweis" class="hilfe" role="status" aria-live="polite">
+          Ohne Auswahl zeigt die Liste den Ausschnitt um {STANDARD.name}.
+        </p>
+        <ul id="ort-treffer" class="ortstreffer"></ul>
+        <p>
+          <button type="button" id="standort">Meinen Standort verwenden</button>
+        </p>
+        <p class="hilfe">{STANDORT_TEXTE.hinweisVorher}</p>
+        <p id="standort-status" role="status" aria-live="polite"></p>
+      </div>
 
-    <fieldset>
-      <legend>Kategorie</legend>
-      {
-        Object.entries(KATEGORIE_LABEL).map(([schluessel, label]) => (
-          <label class="wahl">
-            <input type="checkbox" name="kategorie" value={schluessel} />
-            {label} ({(abdeckung.byCategory[schluessel] ?? 0).toLocaleString('de-DE')})
-          </label>
-        ))
-      }
-      <p class="hilfe">Keine Auswahl bedeutet alle Kategorien.</p>
-    </fieldset>
-
-    <div class="feld">
-      <label for="radius">Umkreis</label>
-      <select id="radius">
+      <fieldset>
+        <legend>Kategorie</legend>
         {
-          RADIEN_METER.map((meter) => (
-            <option value={meter} selected={meter === STANDARD.radius}>
-              {formatiereEntfernung(meter)}
-            </option>
+          Object.entries(KATEGORIE_LABEL).map(([schluessel, label]) => (
+            <label class="wahl">
+              <input type="checkbox" name="kategorie" value={schluessel} />
+              {label} ({(abdeckung.byCategory[schluessel] ?? 0).toLocaleString('de-DE')})
+            </label>
           ))
         }
-      </select>
-    </div>
-  </form>
+        <p class="hilfe">Keine Auswahl bedeutet alle Kategorien.</p>
+      </fieldset>
 
-  <div class="map-output">
-    <nav class="map-view" aria-label="Ansicht wählen">
-      <a href="#treffer-titel">Trefferliste</a><a href="#karte-titel">Karte</a>
-    </nav>
-    <section aria-labelledby="karte-titel">
-      <h2 id="karte-titel">Karte</h2>
-      <p>
-        Die Karte lädt erst, wenn Sie sie anfordern. Vorher wird keine einzige Kachel geladen und
-        Ihre IP-Adresse geht an keinen Kartendienst.
-      </p>
-      <p class="kartenhinweis">{TILES.noticeText}</p>
-      <p>
-        <button type="button" id="karte-anzeigen">Karte anzeigen</button>
-      </p>
-      <div id="karte" class="karte" hidden></div>
-      <p id="karte-status" role="status" aria-live="polite"></p>
-      <p class="hilfe">
-        Die Karte ist eine Ergänzung. Alles, was sie zeigt, steht auch in der Liste darunter.
-      </p>
-    </section>
-
+      <div class="feld">
+        <label for="radius">Umkreis</label>
+        <select id="radius">
+          {
+            RADIEN_METER.map((meter) => (
+              <option value={meter} selected={meter === STANDARD.radius}>
+                {formatiereEntfernung(meter)}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+    </form>
     <section aria-labelledby="treffer-titel">
       <h2 id="treffer-titel">Treffer</h2>
       <p id="treffer-status" role="status" aria-live="polite">
@@ -168,7 +151,7 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
         {' '}{STANDARD.name}.
       </p>
 
-      <ul id="trefferliste" class="treffer">
+      <ul id="trefferliste" class="treffer" tabindex="0" aria-label="Erfasste Orte">
         {
           standardTreffer.map((treffer) => (
             <li>
@@ -217,6 +200,25 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
           ))
         }
       </ul>
+    </section>
+  </div>
+
+  <div class="map-output">
+    <section aria-labelledby="karte-titel" class="map-panel">
+      <h2 id="karte-titel">Karte</h2>
+      <p>
+        Die Karte lädt erst, wenn Sie sie anfordern. Vorher wird keine einzige Kachel geladen und
+        Ihre IP-Adresse geht an keinen Kartendienst.
+      </p>
+      <p class="kartenhinweis">{TILES.noticeText}</p>
+      <p>
+        <button type="button" id="karte-anzeigen">Karte anzeigen</button>
+      </p>
+      <div id="karte" class="karte" hidden></div>
+      <p id="karte-status" role="status" aria-live="polite"></p>
+      <p class="hilfe">
+        Die Karte ist eine Ergänzung. Alles, was sie zeigt, steht auch in der Trefferliste.
+      </p>
     </section>
   </div>
 </div>
@@ -373,6 +375,21 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
   import { listeStarten } from '../../features/map/list-ui.ts';
 
   listeStarten();
+
+  const workspace = document.querySelector<HTMLElement>('.map-workspace');
+  const viewNav = document.querySelector<HTMLElement>('.map-view');
+  if (workspace && viewNav) {
+    viewNav.hidden = false;
+    workspace.dataset.view = 'list';
+    for (const button of viewNav.querySelectorAll<HTMLButtonElement>('button')) {
+      button.addEventListener('click', () => {
+        workspace.dataset.view = button.dataset.mapView;
+        for (const option of viewNav.querySelectorAll('button'))
+          option.setAttribute('aria-pressed', String(option === button));
+        window.dispatchEvent(new Event('resize'));
+      });
+    }
+  }
 </script>
 
 <style>
@@ -388,8 +405,7 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
-    position: sticky;
-    top: 6rem;
+    position: static;
   }
   #filter-titel {
     margin-top: 0;
@@ -402,7 +418,7 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
     gap: var(--space-3);
     margin-bottom: var(--space-4);
   }
-  .map-view a {
+  .map-view button {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -418,6 +434,54 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
     }
     #ortsfilter {
       position: static;
+    }
+    .map-workspace[data-view='list'] .map-output {
+      display: none;
+    }
+    .map-workspace[data-view='map'] [aria-labelledby='treffer-titel'] {
+      display: none;
+    }
+  }
+</style>
+
+<style>
+  .map-sidebar {
+    min-width: 0;
+  }
+  .map-output {
+    position: sticky;
+    top: 6rem;
+    background: var(--color-blue-100);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    min-height: 520px;
+  }
+  .map-panel h2 {
+    margin-top: 0;
+  }
+  .map-view[hidden] {
+    display: none;
+  }
+  .map-view button[aria-pressed='true'] {
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+  @media (min-width: 901px) {
+    .map-view {
+      display: none;
+    }
+    .map-sidebar .treffer {
+      max-height: 620px;
+      overflow-y: auto;
+    }
+    .map-sidebar .treffer li {
+      overflow-wrap: anywhere;
+    }
+  }
+  @media (max-width: 900px) {
+    .map-output {
+      position: static;
+      min-height: 0;
     }
   }
 </style>
