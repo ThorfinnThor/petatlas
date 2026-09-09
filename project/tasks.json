@@ -4192,7 +4192,9 @@
         }
       ],
       "blocker": null,
-      "notes": []
+      "notes": [
+        "Nachtrag 2026-09-09: Die Zusicherung \"Ergebnisueberschrift ohne Scrollen\" war auf dem CI-Runner um 1,1 Pixel zu knapp (801,125 bei 800 Pixeln Fenster) - andere Schriftdarstellung, gleiche Seite. Der Test rechnet jetzt den Testdatenhinweis heraus, der nur in Vorschaubauten steht und in der ausgelieferten Seite fehlt; seine Hoehe wird gemessen und nicht geschaetzt. Dazu kommt eine zweite Zusicherung, die nicht an der Textlaenge darueber haengt: Eingabe und Ergebnis beginnen auf derselben Hoehe. Das ist die eigentliche Aussage der zweispaltigen Ansicht."
+      ]
     },
     {
       "id": "M21-04",

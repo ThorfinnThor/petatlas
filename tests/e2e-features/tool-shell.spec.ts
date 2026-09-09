@@ -29,16 +29,46 @@ test.describe('Tool-Ansicht des Rechners', () => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/de-de/tierarztkosten/');
 
-    const sichtbar = await page.evaluate(() => {
+    const gemessen = await page.evaluate(() => {
       const titel = document.getElementById('ergebnis-titel');
       if (titel === null) return null;
-      const kasten = titel.getBoundingClientRect();
-      return { oben: kasten.top, hoehe: window.innerHeight, gescrollt: window.scrollY };
+      // Der Testdatenhinweis steht nur in Vorschaubauten. Er gehört nicht
+      // zur Seite, die ausgeliefert würde, und wird deshalb herausgerechnet
+      // statt geschätzt: gemessen wird seine tatsächliche Höhe samt Abstand.
+      const banner = document.querySelector('[data-testid="test-data-banner"]');
+      const bannerHoehe =
+        banner === null
+          ? 0
+          : banner.getBoundingClientRect().height +
+            Number.parseFloat(getComputedStyle(banner).marginBottom || '0');
+      return {
+        oben: titel.getBoundingClientRect().top,
+        bannerHoehe,
+        hoehe: window.innerHeight,
+        gescrollt: window.scrollY,
+      };
     });
-    expect(sichtbar).not.toBeNull();
-    if (sichtbar === null) return;
-    expect(sichtbar.gescrollt).toBe(0);
-    expect(sichtbar.oben).toBeLessThan(sichtbar.hoehe);
+    expect(gemessen).not.toBeNull();
+    if (gemessen === null) return;
+
+    expect(gemessen.gescrollt).toBe(0);
+    expect(gemessen.bannerHoehe).toBeGreaterThan(0);
+    expect(gemessen.oben - gemessen.bannerHoehe).toBeLessThan(gemessen.hoehe);
+  });
+
+  test('beginnt das Ergebnis auf derselben Höhe wie die Eingabe', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'chromium-desktop', 'Aussage gilt für den Desktop.');
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/de-de/tierarztkosten/');
+
+    // Das ist die eigentliche Zusage der zweispaltigen Ansicht und hängt
+    // nicht daran, wie lang die Texte darüber gerade sind.
+    const eingabe = await page.locator('.werkzeug__eingabe').boundingBox();
+    const ergebnis = await page.locator('.werkzeug__ergebnis').boundingBox();
+    expect(eingabe).not.toBeNull();
+    expect(ergebnis).not.toBeNull();
+    if (eingabe === null || ergebnis === null) return;
+    expect(Math.abs(ergebnis.y - eingabe.y)).toBeLessThan(2);
   });
 
   test('behält auf dem Telefon die Reihenfolge Eingabe, Aktion, Ergebnis', async ({
