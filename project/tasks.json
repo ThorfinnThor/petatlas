@@ -3,8 +3,8 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": null,
-  "note": "V2 application implemented and verified with real data. Public release and deployment authorization remain separate external prerequisites.",
+  "current_task": "M23-02",
+  "note": "Public-release functional acceptance reopened after a user-reported map defect. External release requirements remain separate.",
   "status_values": [
     "todo",
     "in_progress",
@@ -4462,6 +4462,26 @@
       "notes": [
         "Deployment and public-release prerequisites remain tracked separately; no approval was fabricated."
       ]
+    },
+    {
+      "id": "M23-02",
+      "milestone": "M23",
+      "title": "Practical user-flow acceptance before public release",
+      "implementation": "Verify complete real-data user journeys, repair interaction and recovery defects, and record concrete release prerequisites.",
+      "deliverables": [
+        "docs/PUBLIC_RELEASE_ACCEPTANCE.md"
+      ],
+      "acceptance": [
+        "Real-data core journeys and recovery paths pass browser verification; remaining external release conditions are reported without fabricated approvals."
+      ],
+      "depends_on": [
+        "M23-01"
+      ],
+      "kind": "implementation",
+      "status": "in_progress",
+      "evidence": [],
+      "blocker": null,
+      "notes": []
     }
   ]
 }

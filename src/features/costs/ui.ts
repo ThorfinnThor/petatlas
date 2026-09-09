@@ -138,6 +138,64 @@ export function rechnerStarten(): void {
 
   let katalog: readonly FeeItem[] = [];
   const auswahl: Auswahl[] = [];
+  const bearbeiten = element<HTMLSelectElement>('#position-bearbeiten');
+  const uebernehmen = element<HTMLButtonElement>('#position-uebernehmen');
+  const entfernen = element<HTMLButtonElement>('#auswahl-entfernen');
+  let bearbeitet: number | null = null;
+  menge.value = '1';
+  faktor.value = '1';
+
+  function auswahlSteuern(): void {
+    if (!bearbeiten || !uebernehmen || !entfernen) return;
+    const steuerung = element<HTMLElement>('#auswahl-steuerung');
+    if (steuerung) steuerung.hidden = auswahl.length === 0;
+    bearbeiten.replaceChildren();
+    auswahl.forEach((position, index) => {
+      const option = document.createElement('option');
+      option.value = String(index);
+      option.textContent = position.label;
+      option.selected = index === bearbeitet;
+      bearbeiten.append(option);
+    });
+    uebernehmen.disabled = bearbeitet === null;
+    entfernen.hidden = bearbeitet === null;
+    const hinweis = element<HTMLElement>('#auswahl-hinweis');
+    if (hinweis)
+      hinweis.textContent =
+        'Menge und Faktor gelten für die ausgewählte Position. Änderungen werden erst mit „Änderungen übernehmen“ angewendet.';
+  }
+
+  function eingabePosition(item: FeeItem): Auswahl | null {
+    const position = {
+      officialItemId: item.officialItemId,
+      quantity: Number(menge!.value.trim()),
+      factor: Number(faktor!.value.trim().replace(',', '.')),
+      label: item.originalLabel,
+    };
+    try {
+      calculateCosts({ context: kontext(), species: art(), lines: [position] }, katalog);
+      return position;
+    } catch (error) {
+      status!.textContent =
+        error instanceof CostError ? error.message : 'Die Position kann nicht übernommen werden.';
+      ergebnis!.replaceChildren();
+      const drucken = element<HTMLButtonElement>('#drucken');
+      if (drucken) drucken.disabled = true;
+      return null;
+    }
+  }
+
+  function positionEntfernen(index: number): void {
+    auswahl.splice(index, 1);
+    bearbeitet = auswahl.length ? 0 : null;
+    if (bearbeitet !== null) {
+      menge!.value = String(auswahl[bearbeitet]!.quantity);
+      faktor!.value = String(auswahl[bearbeitet]!.factor).replace('.', ',');
+    }
+    auswahlSteuern();
+    neuRechnen();
+    suche!.focus();
+  }
 
   function kontext(): TreatmentContext {
     const gewaehlt = document.querySelector<HTMLInputElement>('input[name="kontext"]:checked');
@@ -226,14 +284,11 @@ export function rechnerStarten(): void {
           sucheHinweis!.textContent = 'Diese Position ist bereits ausgewählt.';
           return;
         }
-        const anzahl = Number(menge!.value.trim() || '1');
-        const wert = Number((faktor!.value.trim() || '1').replace(',', '.'));
-        auswahl.push({
-          officialItemId: item.officialItemId,
-          quantity: anzahl,
-          factor: wert,
-          label: item.originalLabel,
-        });
+        const position = eingabePosition(item);
+        if (!position) return;
+        auswahl.push(position);
+        bearbeitet = auswahl.length - 1;
+        auswahlSteuern();
         neuRechnen();
       });
       li.append(knopf);
@@ -254,7 +309,35 @@ export function rechnerStarten(): void {
     });
   }
   suche.addEventListener('input', trefferZeigen);
-  form.addEventListener('formular:gueltig', trefferZeigen);
+  form.addEventListener('submit', (event) => event.preventDefault());
+  form.addEventListener('formular:ungueltig', () => {
+    ergebnis.replaceChildren();
+    const drucken = element<HTMLButtonElement>('#drucken');
+    if (drucken) drucken.disabled = true;
+    status.textContent = 'Bitte korrigieren Sie die markierten Eingaben.';
+  });
+  form.addEventListener('formular:gueltig', () => {
+    if (bearbeitet === null) return;
+    const item = katalog.find(
+      (entry) => entry.officialItemId === auswahl[bearbeitet!]?.officialItemId,
+    );
+    if (!item) return;
+    const position = eingabePosition(item);
+    if (!position) return;
+    auswahl[bearbeitet] = position;
+    neuRechnen();
+  });
+  bearbeiten?.addEventListener('change', () => {
+    const index = Number(bearbeiten.value);
+    const position = auswahl[index];
+    if (!position) return;
+    bearbeitet = index;
+    menge.value = String(position.quantity);
+    faktor.value = String(position.factor).replace('.', ',');
+  });
+  entfernen?.addEventListener('click', () => {
+    if (bearbeitet !== null) positionEntfernen(bearbeitet);
+  });
 
   ergebnis.addEventListener('click', (event) => {
     const button =
@@ -264,9 +347,7 @@ export function rechnerStarten(): void {
     if (!button) return;
     const index = Number(button.dataset.removeCost);
     if (!Number.isInteger(index) || index < 0 || index >= auswahl.length) return;
-    auswahl.splice(index, 1);
-    neuRechnen();
-    suche.focus();
+    positionEntfernen(index);
   });
 
   element<HTMLButtonElement>('#drucken')?.addEventListener('click', () => {

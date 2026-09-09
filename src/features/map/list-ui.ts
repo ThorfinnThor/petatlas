@@ -16,10 +16,11 @@ import {
   notdienstHinweis,
   type ListenOrt,
 } from './list.ts';
+import { merkknoepfeBinden } from '../profile/favorites-ui.ts';
 import { frageStandort, standortLabel } from './geolocation.ts';
 import { zeigeKarte, waehleMarker, type KartenZustand } from './map.ts';
 import { normalisiere, sucheOrte, type OrtsEintrag } from './place-search.ts';
-import { ladeManifest, ladeZellenUm } from './data.ts';
+import { ladeManifest, ladeZellenUm, ortMitId } from './data.ts';
 import { darstellung } from './website.ts';
 
 let geladeneNamenCache: Map<string, readonly OrtsEintrag[]> | null = null;
@@ -50,7 +51,7 @@ async function ladeNamen(begriff: string): Promise<readonly OrtsEintrag[]> {
       continue;
     }
     const antwort = await fetch(chunk.path);
-    if (!antwort.ok) continue;
+    if (!antwort.ok) throw new Error(`Ortsnamen antworten mit ${antwort.status}.`);
     const daten = (await antwort.json()) as { entries: OrtsEintrag[] };
     geladeneNamen().set(chunk.chunkId, daten.entries);
     gesammelt.push(...daten.entries);
@@ -66,7 +67,7 @@ function escape(wert: string): string {
   );
 }
 
-function trefferMarkup(treffer: ReturnType<typeof filtereOrte>[number]): string {
+function trefferMarkup(treffer: ReturnType<typeof filtereOrte>[number], mitMerken = false): string {
   const ort = treffer.ort;
   const notdienst = notdienstHinweis(ort.emergency);
   return `
@@ -83,6 +84,7 @@ function trefferMarkup(treffer: ReturnType<typeof filtereOrte>[number]): string 
       }
       ${ort.phone === null ? '' : `<p>Telefon: <a href="tel:${escape(ort.phone.replace(/\s/g, ''))}">${escape(ort.phone)}</a></p>`}
       ${webZeile(ort.website)}
+      ${mitMerken ? `<p><button type="button" data-merken="place" data-id="${escape(ort.id)}" data-lat="${ort.lat}" data-lon="${ort.lon}" hidden>Merken</button></p>` : ''}
       ${notdienst === null ? '' : `<p class="notdienst">${escape(notdienst)}</p>`}
     </li>`;
 }
@@ -110,11 +112,20 @@ export function listeStarten(): void {
 
   if (!form || !ortsFeld || !ortsHinweis || !ortsTreffer || !radius || !status || !liste) return;
 
+  const mitMerken = liste.dataset.profile === 'true';
+  if (mitMerken) merkknoepfeBinden(liste);
+  const erneut = document.querySelector<HTMLButtonElement>('#ortsdaten-erneut');
+  const ladefehler = document.querySelector<HTMLElement>('#orts-ladefehler');
   const karteKnopf = document.querySelector<HTMLButtonElement>('#karte-anzeigen');
   const karteBehaelter = document.querySelector<HTMLElement>('#karte');
   const karteStatus = document.querySelector<HTMLElement>('#karte-status');
 
-  let gewaehlt: { name: string; latitude: number; longitude: number } | null = null;
+  let gewaehlt: { name: string; latitude: number; longitude: number } | null = {
+    name: 'Berlin',
+    latitude: 52.5174,
+    longitude: 13.3951,
+  };
+  let datenGeladen = false;
   let letzteOrte: readonly ListenOrt[] = [];
   let karteAktiv = false;
   let kartenZustand: KartenZustand | undefined;
@@ -130,8 +141,11 @@ export function listeStarten(): void {
   async function aktualisiere(): Promise<void> {
     if (gewaehlt === null) return;
     const lauf = ++suchLauf;
+    datenGeladen = false;
     const radiusMeter = Number(radius!.value);
     status!.textContent = 'Wird geladen …';
+    if (erneut) erneut.disabled = true;
+    if (ladefehler) ladefehler.hidden = true;
 
     try {
       const orte = await ladeZellenUm(gewaehlt.latitude, gewaehlt.longitude, radiusMeter);
@@ -144,8 +158,11 @@ export function listeStarten(): void {
         maxTreffer: 100,
       });
 
+      datenGeladen = true;
+      if (erneut) erneut.hidden = true;
       letzteOrte = treffer.map((eintrag) => eintrag.ort);
-      liste!.innerHTML = treffer.map(trefferMarkup).join('');
+      liste!.innerHTML = treffer.map((treffer) => trefferMarkup(treffer, mitMerken)).join('');
+      if (mitMerken) merkknoepfeBinden(liste!);
       if (karteAktiv) void zeichneKarte();
       status!.textContent =
         treffer.length === 0
@@ -154,7 +171,16 @@ export function listeStarten(): void {
     } catch (fehler) {
       if (lauf !== suchLauf) return;
       // Ein Ladefehler wird benannt; die vorherige Liste bleibt stehen.
-      status!.textContent = 'Die Ortsdaten konnten nicht geladen werden.';
+      status!.textContent =
+        'Die Ortsdaten konnten nicht geladen werden. Die bisherige Anzeige bleibt bestehen.';
+      if (ladefehler) {
+        ladefehler.hidden = false;
+        ladefehler.textContent = status!.textContent;
+      }
+      if (erneut) {
+        erneut.hidden = false;
+        erneut.disabled = false;
+      }
       console.error('Ortsdaten:', fehler);
     }
   }
@@ -180,7 +206,22 @@ export function listeStarten(): void {
           // Ein Ausfall des Kacheldienstes betrifft nur die Karte.
           beiKachelfehler: () => {
             karteStatus.textContent =
-              'Der Kartendienst liefert gerade keine Kacheln. Die Liste unten bleibt vollständig.';
+              'Der Kartendienst liefert gerade keine Kacheln. Die Trefferliste bleibt nutzbar.';
+            if (karteKnopf) {
+              karteKnopf.disabled = false;
+              karteKnopf.textContent = 'Karte erneut laden';
+            }
+          },
+          beiKachelerfolg: () => {
+            const { gezeigt, ausgelassen } = waehleMarker(letzteOrte);
+            karteStatus.textContent =
+              ausgelassen === 0
+                ? `${gezeigt.length} Orte auf der Karte.`
+                : `${gezeigt.length} von ${gezeigt.length + ausgelassen} Orten auf der Karte; der Rest steht in der Liste.`;
+            if (karteKnopf) {
+              karteKnopf.disabled = true;
+              karteKnopf.textContent = 'Karte anzeigen';
+            }
           },
         },
         kartenZustand,
@@ -191,6 +232,10 @@ export function listeStarten(): void {
           : `${gezeigt.length} von ${gezeigt.length + ausgelassen} Orten auf der Karte; der Rest steht in der Liste.`;
     } catch (fehler) {
       karteStatus.textContent = 'Die Karte konnte nicht geladen werden. Die Liste bleibt nutzbar.';
+      if (karteKnopf) {
+        karteKnopf.disabled = false;
+        karteKnopf.textContent = 'Karte erneut laden';
+      }
       console.error('Karte:', fehler);
     }
   }
@@ -198,9 +243,13 @@ export function listeStarten(): void {
   karteKnopf?.addEventListener('click', () => {
     karteAktiv = true;
     karteKnopf.disabled = true;
-    if (gewaehlt === null) {
+    if (kartenZustand) {
+      if (karteStatus) karteStatus.textContent = 'Karte wird erneut geladen …';
+      kartenZustand.kacheln.redraw();
+      return;
+    }
+    if (!datenGeladen) {
       // Ohne gewählten Ort zeigt die Karte den Standardausschnitt der Liste.
-      gewaehlt = { name: 'Berlin', latitude: 52.5174, longitude: 13.3951 };
       void aktualisiere();
     } else {
       void zeichneKarte();
@@ -235,8 +284,13 @@ export function listeStarten(): void {
     });
   });
 
+  erneut?.addEventListener('click', () => void aktualisiere());
+
+  let namensSuche = 0;
   let timer: number | undefined;
   ortsFeld.addEventListener('input', () => {
+    const sucheId = ++namensSuche;
+    ortsTreffer.replaceChildren();
     window.clearTimeout(timer);
     timer = window.setTimeout(() => {
       void (async () => {
@@ -247,7 +301,16 @@ export function listeStarten(): void {
           return;
         }
 
-        const index = await ladeNamen(eingabe);
+        let index: readonly OrtsEintrag[];
+        try {
+          index = await ladeNamen(eingabe);
+        } catch {
+          if (sucheId === namensSuche)
+            ortsHinweis.textContent =
+              'Die Ortsnamen konnten nicht geladen werden. Bitte versuchen Sie die Suche erneut.';
+          return;
+        }
+        if (sucheId !== namensSuche) return;
         const ergebnis = sucheOrte(eingabe, index, { maxTreffer: 8 });
         ortsHinweis.textContent = ergebnis.hinweis;
 
@@ -280,9 +343,45 @@ export function listeStarten(): void {
   }
   form.addEventListener('submit', (ereignis) => {
     ereignis.preventDefault();
-    void aktualisiere();
+    if (ortsFeld.value.trim() !== gewaehlt?.name) {
+      ortsFeld.dispatchEvent(new Event('input', { bubbles: true }));
+    } else {
+      void aktualisiere();
+    }
   });
-  const requestedPlace = new URLSearchParams(window.location.search).get('q')?.trim();
+  const parameter = new URLSearchParams(window.location.search);
+  const requestedPlace = parameter.get('q')?.trim();
+  const placeId = parameter.get('place');
+  const lat = Number(parameter.get('lat'));
+  const lon = Number(parameter.get('lon'));
+  if (
+    placeId &&
+    parameter.has('lat') &&
+    parameter.has('lon') &&
+    Number.isFinite(lat) &&
+    Number.isFinite(lon) &&
+    Math.abs(lat) <= 90 &&
+    Math.abs(lon) <= 180
+  ) {
+    void ortMitId(placeId, lat, lon)
+      .then((ort) => {
+        if (suchLauf !== 0 || ortsFeld.value !== '') return;
+        if (!ort) {
+          ortsHinweis.textContent =
+            'Dieser gemerkte Ort ist im aktuellen Datenstand nicht mehr erfasst.';
+          return;
+        }
+        gewaehlt = { name: ort.name, latitude: ort.lat, longitude: ort.lon };
+        ortsFeld.value = ort.name;
+        ortsHinweis.textContent = `Ausschnitt um ${ort.name}.`;
+        void aktualisiere();
+      })
+      .catch(() => {
+        if (suchLauf === 0)
+          ortsHinweis.textContent =
+            'Der gemerkte Ort konnte gerade nicht geladen werden. Bitte laden Sie die Seite erneut oder suchen Sie einen Ort.';
+      });
+  }
   if (requestedPlace && requestedPlace.length <= 100) {
     ortsFeld.value = requestedPlace;
     ortsFeld.dispatchEvent(new Event('input', { bubbles: true }));

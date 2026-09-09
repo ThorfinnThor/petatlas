@@ -95,6 +95,8 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
   <div class="map-sidebar">
     <form id="ortsfilter" aria-labelledby="filter-titel">
       <h2 id="filter-titel">Suchen</h2>
+      <p id="orts-ladefehler" role="status" hidden></p>
+      <button id="ortsdaten-erneut" type="button" hidden>Ortsdaten erneut laden</button>
 
       <div class="feld">
         <label for="ort">Ort</label>
@@ -151,7 +153,13 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
         {' '}{STANDARD.name}.
       </p>
 
-      <ul id="trefferliste" class="treffer" tabindex="0" aria-label="Erfasste Orte">
+      <ul
+        id="trefferliste"
+        class="treffer"
+        tabindex="0"
+        aria-label="Erfasste Orte"
+        data-profile={String(stadtMarkt.featureFlags.profile === true)}
+      >
         {
           standardTreffer.map((treffer) => (
             <li>
@@ -193,6 +201,20 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
                 }
                 return null;
               })()}
+              {stadtMarkt.featureFlags.profile && (
+                <p>
+                  <button
+                    type="button"
+                    data-merken="place"
+                    data-id={treffer.ort.id}
+                    data-lat={treffer.ort.lat}
+                    data-lon={treffer.ort.lon}
+                    hidden
+                  >
+                    Merken
+                  </button>
+                </p>
+              )}
               {notdienstHinweis(treffer.ort.emergency) !== null && (
                 <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
               )}

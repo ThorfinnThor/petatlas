@@ -27,9 +27,6 @@ import {
 
 function speicher(): Storage | null {
   try {
-    const probe = '__petatlas_probe__';
-    window.localStorage.setItem(probe, '1');
-    window.localStorage.removeItem(probe);
     return window.localStorage;
   } catch {
     return null;
@@ -105,7 +102,14 @@ export function merkknoepfeBinden(bereich: ParentNode = document): void {
                 : null,
             addedAt: new Date().toISOString(),
           });
-      merklisteSchreiben(neu);
+      if (!merklisteSchreiben(neu)) {
+        const meldung = document.createElement('p');
+        meldung.setAttribute('role', 'alert');
+        meldung.textContent =
+          'Die Änderung konnte nicht gespeichert werden. Bitte prüfen Sie den verfügbaren Browser-Speicher.';
+        knopf.after(meldung);
+        return;
+      }
       knopfBeschriften(knopf, istGemerkt(neu, art, id));
     });
   }
@@ -140,7 +144,7 @@ async function nachschlagen(
   return {
     titel: ort.name,
     zusatz: ort.municipality === null ? 'Gemeinde nicht erfasst' : ort.municipality,
-    pfad: kartenPfad,
+    pfad: `${kartenPfad}?${new URLSearchParams({ place: ort.id, lat: String(ort.lat), lon: String(ort.lon) })}`,
   };
 }
 
@@ -205,7 +209,14 @@ export async function merklisteStarten(): Promise<void> {
     for (const knopf of bereich.querySelectorAll<HTMLButtonElement>('button[data-entfernen]')) {
       knopf.addEventListener('click', () => {
         const art = (knopf.dataset.art ?? 'food') as MerkArt;
-        merklisteSchreiben(vergiss(merklisteLesen(), art, knopf.dataset.id ?? ''));
+        if (!merklisteSchreiben(vergiss(merklisteLesen(), art, knopf.dataset.id ?? ''))) {
+          const meldung = document.createElement('p');
+          meldung.setAttribute('role', 'alert');
+          meldung.textContent =
+            'Der Eintrag konnte nicht entfernt werden. Bitte prüfen Sie den Browser-Speicher.';
+          knopf.after(meldung);
+          return;
+        }
         void zeichne();
       });
     }

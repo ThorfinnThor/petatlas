@@ -53,7 +53,15 @@ if (form && feld && status && liste) {
     }
     if (anfrage !== laufendeAnfrage) return;
 
-    const treffer = await Promise.all(gefunden.results.slice(0, 10).map((r) => r.data()));
+    let treffer;
+    try {
+      treffer = await Promise.all(gefunden.results.slice(0, 10).map((r) => r.data()));
+    } catch {
+      if (anfrage === laufendeAnfrage)
+        status.textContent =
+          'Die Suchergebnisse konnten nicht geladen werden. Bitte versuchen Sie es erneut oder laden Sie die Seite neu.';
+      return;
+    }
     if (anfrage !== laufendeAnfrage) return;
 
     status.textContent =
@@ -77,6 +85,7 @@ if (form && feld && status && liste) {
 
   let timer;
   feld.addEventListener('input', () => {
+    laufendeAnfrage += 1;
     window.clearTimeout(timer);
     timer = window.setTimeout(() => void suchen(feld.value), 200);
   });

@@ -12,7 +12,7 @@
  * - kein stiller Ausfall: fällt der Kacheldienst aus, sagt die Karte das,
  *   und die Liste bleibt unberührt.
  */
-import type { CircleMarker, LayerGroup, Map as LeafletMap } from 'leaflet';
+import type { CircleMarker, LayerGroup, TileLayer, Map as LeafletMap } from 'leaflet';
 
 import { KATEGORIE_LABEL, type ListenOrt } from './list.ts';
 import { TILES } from './tiles.ts';
@@ -23,6 +23,7 @@ export const MARKER_GRENZE = 300;
 export interface KartenZustand {
   readonly karte: LeafletMap;
   readonly markerEbene: LayerGroup;
+  readonly kacheln: TileLayer;
 }
 
 let leafletModul: typeof import('leaflet') | null = null;
@@ -57,6 +58,7 @@ export interface KartenOptionen {
   readonly orte: readonly ListenOrt[];
   /** Wird gerufen, wenn der Kacheldienst nicht liefert. */
   readonly beiKachelfehler?: () => void;
+  readonly beiKachelerfolg?: () => void;
 }
 
 export async function zeigeKarte(
@@ -74,6 +76,14 @@ export async function zeigeKarte(
       preferCanvas: false,
     });
 
+  const kacheln =
+    bestehend?.kacheln ??
+    L.tileLayer(TILES.urlTemplate, {
+      attribution: TILES.attributionHtml,
+      maxZoom: TILES.maxZoom,
+      minZoom: TILES.minZoom,
+      keepBuffer: 0,
+    });
   if (bestehend) {
     karte.removeLayer(bestehend.markerEbene);
     karte.setView(
@@ -81,15 +91,13 @@ export async function zeigeKarte(
       optionen.zoom ?? karte.getZoom(),
     );
   } else {
-    const kacheln = L.tileLayer(TILES.urlTemplate, {
-      attribution: TILES.attributionHtml,
-      maxZoom: TILES.maxZoom,
-      minZoom: TILES.minZoom,
-      // Keine Kacheln über den sichtbaren Rand hinaus vorladen.
-      keepBuffer: 0,
-    });
-
     let fehlerGemeldet = false;
+    kacheln.on('loading', () => {
+      fehlerGemeldet = false;
+    });
+    kacheln.on('load', () => {
+      if (!fehlerGemeldet) optionen.beiKachelerfolg?.();
+    });
     kacheln.on('tileerror', () => {
       if (fehlerGemeldet) return;
       fehlerGemeldet = true;
@@ -125,7 +133,7 @@ export async function zeigeKarte(
   }
   const ebene = L.layerGroup(marker).addTo(karte);
 
-  return { karte, markerEbene: ebene };
+  return { karte, markerEbene: ebene, kacheln };
 }
 
 function escape(wert: string): string {

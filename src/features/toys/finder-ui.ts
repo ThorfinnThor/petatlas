@@ -1,3 +1,4 @@
+import { kategorie } from '../care/taxonomy.ts';
 import { productIdentity, merkmalLabel } from '../care/attributes.ts';
 /**
  * M14-04 — Spielzeugfinder im Browser.
@@ -56,7 +57,7 @@ function trefferMarkup(treffer: Treffer): string {
   return `
     <li data-produkt="${escape(treffer.productId)}" data-punkte="${treffer.punkte}">
       <h3>${escape(productIdentity(treffer.productId)?.name ?? treffer.productId)}</h3>
-      <p class="finder__kategorie">Kategorie: ${escape(treffer.categoryId)}</p>
+      <p class="finder__kategorie">Kategorie: ${escape(kategorie(treffer.categoryId)?.label ?? treffer.categoryId)}</p>
       ${begruendung}
       ${offen}
       ${source}
@@ -75,6 +76,20 @@ export function finderStarten(): void {
 
   form.addEventListener('submit', (ereignis) => {
     ereignis.preventDefault();
+    const gewichtFeld = document.querySelector<HTMLInputElement>('#finder-gewicht');
+    const roh = gewichtFeld?.value.trim() ?? '';
+    const gewicht = Number(roh.replace(',', '.'));
+    if (
+      roh !== '' &&
+      (!/^\d+(?:[.,]\d+)?$/.test(roh) || !Number.isFinite(gewicht) || gewicht <= 0)
+    ) {
+      gewichtFeld?.setAttribute('aria-invalid', 'true');
+      ausgabe.textContent =
+        'Bitte geben Sie ein positives Gewicht in Kilogramm ein oder lassen Sie das Feld leer, wenn es unbekannt ist.';
+      gewichtFeld?.focus();
+      return;
+    }
+    gewichtFeld?.removeAttribute('aria-invalid');
     const bedarf = bedarfLesen();
     const treffer = findeSpielzeug(attributPruefung().products, bedarf);
 

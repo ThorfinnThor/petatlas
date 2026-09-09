@@ -51,7 +51,9 @@ export async function ladeZellenUm(
   radiusMeter: number,
 ): Promise<readonly ListenOrt[]> {
   const indexPfad = await pfadVon('places-de-index');
-  const index = (await (await fetch(indexPfad)).json()) as { cells: ZellenVerweis[] };
+  const indexAntwort = await fetch(indexPfad);
+  if (!indexAntwort.ok) throw new Error(`Ortsindex antwortet mit ${indexAntwort.status}.`);
+  const index = (await indexAntwort.json()) as { cells: ZellenVerweis[] };
 
   // Ein Grad Breite sind rund 111 km; für die Länge kommt der Kosinus dazu.
   const gradLat = radiusMeter / 111_000;
@@ -73,7 +75,7 @@ export async function ladeZellenUm(
       continue;
     }
     const antwort = await fetch(zelle.path);
-    if (!antwort.ok) continue;
+    if (!antwort.ok) throw new Error(`Ortsdaten antworten mit ${antwort.status}.`);
     const daten = (await antwort.json()) as { places: ListenOrt[] };
     geladeneZellen.set(zelle.key, daten.places);
     orte.push(...daten.places);

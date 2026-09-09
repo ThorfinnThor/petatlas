@@ -63,6 +63,18 @@ const seitentitel =
   menge === null
     ? `${produkt.brand} — ${produkt.productName}`
     : `${produkt.brand} — ${produkt.productName}, ${menge}`;
+const NAEHRWERT_TEXT: Record<string, string> = {
+  protein: 'Protein',
+  fiber: 'Rohfaser',
+  ash: 'Rohasche',
+  fat: 'Fett',
+  crudeFibre: 'Rohfaser',
+  crudeAsh: 'Rohasche',
+  moisture: 'Feuchtigkeit',
+  calcium: 'Calcium',
+  phosphorus: 'Phosphor',
+  energyKcal: 'Energie (kcal)',
+};
 const deklariert = produkt.nutrients.filter((eintrag) => eintrag.value !== null);
 const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
 ---
@@ -123,7 +135,7 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
         <tbody>
           {deklariert.map((eintrag) => (
             <tr data-naehrwert={eintrag.nutrient}>
-              <th scope="row">{eintrag.nutrient}</th>
+              <th scope="row">{NAEHRWERT_TEXT[eintrag.nutrient] ?? eintrag.nutrient}</th>
               <td>
                 {eintrag.value?.toLocaleString('de-DE')} {eintrag.unit}
               </td>
@@ -148,8 +160,9 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
   {
     offen.length > 0 && (
       <p class="hilfe" data-testid="nicht-deklariert">
-        Nicht deklariert: {offen.map((eintrag) => eintrag.nutrient).join(', ')}. Eine fehlende
-        Angabe ist keine Null.
+        Nicht deklariert:{' '}
+        {offen.map((eintrag) => NAEHRWERT_TEXT[eintrag.nutrient] ?? eintrag.nutrient).join(', ')}.
+        Eine fehlende Angabe ist keine Null.
       </p>
     )
   }
@@ -161,9 +174,15 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
     </p>
   </Notice>
 
-  <p>
-    <button type="button" data-merken="food" data-id={produkt.foodId} hidden>Merken</button>
-  </p>
+  {
+    isFeatureEnabled(markt, 'profile') && (
+      <p>
+        <button type="button" data-merken="food" data-id={produkt.foodId} hidden>
+          Merken
+        </button>
+      </p>
+    )
+  }
 
   <h2>Angebote</h2>
   <p data-testid="keine-angebote">

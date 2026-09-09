@@ -2,7 +2,7 @@
 
 Stand: 2026-09-09. Maßgeblich ist `project/tasks.json`.
 
-**Erledigt:** 129 von 136 Aufgaben. **In Arbeit:** keine. **Blockiert:** sieben bestehende externe Freigaben.
+**Erledigt:** 129 von 137 Aufgaben. **In Arbeit:** M23-02. **Blockiert:** sieben bestehende externe Freigaben.
 
 ## Tatsächlicher Stand
 
@@ -18,4 +18,4 @@ Der Code prüft Betreiberkonfiguration, funktionsabhängige Freigaben, Rechte, D
 
 Die existierende Cloudflare-Vorschau zeigt noch den älteren Stand. Eine Aktualisierung ist durch den abgelaufenen Cloudflare-Login blockiert. Der Nutzer liefert Domain, Betreiberangaben, Produktverträge und fachliche Freigaben später; danach folgen die öffentliche Freigabe und Produktionsveröffentlichung.
 
-M23-01 ist abgeschlossen. Nächster Schritt nach erneuter Cloudflare-Anmeldung: Vorschau veröffentlichen und am ausgelieferten Link prüfen. Umfang, behobene Befunde und verbleibende externe Voraussetzungen stehen in `LAUNCH_V2.md`.
+Die Funktionsabnahme ist nach einem Nutzerrückmeldungsfehler erneut offen. M23-02 prüft vollständige Abläufe und Fehlerbehandlung vor Veröffentlichung. Umfang, behobene Befunde und verbleibende externe Voraussetzungen stehen in `LAUNCH_V2.md`.
