@@ -67,6 +67,30 @@ test('real homepage meets automated accessibility checks', async ({ page }) => {
   ).toEqual([]);
 });
 
+test('mobile map switches views and remains accessible', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/de-de/tierarzt-karte/');
+  const mapView = page.locator('.map-view');
+  await expect(mapView.getByRole('button', { name: 'Liste', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await expect(page.locator('.map-output')).toBeHidden();
+  await mapView.getByRole('button', { name: 'Karte', exact: true }).click();
+  await expect(page.locator('.map-output')).toBeVisible();
+  await expect(mapView.getByRole('button', { name: 'Karte', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await page.screenshot({ path: testInfo.outputPath('map-390.png'), fullPage: true });
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+    .analyze();
+  expect(results.violations.map((item) => ({ id: item.id, nodes: item.nodes }))).toEqual([]);
+  await mapView.getByRole('button', { name: 'Liste', exact: true }).click();
+  await expect(page.locator('.map-output')).toBeHidden();
+});
+
 test('saved profile is applied only on request and survives navigation', async ({ page }) => {
   await page.goto('/de-de/mein-tier/');
   await page.selectOption('#profil-tierart', 'dog');
