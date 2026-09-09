@@ -183,7 +183,11 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
         ? 'not_fulfilled'
         : 'unknown',
     hinweise: [
-      ...pruefung.hinweise,
+      ...(national.some((entry) => entry.state === 'not_fulfilled')
+        ? [
+            'Eine nationale Einreisebeschränkung steht dieser Reise entgegen; erfüllte Gesundheitsangaben heben sie nicht auf.',
+          ]
+        : pruefung.hinweise),
       ...national.map((entry) => entry.text),
       'Nationale und örtliche Zusatzvorgaben sind keine pauschal bestandene Einreiseprüfung. Beachten Sie die Länderhinweise und deren Quellen.',
     ],

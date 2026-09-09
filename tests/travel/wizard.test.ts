@@ -174,6 +174,9 @@ describe('Erweiterte Reiseangaben', () => {
     const result = pruefeWizard({ ...VOLLSTAENDIG, destination: 'FR', frenchCategory: '1' });
     expect(result.gesamt).toBe('not_fulfilled');
     expect(result.hinweise.join(' ')).toContain('Einreise und Durchreise sind untersagt');
+    expect(result.hinweise.join(' ')).not.toContain(
+      'spricht in den vorbereiteten Regeln nichts dagegen',
+    );
   });
 });
 
