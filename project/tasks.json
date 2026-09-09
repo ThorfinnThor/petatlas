@@ -3,7 +3,7 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M21-05",
+  "current_task": "M21-06",
   "note": "Dies ist ein Planungspaket. Es wurden weder Website noch Cloud-Ressourcen implementiert oder freigegeben.",
   "status_values": [
     "todo",
@@ -4238,8 +4238,16 @@
         "M21-01"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Tierart und Behandlungskontext im Rechner sowie die Tierart im Reisecheck sind jetzt Auswahlkarten (src/components/forms/RadioCard.astro, Abschnitt 13.6). Die ganze Karte ist klickbar, weil sie ein label ist - kein Skript faengt Klicks ab; im Dokument steht ein echtes input type=radio. Damit bleiben Pfeiltastenbedienung innerhalb der Gruppe, Formularuebermittlung und Screenreader unveraendert, auch ohne JavaScript. Der Radiopunkt bleibt sichtbar: er ist die Zustandsanzeige, Rahmen und Flaeche kommen dazu und ersetzen ihn nicht (Farbregel 5); ein Test prueft, dass der Punkt nicht per display:none oder appearance:none verschwindet. Der Fokusring liegt auf der ganzen Karte, nicht nur auf dem kleinen Punkt. Nebenbefund waehrend der Umsetzung: die urspruengliche 'keine Angabe' war ein Optionswert mit leerer Zeichenkette - die eigene Pruefung der Komponente hat das beim Build abgelehnt, weil ein leerer Wert im Formular nicht ankommt. 'Keine Angabe' heisst jetzt ausdruecklich 'unbekannt' und ist damit eine Wahl statt einer Luecke. Die Lesestellen in costs/ui.ts und travel/wizard-ui.ts lesen die Radiogruppe statt eines Selects. Geprueft: 3 neue Unit-Tests, 3 neue Playwright-Tests (Klick auf die Erlaeuterung waehlt aus, Pfeiltasten wechseln die Karte, das Radio bleibt sichtbar angekreuzt); Funktionslauf 323 Tests gruen, Barrierefreiheit 107 gruen, Standardlauf 228 gruen, 'npm run verify' exit 0.",
+          "reference": "src/components/forms/RadioCard.astro, src/components/pages/Costs.astro, src/components/pages/Travel.astro, src/features/costs/ui.ts, src/features/travel/wizard-ui.ts, tests/design-system.test.ts, tests/e2e-features/tool-shell.spec.ts",
+          "verified_at": "2026-09-09",
+          "command": "npx playwright test --config playwright.features.config.ts",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     },
@@ -4260,7 +4268,7 @@
         "M21-05"
       ],
       "kind": "implementation",
-      "status": "todo",
+      "status": "in_progress",
       "evidence": [],
       "blocker": null,
       "notes": []

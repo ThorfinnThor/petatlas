@@ -113,3 +113,30 @@ test.describe('Schrittanzeige des Reisechecks', () => {
     await expect(reise).not.toHaveAttribute('aria-current', 'step');
   });
 });
+
+test.describe('Auswahlkarten im Rechner (M21-05)', () => {
+  test('wählt aus, wenn irgendwo auf die Karte geklickt wird', async ({ page }) => {
+    await page.goto('/de-de/tierarztkosten/');
+    const karte = page.locator('label.wahlkarte', { hasText: 'Notdienst' });
+    // Bewusst auf die Erläuterung klicken, nicht auf den Radiopunkt.
+    await karte.getByText('zuzüglich Notdienstgebühr').click();
+    await expect(page.locator('input[name="kontext"][value="emergency"]')).toBeChecked();
+  });
+
+  test('bleibt mit der Tastatur bedienbar', async ({ page }) => {
+    await page.goto('/de-de/tierarztkosten/');
+    await page.locator('input[name="tierart"][value="unbekannt"]').focus();
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('input[name="tierart"][value="dog"]')).toBeChecked();
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('input[name="tierart"][value="cat"]')).toBeChecked();
+  });
+
+  test('zeigt den gewählten Zustand nicht nur über die Farbe', async ({ page }) => {
+    await page.goto('/de-de/tierarztkosten/');
+    // Das Radio selbst bleibt sichtbar und angekreuzt.
+    const gewaehlt = page.locator('input[name="kontext"][value="regular"]');
+    await expect(gewaehlt).toBeChecked();
+    await expect(gewaehlt).toBeVisible();
+  });
+});

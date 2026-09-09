@@ -12,6 +12,7 @@
  */
 import Notice from '../Notice.astro';
 import ToolStepper from '../tools/ToolStepper.astro';
+import RadioCard from '../forms/RadioCard.astro';
 import { reiseUmfang, umfangsSatz } from '../../features/travel/scope.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
@@ -153,12 +154,17 @@ const transit = umfang.transitCountries.map(name);
       <legend><span class="schritt__nummer">Schritt 2</span> Tier</legend>
 
       <div class="feld">
-        <label for="tierart">Tierart</label>
-        <select id="tierart">
-          <option value="dog">Hund</option>
-          <option value="cat">Katze</option>
-          <option value="other">anderes Tier</option>
-        </select>
+        <p class="feld__frage" id="tierart-frage">Tierart</p>
+        <div class="karten" role="group" aria-labelledby="tierart-frage">
+          <RadioCard name="tierart" value="dog" label="Hund" checked />
+          <RadioCard name="tierart" value="cat" label="Katze" />
+          <RadioCard
+            name="tierart"
+            value="other"
+            label="Anderes Tier"
+            erlaeuterung="Für andere Arten gelten andere Regeln; der Check gibt dafür keine Auskunft."
+          />
+        </div>
       </div>
 
       <div class="feld">
@@ -259,6 +265,23 @@ const transit = umfang.transitCountries.map(name);
   .feld label,
   .schritt {
     margin-block: var(--space-8);
+  }
+
+  .feld__frage {
+    margin-block: 0 var(--space-2);
+    font-weight: var(--weight-label);
+  }
+
+  .karten {
+    display: grid;
+    gap: var(--space-3);
+    margin-block: var(--space-3);
+  }
+
+  @media (min-width: 480px) {
+    .karten {
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    }
   }
 
   .schritt__nummer {

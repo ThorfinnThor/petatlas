@@ -117,7 +117,8 @@ export function rechnerStarten(): void {
   const ergebnis = element<HTMLDivElement>('#ergebnis');
   const menge = element<HTMLInputElement>('#menge');
   const faktor = element<HTMLInputElement>('#faktor');
-  const tierart = element<HTMLSelectElement>('#tierart');
+  // M21-05: Die Tierart ist eine Radiogruppe (Auswahlkarten), kein Select.
+  const tierartFelder = [...document.querySelectorAll<HTMLInputElement>('input[name="tierart"]')];
 
   if (
     !form ||
@@ -139,8 +140,13 @@ export function rechnerStarten(): void {
     return gewaehlt?.value === 'emergency' ? 'emergency' : 'regular';
   }
 
+  /**
+   * `null` heißt „keine Angabe“ — und zwar als ausdrückliche Wahl, nicht als
+   * leeres Feld. Alles, was nicht Hund oder Katze ist, filtert nichts.
+   */
   function art(): Species | null {
-    const wert = tierart?.value ?? '';
+    const gewaehlt = document.querySelector<HTMLInputElement>('input[name="tierart"]:checked');
+    const wert = gewaehlt?.value ?? 'unbekannt';
     return wert === 'dog' || wert === 'cat' ? wert : null;
   }
 
@@ -234,10 +240,12 @@ export function rechnerStarten(): void {
       neuRechnen();
     });
   }
-  tierart?.addEventListener('change', () => {
-    trefferZeigen();
-    neuRechnen();
-  });
+  for (const eingabe of tierartFelder) {
+    eingabe.addEventListener('change', () => {
+      trefferZeigen();
+      neuRechnen();
+    });
+  }
   suche.addEventListener('input', trefferZeigen);
   form.addEventListener('formular:gueltig', trefferZeigen);
 

@@ -54,7 +54,7 @@ test('Ort: von der Karte zur Trefferliste mit Herkunft', async ({ page }) => {
 
 test('Reise: von der Angabe zur Checkliste', async ({ page }) => {
   await page.goto('/de-de/reisecheck/');
-  await page.selectOption('#tierart', 'dog');
+  await page.check('input[name="tierart"][value="dog"]');
   await page.selectOption('#ziel', 'AT');
   await page.fill('#reisedatum', '2026-10-01');
   await page.fill('#geburtsdatum', '2020-01-01');

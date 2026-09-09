@@ -12,6 +12,7 @@
  */
 import Notice from '../Notice.astro';
 import ToolShell from '../tools/ToolShell.astro';
+import RadioCard from '../forms/RadioCard.astro';
 import DataStatus from '../DataStatus.astro';
 import ErrorSummary from '../forms/ErrorSummary.astro';
 import Field from '../forms/Field.astro';
@@ -74,25 +75,46 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
           Der Kontext wird nicht aus der Uhrzeit abgeleitet. Wählen Sie, was tatsächlich zutrifft;
           im Zweifel fragen Sie in der Praxis nach.
         </p>
-        <label class="wahl">
-          <input type="radio" name="kontext" value="regular" checked />
-          Regulär — Faktor {COST_CONFIG.standardFactorMin} bis {COST_CONFIG.standardFactorMax}
-        </label>
-        <label class="wahl">
-          <input type="radio" name="kontext" value="emergency" />
-          Notdienst — Faktor {COST_CONFIG.emergencyFactorMin} bis {COST_CONFIG.emergencyFactorMax},
-          zuzüglich Notdienstgebühr
-        </label>
+        <div class="karten">
+          <RadioCard
+            name="kontext"
+            value="regular"
+            label="Regulär"
+            erlaeuterung={`Faktor ${COST_CONFIG.standardFactorMin} bis ${COST_CONFIG.standardFactorMax}`}
+            checked
+          />
+          <RadioCard
+            name="kontext"
+            value="emergency"
+            label="Notdienst"
+            erlaeuterung={`Faktor ${COST_CONFIG.emergencyFactorMin} bis ${COST_CONFIG.emergencyFactorMax}, zuzüglich Notdienstgebühr`}
+          />
+        </div>
       </fieldset>
 
       <fieldset>
         <legend>Tier</legend>
-        <label for="tierart">Tierart</label>
-        <select id="tierart" name="tierart">
-          <option value="">keine Angabe</option>
-          <option value="dog">Hund</option>
-          <option value="cat">Katze</option>
-        </select>
+        <div class="karten">
+          <RadioCard
+            name="tierart"
+            value="unbekannt"
+            label="Keine Angabe"
+            erlaeuterung="Zeigt alle Positionen der Verordnung."
+            checked
+          />
+          <RadioCard
+            name="tierart"
+            value="dog"
+            label="Hund"
+            erlaeuterung="Blendet Positionen aus, die ausdrücklich eine andere Tierart nennen."
+          />
+          <RadioCard
+            name="tierart"
+            value="cat"
+            label="Katze"
+            erlaeuterung="Blendet Positionen aus, die ausdrücklich eine andere Tierart nennen."
+          />
+        </div>
         <p class="hilfe">
           Die Verordnung ordnet die meisten Positionen keiner Tierart zu. Eine Angabe schließt hier
           nur Positionen aus, die im Originaltext ausdrücklich eine andere Tierart nennen.
@@ -191,10 +213,16 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     margin-block: var(--space-1);
   }
 
-  .wahl {
-    display: block;
-    margin-block: var(--space-2);
-    font-weight: 400;
+  .karten {
+    display: grid;
+    gap: var(--space-3);
+    margin-block: var(--space-3);
+  }
+
+  @media (min-width: 480px) {
+    .karten {
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    }
   }
 
   select,

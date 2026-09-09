@@ -1,0 +1,98 @@
+---
+/**
+ * M21-05 — Auswahlkarte nach Designvertrag Abschnitt 13.6.
+ *
+ * Die ganze Karte ist klickbar, weil sie ein `<label>` ist — nicht, weil ein
+ * Skript Klicks abfängt. Im Dokument steht ein echtes `<input type="radio">`.
+ * Damit funktionieren Tastatur, Pfeiltasten innerhalb der Gruppe,
+ * Formularübermittlung und Screenreader unverändert; ohne JavaScript
+ * ebenfalls.
+ *
+ * Der gewählte Zustand wird nicht allein über Farbe gezeigt (Farbregel 5):
+ * der Radiopunkt selbst bleibt sichtbar und ist die eigentliche Anzeige.
+ * Rahmen und Fläche kommen dazu, sie ersetzen ihn nicht.
+ */
+interface Props {
+  /** Gruppenname — gleich für alle Karten einer Entscheidung. */
+  name: string;
+  value: string;
+  label: string;
+  /** Ein Satz, der die Wahl erklärt. Optional, aber meistens sinnvoll. */
+  erlaeuterung?: string;
+  id?: string;
+  checked?: boolean;
+  /** Für Tests und gezielte Ansteuerung. */
+  testId?: string;
+}
+
+const { name, value, label, erlaeuterung, id, checked = false, testId } = Astro.props;
+
+if (name.trim() === '' || value.trim() === '') {
+  throw new Error('Eine Auswahlkarte ohne Name oder Wert kommt im Formular nicht an.');
+}
+if (label.trim() === '') {
+  throw new Error('Eine Auswahlkarte ohne Beschriftung ist nicht bedienbar.');
+}
+---
+
+<label class="wahlkarte" data-testid={testId}>
+  <input type="radio" name={name} value={value} id={id} checked={checked} />
+  <span class="wahlkarte__text">
+    <span class="wahlkarte__label">{label}</span>
+    {erlaeuterung !== undefined && <span class="wahlkarte__hilfe">{erlaeuterung}</span>}
+  </span>
+</label>
+
+<style>
+  .wahlkarte {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    /* Abschnitt 13.6: die ganze Karte ist die Klickfläche. */
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    cursor: pointer;
+    font-weight: 400;
+    margin-block: 0;
+  }
+
+  .wahlkarte:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .wahlkarte input {
+    /* Der Radiopunkt bleibt sichtbar: er ist die Zustandsanzeige. */
+    margin-block-start: 0.15rem;
+    flex: none;
+  }
+
+  .wahlkarte__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .wahlkarte__label {
+    font-weight: var(--weight-label);
+  }
+
+  .wahlkarte__hilfe {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  /* Abschnitt 13.6: Primary Border und Soft Background im gewählten Zustand. */
+  .wahlkarte:has(input:checked) {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+  }
+
+  /* Abschnitt 13.3: der Fokus liegt auf der ganzen Karte, nicht nur auf dem
+     kleinen Punkt — sonst sieht man bei Tastaturbedienung kaum, wo man ist. */
+  .wahlkarte:has(input:focus-visible) {
+    outline: 3px solid var(--color-info);
+    outline-offset: 2px;
+  }
+</style>

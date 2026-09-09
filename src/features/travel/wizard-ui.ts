@@ -15,6 +15,15 @@ function wert(id: string): string {
   return feld === null ? '' : feld.value.trim();
 }
 
+/**
+ * M21-05: Die Tierart ist eine Radiogruppe (Auswahlkarten). Ohne Auswahl
+ * gibt es keinen Wert — geraten wird keiner.
+ */
+function gewaehlt(name: string): string {
+  const feld = document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
+  return feld === null ? '' : feld.value.trim();
+}
+
 function angabe(id: string): Angabe {
   const roh = wert(id);
   return roh === 'ja' || roh === 'nein' ? roh : 'unbekannt';
@@ -41,7 +50,7 @@ function escape(text: string): string {
 
 function eingabeLesen(): WizardEingabe {
   return {
-    species: wert('tierart'),
+    species: gewaehlt('tierart'),
     destination: wert('ziel'),
     transit: transitLaender(),
     direction: wert('richtung'),

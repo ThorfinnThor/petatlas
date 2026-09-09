@@ -15,6 +15,7 @@ import Button from '../src/components/ui/Button.astro';
 import Card from '../src/components/ui/Card.astro';
 import { defaultMarket, withEnabledFeatures } from '../src/domain/market.ts';
 import EmptyState from '../src/components/ui/EmptyState.astro';
+import RadioCard from '../src/components/forms/RadioCard.astro';
 import PageHeader from '../src/components/ui/PageHeader.astro';
 import ToolShell from '../src/components/tools/ToolShell.astro';
 import ToolStepper from '../src/components/tools/ToolStepper.astro';
@@ -402,5 +403,41 @@ describe('ToolStepper (M21-04)', () => {
     await expect(
       render(ToolStepper, { schritte: SCHRITTE, label: 'x', aktiv: 'gibt-es-nicht' }, {}),
     ).rejects.toThrow(/steht nicht in der Liste/);
+  });
+});
+
+describe('RadioCard (M21-05)', () => {
+  it('legt ein echtes Radio ins Dokument, nicht eine nachgebaute Karte', async () => {
+    const html = await render(
+      RadioCard,
+      { name: 'tierart', value: 'dog', label: 'Hund', erlaeuterung: 'Für Hunde.' },
+      {},
+    );
+    expect(html).toContain('type="radio"');
+    expect(html).toContain('name="tierart"');
+    expect(html).toContain('value="dog"');
+    // Die ganze Karte ist das Label — deshalb ist sie klickbar, ohne dass ein
+    // Skript Klicks abfängt.
+    expect(html).toMatch(/^<label/);
+    expect(html).toContain('Für Hunde.');
+  });
+
+  it('verweigert eine Karte ohne Name, Wert oder Beschriftung', async () => {
+    await expect(render(RadioCard, { name: '', value: 'x', label: 'X' }, {})).rejects.toThrow(
+      /kommt im Formular nicht an/,
+    );
+    await expect(render(RadioCard, { name: 'a', value: '', label: 'X' }, {})).rejects.toThrow(
+      /kommt im Formular nicht an/,
+    );
+    await expect(render(RadioCard, { name: 'a', value: 'x', label: ' ' }, {})).rejects.toThrow(
+      /nicht bedienbar/,
+    );
+  });
+
+  it('zeigt den Zustand nicht allein über Farbe', () => {
+    const quelle = readFileSync('src/components/forms/RadioCard.astro', 'utf8');
+    // Der Radiopunkt wird nicht versteckt; er ist die eigentliche Anzeige.
+    expect(quelle).not.toMatch(/input[^{]*\{[^}]*(display:\s*none|visibility:\s*hidden)/);
+    expect(quelle).not.toContain('appearance: none');
   });
 });

@@ -58,7 +58,7 @@ test('rechnet lokal und gibt kein grünes Gesamtergebnis', async ({ page }) => {
   });
 
   await page.goto(REISE);
-  await page.selectOption('#tierart', 'dog');
+  await page.check('input[name="tierart"][value="dog"]');
   await page.selectOption('#ziel', 'AT');
   await page.fill('#reisedatum', '2026-10-01');
   await page.fill('#geburtsdatum', '2020-01-01');
