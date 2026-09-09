@@ -3,8 +3,8 @@
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
   "implementation_state": "in_progress",
-  "current_task": "M23-02",
-  "note": "Public-release functional acceptance reopened after a user-reported map defect. External release requirements remain separate.",
+  "current_task": null,
+  "note": "Practical real-data user flows and failure recovery verified. Public deployment remains pending the documented owner, expert-review and hosting prerequisites.",
   "status_values": [
     "todo",
     "in_progress",
@@ -4478,8 +4478,16 @@
         "M23-01"
       ],
       "kind": "implementation",
-      "status": "in_progress",
-      "evidence": [],
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Repaired bill editing and validation click loss, initial map filters, recoverable data/name/tile failures, actual place favorites, failed storage writes, product species filtering and readable labels. Real-app acceptance: 26 browser cases including mobile/desktop and failed-search recovery. CI at f67dddf: 1432 unit tests, 228 base, 107 accessibility, 298 feature, 26 app, 12 performance checks passed; 11 existing skips. Main now requires all five CI/Security checks. Cloudflare authentication rechecked and still expired; no public release claimed.",
+          "reference": "docs/PUBLIC_RELEASE_ACCEPTANCE.md, https://github.com/ThorfinnThor/petatlas/actions/runs/34379784980",
+          "verified_at": "2026-09-09",
+          "command": "npm run verify && npm run build:app; GitHub CI full browser matrix",
+          "exit_code": 0
+        }
+      ],
       "blocker": null,
       "notes": []
     }

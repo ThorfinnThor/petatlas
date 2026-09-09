@@ -27,6 +27,8 @@ npm run verify
 npm run test:e2e
 npm run test:e2e:features
 npm run test:accessibility
+npm run test:app
+npm run test:performance
 ```
 
 Die Browserprüfungen benötigen die Playwright-Browser (`npx playwright install chromium webkit`). `npm run build:app` prüft zusätzlich Ausgabedateien, interne Verweise, SEO und Größenbudgets.
