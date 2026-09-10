@@ -28,7 +28,7 @@
       "label": "Katzenspielzeug für drinnen",
       "species": ["cat"],
       "description": "Federangeln, Bälle und Spielzeug für die Wohnung.",
-      "matchAttributes": ["material", "lengthCentimeters"]
+      "matchAttributes": ["material", "lengthCentimeters", "species"]
     },
     {
       "categoryId": "scratching",

@@ -69,6 +69,11 @@ export function finderStarten(): void {
   const ausgabe = document.querySelector<HTMLElement>('#finder-ergebnis');
   if (form === null || ausgabe === null) return;
 
+  const requestedSpecies = new URLSearchParams(window.location.search).get('tierart');
+  const speciesField = document.querySelector<HTMLSelectElement>('#finder-tierart');
+  if (speciesField && (requestedSpecies === 'cat' || requestedSpecies === 'dog'))
+    speciesField.value = requestedSpecies;
+
   const hinweis = document.querySelector<HTMLElement>('#finder-ohne-js');
   if (hinweis !== null) hinweis.hidden = true;
   const knopf = document.querySelector<HTMLButtonElement>('#finder-suchen');

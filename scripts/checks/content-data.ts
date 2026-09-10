@@ -66,6 +66,7 @@ export const PRUEFSTUECKE: readonly Pruefstueck[] = [
               name: z.string().min(1),
               brand: z.string().min(1),
               category: z.string().min(1),
+              species: z.enum(['dog', 'cat']),
               categoryId: z.string().min(1),
               sourceUrl: z.url().refine((url) => url.startsWith('https://')),
               sourceLabel: z.string().min(1),

@@ -1,4 +1,5 @@
 ---
+import { createSiteConfig } from '../../../../config/site.ts';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrandImage from '../../../components/BrandImage.astro';
@@ -6,12 +7,79 @@ import { devFeatureOverrides } from '../../../../config/build.ts';
 import { defaultMarket, withEnabledFeatures } from '../../../domain/market.ts';
 import { routeExists, routePath } from '../../../lib/routes.ts';
 export function getStaticPaths() {
-  return ['tierarztrechnung-verstehen', 'hundeorte-finden', 'reise-vorbereiten'].map((slug) => ({
+  return [
+    'tierarztrechnung-verstehen',
+    'hundeorte-finden',
+    'reise-vorbereiten',
+    'katzen-beschaeftigen',
+    'katze-transportbox',
+  ].map((slug) => ({
     params: { slug },
   }));
 }
 const slug = Astro.params.slug;
 const texts = {
+  'katzen-beschaeftigen': {
+    title: 'Wohnungskatzen beschäftigen: Spielen, kratzen und Ruhe finden',
+    category: 'Katzen verstehen',
+    image: 'play-cat-home',
+    intro:
+      'Abwechslung beginnt im Alltag: gemeinsame Spielzeit, erreichbare Kratzmöglichkeiten und ein Platz, an dem deine Katze ungestört sein kann.',
+    sections: [
+      [
+        'Kurze Spiele anbieten',
+        'Biete regelmäßig kurze Spiele an und richte dich nach dem Interesse deiner Katze. Bewege das Spielzeug wie eine Beute von ihr weg und lass sie es zwischendurch fangen. Wechsle Spielzeuge ab; Hände und Füße sind keine Spielbeute.',
+      ],
+      [
+        'Spielzeug prüfen und wegräumen',
+        'Kontrolliere Spielzeug auf beschädigte oder ablösbare Teile. Angeln, Schnüre und Gegenstände, in denen sich die Katze verfangen kann oder die sie zerlegen und verschlucken könnte, bleiben nur unter Aufsicht im Einsatz. Räume sie danach weg.',
+      ],
+      [
+        'Kratzen ermöglichen',
+        'Ein Kratzplatz soll standfest sein und genug Platz zum Strecken bieten. Beobachte, ob deine Katze lieber waagerecht oder senkrecht kratzt. Kratzen gehört zum normalen Verhalten; biete passende Flächen an, statt die Katze dafür zu bestrafen.',
+      ],
+      [
+        'Ruhe respektieren',
+        'Lass deine Katze selbst entscheiden, wann sie mitmacht. Ein zugänglicher Rückzugsort gehört ebenso zum Alltag wie Bewegung. Die Produktauswahl zeigt belegte Eigenschaften, aber keine individuelle Eignungsprüfung.',
+      ],
+    ],
+    source: 'https://www.cats.org.uk/help-and-advice/cat-behaviour/cats-and-play',
+    sourceName: 'Cats Protection · Spielen mit Katzen',
+    extraSource: 'https://www.cats.org.uk/help-and-advice/cat-behaviour/scratching',
+    extraSourceName: 'Cats Protection · Kratzverhalten',
+    tool: 'toys' as const,
+    action: 'Katzenspielzeug im Finder ansehen',
+  },
+  'katze-transportbox': {
+    title: 'Deine Katze an die Transportbox gewöhnen',
+    category: 'Mit Katze zur Praxis',
+    image: 'hero-dog-cat-home',
+    intro:
+      'Auch eine Wohnungskatze muss gelegentlich transportiert werden. Eine vertraute Box und kleine Übungsschritte können den nächsten Weg zur Praxis erleichtern.',
+    sections: [
+      [
+        'Die Box im Alltag stehen lassen',
+        'Stelle die offene Box an einen ruhigen, erreichbaren Ort. Vertraute Unterlagen können beim Erkunden helfen. Die Katze soll sich in ihrem Tempo annähern können; beginne nicht erst direkt vor dem Termin.',
+      ],
+      [
+        'In kleinen Schritten üben',
+        'Wenn deine Katze freiwillig hineingeht und entspannt bleibt, übe später kurz das Schließen und anschließend das vorsichtige Anheben. Gehe erst weiter, wenn der vorherige Schritt gut klappt. Bei Unsicherheit wieder einen Schritt zurückgehen.',
+      ],
+      [
+        'Den Transport vorbereiten',
+        'Jede Katze erhält eine eigene geeignete Box. Halte sie aufrecht und sichere sie für die Fahrt entsprechend den Transportvorgaben. Lass die Katze nicht unbeaufsichtigt im Auto.',
+      ],
+      [
+        'Die Praxis vorher einbeziehen',
+        'Sprich starke Transportangst und besondere Bedürfnisse vor dem Termin mit der Praxis ab. Für eine Reise ins Ausland kommen Dokumente und Einreisevorgaben hinzu; die Box allein genügt dafür nicht.',
+      ],
+    ],
+    source:
+      'https://www.cats.org.uk/help-and-advice/getting-a-cat/how-to-choose-and-use-a-cat-carrier',
+    sourceName: 'Cats Protection · Transportbox auswählen und üben',
+    tool: 'map' as const,
+    action: 'Tierarztpraxis finden',
+  },
   'tierarztrechnung-verstehen': {
     title: 'Deine Tierarztrechnung verstehen',
     category: 'Kosten verstehen',
@@ -63,7 +131,7 @@ const texts = {
     action: 'Hunde-Orte finden',
   },
   'reise-vorbereiten': {
-    title: 'Mit Hund verreisen: die Vorbereitung',
+    title: 'Mit Hund oder Katze verreisen: die Vorbereitung',
     category: 'Zusammen reisen',
     image: 'travel-human-dog-sunset',
     intro:
@@ -98,7 +166,7 @@ const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
   <a href="/de-de/#ratgeber">← Alle Ratgeber</a><p class="eyebrow">{article.category}</p><h1>
     {article.title}
   </h1><p>{article.intro}</p><p class="article-meta">
-    PetAtlas · Redaktionelle Orientierung · 09.09.2026
+    {createSiteConfig('preview', import.meta.env).brandName} · Redaktionelle Orientierung · 10.09.2026
   </p><BrandImage name={article.image} sizes="(max-width: 768px) 100vw, 760px" />
   {
     article.sections.map(([title, text]) => (
@@ -113,17 +181,34 @@ const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
   {
     routeExists(market, article.tool) && (
       <p>
-        <a class="article-action" href={routePath(market, article.tool)}>
+        <a
+          class="article-action"
+          href={
+            routePath(market, article.tool) +
+            (slug === 'katzen-beschaeftigen' ? '?tierart=cat' : '')
+          }
+        >
           {article.action} →
         </a>
       </p>
     )
   }
-  <h2>Quelle und Einordnung</h2><p>
+  <h2>Quellen und Einordnung</h2><p>
     <a href={article.source} rel="noopener">{article.sourceName} ↗</a>
-  </p><p>
-    Diese Seite erklärt die Bedienung und Grenzen unserer Werkzeuge. Sie ersetzt weder eine
-    individuelle tierärztliche Beratung noch die Prüfung aktueller Reisevorgaben.
+  </p>
+  {
+    'extraSource' in article && (
+      <p>
+        <a href={article.extraSource} rel="noopener">
+          {article.extraSourceName} ↗
+        </a>
+      </p>
+    )
+  }
+  <p>
+    Diese Seite gibt redaktionelle Orientierung für den Alltag mit deinem Tier und erklärt die
+    Grenzen unserer Werkzeuge. Sie ersetzt weder eine individuelle tierärztliche Beratung noch die
+    Prüfung aktueller Reisevorgaben.
   </p>
 </BaseLayout>
 <style>
