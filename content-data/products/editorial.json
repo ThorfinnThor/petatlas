@@ -69,7 +69,126 @@
       "sourceLabel": "KONG · Hersteller",
       "checkedAt": "2026-09-10",
       "image": null
+    },
+    {
+      "id": "kong-wobbler",
+      "name": "KONG Wobbler",
+      "brand": "KONG",
+      "category": "Spielzeug",
+      "categoryId": "puzzle-toy",
+      "sourceUrl": "https://www.kongcompany.com/wobbler/",
+      "sourceLabel": "KONG · Hersteller",
+      "checkedAt": "2026-09-10",
+      "facts": [
+        "Befüllbarer Futterspender zum Anstupsen",
+        "Zum Befüllen aufschraubbar; kein Kauspielzeug"
+      ],
+      "image": null,
+      "species": "dog"
+    },
+    {
+      "id": "west-paw-hurley",
+      "name": "Hurley",
+      "brand": "West Paw",
+      "category": "Spielzeug",
+      "categoryId": "chew-toy",
+      "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone",
+      "sourceLabel": "West Paw · Hersteller",
+      "checkedAt": "2026-09-10",
+      "facts": ["Knochenförmiges Spielzeug", "Zogoflex-Material"],
+      "image": null,
+      "species": "dog"
+    },
+    {
+      "id": "west-paw-zisc",
+      "name": "Zisc",
+      "brand": "West Paw",
+      "category": "Spielzeug",
+      "categoryId": "fetch-toy",
+      "sourceUrl": "https://www.westpaw.com/products/zisc-flying-disc",
+      "sourceLabel": "West Paw · Hersteller",
+      "checkedAt": "2026-09-10",
+      "facts": ["Wurfscheibe aus Zogoflex", "Laut Hersteller schwimmfähig"],
+      "image": null,
+      "species": "dog"
+    },
+    {
+      "id": "west-paw-qwizl",
+      "name": "Qwizl",
+      "brand": "West Paw",
+      "category": "Spielzeug",
+      "categoryId": "puzzle-toy",
+      "sourceUrl": "https://www.westpaw.com/products/qwizl-treat-toy",
+      "sourceLabel": "West Paw · Hersteller",
+      "checkedAt": "2026-09-10",
+      "facts": [
+        "Befüllbares Spielzeug mit seitlichen Öffnungen",
+        "Spülmaschinengeeignet im oberen Fach"
+      ],
+      "image": null,
+      "species": "dog"
+    },
+    {
+      "id": "catit-senses-digger",
+      "name": "Senses Digger",
+      "brand": "Catit",
+      "category": "Spielzeug",
+      "categoryId": "puzzle-toy",
+      "sourceUrl": "https://www.catit.com/products/toys/senses-digger/",
+      "sourceLabel": "Catit · Hersteller",
+      "checkedAt": "2026-09-10",
+      "facts": [
+        "Herausnehmbare Becher zum Befüllen mit Trockenfutter",
+        "Basis zum Herausangeln mit der Pfote"
+      ],
+      "image": null,
+      "species": "cat"
+    },
+    {
+      "id": "catit-senses-food-tree",
+      "name": "Senses Food Tree",
+      "brand": "Catit",
+      "category": "Spielzeug",
+      "categoryId": "puzzle-toy",
+      "sourceUrl": "https://www.catit.com/products/toys/senses-food-tree/",
+      "sourceLabel": "Catit · Hersteller",
+      "checkedAt": "2026-09-10",
+      "facts": ["Futterbaum mit vier Ebenen", "Öffnungen zum Herausangeln mit der Pfote"],
+      "image": null,
+      "species": "cat"
+    },
+    {
+      "id": "catit-senses-treat-puzzle",
+      "name": "Senses Treat Puzzle · 43010",
+      "brand": "Catit",
+      "category": "Spielzeug",
+      "categoryId": "puzzle-toy",
+      "sourceUrl": "https://www.catit.com/products/toys/senses-treat-puzzle/",
+      "sourceLabel": "Catit · Hersteller",
+      "checkedAt": "2026-09-10",
+      "facts": [
+        "Sechs unterschiedliche Futterverstecke auf einem Tablett",
+        "Zerlegbar zur Reinigung"
+      ],
+      "image": null,
+      "species": "cat"
+    },
+    {
+      "id": "catit-senses-treat-spinner",
+      "name": "Senses Treat Spinner · 43750",
+      "brand": "Catit",
+      "category": "Spielzeug",
+      "categoryId": "puzzle-toy",
+      "sourceUrl": "https://www.catit.com/products/toys/senses-treat-spinner/",
+      "sourceLabel": "Catit · Hersteller",
+      "checkedAt": "2026-09-10",
+      "facts": [
+        "Kreiselförmige Basis aus Melamin",
+        "Abnehmbare Silikonabdeckung mit vier Öffnungen"
+      ],
+      "image": null,
+      "species": "cat"
     }
   ],
-  "note": "Redaktionelle Faktenauswahl. Keine Vergütung, Affiliate-Links, Testurteile, Preisangebote oder übernommenen Produktbilder."
+  "note": "Redaktionelle Faktenauswahl mit verlinkten Herstellerquellen. Amazon-Suchlinks sind als Werbung gekennzeichnet. Keine eigenen Produkttests, aktuellen Händlerpreise oder übernommenen Produktbilder."
 }

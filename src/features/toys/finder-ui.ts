@@ -45,7 +45,7 @@ function trefferMarkup(treffer: Treffer): string {
   try {
     const links = JSON.parse(configured ?? '{}') as Record<string, unknown>;
     if (expected && links[treffer.productId] === expected)
-      amazon = `<p><a href="${escape(expected)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Amazon suchen ↗ (Werbung)</a></p>`;
+      amazon = `<p class="finder__aktion"><a href="${escape(expected)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Amazon suchen ↗ (Werbung)</a></p>`;
   } catch {
     /* Missing or malformed configuration never creates a link. */
   }
@@ -69,7 +69,8 @@ function trefferMarkup(treffer: Treffer): string {
   return `
     <li data-produkt="${escape(treffer.productId)}" data-punkte="${treffer.punkte}">
       <h3>${escape(productIdentity(treffer.productId)?.name ?? treffer.productId)}</h3>
-      <p class="finder__kategorie">Kategorie: ${escape(kategorie(treffer.categoryId)?.label ?? treffer.categoryId)}</p>
+      <p class="finder__kategorie">${identity ? `${escape(identity.brand)} · ` : ''}Kategorie: ${escape(kategorie(treffer.categoryId)?.label ?? treffer.categoryId)}</p>
+      ${identity ? `<p>${identity.facts.map(escape).join(' · ')}</p>` : ''}
       ${begruendung}
       ${offen}
       ${source}

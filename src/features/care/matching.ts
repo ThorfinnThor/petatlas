@@ -41,7 +41,7 @@ export const BEDUERFNISSE: Readonly<
 > = {
   indoor: {
     label: 'lebt drinnen',
-    erklaerung: 'Bevorzugt Spielzeug für die Wohnung; nichts, was Platz oder Wurfweite braucht.',
+    erklaerung: 'Bevorzugt Beschäftigungsspielzeug und Spiele für die Wohnung.',
   },
   apportieren: {
     label: 'apportiert gern',
@@ -71,7 +71,7 @@ const BEDARF_KATEGORIEN: Readonly<Record<string, readonly string[]>> = {
   apportieren: ['fetch-toy'],
   kauen: ['chew-toy'],
   beschaeftigung: ['puzzle-toy'],
-  wasser: ['fetch-toy'],
+  wasser: [],
   langhaar: ['grooming-brush'],
 };
 
