@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import editorial from '../content-data/products/editorial.json' with { type: 'json' };
+import toys from '../content-data/taxonomy/toys.json' with { type: 'json' };
 import {
   amazonEnabled,
   amazonSearchUrl,
@@ -9,6 +11,14 @@ import { readOperator } from '../config/site.ts';
 import { werbeStand } from '../config/legal.ts';
 
 describe('Owner supplied Amazon text links', () => {
+  it('covers every recorded toy and excludes the care product', () => {
+    const categories = new Set(toys.categories.map((category) => category.categoryId));
+    for (const product of editorial.products) {
+      expect(amazonSearchUrl(product.id) !== null, product.id).toBe(
+        categories.has(product.categoryId),
+      );
+    }
+  });
   it('limits destinations to fixed search terms and the supplied tracking ID', () => {
     for (const [key, query] of Object.entries(AMAZON_SEARCHES)) {
       const url = new URL(amazonSearchUrl(key)!);

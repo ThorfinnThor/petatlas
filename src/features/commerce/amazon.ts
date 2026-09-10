@@ -3,6 +3,7 @@ export const AMAZON_TAG = 'wauandmiau-21';
 export const AMAZON_DISCLOSURE = 'Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.';
 export const AMAZON_SEARCHES = {
   'kong-classic': 'KONG Classic Hundespielzeug',
+  'west-paw-toppl-large': 'West Paw Toppl Large Eggplant Hundespielzeug',
   'catit-senses-play-circuit': 'Catit Senses Play Circuit 43154',
   'kong-cat-tennis-balls': 'KONG Cat Active Tennis Balls with Bells Katze',
   'supplements-dog': 'Ergänzungsfuttermittel Hund',
