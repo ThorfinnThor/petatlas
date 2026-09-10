@@ -41,3 +41,7 @@ Ohne 1 und 2 aus der Pflichttabelle gibt es keinen Produktionsbuild — das ist 
 4. Erst danach fachliche Freigaben für Gebühren und Reiseregeln, dann Partnerverträge.
 
 Jeder dieser Schritte endet mit einem Eintrag in `config/launch.json` **durch die zuständige Person** und einem Nachweis in `docs/reviews/`.
+
+## Aktualisierung 10.09.2026
+
+Die obige Momentaufnahme vom 09.09. ist für Betreiberangaben und Amazon-Textlinks überholt. Der aktuelle Nachweis ist `docs/reviews/legal-amazon-2026-09-10.md`: Impressum, Datenschutzhinweise und Rückmeldekontakt sind ergänzt; ausdrücklich beauftragte Amazon-Textlinks verwenden Werbung/Partnerhinweis. Kein Analyse-Tracking und keine Amazon-Einbettung beim Seitenaufruf. Vertrags-/Kontonachweise und weitere angefragte Betreiberfakten bleiben offen. Keine pauschale Rechtsfreigabe.

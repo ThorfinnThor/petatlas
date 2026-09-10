@@ -78,9 +78,7 @@ const canonical = canonicalPfad
     <SiteHeader market={market} brandName={site.brandName} aktuellerPfad={Astro.url.pathname} />
     {
       build.mode === 'preview' && (
-        <div class="preview-bar">
-          Vorschau · Echte Daten, ohne Werbung. Kosten- und Reiseregeln noch ohne Fachfreigabe.
-        </div>
+        <div class="preview-bar">Vorschau · Kosten- und Reiseregeln noch ohne Fachfreigabe.</div>
       )
     }
     {

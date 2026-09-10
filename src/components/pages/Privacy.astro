@@ -2,6 +2,7 @@
 import { resolveBuildConfig, devFeatureOverrides } from '../../../config/build.ts';
 import { createSiteConfig } from '../../../config/site.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
+import { amazonEnabled } from '../../features/commerce/amazon.ts';
 import Notice from '../Notice.astro';
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
@@ -10,8 +11,8 @@ const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 
 <h1>Datenschutz</h1>
 <p>
-  Hier erfährst du, welche Daten diese Website für ihre Funktionen verwendet. Stand: 9. September
-  2026.
+  Diese Datenschutzerklärung beschreibt die Verarbeitung personenbezogener Daten auf Wau &amp; Miau.
+  Stand: 10. September 2026.
 </p>
 <h2>Verantwortlicher und Kontakt</h2>
 {
@@ -24,82 +25,170 @@ const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
       <a href={`mailto:${site.operator.contactEmail}`}>{site.operator.contactEmail}</a>
     </p>
   ) : (
-    <Notice variante="hinweis" titel="Vorschau ohne vollständige Betreiberangaben">
-      <p>
-        Die Betreiber- und Kontaktangaben werden vor der öffentlichen Freigabe ergänzt. Diese
-        Vorschau enthält noch keine abgeschlossene rechtliche Bewertung.
-      </p>
+    <Notice variante="hinweis" titel="Entwicklungsstand ohne Betreiberangaben">
+      <p>Die produktbezogenen Betreiberangaben werden im Real-Data-Build eingebunden.</p>
     </Notice>
   )
 }
 <h2>Website und Hosting</h2>
 <p>
-  Die Website liefert statische Seiten über Cloudflare aus. Beim Abruf verarbeitet der
-  Hostinganbieter insbesondere die IP-Adresse und technische Verbindungsdaten, um die angeforderten
-  Dateien auszuliefern und den Dienst zu schützen. Es gibt keine Anmeldung und keine eigene
-  Besucherdatenbank.
+  Die Website wird über Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA,
+  ausgeliefert. Dabei werden IP-Adresse, Zeitpunkt, angeforderte Adresse, Browser- und
+  Verbindungsinformationen sowie technische Fehler- und Sicherheitsdaten verarbeitet. Dies dient der
+  Auslieferung, Verfügbarkeit und Abwehr von Missbrauch. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f
+  DSGVO; unser berechtigtes Interesse ist der zuverlässige und sichere Betrieb.
 </p>
 <p>
-  Weitere Angaben zum Hostinganbieter: <a
-    href="https://www.cloudflare.com/privacypolicy/"
-    rel="noopener">Cloudflare-Datenschutzhinweise</a
+  Wir betreiben keine Besucherdatenbank und erstellen keine personenbezogenen Nutzungsprofile.
+  Cloudflare kann technische Protokolle verarbeiten. Die Aufbewahrung richtet sich nach dem
+  jeweiligen Betriebs- oder Sicherheitszweck und gesetzlichen Anforderungen; eine einheitliche Frist
+  für alle dort verarbeiteten Daten besteht nicht. Wir richten keinen eigenen Export von
+  Besucherprotokollen ein.
+</p>
+<p>
+  Cloudflare nutzt ein weltweites Netzwerk; eine Verarbeitung außerhalb der EU/des EWR, insbesondere
+  in den USA, ist möglich. Cloudflare beschreibt dafür das EU-US Data Privacy Framework und in
+  seinem Auftragsverarbeitungszusatz Standardvertragsklauseln. Details, Schutzmaßnahmen und Kontakt
+  für Auskünfte: <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener"
+    >Cloudflare-Datenschutzhinweise</a
+  > und <a href="https://www.cloudflare.com/cloudflare-customer-dpa/" rel="noopener"
+    >Cloudflare-Auftragsverarbeitungszusatz</a
   >.
 </p>
 <h2>Suche und Rechner</h2>
 <p>
   Suchbegriffe und Recheneingaben werden im Browser verarbeitet. Orts- und Gebührendaten werden als
-  statische Dateien geladen. Suchbegriffe in einer Seitenadresse können wie andere URL-Bestandteile
-  in Verbindungsdaten auftauchen. Deshalb gehören keine vertraulichen Informationen in diese Felder.
+  Dateien von unserer Website geladen. Suchbegriffe in einer Seitenadresse können als Teil der
+  angeforderten URL beim Hosting anfallen. Bitte trage keine vertraulichen persönlichen Angaben ein.
+  Berechnungen und Filter lösen keine Übermittlung deiner Eingaben an einen Händler aus.
 </p>
 {
   market.featureFlags.map && (
     <>
-      <>
-        <h2>Karte und Standort</h2>
-        <p>
-          Die Ortsliste funktioniert ohne externe Kartenkacheln. Erst wenn du die Karte anforderst,
-          lädt der Browser Kartenbilder von tile.openstreetmap.org. Dabei erhält der Kacheldienst
-          unter anderem deine IP-Adresse und die angeforderten Kartenausschnitte.{' '}
-          <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">
-            Datenschutzhinweise der OpenStreetMap Foundation
-          </a>
-          .
-        </p>
-        <p>
-          „Meinen Standort verwenden“ fragt die Position erst nach deiner ausdrücklichen Aktion und
-          der Browserfreigabe ab. Die Website verwendet sie für die Suche im Browser. Du kannst
-          stattdessen jederzeit einen Ort eingeben. Standortberechtigungen kannst du in den
-          Browsereinstellungen widerrufen.
-        </p>
-      </>
+      <h2>Karte und Standort</h2>
+      <p>
+        Die Ortsliste funktioniert ohne externe Kartenbilder. Erst über „Karte anzeigen“ fordert
+        dein Browser Kartenkacheln von tile.openstreetmap.org an. Anbieter ist die OpenStreetMap
+        Foundation, Vereinigtes Königreich. Dabei werden IP-Adresse, technische Verbindungsdaten,
+        gegebenenfalls die Herkunftsseite und die angeforderten Kartenausschnitte verarbeitet.
+        Grundlage für diese auf Wunsch geladene Darstellung ist Art. 6 Abs. 1 lit. f DSGVO: unser
+        Interesse an einer verständlichen räumlichen Darstellung. Du kannst die Website über die
+        Ortsliste ohne diese Darstellung nutzen.
+      </p>
+      <p>
+        Der Kacheldienst und seine Dienstleister können Daten auch außerhalb der EU verarbeiten.
+        Einzelheiten zu Empfängern, Speicherdauer und Schutz der Daten stehen in den{' '}
+        <a href="https://osmfoundation.org/wiki/Privacy_Policy" rel="noopener">
+          Datenschutzhinweisen der OpenStreetMap Foundation
+        </a>
+        . Mit dem Schließen oder Neuladen der Seite endet die Kartenanzeige; sie wird nicht
+        automatisch erneut aktiviert.
+      </p>
+      <p>
+        „Meinen Standort verwenden“ fragt deine Position erst nach deiner Aktion und der
+        Browserfreigabe ab (Art. 6 Abs. 1 lit. a DSGVO). Die Koordinaten dienen der lokalen
+        Entfernungssuche und bleiben nur für die Sitzung im Arbeitsspeicher. Bei anschließend
+        aktivierter Karte können die angeforderten Kartenausschnitte deinen ungefähren Standort
+        erkennen lassen. Du kannst stattdessen einen Ort eingeben und Standortberechtigungen in den
+        Browsereinstellungen jederzeit für die Zukunft widerrufen. Wie dein Browser den Standort
+        bestimmt, richtet sich zusätzlich nach dessen Einstellungen und Datenschutzhinweisen.
+      </p>
     </>
   )
 }
 {
   market.featureFlags.profile && (
     <>
-      <>
-        <h2>Mein Tier, Merkliste und Packliste</h2>
-        <p>
-          Wenn du diese Funktionen benutzt, speichert dein Browser deine Auswahl lokal auf diesem
-          Gerät. Das Profil wird nicht an einen Server dieser Website übertragen und nicht zwischen
-          Geräten synchronisiert. Du kannst die Daten in den Werkzeugen löschen oder über die
-          Website-Datenverwaltung deines Browsers entfernen. Ein von dir exportiertes Profil liegt
-          als Datei auf deinem Gerät; du entscheidest, ob du es weitergibst.
-        </p>
-      </>
+      <h2>Mein Tier, Merkliste und Packliste</h2>
+      <p>
+        Diese Funktionen speichern auf deinen Wunsch Angaben und Auswahl lokal im Browser (Local
+        Storage). Die Daten werden nicht auf unserem Server gespeichert oder zwischen Geräten
+        synchronisiert. Speicherung und Auslesen sind für die ausdrücklich gewünschte Funktion
+        erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG); soweit personenbezogene Daten betroffen sind, ist
+        die Grundlage Art. 6 Abs. 1 lit. b DSGVO zur Bereitstellung der gewünschten Funktion.
+      </p>
+      <p>
+        Die Daten bleiben auf diesem Gerät bis zu deiner Löschung oder der Löschung der
+        Website-Daten im Browser. Nutze die Löschfunktionen der Werkzeuge oder die
+        Website-Datenverwaltung deines Browsers. Ein exportiertes Profil ist eine lokale Datei; über
+        eine Weitergabe entscheidest du selbst.
+      </p>
     </>
   )
 }
-<h2>Externe Links, Bilder und Schriftarten</h2>
+<h2>E-Mail-Kontakt</h2>
 <p>
-  Hersteller- und Quellenlinks öffnen fremde Websites erst auf deinen Klick. Es sind keine Analyse-,
-  Werbe- oder Trackingdienste eingebunden. Die Website setzt keine eigenen Tracking-Cookies.
-  Schriftarten und redaktionelle Bilder werden lokal mit der Website ausgeliefert.
+  Wenn du uns schreibst, verarbeiten wir deine E-Mail-Adresse, den Inhalt und die technischen
+  Angaben der Nachricht zur Bearbeitung. Bei einer vertragsbezogenen Anfrage ist Art. 6 Abs. 1 lit.
+  b DSGVO die Grundlage, sonst Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der
+  Beantwortung von Anfragen). Die Angabe ist freiwillig; ohne Rückkanal können wir nicht antworten.
+  Für den Versand und Empfang werden die beteiligten E-Mail-Dienstleister eingesetzt.
 </p>
-<h2>Rechtliche Angaben</h2>
 <p>
-  Vor der öffentlichen Freigabe werden Rechtsgrundlagen, Speicherdauer beim Hosting, mögliche
-  internationale Übermittlungen, deine Betroffenenrechte und die zuständige Aufsichtsbehörde anhand
-  des tatsächlichen Betreibers und der Hostingvereinbarung ergänzt und geprüft.
+  Anfragen werden gelöscht, sobald sie abschließend bearbeitet sind und keine weitere Aufbewahrung
+  zur Rechtsverteidigung oder aufgrund gesetzlicher Pflichten erforderlich ist. Soweit eine
+  Aufbewahrung gesetzlich vorgeschrieben ist, erfolgt sie auf Grundlage von Art. 6 Abs. 1 lit. c
+  DSGVO. Bitte sende nur die für deine Anfrage notwendigen Angaben.
+</p>
+{
+  amazonEnabled(process.env) && (
+    <>
+      <h2>Amazon-Partnerlinks</h2>
+      <p>
+        Wir verwenden als „Werbung“ gekennzeichnete Links zum Amazon-Partnerprogramm. Sie enthalten
+        die feste Partner-ID wauandmiau-21 und eine redaktionell festgelegte Produktsuche. Es werden
+        keine Profilangaben, Rechenergebnisse oder individuellen Besucherkennungen angehängt. Auf
+        dieser Website laden wir dafür keine Amazon-Skripte, Pixel oder Produktbilder und setzen
+        keine Amazon-Cookies.
+      </p>
+      <p>
+        Erst wenn du einen Link öffnest, stellt dein Browser eine Verbindung zu Amazon her. Amazon
+        erhält dabei unter anderem deine IP-Adresse, technische Informationen und den Partnerlink
+        und kann Cookies oder vergleichbare Verfahren zur Zuordnung von Käufen einsetzen. Die
+        weitere Verarbeitung erfolgt bei Amazon nach dessen Datenschutzhinweisen und den dortigen
+        Einstellungen. Die Finanzierung unseres Informationsangebots ist unser berechtigtes
+        Interesse (Art. 6 Abs. 1 lit. f DSGVO). Das erteilt keine Einwilligung für nachfolgende
+        Endgerätezugriffe auf der Händlerseite.
+      </p>
+      <p>
+        Informationen zu den verantwortlichen Amazon-Gesellschaften, Empfängern, internationalen
+        Übermittlungen, Speicherdauer und deinen Einstellungen:{' '}
+        <a
+          href="https://www.amazon.de/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ"
+          rel="noopener"
+        >
+          Amazon-Datenschutzerklärung
+        </a>
+        . Du kannst Händler unabhängig von unseren Partnerlinks besuchen.
+      </p>
+    </>
+  )
+}
+<h2>Weitere Links, Bilder und Schriftarten</h2>
+<p>
+  Quellen- und Herstellerlinks öffnen fremde Websites erst nach deinem Klick. Für deren Verarbeitung
+  gelten die dortigen Hinweise. Unsere Schriftarten und redaktionellen Bilder werden zusammen mit
+  der Website ausgeliefert. Wir verwenden keine Analyse-Tracker und keine eigenen Tracking-Cookies,
+  keine Newsletteranmeldung und keine Nutzerkonten. Es findet keine automatisierte Entscheidung mit
+  rechtlicher oder ähnlich erheblicher Wirkung statt.
+</p>
+<h2>Deine Rechte</h2>
+<p>
+  Unter den gesetzlichen Voraussetzungen hast du das Recht auf Auskunft (Art. 15 DSGVO),
+  Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und
+  Datenübertragbarkeit (Art. 20). Eine Einwilligung kannst du jederzeit mit Wirkung für die Zukunft
+  widerrufen; die bis dahin erfolgte Verarbeitung bleibt rechtmäßig.
+</p>
+<p>
+  <strong>Widerspruch:</strong> Gegen eine Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO kannst
+  du aus Gründen deiner besonderen Situation Widerspruch einlegen (Art. 21 DSGVO). Gegen Direktwerbung
+  besteht ein jederzeitiges Widerspruchsrecht.
+</p>
+<p>
+  Wende dich dafür an den oben genannten Verantwortlichen. Du darfst dich außerdem bei einer
+  Datenschutzaufsichtsbehörde beschweren, insbesondere an deinem Aufenthaltsort, Arbeitsort oder dem
+  Ort des vermuteten Verstoßes. Für unseren Sitz ist die <a
+    href="https://www.datenschutz-berlin.de/buergerinnen-und-buerger/beschwerde/"
+    rel="noopener">Berliner Beauftragte für Datenschutz und Informationsfreiheit</a
+  > zuständig.
 </p>

@@ -41,7 +41,7 @@ describe('Grenzen des Gesundheitsbereichs', () => {
 
   it('schließt Arzneimittel, Supplemente und Tests ausdrücklich aus', () => {
     expect(themen.join(' ')).toContain('arzneimittel');
-    expect(themen.join(' ')).toContain('nahrungsergänzung');
+    expect(themen.join(' ')).toContain('ergänzungsfuttermittel');
     expect(themen.join(' ')).toContain('tests');
     expect(themen.join(' ')).toContain('antiparasitika');
   });

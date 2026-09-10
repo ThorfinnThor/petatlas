@@ -11,6 +11,7 @@ import { HEALTH_PFAD, baueHealthBericht } from '../../features/freshness/health.
 import { verifiedSources, pendingSources } from '../../domain/source-registry.ts';
 import { routePath } from '../../lib/routes.ts';
 import { defaultMarket } from '../../domain/market.ts';
+import { amazonEnabled, AMAZON_DISCLOSURE } from '../../features/commerce/amazon.ts';
 import Notice from '../Notice.astro';
 
 const markt = defaultMarket();
@@ -76,11 +77,28 @@ const offeneQuellen = pendingSources();
 </p>
 
 <h2>Bezahlte Verweise</h2>
-<p>
-  Wo ein Verweis vergütet würde, steht „Anzeige“ daran, und der Link ist als bezahlt ausgezeichnet.
-  Ohne freigegebenen Partnervertrag entsteht kein solcher Verweis; das ist der derzeitige Zustand.
-  Die Reihenfolge von Angeboten hängt nie von einer Vergütung ab.
-</p>
+{
+  amazonEnabled(process.env) ? (
+    <>
+      <p>
+        Bei Spielzeug und Ergänzungsfuttermitteln verlinken wir mit „Werbung“ gekennzeichnete
+        Amazon-Suchen. {AMAZON_DISCLOSURE} Herstellerquellen bleiben separat zugänglich. Die Auswahl
+        auf der Startseite ist redaktionell; im Finder zählt weiterhin ausschließlich die belegte
+        Übereinstimmung, nicht eine Provision.
+      </p>
+      <p>
+        Wir übernehmen keine Amazon-Kundenbewertungen, Produktbilder, Preise oder
+        Verfügbarkeitsangaben. Eine Suchverlinkung ist kein Nachweis, dass ein bestimmtes Produkt
+        dort erhältlich oder für dein Tier geeignet ist.
+      </p>
+    </>
+  ) : (
+    <p>
+      Aktuell sind keine Partnerlinks aktiviert. Die Reihenfolge von Angeboten hängt nie von einer
+      Vergütung ab.
+    </p>
+  )
+}
 
 <Notice variante="hinweis" titel="Diese Seite beschreibt den aktuellen Stand">
   <p>

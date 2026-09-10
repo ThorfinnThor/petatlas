@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import { resolveBuildConfig } from './config/build.ts';
+import { resolveBuildConfig, devFeatureOverrides } from './config/build.ts';
 
 /**
  * M01-01/M01-05 — Statischer Build ohne Laufzeitlogik.
@@ -34,5 +34,8 @@ export default defineConfig({
     // Es gibt genau einen aktiven Markt. Diese Weiterleitung ist deshalb
     // deterministisch und rät weder Sprache noch Herkunft (ADR-010).
     '/': '/de-de/',
+    ...(devFeatureOverrides().includes('food')
+      ? { '/de-de/nahrungsergaenzung/': '/de-de/ergaenzungsfuttermittel/' }
+      : {}),
   },
 });

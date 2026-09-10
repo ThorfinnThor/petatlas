@@ -1,53 +1,48 @@
 ---
-/**
- * M04-03 — Impressum.
- *
- * Solange keine echten Betreiberangaben vorliegen, steht hier kein erfundener
- * Name und keine erfundene Adresse. Der `production`-Build ist dadurch
- * ohnehin gesperrt (M00-03).
- */
 import { resolveBuildConfig } from '../../../config/build.ts';
 import { createSiteConfig } from '../../../config/site.ts';
 import Notice from '../Notice.astro';
-
 const build = resolveBuildConfig();
-const site = createSiteConfig(build.mode, process.env);
-const betreiber = site.operator;
+const betreiber = createSiteConfig(build.mode, process.env).operator;
 ---
 
 <h1>Impressum</h1>
-
 {
   betreiber.legalName === null ? (
     <Notice variante="warnung" titel="Betreiberangaben liegen nicht vor">
-      <p>
-        Für diesen Aufbaustand sind keine Betreiberangaben hinterlegt. Es werden bewusst keine
-        erfundenen Namen, Adressen oder Registerangaben angezeigt. Ein Produktionsbuild ohne
-        vollständige Angaben bricht ab.
-      </p>
+      <p>Für diesen Entwicklungsstand sind keine Betreiberangaben hinterlegt.</p>
     </Notice>
   ) : (
-    <dl>
-      <dt>Anbieter</dt>
-      <dd>{betreiber.legalName}</dd>
-      <dt>Anschrift</dt>
-      <dd>{betreiber.address}</dd>
-      <dt>Kontakt</dt>
-      <dd>{betreiber.contactEmail}</dd>
-      <dt>Inhaltlich verantwortlich</dt>
-      <dd>{betreiber.responsibleForContent}</dd>
-      {betreiber.registerEntry && (
-        <>
-          <dt>Registereintrag</dt>
-          <dd>{betreiber.registerEntry}</dd>
-        </>
-      )}
-      {betreiber.vatId && (
-        <>
-          <dt>Umsatzsteuer-Identifikationsnummer</dt>
-          <dd>{betreiber.vatId}</dd>
-        </>
-      )}
-    </dl>
+    <>
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        {betreiber.legalName}
+        <br />
+        {betreiber.address}
+      </p>
+      <h2>Kontakt</h2>
+      <p>
+        E-Mail: <a href={`mailto:${betreiber.contactEmail}`}>{betreiber.contactEmail}</a>
+      </p>
+      <h2>Verantwortlich für journalistisch-redaktionelle Inhalte gemäß § 18 Abs. 2 MStV</h2>
+      <p>
+        {betreiber.responsibleForContent}
+        <br />
+        {betreiber.address}
+      </p>
+      {betreiber.registerEntry && <p>Registereintrag: {betreiber.registerEntry}</p>}
+      {betreiber.vatId && <p>Umsatzsteuer-Identifikationsnummer: {betreiber.vatId}</p>}
+      <h2>Über dieses Angebot</h2>
+      <p>
+        Wau &amp; Miau bietet Informationen und Werkzeuge für Hunde- und Katzenhalter. Wir verkaufen
+        auf dieser Website keine Waren und nehmen keine Bestellungen entgegen. Über Händlerlinks
+        verlässt du unsere Website; ein Kaufvertrag kommt gegebenenfalls mit dem dort genannten
+        Verkäufer zustande.
+      </p>
+      <p>
+        Hinweise zur Datenverarbeitung findest du unter <a href="../datenschutz/">Datenschutz</a>,
+        zur Auswahl von Quellen und zur Finanzierung unter <a href="../methodik/">Methodik</a>.
+      </p>
+    </>
   )
 }

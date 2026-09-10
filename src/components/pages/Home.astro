@@ -2,6 +2,7 @@
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { routeExists, routePath, type RouteKey } from '../../lib/routes.ts';
+import AmazonLink from '../AmazonLink.astro';
 import HeroFeature from '../HeroFeature.astro';
 import BrandImage from '../BrandImage.astro';
 import Icon from '../ui/Icon.astro';
@@ -57,6 +58,7 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
   .map((id) => {
     const p = products.products.find((product) => product.id === id)!;
     return {
+      productId: p.id,
       name: p.name,
       brand: p.brand,
       tag: p.category,
@@ -71,6 +73,7 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
     ['royal-canin-mini-adult-2kg', 'royal-canin-indoor-2kg'].map((id) => {
       const p = foods.products.find((product) => product.foodId === id)!;
       return {
+        productId: p.foodId,
         name: `${p.productName} · 2 kg`,
         brand: p.brand,
         tag: 'Futter',
@@ -250,7 +253,7 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
                 <h2 id="products-title">Ein genauerer Blick lohnt sich.</h2>
                 <p>
                   Eine kleine Auswahl echter Produkte mit belegten Herstellerangaben. Keine
-                  Rangliste, keine bezahlten Empfehlungen.
+                  Rangliste. Herstellerquellen und gekennzeichnete Händlerlinks sind getrennt.
                 </p>
               </>
             </div>
@@ -277,7 +280,8 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
               <a href={p.url} class="text-link" rel="noopener">
                 Herstellerangaben ansehen ↗
               </a>
-              <small>Quelle geprüft: {p.checkedAt} · kein Werbelink</small>
+              <small>Herstellerquelle geprüft: {p.checkedAt} · kein Werbelink</small>
+              <AmazonLink selection={p.productId} />
             </article>
           ))}
         </div>

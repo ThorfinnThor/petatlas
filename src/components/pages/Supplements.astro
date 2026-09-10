@@ -1,9 +1,11 @@
 ---
+import AmazonLink from '../AmazonLink.astro';
+import { amazonEnabled, AMAZON_DISCLOSURE } from '../../features/commerce/amazon.ts';
 import Notice from '../Notice.astro';
 ---
 
 <p class="eyebrow">Ernährung · Hund und Katze</p>
-<h1>Nahrungsergänzung bewusst auswählen</h1>
+<h1>Ergänzungsfuttermittel bewusst auswählen</h1>
 <p class="lead">
   Was steckt im Produkt, wofür ist es gedacht – und passt es überhaupt zur bisherigen Fütterung?
   Hier ordnen Sie Ergänzungsfuttermittel ein und vergleichen die Kosten einer bereits festgelegten
@@ -50,8 +52,8 @@ import Notice from '../Notice.astro';
   <article>
     <h3>Gelenk- und Kombinationsprodukte</h3><p>
       Eine lange Zutatenliste ist kein Wirksamkeitsnachweis. Prüfen Sie Studien zum konkreten
-      Produkt und die Mengen der einzelnen Bestandteile. Nahrungsergänzung ersetzt keine Abklärung
-      von Schmerzen oder Lahmheit.
+      Produkt und die Mengen der einzelnen Bestandteile. Ergänzungsfuttermittel ersetzen keine
+      Abklärung von Schmerzen oder Lahmheit.
     </p>
   </article>
 </div>
@@ -132,10 +134,30 @@ import Notice from '../Notice.astro';
 
 <h2>Welche Produkte verlinken wir?</h2>
 <p>
-  Aktuell gibt es hier keine bezahlten Empfehlungen oder geprüften Testsieger. Künftige Händlerlinks
-  werden als Werbung gekennzeichnet. Produktmerkmale und Belege bleiben getrennt von der Wahl des
-  Händlers.
+  Wir verlinken Suchergebnisse nach Tierart. Das ist keine Prüfung einzelner Produkte und keine
+  Empfehlung, eine Ergänzung zu füttern. Zusammensetzung, Tierart und Packungsgröße vor dem Kauf
+  vergleichen.
 </p>
+{
+  amazonEnabled(process.env) && (
+    <section aria-labelledby="amazon-ergaenzungen">
+      <h3 id="amazon-ergaenzungen">Ergänzungsfuttermittel bei Amazon suchen · Werbung</h3>
+      <p>{AMAZON_DISCLOSURE}</p>
+      <AmazonLink
+        selection="supplements-dog"
+        label="Ergänzungsfuttermittel für Hunde bei Amazon suchen"
+      />
+      <AmazonLink
+        selection="supplements-cat"
+        label="Ergänzungsfuttermittel für Katzen bei Amazon suchen"
+      />
+      <p>
+        Suchergebnisse können auch andere Produkte enthalten. Wir vergeben keine Testsiegel und
+        zeigen keine Preise oder Verfügbarkeitsangaben.
+      </p>
+    </section>
+  )
+}
 <p class="hilfe">
   Quellenstand: 09.09.2026. Diese Seite bietet allgemeine Informationen für Hunde und Katzen. Für
   andere Tierarten lassen sich Bedarf und Produkte nicht übertragen.
@@ -168,6 +190,10 @@ import Notice from '../Notice.astro';
   });
 </script>
 <style>
+  h1 {
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
   .lead {
     font-size: 1.2rem;
   }

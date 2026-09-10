@@ -34,7 +34,7 @@ export const STANDORT_TEXTE = {
   zeitueberschreitung:
     'Die Standortbestimmung hat zu lange gedauert. Geben Sie einen Ort ein, das Ergebnis ist dasselbe.',
   hinweisVorher:
-    'Ihr Standort wird nur für diese Suche verwendet. Er wird nicht gespeichert und nicht übertragen.',
+    'Die genauen Standortkoordinaten werden von uns nicht gespeichert und nicht übertragen. Eine zusätzlich angezeigte Karte lädt jedoch Kartenausschnitte beim externen Kacheldienst; daraus kann Ihr ungefährer Standort erkennbar sein.',
 } as const;
 
 export interface StandortOptionen {

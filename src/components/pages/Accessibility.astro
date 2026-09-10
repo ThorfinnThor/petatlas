@@ -73,9 +73,18 @@ const eintrag = PFLICHTANGABEN.find((pflicht) => pflicht.id === 'barrierefreihei
   {
     kontakt === null
       ? 'Ein Rückmeldeweg wird eingerichtet, sobald es eine Kontaktadresse des Betreibers gibt. Bis dahin steht hier keine erfundene Adresse.'
-      : `Barrieren können an ${kontakt} gemeldet werden.`
+      : `Barrieren können an ${kontakt} gemeldet werden. Nenne bitte die betroffene Seite, das Problem und gegebenenfalls Browser oder Hilfsmittel.`
   }
 </p>
+{
+  kontakt && (
+    <p>
+      <a href={`mailto:${kontakt}?subject=Barriere%20auf%20Wau%20%26%20Miau`}>
+        Barriere per E-Mail melden
+      </a>
+    </p>
+  )
+}
 
 {
   eintrag !== undefined && (
