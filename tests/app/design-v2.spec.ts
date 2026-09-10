@@ -44,12 +44,12 @@ for (const width of [360, 390, 430, 768, 1024, 1280, 1440]) {
 test('real preview exposes functioning tools without commercial offers', async ({ page }) => {
   await page.goto('/de-de/');
   await page.locator('#home-location').fill('Hamburg');
-  await page.getByRole('button', { name: 'Hunde-Orte suchen' }).click();
+  await page.getByRole('button', { name: 'Tierarzt & Orte suchen' }).click();
   await page.getByRole('button', { name: 'Hamburg', exact: true }).click();
   await expect(page.locator('#treffer-status')).toContainText('Hamburg');
   expect(await page.locator('#trefferliste h3').count()).toBeGreaterThan(0);
   await page.goto('/de-de/futter/');
-  await expect(page.locator('.food-comparison tbody tr')).toHaveCount(2);
+  await expect(page.locator('.food-comparison tbody tr')).toHaveCount(3);
   await expect(page.locator('.food-comparison')).toContainText('27 %');
   expect((await page.request.get('/de-de/angebote/')).status()).toBe(404);
 });
@@ -133,3 +133,37 @@ test('an opened map follows place, category and radius changes', async ({ page }
   await expect(page.locator('#karte .leaflet-map-pane')).toHaveCount(1);
   await expect(page.locator('#karte .leaflet-interactive')).toHaveCount(count);
 });
+
+for (const width of [390, 1440]) {
+  test(`cat guide leads to cat products at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/de-de/');
+    await expect(page.locator('header')).toContainText('Wau & Miau');
+    await expect(page.locator('.pet-world')).toHaveCount(2);
+    await expect(page.locator('.editorial-product').filter({ hasText: 'Katze' })).toHaveCount(2);
+    await page.getByRole('link', { name: 'Zum Katzen-Ratgeber →', exact: true }).click();
+    await expect(page.locator('h1')).toContainText('Wohnungskatzen');
+    await page
+      .getByRole('link', { name: 'Katzenspielzeug im Finder ansehen →', exact: true })
+      .click();
+    await expect(page.locator('#finder-tierart')).toHaveValue('cat');
+    await page.getByRole('button', { name: 'Passendes anzeigen', exact: true }).click();
+    await expect(page.locator('#finder-ergebnis')).toContainText('Senses Play Circuit');
+    await expect(page.locator('#finder-ergebnis')).toContainText('Cat Active Tennis Balls');
+    await expect(page.locator('#finder-ergebnis')).not.toContainText('KONG Classic');
+    await page.selectOption('#finder-tierart', 'dog');
+    await page.getByRole('button', { name: 'Passendes anzeigen', exact: true }).click();
+    await expect(page.locator('#finder-ergebnis')).toContainText('KONG Classic');
+    await expect(page.locator('#finder-ergebnis')).not.toContainText('Senses Play Circuit');
+    await page.goto('/de-de/futter/');
+    await page.fill('#futter-begriff', 'Indoor');
+    await page.click('#futter-suchen');
+    await expect(page.locator('#futter-treffer')).toContainText('Indoor');
+    await expect(page.locator('.food-comparison')).toContainText('Katze');
+    await page.goto('/de-de/ratgeber/katze-transportbox/');
+    await expect(page.locator('h1')).toContainText('Transportbox');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)).toBe(
+      false,
+    );
+  });
+}

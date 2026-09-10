@@ -20,7 +20,9 @@ const groups: { label: string; keys: RouteKey[] }[] = [
 <header class="kopf">
   <div class="kopf__inhalt page-container">
     <a class="kopf__marke" href={home} aria-label={brandName}
-      ><Icon name="paw" size={30} /><span>{brandName}<small>Gute Hunde. Gute Tage.</small></span></a
+      ><Icon name="paw" size={30} /><span
+        >{brandName}<small>Für Hunde. Für Katzen. Für euch.</small></span
+      ></a
     >
     <a class="kopf__suche" href={`${home}#suche-titel`} aria-label="Suche öffnen"
       ><Icon name="search" /></a
@@ -121,7 +123,7 @@ const groups: { label: string; keys: RouteKey[] }[] = [
             <li>
               <a class="kopf__profil" href={routePath(market, 'profile')}>
                 <Icon name="user" size={18} />
-                Mein Hund
+                Mein Tier
               </a>
             </li>
           )

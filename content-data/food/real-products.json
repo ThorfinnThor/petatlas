@@ -1,6 +1,6 @@
 {
   "datasetId": "manufacturer-food-de-2026-09",
-  "lastEditedAt": "2026-09-09",
+  "lastEditedAt": "2026-09-10",
   "dataKind": "real",
   "products": [
     {
@@ -217,6 +217,168 @@
       "composition": null,
       "declarationSourceUrl": "https://www.bosch-tiernahrung.de/bosch_de_de/hpc-adult-lamm-reis.html",
       "declarationCheckedAt": "2026-09-09",
+      "categoryId": "dry-food"
+    },
+    {
+      "foodId": "royal-canin-indoor-2kg",
+      "productId": "royal-canin-indoor-2kg",
+      "species": "cat",
+      "brand": "Royal Canin",
+      "productName": "Indoor",
+      "gtin": null,
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 2000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 27,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "fat",
+          "value": 13,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "fiber",
+          "value": 4,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "ash",
+          "value": 7.7,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+      "declarationCheckedAt": "2026-09-10",
+      "categoryId": "dry-food"
+    },
+    {
+      "foodId": "royal-canin-indoor-4kg",
+      "productId": "royal-canin-indoor-4kg",
+      "species": "cat",
+      "brand": "Royal Canin",
+      "productName": "Indoor",
+      "gtin": null,
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 4000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 27,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "fat",
+          "value": 13,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "fiber",
+          "value": 4,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "ash",
+          "value": 7.7,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+      "declarationCheckedAt": "2026-09-10",
+      "categoryId": "dry-food"
+    },
+    {
+      "foodId": "royal-canin-indoor-10kg",
+      "productId": "royal-canin-indoor-10kg",
+      "species": "cat",
+      "brand": "Royal Canin",
+      "productName": "Indoor",
+      "gtin": null,
+      "lifeStage": "adult",
+      "kind": "complete",
+      "netContentGrams": 10000,
+      "packUnits": 1,
+      "nutrients": [
+        {
+          "nutrient": "protein",
+          "value": 27,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "fat",
+          "value": 13,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "fiber",
+          "value": 4,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "nutrient": "ash",
+          "value": 7.7,
+          "unit": "%",
+          "basis": "as_fed_per_100g",
+          "sourceLabel": "Royal Canin · deutsche Herstellerdeklaration",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+          "checkedAt": "2026-09-10"
+        }
+      ],
+      "composition": null,
+      "declarationSourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+      "declarationCheckedAt": "2026-09-10",
       "categoryId": "dry-food"
     }
   ],

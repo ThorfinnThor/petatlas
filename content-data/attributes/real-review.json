@@ -1,6 +1,6 @@
 {
   "reviewId": "manufacturer-attributes-2026-09",
-  "lastEditedAt": "2026-09-09",
+  "lastEditedAt": "2026-09-10",
   "dataKind": "real",
   "products": [
     {
@@ -81,6 +81,45 @@
           "sourceUrl": "https://www.trixie.de/en/productworld/dog/care-health-cleaning/brushes-combs/brush-double-sided-1001435651-1001465612",
           "sourceLabel": "TRIXIE · Hersteller",
           "checkedAt": "2026-09-09"
+        }
+      ]
+    },
+    {
+      "productId": "catit-senses-play-circuit",
+      "categoryId": "indoor-cat-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-circuits/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "kong-cat-tennis-balls",
+      "categoryId": "indoor-cat-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.kongcompany.com/cat-active-tennis-balls-w-bells/",
+          "sourceLabel": "KONG · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "material",
+          "value": "Gummi, Polyester, Eisen",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.kongcompany.com/cat-active-tennis-balls-w-bells/",
+          "sourceLabel": "KONG · Hersteller",
+          "checkedAt": "2026-09-10"
         }
       ]
     }

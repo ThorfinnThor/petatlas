@@ -18,7 +18,7 @@ test('Startseite des Marktes lädt', async ({ page }) => {
   expect(antwort?.status()).toBe(200);
   // Die H1 nennt seit dem Designdurchgang das Thema; die Marke steht in
   // Kopfbereich und Seitentitel.
-  await expect(page.locator('h1')).toHaveText('Alles für ein gesundes & glückliches Hundeleben.');
+  await expect(page.locator('h1')).toHaveText('Ein gutes Leben. Mit Hund und Katze.');
 });
 
 test('Die Wurzel leitet auf den aktiven Markt', async ({ page }) => {

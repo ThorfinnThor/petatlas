@@ -45,8 +45,9 @@ describe('Real editorial records', () => {
         /^https:\/\/(www.royalcanin.com|www.bosch-tiernahrung.de)\//,
       );
     }
-    expect(alleFutter().length).toBe(4);
-    expect(sucheFutter('Royal Canin').length).toBe(3);
+    expect(alleFutter().length).toBe(7);
+    expect(alleFutter().filter((p) => p.species === 'cat')).toHaveLength(3);
+    expect(sucheFutter('Royal Canin').length).toBe(6);
     expect(sucheFutter('4006381333931')).toEqual([]);
   });
   it('ships sourced manufacturer claims without claiming independent approval', () => {

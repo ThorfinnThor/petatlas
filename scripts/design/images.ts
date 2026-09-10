@@ -5,6 +5,8 @@ const names = [
   'travel-human-dog-sunset',
   'play-dog-alpine-lake',
   'health-dog-home',
+  'hero-dog-cat-home',
+  'play-cat-home',
 ];
 mkdirSync('public/images/brand', { recursive: true });
 for (const name of names) {
@@ -17,4 +19,4 @@ for (const name of names) {
     }
   }
 }
-console.log('Four brand images, responsive AVIF/WebP variants generated.');
+console.log(`${names.length} brand images, responsive AVIF/WebP variants generated.`);

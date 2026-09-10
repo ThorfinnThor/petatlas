@@ -3,7 +3,7 @@ const ROOT = '/de-de/futter/';
 const PRODUCT = `${ROOT}royal-canin-mini-adult-2kg/`;
 test('lists real product variants with honest coverage', async ({ page }) => {
   await page.goto(ROOT);
-  await expect(page.locator('.produkte li')).toHaveCount(4);
+  await expect(page.locator('.produkte li')).toHaveCount(7);
   await expect(page.getByText('Synthetische Futterdaten')).toHaveCount(0);
   await expect(page.locator('main')).toContainText('keine verifizierten Barcodes');
 });
@@ -11,7 +11,7 @@ test('finds a real brand and does not invent barcode matches', async ({ page }) 
   await page.goto(ROOT);
   await page.fill('#futter-begriff', 'Royal Canin');
   await page.click('#futter-suchen');
-  await expect(page.locator('.treffer__liste > li')).toHaveCount(3);
+  await expect(page.locator('.treffer__liste > li')).toHaveCount(6);
   await page.fill('#futter-begriff', '4006381333931');
   await page.click('#futter-suchen');
   await expect(page.locator('.treffer__kopf')).toContainText('nicht erfasst');

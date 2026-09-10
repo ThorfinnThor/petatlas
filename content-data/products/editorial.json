@@ -1,6 +1,6 @@
 {
   "dataKind": "real",
-  "checkedAt": "2026-09-09",
+  "checkedAt": "2026-09-10",
   "products": [
     {
       "id": "kong-classic",
@@ -12,7 +12,8 @@
       "sourceLabel": "KONG · Hersteller",
       "checkedAt": "2026-09-09",
       "facts": ["Naturkautschuk", "Befüllbares Spielzeug"],
-      "image": null
+      "image": null,
+      "species": "dog"
     },
     {
       "id": "west-paw-toppl-large",
@@ -24,7 +25,8 @@
       "sourceLabel": "West Paw · Hersteller",
       "checkedAt": "2026-09-09",
       "facts": ["Zogoflex-Material", "Spülmaschinengeeignet, oberes Fach"],
-      "image": null
+      "image": null,
+      "species": "dog"
     },
     {
       "id": "trixie-buerste-2315",
@@ -36,6 +38,36 @@
       "sourceLabel": "TRIXIE · Hersteller",
       "checkedAt": "2026-09-09",
       "facts": ["Holzgriff", "Nylon- und Metallborsten"],
+      "image": null,
+      "species": "dog"
+    },
+    {
+      "id": "catit-senses-play-circuit",
+      "name": "Senses Play Circuit · 43154",
+      "brand": "Catit",
+      "category": "Spielzeug",
+      "categoryId": "indoor-cat-toy",
+      "sourceUrl": "https://www.catit.com/products/toys/senses-circuits/",
+      "facts": [
+        "Ballbahn mit Abdeckung und Pfotenöffnungen",
+        "Stecksystem für verschiedene Aufbauten"
+      ],
+      "species": "cat",
+      "sourceLabel": "Catit · Hersteller",
+      "checkedAt": "2026-09-10",
+      "image": null
+    },
+    {
+      "id": "kong-cat-tennis-balls",
+      "name": "Cat Active Tennis Balls w/Bells",
+      "brand": "KONG",
+      "category": "Spielzeug",
+      "categoryId": "indoor-cat-toy",
+      "sourceUrl": "https://www.kongcompany.com/cat-active-tennis-balls-w-bells/",
+      "facts": ["Bälle mit innenliegendem Glöckchen", "Materialien: Gummi, Polyester und Eisen"],
+      "species": "cat",
+      "sourceLabel": "KONG · Hersteller",
+      "checkedAt": "2026-09-10",
       "image": null
     }
   ],
