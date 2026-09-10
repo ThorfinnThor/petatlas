@@ -122,6 +122,198 @@
           "checkedAt": "2026-09-10"
         }
       ]
+    },
+    {
+      "productId": "kong-wobbler",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.kongcompany.com/wobbler/",
+          "sourceLabel": "KONG · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "dishwasherSafe",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.kongcompany.com/wobbler/",
+          "sourceLabel": "KONG · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "west-paw-hurley",
+      "categoryId": "chew-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "material",
+          "value": "Zogoflex",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "west-paw-zisc",
+      "categoryId": "fetch-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/zisc-flying-disc",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "material",
+          "value": "Zogoflex",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/zisc-flying-disc",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "floats",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/zisc-flying-disc",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "west-paw-qwizl",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/qwizl-treat-toy",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "material",
+          "value": "Zogoflex",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/qwizl-treat-toy",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "dishwasherSafe",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/qwizl-treat-toy",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "catit-senses-digger",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-digger/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "catit-senses-food-tree",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-food-tree/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "catit-senses-treat-puzzle",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-treat-puzzle/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "material",
+          "value": "Kunststoff",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-treat-puzzle/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "catit-senses-treat-spinner",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-treat-spinner/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "material",
+          "value": "Melamin und Silikon",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-treat-spinner/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
     }
   ],
   "notes": [

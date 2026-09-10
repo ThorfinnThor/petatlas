@@ -120,6 +120,11 @@ describe('Weiche Kriterien', () => {
     const mitWasser = bewerte(ball, { ...BEDARF, needs: ['wasser'] });
     expect(mitWasser.begruendung.join(' ')).toContain('schwimmfähig');
     const ohneAngabe = produkt('fetch-toy', [offen('floats')]);
+    expect(bewerte(ohneAngabe, { ...BEDARF, needs: ['wasser'] }).punkte).toBe(0);
+    expect(
+      bewerte(produkt('fetch-toy', [beleg('floats', false)]), { ...BEDARF, needs: ['wasser'] })
+        .punkte,
+    ).toBe(0);
     expect(
       bewerte(ohneAngabe, { ...BEDARF, needs: ['wasser'] }).begruendung.join(' '),
     ).not.toContain('schwimmfähig');

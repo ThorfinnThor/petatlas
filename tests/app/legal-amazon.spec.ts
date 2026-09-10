@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import editorial from '../../content-data/products/editorial.json' with { type: 'json' };
 import AxeBuilder from '@axe-core/playwright';
 
 for (const width of [390, 1440]) {
@@ -54,7 +55,9 @@ for (const width of [390, 1440]) {
     await page.goto('/de-de/spielzeug/?tierart=cat');
     await page.getByRole('button', { name: 'Passendes anzeigen' }).click();
     const links = page.locator('#finder-ergebnis a[rel~="sponsored"]');
-    await expect(links).toHaveCount(2);
+    await expect(links).toHaveCount(
+      editorial.products.filter((p) => p.species === 'cat' && p.category === 'Spielzeug').length,
+    );
     for (const link of await links.all()) {
       const url = new URL((await link.getAttribute('href'))!);
       expect(url.hostname).toBe('www.amazon.de');

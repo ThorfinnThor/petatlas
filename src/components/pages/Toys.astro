@@ -87,14 +87,23 @@ const synthetisch = pruefung.dataKind === 'synthetic';
 
   <fieldset>
     <legend>Was trifft zu?</legend>
-    {
-      Object.entries(BEDUERFNISSE).map(([schluessel, eintrag]) => (
-        <label class="wahl">
-          <input type="checkbox" name="bedarf" value={schluessel} />
-          {eintrag.label} — <span class="hilfe">{eintrag.erklaerung}</span>
-        </label>
-      ))
-    }
+    <div class="auswahl">
+      {
+        Object.entries(BEDUERFNISSE)
+          .filter(([key]) => key !== 'langhaar')
+          .map(([schluessel, eintrag]) => (
+            <label class="wahl">
+              <input type="checkbox" name="bedarf" value={schluessel} />
+              <span class="wahl__text">
+                <>
+                  <strong>{eintrag.label}</strong>
+                  <span class="hilfe">{eintrag.erklaerung}</span>
+                </>
+              </span>
+            </label>
+          ))
+      }
+    </div>
   </fieldset>
 
   <p id="finder-ohne-js" class="hilfe">
@@ -104,6 +113,14 @@ const synthetisch = pruefung.dataKind === 'synthetic';
   <p><button type="submit" id="finder-suchen" hidden>Passendes anzeigen</button></p>
 </form>
 
+<p class="hilfe">
+  Der Katalog enthält {
+    pruefung.products.filter((product) =>
+      taxonomie.categories.some((category) => category.categoryId === product.categoryId),
+    ).length
+  } redaktionell erfasste Spielzeuge und Kratzmöbel. Er bildet nicht das gesamte Amazon-Sortiment ab.
+  Wünsche ändern die Reihenfolge; ausgeschlossene Tierarten erscheinen nicht.
+</p>
 <div id="finder-ergebnis" role="status" aria-live="polite"></div>
 
 <h2>Kategorien</h2>
@@ -166,9 +183,40 @@ const synthetisch = pruefung.dataKind === 'synthetic';
   }
 
   .wahl {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .auswahl {
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+  }
+
+  .wahl:has(input:checked) {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+  }
+
+  .wahl input {
+    flex: 0 0 20px;
+    margin: 3px 0 0;
+  }
+
+  .wahl__text {
+    min-width: 0;
+  }
+
+  .wahl__text strong,
+  .wahl__text .hilfe {
     display: block;
-    font-weight: 400;
-    margin-block: var(--space-2);
   }
 
   .hilfe {
@@ -190,13 +238,44 @@ const synthetisch = pruefung.dataKind === 'synthetic';
   #finder-ergebnis :global(.finder__liste) {
     list-style: none;
     padding: 0;
+    display: grid;
+    gap: var(--space-5);
+    margin-block: var(--space-5);
   }
 
   #finder-ergebnis :global(.finder__liste > li) {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-    margin-block: var(--space-3);
+    padding: var(--space-5);
+    margin: 0;
+    max-inline-size: none;
+    min-width: 0;
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+  }
+
+  #finder-ergebnis :global(h3) {
+    margin-top: 0;
+    font-size: var(--text-h4);
+  }
+
+  #finder-ergebnis :global(.finder__aktion) {
+    margin-top: auto;
+    padding-top: var(--space-4);
+  }
+
+  @media (min-width: 700px) {
+    .auswahl,
+    #finder-ergebnis :global(.finder__liste) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    #finder-ergebnis :global(.finder__liste) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   #finder-ergebnis :global(.finder__kopf) {

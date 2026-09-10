@@ -187,28 +187,48 @@ const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
     font-size: var(--text-small);
   }
 
-  .produkte,
   .ausschluesse {
     padding-inline-start: var(--space-5);
   }
 
-  .produkte li,
   .ausschluesse li {
     margin-block: var(--space-2);
   }
 
+  .produkte,
   #futter-treffer :global(.treffer__liste) {
     list-style: none;
     padding: 0;
+    display: grid;
+    gap: var(--space-4);
   }
 
+  .produkte > li,
   #futter-treffer :global(.treffer__liste > li) {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-3) var(--space-4);
-    margin-block: var(--space-3);
+    margin: 0;
+    min-width: 0;
+    max-inline-size: none;
+    background: var(--color-surface);
   }
 
+  .produkte .hilfe {
+    display: block;
+  }
+  @media (min-width: 700px) {
+    .produkte,
+    #futter-treffer :global(.treffer__liste) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .produkte,
+    #futter-treffer :global(.treffer__liste) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
   #futter-treffer :global(.treffer__meta) {
     color: var(--color-text-muted);
     font-size: var(--text-small);
