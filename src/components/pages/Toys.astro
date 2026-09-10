@@ -9,6 +9,12 @@
  * Zu jedem Ergebnis stehen zwei Dinge: warum es erscheint und was nicht
  * geprüft ist. Ohne die zweite Angabe wäre die Liste eine Empfehlung.
  */
+import {
+  amazonEnabled,
+  amazonSearchUrl,
+  AMAZON_SEARCHES,
+  AMAZON_DISCLOSURE,
+} from '../../features/commerce/amazon.ts';
 import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
 import { merkmalLabel } from '../../features/care/attributes.ts';
@@ -42,7 +48,26 @@ const synthetisch = pruefung.dataKind === 'synthetic';
 }
 
 <SavedProfileButton />
-<form id="finder">
+{
+  amazonEnabled(process.env) && (
+    <p class="hilfe">
+      Werbung: Händlerlinks öffnen eine Amazon-Suche. {AMAZON_DISCLOSURE} Bitte Tierart, Größe und
+      Ausführung dort prüfen.
+    </p>
+  )
+}
+<form
+  id="finder"
+  data-amazon-links={amazonEnabled(process.env)
+    ? JSON.stringify(
+        Object.fromEntries(
+          Object.keys(AMAZON_SEARCHES)
+            .filter((key) => !key.startsWith('supplements-'))
+            .map((key) => [key, amazonSearchUrl(key)]),
+        ),
+      )
+    : undefined}
+>
   <div class="feld">
     <label for="finder-tierart">Tierart</label>
     <select id="finder-tierart">

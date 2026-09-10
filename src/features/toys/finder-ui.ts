@@ -1,3 +1,5 @@
+import { PARTNER_LINK_ATTRIBUTE } from '../commerce/links.ts';
+import { amazonSearchUrl } from '../commerce/amazon.ts';
 import { kategorie } from '../care/taxonomy.ts';
 import { productIdentity, merkmalLabel } from '../care/attributes.ts';
 /**
@@ -37,6 +39,16 @@ function bedarfLesen(): Bedarf {
 }
 
 function trefferMarkup(treffer: Treffer): string {
+  const configured = document.querySelector<HTMLFormElement>('#finder')?.dataset.amazonLinks;
+  const expected = amazonSearchUrl(treffer.productId);
+  let amazon = '';
+  try {
+    const links = JSON.parse(configured ?? '{}') as Record<string, unknown>;
+    if (expected && links[treffer.productId] === expected)
+      amazon = `<p><a href="${escape(expected)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Amazon suchen ↗ (Werbung)</a></p>`;
+  } catch {
+    /* Missing or malformed configuration never creates a link. */
+  }
   const identity = productIdentity(treffer.productId);
   const source = identity
     ? `<p><a href="${escape(identity.sourceUrl)}" rel="noopener">Herstellerangaben ansehen</a> · ${escape(identity.checkedAt)}</p>`
@@ -61,6 +73,7 @@ function trefferMarkup(treffer: Treffer): string {
       ${begruendung}
       ${offen}
       ${source}
+      ${amazon}
     </li>`;
 }
 

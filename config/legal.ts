@@ -10,6 +10,7 @@
  * Umgebung (`config/site.ts`) und fehlen, solange sie fehlen. Ein
  * Platzhalter wäre eine erfundene Rechtsangabe.
  */
+import { amazonEnabled } from '../src/features/commerce/amazon.ts';
 import launch from './launch.json' with { type: 'json' };
 import legalReviews from './legal-review.json' with { type: 'json' };
 
@@ -43,9 +44,11 @@ export interface WerbeStand {
 
 const GATES = launch.gates as Record<string, { approved: boolean }>;
 
-export function werbeStand(): WerbeStand {
+export function werbeStand(env: Record<string, string | undefined> = process.env): WerbeStand {
   const werbungFreigegeben =
-    (GATES.commerceAffiliate?.approved ?? false) || (GATES.insuranceAffiliate?.approved ?? false);
+    amazonEnabled(env) ||
+    (GATES.commerceAffiliate?.approved ?? false) ||
+    (GATES.insuranceAffiliate?.approved ?? false);
   const trackingFreigegeben = GATES.adsTracking?.approved ?? false;
   return {
     anzeigenAktiv: werbungFreigegeben,
@@ -53,7 +56,7 @@ export function werbeStand(): WerbeStand {
     // Ohne Tracking und ohne fremde Einbettungen gibt es nichts zu setzen.
     cookiesGesetzt: trackingFreigegeben,
     begruendung: werbungFreigegeben
-      ? 'Mindestens ein Partnerprogramm ist freigegeben; die Kennzeichnungspflichten gelten.'
+      ? 'Werbelinks sind auf Betreiberanweisung oder aufgrund einer Programmfreigabe aktiv; die Kennzeichnungspflichten gelten.'
       : 'Kein Partnerprogramm freigegeben und kein Tracking eingeschaltet. Es entstehen keine Anzeigen, keine Messpunkte und keine Cookies.',
   };
 }
@@ -67,7 +70,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: '/de-de/impressum/',
     zustaendig: 'Betreiber',
     bemerkung:
-      'Name, Anschrift, Kontakt und inhaltlich verantwortliche Person liegen nicht vor. Die Seite sagt das und zeigt keinen Platzhalter; der Produktionsbuild bricht ohne sie ab.',
+      'Betreiberangaben vom 10.09.2026 sind im Real-Data-Build eingetragen. Register-/Steuerkennungen, Erreichbarkeit und einschlägige weitere Pflichten bleiben zu bestätigen; siehe docs/reviews/legal-amazon-2026-09-10.md.',
   },
   {
     id: 'datenschutzerklaerung',
@@ -77,7 +80,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: '/de-de/datenschutz/',
     zustaendig: 'Betreiber mit Rechtsprüfung',
     bemerkung:
-      'Die Seite beschreibt bereits nachprüfbar, was der Build tut. Verantwortlicher, Rechtsgrundlagen und Betroffenenrechte setzen Betreiberangaben und eine Prüfung voraus.',
+      'Verantwortlicher, Verarbeitungsvorgänge, Rechtsgrundlagen, Speicherprinzipien, Betroffenenrechte und Berliner Aufsicht sind ergänzt. Kontospezifische Hosting-/Mail-Verträge bleiben zu prüfen; siehe docs/reviews/legal-amazon-2026-09-10.md.',
   },
   {
     id: 'werbekennzeichnung',
@@ -87,7 +90,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: 'Angebots- und Versicherungsbausteine',
     zustaendig: 'Betreiber',
     bemerkung:
-      'Jede Karte trägt „Anzeige“, jeder Partnerlink `rel="sponsored nofollow noopener"`. Ohne freigegebenes Programm entsteht ohnehin kein Link (tests/e2e/versicherung.spec.ts, tests/affiliate-links.test.ts).',
+      'Partnerkarten tragen „Anzeige“, die betreiberseitig beauftragten Amazon-Textlinks „Werbung“, jeder Partnerlink `rel="sponsored nofollow noopener"`. Ohne freigegebenes Programm entsteht ohnehin kein Link (tests/e2e/versicherung.spec.ts, tests/affiliate-links.test.ts).',
   },
   {
     id: 'methodik',

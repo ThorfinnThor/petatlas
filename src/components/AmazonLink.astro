@@ -1,0 +1,26 @@
+---
+import { amazonEnabled, amazonSearchUrl } from '../features/commerce/amazon.ts';
+import { PARTNER_LINK_ATTRIBUTE } from '../features/commerce/links.ts';
+interface Props {
+  selection: string;
+  label?: string;
+}
+const { selection, label = 'Bei Amazon suchen' } = Astro.props;
+const href = amazonEnabled(process.env) ? amazonSearchUrl(selection) : null;
+---
+
+{
+  href && (
+    <p class="amazon-link">
+      <a href={href} {...PARTNER_LINK_ATTRIBUTE}>
+        {label} ↗ (Werbung)
+      </a>
+    </p>
+  )
+}
+<style>
+  .amazon-link {
+    margin-block: 0.75rem;
+    overflow-wrap: anywhere;
+  }
+</style>

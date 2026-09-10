@@ -23,7 +23,7 @@
     "nav.privacy": "Datenschutz",
     "nav.method": "Methodik",
     "nav.accessibility": "Barrierefreiheit",
-    "nav.supplements": "Nahrungsergänzung"
+    "nav.supplements": "Ergänzungsfuttermittel"
   },
   "slugs": {
     "home": "",
@@ -42,7 +42,9 @@
     "favorites": "merkliste",
     "method": "methodik",
     "accessibility": "barrierefreiheit",
-    "supplements": "nahrungsergaenzung"
+    "supplements": "ergaenzungsfuttermittel"
   },
-  "legacySlugs": {}
+  "legacySlugs": {
+    "nahrungsergaenzung": "supplements"
+  }
 }

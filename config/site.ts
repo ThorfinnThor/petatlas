@@ -10,6 +10,8 @@
  * geprüfte Marke; Verfügbarkeit oder Schutzfähigkeit werden nicht behauptet.
  */
 
+import suppliedOperator from './operator.json' with { type: 'json' };
+
 export type BuildMode = 'development' | 'preview' | 'production';
 
 /** Betreiberangaben. `null` bedeutet: noch nicht vom Betreiber geliefert. */
@@ -119,7 +121,10 @@ export function readOperator(env: Record<string, string | undefined>): OperatorI
   return Object.fromEntries(
     Object.entries(keys).map(([key, name]) => [
       key,
-      env[name]?.trim() || OPERATOR_UNKNOWN[key as keyof OperatorInfo],
+      env[name]?.trim() ||
+        (env.APP_PROFILE === 'real' ? suppliedOperator : OPERATOR_UNKNOWN)[
+          key as keyof OperatorInfo
+        ],
     ]),
   ) as unknown as OperatorInfo;
 }

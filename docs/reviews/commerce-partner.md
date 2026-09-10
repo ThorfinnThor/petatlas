@@ -40,3 +40,7 @@ Es fehlt also nichts Technisches. Es fehlt ein Vertrag.
 ## Anmerkung
 
 Ein Provisionswert aus einer Netzwerkoberfläche oder aus einem alten Gespräch ist **kein Vertragsbeleg**. Was gilt, steht im Vertrag; und in dieser Konfiguration steht ohnehin kein Provisionswert, weil sie im Browser lesbar ist.
+
+## Begrenzte Ergänzung 10.09.2026
+
+Der vorstehende Status betrifft die Feed-/Angebotsintegration. Davon getrennt hat der Betreiber statische Amazon-Textlinks mit seiner ID beauftragt. Umfang, bewusste Ausnahme für die echte Vorschau und fehlende Kontoverifikation sind in ADR-020 und `legal-amazon-2026-09-10.md` dokumentiert. Die leere Feed-Registry und ihre Freigabeanforderungen bleiben unverändert.
