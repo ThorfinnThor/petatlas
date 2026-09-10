@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import editorial from '../../content-data/products/editorial.json' with { type: 'json' };
 
 const MAP = '/de-de/tierarzt-karte/';
 const FOOD = '/de-de/futter/royal-canin-mini-adult-2kg/';
@@ -93,7 +94,11 @@ for (const width of [390, 1280]) {
       await expect(page.locator('#finder-gewicht')).not.toHaveAttribute('aria-invalid', 'true');
       await page.selectOption('#finder-tierart', 'cat');
       await page.click('#finder-suchen');
-      await expect(page.locator('.finder__kopf')).toContainText('2 Produkt(e)');
+      const cats = editorial.products.filter(
+        (p) => p.species === 'cat' && p.category === 'Spielzeug',
+      );
+      await expect(page.locator('.finder__kopf')).toContainText(`${cats.length} Produkt(e)`);
+      await expect(page.locator('.finder__liste > li')).toHaveCount(cats.length);
       await expect(page.locator('#finder-ergebnis')).toContainText('Senses Play Circuit');
       await expect(page.locator('#finder-ergebnis')).not.toContainText('KONG Classic');
     });
