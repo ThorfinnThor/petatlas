@@ -22,6 +22,8 @@ interface Props {
   responsibility: string;
   sources: readonly SourceLink[];
   locale?: string;
+  /** Verdichtete Desktop-Darstellung vor Werkzeugen; mobil bleibt die Lesereihenfolge einspaltig. */
+  compact?: boolean;
 }
 
 const {
@@ -32,6 +34,7 @@ const {
   responsibility,
   sources,
   locale = 'de-DE',
+  compact = false,
 } = Astro.props;
 
 if (status === 'approved' && (!reviewedBy?.trim() || !reviewedAt?.trim())) {
@@ -47,7 +50,7 @@ const titel =
 ---
 
 <section
-  class="review-status"
+  class:list={['review-status', compact ? 'review-status--compact' : null]}
   data-review-status={status}
   data-last-verified-at={lastVerifiedAt ?? 'unknown'}
 >
@@ -114,6 +117,39 @@ const titel =
 
   ul {
     padding-inline-start: var(--space-5);
+  }
+
+  @media (min-width: 1024px) {
+    .review-status--compact :global(.hinweisbox) {
+      display: grid;
+      grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 2.45fr);
+      align-items: start;
+      gap: var(--space-2) var(--space-5);
+      padding-block: var(--space-3);
+      margin-block: var(--space-4);
+    }
+
+    .review-status--compact :global(.hinweisbox__titel),
+    .review-status--compact :global(.hinweisbox > p) {
+      margin: 0;
+    }
+
+    .review-status--compact :global(.hinweisbox > p:not(.hinweisbox__titel)) {
+      max-inline-size: none;
+      font-size: var(--text-small);
+    }
+
+    .review-status--compact dl {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      gap: var(--space-2) var(--space-4);
+      font-size: var(--text-small);
+    }
+
+    .review-status--compact dl > div {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
   }
 
   @media (max-width: 520px) {

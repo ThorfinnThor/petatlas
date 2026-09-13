@@ -54,6 +54,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
   responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
   sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+  compact
 >
   {
     COST_CONFIG.clinicalReview === 'approved' ? (
