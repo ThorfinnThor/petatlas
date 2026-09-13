@@ -13,6 +13,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Notice from '../../../components/Notice.astro';
+import ReviewStatus from '../../../components/ReviewStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
@@ -22,6 +23,7 @@ import { KATEGORIE_TITEL, packlisteNach } from '../../../features/travel/packing
 import type { TravelRuleSet } from '../../../domain/schemas/travel.ts';
 import { nationalGuidance } from '../../../features/travel/national.ts';
 import { ZIELLAENDER } from '../../../features/travel/laender.ts';
+import { freigabeFuer } from '../../../features/travel/freigabe.ts';
 
 export function getStaticPaths() {
   const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -41,6 +43,11 @@ const checkPfad = routePath(market, 'travel');
 const eigenerPfad = subroutePath(market, 'travel', ZIELLAENDER[code]!.slug);
 
 const satz: TravelRuleSet = regelSaetze()[0]!;
+const freigabe = freigabeFuer(satz);
+const letzteQuellenpruefung = satz.sources
+  .map((quelle) => quelle.retrievedAt)
+  .sort()
+  .at(-1)!;
 const umfang = reiseUmfang();
 const national = nationalGuidance(code);
 ---
@@ -59,13 +66,26 @@ const national = nationalGuidance(code);
     den <a href={checkPfad}>Reisecheck</a>.
   </p>
 
-  <Notice variante="warnung" titel="Fachlich noch nicht geprüft">
-    <p>
-      Die Anforderungen stammen aus der Rechtsgrundlage und sind mit Fundstelle belegt, aber
-      <strong>fachlich noch nicht abgenommen</strong>. Verbindlich ist die Auskunft der zuständigen
-      Behörde. Diese Seite ist eine Vorbereitung, keine Genehmigung.
-    </p>
-  </Notice>
+  <ReviewStatus
+    status={freigabe.freigegeben ? 'approved' : 'pending'}
+    reviewedAt={freigabe.reviewedAt}
+    reviewedBy={freigabe.reviewedBy}
+    lastVerifiedAt={letzteQuellenpruefung}
+    responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+    sources={satz.sources.map((quelle) => ({ label: quelle.title, url: quelle.url }))}
+  >
+    {
+      freigabe.freigegeben ? (
+        <p>Der Regelsatz wurde fachlich freigegeben. Jede Anforderung nennt ihre Fundstelle.</p>
+      ) : (
+        <p>
+          Die Anforderungen stammen aus der Rechtsgrundlage und sind mit Fundstelle belegt, aber
+          <strong>fachlich noch nicht abgenommen</strong>. Verbindlich ist die Auskunft der
+          zuständigen Behörde. Diese Seite ist eine Vorbereitung, keine Genehmigung.
+        </p>
+      )
+    }
+  </ReviewStatus>
 
   <h2>Was gilt</h2>
   <p class="grundlage">Rechtsgrundlage: {satz.legalBasis}.</p>

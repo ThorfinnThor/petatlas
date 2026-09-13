@@ -6,6 +6,9 @@ import { expect, test } from '@playwright/test';
 const allowlist = JSON.parse(readFileSync('content-data/city-allowlist.json', 'utf8')) as {
   cities: readonly { slug: string; name: string; measured: { total: number } }[];
 };
+const ortsSnapshot = JSON.parse(readFileSync('data-snapshots/places/places-de.json', 'utf8')) as {
+  source: { retrievalDate: string };
+};
 const KARTE = '/de-de/tierarzt-karte/';
 const ERSTE = allowlist.cities[0]!;
 
@@ -32,6 +35,13 @@ test('die Stadtseite zeigt alle vier Kategorien mit Einträgen', async ({ page }
 
 test('nennt Quelle, Lizenz und die Grenzen der Daten', async ({ page }) => {
   await page.goto(`${KARTE}${ERSTE.slug}/`);
+  const datum = new Intl.DateTimeFormat('de-DE', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'UTC',
+  }).format(new Date(`${ortsSnapshot.source.retrievalDate}T00:00:00Z`));
+  await expect(page.getByText(`Datenstand: ${datum}`)).toBeVisible();
   await expect(page.getByText('OpenStreetMap contributors').first()).toBeVisible();
   await expect(page.getByText('Open Database License')).toBeVisible();
   await expect(page.getByText('nicht vollständig')).toBeVisible();

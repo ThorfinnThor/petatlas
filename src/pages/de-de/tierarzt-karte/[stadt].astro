@@ -76,6 +76,7 @@ const quelle = snapshot.source as {
   licenseId: string;
   attribution: string;
   attributionUrl: string;
+  retrievalDate: string;
 };
 
 const kartenPfad = routePath(withEnabledFeatures(market, devFeatureOverrides()), 'map');
@@ -118,7 +119,11 @@ const KOMMUNAL_MAX = 30;
     die übrigen liegen im Umland.
   </p>
 
-  <DataStatus stand={null} quelle={`${quelle.name} · ${quelle.licenseId}`} locale={market.locale} />
+  <DataStatus
+    stand={quelle.retrievalDate}
+    quelle={`${quelle.name} · ${quelle.licenseId}`}
+    locale={market.locale}
+  />
 
   <Notice variante="hinweis" titel="Was diese Seite ist — und was nicht">
     <p>

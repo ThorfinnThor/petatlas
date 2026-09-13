@@ -12,15 +12,24 @@
  */
 import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
+import ReviewStatus from '../ReviewStatus.astro';
 import ToolStepper from '../tools/ToolStepper.astro';
 import RadioCard from '../forms/RadioCard.astro';
 import { reiseUmfang, umfangsSatz } from '../../features/travel/scope.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { ZIELLAENDER } from '../../features/travel/laender.ts';
+import { regelSaetze } from '../../features/travel/rules.ts';
+import { freigabeFuer } from '../../features/travel/freigabe.ts';
 import { routePath, subroutePath } from '../../lib/routes.ts';
 
 const umfang = reiseUmfang();
+const regelsatz = regelSaetze()[0]!;
+const freigabe = freigabeFuer(regelsatz);
+const letzteQuellenpruefung = regelsatz.sources
+  .map((quelle) => quelle.retrievedAt)
+  .sort()
+  .at(-1)!;
 const quellenPfad = routePath(
   withEnabledFeatures(defaultMarket(), devFeatureOverrides()),
   'sources',
@@ -53,15 +62,28 @@ const transit = umfang.transitCountries.map(name);
   </p>
 </Notice>
 
-<Notice variante="warnung" titel="Fachlich noch nicht geprüft">
-  <p>
-    Die Regeln sind aus den amtlichen Quellen erfasst und mit Fundstelle hinterlegt (<a
-      href={quellenPfad}>Quellen</a
-    >), aber <strong>fachlich noch nicht abgenommen</strong>. Deshalb gibt es hier kein grünes
-    Gesamtergebnis, sondern eine Vorschau: einzelne Punkte werden ausgewertet, das Gesamturteil
-    bleibt offen. Verbindlich ist die Auskunft der zuständigen Behörde.
-  </p>
-</Notice>
+<ReviewStatus
+  status={freigabe.freigegeben ? 'approved' : 'pending'}
+  reviewedAt={freigabe.reviewedAt}
+  reviewedBy={freigabe.reviewedBy}
+  lastVerifiedAt={letzteQuellenpruefung}
+  responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+  sources={regelsatz.sources.map((quelle) => ({ label: quelle.title, url: quelle.url }))}
+>
+  {
+    freigabe.freigegeben ? (
+      <p>Der Regelsatz wurde fachlich freigegeben. Jede Anforderung nennt ihre Fundstelle.</p>
+    ) : (
+      <p>
+        Die Regeln sind aus den amtlichen Quellen erfasst und mit Fundstelle hinterlegt (
+        <a href={quellenPfad}>Quellen</a>), aber <strong>fachlich noch nicht abgenommen</strong>.
+        Deshalb gibt es hier kein grünes Gesamtergebnis, sondern eine Vorschau: einzelne Punkte
+        werden ausgewertet, das Gesamturteil bleibt offen. Verbindlich ist die Auskunft der
+        zuständigen Behörde.
+      </p>
+    )
+  }
+</ReviewStatus>
 
 <SavedProfileButton />
 <section aria-labelledby="check-titel">

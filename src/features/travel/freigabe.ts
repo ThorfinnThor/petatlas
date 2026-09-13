@@ -81,6 +81,8 @@ export interface FreigabeStand {
   readonly grund: string;
   /** Signatur des aktuellen Inhalts. */
   readonly signatur: string;
+  readonly reviewedAt: string | null;
+  readonly reviewedBy: string | null;
 }
 
 /**
@@ -111,6 +113,8 @@ export function freigabeFuer(
       freigegeben: false,
       grund: 'Für diesen Regelsatz ist keine fachliche Freigabe eingetragen.',
       signatur,
+      reviewedAt: null,
+      reviewedBy: null,
     };
   }
   if (eintrag.sourceDigest !== signatur) {
@@ -122,6 +126,8 @@ export function freigabeFuer(
         `(geprüft: ${eintrag.sourceDigest}, aktuell: ${signatur}). Die Freigabe gilt für den ` +
         'geprüften Inhalt, nicht für den neuen.',
       signatur,
+      reviewedAt: eintrag.approvedAt,
+      reviewedBy: eintrag.approvedBy,
     };
   }
   if (stichtag !== null) {
@@ -134,6 +140,8 @@ export function freigabeFuer(
           `Die Freigabe vom ${eintrag.approvedAt} ist am ${stichtag} zu alt: ` +
           `${bewertung.begruendung} Eine abgelaufene Prüfung trägt kein positives Ergebnis.`,
         signatur,
+        reviewedAt: eintrag.approvedAt,
+        reviewedBy: eintrag.approvedBy,
       };
     }
   }
@@ -143,6 +151,8 @@ export function freigabeFuer(
     freigegeben: true,
     grund: `Freigegeben am ${eintrag.approvedAt} durch ${eintrag.approvedBy}.`,
     signatur,
+    reviewedAt: eintrag.approvedAt,
+    reviewedBy: eintrag.approvedBy,
   };
 }
 

@@ -13,8 +13,8 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Button from '../../../components/ui/Button.astro';
-import Notice from '../../../components/Notice.astro';
 import DataStatus from '../../../components/DataStatus.astro';
+import ReviewStatus from '../../../components/ReviewStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
@@ -53,6 +53,7 @@ const quelle = snapshot.source as unknown as {
   sourceVersion: string;
   legalBasis: string;
   url: string;
+  retrievalDate: string;
 };
 
 const regulaer = faktorzeilen(item, 'regular');
@@ -161,14 +162,27 @@ function betrag(minor: number): string {
     <Button variante="primaer" href={rechner}>Im Rechner verwenden</Button>
   </p>
 
-  <Notice variante="warnung" titel="Fachlich noch nicht geprüft">
-    <p>
-      Die Rechenannahmen — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und Rundung — sind
-      <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Diese Seite gibt den
-      amtlichen Betrag wieder und rechnet ihn hoch; sie ist keine Auskunft und kein
-      Kostenvoranschlag.
-    </p>
-  </Notice>
+  <ReviewStatus
+    status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
+    reviewedAt={COST_CONFIG.reviewedAt}
+    reviewedBy={COST_CONFIG.reviewedBy}
+    lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
+    responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+    sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+  >
+    {
+      COST_CONFIG.clinicalReview === 'approved' ? (
+        <p>Die Rechenannahmen dieser Seite wurden fachlich geprüft.</p>
+      ) : (
+        <p>
+          Die Rechenannahmen — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und Rundung — sind
+          <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Diese Seite gibt den
+          amtlichen Betrag wieder und rechnet ihn hoch; sie ist keine Auskunft und kein
+          Kostenvoranschlag.
+        </p>
+      )
+    }
+  </ReviewStatus>
 
   <h2>Fundstelle</h2>
   <dl class="fundstelle">

@@ -67,6 +67,8 @@ export interface CostConfig {
   readonly vatPercent: number;
   readonly specialAgreementsSupported: boolean;
   readonly clinicalReview: 'pending' | 'approved' | 'withdrawn';
+  readonly reviewedAt: string | null;
+  readonly reviewedBy: string | null;
 }
 
 export const COST_CONFIG: CostConfig = {
@@ -81,6 +83,8 @@ export const COST_CONFIG: CostConfig = {
   vatPercent: konfiguration.vatPercent,
   specialAgreementsSupported: konfiguration.specialAgreementsSupported,
   clinicalReview: konfiguration.clinicalReview as CostConfig['clinicalReview'],
+  reviewedAt: konfiguration.reviewedAt,
+  reviewedBy: konfiguration.reviewedBy,
 };
 
 /** Erlaubter Faktorbereich für einen Behandlungskontext. */
