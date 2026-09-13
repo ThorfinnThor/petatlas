@@ -1,10 +1,10 @@
 # FINAL SEO IMPLEMENTATION REPORT
 
-Stand: 13.09.2026  
+Stand: 14.09.2026  
 Domain: `https://wauandmiau.de`  
 Ausgerollter Worker: `petatlas-de-preview`  
-Cloudflare-Version: `bfb79f4e-066b-4b3d-a523-2d58c8557cde`  
-Code-Commit: `a60ddcb`
+Cloudflare-Version: `d654809d-56b4-49f8-89b1-0a5c159b2b55`  
+Code-Commits: `a60ddcb`, `46cc721`
 
 ## 1. Bewertung des gelieferten Audits
 
@@ -41,7 +41,7 @@ Einige Punkte waren als Prüfauftrag formuliert und keine bestätigten Fehler. Z
 7. Tierarzt-Ortsseiten zeigen den echten Snapshot-Datenstand; die Quellenseite verlinkt Methodik und Datenstand.
 8. Der Vorschau-Crawling-Schutz ist gegen missverständliche übergeordnete Allow-Regeln gehärtet.
 
-Geändert wurden 24 Dateien beziehungsweise Komponenten mit 2.078 Ergänzungen und 49 Entfernungen. Die wichtigsten Dateien sind:
+Geändert wurden 25 Dateien beziehungsweise Komponenten mit 2.270 Ergänzungen und 49 Entfernungen. Die wichtigsten Dateien sind:
 
 - `src/components/ReviewStatus.astro`
 - `scripts/checks/seo.ts`
@@ -112,6 +112,7 @@ Der vollständige Lauf `npm run verify` ist erfolgreich:
 - Vitest: 96 Testdateien, **1.461/1.461 Tests bestanden**
 - Secrets, Workflows, Lizenzen, Inhaltsdaten und Handoff: bestanden
 - SEO-Simulation als indexierbarer Build: **1.243/1.243 Seiten bestanden**
+- GitHub-Pflichtprüfungen: **5/5 bestanden**, einschließlich Browser-Smoke, Browsermatrix, Accessibility und Feature-Viewports
 
 Live auf `https://wauandmiau.de` geprüft:
 
@@ -126,6 +127,8 @@ Live auf `https://wauandmiau.de` geprüft:
 - `/sitemap.xml` → 404, im Vorschauprofil beabsichtigt
 
 Der Cloudflare-Cache wurde nach dem Deployment vollständig geleert; der neue Stand ist im Browser auf der eigenen Domain geöffnet und gerendert.
+
+Der zusätzliche Desktop-Viewport-Check zeigt die Ergebnisüberschrift des Kostenrechners bei 649 px in einem 720 px hohen Fenster. Die vollständige Prüfbox bleibt darüber sichtbar; mobil behält sie ihre einspaltige Lesereihenfolge.
 
 ## 9. Offene fachliche und organisatorische Prüfungen
 
