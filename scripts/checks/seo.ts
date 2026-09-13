@@ -29,6 +29,71 @@ export interface Beanstandung {
   readonly problem: string;
 }
 
+export interface Weiterleitungsregel {
+  readonly quelle: string;
+  readonly ziel: string;
+  readonly status: number;
+}
+
+/**
+ * Liest die von Cloudflare unterstützte einfache `_redirects`-Syntax.
+ * Ungültige Zeilen bleiben als Regel mit Status 0 sichtbar, damit der Gate
+ * sie nicht genauso still ignoriert wie die Plattform.
+ */
+export function leseWeiterleitungen(inhalt: string): Weiterleitungsregel[] {
+  return inhalt
+    .split(/\r?\n/)
+    .map((zeile) => zeile.trim())
+    .filter((zeile) => zeile !== '' && !zeile.startsWith('#'))
+    .map((zeile) => {
+      const teile = zeile.split(/\s+/);
+      return {
+        quelle: teile[0] ?? '',
+        ziel: teile[1] ?? '',
+        status: teile.length === 3 ? Number(teile[2]) : 302,
+      };
+    });
+}
+
+/** Der Root muss ohne JavaScript und ohne Kette auf den einzigen Markt führen. */
+export function pruefeWeiterleitungen(
+  inhalt: string | null,
+  seiten: readonly Seite[],
+): Beanstandung[] {
+  if (inhalt === null) {
+    return [
+      { pfad: '/_redirects', problem: 'Fehlt; der Root bliebe eine HTML-Meta-Weiterleitung.' },
+    ];
+  }
+
+  const regeln = leseWeiterleitungen(inhalt);
+  const beanstandungen: Beanstandung[] = [];
+  const root = regeln.find((regel) => regel.quelle === '/');
+  if (root === undefined) {
+    beanstandungen.push({ pfad: '/', problem: 'Kein serverseitiger Root-Redirect.' });
+    return beanstandungen;
+  }
+  if (root.ziel !== '/de-de/') {
+    beanstandungen.push({
+      pfad: '/',
+      problem: `Root-Redirect zeigt auf ${root.ziel} statt /de-de/.`,
+    });
+  }
+  if (root.status !== 301 && root.status !== 308) {
+    beanstandungen.push({
+      pfad: '/',
+      problem: `Root-Redirect ist ${root.status || 'ungültig'} statt dauerhaft (301/308).`,
+    });
+  }
+  if (!seiten.some((seite) => seite.pfad === root.ziel)) {
+    beanstandungen.push({ pfad: '/', problem: `Redirect-Ziel ${root.ziel} ist nicht gebaut.` });
+  }
+  if (regeln.some((regel) => regel.quelle === root.ziel)) {
+    beanstandungen.push({ pfad: '/', problem: `Redirect-Kette über ${root.ziel}.` });
+  }
+  return beanstandungen;
+}
+
 /** Pfade, die nie in einen Index gehören, egal was im Kopf steht. */
 export const NIE_INDEXIEREN: readonly string[] = ['/entwicklung/', '/404'];
 
@@ -139,6 +204,85 @@ export function pruefeSeite(pfad: string, html: string, umgebung: Umgebung): Bea
   return beanstandungen;
 }
 
+function hauptinhalt(html: string): string {
+  const anfang = html.indexOf('<main id="inhalt"');
+  const ende = html.indexOf('<footer', anfang);
+  if (anfang === -1) return html;
+  return html.slice(anfang, ende === -1 ? undefined : ende);
+}
+
+/**
+ * Zusätzliche Output-Regeln für die Templates, bei denen ein formal sauberes
+ * `<head>` allein nicht genügt. Sie prüfen sichtbare Nachweise im gebauten
+ * Hauptinhalt und nicht bloß Datenfelder im Quellcode.
+ */
+export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[] {
+  const inhalt = hauptinhalt(html);
+  const beanstandungen: Beanstandung[] = [];
+  const melde = (problem: string): void => {
+    beanstandungen.push({ pfad, problem });
+  };
+  const hatInternenLink = /<a\b[^>]+href=["']\/de-de\//i.test(inhalt);
+
+  const istKosten = pfad.startsWith('/de-de/tierarztkosten/');
+  const istReise = pfad.startsWith('/de-de/reisecheck/');
+  const istStadt = /^\/de-de\/tierarzt-karte\/[^/]+\/$/.test(pfad);
+  const istRatgeber = /^\/de-de\/ratgeber\/[^/]+\/$/.test(pfad);
+  const istSensiblerRatgeber = [
+    '/de-de/ratgeber/tierarztrechnung-verstehen/',
+    '/de-de/ratgeber/reise-vorbereiten/',
+  ].includes(pfad);
+  const istErgaenzung = pfad === '/de-de/ergaenzungsfuttermittel/';
+  const istProduktOderRatgeber = istRatgeber || /^\/de-de\/(?:futter|pflege)\/[^/]+\/$/.test(pfad);
+  const istTransparenz = ['/de-de/methodik/', '/de-de/quellen/'].includes(pfad);
+
+  if (!(
+    istKosten ||
+    istReise ||
+    istStadt ||
+    istProduktOderRatgeber ||
+    istErgaenzung ||
+    istTransparenz
+  )) {
+    return beanstandungen;
+  }
+
+  if (!hatInternenLink) melde('Kein crawlbarer interner Link im Hauptinhalt.');
+
+  if (istKosten || istReise || istSensiblerRatgeber || istErgaenzung) {
+    if (!/data-review-status=["'](?:pending|approved)["']/i.test(inhalt)) {
+      melde('Kein technisch eindeutiger fachlicher Reviewstatus im Hauptinhalt.');
+    }
+    if (!/data-last-verified-at=["']\d{4}-\d{2}-\d{2}["']/i.test(inhalt)) {
+      melde('Kein Datum der letzten Quellenprüfung am Reviewstatus.');
+    }
+    if (!/(?:Quellen|Fundstelle|Rechtsgrundlage|Bezogen über)/i.test(inhalt)) {
+      melde('Kein sichtbarer Quellen- oder Fundstellenhinweis.');
+    }
+    if (!/Fachliche Verantwortung/i.test(inhalt)) {
+      melde('Keine sichtbare fachliche Verantwortlichkeit.');
+    }
+  }
+
+  if (istKosten && !/Datenstand:/i.test(inhalt)) {
+    melde('GOT-/Kostenseite ohne sichtbaren Datenstand.');
+  }
+
+  if (istStadt) {
+    if (!/Datenstand:/i.test(inhalt)) melde('Ortsseite ohne sichtbaren Datenstand.');
+    if (!/(?:<h2[^>]*>Quelle|Quelle:)/i.test(inhalt)) melde('Ortsseite ohne Quellenhinweis.');
+  }
+
+  if (istRatgeber) {
+    if (!/Quellen und Einordnung/i.test(inhalt)) melde('Ratgeber ohne Quellenabschnitt.');
+    if (!/\d{2}\.\d{2}\.\d{4}|\d{4}-\d{2}-\d{2}/.test(inhalt)) {
+      melde('Ratgeber ohne sichtbaren redaktionellen Stand.');
+    }
+  }
+
+  return beanstandungen;
+}
+
 export function pruefeTitelEindeutig(
   seiten: readonly { readonly pfad: string; readonly titel: string | null }[],
 ): Beanstandung[] {
@@ -234,6 +378,7 @@ function main(): number {
   for (const seite of seiten) {
     const html = readFileSync(seite.datei, 'utf8');
     beanstandungen.push(...pruefeSeite(seite.pfad, html, umgebung));
+    beanstandungen.push(...pruefeSensiblenInhalt(seite.pfad, html));
     titel.push({ pfad: seite.pfad, titel: leseKopf(html).titel });
   }
   beanstandungen.push(...pruefeTitelEindeutig(titel));
@@ -260,13 +405,20 @@ function main(): number {
   const sitemap = existsSync(sitemapPfad) ? readFileSync(sitemapPfad, 'utf8') : null;
   beanstandungen.push(...pruefeSitemap(sitemap, seiten, umgebung));
 
+  const redirectsPfad = join(wurzel, '_redirects');
+  const redirects = existsSync(redirectsPfad) ? readFileSync(redirectsPfad, 'utf8') : null;
+  beanstandungen.push(...pruefeWeiterleitungen(redirects, seiten));
+
   const robotsPfad = join(wurzel, 'robots.txt');
   if (!existsSync(robotsPfad)) {
     beanstandungen.push({ pfad: '/robots.txt', problem: 'Fehlt.' });
-  } else if (!umgebung.indexierbar && !/^Disallow:\s*\/$/m.test(readFileSync(robotsPfad, 'utf8'))) {
+  } else if (
+    !umgebung.indexierbar &&
+    !/^Disallow:\s*\/de-de\/$/m.test(readFileSync(robotsPfad, 'utf8'))
+  ) {
     beanstandungen.push({
       pfad: '/robots.txt',
-      problem: 'Dieser Build ist nicht indexierbar, aber robots.txt verbietet nicht alles.',
+      problem: 'Dieser Build ist nicht indexierbar, aber robots.txt sperrt die Marktseiten nicht.',
     });
   }
 

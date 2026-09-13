@@ -9,10 +9,12 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../../components/ui/Breadcrumbs.astro';
 import DataStatus from '../../../../components/DataStatus.astro';
+import ReviewStatus from '../../../../components/ReviewStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../../config/build.ts';
 import { subroutePath } from '../../../../lib/routes.ts';
 import { positionen, teile } from '../../../../features/costs/detail.ts';
+import { COST_CONFIG } from '../../../../features/costs/engine.ts';
 import snapshot from '../../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 
 /**
@@ -27,7 +29,12 @@ export function getStaticPaths() {
 }
 
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
-const quelle = snapshot.source as unknown as { effectiveFrom: string; sourceVersion: string };
+const quelle = snapshot.source as unknown as {
+  effectiveFrom: string;
+  sourceVersion: string;
+  retrievalDate: string;
+  url: string;
+};
 const gliederung = teile();
 const anzahl = positionen().length;
 const eigenerPfad = subroutePath(market, 'costs', 'katalog');
@@ -65,6 +72,25 @@ const eigenerPfad = subroutePath(market, 'costs', 'katalog');
   }
 
   <DataStatus stand={quelle.effectiveFrom} quelle={quelle.sourceVersion} locale={market.locale} />
+  <ReviewStatus
+    status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
+    reviewedAt={COST_CONFIG.reviewedAt}
+    reviewedBy={COST_CONFIG.reviewedBy}
+    lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
+    responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+    sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+  >
+    {
+      COST_CONFIG.clinicalReview === 'approved' ? (
+        <p>Der Katalog und die Rechenregeln wurden fachlich geprüft.</p>
+      ) : (
+        <p>
+          Der Katalog gibt amtliche Positionen wieder. Die fachliche Einordnung der Rechenregeln ist
+          noch nicht abgenommen.
+        </p>
+      )
+    }
+  </ReviewStatus>
 </BaseLayout>
 
 <style>

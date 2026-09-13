@@ -70,7 +70,13 @@ export function baueRobots(indexierbar: boolean, baseUrl: string): string {
     return [
       '# Dieser Build ist nicht zur Indexierung bestimmt.',
       'User-agent: *',
-      'Disallow: /',
+      // Cloudflare kann vor diesen Inhalt eine eigene `Allow: /`-Regel für
+      // Content Signals setzen. Die längeren Pfade gewinnen eindeutig und
+      // halten trotzdem nur den Vorschauinhalt vom Crawling fern.
+      'Disallow: /de-de/',
+      'Disallow: /entwicklung/',
+      'Disallow: /data/',
+      'Disallow: /pagefind/',
       '',
     ].join('\n');
   }

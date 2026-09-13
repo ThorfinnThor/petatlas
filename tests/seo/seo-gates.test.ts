@@ -10,9 +10,12 @@ import { describe, expect, it } from 'vitest';
 import {
   NIE_INDEXIEREN,
   VERBOTENE_SCHEMA_TYPEN,
+  leseWeiterleitungen,
   pruefeSeite,
+  pruefeSensiblenInhalt,
   pruefeSitemap,
   pruefeTitelEindeutig,
+  pruefeWeiterleitungen,
   type Umgebung,
 } from '../../scripts/checks/seo.ts';
 import { leseKopf, nichtIndexierbar } from '../../src/lib/html-head.ts';
@@ -68,6 +71,59 @@ const PFAD = '/de-de/quellen/';
 describe('Eine saubere Seite', () => {
   it('wird nicht beanstandet', () => {
     expect(pruefeSeite(PFAD, seite(), UMGEBUNG)).toEqual([]);
+  });
+});
+
+describe('Sensible Seitentemplates', () => {
+  const grundgeruest = (pfad: string, inhalt: string): string =>
+    seite({
+      canonical: `https://petatlas.example${pfad}`,
+      koerperExtra: `<main id="inhalt">${inhalt}</main><footer></footer>`,
+    });
+
+  it('verlangt auf Kosten- und Reiseseiten Reviewstatus, Prüfdatum, Quelle und Verantwortung', () => {
+    const korrekt = grundgeruest(
+      '/de-de/tierarztkosten/',
+      '<section data-review-status="pending" data-last-verified-at="2026-09-08">' +
+        '<p>Fachliche Verantwortung: offen</p><p>Quellen und Datenstand: 2026-09-08</p>' +
+        '<a href="/de-de/quellen/">Quellen</a></section>',
+    );
+    expect(pruefeSensiblenInhalt('/de-de/tierarztkosten/', korrekt)).toEqual([]);
+
+    const ohneStatus = korrekt.replace('data-review-status="pending"', '');
+    expect(pruefeSensiblenInhalt('/de-de/tierarztkosten/', ohneStatus)[0]?.problem).toContain(
+      'Reviewstatus',
+    );
+  });
+
+  it('verlangt auf Ortsseiten Datenstand, Quelle und einen internen Link', () => {
+    const korrekt = grundgeruest(
+      '/de-de/tierarzt-karte/berlin/',
+      '<p>Datenstand: 2026-09-07 · Quelle: OpenStreetMap</p>' +
+        '<a href="/de-de/tierarzt-karte/">Zur Karte</a>',
+    );
+    expect(pruefeSensiblenInhalt('/de-de/tierarzt-karte/berlin/', korrekt)).toEqual([]);
+  });
+
+  it('verlangt auf Ratgebern Quellenabschnitt und redaktionellen Stand', () => {
+    const korrekt = grundgeruest(
+      '/de-de/ratgeber/reise-vorbereiten/',
+      '<section data-review-status="pending" data-last-verified-at="2026-09-10">' +
+        '<p>Fachliche Verantwortung: offen</p><p>Quellen</p></section>' +
+        '<p>Redaktionelle Orientierung · 10.09.2026</p><h2>Quellen und Einordnung</h2>' +
+        '<a href="/de-de/reisecheck/">Zum Reisecheck</a>',
+    );
+    expect(pruefeSensiblenInhalt('/de-de/ratgeber/reise-vorbereiten/', korrekt)).toEqual([]);
+  });
+
+  it('verlangt auf der Seite zu Ergänzungsfuttermitteln einen Reviewstatus', () => {
+    const korrekt = grundgeruest(
+      '/de-de/ergaenzungsfuttermittel/',
+      '<section data-review-status="pending" data-last-verified-at="2026-09-09">' +
+        '<p>Fachliche Verantwortung: offen</p><p>Quellen</p>' +
+        '<a href="/de-de/methodik/">Methodik</a></section>',
+    );
+    expect(pruefeSensiblenInhalt('/de-de/ergaenzungsfuttermittel/', korrekt)).toEqual([]);
   });
 });
 
@@ -270,9 +326,11 @@ describe('Sitemap', () => {
 });
 
 describe('robots.txt', () => {
-  it('verbietet in einem nicht indexierbaren Build alles', () => {
+  it('verbietet in einem nicht indexierbaren Build alle öffentlichen Inhaltsbereiche', () => {
     const text = baueRobots(false, UMGEBUNG.baseUrl);
-    expect(text).toMatch(/^Disallow:\s*\/$/m);
+    expect(text).toMatch(/^Disallow:\s*\/de-de\/$/m);
+    expect(text).toMatch(/^Disallow:\s*\/entwicklung\/$/m);
+    expect(text).toMatch(/^Disallow:\s*\/data\/$/m);
     expect(text).not.toContain('Sitemap:');
   });
 
@@ -280,6 +338,27 @@ describe('robots.txt', () => {
     const text = baueRobots(true, UMGEBUNG.baseUrl);
     expect(text).toContain('Sitemap: https://petatlas.example/sitemap.xml');
     expect(text).toContain('Disallow: /entwicklung/');
+  });
+});
+
+describe('Cloudflare-Weiterleitungen', () => {
+  const seiten = [{ pfad: '/de-de/', datei: 'x', indexierbar: false }];
+
+  it('verlangt einen permanenten serverseitigen Root-Redirect ohne Kette', () => {
+    expect(pruefeWeiterleitungen('/ /de-de/ 308\n', seiten)).toEqual([]);
+    expect(leseWeiterleitungen('/ /de-de/ 308\n')[0]).toEqual({
+      quelle: '/',
+      ziel: '/de-de/',
+      status: 308,
+    });
+  });
+
+  it('beanstandet fehlende, temporäre und verkettete Root-Redirects', () => {
+    expect(pruefeWeiterleitungen(null, seiten)[0]?.problem).toContain('Fehlt');
+    expect(pruefeWeiterleitungen('/ /de-de/ 302\n', seiten)[0]?.problem).toContain('301/308');
+    expect(pruefeWeiterleitungen('/ /de-de/ 308\n/de-de/ /start/ 308\n', seiten)).toEqual([
+      { pfad: '/', problem: 'Redirect-Kette über /de-de/.' },
+    ]);
   });
 });
 

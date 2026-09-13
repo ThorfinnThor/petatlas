@@ -15,6 +15,7 @@ import Notice from '../Notice.astro';
 import ToolShell from '../tools/ToolShell.astro';
 import RadioCard from '../forms/RadioCard.astro';
 import DataStatus from '../DataStatus.astro';
+import ReviewStatus from '../ReviewStatus.astro';
 import ErrorSummary from '../forms/ErrorSummary.astro';
 import Field from '../forms/Field.astro';
 import { COST_CONFIG, NICHT_ENTHALTEN } from '../../features/costs/engine.ts';
@@ -46,18 +47,27 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   eine echte Rechnung kann Positionen enthalten, die hier niemand ausgewählt hat.
 </p>
 
-{
-  COST_CONFIG.clinicalReview !== 'approved' && (
-    <Notice variante="warnung" titel="Fachlich noch nicht geprüft" testId="ungeprueft">
-      <p>
+<ReviewStatus
+  status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
+  reviewedAt={COST_CONFIG.reviewedAt}
+  reviewedBy={COST_CONFIG.reviewedBy}
+  lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
+  responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+  sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+>
+  {
+    COST_CONFIG.clinicalReview === 'approved' ? (
+      <p>Die Rechenannahmen dieses Rechners wurden fachlich geprüft.</p>
+    ) : (
+      <p data-testid="ungeprueft">
         Die Rechenannahmen dieses Rechners — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und
         Rundung — sind <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Der
         Rechner ist zum Ausprobieren freigeschaltet, nicht als Auskunft. Verlassen Sie sich nicht
         auf die Beträge.
       </p>
-    </Notice>
-  )
-}
+    )
+  }
+</ReviewStatus>
 
 <DataStatus
   stand={quelle.effectiveFrom}

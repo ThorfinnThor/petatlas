@@ -3,6 +3,7 @@ import { createSiteConfig } from '../../../../config/site.ts';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrandImage from '../../../components/BrandImage.astro';
+import ReviewStatus from '../../../components/ReviewStatus.astro';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { defaultMarket, withEnabledFeatures } from '../../../domain/market.ts';
 import { routeExists, routePath } from '../../../lib/routes.ts';
@@ -159,6 +160,7 @@ const texts = {
 };
 const article = texts[slug as keyof typeof texts];
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const fachreviewNoetig = ['tierarztrechnung-verstehen', 'reise-vorbereiten'].includes(slug ?? '');
 ---
 
 <BaseLayout title={article.title} canonicalPfad={`/de-de/ratgeber/${slug}/`}>
@@ -167,7 +169,23 @@ const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
     {article.title}
   </h1><p>{article.intro}</p><p class="article-meta">
     {createSiteConfig('preview', import.meta.env).brandName} · Redaktionelle Orientierung · 10.09.2026
-  </p><BrandImage name={article.image} sizes="(max-width: 768px) 100vw, 760px" />
+  </p>
+  {
+    fachreviewNoetig && (
+      <ReviewStatus
+        status="pending"
+        lastVerifiedAt="2026-09-10"
+        responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+        sources={[{ label: article.sourceName, url: article.source }]}
+      >
+        <p>
+          Die Quellen und die Grenzen des Werkzeugs sind redaktionell dokumentiert. Eine fachliche
+          Abnahme dieser Einordnung steht noch aus.
+        </p>
+      </ReviewStatus>
+    )
+  }
+  <BrandImage name={article.image} sizes="(max-width: 768px) 100vw, 760px" />
   {
     article.sections.map(([title, text]) => (
       <section>

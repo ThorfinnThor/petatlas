@@ -11,5 +11,7 @@
   "baseAmountsExcludeVat": true,
   "vatPercent": 19,
   "specialAgreementsSupported": true,
-  "clinicalReview": "pending"
+  "clinicalReview": "pending",
+  "reviewedAt": null,
+  "reviewedBy": null
 }

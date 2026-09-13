@@ -1,0 +1,6 @@
+# Cloudflare Workers Static Assets applies these rules before serving files.
+# Keep the single-market entry point server-side and permanent.
+/ /de-de/ 308
+
+# Legacy wording retained only as a permanent redirect to the current route.
+/de-de/nahrungsergaenzung/ /de-de/ergaenzungsfuttermittel/ 308

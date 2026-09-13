@@ -47,6 +47,7 @@
     "check:workflows": "bash scripts/checks/workflows.sh",
     "check:budgets": "node scripts/checks/budgets.ts",
     "check:seo": "node scripts/checks/seo.ts",
+    "audit:seo-inventory": "node scripts/audit/seo-inventory.ts",
     "check:dist": "node scripts/checks/dist.ts",
     "check:links": "node scripts/checks/links.ts",
     "check:release": "node scripts/checks/release.ts",
@@ -62,7 +63,7 @@
     "status:json": "python3 scripts/project_status.py --json",
     "status:validate": "python3 scripts/project_status.py --validate",
     "design:images": "node scripts/design/images.ts",
-    "build:app": "APP_PROFILE=real BUILD_MODE=preview npm run build:cloudflare",
+    "build:app": "APP_PROFILE=real BUILD_MODE=preview PUBLIC_SITE_URL=https://wauandmiau.de npm run build:cloudflare",
     "dev:app": "APP_PROFILE=real BUILD_MODE=preview astro dev",
     "test:app": "playwright test --config playwright.app.config.ts"
   },

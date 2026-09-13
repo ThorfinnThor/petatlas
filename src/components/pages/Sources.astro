@@ -7,11 +7,14 @@
  * sie verschwindet nicht und wird nicht beschönigt.
  */
 import { allSources, pendingSources, verifiedSources } from '../../domain/source-registry.ts';
+import { defaultMarket } from '../../domain/market.ts';
+import { routePath } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
 
 const quellen = allSources();
 const geprueft = verifiedSources();
 const offen = pendingSources();
+const markt = defaultMarket();
 
 const statusText: Record<string, string> = {
   pending: 'Rechte noch nicht geprüft',
@@ -25,6 +28,12 @@ const statusText: Record<string, string> = {
 <p>
   Jede fachliche Angabe auf dieser Website stammt aus einer benannten Quelle. Diese Liste kommt aus
   derselben Konfiguration, aus der auch die Daten geladen werden.
+</p>
+<p>
+  Wie wir Quellen auswählen und Änderungen prüfen, steht in der
+  <a href={routePath(markt, 'method')}>Methodik</a>. Die Aktualität der ausgelieferten Daten zeigt
+  der
+  <a href={routePath(markt, 'dataStatus')}>Datenstand</a>.
 </p>
 
 {

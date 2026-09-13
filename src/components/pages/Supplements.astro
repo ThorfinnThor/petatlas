@@ -1,7 +1,12 @@
 ---
 import AmazonLink from '../AmazonLink.astro';
 import { amazonEnabled, AMAZON_DISCLOSURE } from '../../features/commerce/amazon.ts';
+import { defaultMarket } from '../../domain/market.ts';
+import { routePath } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
+import ReviewStatus from '../ReviewStatus.astro';
+
+const methodikPfad = routePath(defaultMarket(), 'method');
 ---
 
 <p class="eyebrow">Ernährung · Hund und Katze</p>
@@ -11,6 +16,37 @@ import Notice from '../Notice.astro';
   Hier ordnen Sie Ergänzungsfuttermittel ein und vergleichen die Kosten einer bereits festgelegten
   Tagesmenge.
 </p>
+
+<ReviewStatus
+  status="pending"
+  lastVerifiedAt="2026-09-09"
+  responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+  sources={[
+    {
+      label: 'UK Pet Food · Einordnung von Ergänzungen',
+      url: 'https://www.ukpetfood.org/resource/pet-supplements-are-they-necessary.html',
+    },
+    {
+      label: 'WSAVA · Ernährungsleitlinien',
+      url: 'https://wsava.org/global-guidelines/global-nutrition-guidelines/',
+    },
+    {
+      label: 'FEDIAF · Ernährungsleitlinien',
+      url: 'https://www.fediaf.org/self-regulation/nutritional-guidelines/',
+    },
+    {
+      label: 'FDA · Xylit und Hunde',
+      url: 'https://www.fda.gov/animal-veterinary/animal-health-literacy/xylitol-and-dogs-deadly-combination',
+    },
+  ]}
+>
+  <p>
+    Die Aussagen sind anhand der genannten Quellen dokumentiert. Eine fachliche Abnahme der
+    gesundheitlichen Einordnung steht noch aus; die Seite bestimmt keine Dosierung und ersetzt keine
+    tierärztliche Beratung. Unser Prüfverfahren steht in der
+    <a href={methodikPfad}>Methodik</a>.
+  </p>
+</ReviewStatus>
 
 <Notice variante="hinweis" titel="Zuerst das Grundfutter prüfen">
   <p>

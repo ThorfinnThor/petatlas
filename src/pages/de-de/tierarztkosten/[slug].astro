@@ -12,6 +12,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Notice from '../../../components/Notice.astro';
 import DataStatus from '../../../components/DataStatus.astro';
+import ReviewStatus from '../../../components/ReviewStatus.astro';
 import { approvedScenarios } from '../../../features/costs/scenarios.ts';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { subroutePath } from '../../../lib/routes.ts';
@@ -32,7 +33,12 @@ export function getStaticPaths() {
 
 const { scenario } = Astro.props as { scenario: CostScenario };
 const market = defaultMarket();
-const quelle = snapshot.source as { sourceVersion: string; effectiveFrom: string | null };
+const quelle = snapshot.source as {
+  sourceVersion: string;
+  effectiveFrom: string | null;
+  retrievalDate: string;
+  url: string;
+};
 ---
 
 <BaseLayout
@@ -53,11 +59,19 @@ const quelle = snapshot.source as { sourceVersion: string; effectiveFrom: string
 
   <DataStatus stand={quelle.effectiveFrom} quelle={quelle.sourceVersion} locale={market.locale} />
 
-  <p>
-    Diese Zusammenstellung wurde am {scenario.reviewedAt?.slice(0, 10)} von {scenario.reviewedBy}
-    fachlich geprüft. Sie bleibt eine Orientierung: welche Leistungen im Einzelfall nötig sind, entscheidet
-    die behandelnde Praxis.
-  </p>
+  <ReviewStatus
+    status="approved"
+    reviewedAt={scenario.reviewedAt}
+    reviewedBy={scenario.reviewedBy}
+    lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
+    responsibility={scenario.reviewedBy ?? ''}
+    sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+  >
+    <p>
+      Diese Zusammenstellung ist fachlich geprüft. Sie bleibt eine Orientierung: welche Leistungen
+      im Einzelfall nötig sind, entscheidet die behandelnde Praxis.
+    </p>
+  </ReviewStatus>
 
   <h2>Enthaltene Positionen</h2>
   <ul>

@@ -17,6 +17,7 @@ import { defaultMarket, withEnabledFeatures } from '../src/domain/market.ts';
 import EmptyState from '../src/components/ui/EmptyState.astro';
 import ProductCard from '../src/components/commerce/ProductCard.astro';
 import RadioCard from '../src/components/forms/RadioCard.astro';
+import ReviewStatus from '../src/components/ReviewStatus.astro';
 import { merkmalLabel } from '../src/features/care/attributes.ts';
 import PageHeader from '../src/components/ui/PageHeader.astro';
 import ToolShell from '../src/components/tools/ToolShell.astro';
@@ -37,6 +38,29 @@ async function render(
 ): Promise<string> {
   return container.renderToString(komponente, { props, slots });
 }
+
+describe('Fachlicher Reviewstatus', () => {
+  const basis = {
+    lastVerifiedAt: '2026-09-07',
+    responsibility: 'Fachliche Prüfung noch offen',
+    sources: [{ label: 'Amtliche Quelle', url: 'https://example.org/quelle' }],
+  };
+
+  it('zeigt Status, Quellenstand und Verantwortlichkeit im HTML', async () => {
+    const html = await render(ReviewStatus, { ...basis, status: 'pending' });
+    expect(html).toContain('data-review-status="pending"');
+    expect(html).toContain('data-last-verified-at="2026-09-07"');
+    expect(html).toContain('Fachlich noch nicht geprüft');
+    expect(html).toContain('Fachliche Prüfung noch offen');
+    expect(html).toContain('https://example.org/quelle');
+  });
+
+  it('verweigert eine angebliche Freigabe ohne Person und Datum', async () => {
+    await expect(render(ReviewStatus, { ...basis, status: 'approved' })).rejects.toThrow(
+      /braucht reviewedBy und reviewedAt/,
+    );
+  });
+});
 
 describe('Button', () => {
   it('rendert jede Variante mit eigener Klasse', async () => {
