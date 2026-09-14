@@ -15,7 +15,7 @@ import {
 } from '../domain/market.ts';
 import { devFeatureOverrides } from '../../config/build.ts';
 import { translate, type LocaleId } from '../domain/i18n.ts';
-import { ROUTES, routeExists, routePath, type RouteKey } from '../lib/routes.ts';
+import { ROUTES, routeExists, routeIsIndexable, routePath, type RouteKey } from '../lib/routes.ts';
 
 import Care from '../components/pages/Care.astro';
 import Catalog from '../components/pages/Catalog.astro';
@@ -85,7 +85,12 @@ const WEITE_SEITEN: readonly RouteKey[] = [
 ];
 ---
 
-<BaseLayout title={titel} route={routeKey} weit={WEITE_SEITEN.includes(routeKey)}>
+<BaseLayout
+  title={titel}
+  route={routeKey}
+  neverIndex={!routeIsIndexable(routeKey)}
+  weit={WEITE_SEITEN.includes(routeKey)}
+>
   {routeKey === 'home' && <Home market={market} />}
   {routeKey === 'costs' && <Costs />}
   {routeKey === 'map' && <Map />}

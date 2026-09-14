@@ -22,6 +22,8 @@ import '../styles/print.css';
 
 interface Props {
   title: string;
+  /** Kurze, eigenständige Beschreibung für Suchergebnis und Linkvorschau. */
+  description?: string;
   /** Route dieser Seite, für canonical und aktiven Navigationszustand. */
   route?: RouteKey;
   /**
@@ -39,7 +41,7 @@ interface Props {
   weit?: boolean;
 }
 
-const { title, route, canonicalPfad, neverIndex = false, weit = false } = Astro.props;
+const { title, description, route, canonicalPfad, neverIndex = false, weit = false } = Astro.props;
 
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
@@ -63,6 +65,7 @@ const canonical = canonicalPfad
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} — {site.brandName}</title>
+    {description && <meta name="description" content={description} />}
     <meta name="robots" content={robots} />
     {canonical && <link rel="canonical" href={canonical} />}
   </head>

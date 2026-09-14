@@ -1,11 +1,12 @@
 ---
 /**
- * Sichtbarer und maschinenprüfbarer Freigabestand für fachlich sensible Inhalte.
- * `approved` ist nur mit Person und Datum zulässig; ein fehlender Nachweis
- * beendet den Build, statt eine Freigabe zu erfinden.
+ * Maschinenlesbarer Freigabestand für die internen Veröffentlichungsprüfungen.
+ *
+ * Die früher sichtbare Infobox wiederholte Datenstände, Verantwortliche und
+ * Freigabedaten auf jeder sensiblen Seite. Diese Angaben bleiben als
+ * technische Metadaten erhalten, während Quellen und fachliche Grenzen dort
+ * stehen, wo sie den jeweiligen Inhalt erklären.
  */
-import { formatCalendarDate } from '../domain/dates.ts';
-import Notice from './Notice.astro';
 
 type Status = 'draft' | 'pending' | 'approved';
 
@@ -22,7 +23,6 @@ interface Props {
   responsibility: string;
   sources: readonly SourceLink[];
   locale?: string;
-  /** Verdichtete Desktop-Darstellung vor Werkzeugen; mobil bleibt die Lesereihenfolge einspaltig. */
   compact?: boolean;
 }
 
@@ -33,129 +33,42 @@ const {
   reviewedAt = null,
   responsibility,
   sources,
-  locale = 'de-DE',
-  compact = false,
 } = Astro.props;
 
 if (status === 'approved' && (!reviewedBy?.trim() || !reviewedAt?.trim())) {
   throw new Error('Ein fachlich freigegebener Inhalt braucht reviewedBy und reviewedAt.');
 }
-
-const titel =
-  status === 'approved'
-    ? 'Fachlich geprüft'
-    : status === 'draft'
-      ? 'Entwurf – nicht veröffentlicht'
-      : 'Fachlich noch nicht geprüft';
 ---
 
-<section
-  class:list={['review-status', compact ? 'review-status--compact' : null]}
+<span
+  hidden
+  aria-hidden="true"
   data-review-status={status}
   data-last-verified-at={lastVerifiedAt ?? 'unknown'}
->
-  <Notice variante={status === 'approved' ? 'hinweis' : 'warnung'} titel={titel}>
-    <slot />
-    <dl>
-      <div>
-        <dt>Letzte Quellenprüfung</dt>
-        <dd>
-          {lastVerifiedAt === null ? 'unbekannt' : formatCalendarDate(lastVerifiedAt, locale)}
-        </dd>
-      </div>
-      <div>
-        <dt>Fachliche Verantwortung</dt>
-        <dd>{status === 'approved' ? reviewedBy : responsibility}</dd>
-      </div>
-      {
-        status === 'approved' && (
-          <div>
-            <dt>Freigegeben am</dt>
-            <dd>{formatCalendarDate(reviewedAt!, locale)}</dd>
-          </div>
-        )
-      }
-      <div>
-        <dt>Quellen</dt>
-        <dd>
-          <ul>
-            {
-              sources.map((source) => (
-                <li>
-                  <a href={source.url}>{source.label}</a>
-                </li>
-              ))
-            }
-          </ul>
-        </dd>
-      </div>
-    </dl>
-  </Notice>
-</section>
+  data-review-approved-by={status === 'approved' ? reviewedBy : undefined}
+  data-review-responsibility={status === 'approved' ? reviewedBy : responsibility}
+  data-reviewed-at={status === 'approved' ? reviewedAt : undefined}
+  data-review-source-count={sources.length}></span>
+{
+  sources.length > 0 && (
+    <p class="review-sources">
+      Quelle:{' '}
+      {sources.map((source, index) => (
+        <>
+          {index > 0 && <span aria-hidden="true"> · </span>}
+          <a href={source.url} rel="noopener">
+            {source.label}
+          </a>
+        </>
+      ))}
+    </p>
+  )
+}
 
 <style>
-  dl {
-    display: grid;
-    gap: var(--space-2);
-    margin-block-end: 0;
-  }
-
-  dl > div {
-    display: grid;
-    grid-template-columns: minmax(9rem, 12rem) 1fr;
-    gap: var(--space-2);
-  }
-
-  dt {
-    font-weight: var(--weight-label);
-  }
-
-  dd,
-  ul {
-    margin: 0;
-  }
-
-  ul {
-    padding-inline-start: var(--space-5);
-  }
-
-  @media (min-width: 1024px) {
-    .review-status--compact :global(.hinweisbox) {
-      display: grid;
-      grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 2.45fr);
-      align-items: start;
-      gap: var(--space-2) var(--space-5);
-      padding-block: var(--space-3);
-      margin-block: var(--space-4);
-    }
-
-    .review-status--compact :global(.hinweisbox__titel),
-    .review-status--compact :global(.hinweisbox > p) {
-      margin: 0;
-    }
-
-    .review-status--compact :global(.hinweisbox > p:not(.hinweisbox__titel)) {
-      max-inline-size: none;
-      font-size: var(--text-small);
-    }
-
-    .review-status--compact dl {
-      grid-column: 1 / -1;
-      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
-      gap: var(--space-2) var(--space-4);
-      font-size: var(--text-small);
-    }
-
-    .review-status--compact dl > div {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-  }
-
-  @media (max-width: 520px) {
-    dl > div {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
+  .review-sources {
+    margin-block: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
 </style>

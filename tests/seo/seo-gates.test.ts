@@ -74,6 +74,19 @@ describe('Eine saubere Seite', () => {
   });
 });
 
+describe('Bewusste Seitenausnahmen im Veröffentlichungs-Probelauf', () => {
+  it('macht eine mit pagefind-ignore markierte noindex-Seite nicht künstlich indexierbar', () => {
+    const ausnahme = seite({
+      robots: 'noindex, nofollow',
+      canonical: null,
+      bodyAttribute: ' data-pagefind-ignore="all"',
+    });
+    expect(
+      pruefeSeite('/de-de/mein-tier/', ausnahme, { ...UMGEBUNG, alsIndexierbar: true }),
+    ).toEqual([]);
+  });
+});
+
 describe('Sensible Seitentemplates', () => {
   const grundgeruest = (pfad: string, inhalt: string): string =>
     seite({
@@ -84,8 +97,9 @@ describe('Sensible Seitentemplates', () => {
   it('verlangt auf Kosten- und Reiseseiten Reviewstatus, Prüfdatum, Quelle und Verantwortung', () => {
     const korrekt = grundgeruest(
       '/de-de/tierarztkosten/',
-      '<section data-review-status="pending" data-last-verified-at="2026-09-08">' +
-        '<p>Fachliche Verantwortung: offen</p><p>Quellen und Datenstand: 2026-09-08</p>' +
+      '<section data-review-status="pending" data-last-verified-at="2026-09-08" ' +
+        'data-review-responsibility="Dokumentierte Prüfung">' +
+        '<p>Quellen und Datenstand: 2026-09-08</p>' +
         '<a href="/de-de/quellen/">Quellen</a></section>',
     );
     expect(pruefeSensiblenInhalt('/de-de/tierarztkosten/', korrekt)).toEqual([]);
@@ -108,12 +122,26 @@ describe('Sensible Seitentemplates', () => {
   it('verlangt auf Ratgebern Quellenabschnitt und redaktionellen Stand', () => {
     const korrekt = grundgeruest(
       '/de-de/ratgeber/reise-vorbereiten/',
-      '<section data-review-status="pending" data-last-verified-at="2026-09-10">' +
-        '<p>Fachliche Verantwortung: offen</p><p>Quellen</p></section>' +
+      '<section data-review-status="pending" data-last-verified-at="2026-09-10" ' +
+        'data-review-responsibility="Dokumentierte Prüfung"><p>Quellen</p></section>' +
         '<p>Redaktionelle Orientierung · 10.09.2026</p><h2>Quellen und Einordnung</h2>' +
         '<a href="/de-de/reisecheck/">Zum Reisecheck</a>',
-    );
+    ).replace('<body>', '<body data-pagefind-ignore="all">');
     expect(pruefeSensiblenInhalt('/de-de/ratgeber/reise-vorbereiten/', korrekt)).toEqual([]);
+  });
+
+  it('stoppt knappe Ratgeber, bevor sie indexierbar werden', () => {
+    const knapp = grundgeruest(
+      '/de-de/ratgeber/katze-transportbox/',
+      '<p>Redaktionelle Orientierung · 14.09.2026</p>' +
+        '<h2>Quellen und Einordnung</h2><a href="https://example.org/quelle">Quelle</a>' +
+        '<a href="/de-de/tierarzt-karte/">Tierarzt finden</a>',
+    );
+    const befund = pruefeSensiblenInhalt('/de-de/ratgeber/katze-transportbox/', knapp);
+    expect(befund.some((eintrag) => eintrag.problem.includes('inhaltlich zu knapp'))).toBe(true);
+    expect(
+      befund.some((eintrag) => eintrag.problem.includes('weniger als zwei externe Quellen')),
+    ).toBe(true);
   });
 
   it('akzeptiert auf der Ergänzungsseite einen nicht sichtbaren Verantwortungsnachweis', () => {

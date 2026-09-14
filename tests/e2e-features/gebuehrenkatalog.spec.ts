@@ -43,7 +43,8 @@ test('eine Position nennt Betrag, Sätze und Fundstelle', async ({ page }) => {
   await expect(page.getByText('lfd. Nr. 1')).toBeVisible();
   await expect(page.getByText('§ 5 Abs. 1 UrhG', { exact: false }).first()).toBeVisible();
 
-  await expect(page.getByText('Fachlich geprüft', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-review-status="approved"]')).toBeHidden();
+  await expect(page.getByText('Fachlich geprüft', { exact: true })).toHaveCount(0);
 });
 
 test('die Position führt zurück in den Rechner und in ihre Gruppe', async ({ page }) => {

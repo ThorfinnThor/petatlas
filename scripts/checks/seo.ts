@@ -130,8 +130,12 @@ export interface Umgebung {
 export function pruefeSeite(pfad: string, html: string, umgebung: Umgebung): Beanstandung[] {
   const kopf: Kopfangaben = leseKopf(html);
   const sollNieIndexiertWerden = NIE_INDEXIEREN.some((teil) => pfad.startsWith(teil));
+  // `data-pagefind-ignore` kennzeichnet eine bewusste Seitenausnahme. Ein
+  // Preview-Build trägt dagegen global noindex, soll aber weiterhin so
+  // geprüft werden, als würden seine vorgesehenen Landingpages indexiert.
+  const bewusstNichtIndexierbar = sollNieIndexiertWerden || kopf.pagefindIgnoriert;
   const wieIndexierbar =
-    umgebung.alsIndexierbar === true ? !sollNieIndexiertWerden : !nichtIndexierbar(kopf);
+    umgebung.alsIndexierbar === true ? !bewusstNichtIndexierbar : !nichtIndexierbar(kopf);
   const beanstandungen: Beanstandung[] = [];
   const melde = (problem: string): void => {
     beanstandungen.push({ pfad, problem });
@@ -256,12 +260,12 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
     if (!/data-last-verified-at=["']\d{4}-\d{2}-\d{2}["']/i.test(inhalt)) {
       melde('Kein Datum der letzten Quellenprüfung am Reviewstatus.');
     }
-    if (!/(?:Quellen|Fundstelle|Rechtsgrundlage|Bezogen über)/i.test(inhalt)) {
+    if (!/(?:Quelle|Fundstelle|Rechtsgrundlage|Bezogen über)/i.test(inhalt)) {
       melde('Kein sichtbarer Quellen- oder Fundstellenhinweis.');
     }
     const hatTechnischenVerantwortungsnachweis =
-      istErgaenzung && /data-review-approved-by=["'][^"']+["']/i.test(inhalt);
-    if (!/Fachliche Verantwortung/i.test(inhalt) && !hatTechnischenVerantwortungsnachweis) {
+      /data-review-(?:approved-by|responsibility)=["'][^"']+["']/i.test(inhalt);
+    if (!hatTechnischenVerantwortungsnachweis) {
       melde('Kein fachlicher Verantwortungsnachweis.');
     }
   }
@@ -279,6 +283,25 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
     if (!/Quellen und Einordnung/i.test(inhalt)) melde('Ratgeber ohne Quellenabschnitt.');
     if (!/\d{2}\.\d{2}\.\d{4}|\d{4}-\d{2}-\d{2}/.test(inhalt)) {
       melde('Ratgeber ohne sichtbaren redaktionellen Stand.');
+    }
+
+    // Nur bewusst freigegebene Ratgeber müssen dieses Qualitätsniveau
+    // erreichen. Dünne Übergangsseiten bleiben erreichbar, aber mit noindex
+    // und außerhalb der internen Suche.
+    if (!leseKopf(html).pagefindIgnoriert) {
+      const textlaenge = inhalt
+        .replace(/<script[\s\S]*?<\/script>/gi, '')
+        .replace(/<style[\s\S]*?<\/style>/gi, '')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim().length;
+      const zwischenueberschriften = [...inhalt.matchAll(/<h2\b/gi)].length;
+      const externeQuellen = [...inhalt.matchAll(/<a\b[^>]+href=["']https:\/\/[^"']+["']/gi)]
+        .length;
+      if (textlaenge < 3_500) melde('Indexierbarer Ratgeber ist inhaltlich zu knapp.');
+      if (zwischenueberschriften < 4) melde('Indexierbarer Ratgeber hat zu wenig Substanzblöcke.');
+      if (externeQuellen < 2)
+        melde('Indexierbarer Ratgeber nennt weniger als zwei externe Quellen.');
     }
   }
 
