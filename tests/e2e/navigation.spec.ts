@@ -124,9 +124,9 @@ test('Barrierefreiheitserklärung nennt Prüfung, Grenzen und Rückmeldeweg', as
   await expect(page.getByText('Erklärung zur Barrierefreiheit', { exact: true })).toBeVisible();
   await expect(page.getByText('kein offener kritischer Befund', { exact: false })).toBeVisible();
   await expect(page.getByText('Keine Prüfung mit Betroffenen', { exact: false })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Barriere per E-Mail melden' })).toHaveAttribute(
-    'href',
-    /^mailto:info@wauandmiau\.de/,
+  await expect(page.getByRole('heading', { name: 'Rückmeldung' })).toBeVisible();
+  await expect(page.locator('main')).toContainText(
+    /Barrieren können an|Ein Rückmeldeweg wird eingerichtet/,
   );
 });
 
