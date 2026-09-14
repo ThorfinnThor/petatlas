@@ -22,6 +22,10 @@
     "not_found_handling": "404-page",
   },
 
+  // Die öffentliche Domain gehört ausschließlich zum Produktionsprojekt.
+  // www wird auf Cloudflare-Ebene dauerhaft auf diese kanonische Domain umgeleitet.
+  "routes": [{ "pattern": "wauandmiau.de", "custom_domain": true }],
+
   // Produktion baut ausschließlich main. Andere Branches erzeugen im
   // Produktionsprojekt kein Deployment (M07-05).
   "workers_dev": false,
