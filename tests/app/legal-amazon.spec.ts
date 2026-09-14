@@ -33,9 +33,9 @@ for (const width of [390, 1440]) {
       }
       if (path === 'ergaenzungsfuttermittel') {
         await expect(page.locator('main a[rel~="sponsored"]')).toHaveCount(2);
-        await expect(page.locator('#amazon-ergaenzungen img')).toHaveCount(2);
+        await expect(page.locator('.supplement-products img')).toHaveCount(2);
         await expect(
-          page.locator('#amazon-ergaenzungen figcaption', { hasText: 'Symbolbild' }),
+          page.locator('.supplement-products figcaption', { hasText: 'Symbolbild' }),
         ).toHaveCount(2);
       }
       expect(

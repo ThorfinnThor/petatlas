@@ -26,6 +26,7 @@ for (const width of [390, 900, 1440]) {
         expected.length,
       );
       for (const image of await cards.locator('img').all()) {
+        await image.scrollIntoViewIfNeeded();
         await expect(image).toHaveJSProperty('complete', true);
         expect(await image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBe(720);
       }
