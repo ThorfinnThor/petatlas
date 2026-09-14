@@ -1,6 +1,6 @@
 # Bekannte Grenzen
 
-Was diese Plattform **nicht** kann, nicht weiß und nicht verspricht. Stand 2026-09-09.
+Was diese Plattform **nicht** kann, nicht weiß und nicht verspricht. Stand 2026-09-14.
 
 Diese Liste ist kein Mängelbericht, sondern der Teil der Wahrheit, der sonst in einem grünen Prüflauf untergeht. Wer sie liest, weiß, worauf er sich nicht verlassen darf.
 
@@ -11,7 +11,7 @@ Diese Liste ist kein Mängelbericht, sondern der Teil der Wahrheit, der sonst in
 - **Kein Notdienstverzeichnis.** Aus OpenStreetMap lässt sich nicht ableiten, wer heute Nacht Dienst hat. Die Karte sagt das ausdrücklich.
 - **Keine Diagnose, keine Dosierung, keine Behandlungsempfehlung.** Das ist kein fehlendes Feature, sondern eine Grenze des Startumfangs.
 - **Keine Bewertungen, keine Tests, keine Empfehlungen.** Es gibt keine Nutzerbewertungen und keine redaktionellen Tests; entsprechend gibt es auch kein Bewertungs-Markup, und der SEO-Gate weist es zurück.
-- **Keine Preise.** Kein Partnervertrag, also kein Angebot und kein Grundpreis — mit Begründung auf der Seite statt einer leeren Stelle.
+- **Keine Preise oder Händlerfeeds.** Gekennzeichnete Amazon-Suchlinks sind vorhanden; Produktbilder, Preisangebote, Widgets und Händlerdatenfeeds sind bis zu einer gesonderten Rechtefreigabe deaktiviert.
 
 - **Kleine Produktauswahl.** Vier Futtervarianten und drei Zubehörprodukte mit Herstellerquellen; keine verifizierten Barcodes, Produktfotos oder aktuellen Händlerangebote.
 
@@ -43,7 +43,8 @@ Diese Liste ist kein Mängelbericht, sondern der Teil der Wahrheit, der sonst in
 
 ## Rechtlich
 
-- **Keine Betreiberangaben.** Impressum und Datenschutzerklärung sind unvollständig, und der Produktionsbuild bricht deshalb ab. Das ist die Sperre, nicht ein Versehen.
+- **Betreiberangaben sind eingebaut, aber nicht abschließend freigegeben.** Name, Einzelunternehmen, Anschrift, E-Mail und redaktionell Verantwortlicher stehen im Build. Erreichbarkeit, bedingte Register-/Identifikationsangaben und weitere tatsächliche Voraussetzungen sind noch zu bestätigen.
+- **Verzeichniseinträge brauchen einen Rechtsprozess.** Datenschutztext, Anfrageweg und technische Sperr-/Berichtigungslogik sind vorhanden. Interessenabwägung und Art.-14-Vorgehen müssen noch rechtlich entschieden werden.
 - **Keine Erklärung zur Barrierefreiheit.** Ob das BFSG für dieses Angebot überhaupt gilt, ist nicht geprüft.
 - **Keine juristische Prüfung.** Weder Datenschutz noch Werbekennzeichnung noch Barrierefreiheit sind von einer dazu befugten Person bewertet worden.
 

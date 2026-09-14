@@ -1,6 +1,6 @@
 # Launchfreigaben
 
-Stand **2026-09-09**. Quellen-Vorprüfung und konkrete Abnahmeentscheidungen: `docs/reviews/preflight-2026-09-09.md`. **Keine der hier genannten Freigaben ist erteilt.** Dieses Dokument beschreibt, was für jede Freigabe verlangt wird, wer sie erteilt und woran man erkennt, dass sie erteilt wurde. Es erteilt selbst keine.
+Stand **2026-09-14**. Quellen-Vorprüfung und konkrete Abnahmeentscheidungen: `docs/reviews/preflight-2026-09-09.md`; aktuelle technische Umsetzung: `docs/reviews/wm-implementation-2026-09-14.md`. **Keine der hier genannten Launch-Gesamtfreigaben ist erteilt.** Dieses Dokument beschreibt, was für jede Freigabe verlangt wird, wer sie erteilt und woran man erkennt, dass sie erteilt wurde. Es erteilt selbst keine.
 
 Das ist die wichtigste Aussage dieser Datei: **kein Agent und kein Skript trägt eine fachliche oder rechtliche Freigabe ein.** `npm run check:release` kann einer Behauptung widersprechen, aber keine begründen.
 
@@ -17,13 +17,13 @@ Ein Häkchen ohne Namen ist keine Freigabe, und ein Verweis auf ein Dokument, da
 
 | Gate | Wer entscheidet | Nachweis | Stand | Was fehlt |
 |---|---|---|---|---|
-| `operatorImprint` | Betreiber | `docs/LEGAL_CHECKLIST.md` | **offen** | Name, Anschrift, Kontakt, inhaltlich verantwortliche Person |
-| `domain` | Betreiber | `docs/CLOUDFLARE_SETUP.md` | **offen** | Domain und `PUBLIC_SITE_URL`; bis dahin nur `example.invalid` in development |
-| `dataRights` | prüfende Person | `docs/SOURCE_REVIEWS.md` | **offen** | Bestätigung der Publikationsrechte je Quelle einschließlich öffentlicher JSON-Weitergabe |
+| `operatorImprint` | Betreiber | `docs/LEGAL_CHECKLIST.md` | **offen** | Gelieferte Angaben sind eingebaut; Richtigkeit/Erreichbarkeit und bedingte Register-, Identifikations- und Kontaktangaben bestätigen |
+| `domain` | Betreiber | `docs/CLOUDFLARE_SETUP.md` | **offen** | `wauandmiau.de` ist technisch konfiguriert; die datierte Gate-Freigabe und Prüfung aller Produktionsvarianten fehlen |
+| `dataRights` | prüfende Person | `docs/reviews/asset-rights-inventory-2026-09-14.md` | **offen** | Datierte Gesamtbestätigung der tatsächlich verwendeten Ausgabeformen |
 | `costsRules` | fachlich prüfende Person | `docs/reviews/costs.md` | **offen** | acht Prüfpunkte zum Gebührenrechner (B-002) |
 | `travelRules` | fachlich prüfende Person | `docs/reviews/travel.md` | **offen** | neun Prüfpunkte zu den Reiseregeln, dazu die Inhaltssignatur in `content-data/travel/approvals.json` (B-004) |
 | `insuranceAffiliate` | Betreiber mit Rechtsprüfung | `docs/reviews/insurance.md` | **offen** | Programmzulassung und Prüfung nach § 34d GewO (B-003) |
-| `commerceAffiliate` | Betreiber | `docs/reviews/commerce-partner.md` | **offen** | Programmfreigabe eines Netzwerks und geprüfte Anzeigerechte (B-005) |
+| `commerceAffiliate` | Betreiber | `docs/reviews/commerce-partner.md` | **offen** | Amazon-Textlinks sind auf Betreiberanweisung aktiv; Preis-/Bild-/Datenfeeds und weitere Programme benötigen getrennte Freigaben (B-005) |
 | `adsTracking` | Betreiber | `docs/LEGAL_CHECKLIST.md` | **offen** | bleibt bewusst aus; eine Freigabe wäre eine eigene Entscheidung mit eigener Datenschutzprüfung |
 
 Dazu kommen vier offene Rechtsprüfungen aus `docs/LEGAL_CHECKLIST.md`: Anbieterkennzeichnung, Datenschutz, Barrierefreiheit und Verbraucherstreitbeilegung. Ob eine Pflicht anwendbar ist, ist Teil der Prüfung; eine belegte Nichtanwendbarkeit ist ein zulässiges Ergebnis.
@@ -34,7 +34,7 @@ Diese Punkte brauchen keine externe Freigabe mehr, weil sie gemessen und dokumen
 
 | Punkt | Nachweis |
 |---|---|
-| Keine Werbung, kein Tracking, keine Cookies | aus den Gates abgeleitet, `tests/legal.test.ts` |
+| Amazon-Textlinks als Werbung, kein eingebettetes Amazon-Medium und kein Tracking auf Wau & Miau | `tests/affiliate-links.test.ts`, Browsernachweis WM-09 |
 | Kennzeichnung bezahlter Verweise | `tests/affiliate-links.test.ts`, `tests/e2e/versicherung.spec.ts` |
 | Kein erfundenes Bewertungs-Markup | `scripts/checks/seo.ts`, `tests/seo/` |
 | Nur zulässige Dateien in der Auslieferung | `scripts/checks/dist.ts` |
@@ -45,15 +45,16 @@ Diese Punkte brauchen keine externe Freigabe mehr, weil sie gemessen und dokumen
 
 ## Reihenfolge
 
-`operatorImprint` und `domain` zuerst: ohne sie bricht der Produktionsbuild ab, und ohne Produktionsbuild ist jede weitere Freigabe folgenlos. Danach `dataRights`, dann die fachlichen Gates, zuletzt die Partnergates.
+`operatorImprint` und `domain` zuerst vollständig bestätigen. Danach `dataRights`, dann die fachlichen Gates, zuletzt weitere Partner-/Feedgates.
 
 Die öffentliche Freigabe (`publicRelease`) setzt die **für die aktivierten Funktionen erforderlichen** Gates und abgeschlossene Rechtsprüfungen voraus (`config/release-policy.ts`). Für den aktuellen Umfang sind Betreiber, Domain, Datenrechte, Kosten- und Reiseregeln erforderlich. Partner- und Tracking-Gates blockieren die Veröffentlichung nicht, solange diese Funktionen ausgeschaltet bleiben. `npm run check:release` widerspricht jedem anderen Zustand.
 
 ## Was ausdrücklich nicht passiert ist
 
-- Niemand hat den Gebührenrechner fachlich geprüft.
-- Niemand hat die Reiseregeln fachlich geprüft.
-- Keine juristische Person hat Datenschutz, Impressum oder Barrierefreiheit bewertet.
-- Es gibt keinen Partnervertrag und keine Programmzulassung.
+- Niemand hat den Gebührenrechner fachlich freigegeben.
+- Niemand hat die Reiseregeln fachlich freigegeben.
+- Für Ernährung ist keine benannte Fachfreigabe eingetragen.
+- Keine juristische Person hat Datenschutz, Impressum oder Barrierefreiheit freigegeben.
+- Die Amazon-Textlinks sind vom Betreiber autorisiert; eine kontoseitige Websitezuordnung und Rechte für Produkt-, Preis- oder Bildfeeds sind nicht belegt.
 
 Diese vier Sätze stehen hier, damit sie nicht später aus einem grünen Prüflauf herausgelesen werden. Ein grüner Lauf heißt: der Stand behauptet nichts, was er nicht belegen kann. Er heißt nicht, dass geprüft wurde.
