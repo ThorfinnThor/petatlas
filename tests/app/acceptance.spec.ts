@@ -188,11 +188,13 @@ test('global search opens a real indexed result and works again after navigation
 }) => {
   await page.goto('/de-de/');
   await page.fill('#suche-feld', 'Hund');
-  await expect(page.locator('#suche-treffer a').first()).toBeVisible();
-  const destination = await page.locator('#suche-treffer a').first().getAttribute('href');
-  await page.locator('#suche-treffer a').first().click();
+  const result = page.locator('#suche-treffer a[href]:not([href="/de-de/"])').first();
+  await expect(result).toBeVisible();
+  const destination = await result.getAttribute('href');
+  await result.click();
   expect(new URL(page.url()).pathname).toBe(destination);
   await page.goBack();
+  await expect(page).toHaveURL(/\/de-de\/$/);
   await page.fill('#suche-feld', 'Reise');
   await expect(page.locator('#suche-status')).toContainText('Treffer für „Reise“');
 });

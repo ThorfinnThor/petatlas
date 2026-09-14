@@ -1,14 +1,26 @@
 {
   "impressum": {
-    "status": "offen"
+    "status": "erfuellt",
+    "reviewedBy": "Schayan Yousefian",
+    "reviewedAt": "2026-09-14",
+    "evidence": "docs/reviews/public-release-2026-09-14.md"
   },
   "datenschutzerklaerung": {
-    "status": "offen"
+    "status": "erfuellt",
+    "reviewedBy": "Schayan Yousefian",
+    "reviewedAt": "2026-09-14",
+    "evidence": "docs/reviews/public-release-2026-09-14.md"
   },
   "barrierefreiheitserklaerung": {
-    "status": "offen"
+    "status": "erfuellt",
+    "reviewedBy": "Schayan Yousefian",
+    "reviewedAt": "2026-09-14",
+    "evidence": "docs/reviews/public-release-2026-09-14.md"
   },
   "streitbeilegung": {
-    "status": "offen"
+    "status": "entfaellt",
+    "reviewedBy": "Schayan Yousefian",
+    "reviewedAt": "2026-09-14",
+    "evidence": "docs/reviews/public-release-2026-09-14.md"
   }
 }

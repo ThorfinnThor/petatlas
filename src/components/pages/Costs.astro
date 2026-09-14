@@ -2,7 +2,7 @@
 /**
  * M08-04 — Tierarztkosten-Rechner.
  *
- * Die Rechnung ist aus den Einzelpositionen nachvollziehbar: jede Zeile
+ * Die Berechnungsübersicht ist aus den Einzelpositionen nachvollziehbar: jede Zeile
  * nennt Basisbetrag, Faktor, Menge und die Fundstelle in der Verordnung.
  *
  * Die Gebührendaten kommen als statische JSON-Datei über das Manifest; es
@@ -43,8 +43,9 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 
 <p>
   Der Rechner setzt Positionen der Gebührenordnung für Tierärztinnen und Tierärzte zusammen und
-  zeigt, wie sich ein Betrag ergibt. Er ist <strong>kein amtlicher Rechner</strong> und kein Kostenvoranschlag:
-  eine echte Rechnung kann Positionen enthalten, die hier niemand ausgewählt hat.
+  zeigt, wie sich ein Betrag ergibt. Er ist <strong>kein amtlicher Rechner</strong>. Die
+  Berechnungsübersicht ist keine Rechnung einer Tierarztpraxis und kein verbindlicher
+  Kostenvoranschlag: Eine echte Rechnung kann Positionen enthalten, die hier niemand ausgewählt hat.
 </p>
 
 <ReviewStatus
@@ -91,7 +92,12 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 </details>
 
 <SavedProfileButton />
-<ToolShell eingabeTitel="Eingaben" ergebnisTitel="Rechnung" ergebnisId="ergebnis-titel" sticky>
+<ToolShell
+  eingabeTitel="Eingaben"
+  ergebnisTitel="Berechnungsübersicht"
+  ergebnisId="ergebnis-titel"
+  sticky
+>
   <Fragment slot="eingabe">
     <ErrorSummary id="rechner-fehler" />
 
@@ -117,6 +123,12 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
             erlaeuterung={`Faktor ${COST_CONFIG.emergencyFactorMin} bis ${COST_CONFIG.emergencyFactorMax}, zuzüglich Notdienstgebühr`}
           />
         </div>
+        <p class="hilfe">
+          Die Notdienstgebühr beträgt grundsätzlich 50,00 Euro netto. In derselben Angelegenheit
+          wird sie nur einmal angesetzt, auch wenn mehrere Tiere desselben Halters behandelt werden.
+          Diese Berechnung bildet eine Angelegenheit ab. Bestätigte Abweichungen sind gesondert zu
+          berücksichtigen.
+        </p>
       </fieldset>
 
       <details>
@@ -256,7 +268,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     >
     </div>
     <div class="drucken">
-      <button type="button" id="drucken" disabled>Rechnung drucken</button>
+      <button type="button" id="drucken" disabled>Berechnungsübersicht drucken</button>
       <p class="hilfe">
         Auf dem Ausdruck stehen Quelle, Fassung und die Fundstelle jeder Position.
       </p>
@@ -291,6 +303,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 
 <style>
   fieldset {
+    min-inline-size: 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-3) var(--space-4);
@@ -330,6 +343,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 
   select,
   input[type='search'] {
+    min-width: 0;
     width: 100%;
     max-width: 28rem;
     padding: var(--space-2);
@@ -359,6 +373,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     padding: var(--space-1);
     cursor: pointer;
     color: inherit;
+    overflow-wrap: anywhere;
   }
 
   .treffer button:hover {
@@ -394,6 +409,16 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     color: var(--color-text-muted);
     font-size: var(--text-small);
   }
+
+  :global(#ergebnis .drucktitel) {
+    display: none;
+  }
+
+  @media print {
+    :global(#ergebnis .drucktitel) {
+      display: block;
+    }
+  }
 </style>
 
 <script>
@@ -420,11 +445,20 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 
 <style>
   #ergebnis {
-    overflow-x: auto;
+    width: 100%;
+    min-width: 0;
     max-width: 100%;
   }
+
+  #ergebnis :global(.tabellenrahmen) {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
   @media print {
-    #ergebnis {
+    #ergebnis,
+    #ergebnis :global(.tabellenrahmen) {
       overflow: visible;
     }
   }

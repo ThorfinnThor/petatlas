@@ -32,7 +32,7 @@
   },
   "notes": [
     "Das Extrakt ist eine konkrete Distribution, nicht „OpenStreetMap“ als Ganzes.",
-    "Kartenkacheln sind ein getrennter Dienst mit eigener Nutzungspolitik und bekommen einen eigenen Registryeintrag, sobald die Karte gebaut wird.",
+    "Kartenkacheln sind ein getrennter externer Dienst. Der öffentliche Eintrag steht im Quellenverzeichnis unter „OpenStreetMap Standard-Kartenkacheln“.",
     "imagesAllowed ist false: das Extrakt enthält keine Bilder, und ODbL deckt keine Bildrechte Dritter.",
     "Ob eigene Verarbeitung eine abgeleitete Datenbank erzeugt, wird in docs/ODBL_DATAFLOW.md beschrieben (M05-05)."
   ],

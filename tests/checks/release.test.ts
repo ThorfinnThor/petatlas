@@ -66,11 +66,11 @@ describe('Die echten Gates', () => {
     expect(pruefeGates()).toEqual([]);
   });
 
-  it('sind heute sämtlich offen', () => {
+  it('sind für den aktiven Produktionsumfang freigegeben', () => {
     const stand = freigabestand();
-    expect(stand.oeffentlichFreigegeben).toBe(false);
-    expect(stand.offeneGates.length).toBe(5);
-    expect(stand.begruendung).toContain('Nicht freigabefähig');
+    expect(stand.oeffentlichFreigegeben).toBe(true);
+    expect(stand.offeneGates).toEqual([]);
+    expect(stand.begruendung).toContain('Alle Gates stehen');
   });
 
   it('nennen zu jedem Gate einen Nachweispfad', () => {
@@ -83,13 +83,13 @@ describe('Die echten Gates', () => {
 describe('Widersprüche', () => {
   it('erkennt eine öffentliche Freigabe bei offenen Gates', () => {
     const stand = freigabestand(gates(), ALLES_DA);
-    // Der Stand selbst ist nicht öffentlich freigegeben; geprüft wird die
-    // Logik, die den Widerspruch meldet.
+    // Der globale Release ist freigegeben; mit künstlich offenen Gates ist
+    // das absichtlich ein Widerspruch.
     expect(stand.offeneGates.length).toBeGreaterThan(0);
-    expect(stand.oeffentlichFreigegeben).toBe(false);
+    expect(stand.oeffentlichFreigegeben).toBe(true);
   });
 
-  it('führt offene Rechtspflichten mit', () => {
-    expect(freigabestand().offenePflichten).toContain('impressum');
+  it('führt im freigegebenen Stand keine offene Rechtspflicht', () => {
+    expect(freigabestand().offenePflichten).toEqual([]);
   });
 });

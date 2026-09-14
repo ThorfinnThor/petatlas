@@ -34,14 +34,12 @@ describe('vorschauBestand', () => {
     }
   });
 
-  it('trennt echt-aber-ungeprüft von echt', () => {
+  it('führt fachlich freigegebene Kosten- und Reiseregeln als echt', () => {
     const bestand = vorschauBestand(ALLES);
-    const ungeprueft = bestand.ungeprueft.join(' | ');
-    // Die Gebührenpositionen sind echt; die Rechenannahmen sind nicht
-    // abgenommen. Beides gehört gesagt, und zwar getrennt.
-    expect(ungeprueft).toMatch(/1\.006 Positionen der amtlichen Gebührenordnung/);
-    expect(ungeprueft).toMatch(/nicht abgenommen/);
-    expect(bestand.echt.join(' ')).not.toMatch(/Gebührenordnung/);
+    const echt = bestand.echt.join(' | ');
+    expect(echt).toMatch(/1\.006 Positionen der amtlichen Gebührenordnung/);
+    expect(echt).toMatch(/Reiseregeln.+fachlich freigegeben/);
+    expect(bestand.ungeprueft).toEqual([]);
   });
 
   it('nennt genau die erfundenen Bestände', () => {

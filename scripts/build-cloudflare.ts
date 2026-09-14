@@ -23,7 +23,7 @@
  * Ausführen: `npm run build:cloudflare`
  */
 import { execFileSync } from 'node:child_process';
-import { writeFileSync, readFileSync, readdirSync } from 'node:fs';
+import { writeFileSync, readFileSync, readdirSync, rmSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { prepareCommerce, publishCommerce } from './build/commerce.ts';
 import { productionFeatures } from '../config/build.ts';
@@ -88,6 +88,12 @@ function inputDigests(directory: string): { path: string; sha256: string }[] {
         : [];
     })
     .sort((a, b) => a.path.localeCompare(b.path));
+}
+
+/** Technische Probe-Seiten gehören in Browsertests, niemals ins Produktionsartefakt. */
+export function entferneEntwicklungsseiten(mode: string, directory = 'dist'): void {
+  if (mode !== 'production') return;
+  rmSync(join(directory, 'entwicklung'), { recursive: true, force: true });
 }
 
 export function erstelleBuildInfo(options: {
@@ -170,6 +176,7 @@ async function main(): Promise<number> {
   // Datenstandseite hätte nichts zu prüfen gehabt. Aufgefallen ist es an der
   // Rauchprobe über das gebaute Verzeichnis — genau dafür gibt es sie.
   fuehreAus('Statischer Build', 'npm', ['run', 'build']);
+  entferneEntwicklungsseiten(build.mode);
   publishCommerce();
   fuehreAus('Gebührendaten', 'npm', ['run', 'build:fees']);
   fuehreAus('Ortsdaten', 'npm', ['run', 'build:places']);

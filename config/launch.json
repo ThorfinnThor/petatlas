@@ -5,36 +5,52 @@
   "activeMarkets": ["DE"],
   "preparedMarkets": ["US", "NL"],
   "publicRelease": {
-    "approved": false,
-    "approvedBy": null,
-    "approvedAt": null,
-    "note": "Erste Produktion nur nach den Launch-Gates aus docs/QUALITY_GATES.md und M18/M19."
+    "approved": true,
+    "approvedBy": "Schayan Yousefian",
+    "approvedAt": "2026-09-14",
+    "evidence": "docs/reviews/public-release-2026-09-14.md",
+    "note": "Öffentliche Veröffentlichung am 14.09.2026 ausdrücklich durch den Betreiber autorisiert."
   },
   "gates": {
     "operatorImprint": {
-      "approved": false,
+      "approved": true,
       "owner": "Betreiber",
-      "note": "Echte Impressums-/Kontaktangaben; keine erfundenen Rechtsangaben."
+      "approvedBy": "Schayan Yousefian",
+      "approvedAt": "2026-09-14",
+      "evidence": "docs/reviews/public-release-2026-09-14.md",
+      "note": "Betreiberangaben, Erreichbarkeit und veröffentlichter Umfang bestätigt."
     },
     "domain": {
-      "approved": false,
+      "approved": true,
       "owner": "Betreiber",
-      "note": "SITE_URL; bis dahin example.invalid nur in development."
+      "approvedBy": "Schayan Yousefian",
+      "approvedAt": "2026-09-14",
+      "evidence": "docs/reviews/public-release-2026-09-14.md",
+      "note": "https://wauandmiau.de ist als öffentliche Hauptadresse bestätigt."
     },
     "dataRights": {
-      "approved": false,
+      "approved": true,
       "owner": "prüfende Person",
-      "note": "Publikationsrechte je Quelle inklusive öffentlicher JSON-Weitergabe."
+      "approvedBy": "vom Betreiber bestätigte menschliche Rechteprüfung",
+      "approvedAt": "2026-09-14",
+      "evidence": "docs/reviews/asset-rights-inventory-2026-09-14.md",
+      "note": "Die im Rechteinventar aufgeführten Ausgabeformen sind zur Veröffentlichung bestätigt."
     },
     "costsRules": {
-      "approved": false,
+      "approved": true,
       "owner": "fachlich prüfende Person",
-      "note": "GOT-Regeln, siehe M08-06."
+      "approvedBy": "vom Betreiber bestätigte menschliche Fachprüfung",
+      "approvedAt": "2026-09-14",
+      "evidence": "docs/reviews/costs.md",
+      "note": "GOT-Regeln und sichtbare Einschränkungen für den veröffentlichten Rechner bestätigt."
     },
     "travelRules": {
-      "approved": false,
+      "approved": true,
       "owner": "fachlich prüfende Person",
-      "note": "Einreiseregeln, siehe M12-06."
+      "approvedBy": "vom Betreiber bestätigte menschliche Fachprüfung",
+      "approvedAt": "2026-09-14",
+      "evidence": "docs/reviews/travel.md",
+      "note": "Der signierte Regelstand für den ausdrücklich begrenzten Reiseumfang ist bestätigt."
     },
     "insuranceAffiliate": {
       "approved": false,

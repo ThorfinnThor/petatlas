@@ -2,11 +2,11 @@
 
 Stand 2026-09-09. **Sieben blockierte Aufgaben: M08-06, M09-06, M12-06, M13-06, M14-06, M18-06 und M19-06.** Die praktische Funktionsabnahme M23-02 ist mit konkreten Nachweisen abgeschlossen. Diese Aufgaben enthalten externe Abnahmen und optionale kommerzielle Erweiterungen; ihre Zahl ist nicht die Zahl technischer Fehler.
 
-Für den aktuellen werbe- und angebotsfreien Umfang sind die Gates `operatorImprint`, `domain`, `dataRights`, `costsRules` und `travelRules` sowie die dokumentierten Rechtsprüfungen und die finale Release-Freigabe relevant. Versicherung, Commerce und Tracking sind ausgeschaltet; fehlende Partnerverträge blockieren diesen kleineren Umfang nicht (`config/release-policy.ts`).
+Für den aktuellen Umfang mit gekennzeichneten Amazon-Textlinks, aber ohne Preis-/Bildfeeds oder Händlerangebote, sind die Gates `operatorImprint`, `domain`, `dataRights`, `costsRules` und `travelRules` sowie die dokumentierten Rechtsprüfungen und die finale Release-Freigabe relevant. Versicherung, weitere Commerce-Feeds und Tracking sind ausgeschaltet; fehlende Verträge dafür blockieren den redaktionellen Umfang nicht (`config/release-policy.ts`).
 
 | Blocker | Aufgabe | Tatsächlich offen | Zuständig |
 |---|---|---|---|
-| B-008 | M19-06 | Freigabevoraussetzungen aus M18-06; zusätzlich abgelaufene Cloudflare-Anmeldung. Der neue Stand ist noch nicht auf der vorhandenen Vorschau veröffentlicht. | Betreiber/Hosting-Account |
+| B-008 | M19-06 | Freigabevoraussetzungen aus M18-06; der neueste Arbeitsstand ist noch nicht als freigegebener Produktionsbuild veröffentlicht und geprüft. | Betreiber/Hosting-Account |
 | B-007 | M18-06 | Echte Betreiberangaben und Domain, einschlägige Rechts-/Datenrechteprüfung sowie Fachfreigaben für aktivierte Kosten-/Reisewerkzeuge. Keine Abnahmen werden aus grünen Tests abgeleitet. | Betreiber und benannte prüfende Personen |
 | B-006 | M14-06 | Öffentliche Datenrechte-/Angebotsfreigabe. Drei reale Produkte mit sieben Herstellerattributen sind bereits redaktionell erfasst und in der Vorschau nutzbar; es fehlen keine technischen Attributfelder. Eine unabhängige Produktprüfung wird nicht behauptet. | Betreiber |
 | B-005 | M13-06 | Programmvertrag und zulässige Feedfelder für tatsächliche Händlerangebote. Betrifft eine optionale Erweiterung, nicht den aktuellen Start ohne Angebote. | Betreiber/Partner |

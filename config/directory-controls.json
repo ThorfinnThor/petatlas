@@ -1,0 +1,4 @@
+{
+  "$comment": "Interne, dauerhafte Korrekturen und Sperren fuer Verzeichniseintraege. Eintraege werden vor jeder HTML-, JSON- und Suchindex-Ausgabe angewendet und bleiben deshalb auch nach einem neuen Quelldatenimport wirksam. Keine Angaben zu anfragenden Personen eintragen.",
+  "entries": []
+}

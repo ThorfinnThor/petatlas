@@ -27,10 +27,33 @@ for (const width of [360, 390, 430, 768, 1024, 1280, 1440]) {
           .click();
         await expect(page.locator('[data-testid=brutto]')).toContainText('28,11');
       }
-      const overflow = await page.evaluate(
-        () => document.documentElement.scrollWidth > window.innerWidth + 1,
-      );
-      expect(overflow, `${path} at ${width}px`).toBe(false);
+      const overflow = await page.evaluate(() => ({
+        vorhanden: document.documentElement.scrollWidth > window.innerWidth + 1,
+        scrollWidth: document.documentElement.scrollWidth,
+        viewport: window.innerWidth,
+        elemente: [...document.querySelectorAll<HTMLElement>('body *')]
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            return {
+              element: `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}${
+                typeof element.className === 'string' && element.className.trim()
+                  ? `.${element.className.trim().replace(/\s+/g, '.')}`
+                  : ''
+              }`,
+              links: Math.round(rect.left),
+              rechts: Math.round(rect.right),
+              breite: Math.round(rect.width),
+              innenbreite: element.scrollWidth,
+              sichtbreite: element.clientWidth,
+            };
+          })
+          .filter(
+            ({ links, rechts, innenbreite, sichtbreite }) =>
+              links < -1 || rechts > window.innerWidth + 1 || innenbreite > sichtbreite + 1,
+          )
+          .slice(0, 20),
+      }));
+      expect(overflow.vorhanden, `${path} at ${width}px: ${JSON.stringify(overflow)}`).toBe(false);
       if (path === '/de-de/') {
         await page.locator('.hero-feature img').first().waitFor({ state: 'visible' });
         await page.evaluate(() => document.fonts.ready);

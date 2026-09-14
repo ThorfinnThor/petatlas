@@ -94,7 +94,11 @@ describe('Prüfung des Reisekontexts', () => {
   });
 
   it('lehnt zu viele und zu wenige Tiere ab', () => {
-    expect(pruefeUmfang({ ...STANDARD, animals: 6 }).unterstuetzt).toBe(false);
+    const sechs = pruefeUmfang({ ...STANDARD, animals: 6 });
+    expect(sechs.unterstuetzt).toBe(false);
+    expect(sechs.gruende.join(' ')).toContain('Dieser Check erfasst höchstens fünf Tiere');
+    expect(sechs.gruende.join(' ')).toContain('Ausnahmen');
+    expect(sechs.gruende.join(' ')).not.toContain('nicht mehr als privat');
     expect(pruefeUmfang({ ...STANDARD, animals: 0 }).unterstuetzt).toBe(false);
     expect(pruefeUmfang({ ...STANDARD, animals: 5 }).unterstuetzt).toBe(true);
   });

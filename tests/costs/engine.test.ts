@@ -362,8 +362,8 @@ describe('Nachvollziehbarkeit und Freigabe', () => {
     expect(ergebnis.catalogVersion).toBe('SYNTHETISCH 2026');
   });
 
-  it('zeigt ohne fachliche Freigabe keine Gesamtschätzung', () => {
-    expect(COST_CONFIG.clinicalReview).toBe('pending');
+  it('zeigt nach fachlicher Freigabe die transparente Gesamtschätzung', () => {
+    expect(COST_CONFIG.clinicalReview).toBe('approved');
     const ergebnis = calculateCosts(
       {
         context: 'regular',
@@ -372,7 +372,7 @@ describe('Nachvollziehbarkeit und Freigabe', () => {
       },
       KATALOG,
     );
-    expect(mayShowTotal(ergebnis)).toBe(false);
+    expect(mayShowTotal(ergebnis)).toBe(true);
   });
 
   it('unterstützt bestätigte Sondervereinbarungen', () => {

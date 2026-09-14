@@ -10,11 +10,13 @@ import { allSources, pendingSources, verifiedSources } from '../../domain/source
 import { defaultMarket } from '../../domain/market.ts';
 import { routePath } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
+import { editorialSources } from '../../domain/editorial-sources.ts';
 
 const quellen = allSources();
 const geprueft = verifiedSources();
 const offen = pendingSources();
 const markt = defaultMarket();
+const redaktionelleQuellen = editorialSources();
 
 const statusText: Record<string, string> = {
   pending: 'Rechte noch nicht geprüft',
@@ -49,6 +51,10 @@ const statusText: Record<string, string> = {
 }
 
 <h2>Erfasste Quellen ({quellen.length})</h2>
+<p>
+  Die folgenden Einträge sind übernommene <strong>Datensätze</strong>. Ihre Rechte werden je
+  Ausgabeform geprüft.
+</p>
 <ul class="quellen">
   {
     quellen.map((quelle) => (
@@ -100,6 +106,44 @@ const statusText: Record<string, string> = {
   }
 </ul>
 
+<h2>Redaktionelle Fach-, Herstellerquellen und externe Dienste ({redaktionelleQuellen.length})</h2>
+<p>
+  Diese Quellen werden verlinkt oder in eigenen Worten ausgewertet. Ein Quellenlink ist keine
+  Freigabe zur Übernahme von Bildern, Seitentexten, Preisen oder Bewertungen.
+</p>
+<ul class="quellen">
+  {
+    redaktionelleQuellen.map((quelle) => (
+      <li>
+        <p class="quellen__art">{quelle.category}</p>
+        <h3>{quelle.title}</h3>
+        <dl>
+          <dt>Herausgeber</dt>
+          <dd>{quelle.publisher}</dd>
+          <dt>Quelladresse</dt>
+          <dd>
+            <a href={quelle.url.replace('{z}/{x}/{y}.png', '')}>{quelle.url}</a>
+          </dd>
+          <dt>Verwendung</dt>
+          <dd>{quelle.usage}</dd>
+          <dt>Fassung</dt>
+          <dd>{quelle.version}</dd>
+          <dt>Letzte tatsächliche Prüfung</dt>
+          <dd>{quelle.checkedAt}</dd>
+          <dt>Rechtebasis</dt>
+          <dd>{quelle.rightsBasis}</dd>
+          <dt>Erlaubte Ausgabe</dt>
+          <dd>{quelle.allowedOutputs}</dd>
+          <dt>Prüfnachweis</dt>
+          <dd>
+            <code>{quelle.evidence}</code>
+          </dd>
+        </dl>
+      </li>
+    ))
+  }
+</ul>
+
 <p>
   {offen.length} von {quellen.length} Quellen sind noch ungeprüft. Eine ungeprüfte Quelle darf weder im
   HTML noch als Datei ausgegeben werden. Die Lizenzgrenzen je Datenklasse stehen in
@@ -125,6 +169,13 @@ const statusText: Record<string, string> = {
     /* Ressourcennamen enthalten Dateinamen und Adressen, die auf einem
      * schmalen Bildschirm sonst über den Rand hinauslaufen. */
     overflow-wrap: anywhere;
+  }
+
+  .quellen__art {
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    margin: 0 0 var(--space-1);
   }
 
   .quellen dl {

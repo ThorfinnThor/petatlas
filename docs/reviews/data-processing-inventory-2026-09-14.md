@@ -1,0 +1,20 @@
+# Verarbeitungsinventar für Datenschutzabgleich
+
+Stand: 14. September 2026. Dieses interne Arbeitsinventar enthält keine Zugangsdaten,
+Vertragskopien oder Daten betroffener Personen.
+
+| Vorgang | Tatsächliche technische Umsetzung | Daten und Zweck | Öffentliche Information | Betriebsnachweis / offener Punkt |
+|---|---|---|---|---|
+| Statische Auslieferung | Cloudflare Workers Static Assets, assets-only; kein eigener Request-Worker, keine Laufzeitdatenbank | IP-Adresse, Zeitpunkt, URL, Browser-/Verbindungs- und Sicherheitsdaten zur Auslieferung und Absicherung | Datenschutz: „Website und Hosting“ | Vertrags- und Kontoeinstellungen wurden vom Betreiber für die Veröffentlichung bestätigt; Produktionsprojekt und Version werden in `docs/RELEASE.md` dokumentiert. |
+| Kartenkacheln | Direkter Browserabruf bei `tile.openstreetmap.org` erst nach „Karte anzeigen“; Status gilt nur für die Sitzung | IP-Adresse, technische Daten, Referer und Kartenausschnitt zur Darstellung | Datenschutz: „Karte und Standort“; sichtbare Attribution | Browserprüfung DS-07/08 vom 14.09.2026: vor Klick 0 Tile-Bilder, nach Klick ausschließlich Tile-URLs plus Attribution; der Ablauf ist für den veröffentlichten Umfang bestätigt. |
+| Browserstandort | Browser-API erst nach „Meinen Standort verwenden“ | Koordinaten für Entfernungssuche im Arbeitsspeicher | Datenschutz: „Karte und Standort“ | Kein automatischer Berechtigungsdialog im Seitenaufruf. Browser-/Geräteanbieter kann die Positionsermittlung selbst verarbeiten; genaue Konfiguration liegt außerhalb der Website. |
+| Profil, Merkliste, Packliste | Arbeitsspeicher; `localStorage` erst nach ausdrücklicher Speicherhandlung | Freiwillige Tier- und Auswahlwerte zur lokalen Wiederverwendung | Datenschutz: „Mein Tier, Merkliste und Packliste“ | Browserprüfung vom 14.09.2026: Testwert wurde erst nach der Schaltfläche dauerhaft wiederhergestellt und durch „Gespeicherten Stand löschen“ entfernt. Keine Serverfunktion im Anwendungscode. |
+| Profil-Export/-Import | Lokale JSON-Datei über Browser-Dateifunktionen | vom Nutzer ausgewählte lokale Daten zur eigenen Sicherung | Profilseite und Datenschutz | Schema- und Größenprüfung ist automatisiert getestet; keine Upload-Route vorhanden. |
+| Rechner, Suche und Filter | Browsercode; Daten als statische Dateien vom eigenen Host | Such-/Rechenwerte zur lokalen Ergebnisbildung | Datenschutz: „Suche und Rechner“ | Kein eigenes API-Backend und keine Händleranfrage. URLs mit absichtlich eingegebenem Suchparameter können in Hosting-Logs erscheinen; Hinweis ist veröffentlicht. |
+| Amazon-Textlinks | normales `<a>` erst nach Nutzerklick, feste Partner-ID | beim Händler: IP-/Verbindungsdaten und Partnerkennung | Datenschutz: „Amazon-Partnerlinks“ und Werbekennzeichnung | Browserprüfung vom 14.09.2026: `rel="sponsored nofollow noopener"`, keine Amazon-Skripte, Bilder, Iframes, Prefetches oder Profilparameter. |
+| E-Mail-Kontakt | `mailto:`-Links an `info@wauandmiau.de`; keine Webform | Absenderadresse, Nachricht und technische Maildaten zur Bearbeitung | Datenschutz: „E-Mail-Kontakt“ | Erreichbarkeit und betrieblicher Umgang wurden vom Betreiber für die Veröffentlichung bestätigt. |
+| Verzeichniseinträge | öffentliche OSM-/kommunale Berufsdaten in HTML, JSON und Suchindex | Name/Praxis, Standort, berufliche Kontaktdaten, Zeiten, Kategorie und Quellen-ID zur Auffindbarkeit | Datenschutz: „Daten zu Praxen und anderen Verzeichniseinträgen“ | Korrektur-/Anfragelink je Eintrag. Validierte Sperr- und Berichtigungsregeln greifen vor allen kontrollierten Ausgaben und erneut nach einem Import; der Prozess ist für den veröffentlichten Umfang bestätigt. |
+
+Nicht aktiviert sind Analyse-Tracking, eigene Tracking-Cookies, Newsletter, Nutzerkonten,
+Uploads, Amazon-Bilder/-Widgets, Affiliate-Preisfeeds und serverseitiges Klicktracking. Jede
+Aktivierung ändert dieses Inventar und muss vor Veröffentlichung erneut abgeglichen werden.

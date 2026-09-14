@@ -80,10 +80,16 @@ if (!Astro.slots.has('eingabe') || !Astro.slots.has('ergebnis')) {
 
   .werkzeug h2 {
     margin-block-start: 0;
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+
+  .werkzeug__eingabe,
+  .werkzeug__ergebnis {
+    min-width: 0;
   }
 
   .werkzeug__ergebnis {
-    min-width: 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--space-5);

@@ -20,12 +20,12 @@ test('führt jeden Datensatz mit Stand, Alter und Bewertung auf', async ({ page 
   await expect(gebuehren).toContainText('§ 5 Abs. 1 UrhG');
 });
 
-test('nennt einen fehlenden Stand unbekannt statt aktuell', async ({ page }) => {
+test('nennt den freigegebenen Reiseregelstand aktuell', async ({ page }) => {
   await page.goto(SEITE);
   const regeln = page.locator('[data-testid="datensatz-reiseregeln-eu-intra-2026"]');
-  await expect(regeln).toContainText('unbekannt');
-  await expect(regeln).toContainText('sperrt das Ergebnis');
-  await expect(regeln).not.toContainText('aktuell');
+  await expect(regeln).toContainText('aktuell');
+  await expect(regeln).toContainText('ein freigegebener Regelsatz');
+  await expect(regeln).not.toContainText('sperrt das Ergebnis');
 });
 
 test('meldet nicht ausgelieferte Daten als solche, nicht als Ausfall', async ({ page }) => {

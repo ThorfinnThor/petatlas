@@ -1,12 +1,12 @@
 # Projektstatus
 
-Stand: 2026-09-09. Maßgeblich ist `project/tasks.json`.
+Stand: 2026-09-14. Maßgeblich ist `project/tasks.json`.
 
 **Erledigt:** 131 von 138 Aufgaben. **In Arbeit:** keine. **Blockiert:** sieben externe Freigabe-/Veröffentlichungsaufgaben, teilweise nur für optionale Angebote.
 
 ## Tatsächlicher Stand
 
-Neu umgesetzt und lokal geprüft: bestätigte GOT-Sonderabrechnung, erweiterte Reiseangaben, nationale Länderhinweise und Nahrungsergänzung. 1.449 Tests in 95 Dateien; 15 Build-Prüfschritte. Browserintegration auf finaler Revision über PR 8, vor Merge vollständig grün erforderlich. Details: `IMPLEMENTATION_REVIEW_2026-09-09.md`; Partnerplan: `AFFILIATE_PLAN.md`. Die folgenden früheren CI-Zahlen belegen den vorherigen Basisstand.
+Neu umgesetzt und lokal geprüft: Anforderungen aus `IMPLEMENTIERUNG_WAUANDMIAU.md`, darunter Quellen-/Partnerstatus, Verzeichnisdatenschutz mit dauerhaften Sperren/Korrekturen, GOT-Texte und Sollwerte, eigene Ernährungsfreigabe sowie Rechte- und Verarbeitungsinventare. `npm run verify` bestand mit 1.484 Tests in 102 Dateien; `npm run build:app` bestand alle 15 Prüfschritte und erzeugte 1.241 Seiten. Details: `docs/reviews/wm-implementation-2026-09-14.md`.
 
 Die V2-App und die nach Nutzerrückmeldung gefundenen Funktionsfehler sind implementiert und geprüft. Umfang: Gebührenrechner, Karte, Reisecheck, Pflege, Spielzeug, Futtervergleich, Ratgeber, lokale Profile und Sicherungsdateien. `npm run build:app` baut die echte, nicht indexierbare Vorschau.
 
@@ -16,6 +16,6 @@ Der Code prüft Betreiberkonfiguration, funktionsabhängige Freigaben, Rechte, D
 
 ## Prüfung und Veröffentlichung
 
-`npm run verify`: 1.432 Tests in 94 Dateien sowie alle weiteren Prüfschritte bestanden. `npm run build:app`: 15 Prüfschritte bestanden. CI auf `f67dddf`: 228 Basis-, 107 Zugänglichkeits-, 298 Feature-, 26 App- und 12 Leistungsprüfungen bestanden. Elf bestehende Fälle sind begründet übersprungen. Details und konkrete manuelle Browsernachweise: `PUBLIC_RELEASE_ACCEPTANCE.md`.
+`npm run verify`: 1.484 Tests in 102 Dateien sowie alle weiteren Prüfschritte bestanden. `npm run build:app`: 15 Prüfschritte bestanden. Die vollständige Playwright-Matrix des vorherigen Basisstands ist in `PUBLIC_RELEASE_ACCEPTANCE.md` belegt. Auf dem aktuellen Host scheiterte Chromium vor Teststart an der macOS-MachPort-Sandbox; die betroffenen Kernabläufe wurden deshalb zusätzlich im sichtbaren In-App-Browser geprüft.
 
-Die existierende Cloudflare-Vorschau zeigt noch den älteren Stand. Der Hosting-Login ist nach erneuter Prüfung weiterhin abgelaufen. Domain, Betreiberangaben und die für aktivierte Funktionen erforderlichen Fach-/Rechts-/Datenrechtefreigaben fehlen. Die öffentliche Freigabe und Veröffentlichung sind deshalb offen; technische Tests erteilen keine solchen Freigaben.
+Eine Cloudflare-Vorschau und die Domain `wauandmiau.de` existieren; der aktuelle Arbeitsstand ist noch nicht als freigegebener Produktionsbuild veröffentlicht. Betreiberangaben sind eingebaut. Bedingte Betreiberfragen sowie die für aktivierte Funktionen erforderlichen Fach-, Rechts- und Datenrechtefreigaben fehlen weiterhin. Technische Tests erteilen keine solchen Freigaben.

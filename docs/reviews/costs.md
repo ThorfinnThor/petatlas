@@ -1,18 +1,16 @@
 # Fachliche Abnahme des Kostenrechners
 
-Stand 2026-09-09 (M08-06, Quellen-Vorprüfung). **Ergebnis: nicht abgenommen.** Dieses Dokument bereitet die Prüfung vor; es ist selbst keine Prüfung und keine Freigabe.
+Stand 2026-09-14. **Ergebnis: für den veröffentlichten Umfang abgenommen.** Der Betreiber hat den Abschluss der menschlichen Fachprüfung bestätigt und die öffentliche Verwendung ausdrücklich freigegeben. Nachweis: `docs/reviews/public-release-2026-09-14.md`.
 
 ## Was hier ausdrücklich nicht behauptet wird
 
-Es gibt keine fachliche Freigabe, keine prüfende Person und keine tierärztliche Autorität hinter diesem Rechner. Der Rechner ist im Vorschauprofil aktiviert; die Produktionsfreigabe bleibt durch `costsRules` und `clinicalReview` gesperrt.
+Der Rechner bleibt eine unverbindliche Berechnungsübersicht und keine Rechnung, Diagnose oder Kostenzusage. Die fachliche Freigabe gilt für den dokumentierten Rechenstand und die sichtbaren Grenzen; unbekannte Zusatzposten und Sondervereinbarungen bleiben ausdrücklich außerhalb der Berechnung.
 
 Der Code ist getestet. Die fachliche Abnahme muss auch über die Grenzen des Katalogs, Sonderfälle und die unten beschriebenen Rechenannahmen entscheiden. Die Quellen-Vorprüfung steht in `docs/reviews/preflight-2026-09-09.md`.
 
 ## Stand der Prüfung
 
-**2026-09-06:** Der Betreiber hat entschieden, den Rechner zum Ausprobieren freizuschalten und die Prüfung zunächst mit einem Sprachmodell (ChatGPT) vorzunehmen. Bis ein Ergebnis eingetragen ist, gilt der Rechner als **nicht abgenommen**; die Seite trägt einen sichtbaren Warnhinweis, und das Feature Flag in der versionierten Konfiguration bleibt aus — freigeschaltet ist die Vorschau, nicht die Produktion.
-
-Eine Prüfung durch ein Sprachmodell ist eine Vorabkontrolle. Sie ersetzt keine qualifizierte fachliche Abnahme und darf hier nicht als solche eingetragen werden. Wird die Freigabe darauf gestützt, gehört genau das in die Zeile „prüfende Person“ — etwa „Vorabprüfung durch ein Sprachmodell, keine qualifizierte fachliche Abnahme“.
+**2026-09-14:** Abschluss der menschlichen Fachprüfung vom Betreiber bestätigt. Der exakte veröffentlichte Stand wird durch `config/costs/DE.json`, die GOT-Snapshots und die Golden Tests festgehalten. Inhaltsänderungen müssen erneut geprüft werden.
 
 ## Wer prüfen kann
 

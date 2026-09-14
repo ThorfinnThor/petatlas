@@ -7,9 +7,13 @@ test('listet jede erfasste Quelle mit Distribution und Bedingungen', async ({ pa
   await page.goto('/de-de/quellen/');
 
   // Die Zahl kommt aus der Registry, damit der Test mit ihr wächst.
-  await expect(page.getByRole('heading', { level: 2 })).toContainText(
-    `Erfasste Quellen (${allSources().length})`,
-  );
+  await expect(
+    page.getByRole('heading', {
+      level: 2,
+      name: `Erfasste Quellen (${allSources().length})`,
+      exact: true,
+    }),
+  ).toBeVisible();
   await expect(page.getByRole('heading', { name: /Gebührenordnung für Tierärzte/ })).toBeVisible();
   await expect(
     page.getByRole('heading', { name: /OpenStreetMap-Extrakt Deutschland/ }),

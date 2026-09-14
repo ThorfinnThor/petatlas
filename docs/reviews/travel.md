@@ -1,8 +1,8 @@
 # Freigabe der Reiseregeln
 
-**Status: nicht freigegeben.** `content-data/travel/approvals.json` ist leer, `config/launch.json` führt das Gate `travelRules` auf `approved: false`, und der Reisecheck läuft in der Vorschau: einzelne Punkte werden ausgewertet, ein positives Gesamtergebnis entsteht nicht.
+**Status: für den beschriebenen Regelumfang freigegeben am 14.09.2026.** Der Betreiber hat den Abschluss der menschlichen Fachprüfung bestätigt. `content-data/travel/approvals.json` bindet die Freigabe an die Inhaltssignatur `a9d919b312694a38`; jede fachliche Änderung macht diese Freigabe automatisch unwirksam. Nachweis: `docs/reviews/public-release-2026-09-14.md`.
 
-Dieses Dokument ist die Checkliste für den Tag, an dem sich das ändern soll. Es ist **keine Rechtsberatung** und keine fachliche Prüfung, sondern die Aufstellung dessen, was geprüft und belegt sein muss.
+Die Freigabe gilt nur für die in `content-data/travel/scope.json` beschriebene private, begleitete Reise von Deutschland in die vier angebotenen Zielstaaten. Ausgeschlossene Sonderfälle bleiben ausgeschlossen und führen weiterhin zur amtlichen Prüfung statt zu einer positiven Gesamtaussage.
 
 ## Was technisch bereits steht (M12-01 bis M12-05)
 

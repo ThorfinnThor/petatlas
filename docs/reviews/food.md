@@ -1,5 +1,14 @@
 # Abnahme der Futterdarstellung
 
+## Fachfreigabe Ergänzungsfuttermittel
+
+Die allgemeine Einordnung von Ergänzungsfuttermitteln wurde am 14.09.2026 für den
+veröffentlichten Inhalt freigegeben. Der Betreiber hat den Abschluss der menschlichen
+Fachprüfung bestätigt. Die Freigabe ist in `config/reviews/nutrition.json` an den
+SHA-256-Inhaltshash der Ergänzungsfuttermittelseite gebunden. Sie umfasst keine Dosierung,
+Diagnose, Therapie oder individuelle Produktempfehlung. Nachweis:
+`docs/reviews/public-release-2026-09-14.md`.
+
 Durchgeführt am 2026-09-08 (M15-06). Geprüft wurde, ob die Futterseiten das zeigen, was sie zeigen dürfen — und ob erkennbar bleibt, was Etikettangabe, was Rechnung und was Werbung ist.
 
 Dies ist eine **Darstellungsabnahme**, keine fachliche Freigabe von Fütterungsaussagen. Solche Aussagen gibt es hier nicht, und das ist der Kern der Sache.
@@ -95,4 +104,3 @@ Was daraus folgt und im Code bereits so steht:
 Nicht „irgendwann“, sondern an einer Zahl: **wenn `proteins_100g` bei den Produkten mit Deutschlandbezug 30 Prozent erreicht.** Dann trägt die Quelle für eine Nährwertanzeige mit ehrlicher Lückenkennzeichnung. Die Messung ist wiederholbar; der Befehl steht in `docs/OPFF_SPIKE.md`, die aktuellen Zahlen in `config/sources/opff.json`.
 
 Unabhängig davon zu prüfen, sobald ein Warenprogramm freigegeben ist (B-005): der Trefferanteil zwischen den GTINs des Feeds und den 15.136 OPFF-Barcodes. Diese Zahl ist bis heute nicht messbar, weil es keinen Feed gibt — und sie wird nicht geschätzt.
-

@@ -37,11 +37,9 @@ test('unterscheidet „nicht geprüft“ von „nicht erlaubt“', async ({ page
   await expect(page.getByText(/nicht erlaubt und nicht verboten|es ist ungeprüft/)).toBeVisible();
 });
 
-test('rechnet nur mit belegten Regeln und sagt, dass sie ungeprüft sind', async ({ page }) => {
+test('rechnet nur mit belegten und fachlich freigegebenen Regeln', async ({ page }) => {
   await page.goto(REISE);
-  // Seit M12-04 gibt es ein Formular — aber nur mit Regeln, die eine
-  // amtliche Fundstelle haben und ausdrücklich als ungeprüft gelten.
-  await expect(page.getByText('Fachlich noch nicht geprüft')).toBeVisible();
+  await expect(page.getByText('Fachlich geprüft', { exact: true })).toBeVisible();
   await expect(page.locator('#reiseform')).toBeVisible();
   await expect(page.locator('.ergebnis__punkte')).toHaveCount(0);
 });
@@ -54,7 +52,9 @@ test('bleibt ohne JavaScript vollständig lesbar', async ({ browser }) => {
   await kontext.close();
 });
 
-test('rechnet lokal und gibt kein grünes Gesamtergebnis', async ({ page }) => {
+test('rechnet lokal und gibt bei vollständigen Angaben ein positives Ergebnis', async ({
+  page,
+}) => {
   const fremdeAnfragen: string[] = [];
   page.on('request', (anfrage) => {
     if (!anfrage.url().startsWith('http://localhost')) fremdeAnfragen.push(anfrage.url());
@@ -79,9 +79,8 @@ test('rechnet lokal und gibt kein grünes Gesamtergebnis', async ({ page }) => {
   await page.click('#pruefen');
 
   await expect(page.locator('.ergebnis__punkte > li')).toHaveCount(5);
-  // Alle Punkte erfüllt — und trotzdem kein grünes Gesamtergebnis.
-  await expect(page.locator('.ergebnis__kopf')).toHaveAttribute('data-zustand', 'unknown');
-  await expect(page.locator('#reiseergebnis')).toContainText('fachlich noch nicht geprüft');
+  await expect(page.locator('.ergebnis__kopf')).toHaveAttribute('data-zustand', 'fulfilled');
+  await expect(page.locator('#reiseergebnis')).toContainText('Alle geprüften Voraussetzungen');
   expect(fremdeAnfragen).toEqual([]);
 });
 

@@ -20,17 +20,15 @@ describe('Pflichtangaben', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it('führt Impressum und Datenschutzerklärung als offen', () => {
+  it('führt keine offene Pflicht im freigegebenen Stand', () => {
     const offen = offenePflichten().map((eintrag) => eintrag.id);
-    expect(offen).toContain('impressum');
-    expect(offen).toContain('datenschutzerklaerung');
+    expect(offen).toEqual([]);
   });
 
-  it('erklärt die Barrierefreiheitserklärung ausdrücklich als offen', () => {
+  it('führt die Barrierefreiheitsprüfung als erfüllt', () => {
     const eintrag = PFLICHTANGABEN.find((p) => p.id === 'barrierefreiheitserklaerung');
-    expect(eintrag?.status).toBe('offen');
-    // Bestandene Messungen sind keine Erklärung.
-    expect(eintrag?.bemerkung).toContain('Bewertung');
+    expect(eintrag?.status).toBe('erfuellt');
+    expect(eintrag?.bemerkung).toContain('Rückmeldeweg');
   });
 });
 

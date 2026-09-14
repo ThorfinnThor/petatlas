@@ -53,10 +53,10 @@ describe('Vollständige, unterstützte Reise', () => {
     }
   });
 
-  it('gibt trotzdem kein grünes Gesamtergebnis, weil die Regeln ungeprüft sind', () => {
-    expect(ergebnis.gesamt).toBe('unknown');
-    expect(ergebnis.hinweise.join(' ')).toContain('fachlich noch nicht geprüft');
-    expect(ergebnis.pruefung?.vorschau).toBe(true);
+  it('gibt nach inhaltsgebundener Freigabe ein positives Gesamtergebnis', () => {
+    expect(ergebnis.gesamt).toBe('fulfilled');
+    expect(ergebnis.hinweise.join(' ')).toContain('Alle geprüften Voraussetzungen');
+    expect(ergebnis.pruefung?.vorschau).toBe(false);
   });
 
   it('nennt zu jedem Punkt eine amtliche Fundstelle', () => {
@@ -77,7 +77,7 @@ describe('Unvollständige Angaben', () => {
     expect(ergebnis.gesamt).toBe('unknown');
   });
 
-  it('melden einen klaren Mangel auch in der Vorschau', () => {
+  it('melden einen klaren Mangel', () => {
     const ergebnis = pruefeWizard({ ...VOLLSTAENDIG, microchipped: 'nein' });
     expect(ergebnis.gesamt).toBe('not_fulfilled');
   });
@@ -136,7 +136,7 @@ describe('Stichtag', () => {
       travelDate: '2026-10-20',
     });
     expect(frueh.gesamt).toBe('not_fulfilled');
-    expect(spaet.gesamt).toBe('unknown');
+    expect(spaet.gesamt).toBe('fulfilled');
   });
 });
 
