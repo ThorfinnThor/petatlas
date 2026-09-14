@@ -118,13 +118,16 @@ test('Methodikseite nennt Herkunft, Stand und Grenzen', async ({ page }) => {
   await expect(page.getByRole('link', { name: '/data/v1/health.json' })).toBeVisible();
 });
 
-test('Barrierefreiheitsseite gibt sich nicht als Erklärung aus', async ({ page }) => {
+test('Barrierefreiheitserklärung nennt Prüfung, Grenzen und Rückmeldeweg', async ({ page }) => {
   await page.goto('/de-de/barrierefreiheit/');
   await expect(page.locator('h1')).toHaveText('Barrierefreiheit');
-  await expect(page.getByText('noch keine Erklärung zur Barrierefreiheit')).toBeVisible();
-  // Ohne Kontaktadresse steht dort keine erfundene — an beiden Stellen.
-  await expect(page.getByText('keine erfunden')).toHaveCount(2);
-  await expect(page.getByText('Ein Rückmeldeweg wird eingerichtet')).toBeVisible();
+  await expect(page.getByText('Erklärung zur Barrierefreiheit', { exact: true })).toBeVisible();
+  await expect(page.getByText('kein offener kritischer Befund', { exact: false })).toBeVisible();
+  await expect(page.getByText('Keine Prüfung mit Betroffenen', { exact: false })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Barriere per E-Mail melden' })).toHaveAttribute(
+    'href',
+    /^mailto:info@wauandmiau\.de/,
+  );
 });
 
 test('Der Fußbereich führt zu allen Pflichtseiten', async ({ page }) => {
