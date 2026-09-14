@@ -26,6 +26,7 @@ interface Props {
 
 const { programm, placement = 'information_page' } = Astro.props;
 const kennzeichnung = werbekennzeichnung(programm);
+const ueberAwin = programm?.tracking?.provider === 'awin';
 // Die Texte stehen in content-data, nicht in dieser Datei: sie sind
 // redaktionell und werden ohne Codeänderung gepflegt.
 const texte = disclosuresFor(placement, programm !== null);
@@ -64,8 +65,8 @@ const texte = disclosuresFor(placement, programm !== null);
       ) : (
         <li>
           <strong>Bezahlte Weiterleitung.</strong> Der Anbieterlink ist bezahlt. Er ist als solcher
-          gekennzeichnet, führt direkt zum Anbieter und überträgt nichts, was Sie hier eingegeben
-          haben.
+          gekennzeichnet, führt {ueberAwin ? 'über Awin' : 'direkt'} zum Anbieter und überträgt
+          nichts, was Sie hier eingegeben haben.
         </li>
       )
     }

@@ -1,8 +1,8 @@
 # M17-03 — Rebuild des Warenkatalogs, wenn es einen Partner gibt.
 #
-# Der Lauf prüft zuerst, ob überhaupt ein zugelassenes Warenprogramm für einen
-# aktiven Markt existiert. Heute gibt es keins (M13-06), und dann endet er hier.
-# Das ist der beabsichtigte Normalzustand, kein Fehlschlag.
+# Der Lauf prüft zuerst, ob ein Angebotsfeed ausdrücklich freigegeben ist und
+# dafür ein zugelassenes Warenprogramm existiert. Statische Fressnapf-Links
+# benötigen keinen Feed; für sie endet der Lauf ohne Hook.
 #
 # Hook und Buildstatus sind zwei Dinge:
 #   - Der Hook wird aufgerufen. Ob er angekommen ist, sagt der HTTP-Status,
@@ -63,7 +63,7 @@ jobs:
         id: partner
         run: node scripts/publish/commerce-rebuild.ts
 
-      # Der Hook wird nur aufgerufen, wenn es etwas Neues gibt. Fehlt das
+      # Der Hook wird nur aufgerufen, wenn ein Feed freigegeben ist. Fehlt das
       # Secret, endet der Schritt mit einer klaren Meldung statt mit einem
       # Fehler: ein Repository ohne hinterlegten Hook ist kein kaputtes
       # Repository.
@@ -80,8 +80,8 @@ jobs:
             echo '## Warenkatalog'
             echo
             if [ "${{ steps.partner.outputs.noetig }}" = 'true' ]; then
-              echo 'Es gibt ein zugelassenes Warenprogramm; der Hookstatus steht im vorigen Schritt. Gebaut wird ausschließlich bei Cloudflare.'
+              echo 'Ein Angebotsfeed und ein Warenprogramm sind freigegeben; der Hookstatus steht im vorigen Schritt. Gebaut wird ausschließlich bei Cloudflare.'
             else
-              echo 'Kein zugelassenes Warenprogramm. Kein Feedabruf, kein Rebuild, kein Hook.'
+              echo 'Kein freigegebener Angebotsfeed. Statische Partnerlinks bleiben aktiv; kein Feedabruf, kein Rebuild, kein Hook.'
             fi
           } >> "$GITHUB_STEP_SUMMARY"

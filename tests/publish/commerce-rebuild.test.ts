@@ -31,7 +31,7 @@ function programm(ueberschreibung: Partial<PartnerProgram> = {}): PartnerProgram
 
 describe('Rebuild-Entscheidung', () => {
   it('sagt nein, solange kein Programm freigegeben ist', () => {
-    const entscheidung = entscheide('2026-09-08', [], ['DE']);
+    const entscheidung = entscheide('2026-09-08', [], ['DE'], 'approved');
     expect(entscheidung.noetig).toBe(false);
     expect(entscheidung.begruendung).toContain('Kein zugelassenes Warenprogramm');
   });
@@ -41,9 +41,15 @@ describe('Rebuild-Entscheidung', () => {
   });
 
   it('sagt ja bei einem zugelassenen Programm im aktiven Markt', () => {
-    const entscheidung = entscheide('2026-09-08', [programm()], ['DE']);
+    const entscheidung = entscheide('2026-09-08', [programm()], ['DE'], 'approved');
     expect(entscheidung.noetig).toBe(true);
     expect(entscheidung.programme).toEqual(['test-programm']);
+  });
+
+  it('startet für einen statischen Partnerlink keinen Feedabruf', () => {
+    const entscheidung = entscheide('2026-09-08', [programm()], ['DE'], 'disabled');
+    expect(entscheidung.noetig).toBe(false);
+    expect(entscheidung.begruendung).toContain('statische Partnerlinks');
   });
 
   it('sagt nein bei abgelaufener Zulassung', () => {
@@ -56,20 +62,22 @@ describe('Rebuild-Entscheidung', () => {
         reviewedAt: '2026-01-01T00:00:00+00:00',
       },
     });
-    expect(entscheide('2026-09-08', [abgelaufen], ['DE']).noetig).toBe(false);
+    expect(entscheide('2026-09-08', [abgelaufen], ['DE'], 'approved').noetig).toBe(false);
   });
 
   it('sagt nein für einen Markt, der nicht aktiv ist', () => {
     const nurUs = programm({ markets: ['US'] });
-    expect(entscheide('2026-09-08', [nurUs], ['DE']).noetig).toBe(false);
+    expect(entscheide('2026-09-08', [nurUs], ['DE'], 'approved').noetig).toBe(false);
   });
 
   it('sagt nein bei einem Programm, das nur beantragt ist', () => {
     const beantragt = programm({ status: 'applied', approval: null });
-    expect(entscheide('2026-09-08', [beantragt], ['DE']).noetig).toBe(false);
+    expect(entscheide('2026-09-08', [beantragt], ['DE'], 'approved').noetig).toBe(false);
   });
 
   it('sagt nein bei einem beendeten Programm', () => {
-    expect(entscheide('2026-09-08', [programm({ status: 'ended' })], ['DE']).noetig).toBe(false);
+    expect(
+      entscheide('2026-09-08', [programm({ status: 'ended' })], ['DE'], 'approved').noetig,
+    ).toBe(false);
   });
 });

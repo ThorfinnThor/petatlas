@@ -35,6 +35,18 @@ function programm(overrides: Partial<PartnerProgram> = {}): PartnerProgram {
   } as PartnerProgram;
 }
 
+function awinProgramm(overrides: Partial<PartnerProgram> = {}): PartnerProgram {
+  return programm({
+    programId: 'awin-testprogramm',
+    network: 'Awin',
+    allowedLinkHosts: ['shop.beispiel.invalid'],
+    landingUrl: 'https://shop.beispiel.invalid/',
+    campaignIds: [],
+    tracking: { provider: 'awin', publisherId: '3037577', advertiserId: '14757' },
+    ...overrides,
+  });
+}
+
 describe('Zielprüfung', () => {
   it('lässt die vertraglich hinterlegte Adresse zu', () => {
     const pruefung = pruefeZiel(programm());
@@ -123,6 +135,44 @@ describe('Ausgelieferte Adresse', () => {
     expect(PARTNER_LINK_ATTRIBUTE.rel).toContain('sponsored');
     expect(PARTNER_LINK_ATTRIBUTE.rel).toContain('nofollow');
     expect(PARTNER_LINK_ATTRIBUTE.rel).toContain('noopener');
+  });
+
+  it('erzeugt einen Awin-Deeplink mit vier statischen ClickRefs', () => {
+    const href = partnerZiel(awinProgramm(), {
+      verticalRef: 'commerce',
+      placementRef: 'neutral-list',
+      contentRef: 'hundespielzeug',
+      pageSlug: 'spielzeug',
+      destinationUrl: 'https://shop.beispiel.invalid/hund/spielzeug/',
+    });
+    const ziel = new URL(href as string);
+    expect(ziel.origin + ziel.pathname).toBe('https://www.awin1.com/cread.php');
+    expect(ziel.searchParams.get('awinmid')).toBe('14757');
+    expect(ziel.searchParams.get('awinaffid')).toBe('3037577');
+    expect(ziel.searchParams.get('clickref')).toBe('commerce');
+    expect(ziel.searchParams.get('clickref2')).toBe('neutral-list');
+    expect(ziel.searchParams.get('clickref3')).toBe('hundespielzeug');
+    expect(ziel.searchParams.get('clickref4')).toBe('spielzeug');
+    expect(ziel.searchParams.get('ued')).toBe('https://shop.beispiel.invalid/hund/spielzeug/');
+  });
+
+  it('lehnt fremde Awin-Deeplinks und ungültige ClickRefs ab', () => {
+    const context = {
+      verticalRef: 'commerce',
+      placementRef: 'neutral-list',
+      contentRef: 'hundespielzeug',
+      pageSlug: 'spielzeug',
+    } as const;
+    expect(
+      partnerZiel(awinProgramm(), {
+        ...context,
+        destinationUrl: 'https://fremd.example/hund/spielzeug/',
+      }),
+    ).toBeNull();
+    expect(
+      partnerZiel(awinProgramm(), { ...context, contentRef: 'nicht erlaubt & geheim' }),
+    ).toBeNull();
+    expect(partnerZiel(awinProgramm())).toBeNull();
   });
 });
 

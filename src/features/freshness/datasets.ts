@@ -187,7 +187,7 @@ export function datensaetze(wurzel = '.'): readonly Datensatz[] {
       stand: null,
       umfang: 'keine Angebote ausgeliefert',
       hinweis:
-        'Ein automatischer Angebotsfeed ist nicht aktiviert. Statische, als Werbung gekennzeichnete Amazon-Textlinks werden getrennt verwaltet; ohne Feed entstehen keine Preise, Verfügbarkeiten oder Angebotsdateien. Das ist der Normalzustand, kein Ausfall.',
+        'Ein automatischer Angebotsfeed ist nicht aktiviert. Statische, als Werbung gekennzeichnete Amazon- und Awin-Links werden getrennt verwaltet; ohne Feed entstehen keine Preise, Verfügbarkeiten oder Angebotsdateien. Das ist der Normalzustand, kein Ausfall.',
       ausgeliefert: false,
     },
   ];

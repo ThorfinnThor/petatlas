@@ -23,7 +23,8 @@
     "nav.privacy": "Datenschutz",
     "nav.method": "Methodik",
     "nav.accessibility": "Barrierefreiheit",
-    "nav.supplements": "Ergänzungsfuttermittel"
+    "nav.supplements": "Ergänzungsfuttermittel",
+    "nav.insurance": "Tierversicherung"
   },
   "slugs": {
     "home": "",
@@ -42,7 +43,8 @@
     "favorites": "merkliste",
     "method": "methodik",
     "accessibility": "barrierefreiheit",
-    "supplements": "ergaenzungsfuttermittel"
+    "supplements": "ergaenzungsfuttermittel",
+    "insurance": "tierversicherung"
   },
   "legacySlugs": {
     "nahrungsergaenzung": "supplements"

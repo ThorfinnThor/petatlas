@@ -1,0 +1,116 @@
+---
+import type { MarketConfig } from '../../domain/market.ts';
+import InsuranceDisclosure from '../InsuranceDisclosure.astro';
+import PartnerCta from '../PartnerCta.astro';
+import Notice from '../Notice.astro';
+import { insuranceProgramme, partnerHinweisErlaubt } from '../../features/commerce/partner.ts';
+
+interface Props {
+  market: MarketConfig;
+}
+
+const { market } = Astro.props;
+const entscheidung = partnerHinweisErlaubt({
+  market,
+  placement: 'information_page',
+  stichtag: new Date().toISOString().slice(0, 10),
+  programme: insuranceProgramme(),
+});
+---
+
+<p class="eyebrow">Finanzielle Vorsorge · Hund und Katze</p>
+<h1>Tierversicherung prüfen</h1>
+<p class="lead">
+  Eine Tierkrankenversicherung kann hohe Tierarztkosten abfedern. Ob ein Vertrag zu Ihnen passt,
+  hängt von Ihrem Tier, Ihren Rücklagen und den konkreten Bedingungen ab. Diese Seite hilft beim
+  Lesen der Bedingungen; sie vergleicht keine Tarife und gibt keine persönliche Empfehlung.
+</p>
+
+<PartnerCta
+  market={market}
+  placement="information_page"
+  programme={insuranceProgramme()}
+  description="HanseMerkur bietet Kranken- und OP-Versicherungen für Hunde und Katzen an. Beiträge, Ausschlüsse und der genaue Leistungsumfang stehen beim Anbieter."
+  linkLabel="Tierversicherung bei HanseMerkur ansehen"
+  linkContext={{
+    verticalRef: 'insurance',
+    placementRef: 'information-page',
+    contentRef: 'tierkrankenversicherung',
+    pageSlug: 'tierversicherung',
+  }}
+/>
+
+<InsuranceDisclosure programm={entscheidung.erlaubt ? entscheidung.programm : null} />
+
+<h2>Vor dem Abschluss vergleichen</h2>
+<div class="insurance-grid">
+  <article>
+    <h3>OP-Schutz oder Krankenvollschutz?</h3>
+    <p>
+      OP-Tarife decken einen engeren Bereich ab. Ein Krankenvollschutz kann auch allgemeine
+      Behandlungen erfassen. Prüfen Sie die Definitionen im Vertrag und bilden Sie daneben eine
+      eigene Rücklage für nicht versicherte Kosten.
+    </p>
+  </article>
+  <article>
+    <h3>Erstattung und Eigenanteil</h3>
+    <p>
+      Achten Sie auf den erstatteten GOT-Satz, Selbstbeteiligungen, Jahreshöchstleistungen und
+      Begrenzungen in den ersten Versicherungsjahren. Eine Kostenübernahme ist nie allein aus dem
+      Produktnamen abzulesen.
+    </p>
+  </article>
+  <article>
+    <h3>Wartezeiten und Vorerkrankungen</h3>
+    <p>
+      Lesen Sie, ab wann Schutz besteht, welche Erkrankungen ausgeschlossen sind und welche Angaben
+      zum Gesundheitszustand verlangt werden. Beantworten Sie Antragsfragen vollständig und direkt
+      nach dem Wortlaut.
+    </p>
+  </article>
+  <article>
+    <h3>Laufzeit und Reisen</h3>
+    <p>
+      Prüfen Sie Kündigungsrechte, Beitragsanpassungen, Altersgrenzen und den Schutz bei Reisen.
+      Entscheidend sind die aktuellen Versicherungsbedingungen, nicht eine Kurzbeschreibung.
+    </p>
+  </article>
+</div>
+
+<Notice variante="hinweis" titel="Unabhängige Orientierung">
+  <p>
+    Die Verbraucherzentrale empfiehlt, Ausschlüsse und Leistungsgrenzen genau zu vergleichen und
+    nennt eine eigene Rücklage als mögliche Alternative. Lesen Sie die{' '}
+    <a
+      href="https://www.verbraucherzentrale.de/wissen/geld-versicherungen/weitere-versicherungen/krankenversicherungen-fuer-haustiere-sinnvoll-oder-ueberfluessig-10781"
+    >
+      unabhängige Einordnung der Verbraucherzentrale
+    </a>{' '}
+    zusätzlich zur Anbieterinformation.
+  </p>
+</Notice>
+
+<style>
+  .insurance-grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-5) var(--space-8);
+  }
+
+  .insurance-grid article {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .insurance-grid h3 {
+    margin-block-start: 0;
+  }
+
+  @media (min-width: 760px) {
+    .insurance-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

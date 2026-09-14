@@ -9,34 +9,34 @@ import { katalogAnsicht } from '../../src/features/commerce/filters.ts';
 import { oeffentlicheAusgabe } from '../../scripts/build/commerce.ts';
 import { OfferSchema, ProductSchema } from '../../src/domain/schemas/catalog.ts';
 
-const JETZT = '2026-09-07T12:00:00+00:00';
+const JETZT = '2026-09-14T12:00:00+00:00';
 
 describe('Ausgelieferte Warenkonfiguration', () => {
   const roh = JSON.parse(
     readFileSync('config/publishers/commerce/programs.json', 'utf8'),
   ) as unknown;
 
-  it('entspricht dem Schema und ist leer', () => {
+  it('entspricht dem Schema und enthält Fressnapf', () => {
     const geprueft = PartnerRegistrySchema.parse(roh);
     expect(geprueft.domain).toBe('commerce');
-    expect(geprueft.programs).toEqual([]);
-    expect(commerceProgramme()).toEqual([]);
+    expect(geprueft.programs).toHaveLength(1);
+    expect(commerceProgramme()[0]?.programId).toBe('fressnapf-de');
   });
 
-  it('enthält keinen Provisionswert', () => {
+  it('enthält keine Provisionshöhe', () => {
     const text = readFileSync('config/publishers/commerce/programs.json', 'utf8').toLowerCase();
-    for (const wort of ['commission', 'provision', 'payout', 'cpa']) {
+    expect(text).not.toMatch(/\d+([.,]\d+)?\s*(prozent|%|eur|€)/i);
+    for (const wort of ['commissionrate', 'payout', 'cpa'])
       expect(text.includes(wort), wort).toBe(false);
-    }
   });
 });
 
-describe('Erlaubnis ohne Vertrag', () => {
-  it('erteilt weder Anzeige- noch Bilderlaubnis', () => {
-    const erlaubnis = angebotsErlaubnis('DE', '2026-09-07');
-    expect(erlaubnis.anzeigen).toBe(false);
+describe('Begrenzte Erlaubnis', () => {
+  it('erteilt Anzeige-, aber ohne gesonderten Nachweis keine Bilderlaubnis', () => {
+    const erlaubnis = angebotsErlaubnis('DE', '2026-09-14');
+    expect(erlaubnis.anzeigen).toBe(true);
     expect(erlaubnis.bilder).toBe(false);
-    expect(erlaubnis.grund).toContain('Kein freigegebenes Warenprogramm');
+    expect(erlaubnis.grund).toContain('fressnapf-de');
   });
 
   it('lässt den Katalog leer', () => {

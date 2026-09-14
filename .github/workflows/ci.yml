@@ -92,7 +92,7 @@ jobs:
       # Launch-Gates offen sind, trägt jede Seite noindex.
       - name: SEO-Probelauf mit allen Funktionen
         env:
-          ENABLE_FEATURES: 'costs,map,travel,commerce,care,toys,food,profile'
+          ENABLE_FEATURES: 'costs,map,travel,partners,commerce,care,toys,food,profile'
         run: |
           npm run build:fixture
           npm run build:fees

@@ -1,4 +1,37 @@
 {
   "domain": "insurance",
-  "programs": []
+  "programs": [
+    {
+      "programId": "hansemerkur-de",
+      "advertiser": "HanseMerkur",
+      "network": "Awin",
+      "markets": ["DE"],
+      "status": "approved",
+      "approval": {
+        "contractReference": "Awin Advertiser 11705",
+        "approvedAt": "2026-09-14",
+        "expiresAt": null,
+        "reviewEvidence": "docs/reviews/awin-partners-2026-09-14.md",
+        "reviewedAt": "2026-09-14T18:30:00+02:00"
+      },
+      "allowedLinkHosts": ["www.hansemerkur.de"],
+      "landingUrl": "https://www.hansemerkur.de/tierkrankenversicherung",
+      "campaignIds": [],
+      "tracking": {
+        "provider": "awin",
+        "publisherId": "3037577",
+        "advertiserId": "11705"
+      },
+      "allowedPlacements": ["information_page", "page_footer_section", "neutral_list"],
+      "disclosureText": "Werbung: Für einen Abschluss über diesen Link können wir eine Provision erhalten. Beiträge und Leistungen werden dadurch nicht verändert.",
+      "restrictions": [
+        "Keine individuelle Tarifempfehlung oder Rangfolge nach Vergütung.",
+        "Leistungs- und Beitragsangaben nur auf der Anbieterzielseite; maßgeblich sind die dortigen Versicherungsbedingungen."
+      ],
+      "notes": [
+        "Zulassung für wauandmiau.de vom Betreiber am 14.09.2026 bestätigt.",
+        "Reine, gekennzeichnete Weiterleitung ohne Erhebung oder Übertragung von Tierdaten."
+      ]
+    }
+  ]
 }

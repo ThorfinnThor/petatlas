@@ -1,0 +1,163 @@
+---
+import type { MarketConfig } from '../domain/market.ts';
+import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../features/commerce/links.ts';
+import { commerceProgramme, partnerHinweisErlaubt } from '../features/commerce/partner.ts';
+
+interface Props {
+  market: MarketConfig;
+  page: 'spielzeug' | 'ergaenzungsfuttermittel';
+}
+
+const { market, page } = Astro.props;
+const programm = commerceProgramme().find((eintrag) => eintrag.programId === 'fressnapf-de');
+const entscheidung = partnerHinweisErlaubt({
+  market,
+  placement: 'neutral_list',
+  stichtag: new Date().toISOString().slice(0, 10),
+  programme: programm === undefined ? [] : [programm],
+});
+
+const ziele =
+  page === 'spielzeug'
+    ? [
+        {
+          id: 'hundespielzeug',
+          tier: 'Hund',
+          titel: 'Hundespielzeug bei Fressnapf',
+          beschreibung: 'Bälle, Kau-, Wurf-, Wasser- und Intelligenzspielzeug im Händlersortiment.',
+          url: 'https://www.fressnapf.de/c/hund/hundespielzeug/',
+        },
+        {
+          id: 'katzenspielzeug',
+          tier: 'Katze',
+          titel: 'Katzenspielzeug bei Fressnapf',
+          beschreibung:
+            'Spielangeln, Bälle, Kratzmöbel und Beschäftigungsspielzeug im Händlersortiment.',
+          url: 'https://www.fressnapf.de/c/katze/katzenspielzeug/',
+        },
+      ]
+    : [
+        {
+          id: 'hunde-ergaenzungsfutter',
+          tier: 'Hund',
+          titel: 'Ergänzungsfuttermittel für Hunde',
+          beschreibung:
+            'Öle, Pulver, Pasten und weitere Ergänzungsfuttermittel im Händlersortiment.',
+          url: 'https://www.fressnapf.de/c/hund/hundefutter/ergaenzungsfutter/',
+        },
+        {
+          id: 'katzen-ergaenzungsfutter',
+          tier: 'Katze',
+          titel: 'Ergänzungsfuttermittel für Katzen',
+          beschreibung: 'Pasten, Öle und weitere Ergänzungsfuttermittel im Händlersortiment.',
+          url: 'https://www.fressnapf.de/c/katze/katzenfutter/ergaenzungsfutter/',
+        },
+      ];
+
+const links =
+  entscheidung.erlaubt && entscheidung.programm !== null
+    ? ziele
+        .map((eintrag) => ({
+          ...eintrag,
+          href: partnerZiel(entscheidung.programm, {
+            verticalRef: 'commerce',
+            placementRef: 'neutral-list',
+            contentRef: eintrag.id,
+            pageSlug: page,
+            destinationUrl: eintrag.url,
+          }),
+        }))
+        .filter((eintrag) => eintrag.href !== null)
+    : [];
+---
+
+{
+  links.length > 0 && entscheidung.programm !== null && (
+    <section class="retail-partner" aria-labelledby={`fressnapf-${page}`}>
+      <div class="retail-partner__heading">
+        <div>
+          <p class="eyebrow">Weitere Einkaufsmöglichkeit · Werbung</p>
+          <h2 id={`fressnapf-${page}`}>Bei Fressnapf ansehen</h2>
+        </div>
+        <p class="retail-partner__disclosure">{entscheidung.programm.disclosureText}</p>
+      </div>
+      <p>
+        Die Links führen über Awin zu passenden Kategorien. Wir erhalten keine Angaben dazu, was Sie
+        dort ansehen oder kaufen; Preise und Verfügbarkeit prüfen Sie beim Händler.
+      </p>
+      <div class="retail-partner__grid">
+        {links.map((eintrag) => (
+          <article>
+            <p class="retail-partner__species">Für {eintrag.tier}</p>
+            <h3>{eintrag.titel}</h3>
+            <p>{eintrag.beschreibung}</p>
+            <a
+              href={eintrag.href as string}
+              rel={PARTNER_LINK_ATTRIBUTE.rel}
+              target={PARTNER_LINK_ATTRIBUTE.target}
+            >
+              Sortiment öffnen ↗ <span class="sr-only">(Werbung)</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .retail-partner {
+    margin-block: var(--space-8);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-subtle);
+  }
+
+  .retail-partner__heading {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .retail-partner__heading h2,
+  .retail-partner__heading p {
+    margin-block: 0;
+  }
+
+  .retail-partner__disclosure {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    max-inline-size: 52ch;
+  }
+
+  .retail-partner__grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-block-start: var(--space-4);
+  }
+
+  .retail-partner__grid article {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .retail-partner__grid h3 {
+    margin-block: var(--space-1) var(--space-2);
+  }
+
+  .retail-partner__species {
+    color: var(--color-primary-hover);
+    font-size: var(--text-small);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  @media (min-width: 700px) {
+    .retail-partner__heading,
+    .retail-partner__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

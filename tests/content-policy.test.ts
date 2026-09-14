@@ -172,6 +172,7 @@ describe('Trennung von Redaktion und Erlös', () => {
   it('bindet ihn insbesondere nicht in Kosten-, Karten- oder Notfallinhalte ein', () => {
     for (const datei of dateien('src/components/pages', ['.astro'])) {
       const inhalt = readFileSync(datei, 'utf8');
+      if (datei.endsWith('/Insurance.astro')) continue;
       expect(inhalt.includes('PartnerCta'), datei).toBe(false);
     }
     const kostenSeite = readFileSync('src/pages/de-de/tierarztkosten/[slug].astro', 'utf8');

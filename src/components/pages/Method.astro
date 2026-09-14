@@ -10,17 +10,23 @@
 import { HEALTH_PFAD, baueHealthBericht } from '../../features/freshness/health.ts';
 import { verifiedSources, pendingSources } from '../../domain/source-registry.ts';
 import { routePath } from '../../lib/routes.ts';
-import { defaultMarket } from '../../domain/market.ts';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../domain/market.ts';
+import { devFeatureOverrides } from '../../../config/build.ts';
 import { amazonEnabled, AMAZON_DISCLOSURE } from '../../features/commerce/amazon.ts';
 import Notice from '../Notice.astro';
 import { commerceStatus } from '../../features/commerce/status.ts';
+import { commerceProgramme, insuranceProgramme } from '../../features/commerce/partner.ts';
 
-const markt = defaultMarket();
+const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const jetzt = new Date();
 const bericht = baueHealthBericht(jetzt.toISOString().slice(0, 10), jetzt.toISOString());
 const gepruefteQuellen = verifiedSources();
 const offeneQuellen = pendingSources();
 const partnerstatus = commerceStatus();
+const awinAktiv =
+  isFeatureEnabled(markt, 'partners') &&
+  (commerceProgramme().some((programm) => programm.status === 'approved') ||
+    insuranceProgramme().some((programm) => programm.status === 'approved'));
 ---
 
 <h1>Methodik</h1>
@@ -106,6 +112,16 @@ const partnerstatus = commerceStatus();
     <p>
       Aktuell sind keine Partnerlinks aktiviert. Die Reihenfolge von Angeboten hängt nie von einer
       Vergütung ab.
+    </p>
+  )
+}
+{
+  awinAktiv && (
+    <p>
+      Fressnapf und HanseMerkur sind als Awin-Partner eingebunden. Jeder Link trägt vier statische
+      ClickRefs für Themenbereich, Platzierung, Inhalt und Seite. Sie enthalten keine Profilangaben,
+      Rechenergebnisse oder Sitzungskennung. Die Händler- und Versicherungslinks stehen in
+      getrennten Werbeblöcken; ihre Position hängt nicht von einer Provision ab.
     </p>
   )
 }

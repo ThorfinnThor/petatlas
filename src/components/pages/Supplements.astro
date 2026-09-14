@@ -6,7 +6,14 @@ import { routePath } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
 import supplements from '../../../content-data/products/supplements.json' with { type: 'json' };
 import nutritionReview from '../../../config/reviews/nutrition.json' with { type: 'json' };
+import RetailPartnerSection from '../RetailPartnerSection.astro';
+import type { MarketConfig } from '../../domain/market.ts';
 
+interface Props {
+  market: MarketConfig;
+}
+
+const { market } = Astro.props;
 const methodikPfad = routePath(defaultMarket(), 'method');
 ---
 
@@ -17,6 +24,8 @@ const methodikPfad = routePath(defaultMarket(), 'method');
   Hier ordnen Sie Ergänzungsfuttermittel ein und vergleichen die Kosten einer bereits festgelegten
   Tagesmenge.
 </p>
+
+<RetailPartnerSection market={market} page="ergaenzungsfuttermittel" />
 
 <p
   class="review-note"

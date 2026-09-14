@@ -42,11 +42,11 @@ describe('Werbung und Tracking', () => {
     expect(stand.trackingAktiv).toBe(gates.adsTracking?.approved ?? false);
   });
 
-  it('meldet für den heutigen Stand: nichts an', () => {
+  it('meldet Partnerwerbung aktiv, aber eigenes Tracking und Cookies aus', () => {
     const stand = werbeStand();
-    expect(stand.anzeigenAktiv).toBe(false);
+    expect(stand.anzeigenAktiv).toBe(true);
     expect(stand.trackingAktiv).toBe(false);
     expect(stand.cookiesGesetzt).toBe(false);
-    expect(stand.begruendung).toContain('Kein Partnerprogramm freigegeben');
+    expect(stand.begruendung).toContain('Werbelinks');
   });
 });

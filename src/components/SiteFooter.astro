@@ -10,9 +10,10 @@
  */
 import { amazonEnabled, AMAZON_DISCLOSURE } from '../features/commerce/amazon.ts';
 import { createSiteConfig, readBuildMode } from '../../config/site.ts';
-import type { MarketConfig } from '../domain/market.ts';
+import { isFeatureEnabled, type MarketConfig } from '../domain/market.ts';
 import { translate, type LocaleId } from '../domain/i18n.ts';
 import { navigationFor, type NavigationItem, type RouteKey } from '../lib/routes.ts';
+import { commerceProgramme, insuranceProgramme } from '../features/commerce/partner.ts';
 
 interface Props {
   market: MarketConfig;
@@ -30,7 +31,7 @@ function gruppe(keys: readonly RouteKey[]): readonly NavigationItem[] {
     .filter((eintrag): eintrag is NavigationItem => eintrag !== undefined);
 }
 
-const werkzeuge = gruppe(['costs', 'map', 'travel']);
+const werkzeuge = gruppe(['costs', 'map', 'travel', 'insurance']);
 const produkte = gruppe(['care', 'toys', 'food', 'supplements', 'catalog']);
 const transparenz = gruppe([
   'sources',
@@ -42,6 +43,10 @@ const transparenz = gruppe([
 ]);
 const brandName = createSiteConfig(readBuildMode(process.env), process.env).brandName;
 const jahr = new Date().getFullYear();
+const awinAktiv =
+  isFeatureEnabled(market, 'partners') &&
+  (commerceProgramme().some((programm) => programm.status === 'approved') ||
+    insuranceProgramme().some((programm) => programm.status === 'approved'));
 
 const SPALTEN = [
   { titel: 'Werkzeuge', eintraege: werkzeuge },
@@ -82,6 +87,15 @@ const SPALTEN = [
         <p class="fuss__werbung">
           Werbung: {AMAZON_DISCLOSURE} Als „Werbung“ gekennzeichnete Links führen zu Amazon. Eine
           Provision verändert die Reihenfolge im Finder nicht.
+        </p>
+      )
+    }
+    {
+      awinAktiv && (
+        <p class="fuss__werbung">
+          Werbung: Gekennzeichnete Links zu Fressnapf und HanseMerkur führen über Awin. Bei einem
+          Kauf oder Abschluss können wir eine Provision erhalten; der Preis und die redaktionelle
+          Reihenfolge ändern sich dadurch nicht.
         </p>
       )
     }

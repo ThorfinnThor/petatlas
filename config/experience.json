@@ -1,4 +1,4 @@
 {
-  "features": ["costs", "map", "travel", "care", "toys", "food", "profile"],
-  "note": "Öffentlich freigegebenes Real-Data-Profil. Preis-/Bildfeeds, Versicherungsangebote und Tracking bleiben deaktiviert."
+  "features": ["costs", "map", "travel", "partners", "care", "toys", "food", "profile"],
+  "note": "Öffentlich freigegebenes Real-Data-Profil. Statische, gekennzeichnete Affiliate-Links sind aktiv; Preis-/Bildfeeds und eigenes Tracking bleiben deaktiviert."
 }

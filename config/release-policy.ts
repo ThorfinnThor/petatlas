@@ -35,6 +35,9 @@ export function requiredGates(features: readonly string[]): string[] {
     commerce: 'commerceAffiliate',
     ads: 'adsTracking',
   };
+  if (features.includes('partners')) {
+    result.push('insuranceAffiliate', 'commerceAffiliate');
+  }
   for (const feature of features) {
     const gate = featureGates[feature];
     if (gate && !result.includes(gate)) result.push(gate);

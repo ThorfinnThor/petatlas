@@ -24,7 +24,8 @@
     "nav.privacy": "Privacy",
     "nav.method": "Method",
     "nav.accessibility": "Accessibility",
-    "nav.supplements": "Supplements"
+    "nav.supplements": "Supplements",
+    "nav.insurance": "Pet insurance"
   },
   "slugs": {
     "home": "",
@@ -43,7 +44,8 @@
     "favorites": "saved",
     "method": "method",
     "accessibility": "accessibility",
-    "supplements": "supplements"
+    "supplements": "supplements",
+    "insurance": "pet-insurance"
   },
   "legacySlugs": {}
 }

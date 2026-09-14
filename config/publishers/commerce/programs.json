@@ -1,4 +1,37 @@
 {
   "domain": "commerce",
-  "programs": []
+  "programs": [
+    {
+      "programId": "fressnapf-de",
+      "advertiser": "Fressnapf",
+      "network": "Awin",
+      "markets": ["DE"],
+      "status": "approved",
+      "approval": {
+        "contractReference": "Awin Advertiser 14757",
+        "approvedAt": "2026-09-14",
+        "expiresAt": null,
+        "reviewEvidence": "docs/reviews/awin-partners-2026-09-14.md",
+        "reviewedAt": "2026-09-14T18:30:00+02:00"
+      },
+      "allowedLinkHosts": ["www.fressnapf.de"],
+      "landingUrl": "https://www.fressnapf.de/",
+      "campaignIds": [],
+      "tracking": {
+        "provider": "awin",
+        "publisherId": "3037577",
+        "advertiserId": "14757"
+      },
+      "allowedPlacements": ["information_page", "page_footer_section", "neutral_list"],
+      "disclosureText": "Werbung: Für einen Kauf über diesen Link können wir eine Provision erhalten. Der Preis ändert sich dadurch nicht.",
+      "restrictions": [
+        "Nur redaktionell passende, klar als Werbung gekennzeichnete Verweise verwenden.",
+        "Keine nicht freigegebenen Gutscheine oder Rabatte bewerben."
+      ],
+      "notes": [
+        "Zulassung für wauandmiau.de vom Betreiber am 14.09.2026 bestätigt.",
+        "Keine Aussage zu Bildrechten; Händlerbilder werden nicht übernommen."
+      ]
+    }
+  ]
 }
