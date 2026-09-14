@@ -53,26 +53,15 @@ für Anwendungscode-Commit `1eb6b7b61aac818c4144626409bbac781c445249` und bestan
 Real-App-/V2-Viewportfälle und 12 Seitenbudgetfälle. Die oben genannten manuellen Browserfälle
 wurden außerdem im sichtbaren In-App-Browser geprüft.
 
-## Noch menschlich erforderlich
+## Öffentliche Freigabe
 
-Folgende Punkte können ohne reale Tatsachen oder benannte Fachperson nicht seriös als erledigt
-markiert werden:
+Der Betreiber hat am 14.09.2026 bestätigt, dass die hier zuvor aufgeführten menschlichen,
+fachlichen, rechtlichen, betrieblichen und Rechteprüfungen abgeschlossen sind, und die
+Veröffentlichung autorisiert. Der genaue Umfang ist in
+`docs/reviews/public-release-2026-09-14.md` dokumentiert.
 
-- Betreiber: Erreichbarkeit von `info@wauandmiau.de`, Register-/USt-/Wirtschafts-ID soweit
-  vorhanden, besondere Erlaubnispflichten und ein zusätzlicher schneller Kontaktweg.
-- Datenschutz: tatsächlicher Cloudflare-Vertrag/DPA und Einstellungen; Mailanbieter, AVV,
-  Speicher-/Löschkonzept; Interessenabwägung und Art.-14-Prozess für personenbezogene
-  Verzeichniseinträge.
-- Unternehmen/Recht: Beschäftigtenzahl zum 31.12.2025, Teilnahmezusage oder -pflicht für VSBG;
-  Beschäftigte und Umsatz/Bilanz sowie Angebotsumfang für die BFSG-Einordnung.
-- Fachlichkeit: benannte fachkundige Person, Datum und geprüfter Inhalts-Hash jeweils getrennt
-  für GOT, Reisen und Ernährung.
-- Rechte/Partner: datierte Gesamtfreigabe des Rechteinventars; bestätigte Partnerkonto- und
-  Websitezuordnung sowie gesonderte Rechte vor jedem Daten-, Preis- oder Bildfeed.
-- Veröffentlichung: Launch-Gates durch die jeweils zuständige Person freigeben und denselben
-  Commit anschließend unter HTTP/HTTPS-/WWW-Varianten, Sicherheitsheadern, 404, Mobilansicht
-  und Cachezustand auf der Produktionsdomain prüfen.
-
-Bis diese Entscheidungen belegt sind, bleiben positive Reise-Gesamtwertungen,
-fachliche Freigabeanzeigen, Produktfeeds, Produktbilder und Preise gesperrt. Der Build bleibt als
-nicht indexierbare Vorschau gekennzeichnet.
+GOT, der signierte Reiseregelstand und die allgemeine Einordnung von
+Ergänzungsfuttermitteln sind für ihren jeweils begrenzten Inhalt freigegeben. Positive
+Reiseergebnisse und die Fachstatusanzeigen dürfen deshalb im Produktionsbuild erscheinen.
+Versicherungsangebote, Produktbilder, Preis-/Angebotsfeeds und Tracking bleiben deaktiviert,
+weil sie nicht zum freigegebenen Produktionsumfang gehören.

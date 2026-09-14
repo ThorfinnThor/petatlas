@@ -11,9 +11,9 @@ verwendeten Ressourcen zu. Es ersetzt keine rechtliche Prüfung ungeklärter Son
 | OpenStreetMap-Orte | Geofabrik-Deutschlandextrakte, Snapshot vom 07.09.2026 | HTML-Listen, Stadtseiten, Suchindex, räumliche JSON-Chunks | ODbL 1.0, Attribution an Karte und Daten; `config/sources/osm-geofabrik-de.json`, `docs/ODBL_DATAFLOW.md`, `licenses/ODbL-notice.md` |
 | OpenStreetMap-Kacheln | `tile.openstreetmap.org` | Nur nach Klick geladene Kartendarstellung | Kacheln sind kein Bestandteil des Builds; Nutzungsbedingung und Attribution getrennt in `config/editorial-sources.json` und `src/features/map/tiles.ts` |
 | Kommunale Hundeflächen | Berlin und Hamburg, jeweilige Snapshots | Stadtseiten und Quellenhinweise | Einzelentscheidungen in `config/sources/berlin-hundefreilauf.json`, `config/sources/hamburg-hundeauslaufzonen.json` und `config/sources/hamburg-hundeauslaufzonen-anzahl.json` |
-| Reiseregeln | EU- und nationale Behördenquellen | Begrenzte Vorschauauswertung und Packliste | Quellen in `config/editorial-sources.json`; Fachfreigabe bleibt getrennt und ausstehend in `content-data/travel/approvals.json` |
+| Reiseregeln | EU- und nationale Behördenquellen | Begrenzte Auswertung und Packliste | Quellen in `config/editorial-sources.json`; die Fachfreigabe ist getrennt und inhaltsgebunden in `content-data/travel/approvals.json` dokumentiert |
 | Produkt- und Futterangaben | Verlinkte Herstellerseiten, Stand je Eintrag | Redaktionelle Fakten und Vergleichsmerkmale, keine kopierten Produktbilder oder Bewertungen | Je Produkt Quelle und Prüfdatum in `content-data/products/editorial.json` und `content-data/food/real-products.json`; nur als Herstellerangabe bezeichnet |
-| Ergänzungsfuttermittel | Hersteller-, Verbands- und Behördenquellen | Redaktionelle Einordnung, keine Dosierungsempfehlung | Getrennte Quellen in `config/editorial-sources.json`; eigene Fachfreigabe in `config/reviews/nutrition.json` bleibt `pending` |
+| Ergänzungsfuttermittel | Hersteller-, Verbands- und Behördenquellen | Redaktionelle Einordnung, keine Dosierungsempfehlung | Getrennte Quellen in `config/editorial-sources.json`; eigene inhaltsgebundene Fachfreigabe in `config/reviews/nutrition.json` |
 | Amazon | Vom Betreiber autorisierte Suchlinks mit Partner-ID | Gekennzeichneter Textlink; keine Preise, Bilder, Widgets, Rezensionen oder Produktdaten | Status getrennt in `config/commerce/status.json`; Vertrags-/Feedrechte werden nicht aus der Textlink-Autorisierung abgeleitet |
 | Eigene Seitentexte und UI | Repository Wau & Miau | HTML, Suchindex und Druckansichten | Eigene redaktionelle und technische Arbeit; das Repository ist als `UNLICENSED` gekennzeichnet |
 
@@ -58,10 +58,10 @@ Entwicklungswerkzeuge sind in `package-lock.json` versionsgebunden. Ihre Lizenzd
 werden nicht als Website-Inhalt kopiert. Der Output-Audit prüft, dass keine internen
 Nachweise, Quell-Snapshots oder Originalbilder versehentlich in `dist/` gelangen.
 
-## Noch erforderliche menschliche Entscheidung
+## Freigabeentscheidung
 
-Die technische Zuordnung und die bestehenden Einzelentscheidungen sind dokumentiert. Die
-globale Datenrechtefreigabe in `config/launch.json` bleibt bewusst gesperrt, bis die dafür
-zuständige Person dieses Inventar und die ODbL-Ausgabeformen geprüft, datiert und als
-Nachweis in `docs/reviews/` bestätigt hat. Ungeklärte Partnerfeeds und Produktbilder bleiben
-bis dahin technisch deaktiviert.
+Der Betreiber hat am 14.09.2026 den Abschluss der menschlichen Rechteprüfung für die in
+diesem Inventar aufgeführten Ressourcen und Ausgabeformen bestätigt. Die globale
+Datenrechtefreigabe verweist auf dieses Inventar. Nicht aufgeführte Partnerfeeds,
+Produktbilder, Preise und Logos bleiben technisch deaktiviert und sind von dieser
+Freigabe nicht erfasst.

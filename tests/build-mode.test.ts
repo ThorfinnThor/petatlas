@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { BuildConfigError, resolveBuildConfig, robotsDirective } from '../config/build.ts';
+import type { ReleaseConfig } from '../config/release-policy.ts';
 import type { OperatorInfo } from '../config/site.ts';
 
 const COMPLETE_OPERATOR: OperatorInfo = {
@@ -15,6 +16,10 @@ const COMPLETE_OPERATOR: OperatorInfo = {
 };
 
 const REAL_SITE = { PUBLIC_SITE_URL: 'https://beispiel.example' };
+const RELEASE_BLOCKED: ReleaseConfig = {
+  publicRelease: { approved: false },
+  gates: {},
+};
 
 describe('Standardverhalten ohne Konfiguration', () => {
   it('fällt auf development zurück, nicht auf production', () => {
@@ -55,16 +60,33 @@ describe('preview', () => {
 });
 
 describe('production verweigert ungeklärte Pflichtkonfiguration', () => {
-  it('bricht ab, solange die Launch-Freigabe nicht dokumentiert ist', () => {
+  it('bricht mit einem ausdrücklich nicht freigegebenen Stand ab', () => {
     expect(() =>
-      resolveBuildConfig({ BUILD_MODE: 'production', ...REAL_SITE }, COMPLETE_OPERATOR),
+      resolveBuildConfig(
+        { BUILD_MODE: 'production', ...REAL_SITE },
+        COMPLETE_OPERATOR,
+        RELEASE_BLOCKED,
+      ),
     ).toThrow(BuildConfigError);
   });
 
   it('nennt die fehlende Freigabe im Fehlertext', () => {
     expect(() =>
-      resolveBuildConfig({ BUILD_MODE: 'production', ...REAL_SITE }, COMPLETE_OPERATOR),
+      resolveBuildConfig(
+        { BUILD_MODE: 'production', ...REAL_SITE },
+        COMPLETE_OPERATOR,
+        RELEASE_BLOCKED,
+      ),
     ).toThrow(/publicRelease\.approved=false/);
+  });
+
+  it('erzeugt mit dem freigegebenen Repository-Stand eine indexierbare Produktion', () => {
+    const config = resolveBuildConfig(
+      { BUILD_MODE: 'production', ...REAL_SITE },
+      COMPLETE_OPERATOR,
+    );
+    expect(config.indexable).toBe(true);
+    expect(robotsDirective(config)).toBe('index, follow');
   });
 
   it('lehnt angeforderte Fixtures ab, bevor irgendetwas anderes geprüft wird', () => {

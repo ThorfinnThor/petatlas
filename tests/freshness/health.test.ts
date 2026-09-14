@@ -94,11 +94,12 @@ describe('Die echten Datensätze', () => {
     }
   });
 
-  it('halten die Reiseregeln ohne Freigabe für gesperrt', () => {
-    const bewertet = bewerteDatensaetze(HEUTE, echte);
+  it('führt den freigegebenen Reiseregelstand ohne Sperre', () => {
+    const bewertet = bewerteDatensaetze('2026-09-14', echte);
     const regeln = bewertet.find((eintrag) => eintrag.id === 'reiseregeln-eu-intra-2026');
-    expect(regeln?.sperrt).toBe(true);
-    expect(regeln?.hinweis).toContain('keine fachliche Freigabe');
+    expect(regeln?.sperrt).toBe(false);
+    expect(regeln?.umfang).toContain('ein freigegebener Regelsatz');
+    expect(regeln?.hinweis).toBeNull();
   });
 
   it('melden die Angebote als nicht ausgeliefert statt als Ausfall', () => {

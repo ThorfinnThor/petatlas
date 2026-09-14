@@ -17,8 +17,7 @@
 import type { RequirementState } from '../../domain/schemas/travel.ts';
 import { pruefeReise, type Fakten, type ReiseErgebnis } from './engine.ts';
 import { nationalOutcome } from './national.ts';
-import { nurVorschau } from './freigabe.ts';
-import { alleRegeln } from './rules.ts';
+import { nurVorschau, regelnMitFreigabe } from './freigabe.ts';
 import { pruefeUmfang, type UmfangsErgebnis } from './scope.ts';
 
 /** Antwortmöglichkeit für alles, was man auch nicht wissen kann. */
@@ -158,7 +157,7 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
   }
 
   const pruefung = pruefeReise({
-    regeln: alleRegeln(),
+    regeln: regelnMitFreigabe(eingabe.heute ?? null),
     route: {
       originCountry: 'DE',
       destinationCountry: eingabe.destination,
@@ -186,11 +185,9 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
   return {
     umfang,
     pruefung,
-    gesamt:
-      national.some((entry) => entry.state === 'not_fulfilled') ||
-      pruefung.gesamt === 'not_fulfilled'
-        ? 'not_fulfilled'
-        : 'unknown',
+    gesamt: national.some((entry) => entry.state === 'not_fulfilled')
+      ? 'not_fulfilled'
+      : pruefung.gesamt,
     hinweise: [
       ...(national.some((entry) => entry.state === 'not_fulfilled')
         ? [

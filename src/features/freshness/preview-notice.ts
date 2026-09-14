@@ -32,6 +32,7 @@ import gebuehren from '../../../data-snapshots/got/got-2022.json' with { type: '
 import orte from '../../../data-snapshots/places/places-de.json' with { type: 'json' };
 import type { Place } from '../../domain/schemas/places.ts';
 import { publicPlaceCount } from '../map/directory-controls.ts';
+import { nurVorschau } from '../travel/freigabe.ts';
 
 export interface VorschauBestand {
   /** Echte Bestände mit Zahl und Quelle. */
@@ -71,9 +72,9 @@ export function vorschauBestand(market: MarketConfig): VorschauBestand {
   }
 
   if (isFeatureEnabled(market, 'travel')) {
-    ungeprueft.push(
-      'Reiseregeln mit Fundstelle aus der Delegierten Verordnung (EU) 2026/131 — fachlich nicht freigegeben',
-    );
+    const satz = 'Reiseregeln mit Fundstelle aus der Delegierten Verordnung (EU) 2026/131';
+    if (nurVorschau()) ungeprueft.push(`${satz} — fachlich nicht freigegeben`);
+    else echt.push(`${satz} — fachlich freigegeben`);
   }
 
   if (isFeatureEnabled(market, 'food') && futterDatenArt() === 'synthetic') {

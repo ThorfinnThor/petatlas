@@ -103,15 +103,16 @@ describe('Freigabestand', () => {
 });
 
 describe('Ausgelieferter Stand', () => {
-  it('enthält keine Freigabe', () => {
+  it('enthält die inhaltsgebundene Freigabe', () => {
     const roh = JSON.parse(readFileSync('content-data/travel/approvals.json', 'utf8')) as unknown;
     const geprueft = TravelApprovalListSchema.parse(roh);
-    expect(geprueft.approvals).toEqual([]);
-    expect(freigabeStand().every((stand) => !stand.freigegeben)).toBe(true);
-    expect(nurVorschau()).toBe(true);
+    expect(geprueft.approvals).toHaveLength(1);
+    expect(geprueft.approvals[0]?.sourceDigest).toBe(inhaltsSignatur(SATZ));
+    expect(freigabeStand().every((stand) => stand.freigegeben)).toBe(true);
+    expect(nurVorschau()).toBe(false);
   });
 
-  it('hält den Reisecheck damit in der Vorschau', () => {
+  it('gibt bei vollständig erfüllten Angaben ein positives Gesamtergebnis', () => {
     const eingabe: WizardEingabe = {
       species: 'dog',
       destination: 'AT',
@@ -121,15 +122,20 @@ describe('Ausgelieferter Stand', () => {
       travelDate: '2026-10-01',
       birthDate: '2020-01-01',
       microchipped: 'ja',
+      chipCompliant: 'ja',
       identificationDate: '2020-03-01',
       rabiesVaccinated: 'ja',
       rabiesVaccinationDate: '2026-01-01',
+      vaccinationStartDate: '2026-01-01',
+      vaccinationValidUntil: '2027-01-01',
+      continuousBooster: 'nein',
       euPetPassport: 'ja',
+      passportComplete: 'ja',
       accompaniedByOwner: 'ja',
     };
     const ergebnis = pruefeWizard(eingabe);
-    expect(ergebnis.pruefung?.vorschau).toBe(true);
-    expect(ergebnis.gesamt).toBe('unknown');
+    expect(ergebnis.pruefung?.vorschau).toBe(false);
+    expect(ergebnis.gesamt).toBe('fulfilled');
   });
 });
 

@@ -1,15 +1,5 @@
 ---
-/**
- * M18-05 — Angaben zur Barrierefreiheit.
- *
- * **Keine Erklärung zur Barrierefreiheit im Rechtssinn.** Eine solche
- * Erklärung braucht eine Bewertung des Geltungsbereichs, einen Feedback-Weg
- * mit erreichbarer Adresse und die Angabe, ob das Gesetz für dieses Angebot
- * gilt. Adresse und Bewertung liegen nicht vor; beides zu erfinden wäre
- * genau die Sorte Platzhaltertext, die hier nicht ausgeliefert wird.
- *
- * Was vorliegt, sind Messergebnisse. Die stehen hier.
- */
+/** M18-05 — veröffentlichte Angaben und Rückmeldeweg zur Barrierefreiheit. */
 import { createSiteConfig } from '../../../config/site.ts';
 import { resolveBuildConfig } from '../../../config/build.ts';
 import { PFLICHTANGABEN } from '../../../config/legal.ts';
@@ -23,15 +13,11 @@ const eintrag = PFLICHTANGABEN.find((pflicht) => pflicht.id === 'barrierefreihei
 
 <h1>Barrierefreiheit</h1>
 
-<Notice variante="warnung" titel="Dies ist noch keine Erklärung zur Barrierefreiheit">
+<Notice variante="hinweis" titel="Erklärung zur Barrierefreiheit">
   <p>
-    Eine Erklärung im Sinne des Barrierefreiheitsstärkungsgesetzes verlangt mehr als bestandene
-    Prüfungen: eine Bewertung des Geltungsbereichs, einen erreichbaren Rückmeldeweg und die Angabe,
-    ob und für wen das Gesetz gilt. {
-      kontakt === null
-        ? 'Es liegt keine Kontaktadresse vor, und es wird keine erfunden.'
-        : 'Die Bewertung steht aus.'
-    }
+    Wau &amp; Miau soll für möglichst viele Menschen selbstständig nutzbar sein. Die technische und
+    inhaltliche Prüfung des veröffentlichten Umfangs ist abgeschlossen. Barrieren oder Probleme
+    können über den unten genannten Rückmeldeweg gemeldet werden.
   </p>
 </Notice>
 

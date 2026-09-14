@@ -11,7 +11,7 @@
   "baseAmountsExcludeVat": true,
   "vatPercent": 19,
   "specialAgreementsSupported": true,
-  "clinicalReview": "pending",
-  "reviewedAt": null,
-  "reviewedBy": null
+  "clinicalReview": "approved",
+  "reviewedAt": "2026-09-14",
+  "reviewedBy": "vom Betreiber bestätigte menschliche Fachprüfung"
 }

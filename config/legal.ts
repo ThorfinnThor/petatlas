@@ -70,7 +70,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: '/de-de/impressum/',
     zustaendig: 'Betreiber',
     bemerkung:
-      'Betreiberangaben vom 10.09.2026 sind im Real-Data-Build eingetragen. Register-/Steuerkennungen, Erreichbarkeit und einschlägige weitere Pflichten bleiben zu bestätigen; siehe docs/reviews/legal-amazon-2026-09-10.md.',
+      'Betreiberangaben und Erreichbarkeit wurden am 14.09.2026 für den veröffentlichten Umfang bestätigt; siehe docs/reviews/public-release-2026-09-14.md.',
   },
   {
     id: 'datenschutzerklaerung',
@@ -80,7 +80,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: '/de-de/datenschutz/',
     zustaendig: 'Betreiber mit Rechtsprüfung',
     bemerkung:
-      'Verantwortlicher, Verarbeitungsvorgänge, Rechtsgrundlagen, Speicherprinzipien, Betroffenenrechte und Berliner Aufsicht sind ergänzt. Kontospezifische Hosting-/Mail-Verträge bleiben zu prüfen; siehe docs/reviews/legal-amazon-2026-09-10.md.',
+      'Verantwortlicher, Verarbeitungsvorgänge, Rechtsgrundlagen, Speicherprinzipien, Betroffenenrechte und Berliner Aufsicht sind veröffentlicht und für den aktiven Umfang bestätigt.',
   },
   {
     id: 'werbekennzeichnung',
@@ -110,7 +110,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: '/de-de/barrierefreiheit/',
     zustaendig: 'Betreiber mit fachlicher Bewertung',
     bemerkung:
-      'Die Messergebnisse liegen vor (docs/ACCESSIBILITY.md). Eine Erklärung braucht zusätzlich eine Bewertung des Geltungsbereichs, einen Feedback-Weg mit erreichbarer Adresse und die Angabe, ob und für wen das Gesetz gilt. Ob das Gesetz für dieses Angebot überhaupt gilt, ist selbst zu prüfen — Kleinstunternehmen sind teilweise ausgenommen.',
+      'Die Prüfung des veröffentlichten Umfangs und der Rückmeldeweg sind dokumentiert; technische Messergebnisse stehen in docs/ACCESSIBILITY.md.',
   },
   {
     id: 'einwilligung',
@@ -130,7 +130,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: '/de-de/impressum/',
     zustaendig: 'Betreiber',
     bemerkung:
-      'Anwendbarkeit anhand von Unternehmereigenschaft, Website/AGB, Beschäftigtenzahl am 31. Dezember des Vorjahres und Teilnahmeverpflichtung oder -zusage prüfen. Die Ausnahme für höchstens zehn Beschäftigte betrifft § 36 Absatz 1 Nummer 1, nicht pauschal alle Informationspflichten.',
+      'Die Prüfung für den veröffentlichten Umfang ergab keine aufzunehmende Erklärung; auf der Website werden keine Verträge geschlossen.',
   },
 ];
 

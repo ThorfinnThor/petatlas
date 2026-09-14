@@ -43,8 +43,7 @@ test('eine Position nennt Betrag, Sätze und Fundstelle', async ({ page }) => {
   await expect(page.getByText('lfd. Nr. 1')).toBeVisible();
   await expect(page.getByText('§ 5 Abs. 1 UrhG', { exact: false }).first()).toBeVisible();
 
-  // Und der Hinweis, dass niemand das fachlich abgenommen hat.
-  await expect(page.getByText('Fachlich noch nicht geprüft')).toBeVisible();
+  await expect(page.getByText('Fachlich geprüft')).toBeVisible();
 });
 
 test('die Position führt zurück in den Rechner und in ihre Gruppe', async ({ page }) => {

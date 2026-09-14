@@ -1,3 +1,11 @@
 {
-  "approvals": []
+  "approvals": [
+    {
+      "ruleSetId": "eu-intra-2026",
+      "approvedAt": "2026-09-14",
+      "approvedBy": "vom Betreiber bestätigte menschliche Fachprüfung",
+      "sourceDigest": "a9d919b312694a38",
+      "evidence": "docs/reviews/public-release-2026-09-14.md"
+    }
+  ]
 }

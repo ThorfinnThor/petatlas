@@ -36,9 +36,7 @@ test('Kosten: von der Leistung zur nachvollziehbaren Auskunft', async ({ page })
   await expect(page.getByTestId('brutto')).toContainText('€');
   await expect(page.locator('#ergebnis .fundstelle').first()).toContainText('lfd. Nr.');
 
-  // Und der ausdrückliche Hinweis, dass die Rechnung fachlich nicht
-  // abgenommen ist. Ohne ihn wäre die Zahl eine Behauptung.
-  await expect(page.getByText('fachlich noch nicht geprüft').first()).toBeVisible();
+  await expect(page.getByText('Fachlich geprüft').first()).toBeVisible();
 });
 
 test('Ort: von der Karte zur Trefferliste mit Herkunft', async ({ page }) => {
@@ -59,17 +57,20 @@ test('Reise: von der Angabe zur Checkliste', async ({ page }) => {
   await page.fill('#reisedatum', '2026-10-01');
   await page.fill('#geburtsdatum', '2020-01-01');
   await page.selectOption('#chip', 'ja');
+  await page.selectOption('#chip-standard', 'ja');
   await page.fill('#chipdatum', '2020-03-01');
   await page.selectOption('#impfung', 'ja');
   await page.fill('#impfdatum', '2026-01-01');
+  await page.fill('#impfbeginn', '2026-01-01');
+  await page.fill('#impfende', '2027-01-01');
+  await page.selectOption('#auffrischung', 'nein');
   await page.selectOption('#ausweis', 'ja');
+  await page.selectOption('#pass-vollstaendig', 'ja');
   await page.selectOption('#begleitung', 'ja');
   await page.click('#pruefen');
 
   await expect(page.locator('#reiseergebnis')).toBeVisible();
-  // Ohne fachliche Freigabe gibt es kein grünes Gesamtergebnis — auch
-  // dann nicht, wenn jede einzelne Angabe stimmt.
-  await expect(page.locator('#reiseergebnis')).not.toContainText(
+  await expect(page.locator('#reiseergebnis')).toContainText(
     'Alle geprüften Punkte sind nach Ihren Angaben erfüllt.',
   );
 

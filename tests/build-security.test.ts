@@ -1,16 +1,23 @@
 // M07-04/M07-05 — Der Build lässt sich nicht an seinen Prüfungen vorbei
 // auslösen, und ein Preview- oder Fork-Build kommt an keine echten Secrets.
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
-import { BuildConfigError, resolveBuildConfig } from '../config/build.ts';
-import { erstelleBuildInfo } from '../scripts/build-cloudflare.ts';
+import { resolveBuildConfig } from '../config/build.ts';
+import type { ReleaseConfig } from '../config/release-policy.ts';
+import { entferneEntwicklungsseiten, erstelleBuildInfo } from '../scripts/build-cloudflare.ts';
 import { scanContent } from '../scripts/checks/secrets.ts';
 import { allSources } from '../src/domain/source-registry.ts';
 
 const REAL_SITE = { PUBLIC_SITE_URL: 'https://beispiel.example' };
+const RELEASE_BLOCKED: ReleaseConfig = {
+  publicRelease: { approved: false },
+  gates: {},
+};
 
 function baue(env: Record<string, string>): { code: number; ausgabe: string } {
   try {
@@ -27,11 +34,22 @@ function baue(env: Record<string, string>): { code: number; ausgabe: string } {
 }
 
 describe('Das Deployment kann nicht vor den Prüfungen laufen', () => {
-  it('bricht production ohne dokumentierte Launch-Freigabe ab', () => {
-    const ergebnis = baue({ BUILD_MODE: 'production', ...REAL_SITE });
-    expect(ergebnis.code).toBe(1);
-    expect(ergebnis.ausgabe).toContain('publicRelease.approved=false');
-  }, 120_000);
+  it('bricht production mit einem ausdrücklich gesperrten Freigabestand ab', () => {
+    expect(() =>
+      resolveBuildConfig(
+        { BUILD_MODE: 'production', ...REAL_SITE },
+        {
+          legalName: 'Testbetrieb',
+          address: 'Teststraße 1, 00000 Testort',
+          contactEmail: 'kontakt@example.invalid',
+          responsibleForContent: 'Testperson',
+          registerEntry: null,
+          vatId: null,
+        },
+        RELEASE_BLOCKED,
+      ),
+    ).toThrow(/publicRelease\.approved=false/);
+  });
 
   it('bricht ab, wenn ein Nicht-Entwicklungsbuild Fixtures ausliefern würde', () => {
     const ergebnis = baue({ BUILD_MODE: 'preview', USE_FIXTURES: 'true' });
@@ -52,6 +70,19 @@ describe('Das Deployment kann nicht vor den Prüfungen laufen', () => {
     // Der Wert darf dabei nicht in der Ausgabe landen.
     expect(ergebnis.ausgabe).not.toContain(attrappe);
   }, 120_000);
+});
+
+describe('Produktionsartefakt', () => {
+  it('entfernt technische Probe-Seiten nur in production', () => {
+    const root = mkdtempSync(join(tmpdir(), 'petatlas-dist-'));
+    const probe = join(root, 'entwicklung');
+    mkdirSync(probe);
+    writeFileSync(join(probe, 'index.html'), 'synthetische Probe');
+    entferneEntwicklungsseiten('preview', root);
+    expect(existsSync(probe)).toBe(true);
+    entferneEntwicklungsseiten('production', root);
+    expect(existsSync(probe)).toBe(false);
+  });
 });
 
 describe('Build-Metadaten nennen die exakten Eingaben', () => {
@@ -127,7 +158,7 @@ describe('Preview und Produktion sind getrennt', () => {
     // Weder ein fehlender Modus noch eine gesetzte Domain allein reichen.
     expect(resolveBuildConfig({ ...REAL_SITE }).mode).toBe('development');
     expect(() => resolveBuildConfig({ BUILD_MODE: 'production', ...REAL_SITE })).toThrow(
-      BuildConfigError,
+      /Betreiberangaben/,
     );
   });
 });

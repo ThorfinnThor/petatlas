@@ -20,9 +20,9 @@
  * Manipulation im eigenen Repository schützt sie nicht und soll es nicht.
  */
 import freigaben from '../../../content-data/travel/approvals.json' with { type: 'json' };
-import type { TravelApproval, TravelRuleSet } from '../../domain/schemas/travel.ts';
+import type { TravelApproval, TravelRule, TravelRuleSet } from '../../domain/schemas/travel.ts';
 import { bewerte, type FrischePolitik } from '../freshness/policy.ts';
-import { regelSaetze } from './rules.ts';
+import { alleRegeln, regelSaetze } from './rules.ts';
 import { NATIONAL } from './national.ts';
 
 /** Kanonische Textform des fachlich geprüften Inhalts. */
@@ -159,6 +159,22 @@ export function freigabeFuer(
 /** Stand aller Regelsätze. Mit Stichtag zählt auch das Alter der Freigabe. */
 export function freigabeStand(stichtag: string | null = null): readonly FreigabeStand[] {
   return regelSaetze().map((satz) => freigabeFuer(satz, FREIGABEN, stichtag));
+}
+
+/**
+ * Überträgt eine gültige, inhaltsgebundene Regelsatzfreigabe auf die daraus
+ * entfalteten Einzelregeln. Die Rohregeln bleiben neutral; so kann eine
+ * geänderte oder abgelaufene Freigabe sie sofort wieder sperren.
+ */
+export function regelnMitFreigabe(stichtag: string | null = null): readonly TravelRule[] {
+  const staende = new Map(freigabeStand(stichtag).map((stand) => [stand.ruleSetId, stand]));
+  return alleRegeln().map((regel) => {
+    const stand = [...staende.values()].find((eintrag) =>
+      regel.ruleId.startsWith(`${eintrag.ruleSetId}-`),
+    );
+    if (!stand?.freigegeben) return { ...regel, reviewedAt: null, reviewedBy: null };
+    return { ...regel, reviewedAt: stand.reviewedAt, reviewedBy: stand.reviewedBy };
+  });
 }
 
 /**

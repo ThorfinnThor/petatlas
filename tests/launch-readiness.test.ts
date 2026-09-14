@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { requiredGates, releaseProblems, validReviewDate } from '../config/release-policy.ts';
 import launch from '../config/launch.json' with { type: 'json' };
+import legalReviews from '../config/legal-review.json' with { type: 'json' };
 import food from '../content-data/food/real-products.json' with { type: 'json' };
 import attributes from '../content-data/attributes/real-review.json' with { type: 'json' };
 import { FoodProductSchema } from '../src/domain/schemas/food.ts';
@@ -22,9 +23,15 @@ describe('Launch safeguards', () => {
     const forged = {
       ...launch,
       publicRelease: { approved: true, approvedBy: 'Test', approvedAt: '2026-09-08' },
+      gates: {
+        ...launch.gates,
+        costsRules: { approved: false },
+      },
     };
-    expect(releaseProblems(forged, ['costs', 'travel']).join(' ')).toContain('costsRules');
-    expect(releaseProblems(forged, ['costs', 'travel']).join(' ')).toContain('impressum');
+    const reviews = { ...legalReviews, impressum: { status: 'offen' } };
+    const problems = releaseProblems(forged, ['costs', 'travel'], reviews);
+    expect(problems.join(' ')).toContain('costsRules');
+    expect(problems.join(' ')).toContain('impressum');
   });
   it('rejects impossible, future and absent review dates', () => {
     for (const date of ['2026-02-30', '9999-01-01', '', undefined])
