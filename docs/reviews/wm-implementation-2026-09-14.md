@@ -44,11 +44,14 @@ Browser: Codex In-App Browser auf `http://127.0.0.1:4331`, frischer lokaler Buil
 | DS-10 | Zwei Amazon-Links im Startseitenbestand: feste Suchziele, `tag=wauandmiau-21`, `rel="sponsored nofollow noopener"`; 0 Amazon-Skripte, Bilder, Iframes, Prefetches oder Preconnects. |
 | DS-11 | Merkliste und Packliste besitzen getrennte lokale Speicher- und Löschtests. |
 
-Playwright/Chromium konnte auf diesem Host nicht starten: Chromium brach vor jedem Test
-bei `MachPortRendezvousServer` mit macOS-Fehler 1100 ab. Das ist kein fehlgeschlagener
-Anwendungstest, aber die vollständige CI-Browsermatrix muss auf einem geeigneten Runner erneut
-laufen. Die oben genannten Browserfälle wurden deshalb zusätzlich im sichtbaren In-App-Browser
-geprüft.
+Playwright/Chromium konnte auf diesem macOS-Host nicht starten: Chromium brach vor jedem Test bei
+`MachPortRendezvousServer` mit macOS-Fehler 1100 ab. Die vollständige Browsermatrix lief deshalb
+zusätzlich auf dem Linux-Runner in
+[GitHub Actions, Lauf 34832691328](https://github.com/ThorfinnThor/petatlas/actions/runs/34832691328)
+für Anwendungscode-Commit `1eb6b7b61aac818c4144626409bbac781c445249` und bestand vollständig:
+228 gebaute End-to-End-Fälle, 107 Zugänglichkeits-/Browserfälle, 298 Feature-Fälle, 39
+Real-App-/V2-Viewportfälle und 12 Seitenbudgetfälle. Die oben genannten manuellen Browserfälle
+wurden außerdem im sichtbaren In-App-Browser geprüft.
 
 ## Noch menschlich erforderlich
 
