@@ -140,6 +140,8 @@ button {
   cursor: pointer;
   /* Abschnitt 54: Buttons dürfen umbrechen statt Text abzuschneiden. */
   white-space: normal;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast);

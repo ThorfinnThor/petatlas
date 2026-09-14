@@ -43,9 +43,14 @@ for (const width of [360, 390, 430, 768, 1024, 1280, 1440]) {
               links: Math.round(rect.left),
               rechts: Math.round(rect.right),
               breite: Math.round(rect.width),
+              innenbreite: element.scrollWidth,
+              sichtbreite: element.clientWidth,
             };
           })
-          .filter(({ links, rechts }) => links < -1 || rechts > window.innerWidth + 1)
+          .filter(
+            ({ links, rechts, innenbreite, sichtbreite }) =>
+              links < -1 || rechts > window.innerWidth + 1 || innenbreite > sichtbreite + 1,
+          )
           .slice(0, 20),
       }));
       expect(overflow.vorhanden, `${path} at ${width}px: ${JSON.stringify(overflow)}`).toBe(false);

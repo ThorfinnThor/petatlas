@@ -447,11 +447,19 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   #ergebnis {
     width: 100%;
     min-width: 0;
-    overflow-x: auto;
+    overflow-x: clip;
     max-width: 100%;
   }
+
+  #ergebnis :global(.tabellenrahmen) {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
   @media print {
-    #ergebnis {
+    #ergebnis,
+    #ergebnis :global(.tabellenrahmen) {
       overflow: visible;
     }
   }

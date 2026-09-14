@@ -90,24 +90,26 @@ function ergebnisTabelle(result: CostResult): string {
     ${(result.warnings ?? []).map((warning) => `<p class="hilfe">${escape(warning)}</p>`).join('')}
     ${notdienstHinweis}
     <p class="bill-summary"><strong>${geld(result.grossTotal.amountMinor)}</strong><br>Brutto für die ausgewählten Positionen, inklusive ${result.vatPercent} % Umsatzsteuer.</p>
-    <table>
-      <caption>Berechnungsübersicht, Fassung ${escape(result.catalogVersion)}</caption>
-      <thead>
-        <tr>
-          <th scope="col">Position</th>
-          <th scope="col" class="zahl">Satz</th>
-          <th scope="col" class="zahl">Faktor</th>
-          <th scope="col" class="zahl">Menge</th>
-          <th scope="col" class="zahl">Netto</th>
-        </tr>
-      </thead>
-      <tbody>${zeilen}${notdienst}</tbody>
-      <tfoot>
-        <tr><td colspan="4">Summe netto</td><td class="zahl">${geld(result.netTotal.amountMinor)}</td></tr>
-        <tr><td colspan="4">Umsatzsteuer ${result.vatPercent} Prozent</td><td class="zahl">${geld(result.vatAmount.amountMinor)}</td></tr>
-        <tr><td colspan="4">Summe brutto</td><td class="zahl" data-testid="brutto">${geld(result.grossTotal.amountMinor)}</td></tr>
-      </tfoot>
-    </table>
+    <div class="tabellenrahmen" role="region" aria-label="Gebührentabelle mit horizontalem Bildlauf" tabindex="0">
+      <table>
+        <caption>Berechnungsübersicht, Fassung ${escape(result.catalogVersion)}</caption>
+        <thead>
+          <tr>
+            <th scope="col">Position</th>
+            <th scope="col" class="zahl">Satz</th>
+            <th scope="col" class="zahl">Faktor</th>
+            <th scope="col" class="zahl">Menge</th>
+            <th scope="col" class="zahl">Netto</th>
+          </tr>
+        </thead>
+        <tbody>${zeilen}${notdienst}</tbody>
+        <tfoot>
+          <tr><td colspan="4">Summe netto</td><td class="zahl">${geld(result.netTotal.amountMinor)}</td></tr>
+          <tr><td colspan="4">Umsatzsteuer ${result.vatPercent} Prozent</td><td class="zahl">${geld(result.vatAmount.amountMinor)}</td></tr>
+          <tr><td colspan="4">Summe brutto</td><td class="zahl" data-testid="brutto">${geld(result.grossTotal.amountMinor)}</td></tr>
+        </tfoot>
+      </table>
+    </div>
     <p>Die Umsatzsteuer ist mit ${result.vatPercent} Prozent angenommen. Auslagen können abweichend behandelt werden.</p>
     <p class="berechnung-hinweis"><strong>Unverbindliche Übersicht:</strong> Diese Übersicht ist keine Rechnung einer Tierarztpraxis und kein verbindlicher Kostenvoranschlag. Sie enthält nur die ausgewählten Leistungen. Welche Leistungen notwendig und gemeinsam abrechenbar sind und welche weiteren Kosten anfallen, klärt die behandelnde Praxis.</p>`;
 }
