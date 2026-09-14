@@ -17,7 +17,7 @@ import Notice from '../../../components/Notice.astro';
 import DataStatus from '../../../components/DataStatus.astro';
 import { darstellung } from '../../../features/map/website.ts';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
-import { devFeatureOverrides } from '../../../../config/build.ts';
+import { devFeatureOverrides, resolveBuildConfig } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
 import { PFLICHT_KATEGORIEN, STADT_KRITERIEN } from '../../../features/map/city.ts';
 import {
@@ -35,6 +35,8 @@ import {
 } from '../../../features/map/list.ts';
 import { ART_LABEL, kommunaleFlaechen } from '../../../features/map/municipal.ts';
 import { formatCalendarDate } from '../../../domain/dates.ts';
+import { verzeichnisKontaktLink } from '../../../features/map/contact.ts';
+import { createSiteConfig } from '../../../../config/site.ts';
 import snapshot from '../../../../data-snapshots/places/places-de.json' with { type: 'json' };
 import { oeffentlicheProjektion } from '../../../../scripts/publish/places.ts';
 import type { Place } from '../../../domain/schemas/places.ts';
@@ -86,6 +88,8 @@ const eigenerPfad = subroutePath(
   seite.slug,
 );
 const umkreis = formatiereEntfernung(STADT_KRITERIEN.radiusMeter);
+const build = resolveBuildConfig();
+const kontakt = createSiteConfig(build.mode, process.env).operator.contactEmail;
 
 // „77 Tierarztpraxen, 1 Tierheim, 34 Zoofachgeschäfte und 5 Hundewiesen“ —
 // die Zahlen kommen aus der Messung, die Grammatik aus der Zählform.
@@ -202,6 +206,13 @@ const KOMMUNAL_MAX = 30;
                 })()}
                 {notdienstHinweis(treffer.ort.emergency) !== null && (
                   <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
+                )}
+                {verzeichnisKontaktLink(kontakt, treffer.ort.id, eigenerPfad) !== null && (
+                  <p class="hilfe">
+                    <a href={verzeichnisKontaktLink(kontakt, treffer.ort.id, eigenerPfad)!}>
+                      Eintrag berichtigen oder Datenschutzanfrage stellen
+                    </a>
+                  </p>
                 )}
               </li>
             ))}

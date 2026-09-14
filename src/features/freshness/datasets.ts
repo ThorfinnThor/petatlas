@@ -187,7 +187,7 @@ export function datensaetze(wurzel = '.'): readonly Datensatz[] {
       stand: null,
       umfang: 'keine Angebote ausgeliefert',
       hinweis:
-        'Es besteht kein freigegebenes Partnerprogramm (M13-06). Ohne Vertrag entsteht keine Angebotsdatei — das ist der Normalzustand, kein Ausfall.',
+        'Ein automatischer Angebotsfeed ist nicht aktiviert. Statische, als Werbung gekennzeichnete Amazon-Textlinks werden getrennt verwaltet; ohne Feed entstehen keine Preise, Verfügbarkeiten oder Angebotsdateien. Das ist der Normalzustand, kein Ausfall.',
       ausgeliefert: false,
     },
   ];

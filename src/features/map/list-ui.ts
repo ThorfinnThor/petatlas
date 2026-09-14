@@ -22,6 +22,7 @@ import { zeigeKarte, waehleMarker, type KartenZustand } from './map.ts';
 import { normalisiere, sucheOrte, type OrtsEintrag } from './place-search.ts';
 import { ladeManifest, ladeZellenUm, ortMitId } from './data.ts';
 import { darstellung } from './website.ts';
+import { verzeichnisKontaktLink } from './contact.ts';
 
 let geladeneNamenCache: Map<string, readonly OrtsEintrag[]> | null = null;
 
@@ -67,9 +68,15 @@ function escape(wert: string): string {
   );
 }
 
-function trefferMarkup(treffer: ReturnType<typeof filtereOrte>[number], mitMerken = false): string {
+function trefferMarkup(
+  treffer: ReturnType<typeof filtereOrte>[number],
+  mitMerken = false,
+  kontaktEmail = '',
+  seitenPfad = '/de-de/tierarzt-karte/',
+): string {
   const ort = treffer.ort;
   const notdienst = notdienstHinweis(ort.emergency);
+  const kontakt = verzeichnisKontaktLink(kontaktEmail || null, ort.id, seitenPfad);
   return `
     <li>
       <h3>${escape(ort.name)}</h3>
@@ -86,6 +93,7 @@ function trefferMarkup(treffer: ReturnType<typeof filtereOrte>[number], mitMerke
       ${webZeile(ort.website)}
       ${mitMerken ? `<p><button type="button" data-merken="place" data-id="${escape(ort.id)}" data-lat="${ort.lat}" data-lon="${ort.lon}" hidden>Merken</button></p>` : ''}
       ${notdienst === null ? '' : `<p class="notdienst">${escape(notdienst)}</p>`}
+      ${kontakt === null ? '' : `<p class="hilfe"><a href="${escape(kontakt)}">Eintrag berichtigen oder Datenschutzanfrage stellen</a></p>`}
     </li>`;
 }
 
@@ -113,6 +121,8 @@ export function listeStarten(): void {
   if (!form || !ortsFeld || !ortsHinweis || !ortsTreffer || !radius || !status || !liste) return;
 
   const mitMerken = liste.dataset.profile === 'true';
+  const kontaktEmail = liste.dataset.contactEmail ?? '';
+  const seitenPfad = liste.dataset.pagePath ?? '/de-de/tierarzt-karte/';
   if (mitMerken) merkknoepfeBinden(liste);
   const erneut = document.querySelector<HTMLButtonElement>('#ortsdaten-erneut');
   const ladefehler = document.querySelector<HTMLElement>('#orts-ladefehler');
@@ -161,7 +171,9 @@ export function listeStarten(): void {
       datenGeladen = true;
       if (erneut) erneut.hidden = true;
       letzteOrte = treffer.map((eintrag) => eintrag.ort);
-      liste!.innerHTML = treffer.map((treffer) => trefferMarkup(treffer, mitMerken)).join('');
+      liste!.innerHTML = treffer
+        .map((treffer) => trefferMarkup(treffer, mitMerken, kontaktEmail, seitenPfad))
+        .join('');
       if (mitMerken) merkknoepfeBinden(liste!);
       if (karteAktiv) void zeichneKarte();
       status!.textContent =

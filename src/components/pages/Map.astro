@@ -12,11 +12,13 @@ import Notice from '../Notice.astro';
 import DataStatus from '../DataStatus.astro';
 import { darstellung } from '../../features/map/website.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
-import { devFeatureOverrides } from '../../../config/build.ts';
+import { devFeatureOverrides, resolveBuildConfig } from '../../../config/build.ts';
 import { subroutePath } from '../../lib/routes.ts';
 import { baubareStadtseiten } from '../../features/map/city-allowlist.ts';
 import { TILES } from '../../features/map/tiles.ts';
+import { verzeichnisKontaktLink } from '../../features/map/contact.ts';
 import { STANDORT_TEXTE } from '../../features/map/geolocation.ts';
+import { createSiteConfig } from '../../../config/site.ts';
 import {
   KATEGORIE_LABEL,
   RADIEN_METER,
@@ -30,6 +32,9 @@ import { oeffentlicheProjektion } from '../../../scripts/publish/places.ts';
 import type { Place } from '../../domain/schemas/places.ts';
 
 const market = defaultMarket();
+const build = resolveBuildConfig();
+const kontakt = createSiteConfig(build.mode, process.env).operator.contactEmail;
+const seitenPfad = subroutePath(withEnabledFeatures(market, devFeatureOverrides()), 'map');
 
 /** Standardausschnitt der statischen Liste. */
 const STANDARD = { name: 'Berlin', latitude: 52.5174, longitude: 13.3951, radius: 5_000 };
@@ -159,6 +164,8 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
         tabindex="0"
         aria-label="Erfasste Orte"
         data-profile={String(stadtMarkt.featureFlags.profile === true)}
+        data-contact-email={kontakt ?? ''}
+        data-page-path={seitenPfad}
       >
         {
           standardTreffer.map((treffer) => (
@@ -217,6 +224,13 @@ const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<
               )}
               {notdienstHinweis(treffer.ort.emergency) !== null && (
                 <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
+              )}
+              {verzeichnisKontaktLink(kontakt, treffer.ort.id, seitenPfad) !== null && (
+                <p class="hilfe">
+                  <a href={verzeichnisKontaktLink(kontakt, treffer.ort.id, seitenPfad)!}>
+                    Eintrag berichtigen oder Datenschutzanfrage stellen
+                  </a>
+                </p>
               )}
             </li>
           ))

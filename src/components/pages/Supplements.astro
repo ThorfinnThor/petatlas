@@ -5,8 +5,10 @@ import { defaultMarket } from '../../domain/market.ts';
 import { routePath } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
 import ReviewStatus from '../ReviewStatus.astro';
+import nutritionReview from '../../../config/reviews/nutrition.json' with { type: 'json' };
 
 const methodikPfad = routePath(defaultMarket(), 'method');
+const nutritionStatus = nutritionReview.status as string;
 ---
 
 <p class="eyebrow">Ernährung · Hund und Katze</p>
@@ -18,7 +20,9 @@ const methodikPfad = routePath(defaultMarket(), 'method');
 </p>
 
 <ReviewStatus
-  status="pending"
+  status={nutritionStatus === 'approved' ? 'approved' : 'pending'}
+  reviewedAt={nutritionReview.reviewedAt}
+  reviewedBy={nutritionReview.reviewedBy}
   lastVerifiedAt="2026-09-09"
   responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
   sources={[
@@ -41,10 +45,12 @@ const methodikPfad = routePath(defaultMarket(), 'method');
   ]}
 >
   <p>
-    Die Aussagen sind anhand der genannten Quellen dokumentiert. Eine fachliche Abnahme der
-    gesundheitlichen Einordnung steht noch aus; die Seite bestimmt keine Dosierung und ersetzt keine
-    tierärztliche Beratung. Unser Prüfverfahren steht in der
-    <a href={methodikPfad}>Methodik</a>.
+    Die Aussagen sind anhand der genannten Quellen dokumentiert. {
+      nutritionStatus === 'approved'
+        ? 'Die gesundheitliche Einordnung wurde im oben genannten Umfang fachlich geprüft.'
+        : 'Eine fachliche Abnahme der gesundheitlichen Einordnung steht noch aus.'
+    } Die Seite bestimmt keine Dosierung und ersetzt keine tierärztliche Beratung. Unser Prüfverfahren
+    steht in der <a href={methodikPfad}>Methodik</a>.
   </p>
 </ReviewStatus>
 

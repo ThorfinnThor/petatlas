@@ -13,12 +13,14 @@ import { routePath } from '../../lib/routes.ts';
 import { defaultMarket } from '../../domain/market.ts';
 import { amazonEnabled, AMAZON_DISCLOSURE } from '../../features/commerce/amazon.ts';
 import Notice from '../Notice.astro';
+import { commerceStatus } from '../../features/commerce/status.ts';
 
 const markt = defaultMarket();
 const jetzt = new Date();
 const bericht = baueHealthBericht(jetzt.toISOString().slice(0, 10), jetzt.toISOString());
 const gepruefteQuellen = verifiedSources();
 const offeneQuellen = pendingSources();
+const partnerstatus = commerceStatus();
 ---
 
 <h1>Methodik</h1>
@@ -29,11 +31,13 @@ const offeneQuellen = pendingSources();
 
 <h2>Woher die Daten stammen</h2>
 <p>
-  Alle fachlichen Angaben stammen aus benannten Quellen. Für jede Quelle ist festgehalten, wer sie
-  herausgibt, unter welchen Bedingungen sie genutzt werden darf und ob diese Bedingungen geprüft
-  sind. Derzeit sind <strong>{gepruefteQuellen.length}</strong> Quellen geprüft und freigegeben,
-  <strong>{offeneQuellen.length}</strong> sind es nicht — aus einer nicht freigegebenen Quelle wird nichts
-  veröffentlicht.
+  Unser Quellenverzeichnis unterscheidet übernommene Datensätze, redaktionelle Fachquellen,
+  Herstellerquellen und externe Dienste. Die Einträge nennen Herkunft, Verwendung und Prüfstand.
+  Eine Quellenangabe ist weder eine fachliche Freigabe unserer Auswertung noch automatisch eine
+  Erlaubnis zur Übernahme geschützter Inhalte. Bei übernommenen Datensätzen sind derzeit <strong
+    >{gepruefteQuellen.length}</strong
+  > Quellen geprüft und freigegeben, <strong>{offeneQuellen.length}</strong> sind es nicht — aus einer
+  nicht freigegebenen Datenquelle wird nichts veröffentlicht.
 </p>
 <p>
   Die vollständige Liste steht unter <a href={routePath(markt, 'sources')}>Quellen</a>, der Stand
@@ -90,6 +94,12 @@ const offeneQuellen = pendingSources();
         Wir übernehmen keine Amazon-Kundenbewertungen, Produktbilder, Preise oder
         Verfügbarkeitsangaben. Eine Suchverlinkung ist kein Nachweis, dass ein bestimmtes Produkt
         dort erhältlich oder für dein Tier geeignet ist.
+      </p>
+      <p>
+        Partnerlinks und Angebotsdaten werden getrennt verwaltet. Die vom Betreiber beauftragten
+        Amazon-Textlinks sind aktiv ({partnerstatus.affiliateLinkStatus.siteTag}). Ein automatischer
+        Feed für Preise, Verfügbarkeit oder Produktangebote ist nicht aktiviert; entsprechende
+        Angebotsdaten werden hier nicht ausgeliefert.
       </p>
     </>
   ) : (
