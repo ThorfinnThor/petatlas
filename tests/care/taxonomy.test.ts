@@ -12,6 +12,7 @@ import {
   pflegeTaxonomie,
   spielzeugTaxonomie,
 } from '../../src/features/care/taxonomy.ts';
+import { allCareGuides } from '../../src/features/care/guides.ts';
 
 describe('Taxonomiedateien', () => {
   for (const datei of ['care', 'toys']) {
@@ -95,6 +96,26 @@ describe('Zuschnitt', () => {
   it('führt Zahnpflege als Zubehör ohne Wirkstoff', () => {
     const zahn = kategorie('dental-care');
     expect(zahn?.description).toContain('ohne Wirkstoffe');
+  });
+
+  it('hat für jede Pflegekategorie eine vollständige Auswahlhilfe', () => {
+    const kategorien = pflegeTaxonomie()
+      .categories.map((eintrag) => eintrag.categoryId)
+      .sort();
+    const guides = allCareGuides()
+      .map((eintrag) => eintrag.categoryId)
+      .sort();
+
+    expect(guides).toEqual(kategorien);
+    for (const guide of allCareGuides()) {
+      expect(guide.intro.length, `${guide.categoryId}/intro`).toBeGreaterThan(180);
+      expect(guide.choices.length, `${guide.categoryId}/choices`).toBeGreaterThanOrEqual(4);
+      expect(guide.measures.length, `${guide.categoryId}/measures`).toBeGreaterThanOrEqual(5);
+      expect(guide.steps.length, `${guide.categoryId}/steps`).toBeGreaterThanOrEqual(5);
+      expect(guide.faqs.length, `${guide.categoryId}/faqs`).toBeGreaterThanOrEqual(3);
+      expect(guide.sources.length, `${guide.categoryId}/sources`).toBeGreaterThanOrEqual(3);
+      expect(guide.shopLinks.length, `${guide.categoryId}/shopLinks`).toBeGreaterThanOrEqual(1);
+    }
   });
 
   it('führt Kratzmöbel nur für Katzen und Mobilitätshilfen nur für Hunde', () => {

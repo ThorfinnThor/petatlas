@@ -43,10 +43,10 @@ test('führt jede Pflegekategorie zu einer eigenen Seite', async ({ page }) => {
 
   await page.goto(`${PFLEGE}dental-care/`);
   await expect(page.locator('h1')).toHaveText('Zahnpflegezubehör');
-  await expect(page.locator('[data-merkmal]').first()).toBeVisible();
-  await expect(page.locator('[data-testid="keine-produkte"]')).toContainText(
-    'Sorgfalt vortäuschen',
-  );
+  await expect(page.locator('.hero img')).toBeVisible();
+  await expect(page.locator('.choice-card')).toHaveCount(4);
+  await expect(page.locator('.check-list li')).toHaveCount(5);
+  await expect(page.getByText('Noch keine geprüften Produkte')).toHaveCount(0);
 });
 
 test('gibt es keine Seite für eine erfundene Kategorie', async ({ page }) => {
