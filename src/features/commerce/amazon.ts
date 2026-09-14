@@ -14,8 +14,12 @@ export const AMAZON_SEARCHES = {
   'catit-senses-food-tree': 'Catit Senses Food Tree Katzenspielzeug',
   'catit-senses-treat-puzzle': 'Catit Senses Treat Puzzle · 43010 Katzenspielzeug',
   'catit-senses-treat-spinner': 'Catit Senses Treat Spinner · 43750 Katzenspielzeug',
-  'supplements-dog': 'Ergänzungsfuttermittel Hund',
-  'supplements-cat': 'Ergänzungsfuttermittel Katze',
+  'canina-caniflora-vital-hund': 'Canina Caniflora Vital Hund 120 g',
+  'canina-barfers-best-hund': "Canina Barfer's Best Hund 180 g",
+  'canina-petvital-darm-gel': 'Canina PETVITAL Darm-Gel 30 ml',
+  'canina-cat-vitamin-tabs': 'Canina Cat-Vitamin Tabs 125 g',
+  'canina-cat-mineral-tabs': 'Canina Cat-Mineral Tabs 75 g',
+  'canina-barfers-best-katze': "Canina Barfer's Best for Cats 180 g",
 } as const;
 export type AmazonSelection = keyof typeof AMAZON_SEARCHES;
 /** No visitor inputs, session IDs, profiles, prices or intermediary redirects. */

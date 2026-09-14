@@ -81,6 +81,33 @@ export const PRUEFSTUECKE: readonly Pruefstueck[] = [
     zweck: 'Echte redaktionelle Herstellerangaben ohne erfundene Angebote',
   },
   {
+    datei: 'content-data/products/supplements.json',
+    schema: z
+      .object({
+        dataKind: z.literal('real'),
+        checkedAt: z.iso.date(),
+        products: z
+          .array(
+            z
+              .object({
+                id: z.string().regex(/^[a-z0-9-]+$/),
+                name: z.string().min(1),
+                brand: z.string().min(1),
+                species: z.enum(['dog', 'cat']),
+                packageSize: z.string().min(1),
+                category: z.string().min(1),
+                sourceUrl: z.url().refine((url) => url.startsWith('https://')),
+                sourceLabel: z.string().min(1),
+                image: z.string().regex(/^\/images\/products\/[a-z0-9-]+\.avif$/),
+              })
+              .strict(),
+          )
+          .min(1),
+      })
+      .strict(),
+    zweck: 'Konkrete Ergänzungsfuttermittel mit Herstellerquelle und Amazon-Suchauswahl',
+  },
+  {
     datei: 'content-data/taxonomy/care.json',
     schema: TaxonomySchema,
     zweck: 'Pflegekategorien und ihre Ausschlüsse',

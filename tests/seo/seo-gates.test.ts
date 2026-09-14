@@ -116,14 +116,19 @@ describe('Sensible Seitentemplates', () => {
     expect(pruefeSensiblenInhalt('/de-de/ratgeber/reise-vorbereiten/', korrekt)).toEqual([]);
   });
 
-  it('verlangt auf der Seite zu Ergänzungsfuttermitteln einen Reviewstatus', () => {
+  it('akzeptiert auf der Ergänzungsseite einen nicht sichtbaren Verantwortungsnachweis', () => {
     const korrekt = grundgeruest(
       '/de-de/ergaenzungsfuttermittel/',
-      '<section data-review-status="pending" data-last-verified-at="2026-09-09">' +
-        '<p>Fachliche Verantwortung: offen</p><p>Quellen</p>' +
+      '<section data-review-status="approved" data-last-verified-at="2026-09-09" ' +
+        'data-review-approved-by="Dokumentierte Prüfung"><p>Quellen</p>' +
         '<a href="/de-de/methodik/">Methodik</a></section>',
     );
     expect(pruefeSensiblenInhalt('/de-de/ergaenzungsfuttermittel/', korrekt)).toEqual([]);
+
+    const ohneNachweis = korrekt.replace('data-review-approved-by="Dokumentierte Prüfung"', '');
+    expect(
+      pruefeSensiblenInhalt('/de-de/ergaenzungsfuttermittel/', ohneNachweis)[0]?.problem,
+    ).toContain('Verantwortungsnachweis');
   });
 });
 

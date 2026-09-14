@@ -1,0 +1,72 @@
+{
+  "dataKind": "real",
+  "checkedAt": "2026-09-14",
+  "products": [
+    {
+      "id": "canina-caniflora-vital-hund",
+      "name": "Caniflora Vital",
+      "brand": "Canina",
+      "species": "dog",
+      "packageSize": "120 g",
+      "category": "Ergänzungsfuttermittel für Hunde",
+      "sourceUrl": "https://canina.de/products/145010-caniflora-vital-hunde/14501-0",
+      "sourceLabel": "Canina · Herstellerangaben",
+      "image": "/images/products/symbol-supplements-dog.avif"
+    },
+    {
+      "id": "canina-barfers-best-hund",
+      "name": "Barfer’s Best",
+      "brand": "Canina",
+      "species": "dog",
+      "packageSize": "180 g",
+      "category": "Ergänzungsfuttermittel für Hunde",
+      "sourceUrl": "https://canina.de/products/128051-barfer-s-best",
+      "sourceLabel": "Canina · Herstellerangaben",
+      "image": "/images/products/symbol-supplements-dog.avif"
+    },
+    {
+      "id": "canina-petvital-darm-gel",
+      "name": "PETVITAL Darm-Gel",
+      "brand": "Canina",
+      "species": "dog",
+      "packageSize": "30 ml",
+      "category": "Ergänzungsfuttermittel für Hunde",
+      "sourceUrl": "https://canina.de/products/712304-petvital-darm-gel",
+      "sourceLabel": "Canina · Herstellerangaben",
+      "image": "/images/products/symbol-supplements-dog.avif"
+    },
+    {
+      "id": "canina-cat-vitamin-tabs",
+      "name": "Cat-Vitamin Tabs",
+      "brand": "Canina",
+      "species": "cat",
+      "packageSize": "125 g",
+      "category": "Ergänzungsfuttermittel für Katzen",
+      "sourceUrl": "https://canina.de/products/210312-cat-vitamin-tabs/21032-9-cat-vitamin-tabs-ca-250-stueck",
+      "sourceLabel": "Canina · Herstellerangaben",
+      "image": "/images/products/symbol-supplements-cat.avif"
+    },
+    {
+      "id": "canina-cat-mineral-tabs",
+      "name": "Cat-Mineral Tabs",
+      "brand": "Canina",
+      "species": "cat",
+      "packageSize": "75 g",
+      "category": "Mineral-Ergänzungsfuttermittel für Katzen",
+      "sourceUrl": "https://canina.de/products/220922-cat-mineral-tabs",
+      "sourceLabel": "Canina · Herstellerangaben",
+      "image": "/images/products/symbol-supplements-cat.avif"
+    },
+    {
+      "id": "canina-barfers-best-katze",
+      "name": "Barfer’s Best for Cats",
+      "brand": "Canina",
+      "species": "cat",
+      "packageSize": "180 g",
+      "category": "Ergänzungsfuttermittel für Katzen",
+      "sourceUrl": "https://canina.de/products/228058-barfer-s-best-for-cats",
+      "sourceLabel": "Canina · Herstellerangaben",
+      "image": "/images/products/symbol-supplements-cat.avif"
+    }
+  ]
+}

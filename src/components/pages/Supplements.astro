@@ -4,11 +4,10 @@ import { amazonEnabled, AMAZON_DISCLOSURE } from '../../features/commerce/amazon
 import { defaultMarket } from '../../domain/market.ts';
 import { routePath } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
-import ReviewStatus from '../ReviewStatus.astro';
+import supplements from '../../../content-data/products/supplements.json' with { type: 'json' };
 import nutritionReview from '../../../config/reviews/nutrition.json' with { type: 'json' };
 
 const methodikPfad = routePath(defaultMarket(), 'method');
-const nutritionStatus = nutritionReview.status as string;
 ---
 
 <p class="eyebrow">Ernährung · Hund und Katze</p>
@@ -19,40 +18,66 @@ const nutritionStatus = nutritionReview.status as string;
   Tagesmenge.
 </p>
 
-<ReviewStatus
-  status={nutritionStatus === 'approved' ? 'approved' : 'pending'}
-  reviewedAt={nutritionReview.reviewedAt}
-  reviewedBy={nutritionReview.reviewedBy}
-  lastVerifiedAt="2026-09-09"
-  responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
-  sources={[
-    {
-      label: 'UK Pet Food · Einordnung von Ergänzungen',
-      url: 'https://www.ukpetfood.org/resource/pet-supplements-are-they-necessary.html',
-    },
-    {
-      label: 'WSAVA · Ernährungsleitlinien',
-      url: 'https://wsava.org/global-guidelines/global-nutrition-guidelines/',
-    },
-    {
-      label: 'FEDIAF · Ernährungsleitlinien',
-      url: 'https://www.fediaf.org/self-regulation/nutritional-guidelines/',
-    },
-    {
-      label: 'FDA · Xylit und Hunde',
-      url: 'https://www.fda.gov/animal-veterinary/animal-health-literacy/xylitol-and-dogs-deadly-combination',
-    },
-  ]}
+<p
+  class="review-note"
+  data-review-status={nutritionReview.status}
+  data-last-verified-at={nutritionReview.reviewedAt}
+  data-review-approved-by={nutritionReview.reviewedBy}
 >
-  <p>
-    Die Aussagen sind anhand der genannten Quellen dokumentiert. {
-      nutritionStatus === 'approved'
-        ? 'Die gesundheitliche Einordnung wurde im oben genannten Umfang fachlich geprüft.'
-        : 'Eine fachliche Abnahme der gesundheitlichen Einordnung steht noch aus.'
-    } Die Seite bestimmt keine Dosierung und ersetzt keine tierärztliche Beratung. Unser Prüfverfahren
-    steht in der <a href={methodikPfad}>Methodik</a>.
-  </p>
-</ReviewStatus>
+  Die gesundheitliche Einordnung ist fachlich geprüft. Die Seite bestimmt keine Dosierung und
+  ersetzt keine tierärztliche Beratung. Die verwendeten Quellen sind bei den jeweiligen Hinweisen
+  verlinkt; mehr zum Prüfverfahren steht in der <a href={methodikPfad}>Methodik</a>.
+</p>
+
+{
+  amazonEnabled(process.env) && (
+    <section class="affiliate-section" aria-labelledby="amazon-ergaenzungen">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Konkrete Produkte · Werbung</p>
+          <h2 id="amazon-ergaenzungen">Ergänzungsfuttermittel bei Amazon suchen</h2>
+        </div>
+        <p class="affiliate-disclosure">{AMAZON_DISCLOSURE}</p>
+      </div>
+      <p>
+        Die Auswahl führt zu einer Amazon-Suche nach dem jeweils genannten Produkt. Prüfen Sie dort
+        Zusammensetzung, Tierart und Packungsgröße. Die Einordnung stammt aus den verlinkten
+        Herstellerangaben und ist keine Empfehlung, eine Ergänzung zu füttern.
+      </p>
+      <div class="supplement-products">
+        {supplements.products.map((product) => (
+          <article class="product-card">
+            <figure>
+              <img
+                src={product.image}
+                alt={`Symbolbild für ${product.category}, keine Produktabbildung`}
+                width="720"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>Symbolbild</figcaption>
+            </figure>
+            <p class="species-label">{product.species === 'dog' ? 'Für Hunde' : 'Für Katzen'}</p>
+            <h3>{product.name}</h3>
+            <p class="product-meta">
+              {product.brand} · {product.packageSize}
+            </p>
+            <p class="product-category">Kategorie laut Hersteller: {product.category}</p>
+            <a class="source-link" href={product.sourceUrl} rel="noopener noreferrer">
+              {product.sourceLabel} ↗
+            </a>
+            <AmazonLink selection={product.id} label={`${product.name} bei Amazon suchen`} />
+          </article>
+        ))}
+      </div>
+      <p class="affiliate-note">
+        Suchergebnisse können abweichende Varianten oder andere Produkte enthalten. Wir zeigen keine
+        Preise, Verfügbarkeiten oder Testsiegel.
+      </p>
+    </section>
+  )
+}
 
 <Notice variante="hinweis" titel="Zuerst das Grundfutter prüfen">
   <p>
@@ -165,7 +190,7 @@ const nutritionStatus = nutritionReview.status as string;
     }
     <button type="submit">Kosten vergleichen</button>
   </form>
-  <p id="supplement-ergebnis" role="status" aria-live="polite"></p>
+  <div id="supplement-ergebnis" class="comparison-result" role="status" aria-live="polite"></div>
   <noscript
     ><p>
       Ohne JavaScript: Packungsinhalt durch Tagesmenge teilen; Preis durch die ermittelte Reichweite
@@ -174,75 +199,27 @@ const nutritionStatus = nutritionReview.status as string;
   >
 </section>
 
-<h2>Welche Produkte verlinken wir?</h2>
-<p>
-  Wir verlinken Suchergebnisse nach Tierart. Das ist keine Prüfung einzelner Produkte und keine
-  Empfehlung, eine Ergänzung zu füttern. Zusammensetzung, Tierart und Packungsgröße vor dem Kauf
-  vergleichen.
-</p>
-{
-  amazonEnabled(process.env) && (
-    <section aria-labelledby="amazon-ergaenzungen">
-      <h3 id="amazon-ergaenzungen">Ergänzungsfuttermittel bei Amazon suchen · Werbung</h3>
-      <p>{AMAZON_DISCLOSURE}</p>
-      <div class="supplement-products">
-        <article>
-          <figure>
-            <img
-              src="/images/products/symbol-supplements-dog.avif"
-              alt="Symbolbild für Ergänzungsfuttermittel für Hunde, keine Produktabbildung"
-              width="720"
-              height="720"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>Symbolbild</figcaption>
-          </figure>
-          <h4>Für Hunde</h4>
-          <p>Amazon-Suche nach Ergänzungsfuttermitteln für Hunde.</p>
-          <AmazonLink
-            selection="supplements-dog"
-            label="Ergänzungsfuttermittel für Hunde bei Amazon suchen"
-          />
-        </article>
-        <article>
-          <figure>
-            <img
-              src="/images/products/symbol-supplements-cat.avif"
-              alt="Symbolbild für Ergänzungsfuttermittel für Katzen, keine Produktabbildung"
-              width="720"
-              height="720"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption>Symbolbild</figcaption>
-          </figure>
-          <h4>Für Katzen</h4>
-          <p>Amazon-Suche nach Ergänzungsfuttermitteln für Katzen.</p>
-          <AmazonLink
-            selection="supplements-cat"
-            label="Ergänzungsfuttermittel für Katzen bei Amazon suchen"
-          />
-        </article>
-      </div>
-      <p>
-        Suchergebnisse können auch andere Produkte enthalten. Wir vergeben keine Testsiegel und
-        zeigen keine Preise oder Verfügbarkeitsangaben.
-      </p>
-    </section>
-  )
-}
 <p class="hilfe">
-  Quellenstand: 09.09.2026. Diese Seite bietet allgemeine Informationen für Hunde und Katzen. Für
-  andere Tierarten lassen sich Bedarf und Produkte nicht übertragen.
+  Diese Seite bietet allgemeine Informationen für Hunde und Katzen. Für andere Tierarten lassen sich
+  Bedarf und Produkte nicht übertragen.
 </p>
 
 <script>
   import { supplementComparison } from '../../features/food/supplements.ts';
   const form = document.querySelector<HTMLFormElement>('#supplement-vergleich');
   const output = document.querySelector<HTMLElement>('#supplement-ergebnis');
+
+  const renderMessage = (message: string, state = 'notice') => {
+    if (!output) return;
+    const paragraph = document.createElement('p');
+    paragraph.className = 'comparison-message';
+    paragraph.textContent = message;
+    output.dataset.state = state;
+    output.replaceChildren(paragraph);
+  };
+
   form?.addEventListener('input', () => {
-    if (output?.textContent) output.textContent = 'Eingaben geändert – bitte erneut vergleichen.';
+    if (output?.textContent) renderMessage('Eingaben geändert – bitte erneut vergleichen.');
   });
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -252,14 +229,61 @@ const nutritionStatus = nutritionReview.status as string;
         const read = (field: string) =>
           document.querySelector<HTMLInputElement>(`#${field}-${id}`)?.value ?? '';
         const value = supplementComparison(read('preis'), read('inhalt'), read('menge'));
-        return `Produkt ${id}: ${value.days.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Tage, ${value.dailyCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })} pro Tag.`;
+        return { id, ...value };
       });
-      output.textContent =
-        values.join(' ') +
-        ' Rechnerischer Vergleich; keine Aussage zu Eignung oder Wirksamkeit. Haltbarkeit nach Öffnen zusätzlich beachten.';
+
+      const lowestDailyCost = Math.min(...values.map((value) => value.dailyCost));
+      const equalCost = values.every((value) => value.dailyCost === lowestDailyCost);
+      const grid = document.createElement('div');
+      grid.className = 'result-grid';
+
+      for (const value of values) {
+        const card = document.createElement('article');
+        const isLowest = value.dailyCost === lowestDailyCost;
+        card.className = `result-card${isLowest ? ' result-card--best' : ''}`;
+        card.dataset.product = value.id;
+
+        const headingRow = document.createElement('div');
+        headingRow.className = 'result-heading';
+        const heading = document.createElement('h3');
+        heading.textContent = `Produkt ${value.id}`;
+        headingRow.append(heading);
+        if (isLowest) {
+          const badge = document.createElement('span');
+          badge.className = 'result-badge';
+          badge.textContent = equalCost ? 'Gleicher Tagespreis' : 'Niedrigerer Tagespreis';
+          headingRow.append(badge);
+        }
+
+        const price = document.createElement('p');
+        price.className = 'result-price';
+        const amount = document.createElement('strong');
+        amount.textContent = value.dailyCost.toLocaleString('de-DE', {
+          style: 'currency',
+          currency: 'EUR',
+        });
+        const perDay = document.createElement('span');
+        perDay.textContent = ' pro Tag';
+        price.append(amount, perDay);
+
+        const reach = document.createElement('p');
+        reach.className = 'result-reach';
+        reach.textContent = `Rechnerische Reichweite: ${value.days.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Tage`;
+        card.append(headingRow, price, reach);
+        grid.append(card);
+      }
+
+      const note = document.createElement('p');
+      note.className = 'result-note';
+      note.textContent =
+        'Rechnerischer Vergleich ohne Aussage zu Eignung oder Wirksamkeit. Haltbarkeit nach Öffnen zusätzlich beachten.';
+      output.dataset.state = 'result';
+      output.replaceChildren(grid, note);
     } catch {
-      output.textContent =
-        'Bitte für beide Produkte gültige positive Zahlen eingeben (z. B. 19,95). Tagesmenge und Packungsinhalt müssen dieselbe Einheit verwenden.';
+      renderMessage(
+        'Bitte für beide Produkte gültige positive Zahlen eingeben (z. B. 19,95). Tagesmenge und Packungsinhalt müssen dieselbe Einheit verwenden.',
+        'error',
+      );
     }
   });
 </script>
@@ -271,6 +295,34 @@ const nutritionStatus = nutritionReview.status as string;
   .lead {
     font-size: 1.2rem;
   }
+  .review-note {
+    padding-inline-start: 1rem;
+    border-inline-start: 3px solid var(--color-primary, #0d4946);
+    color: var(--color-text-muted, #526b70);
+  }
+  .affiliate-section {
+    margin-block: 2.5rem 3.5rem;
+    padding: clamp(1.1rem, 2.5vw, 2rem);
+    border: 1px solid #d7e4df;
+    border-radius: 1.5rem;
+    background: linear-gradient(145deg, #fffaf2, #f3f8f5);
+  }
+  .section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .section-heading h2,
+  .section-heading .eyebrow {
+    margin-block: 0;
+  }
+  .affiliate-disclosure {
+    max-inline-size: 25rem;
+    margin: 0;
+    color: var(--color-text-muted, #526b70);
+    font-size: 0.9rem;
+  }
   .supplement-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -279,13 +331,14 @@ const nutritionStatus = nutritionReview.status as string;
   }
   .supplement-products {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
     margin-block: 1.5rem;
   }
-  .supplement-products article {
+  .product-card {
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
   .supplement-products figure {
     position: relative;
@@ -294,7 +347,8 @@ const nutritionStatus = nutritionReview.status as string;
   .supplement-products img {
     display: block;
     inline-size: 100%;
-    aspect-ratio: 1;
+    block-size: auto;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     border-radius: 1rem 1rem 0 0;
   }
@@ -308,9 +362,36 @@ const nutritionStatus = nutritionReview.status as string;
     color: var(--color-text);
     font-size: 0.72rem;
   }
-  .supplement-products h4 {
+  .supplement-products h3 {
     margin: 0;
-    font-size: var(--text-h4);
+    font-size: var(--text-h3);
+  }
+  .species-label {
+    align-self: flex-start;
+    margin-block: 0 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: #e3f1ec;
+    color: #174c44;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .product-meta {
+    margin-block: 0.5rem 0;
+    font-weight: 700;
+  }
+  .product-category {
+    color: var(--color-text-muted, #526b70);
+    font-size: 0.92rem;
+  }
+  .source-link {
+    margin-block-start: auto;
+    font-size: 0.9rem;
+  }
+  .affiliate-note {
+    margin-block-end: 0;
+    color: var(--color-text-muted, #526b70);
+    font-size: 0.9rem;
   }
   article,
   .supplement-tool {
@@ -334,9 +415,90 @@ const nutritionStatus = nutritionReview.status as string;
     width: 100%;
     min-height: 44px;
   }
+  .comparison-result:not(:empty) {
+    margin-block-start: 1.5rem;
+  }
   @media (max-width: 600px) {
     .supplement-grid,
     .supplement-products {
+      grid-template-columns: 1fr;
+    }
+    .section-heading {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+  @media (min-width: 601px) and (max-width: 960px) {
+    .supplement-products {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
+
+<style is:global>
+  .comparison-result .result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .comparison-result .result-card {
+    padding: 1.15rem;
+    border: 1px solid #d5e1dd;
+    border-radius: 1rem;
+    background: #f8fbfa;
+  }
+  .comparison-result .result-card--best {
+    border-color: #5b988b;
+    background: #edf7f3;
+    box-shadow: inset 0 0 0 1px #5b988b;
+  }
+  .comparison-result .result-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .comparison-result .result-heading h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  .comparison-result .result-badge {
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    background: #0d4946;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .comparison-result .result-price {
+    margin-block: 1rem 0.35rem;
+  }
+  .comparison-result .result-price strong {
+    color: #0d4946;
+    font-size: clamp(1.7rem, 4vw, 2.25rem);
+    line-height: 1;
+  }
+  .comparison-result .result-price span,
+  .comparison-result .result-reach,
+  .comparison-result .result-note,
+  .comparison-result .comparison-message {
+    color: #526b70;
+  }
+  .comparison-result .result-reach,
+  .comparison-result .result-note,
+  .comparison-result .comparison-message {
+    margin-block: 0.5rem 0;
+  }
+  .comparison-result[data-state='error'] .comparison-message {
+    padding: 0.85rem 1rem;
+    border-inline-start: 4px solid #b9452d;
+    background: #fff4f0;
+    color: #71301f;
+  }
+  @media (max-width: 600px) {
+    .comparison-result .result-grid {
       grid-template-columns: 1fr;
     }
   }

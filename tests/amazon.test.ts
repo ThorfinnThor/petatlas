@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import editorial from '../content-data/products/editorial.json' with { type: 'json' };
+import supplements from '../content-data/products/supplements.json' with { type: 'json' };
 import toys from '../content-data/taxonomy/toys.json' with { type: 'json' };
 import {
   amazonEnabled,
@@ -17,6 +18,13 @@ describe('Owner supplied Amazon text links', () => {
       expect(amazonSearchUrl(product.id) !== null, product.id).toBe(
         categories.has(product.categoryId),
       );
+    }
+  });
+  it('covers every recorded supplement with a specific search term', () => {
+    for (const product of supplements.products) {
+      const url = new URL(amazonSearchUrl(product.id)!);
+      expect(url.searchParams.get('k')).toContain(product.brand);
+      expect(url.searchParams.get('k')).toContain(product.packageSize);
     }
   });
   it('limits destinations to fixed search terms and the supplied tracking ID', () => {

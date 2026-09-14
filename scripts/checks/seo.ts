@@ -259,8 +259,10 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
     if (!/(?:Quellen|Fundstelle|Rechtsgrundlage|Bezogen über)/i.test(inhalt)) {
       melde('Kein sichtbarer Quellen- oder Fundstellenhinweis.');
     }
-    if (!/Fachliche Verantwortung/i.test(inhalt)) {
-      melde('Keine sichtbare fachliche Verantwortlichkeit.');
+    const hatTechnischenVerantwortungsnachweis =
+      istErgaenzung && /data-review-approved-by=["'][^"']+["']/i.test(inhalt);
+    if (!/Fachliche Verantwortung/i.test(inhalt) && !hatTechnischenVerantwortungsnachweis) {
+      melde('Kein fachlicher Verantwortungsnachweis.');
     }
   }
 
