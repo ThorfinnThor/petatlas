@@ -185,14 +185,46 @@ const nutritionStatus = nutritionReview.status as string;
     <section aria-labelledby="amazon-ergaenzungen">
       <h3 id="amazon-ergaenzungen">Ergänzungsfuttermittel bei Amazon suchen · Werbung</h3>
       <p>{AMAZON_DISCLOSURE}</p>
-      <AmazonLink
-        selection="supplements-dog"
-        label="Ergänzungsfuttermittel für Hunde bei Amazon suchen"
-      />
-      <AmazonLink
-        selection="supplements-cat"
-        label="Ergänzungsfuttermittel für Katzen bei Amazon suchen"
-      />
+      <div class="supplement-products">
+        <article>
+          <figure>
+            <img
+              src="/images/products/symbol-supplements-dog.avif"
+              alt="Symbolbild für Ergänzungsfuttermittel für Hunde, keine Produktabbildung"
+              width="720"
+              height="720"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Symbolbild</figcaption>
+          </figure>
+          <h4>Für Hunde</h4>
+          <p>Amazon-Suche nach Ergänzungsfuttermitteln für Hunde.</p>
+          <AmazonLink
+            selection="supplements-dog"
+            label="Ergänzungsfuttermittel für Hunde bei Amazon suchen"
+          />
+        </article>
+        <article>
+          <figure>
+            <img
+              src="/images/products/symbol-supplements-cat.avif"
+              alt="Symbolbild für Ergänzungsfuttermittel für Katzen, keine Produktabbildung"
+              width="720"
+              height="720"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Symbolbild</figcaption>
+          </figure>
+          <h4>Für Katzen</h4>
+          <p>Amazon-Suche nach Ergänzungsfuttermitteln für Katzen.</p>
+          <AmazonLink
+            selection="supplements-cat"
+            label="Ergänzungsfuttermittel für Katzen bei Amazon suchen"
+          />
+        </article>
+      </div>
       <p>
         Suchergebnisse können auch andere Produkte enthalten. Wir vergeben keine Testsiegel und
         zeigen keine Preise oder Verfügbarkeitsangaben.
@@ -245,6 +277,41 @@ const nutritionStatus = nutritionReview.status as string;
     gap: 1rem;
     margin-block: 1.5rem;
   }
+  .supplement-products {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-block: 1.5rem;
+  }
+  .supplement-products article {
+    display: flex;
+    flex-direction: column;
+  }
+  .supplement-products figure {
+    position: relative;
+    margin: -1.3rem -1.3rem 1rem;
+  }
+  .supplement-products img {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 1rem 1rem 0 0;
+  }
+  .supplement-products figcaption {
+    position: absolute;
+    inset-inline-end: 0.65rem;
+    inset-block-end: 0.65rem;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 88%);
+    color: var(--color-text);
+    font-size: 0.72rem;
+  }
+  .supplement-products h4 {
+    margin: 0;
+    font-size: var(--text-h4);
+  }
   article,
   .supplement-tool {
     background: var(--color-surface, #fff);
@@ -268,7 +335,8 @@ const nutritionStatus = nutritionReview.status as string;
     min-height: 44px;
   }
   @media (max-width: 600px) {
-    .supplement-grid {
+    .supplement-grid,
+    .supplement-products {
       grid-template-columns: 1fr;
     }
   }

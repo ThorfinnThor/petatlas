@@ -43,10 +43,9 @@ export const ERLAUBTE_ENDUNGEN: readonly string[] = [
 export const ERLAUBTE_DATEINAMEN: readonly string[] = ['_headers', '_redirects'];
 
 /**
- * Bilder gehen nur mit ausdrücklicher Erlaubnis raus. Es gibt heute keine —
- * weder von OpenStreetMap noch von einem Partnerprogramm —, also darf keins
- * im Output liegen. Diese Liste ist bewusst großzügig: sie soll auch das
- * fangen, was jemand versehentlich hineinlegt.
+ * Bilder gehen nur mit dokumentierter Herkunft und Ausgabeerlaubnis raus.
+ * Diese Liste ist bewusst großzügig: sie soll auch das fangen, was jemand
+ * versehentlich hineinlegt.
  */
 export const BILDENDUNGEN: readonly string[] = [
   '.png',
@@ -74,6 +73,12 @@ export const ERLAUBTE_BILDER: readonly { readonly muster: RegExp; readonly grund
       /^images\/brand\/(hero-dog-alpine-lake|travel-human-dog-sunset|play-dog-alpine-lake|health-dog-home|hero-dog-cat-home|play-cat-home)-(480|800|1200|1536)\.(avif|webp)$/,
     grund:
       'AI-generated editorial brand photographs; source and prompts in design-assets/README.md. Not product photos.',
+  },
+  {
+    muster:
+      /^images\/products\/symbol-(cat|chew|fetch|puzzle|supplements-cat|supplements-dog)\.avif$/,
+    grund:
+      'AI-generated, brand-neutral product-category symbols; prompts, hashes and display restrictions in docs/GENERATED_PRODUCT_SYMBOLS.md.',
   },
   {
     // Leaflet bringt seine Bedienbilder selbst mit; sie stehen unter

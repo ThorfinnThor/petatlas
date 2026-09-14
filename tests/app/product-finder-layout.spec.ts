@@ -21,6 +21,14 @@ for (const width of [390, 900, 1440]) {
       );
       const cards = page.locator('.finder__liste > li');
       await expect(cards).toHaveCount(expected.length);
+      await expect(cards.locator('img')).toHaveCount(expected.length);
+      await expect(cards.locator('figcaption', { hasText: 'Symbolbild' })).toHaveCount(
+        expected.length,
+      );
+      for (const image of await cards.locator('img').all()) {
+        await expect(image).toHaveJSProperty('complete', true);
+        expect(await image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBe(720);
+      }
       expect(expected.length).toBeGreaterThanOrEqual(6);
       const actual = await cards.evaluateAll((elements) =>
         elements.map((el) => el.getAttribute('data-produkt')),
