@@ -19,6 +19,18 @@ for (const width of [390, 1280]) {
       await page.getByRole('button', { name: 'Kosten vergleichen' }).click();
       await expect(page.locator('#supplement-ergebnis')).toContainText('50 Tage');
       await expect(page.locator('#supplement-ergebnis')).toContainText('0,60');
+      await expect(page.locator('#supplement-ergebnis .result-card')).toHaveCount(2);
+      await expect(page.locator('[data-product="A"]')).toContainText('0,40');
+      await expect(page.locator('[data-product="A"]')).toContainText('Niedrigerer Tagespreis');
+      await expect(page.locator('[data-product="B"]')).toContainText('40 Tage');
+      expect(
+        await page
+          .locator('#supplement-ergebnis .result-grid')
+          .evaluate(
+            (element) =>
+              getComputedStyle(element).gridTemplateColumns.split(' ').filter(Boolean).length,
+          ),
+      ).toBe(width <= 600 ? 1 : 2);
       await page.fill('#menge-A', '0');
       await page.getByRole('button', { name: 'Kosten vergleichen' }).click();
       await expect(page.locator('#supplement-ergebnis')).toContainText('gültige positive Zahlen');

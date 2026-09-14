@@ -32,11 +32,22 @@ for (const width of [390, 1440]) {
           await expect(page.locator('main')).toContainText(text);
       }
       if (path === 'ergaenzungsfuttermittel') {
-        await expect(page.locator('main a[rel~="sponsored"]')).toHaveCount(2);
-        await expect(page.locator('.supplement-products img')).toHaveCount(2);
+        await expect(page.locator('main')).not.toContainText('Letzte Quellenprüfung');
+        await expect(page.locator('main')).not.toContainText('Fachliche Verantwortung');
+        await expect(page.locator('main')).not.toContainText('Freigegeben am');
+        await expect(page.locator('main a[rel~="sponsored"]')).toHaveCount(6);
+        await expect(page.locator('.supplement-products article')).toHaveCount(6);
+        await expect(page.locator('.supplement-products img')).toHaveCount(6);
         await expect(
           page.locator('.supplement-products figcaption', { hasText: 'Symbolbild' }),
-        ).toHaveCount(2);
+        ).toHaveCount(6);
+        await expect(page.locator('.supplement-products')).toContainText('Caniflora Vital');
+        await expect(page.locator('.supplement-products')).toContainText('Cat-Vitamin Tabs');
+        for (const link of await page.locator('.supplement-products a[rel~="sponsored"]').all()) {
+          const url = new URL((await link.getAttribute('href'))!);
+          expect(url.hostname).toBe('www.amazon.de');
+          expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
+        }
       }
       expect(
         (
