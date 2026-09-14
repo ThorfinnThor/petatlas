@@ -1,27 +1,21 @@
 ---
-/**
- * M14-04 — Eine Pflegekategorie.
- *
- * Die Seite sagt, wonach in dieser Kategorie gefiltert wird und welche
- * Angaben typischerweise fehlen. Produkte stehen hier erst, wenn es
- * Angebotsrechte gibt und die Eigenschaften einzeln geprüft sind — bis dahin
- * steht das da, statt einer leeren Liste.
- */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import ProductCard from '../../../components/commerce/ProductCard.astro';
-import { productIdentity } from '../../../features/care/attributes.ts';
-import Notice from '../../../components/Notice.astro';
+import {
+  kartenMerkmale,
+  merkmalLabel,
+  productIdentity,
+  ungepruefteAttribute,
+} from '../../../features/care/attributes.ts';
+import { careGuide } from '../../../features/care/guides.ts';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
 import { pflegeTaxonomie } from '../../../features/care/taxonomy.ts';
-import {
-  attributPruefung,
-  kartenMerkmale,
-  merkmalLabel,
-  ungepruefteAttribute,
-} from '../../../features/care/attributes.ts';
+import { attributPruefung } from '../../../features/care/attributes.ts';
+import { commerceProgramme, partnerHinweisErlaubt } from '../../../features/commerce/partner.ts';
+import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../../../features/commerce/links.ts';
 import type { TaxonomyCategory } from '../../../domain/schemas/taxonomy.ts';
 
 export function getStaticPaths() {
@@ -35,102 +29,611 @@ export function getStaticPaths() {
 }
 
 const { kategorie } = Astro.props as { kategorie: TaxonomyCategory };
+const guide = careGuide(kategorie.categoryId);
+if (guide === undefined) {
+  throw new Error(`Pflegekategorie ${kategorie.categoryId} hat keine vollständige Auswahlhilfe.`);
+}
+
 const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const uebersicht = routePath(markt, 'care');
 const eigenerPfad = subroutePath(markt, 'care', kategorie.categoryId);
-
-const ARTEN: Readonly<Record<string, string>> = {
-  dog: 'Hund',
-  cat: 'Katze',
-  other: 'andere Tiere',
-};
 const produkte = attributPruefung().products.filter(
   (produkt) => produkt.categoryId === kategorie.categoryId,
 );
-const synthetisch = attributPruefung().dataKind === 'synthetic';
+const programm = commerceProgramme().find((eintrag) => eintrag.programId === 'fressnapf-de');
+const partnerEntscheidung = partnerHinweisErlaubt({
+  market: markt,
+  placement: 'neutral_list',
+  stichtag: new Date().toISOString().slice(0, 10),
+  programme: programm === undefined ? [] : [programm],
+});
+const shopLinks =
+  partnerEntscheidung.erlaubt && partnerEntscheidung.programm !== null
+    ? guide.shopLinks
+        .map((link) => ({
+          ...link,
+          href: partnerZiel(partnerEntscheidung.programm, {
+            verticalRef: 'care',
+            placementRef: 'category-page',
+            contentRef: link.id,
+            pageSlug: kategorie.categoryId,
+            destinationUrl: link.destinationUrl,
+          }),
+        }))
+        .filter((link) => link.href !== null)
+    : [];
+const faqThema: Readonly<Record<string, string>> = {
+  'grooming-brush': 'Bürsten und Kämmen',
+  'grooming-claw': 'Krallenpflege',
+  'dental-care': 'Zahnpflegezubehör',
+  'mobility-aid': 'Mobilitätszubehör',
+  'coat-care-textile': 'Pflegetextilien',
+};
 ---
 
-<BaseLayout title={kategorie.label} route="care" canonicalPfad={eigenerPfad}>
+<BaseLayout
+  title={kategorie.label}
+  description={guide.description}
+  route="care"
+  canonicalPfad={eigenerPfad}
+  weit
+>
   <Breadcrumbs
     market={markt}
     stufen={[{ label: 'Pflege', route: 'care' }, { label: kategorie.label }]}
   />
 
-  <h1>{kategorie.label}</h1>
-  <p>{kategorie.description}</p>
-  <p class="hilfe">
-    Für: {kategorie.species.map((art) => ARTEN[art] ?? art).join(', ')} ·
-    <a href={uebersicht}>alle Pflegekategorien</a>
-  </p>
-
-  <h2>Wonach hier gefiltert wird</h2>
-  <ul class="merkmale">
-    {
-      kategorie.matchAttributes.map((merkmal) => (
-        <li data-merkmal={merkmal}>{merkmalLabel(merkmal)}</li>
-      ))
-    }
-  </ul>
-  <p class="hilfe">
-    Nur diese Merkmale entscheiden, ob ein Produkt in dieser Kategorie als passend gilt — und auch
-    das nur, wenn sie belegt sind. Eine fehlende Angabe macht ein Produkt weder passend noch
-    unpassend.
-  </p>
-
-  <h2>Produkte</h2>
-  {
-    produkte.length === 0 || synthetisch ? (
-      <Notice variante="hinweis" titel="Noch keine geprüften Produkte">
-        <p data-testid="keine-produkte">
-          Hier stehen erst dann Produkte, wenn Angebotsrechte bestehen und die Eigenschaften jedes
-          einzelnen belegt sind. Eine Liste aus einem Händlerfeed abzuschreiben wäre schneller — und
-          würde eine Sorgfalt vortäuschen, die es nicht gab.
+  <article class="care-guide">
+    <header class="hero">
+      <div class="hero__copy">
+        <p class="eyebrow">{guide.kicker}</p>
+        <h1>{kategorie.label}</h1>
+        <p class="hero__intro">{guide.intro}</p>
+        <p class="hero__species">
+          Für {kategorie.species.includes('dog') ? 'Hunde' : ''}{
+            kategorie.species.length > 1 ? ' und Katzen' : ''
+          }
         </p>
-      </Notice>
-    ) : (
-      <ul class="produkte">
-        {produkte.map((produkt) => (
-          <li>
-            <ProductCard
-              name={productIdentity(produkt.productId)?.name ?? produkt.productId}
-              marke={productIdentity(produkt.productId)?.brand ?? null}
-              merkmale={kartenMerkmale(produkt)}
-              nichtGeprueft={ungepruefteAttribute(produkt)}
-              testId={`produkt-${produkt.productId}`}
-            />
-          </li>
-        ))}
-      </ul>
-    )
-  }
+      </div>
+      <picture class="hero__media">
+        <source
+          type="image/avif"
+          srcset={`/images/care/${guide.imageStem}-800.avif 800w, /images/care/${guide.imageStem}-1200.avif 1200w`}
+          sizes="(min-width: 900px) 48vw, 100vw"
+        />
+        <source
+          type="image/webp"
+          srcset={`/images/care/${guide.imageStem}-800.webp 800w, /images/care/${guide.imageStem}-1200.webp 1200w`}
+          sizes="(min-width: 900px) 48vw, 100vw"
+        />
+        <img
+          src={`/images/care/${guide.imageStem}-1200.webp`}
+          alt={guide.imageAlt}
+          width="1200"
+          height="800"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </picture>
+    </header>
 
-  <Notice variante="warnung" titel="Kein Gesundheitsversprechen">
-    <p>
-      Kein Eintrag in dieser Kategorie behauptet eine Wirkung, eine Eignung bei Beschwerden oder
-      eine Haltbarkeit. Wo eine Herstellerangabe vorliegt, steht sie als Herstellerangabe da.
-    </p>
-  </Notice>
+    <nav class="jump" aria-label="Inhalt dieser Auswahlhilfe">
+      <a href="#kurzantwort">Kurzantwort</a>
+      <a href="#auswahl">Auswahl</a>
+      <a href="#messen">Vor dem Kauf</a>
+      <a href="#routine">Anwendung</a>
+      <a href="#fragen">Häufige Fragen</a>
+    </nav>
+
+    <section id="kurzantwort" class="quick-answer">
+      <p class="eyebrow">DIE KURZANTWORT</p>
+      <h2>Was passt zu meinem Tier?</h2>
+      <p>{guide.quickAnswer}</p>
+    </section>
+
+    <section id="auswahl" class="content-section">
+      <div class="section-heading">
+        <p class="eyebrow">AUSWAHLHILFE</p>
+        <h2>{guide.selectionTitle}</h2>
+        <p>{guide.selectionIntro}</p>
+      </div>
+      <div class="choice-grid">
+        {
+          guide.choices.map((choice) => (
+            <article class="choice-card">
+              <h3>{choice.title}</h3>
+              <dl>
+                <div>
+                  <>
+                    <dt>Passt eher, wenn</dt>
+                    <dd>{choice.suitableFor}</dd>
+                  </>
+                </div>
+                <div>
+                  <>
+                    <dt>Darauf achten</dt>
+                    <dd>{choice.check}</dd>
+                  </>
+                </div>
+                <div>
+                  <>
+                    <dt>Nicht dafür gedacht</dt>
+                    <dd>{choice.avoid}</dd>
+                  </>
+                </div>
+              </dl>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    {
+      shopLinks.length > 0 && partnerEntscheidung.programm !== null && (
+        <section class="shop" aria-labelledby="shop-title">
+          <div class="shop__heading">
+            <div>
+              <p class="eyebrow">SORTIMENT ÖFFNEN · WERBUNG</p>
+              <h2 id="shop-title">Passende Pflegekategorie bei Fressnapf</h2>
+            </div>
+            <p>{partnerEntscheidung.programm.disclosureText}</p>
+          </div>
+          <div class="shop__grid">
+            {shopLinks.map((link) => (
+              <article>
+                <p class="shop__species">Für {link.species}</p>
+                <h3>{link.label}</h3>
+                <p>{link.description}</p>
+                <a
+                  class="button-link"
+                  href={link.href as string}
+                  rel={PARTNER_LINK_ATTRIBUTE.rel}
+                  target={PARTNER_LINK_ATTRIBUTE.target}
+                >
+                  Sortiment bei Fressnapf öffnen ↗ <span class="sr-only">(Werbung)</span>
+                </a>
+              </article>
+            ))}
+          </div>
+          <p class="shop__note">
+            Der Link führt über Awin. Preise, Lieferbarkeit, Größen und vollständige
+            Herstellerangaben prüfst du direkt beim Händler. Die Auswahlhilfe oben bleibt davon
+            unabhängig.
+          </p>
+        </section>
+      )
+    }
+
+    <section id="messen" class="measure content-section">
+      <div class="section-heading">
+        <p class="eyebrow">VOR DEM KAUF</p>
+        <h2>{guide.measureTitle}</h2>
+        <p>{guide.measureIntro}</p>
+      </div>
+      <ol class="check-list">
+        {
+          guide.measures.map((measure, index) => (
+            <li>
+              <>
+                <span>{index + 1}</span>
+                <p>{measure}</p>
+              </>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    {
+      produkte.length > 0 && (
+        <section class="verified content-section" aria-labelledby="verified-title">
+          <div class="section-heading">
+            <p class="eyebrow">EINZELN BELEGTE HERSTELLERANGABEN</p>
+            <h2 id="verified-title">Bereits redaktionell erfasste Produkte</h2>
+            <p>
+              Diese Einträge zeigen nur Eigenschaften mit verlinkter Fundstelle. Sie sind keine
+              Rangliste und keine Aussage darüber, welches Produkt für dein Tier am besten ist.
+            </p>
+          </div>
+          <ul class="product-grid">
+            {produkte.map((produkt) => (
+              <li>
+                <ProductCard
+                  name={productIdentity(produkt.productId)?.name ?? produkt.productId}
+                  marke={productIdentity(produkt.productId)?.brand ?? null}
+                  merkmale={kartenMerkmale(produkt)}
+                  nichtGeprueft={ungepruefteAttribute(produkt).map(merkmalLabel)}
+                  testId={`produkt-${produkt.productId}`}
+                />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section id="routine" class="routine content-section">
+      <div class="section-heading">
+        <p class="eyebrow">RUHIG ANWENDEN</p>
+        <h2>{guide.routineTitle}</h2>
+        <p>{guide.routineIntro}</p>
+      </div>
+      <ol class="steps">
+        {
+          guide.steps.map((step, index) => (
+            <li>
+              <span class="steps__number">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                </>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <div class="two-column">
+      <section class="mistakes">
+        <p class="eyebrow">FEHLKÄUFE VERMEIDEN</p>
+        <h2>{guide.mistakesTitle}</h2>
+        <ul>{guide.mistakes.map((mistake) => <li>{mistake}</li>)}</ul>
+      </section>
+      <section class="stop">
+        <p class="eyebrow">STOPPSIGNAL</p>
+        <h2>{guide.stopTitle}</h2>
+        <p>{guide.stopText}</p>
+        {
+          isFeatureEnabled(markt, 'map') && (
+            <a href={routePath(markt, 'map')}>Tierarztpraxis in der Nähe finden</a>
+          )
+        }
+      </section>
+    </div>
+
+    <section id="fragen" class="faq content-section">
+      <div class="section-heading">
+        <p class="eyebrow">KURZ GEKLÄRT</p>
+        <h2>Häufige Fragen zu {faqThema[kategorie.categoryId] ?? kategorie.label}</h2>
+      </div>
+      <div class="faq__grid">
+        {
+          guide.faqs.map((faq) => (
+            <details>
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="sources" aria-labelledby="sources-title">
+      <h2 id="sources-title">Quellen und Einordnung</h2>
+      <p>
+        Die Auswahlkriterien verbinden allgemeine Pflegehinweise mit überprüfbaren
+        Produkteigenschaften. Händlerpreise und Verfügbarkeit können sich ändern und werden auf
+        dieser Seite nicht übernommen.
+      </p>
+      <ul>
+        {
+          guide.sources.map((source) => (
+            <li>
+              <a href={source.url} rel="noopener">
+                {source.label} ↗
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <p class="back-link"><a href={uebersicht}>← Alle Pflegekategorien</a></p>
+  </article>
 
   <style>
-    .hilfe {
-      color: var(--color-text-muted);
-      font-size: var(--text-small);
+    .care-guide {
+      --care-accent: #a84e2a;
     }
-
-    .merkmale {
+    .eyebrow {
+      margin: 0 0 var(--space-2);
+      color: var(--care-accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+    .hero {
+      display: grid;
+      overflow: hidden;
+      margin-block: var(--space-4) var(--space-6);
+      border: 1px solid var(--color-border);
+      border-radius: 1.5rem;
+      background: #f4eadc;
+    }
+    .hero__copy {
+      align-self: center;
+      padding: clamp(1.5rem, 5vw, 4.5rem);
+    }
+    .hero h1 {
+      max-inline-size: 14ch;
+      margin-block: 0 var(--space-4);
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      line-height: 0.98;
+    }
+    .hero__intro {
+      max-inline-size: 62ch;
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    }
+    .hero__species {
+      margin-block-start: var(--space-5);
+      font-weight: 750;
+    }
+    .hero__media,
+    .hero__media img {
+      display: block;
+      inline-size: 100%;
+      block-size: 100%;
+    }
+    .hero__media img {
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+    }
+    .jump {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--space-2) var(--space-4);
+      gap: var(--space-2);
+      margin-block: var(--space-6);
+    }
+    .jump a {
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: var(--color-surface);
+      font-size: var(--text-small);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .quick-answer {
+      max-inline-size: 72rem;
+      margin-block: var(--space-8);
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border-inline-start: 0.45rem solid var(--care-accent);
+      border-radius: 0 1rem 1rem 0;
+      background: #fff3df;
+    }
+    .quick-answer h2 {
+      margin-block-start: 0;
+    }
+    .quick-answer p:last-child {
+      max-inline-size: 78ch;
+      font-size: 1.08rem;
+    }
+    .content-section,
+    .two-column,
+    .sources {
+      margin-block: clamp(3.5rem, 8vw, 7rem);
+    }
+    .section-heading {
+      max-inline-size: 70ch;
+      margin-block-end: var(--space-5);
+    }
+    .section-heading h2 {
+      margin-block: 0 var(--space-3);
+      font-size: clamp(1.8rem, 3vw, 3rem);
+    }
+    .choice-grid {
+      display: grid;
+      gap: var(--space-4);
+    }
+    .choice-card {
+      padding: var(--space-5);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+    }
+    .choice-card h3 {
+      margin-block-start: 0;
+    }
+    .choice-card dl,
+    .choice-card dd {
+      margin: 0;
+    }
+    .choice-card dl {
+      display: grid;
+      gap: var(--space-3);
+    }
+    .choice-card dt {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .choice-card dd {
+      color: var(--color-text-muted);
+    }
+    .shop {
+      margin-block: var(--space-8);
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border-radius: 1.5rem;
+      color: white;
+      background: #073f3c;
+    }
+    .shop .eyebrow,
+    .shop a {
+      color: #ffd6a6;
+    }
+    .shop__heading {
+      display: grid;
+      gap: var(--space-3);
+    }
+    .shop__heading h2,
+    .shop__heading p {
+      margin-block: 0;
+    }
+    .shop__heading > p,
+    .shop__note {
+      color: #d8e9e6;
+      font-size: var(--text-small);
+    }
+    .shop__grid {
+      display: grid;
+      gap: var(--space-3);
+      margin-block: var(--space-5);
+    }
+    .shop__grid article {
+      padding: var(--space-4);
+      border: 1px solid rgb(255 255 255 / 22%);
+      border-radius: var(--radius-lg);
+      background: rgb(255 255 255 / 8%);
+    }
+    .shop__grid h3 {
+      margin-block: var(--space-1) var(--space-2);
+    }
+    .shop__species {
+      margin: 0;
+      color: #ffd6a6;
+      font-size: var(--text-small);
+      font-weight: 800;
+    }
+    .button-link {
+      display: inline-block;
+      margin-block-start: var(--space-2);
+      font-weight: 800;
+    }
+    .check-list,
+    .steps,
+    .product-grid {
       list-style: none;
+      margin: 0;
       padding: 0;
     }
-
-    .merkmale li {
+    .check-list {
+      display: grid;
+      gap: var(--space-3);
+    }
+    .check-list li {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: var(--space-3);
+      align-items: start;
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .check-list span {
+      display: grid;
+      place-items: center;
+      inline-size: 2.25rem;
+      block-size: 2.25rem;
+      border-radius: 50%;
+      color: white;
+      background: var(--care-accent);
+      font-weight: 800;
+    }
+    .check-list p {
+      margin: 0.25rem 0 0;
+    }
+    .steps {
+      border-top: 1px solid var(--color-border);
+    }
+    .steps li {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      gap: var(--space-4);
+      padding-block: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .steps__number {
+      color: var(--care-accent);
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+    .steps h3,
+    .steps p {
+      margin-block: 0 var(--space-1);
+    }
+    .two-column {
+      display: grid;
+      gap: var(--space-4);
+    }
+    .mistakes,
+    .stop {
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border-radius: var(--radius-lg);
+    }
+    .mistakes {
+      background: #edf4ec;
+    }
+    .stop {
+      background: #fff0e8;
+    }
+    .mistakes h2,
+    .stop h2 {
+      margin-block-start: 0;
+    }
+    .mistakes li + li {
+      margin-block-start: var(--space-3);
+    }
+    .faq__grid {
+      display: grid;
+      gap: var(--space-3);
+    }
+    .faq details {
+      padding: var(--space-4);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
-      padding: var(--space-1) var(--space-3);
-      font-family: var(--font-mono, monospace);
-      font-size: var(--text-small);
+      background: var(--color-surface);
+    }
+    .faq summary {
+      cursor: pointer;
+      font-weight: 750;
+    }
+    .faq details p {
+      margin-block-end: 0;
+      color: var(--color-text-muted);
+    }
+    .product-grid {
+      display: grid;
+      gap: var(--space-4);
+    }
+    .sources {
+      max-inline-size: 72rem;
+      padding-block-start: var(--space-5);
+      border-top: 1px solid var(--color-border);
+    }
+    .sources ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-5);
+      padding-inline-start: 1.2rem;
+    }
+    .back-link {
+      margin-block: var(--space-8);
+    }
+    @media (min-width: 760px) {
+      .choice-grid,
+      .shop__grid,
+      .two-column,
+      .faq__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .shop__heading {
+        grid-template-columns: 1.4fr 1fr;
+        align-items: end;
+      }
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (min-width: 900px) {
+      .hero {
+        grid-template-columns: 1.05fr 0.95fr;
+        min-block-size: 34rem;
+      }
+      .hero__media img {
+        aspect-ratio: auto;
+      }
     }
   </style>
 </BaseLayout>

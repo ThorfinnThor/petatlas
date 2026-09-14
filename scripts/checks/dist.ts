@@ -81,6 +81,12 @@ export const ERLAUBTE_BILDER: readonly { readonly muster: RegExp; readonly grund
       'AI-generated, brand-neutral product-category symbols; prompts, hashes and display restrictions in docs/GENERATED_PRODUCT_SYMBOLS.md.',
   },
   {
+    muster:
+      /^images\/care\/(fellpflege|krallenpflege|zahnpflege|mobilitaet|pflegetextilien)-(800|1200)\.(avif|webp)$/,
+    grund:
+      'AI-generated editorial care-guide photographs; prompts, hashes and usage rules in docs/GENERATED_CARE_IMAGES.md. Not merchant product photos.',
+  },
+  {
     // Leaflet bringt seine Bedienbilder selbst mit; sie stehen unter
     // BSD-2-Clause (node_modules/leaflet/LICENSE) und werden unverändert
     // mitgeliefert. Der Bundler hängt einen Inhalts-Hash an den Namen.

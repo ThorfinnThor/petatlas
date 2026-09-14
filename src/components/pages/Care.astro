@@ -12,6 +12,7 @@ import { merkmalLabel } from '../../features/care/attributes.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { subroutePath } from '../../lib/routes.ts';
+import { careGuide } from '../../features/care/guides.ts';
 import { pflegeTaxonomie } from '../../features/care/taxonomy.ts';
 
 const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -20,10 +21,10 @@ const taxonomie = pflegeTaxonomie();
 
 <h1>Pflege</h1>
 
-<p>
-  Zubehör für die Fell-, Krallen- und Zahnpflege sowie für Mobilität — beschrieben über belegte
-  Eigenschaften wie Maß, Material und Herstellerangaben. Nicht über eine vermutete gesundheitliche
-  Wirkung.
+<p class="intro">
+  Fünf ausführliche Auswahlhilfen für den Pflegealltag mit Hund und Katze. Vergleiche Werkzeuge nach
+  Aufgabe und Passform, miss vor dem Kauf die entscheidenden Größen und erkenne Situationen, in
+  denen Zubehör nicht die nächste Handlung ist.
 </p>
 
 <Notice variante="warnung" titel="Kein Gesundheitsbereich">
@@ -39,13 +40,34 @@ const taxonomie = pflegeTaxonomie();
   {
     taxonomie.categories.map((kategorie) => (
       <li data-kategorie={kategorie.categoryId}>
-        <h3>
-          <a href={subroutePath(markt, 'care', kategorie.categoryId)}>{kategorie.label}</a>
-        </h3>
-        <p>{kategorie.description}</p>
-        <p class="hilfe">
-          Gefiltert wird nach: {kategorie.matchAttributes.map(merkmalLabel).join(', ')}.
-        </p>
+        {careGuide(kategorie.categoryId) && (
+          <picture>
+            <source
+              type="image/avif"
+              srcset={`/images/care/${careGuide(kategorie.categoryId)?.imageStem}-800.avif`}
+            />
+            <img
+              src={`/images/care/${careGuide(kategorie.categoryId)?.imageStem}-800.webp`}
+              alt=""
+              width="800"
+              height="533"
+              loading="lazy"
+            />
+          </picture>
+        )}
+        <div class="kategorie__inhalt">
+          <p class="kategorie__kicker">{careGuide(kategorie.categoryId)?.kicker}</p>
+          <h3>
+            <a href={subroutePath(markt, 'care', kategorie.categoryId)}>{kategorie.label}</a>
+          </h3>
+          <p>{kategorie.description}</p>
+          <p class="hilfe">
+            Auswahl nach: {kategorie.matchAttributes.map(merkmalLabel).join(', ')}.
+          </p>
+          <a class="kategorie__aktion" href={subroutePath(markt, 'care', kategorie.categoryId)}>
+            Auswahlhilfe öffnen →
+          </a>
+        </div>
       </li>
     ))
   }
@@ -84,16 +106,45 @@ const taxonomie = pflegeTaxonomie();
   }
 
   .kategorien > li {
+    overflow: hidden;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-4) var(--space-5);
     margin-block: 0;
     background: var(--color-surface);
+  }
+
+  .kategorien picture,
+  .kategorien img {
+    display: block;
+    inline-size: 100%;
+  }
+
+  .kategorien img {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .kategorie__inhalt {
+    padding: var(--space-4) var(--space-5) var(--space-5);
+  }
+
+  .kategorie__kicker {
+    margin: 0 0 var(--space-1);
+    color: var(--color-primary-hover);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
   }
 
   .kategorien h3 {
     margin: 0 0 var(--space-1);
     font-size: var(--text-body);
+  }
+
+  .kategorie__aktion {
+    display: inline-block;
+    margin-block-start: var(--space-2);
+    font-weight: 750;
   }
 
   .ausschluesse > li {
@@ -103,5 +154,10 @@ const taxonomie = pflegeTaxonomie();
   .hilfe {
     color: var(--color-text-muted);
     font-size: var(--text-small);
+  }
+
+  .intro {
+    max-inline-size: 72ch;
+    font-size: 1.1rem;
   }
 </style>
