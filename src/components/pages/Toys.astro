@@ -21,6 +21,14 @@ import { merkmalLabel } from '../../features/care/attributes.ts';
 import { BEDUERFNISSE } from '../../features/care/matching.ts';
 import { attributPruefung } from '../../features/care/attributes.ts';
 import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
+import RetailPartnerSection from '../RetailPartnerSection.astro';
+import type { MarketConfig } from '../../domain/market.ts';
+
+interface Props {
+  market: MarketConfig;
+}
+
+const { market } = Astro.props;
 
 const taxonomie = spielzeugTaxonomie();
 const pruefung = attributPruefung();
@@ -35,6 +43,8 @@ const synthetisch = pruefung.dataKind === 'synthetic';
   keine Produkte und vergibt keine Punkte für Sicherheit oder Haltbarkeit — solche Zahlen wären
   erfunden.
 </p>
+
+<RetailPartnerSection market={market} page="spielzeug" />
 
 {
   synthetisch && (

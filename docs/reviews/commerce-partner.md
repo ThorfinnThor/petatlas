@@ -1,6 +1,6 @@
 # Freigabe eines Warenpartners
 
-**Status: nicht freigegeben.** `config/publishers/commerce/programs.json` ist leer, `config/launch.json` führt das Gate `commerceAffiliate` auf `approved: false`, und der Katalog zeigt seinen Leerzustand. Es wird kein Feed abgerufen und keine öffentliche Angebotsdatei geschrieben.
+**Status: statische Händlerlinks freigegeben am 14.09.2026.** Der Betreiber hat die Annahme von `wauandmiau.de` im Awin-Programm Fressnapf-Online-Shop DE (Advertiser-ID 14757) bestätigt. Die Freigabe umfasst ausschließlich klar gekennzeichnete, statische Kategorie-Deeplinks auf den Seiten Spielzeug und Ergänzungsfuttermittel. Sie umfasst keinen Produktfeed, keine Preise, keine Verfügbarkeit und keine Händler- oder Produktbilder. Details: `docs/reviews/awin-partners-2026-09-14.md`.
 
 Dieses Dokument ist die Checkliste für den Tag, an dem sich das ändern soll. Es ist **keine Rechtsberatung**.
 
@@ -15,7 +15,7 @@ Dieses Dokument ist die Checkliste für den Tag, an dem sich das ändern soll. E
 | Oberfläche | `OfferCard.astro`, `/de-de/angebote/` mit erklärter Sortierung |
 | Erlaubnisprüfung | `angebotsErlaubnis()` in `src/features/commerce/partner.ts` |
 
-Es fehlt also nichts Technisches. Es fehlt ein Vertrag.
+Die nachfolgende Checkliste bleibt für eine spätere Feed-/Angebotsintegration verbindlich. Die aktuelle Linkfreigabe erweitert diesen Umfang nicht.
 
 ## Prüfpunkte
 
@@ -31,11 +31,11 @@ Es fehlt also nichts Technisches. Es fehlt ein Vertrag.
 ## Freigabeschritte
 
 1. Prüfpunkte hier beantworten, mit Datum, Namen und Nachweis.
-2. Programm in `config/publishers/commerce/programs.json` eintragen (`status: "approved"`, vollständige `approval`, erlaubte Zielhosts, statische Kampagnenkennungen). Bildrechte werden ausdrücklich vermerkt; ohne Vermerk bleiben sie aus.
+2. Programm in `config/publishers/commerce/programs.json` aktuell halten (`status: "approved"`, vollständige `approval`, erlaubte Zielhosts, statische Kennungen). Bildrechte werden ausdrücklich vermerkt; ohne Vermerk bleiben sie aus.
 3. Feed-Secret als Build-Secret hinterlegen — nie im Repository.
 4. `npx vitest run tests/commerce tests/product-match tests/feed-secrecy.test.ts` ausführen, ohne die Tests zu ändern.
-5. Gate `commerceAffiliate` in `config/launch.json` freischalten.
-6. Erst danach ein Produktionsdeployment mit eingeschaltetem Feature `commerce`.
+5. Gate `commerceAffiliate` in `config/launch.json` nur so lange freigeschaltet lassen, wie die Partnerschaft aktiv ist.
+6. Vor jedem Produktionsdeployment die Freigabe- und Linktests ausführen.
 
 ## Anmerkung
 

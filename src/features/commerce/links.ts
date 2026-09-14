@@ -18,6 +18,7 @@ import type { PartnerProgram } from '../../domain/schemas/partner.ts';
 
 /** Name des Parameters, unter dem die Kampagnenkennung übergeben wird. */
 export const KAMPAGNEN_PARAMETER = 'campaign';
+export const AWIN_TRACKING_HOST = 'www.awin1.com';
 
 /**
  * `rel` und `target` eines Partnerlinks. Stehen an einer Stelle, damit kein
@@ -54,6 +55,22 @@ export interface LinkPruefung {
   readonly gueltig: boolean;
   /** Klartextbegründung, auch im gültigen Fall. */
   readonly grund: string;
+}
+
+export interface PartnerLinkKontext {
+  /** Statische, redaktionell vergebene Werte; niemals Besucherdaten. */
+  readonly verticalRef: string;
+  readonly placementRef: string;
+  readonly contentRef: string;
+  readonly pageSlug: string;
+  /** Optionaler Deeplink auf einen ebenfalls freigegebenen Händlerhost. */
+  readonly destinationUrl?: string;
+}
+
+const AWIN_REF = /^[a-z0-9][a-z0-9_-]{0,49}$/i;
+
+function sichereAwinReferenz(wert: string): string | null {
+  return AWIN_REF.test(wert) ? wert.toLowerCase() : null;
 }
 
 /**
@@ -110,13 +127,48 @@ export function pruefeZiel(programm: PartnerProgram): LinkPruefung {
  * `null` heißt: dieser Link wird nicht angezeigt. Das ist der Normalfall,
  * solange kein Vertrag besteht.
  */
-export function partnerZiel(programm: PartnerProgram | null): string | null {
+export function partnerZiel(
+  programm: PartnerProgram | null,
+  kontext?: PartnerLinkKontext,
+): string | null {
   if (programm === null) return null;
   if (programm.status !== 'approved') return null;
   if (!pruefeZiel(programm).gueltig) return null;
 
-  // `landingUrl` ist nach der Prüfung gesetzt und parsebar.
-  const ziel = new URL(programm.landingUrl as string);
+  // `landingUrl` ist nach der Prüfung gesetzt und parsebar. Ein Deeplink muss
+  // denselben strengen Hosttest bestehen wie die Vertragsadresse.
+  const ziel = new URL(kontext?.destinationUrl ?? (programm.landingUrl as string));
+  if (
+    ziel.protocol !== 'https:' ||
+    ziel.username !== '' ||
+    ziel.password !== '' ||
+    ziel.port !== '' ||
+    !programm.allowedLinkHosts.includes(ziel.host)
+  ) {
+    return null;
+  }
+
+  if (programm.tracking?.provider === 'awin') {
+    if (kontext === undefined) return null;
+    const referenzen = [
+      kontext.verticalRef,
+      kontext.placementRef,
+      kontext.contentRef,
+      kontext.pageSlug,
+    ].map(sichereAwinReferenz);
+    if (referenzen.some((wert) => wert === null)) return null;
+
+    const tracking = new URL(`https://${AWIN_TRACKING_HOST}/cread.php`);
+    tracking.searchParams.set('awinmid', programm.tracking.advertiserId);
+    tracking.searchParams.set('awinaffid', programm.tracking.publisherId);
+    tracking.searchParams.set('clickref', referenzen[0] as string);
+    tracking.searchParams.set('clickref2', referenzen[1] as string);
+    tracking.searchParams.set('clickref3', referenzen[2] as string);
+    tracking.searchParams.set('clickref4', referenzen[3] as string);
+    tracking.searchParams.set('ued', ziel.toString());
+    return tracking.toString();
+  }
+
   const kennung = programm.campaignIds[0];
   if (kennung !== undefined) {
     // Genau eine statische Kennung, aus der Konfiguration. Vorhandene

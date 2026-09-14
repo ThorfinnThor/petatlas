@@ -17,6 +17,8 @@ sind, und die öffentliche Veröffentlichung ausdrücklich autorisiert.
 - signierter Reiseregelstand `eu-intra-2026` für den ausdrücklich beschriebenen Umfang
 - allgemeine Einordnung von Ergänzungsfuttermitteln ohne Dosierungs- oder Therapierat
 - statische, gekennzeichnete Amazon-Suchlinks mit `tag=wauandmiau-21`
+- statische, gekennzeichnete Fressnapf-Kategorielinks über Awin
+- neutrale Tierversicherungsinformation mit gekennzeichnetem HanseMerkur-Link über Awin
 
 Die Freigabe bezieht sich auf den durch CI und Produktionsbuild geprüften Repository-Stand.
 Ändern sich freigegebene Fachinhalte, greift weiterhin die jeweilige Versions- oder
@@ -24,11 +26,10 @@ Inhaltsprüfung.
 
 ## Bewusst nicht aktivierter Umfang
 
-Nicht zum Produktionsumfang gehören Versicherungsangebote, Amazon- oder andere
-Produktbilder, Preis- und Angebotsfeeds, Analyse-Tracking, Werbe-Pixel, Nutzerkonten,
-Uploads oder ein eigener Vertragsabschluss auf Wau & Miau. Die zugehörigen Gates und
-Integrationen bleiben deaktiviert. Ihre spätere Aktivierung braucht eine eigene Änderung
-mit den dann erforderlichen Nachweisen.
+Nicht zum Produktionsumfang gehören ein Tarifvergleich, Beitrags- oder Leistungsdaten von
+Versicherern, Amazon- oder andere Händlerbilder, Preis- und Angebotsfeeds, eigenes
+Analyse-Tracking, Werbe-Pixel, Nutzerkonten, Uploads oder ein Vertragsabschluss auf Wau & Miau.
+Ihre spätere Aktivierung braucht eine eigene Änderung mit den dann erforderlichen Nachweisen.
 
 ## Technische Veröffentlichung
 

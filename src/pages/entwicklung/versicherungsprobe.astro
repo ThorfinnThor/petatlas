@@ -47,9 +47,9 @@ const beispielProgramm = PartnerProgramSchema.parse({
   notes: ['Synthetisches Beispiel für die Probe-Seite.'],
 });
 
-const marktMitCommerce = {
+const marktMitPartnern = {
   ...market,
-  featureFlags: { ...market.featureFlags, commerce: true },
+  featureFlags: { ...market.featureFlags, partners: true },
 };
 
 // Der echte Zustand: Feature aus, keine Programme, also kein Hinweis.
@@ -86,7 +86,7 @@ const echteEntscheidung = partnerHinweisErlaubt({
         <h2>Zustand 2: synthetisches Programm, erlaubte Platzierung</h2>
         <InsuranceDisclosure programm={beispielProgramm} />
         <PartnerCta
-          market={marktMitCommerce}
+          market={marktMitPartnern}
           placement="information_page"
           stichtag="2026-09-07"
           programme={[beispielProgramm]}
@@ -95,7 +95,7 @@ const echteEntscheidung = partnerHinweisErlaubt({
         <h2>Zustand 3: dasselbe Programm, nicht erlaubte Platzierung</h2>
         <p>Hier darf nichts stehen — das Programm erlaubt nur die Informationsseite.</p>
         <PartnerCta
-          market={marktMitCommerce}
+          market={marktMitPartnern}
           placement="neutral_list"
           stichtag="2026-09-07"
           programme={[beispielProgramm]}

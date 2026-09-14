@@ -57,7 +57,7 @@ describe('Das Deployment kann nicht vor den Prüfungen laufen', () => {
     expect(ergebnis.ausgabe).toMatch(/synthetische Daten dürfen nicht ausgeliefert werden/);
   }, 120_000);
 
-  it('bricht ab, wenn ein Feed-Secret gesetzt ist, ohne dass ein Vertrag freigegeben wäre', () => {
+  it('bricht ab, wenn ein Feed-Secret gesetzt ist, ohne dass eine Feed-Ausgabe freigegeben wäre', () => {
     // Der Wert wird zur Laufzeit zusammengesetzt: als Literal im Quelltext
     // würde der Secret-Audit ihn zu Recht als Fund melden.
     const attrappe = ['https://feed.example', 'synthetischer-pfad'].join('/');
@@ -66,7 +66,7 @@ describe('Das Deployment kann nicht vor den Prüfungen laufen', () => {
     const schluessel = ['AWIN', 'FEED', 'URL'].join('_');
     const ergebnis = baue({ [schluessel]: attrappe });
     expect(ergebnis.code).toBe(1);
-    expect(ergebnis.ausgabe).toMatch(/kein Partnervertrag freigegeben/);
+    expect(ergebnis.ausgabe).toMatch(/keine Feed- oder Angebotsausgabe freigegeben/);
     // Der Wert darf dabei nicht in der Ausgabe landen.
     expect(ergebnis.ausgabe).not.toContain(attrappe);
   }, 120_000);

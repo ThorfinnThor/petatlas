@@ -248,7 +248,7 @@ export function schreibeAusgabe(pfad: string, inhalt: JsonValue): void {
 
 const ZIEL = 'dist/data/v1/commerce/de/offers.json';
 
-/** No partner contract is configured. Remove stale offers on every build. */
+/** No product feed is configured. Remove stale feed offers on every build. */
 export async function prepareCommerce(
   env: Readonly<Record<string, string | undefined>>,
 ): Promise<void> {
@@ -256,11 +256,11 @@ export async function prepareCommerce(
   rmSync('.generated/commerce.json', { force: true });
   if (secretStand(env).some((entry) => entry.vorhanden)) {
     throw new CommerceBuildError(
-      'Feed-Secret gesetzt, aber kein Partnervertrag freigegeben. Bitte zuerst Vertrag und Ausgabeformen konfigurieren.',
+      'Feed-Secret gesetzt, aber keine Feed- oder Angebotsausgabe freigegeben. Bitte zuerst Feed-Vertrag und Ausgabeformen konfigurieren.',
     );
   }
   console.log(
-    'Keine Partnerangebote konfiguriert; redaktionelle Herstellerangaben bleiben verfügbar.',
+    'Kein Angebotsfeed konfiguriert; statische Partnerlinks und redaktionelle Herstellerangaben bleiben verfügbar.',
   );
 }
 

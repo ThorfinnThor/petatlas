@@ -27,6 +27,7 @@ export type RouteKey =
   | 'toys'
   | 'food'
   | 'supplements'
+  | 'insurance'
   | 'sources'
   | 'dataStatus'
   | 'imprint'
@@ -58,6 +59,7 @@ export const ROUTES: readonly RouteDefinition[] = [
   { key: 'toys', requiresFeature: 'toys', indexable: true },
   { key: 'food', requiresFeature: 'food', indexable: true },
   { key: 'supplements', requiresFeature: 'food', indexable: true },
+  { key: 'insurance', requiresFeature: 'partners', indexable: true },
   { key: 'sources', requiresFeature: null, indexable: true },
   { key: 'dataStatus', requiresFeature: null, indexable: true },
   // M18-05: Methodik und Barrierefreiheit gehören zu den Pflicht- und

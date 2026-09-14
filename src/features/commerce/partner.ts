@@ -109,10 +109,10 @@ export function partnerHinweisErlaubt(anfrage: PartnerAnfrage): PartnerEntscheid
   const { market, placement, stichtag } = anfrage;
   const kandidaten = anfrage.programme ?? VERSICHERUNG;
 
-  if (!isFeatureEnabled(market, 'commerce')) {
+  if (!isFeatureEnabled(market, 'partners')) {
     return {
       erlaubt: false,
-      grund: `Feature "commerce" ist im Markt ${market.id} nicht eingeschaltet.`,
+      grund: `Feature "partners" ist im Markt ${market.id} nicht eingeschaltet.`,
       programm: null,
     };
   }

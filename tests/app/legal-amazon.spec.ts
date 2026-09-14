@@ -3,14 +3,23 @@ import editorial from '../../content-data/products/editorial.json' with { type: 
 import AxeBuilder from '@axe-core/playwright';
 
 for (const width of [390, 1440]) {
-  test(`operator, privacy and Amazon links at ${width}px`, async ({ page }) => {
+  test(`operator, privacy and affiliate links at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     const remote: string[] = [];
     page.on('request', (request) => {
-      if (/amazon\.|amazon-adsystem|ssl-images-amazon/.test(new URL(request.url()).hostname))
+      if (
+        /amazon\.|amazon-adsystem|ssl-images-amazon|awin1\.com/.test(
+          new URL(request.url()).hostname,
+        )
+      )
         remote.push(request.url());
     });
-    for (const path of ['impressum', 'datenschutz', 'ergaenzungsfuttermittel']) {
+    for (const path of [
+      'impressum',
+      'datenschutz',
+      'ergaenzungsfuttermittel',
+      'tierversicherung',
+    ]) {
       expect((await page.goto(`/de-de/${path}/`))?.status()).toBe(200);
       expect(await page.locator('main').innerText()).not.toContain(
         'Betreiberangaben liegen nicht vor',
@@ -24,6 +33,7 @@ for (const width of [390, 1440]) {
       if (path === 'datenschutz') {
         for (const text of [
           'Amazon-Partnerlinks',
+          'Awin-Partnerlinks',
           'Cloudflare',
           'Art. 21 DSGVO',
           'Berliner Beauftragte',
@@ -35,7 +45,15 @@ for (const width of [390, 1440]) {
         await expect(page.locator('main')).not.toContainText('Letzte Quellenprüfung');
         await expect(page.locator('main')).not.toContainText('Fachliche Verantwortung');
         await expect(page.locator('main')).not.toContainText('Freigegeben am');
-        await expect(page.locator('main a[rel~="sponsored"]')).toHaveCount(6);
+        await expect(page.locator('.supplement-products a[rel~="sponsored"]')).toHaveCount(6);
+        const fressnapfLinks = page.locator('.retail-partner a[rel~="sponsored"]');
+        await expect(fressnapfLinks).toHaveCount(2);
+        for (const link of await fressnapfLinks.all()) {
+          const url = new URL((await link.getAttribute('href'))!);
+          expect(url.hostname).toBe('www.awin1.com');
+          expect(url.searchParams.get('awinmid')).toBe('14757');
+          expect(url.searchParams.get('awinaffid')).toBe('3037577');
+        }
         await expect(page.locator('.supplement-products article')).toHaveCount(6);
         await expect(page.locator('.supplement-products img')).toHaveCount(6);
         await expect(
@@ -48,6 +66,15 @@ for (const width of [390, 1440]) {
           expect(url.hostname).toBe('www.amazon.de');
           expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
         }
+      }
+      if (path === 'tierversicherung') {
+        await expect(page.getByRole('heading', { name: 'Tierversicherung prüfen' })).toBeVisible();
+        const link = page.locator('main a[rel~="sponsored"]');
+        await expect(link).toHaveCount(1);
+        const url = new URL((await link.getAttribute('href'))!);
+        expect(url.hostname).toBe('www.awin1.com');
+        expect(url.searchParams.get('awinmid')).toBe('11705');
+        expect(url.searchParams.get('awinaffid')).toBe('3037577');
       }
       expect(
         (

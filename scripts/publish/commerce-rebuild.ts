@@ -2,9 +2,9 @@
  * M17-03 — Braucht der Warenkatalog überhaupt einen neuen Build?
  *
  * Der Feedabruf kostet Vertragsdaten, Zeit und fremde Bandbreite. Er ist nur
- * gerechtfertigt, wenn es mindestens ein zugelassenes Warenprogramm für einen
- * aktiven Markt gibt. Solange `config/publishers/commerce/programs.json` leer
- * ist — der heutige Normalzustand, siehe M13-06 —, lautet die Antwort nein.
+ * gerechtfertigt, wenn der Angebotsfeed ausdrücklich freigegeben ist und es
+ * mindestens ein zugelassenes Warenprogramm für einen aktiven Markt gibt.
+ * Statische Partnerlinks allein lösen keinen Feedabruf aus.
  *
  * Das ist kein Fehlschlag. Ein täglicher Lauf, der jeden Tag „nichts zu tun“
  * meldet, tut genau das, wofür er da ist.
@@ -16,6 +16,7 @@ import { appendFileSync } from 'node:fs';
 
 import { enabledMarkets } from '../../src/domain/market.ts';
 import { commerceProgramme, zulassungGilt } from '../../src/features/commerce/partner.ts';
+import { commerceStatus, type OfferFeedStatus } from '../../src/features/commerce/status.ts';
 
 export interface RebuildEntscheidung {
   readonly noetig: boolean;
@@ -27,7 +28,16 @@ export function entscheide(
   stichtag: string = new Date().toISOString().slice(0, 10),
   programme = commerceProgramme(),
   maerkte = enabledMarkets().map((markt) => markt.id),
+  feedStatus: OfferFeedStatus = commerceStatus().offerFeedStatus.status,
 ): RebuildEntscheidung {
+  if (feedStatus !== 'approved') {
+    return {
+      noetig: false,
+      begruendung: `Der Angebotsfeed ist ${feedStatus}; statische Partnerlinks benötigen keinen Feedabruf.`,
+      programme: [],
+    };
+  }
+
   const gueltig = programme.filter(
     (programm) =>
       programm.markets.some((markt) => maerkte.includes(markt)) &&

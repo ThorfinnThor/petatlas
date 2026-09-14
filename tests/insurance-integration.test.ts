@@ -13,11 +13,11 @@ import {
   werbekennzeichnung,
 } from '../src/features/commerce/partner.ts';
 
-const HEUTE = '2026-09-07';
+const HEUTE = '2026-09-14';
 
-function markt(commerce: boolean, id = 'DE'): MarketConfig {
+function markt(partners: boolean, id = 'DE'): MarketConfig {
   const basis = requireMarket(id);
-  return { ...basis, featureFlags: { ...basis.featureFlags, commerce } };
+  return { ...basis, featureFlags: { ...basis.featureFlags, partners } };
 }
 
 /** Synthetisches Programm auf einer reservierten Testdomain. */
@@ -62,9 +62,10 @@ function durchlauf(programme: readonly PartnerProgram[], m = markt(true)) {
   };
 }
 
-describe('Der tatsächliche Zustand: kein Partner', () => {
-  it('liefert keine Programme aus', () => {
-    expect(insuranceProgramme()).toEqual([]);
+describe('Der tatsächliche Zustand: freigegebener Partner', () => {
+  it('liefert das bestätigte Programm aus', () => {
+    expect(insuranceProgramme()).toHaveLength(1);
+    expect(insuranceProgramme()[0]?.programId).toBe('hansemerkur-de');
   });
 
   it('bleibt informativ: alle Hinweistexte stehen weiterhin', () => {
@@ -76,11 +77,10 @@ describe('Der tatsächliche Zustand: kein Partner', () => {
     expect(ergebnis.hinweise.length).toBeGreaterThanOrEqual(5);
   });
 
-  it('enthält in der ausgelieferten Konfiguration keine Provision und kein Angebot', () => {
+  it('enthält in der ausgelieferten Konfiguration keine Provisionshöhe oder Tarifpreise', () => {
     const roh = readFileSync('config/publishers/insurance/programs.json', 'utf8');
-    for (const wort of ['commission', 'provision', 'payout', 'cpa', 'cpl', 'beitrag', 'tarif']) {
-      expect(roh.toLowerCase(), wort).not.toContain(wort);
-    }
+    expect(roh).not.toMatch(/\d+([.,]\d+)?\s*(€|EUR|Prozent|%)/i);
+    expect(roh.toLowerCase()).not.toContain('commissionrate');
   });
 });
 
@@ -130,7 +130,7 @@ describe('Gesperrte Zustände', () => {
   it('Feature aus: auch ein gültiger Vertrag erzeugt nichts', () => {
     const ergebnis = durchlauf([programm()], markt(false));
     expect(ergebnis.entscheidung.erlaubt).toBe(false);
-    expect(ergebnis.entscheidung.grund).toContain('commerce');
+    expect(ergebnis.entscheidung.grund).toContain('partners');
   });
 
   it('fehlende Werbekennzeichnung: lieber kein Hinweis als ein ungekennzeichneter', () => {

@@ -15,7 +15,7 @@ test('sagt ohne Partner, dass es keinen gibt, statt leer zu bleiben', async ({ p
   await page.goto(PROBE);
   await expect(page.locator('[data-testid="kein-partner"]')).toBeVisible();
   await expect(page.locator('[data-testid="echte-begruendung"]')).toContainText(
-    /kein Partnerprogramm|commerce/,
+    /kein Partnerprogramm|partners/,
   );
 });
 

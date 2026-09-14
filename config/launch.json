@@ -53,14 +53,20 @@
       "note": "Der signierte Regelstand für den ausdrücklich begrenzten Reiseumfang ist bestätigt."
     },
     "insuranceAffiliate": {
-      "approved": false,
+      "approved": true,
       "owner": "Betreiber mit Rechtsprüfung",
-      "note": "Kein individualisierter Tarifvergleich."
+      "approvedBy": "Schayan Yousefian",
+      "approvedAt": "2026-09-14",
+      "evidence": "docs/reviews/insurance.md",
+      "note": "HanseMerkur über Awin freigegeben; nur gekennzeichnete Weiterleitung auf einer neutralen Informationsseite, kein individualisierter Tarifvergleich."
     },
     "commerceAffiliate": {
-      "approved": false,
+      "approved": true,
       "owner": "Betreiber",
-      "note": "Partnerverträge und erlaubte Anzeigefelder."
+      "approvedBy": "Schayan Yousefian",
+      "approvedAt": "2026-09-14",
+      "evidence": "docs/reviews/commerce-partner.md",
+      "note": "Fressnapf über Awin freigegeben; statische Kategorie-Deeplinks ohne Preis-, Verfügbarkeits- oder Bildfeed."
     },
     "adsTracking": {
       "approved": false,

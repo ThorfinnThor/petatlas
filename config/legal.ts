@@ -32,8 +32,8 @@ export interface Pflichtangabe {
 
 /**
  * Werbung und Tracking. Die Werte werden **abgeleitet**, nicht behauptet:
- * sie folgen aus den Launch-Gates und aus der Tatsache, dass kein einziges
- * Partnerprogramm freigegeben ist.
+ * sie folgen aus den Launch-Gates, statischen Partnerfreigaben und der
+ * tatsächlich aktivierten Amazon-Konfiguration.
  */
 export interface WerbeStand {
   readonly anzeigenAktiv: boolean;
@@ -90,7 +90,7 @@ export const PFLICHTANGABEN: readonly Pflichtangabe[] = [
     ort: 'Angebots- und Versicherungsbausteine',
     zustaendig: 'Betreiber',
     bemerkung:
-      'Partnerkarten tragen „Anzeige“, die betreiberseitig beauftragten Amazon-Textlinks „Werbung“, jeder Partnerlink `rel="sponsored nofollow noopener"`. Ohne freigegebenes Programm entsteht ohnehin kein Link (tests/e2e/versicherung.spec.ts, tests/affiliate-links.test.ts).',
+      'Partnerkarten tragen „Anzeige“, Amazon- und Awin-Links „Werbung“, jeder Partnerlink `rel="sponsored nofollow noopener"`. Awin-Links enthalten nur statische ClickRefs und entstehen ausschließlich aus freigegebenen Programmeinträgen (tests/e2e/versicherung.spec.ts, tests/affiliate-links.test.ts).',
   },
   {
     id: 'methodik',

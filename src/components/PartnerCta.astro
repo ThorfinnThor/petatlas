@@ -18,7 +18,11 @@
 import type { MarketConfig } from '../domain/market.ts';
 import type { PartnerPlacement, PartnerProgram } from '../domain/schemas/partner.ts';
 import { partnerHinweisErlaubt, type PartnerEntscheidung } from '../features/commerce/partner.ts';
-import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../features/commerce/links.ts';
+import {
+  PARTNER_LINK_ATTRIBUTE,
+  partnerZiel,
+  type PartnerLinkKontext,
+} from '../features/commerce/links.ts';
 
 interface Props {
   market: MarketConfig;
@@ -30,9 +34,12 @@ interface Props {
    * Konfiguration; abweichend gesetzt wird das nur auf der Probe-Seite.
    */
   programme?: readonly PartnerProgram[];
+  description?: string;
+  linkLabel?: string;
+  linkContext?: PartnerLinkKontext;
 }
 
-const { market, placement, stichtag, programme } = Astro.props;
+const { market, placement, stichtag, programme, description, linkLabel, linkContext } = Astro.props;
 
 // Das Datum kommt von außen oder aus dem Build — nie aus der Uhr im Browser
 // des Besuchers, denn dann hinge die Auslieferung an dessen Systemzeit.
@@ -43,7 +50,7 @@ const entscheidung: PartnerEntscheidung = partnerHinweisErlaubt({
   stichtag: tag,
   ...(programme === undefined ? {} : { programme }),
 });
-const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm) : null;
+const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm, linkContext) : null;
 ---
 
 {
@@ -56,8 +63,8 @@ const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm) : null;
     >
       <p class="partner__kennzeichnung">Anzeige</p>
       <p>
-        {entscheidung.programm.advertiser} bietet Tierkrankenversicherungen an. Beiträge und
-        Leistungen stehen dort; diese Seite gibt dazu keine Einschätzung ab.
+        {description ??
+          `${entscheidung.programm.advertiser} bietet Tierkrankenversicherungen an. Beiträge und Leistungen stehen dort; diese Seite gibt dazu keine Einschätzung ab.`}
       </p>
       <p>
         <a
@@ -66,7 +73,7 @@ const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm) : null;
           rel={PARTNER_LINK_ATTRIBUTE.rel}
           target={PARTNER_LINK_ATTRIBUTE.target}
         >
-          Zum Anbieter {entscheidung.programm.advertiser}
+          {linkLabel ?? `Zum Anbieter ${entscheidung.programm.advertiser}`}
         </a>
         <span class="partner__hinweis"> (öffnet ein neues Fenster beim Anbieter)</span>
       </p>

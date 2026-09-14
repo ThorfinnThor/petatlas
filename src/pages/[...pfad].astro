@@ -28,6 +28,7 @@ import Supplements from '../components/pages/Supplements.astro';
 import Food from '../components/pages/Food.astro';
 import Home from '../components/pages/Home.astro';
 import Imprint from '../components/pages/Imprint.astro';
+import Insurance from '../components/pages/Insurance.astro';
 import Map from '../components/pages/Map.astro';
 import Privacy from '../components/pages/Privacy.astro';
 import Profile from '../components/pages/Profile.astro';
@@ -80,6 +81,7 @@ const WEITE_SEITEN: readonly RouteKey[] = [
   'care',
   'toys',
   'food',
+  'insurance',
 ];
 ---
 
@@ -92,9 +94,10 @@ const WEITE_SEITEN: readonly RouteKey[] = [
   {routeKey === 'favorites' && <Favorites />}
   {routeKey === 'travel' && <Travel />}
   {routeKey === 'care' && <Care />}
-  {routeKey === 'toys' && <Toys />}
+  {routeKey === 'toys' && <Toys market={market} />}
   {routeKey === 'food' && <Food />}
-  {routeKey === 'supplements' && <Supplements />}
+  {routeKey === 'supplements' && <Supplements market={market} />}
+  {routeKey === 'insurance' && <Insurance market={market} />}
   {routeKey === 'sources' && <Sources />}
   {routeKey === 'dataStatus' && <DataStatusPage />}
   {routeKey === 'imprint' && <Imprint />}

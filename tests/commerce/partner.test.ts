@@ -16,11 +16,11 @@ import {
   zulassungGilt,
 } from '../../src/features/commerce/partner.ts';
 
-const HEUTE = '2026-09-07';
+const HEUTE = '2026-09-14';
 
-function mitCommerce(an: boolean): MarketConfig {
+function mitPartnern(an: boolean): MarketConfig {
   const markt = requireMarket('DE');
-  return { ...markt, featureFlags: { ...markt.featureFlags, commerce: an } };
+  return { ...markt, featureFlags: { ...markt.featureFlags, partners: an } };
 }
 
 /** Synthetisches Programm. Kein echter Anbieter, kein echter Vertrag. */
@@ -58,20 +58,20 @@ describe('Ausgelieferte Konfiguration', () => {
     expect(PartnerRegistrySchema.safeParse(roh).success).toBe(true);
   });
 
-  it('führt keinen Vertrag, weil es keinen gibt', () => {
-    expect(insuranceProgramme()).toEqual([]);
+  it('führt die bestätigte HanseMerkur-Zulassung', () => {
+    expect(insuranceProgramme()).toHaveLength(1);
+    expect(insuranceProgramme()[0]?.programId).toBe('hansemerkur-de');
   });
 
-  it('erzeugt damit an keiner erlaubten Stelle einen Hinweis', () => {
+  it('erlaubt nur die ausdrücklich eingetragenen Stellen', () => {
     for (const platz of ['information_page', 'page_footer_section', 'neutral_list'] as const) {
       const entscheidung = partnerHinweisErlaubt({
-        market: mitCommerce(true),
+        market: mitPartnern(true),
         placement: platz,
         stichtag: HEUTE,
       });
-      expect(entscheidung.erlaubt, platz).toBe(false);
-      expect(entscheidung.programm).toBeNull();
-      expect(entscheidung.grund).toContain('kein Partnerprogramm');
+      expect(entscheidung.erlaubt, platz).toBe(true);
+      expect(entscheidung.programm?.programId).toBe('hansemerkur-de');
     }
   });
 });
@@ -132,16 +132,16 @@ describe('Freigabelogik', () => {
 
   it('lässt einen Hinweis nur mit eingeschaltetem Feature zu', () => {
     const aus = partnerHinweisErlaubt({
-      market: mitCommerce(false),
+      market: mitPartnern(false),
       placement: 'information_page',
       stichtag: HEUTE,
       programme: eins,
     });
     expect(aus.erlaubt).toBe(false);
-    expect(aus.grund).toContain('commerce');
+    expect(aus.grund).toContain('partners');
 
     const an = partnerHinweisErlaubt({
-      market: mitCommerce(true),
+      market: mitPartnern(true),
       placement: 'information_page',
       stichtag: HEUTE,
       programme: eins,
@@ -153,7 +153,7 @@ describe('Freigabelogik', () => {
   it('gilt nur im vertraglich erfassten Markt', () => {
     const nurUs = [programm({ markets: ['US'] })];
     const entscheidung = partnerHinweisErlaubt({
-      market: mitCommerce(true),
+      market: mitPartnern(true),
       placement: 'information_page',
       stichtag: HEUTE,
       programme: nurUs,
@@ -164,7 +164,7 @@ describe('Freigabelogik', () => {
 
   it('gilt nur an der vertraglich erlaubten Stelle', () => {
     const entscheidung = partnerHinweisErlaubt({
-      market: mitCommerce(true),
+      market: mitPartnern(true),
       placement: 'neutral_list',
       stichtag: HEUTE,
       programme: eins,
@@ -178,7 +178,7 @@ describe('Freigabelogik', () => {
       PartnerProgramSchema.parse({ ...programm(), status: 'ended', approval: null }),
     ];
     const entscheidung = partnerHinweisErlaubt({
-      market: mitCommerce(true),
+      market: mitPartnern(true),
       placement: 'information_page',
       stichtag: HEUTE,
       programme: beendet,
@@ -212,7 +212,7 @@ describe('Freigabelogik', () => {
 
   it('begründet auch die Erlaubnis, nicht nur die Ablehnung', () => {
     const entscheidung = partnerHinweisErlaubt({
-      market: mitCommerce(true),
+      market: mitPartnern(true),
       placement: 'information_page',
       stichtag: HEUTE,
       programme: eins,

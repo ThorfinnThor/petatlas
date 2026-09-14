@@ -12,7 +12,7 @@ const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 <h1>Datenschutz</h1>
 <p>
   Diese Datenschutzerklärung beschreibt die Verarbeitung personenbezogener Daten auf Wau &amp; Miau.
-  Stand: 10. September 2026.
+  Stand: 14. September 2026.
 </p>
 <h2>Verantwortlicher und Kontakt</h2>
 {
@@ -184,6 +184,32 @@ const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
           Amazon-Datenschutzerklärung
         </a>
         . Du kannst Händler unabhängig von unseren Partnerlinks besuchen.
+      </p>
+    </>
+  )
+}
+{
+  market.featureFlags.partners && (
+    <>
+      <h2>Awin-Partnerlinks</h2>
+      <p>
+        Auf den Seiten zu Spielzeug, Ergänzungsfuttermitteln und Tierversicherungen verwenden wir
+        als „Werbung“ oder „Anzeige“ gekennzeichnete Links über das Affiliate-Netzwerk Awin. Die
+        Links enthalten unsere feste Publisher-ID, die jeweilige Advertiser-ID und vier statische
+        Angaben zur Seite und Linkposition. Profilangaben, Rechenergebnisse und individuelle
+        Besucherkennungen hängen wir nicht an. Auf Wau &amp; Miau laden wir dafür keine Awin-Skripte
+        oder Pixel und setzen keine Awin-Cookies.
+      </p>
+      <p>
+        Erst wenn du einen Partnerlink öffnest, stellt dein Browser eine Verbindung zu Awin und
+        anschließend zum jeweiligen Anbieter her. Dabei können insbesondere IP-Adresse, technische
+        Verbindungsdaten und die im Link enthaltenen statischen Kennungen verarbeitet sowie Cookies
+        oder ähnliche Verfahren zur Zuordnung eines Kaufs oder Abschlusses eingesetzt werden.
+        Weitere Informationen stehen in der{' '}
+        <a href="https://www.awin.com/de/datenschutzerklarung" rel="noopener">
+          Datenschutzerklärung von Awin
+        </a>
+        . Du kannst Fressnapf und HanseMerkur auch unabhängig von unseren Partnerlinks besuchen.
       </p>
     </>
   )

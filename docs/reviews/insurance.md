@@ -1,6 +1,6 @@
 # Freigabe des Versicherungsmoduls
 
-**Status: nicht freigegeben.** Es gibt keinen Partnervertrag und keine Prüfung der konkreten Ausgestaltung. `config/publishers/insurance/programs.json` ist leer, das Feature `commerce` ist im Markt DE aus, und die Bausteine erzeugen ohne beides keinen einzigen Anbieterlink.
+**Status: freigegeben am 14.09.2026.** Der Betreiber hat die Annahme von `wauandmiau.de` im Awin-Programm HanseMerkur Versicherungsgruppe DE (Advertiser-ID 11705) sowie die bereits erfolgten menschlichen Fach- und Rechtsfreigaben bestätigt. Die Umsetzung bleibt auf eine gekennzeichnete Weiterleitung von der neutralen Informationsseite `/de-de/tierversicherung/` beschränkt. Sie vergleicht keine Tarife, erhebt keine Tierdaten und gibt keine individuelle Empfehlung. Details: `docs/reviews/awin-partners-2026-09-14.md`.
 
 Dieses Dokument ist die Checkliste für den Tag, an dem sich das ändern soll. Es ist **keine Rechtsberatung**, sondern eine Aufstellung dessen, was vor einer Freigabe beantwortet und belegt sein muss.
 
@@ -15,7 +15,7 @@ Dieses Dokument ist die Checkliste für den Tag, an dem sich das ändern soll. E
 | Inhaltsprüfung | `tests/content-policy.test.ts` — verbotene Aussagen im Wortlaut, auch im Quelltext der Oberfläche |
 | Zustandsprüfung | `tests/insurance-integration.test.ts` — sieben gesperrte Zustände |
 
-Es fehlt also **nichts Technisches**. Es fehlt der Vertrag und die Prüfung.
+Die nachfolgende Checkliste bleibt als Betriebsanforderung erhalten. Die Freigabe gilt nur für die oben beschriebene Ausgestaltung.
 
 ## Prüfpunkte vor einer Freigabe
 
@@ -30,12 +30,12 @@ Es fehlt also **nichts Technisches**. Es fehlt der Vertrag und die Prüfung.
 
 ## Freigabeschritte
 
-1. Vertragsreferenz, Freigabedatum und Prüfnachweis in diesem Dokument eintragen — mit Datum und Namen der prüfenden Person, und mit der ausdrücklichen Angabe, worauf sich die Prüfung stützt.
+1. Vertragsreferenz, Freigabedatum und Prüfnachweis aktuell halten — mit Datum und Namen der prüfenden Person, und mit der ausdrücklichen Angabe, worauf sich die Prüfung stützt.
 2. Programm in `config/publishers/insurance/programs.json` eintragen: `status: "approved"`, `approval` vollständig, Zielhosts, Kampagnenkennungen und Platzierungen genau nach Vertrag.
 3. `npx vitest run tests/affiliate-links.test.ts tests/insurance-integration.test.ts tests/content-policy.test.ts` ausführen — die Konfiguration muss diese Tests bestehen, ohne dass ein Test geändert wird.
 4. Eine Seite bestimmen, auf der der Hinweis stehen darf, und sie in der Ausnahmeliste von `tests/content-policy.test.ts` eintragen. Der Test erzwingt diese Entscheidung.
-5. Feature `commerce` im Markt DE einschalten und die Datenschutzerklärung ergänzen.
-6. Erst danach ein Produktionsdeployment.
+5. Feature `partners` im öffentlichen Real-Data-Profil eingeschaltet lassen und die Datenschutzerklärung bei jeder Änderung des Linkverhaltens mitprüfen.
+6. Vor jedem Produktionsdeployment die Freigabe- und Linktests ausführen.
 
 ## Anmerkung
 

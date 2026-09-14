@@ -66,6 +66,16 @@ export const PartnerApprovalSchema = z
   .strict();
 export type PartnerApproval = z.infer<typeof PartnerApprovalSchema>;
 
+export const PartnerTrackingSchema = z
+  .object({
+    provider: z.literal('awin'),
+    /** Öffentliche Kennungen aus dem Awin-Link-Builder, keine Zugangsdaten. */
+    publisherId: z.string().regex(/^\d+$/),
+    advertiserId: z.string().regex(/^\d+$/),
+  })
+  .strict();
+export type PartnerTracking = z.infer<typeof PartnerTrackingSchema>;
+
 export const PartnerProgramSchema = z
   .object({
     programId: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Kleinbuchstaben und Bindestriche.'),
@@ -84,6 +94,8 @@ export const PartnerProgramSchema = z
     landingUrl: z.url().nullable(),
     /** Statische Kampagnenkennungen. Keine dynamischen Parameter. */
     campaignIds: z.array(z.string().regex(/^[A-Za-z0-9_-]+$/)),
+    /** Optionaler, rein statischer Linkaufbau des Partnernetzwerks. */
+    tracking: PartnerTrackingSchema.optional(),
     allowedPlacements: z.array(PartnerPlacement),
     /** Wortlaut der Werbekennzeichnung, wie sie erscheinen muss. */
     disclosureText: z.string().min(1),
