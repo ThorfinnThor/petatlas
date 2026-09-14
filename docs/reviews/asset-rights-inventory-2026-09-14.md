@@ -33,11 +33,18 @@ bloße externe Quellenverlinkung bleibt davon getrennt.
 | `play-cat-home.png` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `a9e75467e8a334c2cb8374065ff5fcb966df7eecfe8a1875e6deef99df3514f7` | Katzeninhalte |
 | `play-dog-alpine-lake.png` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `b43801de0af9f57b569cdf4bd4246219477495b0800f0807ccec6f697794e9b7` | Hunde- und Spielinhalte |
 | `travel-human-dog-sunset.png` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `8c8b79d76b1be070e65a598826dc414a94e6aa5e8f24ac37b6bc29bb94a0724b` | Reiseinhalte |
+| `symbol-cat.avif` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `044a9401ece187d6896558da9683f3a2c653958432dfdee01a5c343e390306d9` | gekennzeichnetes Symbolbild für Katzenspielzeug |
+| `symbol-chew.avif` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `f0380a7c5c257ff2c32659eebffa6080500351cf1c19107df2d9685122ed6e8c` | gekennzeichnetes Symbolbild für Kauspielzeug |
+| `symbol-fetch.avif` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `74df4ccc95182df0e0ce7d7df7d9a2baea3f378cc95ef39db9f759db2504aa20` | gekennzeichnetes Symbolbild für Apportierspielzeug |
+| `symbol-puzzle.avif` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `f2832bdd8b1ad44f312bfd71febd25f3e5abb19879f997d1f5acdcecd8799fff` | gekennzeichnetes Symbolbild für Beschäftigungsspielzeug |
+| `symbol-supplements-cat.avif` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `9141dc9e81e0f40f0d995d732955af4d7402935789ac89b258ecaf60ef1e3706` | gekennzeichnetes Symbolbild für Ergänzungsfuttermittel für Katzen |
+| `symbol-supplements-dog.avif` | mit OpenAI Image Generation für dieses Projekt erzeugt | SHA-256 `9cd39c54ac398e7a1a3aad057db6e370cf3c2ca81ee1e837929922e9776f1007` | gekennzeichnetes Symbolbild für Ergänzungsfuttermittel für Hunde |
 | Inline-Icons | im Repository definierte einfache SVG-Pfade | `src/components/ui/Icon.astro` | rein dekorative/navigationale Symbole |
 
 Die PNG-Originale liegen in `design-assets/`; `scripts/design/images.ts` erzeugt die
 ausgelieferten AVIF- und WebP-Varianten. `design-assets/README.md` protokolliert Zweck und
-Erstellungsweg. Die Bilder stellen weder konkrete Produkte noch gelistete Praxen oder
+Erstellungsweg. Die Produktsymbole werden in `docs/GENERATED_PRODUCT_SYMBOLS.md` dokumentiert.
+Die Bilder stellen weder konkrete Produkte noch gelistete Praxen oder
 unabhängige Produkttests dar. Es werden keine Herstellerfotos, Logos oder Amazon-Bilder
 ausgeliefert.
 
@@ -63,5 +70,5 @@ Nachweise, Quell-Snapshots oder Originalbilder versehentlich in `dist/` gelangen
 Der Betreiber hat am 14.09.2026 den Abschluss der menschlichen Rechteprüfung für die in
 diesem Inventar aufgeführten Ressourcen und Ausgabeformen bestätigt. Die globale
 Datenrechtefreigabe verweist auf dieses Inventar. Nicht aufgeführte Partnerfeeds,
-Produktbilder, Preise und Logos bleiben technisch deaktiviert und sind von dieser
-Freigabe nicht erfasst.
+exakten Händler- oder Herstellerbilder, Preise und Logos bleiben technisch deaktiviert und sind
+von dieser Freigabe nicht erfasst. Die oben dokumentierten, eigenen Symbolbilder sind freigegeben.

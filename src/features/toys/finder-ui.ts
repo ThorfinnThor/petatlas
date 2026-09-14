@@ -38,6 +38,34 @@ function bedarfLesen(): Bedarf {
   return { species: art, weightKilograms: gewicht, needs };
 }
 
+function symbolbild(identity: ReturnType<typeof productIdentity>): {
+  readonly src: string;
+  readonly alt: string;
+} {
+  if (identity?.species === 'cat') {
+    return {
+      src: '/images/products/symbol-cat.avif',
+      alt: 'Symbolbild für Katzenspielzeug, keine Herstellerabbildung',
+    };
+  }
+  if (identity?.categoryId === 'fetch-toy') {
+    return {
+      src: '/images/products/symbol-fetch.avif',
+      alt: 'Symbolbild für Apportierspielzeug, keine Herstellerabbildung',
+    };
+  }
+  if (identity?.categoryId === 'chew-toy') {
+    return {
+      src: '/images/products/symbol-chew.avif',
+      alt: 'Symbolbild für Kauspielzeug, keine Herstellerabbildung',
+    };
+  }
+  return {
+    src: '/images/products/symbol-puzzle.avif',
+    alt: 'Symbolbild für Beschäftigungsspielzeug, keine Herstellerabbildung',
+  };
+}
+
 function trefferMarkup(treffer: Treffer): string {
   const configured = document.querySelector<HTMLFormElement>('#finder')?.dataset.amazonLinks;
   const expected = amazonSearchUrl(treffer.productId);
@@ -50,6 +78,7 @@ function trefferMarkup(treffer: Treffer): string {
     /* Missing or malformed configuration never creates a link. */
   }
   const identity = productIdentity(treffer.productId);
+  const bild = symbolbild(identity);
   const source = identity
     ? `<p><a href="${escape(identity.sourceUrl)}" rel="noopener">Herstellerangaben ansehen</a> · ${escape(identity.checkedAt)}</p>`
     : '';
@@ -68,6 +97,10 @@ function trefferMarkup(treffer: Treffer): string {
 
   return `
     <li data-produkt="${escape(treffer.productId)}" data-punkte="${treffer.punkte}">
+      <figure class="finder__bild">
+        <img src="${bild.src}" alt="${escape(bild.alt)}" width="720" height="720" loading="lazy" decoding="async">
+        <figcaption>Symbolbild</figcaption>
+      </figure>
       <h3>${escape(productIdentity(treffer.productId)?.name ?? treffer.productId)}</h3>
       <p class="finder__kategorie">${identity ? `${escape(identity.brand)} · ` : ''}Kategorie: ${escape(kategorie(treffer.categoryId)?.label ?? treffer.categoryId)}</p>
       ${identity ? `<p>${identity.facts.map(escape).join(' · ')}</p>` : ''}
