@@ -110,6 +110,7 @@ test('nennt Quelle, Fassung und was nicht enthalten ist', async ({ page }) => {
   await expect(page.getByText('Was der Rechner nicht kann')).toBeVisible();
   await expect(page.getByText('Arzneimittel und Verbrauchsmaterial')).toBeVisible();
   await expect(page.getByText('kein amtlicher Rechner')).toBeVisible();
+  await expect(page.getByText('keine Rechnung einer Tierarztpraxis')).toBeVisible();
 });
 
 test('ist ohne Maus bedienbar', async ({ page }) => {

@@ -82,10 +82,11 @@ function ergebnisTabelle(result: CostResult): string {
          </tr>`;
 
   return `
+    <h2 class="drucktitel">Unverbindliche Berechnungsübersicht zu Tierarztgebühren</h2>
     ${(result.warnings ?? []).map((warning) => `<p class="hilfe">${escape(warning)}</p>`).join('')}
     <p class="bill-summary"><strong>${geld(result.grossTotal.amountMinor)}</strong><br>Brutto für die ausgewählten Positionen, inklusive ${result.vatPercent} % Umsatzsteuer.</p>
     <table>
-      <caption>Rechnung, Fassung ${escape(result.catalogVersion)}</caption>
+      <caption>Berechnungsübersicht, Fassung ${escape(result.catalogVersion)}</caption>
       <thead>
         <tr>
           <th scope="col">Position</th>
@@ -102,7 +103,8 @@ function ergebnisTabelle(result: CostResult): string {
         <tr><td colspan="4">Summe brutto</td><td class="zahl" data-testid="brutto">${geld(result.grossTotal.amountMinor)}</td></tr>
       </tfoot>
     </table>
-    <p>Die Umsatzsteuer ist mit ${result.vatPercent} Prozent angenommen. Auslagen können abweichend behandelt werden.</p>`;
+    <p>Die Umsatzsteuer ist mit ${result.vatPercent} Prozent angenommen. Auslagen können abweichend behandelt werden.</p>
+    <p class="berechnung-hinweis"><strong>Unverbindliche Übersicht:</strong> Diese Übersicht ist keine Rechnung einer Tierarztpraxis und kein verbindlicher Kostenvoranschlag. Sie enthält nur die ausgewählten Leistungen. Welche Leistungen notwendig und gemeinsam abrechenbar sind und welche weiteren Kosten anfallen, klärt die behandelnde Praxis.</p>`;
 }
 
 function escape(wert: string): string {
@@ -268,7 +270,7 @@ export function rechnerStarten(): void {
     } catch (fehler) {
       // Ein Rechenfehler wird benannt, nicht verschluckt.
       const meldung =
-        fehler instanceof CostError ? fehler.message : 'Die Rechnung ist nicht möglich.';
+        fehler instanceof CostError ? fehler.message : 'Die Berechnung ist nicht möglich.';
       status!.textContent = meldung;
       ergebnis!.replaceChildren();
     }

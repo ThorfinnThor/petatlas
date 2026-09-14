@@ -33,7 +33,7 @@
     {
       "caseId": "mehr-als-fuenf-tiere",
       "label": "Mehr als fünf Tiere auf einer Reise",
-      "reason": "Ab dieser Zahl wird die Reise regelmäßig nicht mehr als privat behandelt, sondern nach anderen Vorschriften beurteilt."
+      "reason": "Dieser Check erfasst höchstens fünf Tiere. Für mehr als fünf Tiere gelten zusätzliche Voraussetzungen; unter bestimmten Bedingungen bestehen Ausnahmen, etwa bei Wettbewerben oder Ausstellungen. Solche Fälle werden hier nicht geprüft."
     },
     {
       "caseId": "gewerblich",

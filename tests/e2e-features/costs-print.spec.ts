@@ -20,8 +20,13 @@ test.describe('Druckansicht', () => {
   test('behält alles, was den Betrag erklärt', async ({ page }) => {
     await page.emulateMedia({ media: 'print' });
 
-    // Die Rechnung selbst bleibt vollständig.
+    // Die Berechnungsübersicht selbst bleibt vollständig.
     await expect(page.locator('#ergebnis table')).toBeVisible();
+    await expect(
+      page.getByRole('heading', {
+        name: 'Unverbindliche Berechnungsübersicht zu Tierarztgebühren',
+      }),
+    ).toBeVisible();
     await expect(page.locator('#ergebnis .fundstelle').first()).toBeVisible();
     await expect(page.getByTestId('brutto')).toBeVisible();
 
@@ -41,6 +46,7 @@ test.describe('Druckansicht', () => {
 
   test('bietet einen Druckknopf, der im Bildschirmmodus sichtbar ist', async ({ page }) => {
     await expect(page.locator('#drucken')).toBeVisible();
+    await expect(page.locator('#drucken')).toHaveText('Berechnungsübersicht drucken');
   });
 });
 

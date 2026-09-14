@@ -2,7 +2,7 @@
 /**
  * M08-04 — Tierarztkosten-Rechner.
  *
- * Die Rechnung ist aus den Einzelpositionen nachvollziehbar: jede Zeile
+ * Die Berechnungsübersicht ist aus den Einzelpositionen nachvollziehbar: jede Zeile
  * nennt Basisbetrag, Faktor, Menge und die Fundstelle in der Verordnung.
  *
  * Die Gebührendaten kommen als statische JSON-Datei über das Manifest; es
@@ -91,7 +91,12 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 </details>
 
 <SavedProfileButton />
-<ToolShell eingabeTitel="Eingaben" ergebnisTitel="Rechnung" ergebnisId="ergebnis-titel" sticky>
+<ToolShell
+  eingabeTitel="Eingaben"
+  ergebnisTitel="Berechnungsübersicht"
+  ergebnisId="ergebnis-titel"
+  sticky
+>
   <Fragment slot="eingabe">
     <ErrorSummary id="rechner-fehler" />
 
@@ -256,7 +261,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     >
     </div>
     <div class="drucken">
-      <button type="button" id="drucken" disabled>Rechnung drucken</button>
+      <button type="button" id="drucken" disabled>Berechnungsübersicht drucken</button>
       <p class="hilfe">
         Auf dem Ausdruck stehen Quelle, Fassung und die Fundstelle jeder Position.
       </p>
@@ -393,6 +398,16 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     display: block;
     color: var(--color-text-muted);
     font-size: var(--text-small);
+  }
+
+  :global(#ergebnis .drucktitel) {
+    display: none;
+  }
+
+  @media print {
+    :global(#ergebnis .drucktitel) {
+      display: block;
+    }
   }
 </style>
 

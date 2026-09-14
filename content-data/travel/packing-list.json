@@ -39,7 +39,7 @@
       "label": "Anzahl der Tiere prüfen",
       "category": "rule_task",
       "requirementId": "max-five-animals",
-      "note": "Ab sechs Tieren ist es keine private Verbringung mehr.",
+      "note": "Dieser Check erfasst höchstens fünf Tiere. Für mehr als fünf Tiere gelten zusätzliche Voraussetzungen; unter bestimmten Bedingungen bestehen Ausnahmen, etwa bei Wettbewerben oder Ausstellungen. Solche Fälle werden hier nicht geprüft.",
       "order": 5
     },
     {

@@ -70,6 +70,13 @@ describe('Packliste', () => {
       expect(eintrag.note.length, eintrag.itemId).toBeGreaterThan(30);
     }
   });
+
+  it('beschreibt mehr als fünf Tiere als Umfangsgrenze mit möglichen Ausnahmen', () => {
+    const tierzahl = reisePackliste().items.find((item) => item.itemId === 'tierzahl-pruefen');
+    expect(tierzahl?.note).toContain('höchstens fünf Tiere');
+    expect(tierzahl?.note).toContain('Ausnahmen');
+    expect(tierzahl?.note).not.toContain('keine private Verbringung');
+  });
 });
 
 describe('Zielländer', () => {
