@@ -16,6 +16,7 @@ import {
   navigationFor,
   redirectsFor,
   routeExists,
+  routeIsIndexable,
   routePath,
   subroutePath,
 } from '../src/lib/routes.ts';
@@ -62,6 +63,27 @@ describe('Pfade', () => {
     const us = withFeature(requireMarket('US'), 'costs', true);
     expect(routePath(us, 'costs')).toBe('/en-us/vet-costs/');
     expect(routePath(us, 'home')).toBe('/en-us/');
+  });
+});
+
+describe('Indexierungsentscheidung', () => {
+  it('hält persönliche und rechtliche Hilfsseiten aus Sitemap und Seitensuche', () => {
+    for (const key of [
+      'profile',
+      'favorites',
+      'dataStatus',
+      'imprint',
+      'privacy',
+      'accessibility',
+    ] as const) {
+      expect(routeIsIndexable(key), key).toBe(false);
+    }
+  });
+
+  it('lässt eigenständige Werkzeuge und Transparenzseiten indexieren', () => {
+    for (const key of ['home', 'costs', 'map', 'travel', 'toys', 'sources', 'method'] as const) {
+      expect(routeIsIndexable(key), key).toBe(true);
+    }
   });
 });
 

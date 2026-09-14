@@ -52,8 +52,10 @@ export const ROUTES: readonly RouteDefinition[] = [
   { key: 'costs', requiresFeature: 'costs', indexable: true },
   { key: 'map', requiresFeature: 'map', indexable: true },
   { key: 'catalog', requiresFeature: 'commerce', indexable: true },
-  { key: 'profile', requiresFeature: 'profile', indexable: true },
-  { key: 'favorites', requiresFeature: 'profile', indexable: true },
+  // Persönliche, lokale Werkzeugzustände beantworten keine öffentliche
+  // Suchanfrage und gehören weder in die Sitemap noch in die Seitensuche.
+  { key: 'profile', requiresFeature: 'profile', indexable: false },
+  { key: 'favorites', requiresFeature: 'profile', indexable: false },
   { key: 'travel', requiresFeature: 'travel', indexable: true },
   { key: 'care', requiresFeature: 'care', indexable: true },
   { key: 'toys', requiresFeature: 'toys', indexable: true },
@@ -61,14 +63,14 @@ export const ROUTES: readonly RouteDefinition[] = [
   { key: 'supplements', requiresFeature: 'food', indexable: true },
   { key: 'insurance', requiresFeature: 'partners', indexable: true },
   { key: 'sources', requiresFeature: null, indexable: true },
-  { key: 'dataStatus', requiresFeature: null, indexable: true },
+  { key: 'dataStatus', requiresFeature: null, indexable: false },
   // M18-05: Methodik und Barrierefreiheit gehören zu den Pflicht- und
   // Erklärangaben und stehen deshalb immer zur Verfügung, unabhängig von
   // jedem Feature Flag. Die Reihenfolge hier ist die Reihenfolge im Fuß.
   { key: 'method', requiresFeature: null, indexable: true },
-  { key: 'imprint', requiresFeature: null, indexable: true },
-  { key: 'privacy', requiresFeature: null, indexable: true },
-  { key: 'accessibility', requiresFeature: null, indexable: true },
+  { key: 'imprint', requiresFeature: null, indexable: false },
+  { key: 'privacy', requiresFeature: null, indexable: false },
+  { key: 'accessibility', requiresFeature: null, indexable: false },
 ];
 
 const SLUGS: Readonly<Record<string, Readonly<Record<string, string>>>> = {
@@ -100,6 +102,11 @@ function definitionFor(key: RouteKey): RouteDefinition {
   const definition = ROUTES.find((route) => route.key === key);
   if (!definition) throw new RouteError(`Unbekannte Route: ${key}`);
   return definition;
+}
+
+/** Ob eine vorhandene Hauptseite als Such-Landingpage gedacht ist. */
+export function routeIsIndexable(key: RouteKey): boolean {
+  return definitionFor(key).indexable;
 }
 
 /** Existiert die Route in diesem Markt? Ein ausgeschaltetes Feature heißt nein. */

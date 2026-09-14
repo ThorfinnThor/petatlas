@@ -36,7 +36,8 @@ test('Kosten: von der Leistung zur nachvollziehbaren Auskunft', async ({ page })
   await expect(page.getByTestId('brutto')).toContainText('€');
   await expect(page.locator('#ergebnis .fundstelle').first()).toContainText('lfd. Nr.');
 
-  await expect(page.getByText('Fachlich geprüft').first()).toBeVisible();
+  await expect(page.locator('[data-review-status="approved"]').first()).toBeHidden();
+  await expect(page.getByText('Fachlich geprüft')).toHaveCount(0);
 });
 
 test('Ort: von der Karte zur Trefferliste mit Herkunft', async ({ page }) => {

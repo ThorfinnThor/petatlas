@@ -166,9 +166,11 @@ for (const width of [390, 1440]) {
     await expect(page.locator('.editorial-product').filter({ hasText: 'Katze' })).toHaveCount(2);
     await page.getByRole('link', { name: 'Zum Katzen-Ratgeber →', exact: true }).click();
     await expect(page.locator('h1')).toContainText('Wohnungskatzen');
-    await page
-      .getByRole('link', { name: 'Katzenspielzeug im Finder ansehen →', exact: true })
-      .click();
+    await expect(
+      page.getByRole('heading', { name: 'Sieben Tage, sieben verschiedene Reize' }),
+    ).toBeVisible();
+    await expect(page.getByText('Fachlich geprüft', { exact: true })).toHaveCount(0);
+    await page.getByRole('link', { name: 'Katzenspielzeug vergleichen', exact: true }).click();
     await expect(page.locator('#finder-tierart')).toHaveValue('cat');
     await page.getByRole('button', { name: 'Passendes anzeigen', exact: true }).click();
     await expect(page.locator('#finder-ergebnis')).toContainText('Senses Play Circuit');
@@ -185,6 +187,10 @@ for (const width of [390, 1440]) {
     await expect(page.locator('.food-comparison')).toContainText('Katze');
     await page.goto('/de-de/ratgeber/katze-transportbox/');
     await expect(page.locator('h1')).toContainText('Transportbox');
+    await expect(
+      page.getByRole('heading', { name: 'Der Trainingsweg mit fünf Haltepunkten' }),
+    ).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Checkliste drucken' })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)).toBe(
       false,
     );

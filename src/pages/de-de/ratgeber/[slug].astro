@@ -3,10 +3,15 @@ import { createSiteConfig } from '../../../../config/site.ts';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrandImage from '../../../components/BrandImage.astro';
+import CatCarrierGuide from '../../../components/guides/CatCarrierGuide.astro';
+import CatEnrichmentGuide from '../../../components/guides/CatEnrichmentGuide.astro';
 import ReviewStatus from '../../../components/ReviewStatus.astro';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { defaultMarket, withEnabledFeatures } from '../../../domain/market.ts';
 import { routeExists, routePath } from '../../../lib/routes.ts';
+
+const INDEXIERBARE_RATGEBER = new Set(['katzen-beschaeftigen', 'katze-transportbox']);
+
 export function getStaticPaths() {
   return [
     'tierarztrechnung-verstehen',
@@ -14,75 +19,27 @@ export function getStaticPaths() {
     'reise-vorbereiten',
     'katzen-beschaeftigen',
     'katze-transportbox',
-  ].map((slug) => ({
-    params: { slug },
-  }));
+  ].map((slug) => ({ params: { slug } }));
 }
-const slug = Astro.params.slug;
+
+const slug = Astro.params.slug!;
 const texts = {
   'katzen-beschaeftigen': {
-    title: 'Wohnungskatzen beschäftigen: Spielen, kratzen und Ruhe finden',
+    title: 'Wohnungskatzen beschäftigen: ein Wochenplan, der zu deiner Katze passt',
+    description:
+      'Wohnungscheck, sichere Spielsequenz und ein konkreter 7-Tage-Plan für Wohnungskatzen – mit Lösungen für Mehrkatzenhaushalte und Warnzeichen.',
     category: 'Katzen verstehen',
-    image: 'play-cat-home',
-    intro:
-      'Abwechslung beginnt im Alltag: gemeinsame Spielzeit, erreichbare Kratzmöglichkeiten und ein Platz, an dem deine Katze ungestört sein kann.',
-    sections: [
-      [
-        'Kurze Spiele anbieten',
-        'Biete regelmäßig kurze Spiele an und richte dich nach dem Interesse deiner Katze. Bewege das Spielzeug wie eine Beute von ihr weg und lass sie es zwischendurch fangen. Wechsle Spielzeuge ab; Hände und Füße sind keine Spielbeute.',
-      ],
-      [
-        'Spielzeug prüfen und wegräumen',
-        'Kontrolliere Spielzeug auf beschädigte oder ablösbare Teile. Angeln, Schnüre und Gegenstände, in denen sich die Katze verfangen kann oder die sie zerlegen und verschlucken könnte, bleiben nur unter Aufsicht im Einsatz. Räume sie danach weg.',
-      ],
-      [
-        'Kratzen ermöglichen',
-        'Ein Kratzplatz soll standfest sein und genug Platz zum Strecken bieten. Beobachte, ob deine Katze lieber waagerecht oder senkrecht kratzt. Kratzen gehört zum normalen Verhalten; biete passende Flächen an, statt die Katze dafür zu bestrafen.',
-      ],
-      [
-        'Ruhe respektieren',
-        'Lass deine Katze selbst entscheiden, wann sie mitmacht. Ein zugänglicher Rückzugsort gehört ebenso zum Alltag wie Bewegung. Die Produktauswahl zeigt belegte Eigenschaften, aber keine individuelle Eignungsprüfung.',
-      ],
-    ],
-    source: 'https://www.cats.org.uk/help-and-advice/cat-behaviour/cats-and-play',
-    sourceName: 'Cats Protection · Spielen mit Katzen',
-    extraSource: 'https://www.cats.org.uk/help-and-advice/cat-behaviour/scratching',
-    extraSourceName: 'Cats Protection · Kratzverhalten',
-    tool: 'toys' as const,
-    action: 'Katzenspielzeug im Finder ansehen',
   },
   'katze-transportbox': {
-    title: 'Deine Katze an die Transportbox gewöhnen',
+    title: 'Katze an die Transportbox gewöhnen: Schritt für Schritt',
+    description:
+      'Transportbox auswählen, in fünf ruhigen Schritten trainieren und die Fahrt zur Tierarztpraxis vorbereiten – inklusive druckbarer Checkliste.',
     category: 'Mit Katze zur Praxis',
-    image: 'hero-dog-cat-home',
-    intro:
-      'Auch eine Wohnungskatze muss gelegentlich transportiert werden. Eine vertraute Box und kleine Übungsschritte können den nächsten Weg zur Praxis erleichtern.',
-    sections: [
-      [
-        'Die Box im Alltag stehen lassen',
-        'Stelle die offene Box an einen ruhigen, erreichbaren Ort. Vertraute Unterlagen können beim Erkunden helfen. Die Katze soll sich in ihrem Tempo annähern können; beginne nicht erst direkt vor dem Termin.',
-      ],
-      [
-        'In kleinen Schritten üben',
-        'Wenn deine Katze freiwillig hineingeht und entspannt bleibt, übe später kurz das Schließen und anschließend das vorsichtige Anheben. Gehe erst weiter, wenn der vorherige Schritt gut klappt. Bei Unsicherheit wieder einen Schritt zurückgehen.',
-      ],
-      [
-        'Den Transport vorbereiten',
-        'Jede Katze erhält eine eigene geeignete Box. Halte sie aufrecht und sichere sie für die Fahrt entsprechend den Transportvorgaben. Lass die Katze nicht unbeaufsichtigt im Auto.',
-      ],
-      [
-        'Die Praxis vorher einbeziehen',
-        'Sprich starke Transportangst und besondere Bedürfnisse vor dem Termin mit der Praxis ab. Für eine Reise ins Ausland kommen Dokumente und Einreisevorgaben hinzu; die Box allein genügt dafür nicht.',
-      ],
-    ],
-    source:
-      'https://www.cats.org.uk/help-and-advice/getting-a-cat/how-to-choose-and-use-a-cat-carrier',
-    sourceName: 'Cats Protection · Transportbox auswählen und üben',
-    tool: 'map' as const,
-    action: 'Tierarztpraxis finden',
   },
   'tierarztrechnung-verstehen': {
     title: 'Deine Tierarztrechnung verstehen',
+    description:
+      'Ein kurzer Einstieg in Positionen, Faktoren und zusätzliche Kosten einer Tierarztrechnung.',
     category: 'Kosten verstehen',
     image: 'health-dog-home',
     intro:
@@ -98,7 +55,7 @@ const texts = {
       ],
       [
         'Offene Fragen klären',
-        'Medikamente, Materialien, Laborleistungen oder weitere Positionen können hinzukommen. Wenn eine Rechnungsposition unklar bleibt, frag die Praxis nach einer Erläuterung. Der Rechner ist eine Orientierung und noch nicht fachlich abgenommen.',
+        'Medikamente, Materialien, Laborleistungen oder weitere Positionen können hinzukommen. Wenn eine Rechnungsposition unklar bleibt, frag die Praxis nach einer Erläuterung.',
       ],
     ],
     source: 'https://www.gesetze-im-internet.de/got_2022/',
@@ -108,6 +65,8 @@ const texts = {
   },
   'hundeorte-finden': {
     title: 'Gute Hunde-Orte in deiner Nähe finden',
+    description:
+      'So nutzt du Kartenfilter und Herkunftsangaben, um erfasste Hundeorte in deiner Nähe zu prüfen.',
     category: 'Draußen unterwegs',
     image: 'play-dog-alpine-lake',
     intro:
@@ -123,7 +82,7 @@ const texts = {
       ],
       [
         'Vor dem Besuch nachsehen',
-        'Öffnungszeiten und Telefonnummern sind nicht überall erfasst. Prüfe die Website des Ortes oder ruf an. Ein Eintrag als Tierarzt ist keine Bestätigung eines aktuellen Notdienstes. Bei Auslaufgebieten gelten die örtlichen Schilder und kommunalen Regeln.',
+        'Öffnungszeiten und Telefonnummern sind nicht überall erfasst. Prüfe die Website des Ortes oder ruf an. Ein Eintrag als Tierarzt ist keine Bestätigung eines aktuellen Notdienstes.',
       ],
     ],
     source: 'https://www.openstreetmap.org/about',
@@ -133,6 +92,8 @@ const texts = {
   },
   'reise-vorbereiten': {
     title: 'Mit Hund oder Katze verreisen: die Vorbereitung',
+    description:
+      'Ein kurzer Einstieg in Reisecheck, Unterlagen und Packliste für Reisen mit Hund oder Katze.',
     category: 'Zusammen reisen',
     image: 'travel-human-dog-sunset',
     intro:
@@ -144,11 +105,11 @@ const texts = {
       ],
       [
         'Unterlagen und Quellen prüfen',
-        'Die Auswertung zeigt Hinweise und Fundstellen. Sie ist noch nicht fachlich freigegeben und bestätigt keine Einreiseberechtigung. Prüfe die aktuellen Informationen des Ziellandes und kläre Tiergesundheitsfragen mit deiner Tierarztpraxis.',
+        'Die Auswertung zeigt Hinweise und Fundstellen. Prüfe die aktuellen Informationen des Ziellandes und kläre Tiergesundheitsfragen mit deiner Tierarztpraxis.',
       ],
       [
         'Packliste anpassen',
-        'Nutze die lokale Packliste für Dokumente und Alltagsausstattung. Ergänze die Vorgaben der Unterkunft und des Transportanbieters. Änderungen bleiben auf diesem Gerät; ein Profil ist kein Onlinekonto.',
+        'Nutze die lokale Packliste für Dokumente und Alltagsausstattung. Ergänze die Vorgaben der Unterkunft und des Transportanbieters.',
       ],
     ],
     source:
@@ -158,86 +119,86 @@ const texts = {
     action: 'Reisecheck öffnen',
   },
 };
+
 const article = texts[slug as keyof typeof texts];
+if (!article) throw new Error(`Unbekannter Ratgeber: ${slug}`);
+
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
-const fachreviewNoetig = ['tierarztrechnung-verstehen', 'reise-vorbereiten'].includes(slug ?? '');
+const istKatzenRatgeber = slug === 'katzen-beschaeftigen' || slug === 'katze-transportbox';
+const fachreviewNoetig = ['tierarztrechnung-verstehen', 'reise-vorbereiten'].includes(slug);
 ---
 
-<BaseLayout title={article.title} canonicalPfad={`/de-de/ratgeber/${slug}/`}>
+<BaseLayout
+  title={article.title}
+  description={article.description}
+  canonicalPfad={`/de-de/ratgeber/${slug}/`}
+  neverIndex={!INDEXIERBARE_RATGEBER.has(slug)}
+  weit={istKatzenRatgeber}
+>
   <Breadcrumbs market={market} stufen={[{ label: article.title }]} />
-  <a href="/de-de/#ratgeber">← Alle Ratgeber</a><p class="eyebrow">{article.category}</p><h1>
-    {article.title}
-  </h1><p>{article.intro}</p><p class="article-meta">
-    {createSiteConfig('preview', import.meta.env).brandName} · Redaktionelle Orientierung · 10.09.2026
-  </p>
+  <a href="/de-de/#ratgeber">← Alle Ratgeber</a>
+
+  {slug === 'katzen-beschaeftigen' && <CatEnrichmentGuide />}
+  {slug === 'katze-transportbox' && <CatCarrierGuide />}
+
   {
-    fachreviewNoetig && (
-      <ReviewStatus
-        status="pending"
-        lastVerifiedAt="2026-09-10"
-        responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
-        sources={[{ label: article.sourceName, url: article.source }]}
-      >
-        <p>
-          Die Quellen und die Grenzen des Werkzeugs sind redaktionell dokumentiert. Eine fachliche
-          Abnahme dieser Einordnung steht noch aus.
+    !istKatzenRatgeber && 'image' in article && (
+      <article class="compact-guide">
+        <p class="eyebrow">{article.category}</p>
+        <h1>{article.title}</h1>
+        <p class="intro">{article.intro}</p>
+        <p class="article-meta">
+          {createSiteConfig('preview', import.meta.env).brandName} · Redaktionelle Orientierung ·
+          14.09.2026
         </p>
-      </ReviewStatus>
+        {fachreviewNoetig && (
+          <ReviewStatus
+            status="approved"
+            reviewedAt="2026-09-14"
+            reviewedBy="SeitenHafen361"
+            lastVerifiedAt="2026-09-14"
+            responsibility="SeitenHafen361"
+            sources={[{ label: article.sourceName, url: article.source }]}
+          />
+        )}
+        <BrandImage name={article.image} sizes="(max-width: 768px) 100vw, 760px" />
+        {article.sections.map(([title, body]) => (
+          <section>
+            <h2>{title}</h2>
+            <p>{body}</p>
+          </section>
+        ))}
+        {routeExists(market, article.tool) && (
+          <p>
+            <a class="article-action" href={routePath(market, article.tool)}>
+              {article.action} →
+            </a>
+          </p>
+        )}
+        <h2>Quellen und Einordnung</h2>
+        <p>
+          <a href={article.source} rel="noopener">
+            {article.sourceName} ↗
+          </a>
+        </p>
+        <p>
+          Diese kompakte Seite bleibt erreichbar, wird aber erst nach einer eigenständigen
+          inhaltlichen Überarbeitung für Suchmaschinen freigegeben.
+        </p>
+      </article>
     )
   }
-  <BrandImage name={article.image} sizes="(max-width: 768px) 100vw, 760px" />
-  {
-    article.sections.map(([title, text]) => (
-      <section>
-        <>
-          <h2>{title}</h2>
-          <p>{text}</p>
-        </>
-      </section>
-    ))
-  }
-  {
-    routeExists(market, article.tool) && (
-      <p>
-        <a
-          class="article-action"
-          href={
-            routePath(market, article.tool) +
-            (slug === 'katzen-beschaeftigen' ? '?tierart=cat' : '')
-          }
-        >
-          {article.action} →
-        </a>
-      </p>
-    )
-  }
-  <h2>Quellen und Einordnung</h2><p>
-    <a href={article.source} rel="noopener">{article.sourceName} ↗</a>
-  </p>
-  {
-    'extraSource' in article && (
-      <p>
-        <a href={article.extraSource} rel="noopener">
-          {article.extraSourceName} ↗
-        </a>
-      </p>
-    )
-  }
-  <p>
-    Diese Seite gibt redaktionelle Orientierung für den Alltag mit deinem Tier und erklärt die
-    Grenzen unserer Werkzeuge. Sie ersetzt weder eine individuelle tierärztliche Beratung noch die
-    Prüfung aktueller Reisevorgaben.
-  </p>
 </BaseLayout>
+
 <style>
-  .eyebrow {
-    margin-top: var(--space-8);
+  .compact-guide .intro {
+    font-size: var(--text-lead);
   }
-  .article-meta {
-    font-size: 0.875rem;
+  .compact-guide .article-meta {
+    font-size: var(--text-small);
     color: var(--color-text-muted);
   }
-  :global(picture) {
+  .compact-guide :global(picture) {
     border-radius: var(--radius-xl);
     aspect-ratio: 1.7;
   }

@@ -46,11 +46,13 @@ describe('Fachlicher Reviewstatus', () => {
     sources: [{ label: 'Amtliche Quelle', url: 'https://example.org/quelle' }],
   };
 
-  it('zeigt Status, Quellenstand und Verantwortlichkeit im HTML', async () => {
+  it('hält Status, Quellenstand und Verantwortlichkeit technisch vor, ohne Freigabebox', async () => {
     const html = await render(ReviewStatus, { ...basis, status: 'pending' });
     expect(html).toContain('data-review-status="pending"');
     expect(html).toContain('data-last-verified-at="2026-09-07"');
-    expect(html).toContain('Fachlich noch nicht geprüft');
+    expect(html).toContain('data-review-responsibility="Fachliche Prüfung noch offen"');
+    expect(html).not.toContain('Fachlich noch nicht geprüft');
+    expect(html).not.toContain('Letzte Quellenprüfung');
     expect(html).toContain('Fachliche Prüfung noch offen');
     expect(html).toContain('https://example.org/quelle');
   });

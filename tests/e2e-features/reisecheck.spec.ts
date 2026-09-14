@@ -39,7 +39,8 @@ test('unterscheidet „nicht geprüft“ von „nicht erlaubt“', async ({ page
 
 test('rechnet nur mit belegten und fachlich freigegebenen Regeln', async ({ page }) => {
   await page.goto(REISE);
-  await expect(page.getByText('Fachlich geprüft', { exact: true })).toBeVisible();
+  await expect(page.locator('[data-review-status="approved"]')).toBeHidden();
+  await expect(page.getByText('Fachlich geprüft', { exact: true })).toHaveCount(0);
   await expect(page.locator('#reiseform')).toBeVisible();
   await expect(page.locator('.ergebnis__punkte')).toHaveCount(0);
 });
