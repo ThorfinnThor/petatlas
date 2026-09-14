@@ -38,8 +38,12 @@ test('nennt auf der Pflegeseite Kategorien und die Ausschlüsse', async ({ page 
 
 test('führt jede Pflegekategorie zu einer eigenen Seite', async ({ page }) => {
   await page.goto(PFLEGE);
-  const links = page.locator('.kategorien a');
-  await expect(links).toHaveCount(5);
+  const karten = page.locator('.kategorien [data-kategorie]');
+  await expect(karten).toHaveCount(5);
+  const ziele = await page
+    .locator('.kategorie__aktion')
+    .evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).pathname));
+  expect(new Set(ziele).size).toBe(5);
 
   await page.goto(`${PFLEGE}dental-care/`);
   await expect(page.locator('h1')).toHaveText('Zahnpflegezubehör');
