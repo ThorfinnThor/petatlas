@@ -30,6 +30,8 @@ import { attributPruefung } from '../care/attributes.ts';
 import { staedteMitKommunalerQuelle, kommunaleFlaechen } from '../map/municipal.ts';
 import gebuehren from '../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 import orte from '../../../data-snapshots/places/places-de.json' with { type: 'json' };
+import type { Place } from '../../domain/schemas/places.ts';
+import { publicPlaceCount } from '../map/directory-controls.ts';
 
 export interface VorschauBestand {
   /** Echte Bestände mit Zahl und Quelle. */
@@ -57,7 +59,7 @@ export function vorschauBestand(market: MarketConfig): VorschauBestand {
   }
 
   if (isFeatureEnabled(market, 'map')) {
-    const anzahl = (orte as { places: unknown[] }).places.length;
+    const anzahl = publicPlaceCount((orte as { places: Place[] }).places);
     echt.push(`${zahl(anzahl)} Orte aus OpenStreetMap`);
     const flaechen = staedteMitKommunalerQuelle().reduce(
       (summe, stadt) => summe + (kommunaleFlaechen(stadt)?.flaechen.length ?? 0),

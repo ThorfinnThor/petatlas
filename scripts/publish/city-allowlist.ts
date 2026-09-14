@@ -12,6 +12,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 import { CityAllowlistSchema } from '../../src/domain/schemas/city.ts';
 import type { ListenOrt } from '../../src/features/map/list.ts';
+import { applyDirectoryControls } from '../../src/features/map/directory-controls.ts';
 import {
   STADT_KRITERIEN,
   bewerteStadt,
@@ -56,7 +57,9 @@ function main(): number {
     entries: readonly OrtsIndexEintrag[];
   };
 
-  const orte = snapshot.places.map(oeffentlicheProjektion) as unknown as ListenOrt[];
+  const orte = applyDirectoryControls(snapshot.places).map(
+    oeffentlicheProjektion,
+  ) as unknown as ListenOrt[];
   const kandidaten: BewerteterKandidat[] = kandidatenAus(ortsIndex.entries).map((eintrag) => {
     const stadt = {
       name: eintrag.name,

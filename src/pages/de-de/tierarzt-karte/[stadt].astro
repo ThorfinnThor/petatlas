@@ -40,6 +40,7 @@ import { createSiteConfig } from '../../../../config/site.ts';
 import snapshot from '../../../../data-snapshots/places/places-de.json' with { type: 'json' };
 import { oeffentlicheProjektion } from '../../../../scripts/publish/places.ts';
 import type { Place } from '../../../domain/schemas/places.ts';
+import { applyDirectoryControls } from '../../../features/map/directory-controls.ts';
 
 /** Wie viele Einträge je Kategorie auf der Seite stehen. */
 const JE_KATEGORIE = 12;
@@ -50,7 +51,7 @@ export function getStaticPaths() {
   // Unterseite darunter.
   if (!isFeatureEnabled(market, 'map')) return [];
 
-  const orte = (snapshot.places as unknown as Place[]).map(
+  const orte = applyDirectoryControls(snapshot.places as unknown as Place[]).map(
     oeffentlicheProjektion,
   ) as unknown as ListenOrt[];
   const seiten = baubareStadtseiten(orte);

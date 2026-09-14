@@ -13,7 +13,7 @@ import DataStatus from '../DataStatus.astro';
 import { darstellung } from '../../features/map/website.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides, resolveBuildConfig } from '../../../config/build.ts';
-import { subroutePath } from '../../lib/routes.ts';
+import { routePath, subroutePath } from '../../lib/routes.ts';
 import { baubareStadtseiten } from '../../features/map/city-allowlist.ts';
 import { TILES } from '../../features/map/tiles.ts';
 import { verzeichnisKontaktLink } from '../../features/map/contact.ts';
@@ -30,18 +30,18 @@ import {
 import snapshot from '../../../data-snapshots/places/places-de.json' with { type: 'json' };
 import { oeffentlicheProjektion } from '../../../scripts/publish/places.ts';
 import type { Place } from '../../domain/schemas/places.ts';
+import { applyDirectoryControls } from '../../features/map/directory-controls.ts';
 
 const market = defaultMarket();
 const build = resolveBuildConfig();
 const kontakt = createSiteConfig(build.mode, process.env).operator.contactEmail;
-const seitenPfad = subroutePath(withEnabledFeatures(market, devFeatureOverrides()), 'map');
+const seitenPfad = routePath(withEnabledFeatures(market, devFeatureOverrides()), 'map');
 
 /** Standardausschnitt der statischen Liste. */
 const STANDARD = { name: 'Berlin', latitude: 52.5174, longitude: 13.3951, radius: 5_000 };
 
-const alleOrte = (snapshot.places as unknown as Place[]).map(
-  oeffentlicheProjektion,
-) as unknown as ListenOrt[];
+const oeffentlicheOrte = applyDirectoryControls(snapshot.places as unknown as Place[]);
+const alleOrte = oeffentlicheOrte.map(oeffentlicheProjektion) as unknown as ListenOrt[];
 
 const standardTreffer = filtereOrte(alleOrte, {
   mitte: { latitude: STANDARD.latitude, longitude: STANDARD.longitude },
@@ -67,7 +67,19 @@ const quelle = snapshot.source as {
   attribution: string;
   attributionUrl: string;
 };
-const abdeckung = snapshot.coverage as { placeCount: number; byCategory: Record<string, number> };
+const quellAbdeckung = snapshot.coverage as {
+  placeCount: number;
+  byCategory: Record<string, number>;
+};
+const abdeckung = {
+  placeCount: oeffentlicheOrte.length,
+  byCategory: Object.fromEntries(
+    Object.keys(quellAbdeckung.byCategory).map((category) => [
+      category,
+      oeffentlicheOrte.filter((place) => place.category === category).length,
+    ]),
+  ),
+};
 ---
 
 <h1>Tierärzte und Orte in der Nähe</h1>

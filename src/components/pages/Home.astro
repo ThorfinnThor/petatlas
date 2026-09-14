@@ -11,6 +11,8 @@ import foods from '../../../content-data/food/real-products.json';
 import products from '../../../content-data/products/editorial.json';
 import places from '../../../data-snapshots/places/places-de.json';
 import fees from '../../../data-snapshots/got/got-2022.json';
+import { publicPlaceCount } from '../../features/map/directory-controls.ts';
+import type { Place } from '../../domain/schemas/places.ts';
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const path = (key: RouteKey) => routePath(market, key);
 const has = (key: RouteKey) => routeExists(market, key);
@@ -321,9 +323,8 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
       Reiseregeln tragen ihren Prüfstatus sichtbar.
     </p><a class="text-link" href={path('dataStatus')}>Datenstand ansehen →</a>
   </div><div class="data-number">
-    <strong>{places.places.length.toLocaleString('de-DE')}</strong><span
-      >erfasste Orte in Deutschland</span
-    >
+    <strong>{publicPlaceCount(places.places as unknown as Place[]).toLocaleString('de-DE')}</strong
+    ><span>erfasste Orte in Deutschland</span>
   </div><div class="data-number">
     <strong>{fees.itemCount.toLocaleString('de-DE')}</strong><span>Positionen im GOT-Katalog</span>
   </div>

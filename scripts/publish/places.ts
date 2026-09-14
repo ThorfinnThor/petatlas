@@ -23,6 +23,7 @@ import {
   type ChunkEntry,
 } from '../../src/domain/schemas/manifest.ts';
 import type { Place } from '../../src/domain/schemas/places.ts';
+import { applyDirectoryControls } from '../../src/features/map/directory-controls.ts';
 import { normalisiere } from '../../src/features/map/place-search.ts';
 import { canonicalJson, type JsonValue } from '../normalize/canonical.ts';
 import { buildManifest, writeFiles, writeManifest, type PublishableFile } from './manifest.ts';
@@ -199,7 +200,8 @@ function main(): number {
     console.error(`Ortsdaten werden nicht ausgeliefert: ${entscheidung.reason}`);
     return 1;
   }
-  if (snapshot.places.length === 0) {
+  const publicPlaces = applyDirectoryControls(snapshot.places);
+  if (publicPlaces.length === 0) {
     console.error('Der Snapshot enthält keinen Ort; es wird nichts geschrieben.');
     return 1;
   }
@@ -211,7 +213,7 @@ function main(): number {
     attributionUrl: quelle.attributionUrl,
   };
 
-  const zellen = baueZellen(snapshot.places);
+  const zellen = baueZellen(publicPlaces);
   const dateien: PublishableFile[] = [];
   const chunks: ChunkEntry[] = [];
   const zellenVerweise: {
@@ -314,7 +316,7 @@ function main(): number {
 
   const gesamt = chunks.reduce((summe, chunk) => summe + chunk.byteSize, 0);
   console.log(
-    `Ortsdaten veröffentlicht: ${zellen.length} Zellen, ${snapshot.places.length} Orte, ` +
+    `Ortsdaten veröffentlicht: ${zellen.length} Zellen, ${publicPlaces.length} Orte, ` +
       `${namensGruppen.size} Namensteile mit ${ortsIndex.entries.length} Ortsnamen, ` +
       `${(gesamt / 1024 / 1024).toFixed(1)} MiB gesamt. ` +
       `Kartenindex ${(index.chunk.byteSize / 1024).toFixed(0)} KiB, ` +
