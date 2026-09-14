@@ -80,10 +80,15 @@ function ergebnisTabelle(result: CostResult): string {
            <td colspan="4">Notdienstgebühr, einmal je Angelegenheit</td>
            <td class="zahl">${geld(result.emergencyFee.amountMinor)}</td>
          </tr>`;
+  const notdienstHinweis =
+    result.emergencyFee === null
+      ? ''
+      : '<p class="hilfe">Die Notdienstgebühr beträgt grundsätzlich 50,00 Euro netto. In derselben Angelegenheit wird sie nur einmal angesetzt, auch wenn mehrere Tiere desselben Halters behandelt werden. Diese Berechnung bildet eine Angelegenheit ab. Bestätigte Abweichungen sind gesondert zu berücksichtigen.</p>';
 
   return `
     <h2 class="drucktitel">Unverbindliche Berechnungsübersicht zu Tierarztgebühren</h2>
     ${(result.warnings ?? []).map((warning) => `<p class="hilfe">${escape(warning)}</p>`).join('')}
+    ${notdienstHinweis}
     <p class="bill-summary"><strong>${geld(result.grossTotal.amountMinor)}</strong><br>Brutto für die ausgewählten Positionen, inklusive ${result.vatPercent} % Umsatzsteuer.</p>
     <table>
       <caption>Berechnungsübersicht, Fassung ${escape(result.catalogVersion)}</caption>

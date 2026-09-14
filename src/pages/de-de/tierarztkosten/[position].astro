@@ -154,8 +154,11 @@ function betrag(minor: number): string {
   </table>
 
   <p class="hinweis">
-    Die Notdienstgebühr von {betrag(COST_CONFIG.emergencyFeeMinor)} fällt einmal je Angelegenheit an und
-    ist in den Beträgen oben <strong>nicht</strong> enthalten.
+    Die Notdienstgebühr beträgt grundsätzlich {betrag(COST_CONFIG.emergencyFeeMinor)} netto. In derselben
+    Angelegenheit wird sie nur einmal angesetzt, auch wenn mehrere Tiere desselben Halters behandelt werden.
+    Diese Berechnung bildet eine Angelegenheit ab. Bestätigte Abweichungen sind gesondert zu berücksichtigen.
+    Die Gebühr ist in den Beträgen oben <strong>nicht</strong>
+    enthalten.
   </p>
 
   <p>

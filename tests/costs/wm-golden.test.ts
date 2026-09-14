@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 import snapshot from '../../data-snapshots/got/got-2022.json' with { type: 'json' };
@@ -7,6 +8,12 @@ import { calculateCosts } from '../../src/features/costs/engine.ts';
 const katalog = snapshot.items as FeeItem[];
 
 describe('WM-12 Sollwerte mit GOT-Position 16', () => {
+  it('erklärt die einmalige Notdienstgebühr unmittelbar im Rechner', () => {
+    const page = readFileSync('src/components/pages/Costs.astro', 'utf8');
+    expect(page).toContain('Die Notdienstgebühr beträgt grundsätzlich 50,00 Euro netto.');
+    expect(page).toContain('Diese Berechnung bildet eine Angelegenheit ab.');
+  });
+
   it('nutzt den amtlichen einfachen Nettobetrag von 23,62 Euro', () => {
     expect(katalog.find((item) => item.officialItemId === '16')?.baseAmountMinor).toBe(2362);
   });
