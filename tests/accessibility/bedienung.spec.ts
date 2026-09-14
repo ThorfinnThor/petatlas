@@ -110,10 +110,29 @@ test.describe('Zoom und schmale Fenster', () => {
       await page.goto(pfad);
       await page.waitForLoadState('networkidle');
 
-      const ueberstand = await page.evaluate(() => ({
-        scrollWidth: document.documentElement.scrollWidth,
-        clientWidth: document.documentElement.clientWidth,
-      }));
+      const ueberstand = await page.evaluate(() => {
+        const clientWidth = document.documentElement.clientWidth;
+        return {
+          scrollWidth: document.documentElement.scrollWidth,
+          clientWidth,
+          elemente: [...document.querySelectorAll<HTMLElement>('body *')]
+            .map((element) => {
+              const rect = element.getBoundingClientRect();
+              return {
+                element: `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}${
+                  typeof element.className === 'string' && element.className.trim()
+                    ? `.${element.className.trim().replace(/\s+/g, '.')}`
+                    : ''
+                }`,
+                links: Math.round(rect.left),
+                rechts: Math.round(rect.right),
+                breite: Math.round(rect.width),
+              };
+            })
+            .filter(({ links, rechts }) => links < -1 || rechts > clientWidth + 1)
+            .slice(0, 20),
+        };
+      });
       // Ein Pixel Toleranz für Rundungen im Layout.
       expect(ueberstand.scrollWidth, JSON.stringify(ueberstand)).toBeLessThanOrEqual(
         ueberstand.clientWidth + 1,
