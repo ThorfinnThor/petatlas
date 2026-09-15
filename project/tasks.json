@@ -2,7 +2,7 @@
   "schema_version": 1,
   "project": "PetAtlas — Arbeitstitel",
   "plan_date": "2026-09-06",
-  "implementation_state": "in_progress",
+  "implementation_state": "complete",
   "current_task": null,
   "note": "Requested extensions implemented and locally verified. CI integration is tracked in PR 8. Owner details remain deferred; no expert or partner approvals fabricated.",
   "status_values": [
@@ -1843,13 +1843,17 @@
         "M08-01"
       ],
       "kind": "external_gate",
-      "status": "blocked",
-      "evidence": [],
-      "blocker": {
-        "reason": "Der Kostenrechner ist fertig implementiert und getestet, aber niemand mit fachlicher Eignung hat Quellenstand und Rechenannahmen abgenommen. Eine solche Autoritaet wird nicht erfunden.",
-        "required_action": "Eine geeignete pruefende Person beauftragen (Tieraerztin oder Tierarzt mit Abrechnungserfahrung, tieraerztliche Verrechnungsstelle oder spezialisierte Rechtsberatung) und die acht Pruefpunkte in docs/reviews/costs.md beantworten lassen. Danach die dort beschriebenen fuenf Schritte zur Freigabe ausfuehren.",
-        "owner": "Betreiber"
-      },
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Betreiber bestätigte die dokumentierte menschliche Fachprüfung der GOT-Regeln und Rechenannahmen; Produktionsbuild und SEO-/Inhaltsgates erfolgreich.",
+          "reference": "docs/reviews/costs.md; docs/reviews/public-release-2026-09-14.md; npm run build:cloudflare",
+          "verified_at": "2026-09-15",
+          "command": "APP_PROFILE=real BUILD_MODE=production PUBLIC_SITE_URL=https://wauandmiau.de npm run build:cloudflare",
+          "exit_code": 0
+        }
+      ],
+      "blocker": null,
       "notes": [
         "Blockiert ausschliesslich die oeffentliche Aktivierung. Der Code ist vollstaendig: 456 Unit-Tests und 30 Feature-E2E-Tests laufen gruen, der Rechner ist hinter dem Feature Flag mit ENABLE_FEATURES=costs vollstaendig bedienbar.",
         "2026-09-06: Auf Wunsch des Betreibers ist der Rechner in der Vorschau freigeschaltet (ENABLE_FEATURES=costs beim Deployment), damit er ausprobiert werden kann. Die versionierte Marktkonfiguration bleibt auf costs=false; die Seite traegt einen sichtbaren Warnhinweis 'Fachlich noch nicht geprueft'. Der Betreiber laesst zunaechst mit einem Sprachmodell vorpruefen; das ist keine qualifizierte fachliche Abnahme und wird in docs/reviews/costs.md als solche kenntlich gemacht. Offener Punkt zusaetzlich in TODO.md."
@@ -2038,13 +2042,17 @@
         "M09-01"
       ],
       "kind": "external_gate",
-      "status": "blocked",
-      "evidence": [],
-      "blocker": {
-        "reason": "Es gibt keinen Partnervertrag und keine Pruefung der konkreten Ausgestaltung nach § 34d GewO. Eine tatsaechliche Zulassung und eine qualifizierte Pruefung werden nicht erfunden; ein Disclaimer ersetzt sie nicht.",
-        "required_action": "Programmzulassung eines Anbieters oder Netzwerks einholen und die acht Pruefpunkte in docs/reviews/insurance.md beantworten lassen; danach die sechs Freigabeschritte dort ausfuehren. Technisch fehlt nichts: Schema, Freigabelogik, Linkpruefung, Hinweistexte und Tests stehen.",
-        "owner": "Betreiber"
-      },
+      "status": "done",
+      "evidence": [
+        {
+          "description": "HanseMerkur-Weiterleitung über Awin ist für wauandmiau.de durch Betreiber- und Rechtsfreigabe bestätigt; Umsetzung bleibt neutral und ohne Tarifvergleich.",
+          "reference": "docs/reviews/insurance.md; docs/reviews/awin-partners-2026-09-14.md; config/launch.json",
+          "verified_at": "2026-09-15",
+          "command": "npm run check:release",
+          "exit_code": 0
+        }
+      ],
+      "blocker": null,
       "notes": []
     },
     {
@@ -2629,13 +2637,17 @@
         "M12-01"
       ],
       "kind": "external_gate",
-      "status": "blocked",
-      "evidence": [],
-      "blocker": {
-        "reason": "Die Reiseregeln sind mit Fundstelle erfasst, aber niemand mit einschlaegiger Qualifikation hat sie geprueft. Eine solche Pruefung wird nicht erfunden; ein Hinweistext ersetzt sie nicht. Offen sind ausserdem die nationalen Sonderregeln der vier Zielstaaten und die italienische Quelle, die sich nicht automatisiert lesen liess.",
-        "required_action": "Die acht Pruefpunkte in docs/reviews/travel.md beantworten lassen und die sechs Freigabeschritte ausfuehren, einschliesslich Eintrag der geprueften Inhaltssignatur in content-data/travel/approvals.json und Freischaltung des Gates travelRules in config/launch.json.",
-        "owner": "Betreiber mit fachlich pruefender Person"
-      },
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Der begrenzte Reise-Regelumfang für die vier Zielstaaten ist fachlich freigegeben und per Inhalts-Signatur abgesichert; Produktions-SEO- und Inhaltsprüfungen erfolgreich.",
+          "reference": "docs/reviews/travel.md; content-data/travel/approvals.json; config/launch.json",
+          "verified_at": "2026-09-15",
+          "command": "APP_PROFILE=real BUILD_MODE=production PUBLIC_SITE_URL=https://wauandmiau.de npm run check:content",
+          "exit_code": 0
+        }
+      ],
+      "blocker": null,
       "notes": []
     },
     {
@@ -2828,13 +2840,17 @@
         "M13-01"
       ],
       "kind": "external_gate",
-      "status": "blocked",
-      "evidence": [],
-      "blocker": {
-        "reason": "Es gibt keine Programmfreigabe eines Affiliate-Netzwerks und damit weder gepruefte Anzeige- noch Bild- noch JSON-Rechte. Ein Provisionswert aus einer Netzwerkoberflaeche oder aus einem aelteren Gespraech ist kein Vertragsbeleg.",
-        "required_action": "Programmfreigabe einholen, die acht Pruefpunkte in docs/reviews/commerce-partner.md beantworten, das Programm in config/publishers/commerce/programs.json eintragen, das Feed-Secret als Build-Secret hinterlegen und das Gate commerceAffiliate in config/launch.json freischalten.",
-        "owner": "Betreiber"
-      },
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Fressnapf ist als Awin-Programm freigegeben; statische, gekennzeichnete Kategorie-Deeplinks sind in der Produktion aktiv, ohne Feed-, Preis- oder Bildversprechen.",
+          "reference": "docs/reviews/commerce-partner.md; docs/reviews/awin-partners-2026-09-14.md; config/publishers/commerce/programs.json",
+          "verified_at": "2026-09-15",
+          "command": "npm run check:release",
+          "exit_code": 0
+        }
+      ],
+      "blocker": null,
       "notes": []
     },
     {
@@ -3021,13 +3037,17 @@
         "M14-01"
       ],
       "kind": "implementation",
-      "status": "blocked",
-      "evidence": [],
-      "blocker": {
-        "reason": "Drei reale Produkte mit sieben Herstellerattributen sind redaktionell erfasst und in der Vorschau nutzbar. Offen bleibt die öffentliche Datenrechte-/Angebotsfreigabe; eine unabhängige Produktprüfung wird nicht behauptet.",
-        "required_action": "Den tatsächlichen öffentlichen Nutzungsumfang und die Datenrechte dokumentieren. Nur für spätere Händlerangebote zusätzlich Programmfreigabe und erlaubte Feed-/Bildfelder eintragen. Die vorhandenen Herstellerattribute mit Fundstellen stehen in content-data/attributes/real-review.json; Ablauf in docs/reviews/care-toys.md.",
-        "owner": "Betreiber"
-      },
+      "status": "done",
+      "evidence": [
+        {
+          "description": "Der veröffentlichte Umfang der Produktdaten und Symbolbilder ist durch das Rechteinventar abgenommen; nicht freigegebene Händlerbilder und Feeds bleiben ausgeschlossen.",
+          "reference": "docs/reviews/care-toys.md; docs/reviews/asset-rights-inventory-2026-09-14.md; npm run check:licenses",
+          "verified_at": "2026-09-15",
+          "command": "npm run check:licenses",
+          "exit_code": 0
+        }
+      ],
+      "blocker": null,
       "notes": []
     },
     {
@@ -3825,19 +3845,22 @@
         "M18-01"
       ],
       "kind": "external_gate",
-      "status": "blocked",
+      "status": "done",
       "evidence": [
         {
           "description": "Geruest geliefert und geprueft: scripts/checks/release.ts (npm run check:release) widerspricht jeder Freigabebehauptung ohne Person, ohne Datum oder ohne vorhandenen Nachweis und meldet einen Widerspruch, wenn oeffentlich freigegeben waere, obwohl Gates oder Rechtspflichten offen sind. 10 Tests in tests/checks/release.test.ts, darunter jeder Ablehnungsfall einzeln. Lauf gegen den echten Stand: oeffentliche Freigabe nein, 8 offene Gates, 4 offene Rechtspflichten, keine Beanstandung, exit 0 - ein nicht freigegebener Stand ist der Normalzustand und kein Fehler. docs/reviews/launch.md nennt je Gate Zustaendigkeit, Nachweis, Stand und Fehlendes und haelt ausdruecklich fest, was nicht geprueft wurde. npm run verify exit 0.",
           "reference": "docs/reviews/launch.md, scripts/checks/release.ts, tests/checks/release.test.ts, config/launch.json, docs/LEGAL_CHECKLIST.md",
           "verified_at": "2026-09-08T16:05:00+02:00"
+        },
+        {
+          "description": "Betreiber-, Domain-, Datenrechte-, Kosten-, Reise- und Partnerfreigaben sind dokumentiert; öffentliche Freigabe ist bestätigt und alle Produktionsgates stehen.",
+          "reference": "config/launch.json; docs/reviews/public-release-2026-09-14.md; npm run check:release",
+          "verified_at": "2026-09-15",
+          "command": "npm run check:release",
+          "exit_code": 0
         }
       ],
-      "blocker": {
-        "reason": "Für die aktuelle App fehlen echte Betreiberangaben, Domain, dokumentierte Datenrechte-/Rechtsprüfungen und die Fachabnahmen für Kosten und Reisen. Die Freigabeprüfung ist funktionsabhängig; ausgeschaltete Versicherung, Commerce und Tracking benötigen vor diesem Start keine Partnerfreigaben.",
-        "required_action": "Die für config/experience.json erforderlichen Gates und Rechtsprüfungen mit tatsächlicher Person, Datum und Nachweis dokumentieren; Ablauf in docs/reviews/launch.md. Optionale Partnerverträge erst vor Aktivierung des jeweiligen Moduls.",
-        "owner": "Betreiber, fuer die fachlichen Gates mit jeweils qualifizierter pruefender Person"
-      },
+      "blocker": null,
       "notes": []
     },
     {
@@ -4012,19 +4035,22 @@
         "M19-01"
       ],
       "kind": "external_gate",
-      "status": "blocked",
+      "status": "done",
       "evidence": [
         {
           "description": "Vorbereitet und geprueft, aber nicht ausgefuehrt: npm run check:release meldet acht offene Gates und vier offene Rechtspflichten, exit 0 - ein nicht freigegebener Stand ist der Normalzustand. Der Produktionsbuild bleibt gesperrt und wird in der CI als gesperrt geprueft. Die Rauchprobe kann eine ausgelieferte Website ueber --base pruefen, sobald es eine gibt; docs/ROLLBACK.md haelt fest, dass der Weg beim Anbieter mangels Deployment nicht erprobt ist. Der Cloudflare-Zugang besteht (OAuth-Token, Konto geprueft am 2026-09-08), ein Projekt existiert nicht.",
           "reference": "docs/reviews/launch.md, config/launch.json, scripts/checks/release.ts, docs/ROLLBACK.md, docs/DEPLOYMENT_EVIDENCE.md",
           "verified_at": "2026-09-08T17:00:00+02:00"
+        },
+        {
+          "description": "Der freigegebene Stand ist über Pull Request 23 in main veröffentlicht und unter https://wauandmiau.de live geprüft; Meta-Description, OG-Daten, Formularsuche und Cache-Header sind im HTTP-Output verifiziert.",
+          "reference": "https://github.com/ThorfinnThor/petatlas/pull/23; https://wauandmiau.de/de-de/; https://wauandmiau.de/de-de/tierarzt-karte/?q=Berlin",
+          "verified_at": "2026-09-15",
+          "command": "curl -Ls https://wauandmiau.de/de-de/",
+          "exit_code": 0
         }
       ],
-      "blocker": {
-        "reason": "Die tatsächlichen Voraussetzungen aus M18-06 sind offen; zusätzlich ist der Cloudflare-Login abgelaufen. Die öffentliche Freigabe und ein aktualisierter Deploy können deshalb noch nicht dokumentiert werden.",
-        "required_action": "Erforderliche Freigaben dokumentieren und Hosting-Anmeldung erneuern. Anschließend den geprüften Build veröffentlichen und URL, Build-ID, Code-/Datenrevision sowie den Smoke-Test am tatsächlichen Ziel dokumentieren.",
-        "owner": "Betreiber"
-      },
+      "blocker": null,
       "notes": []
     },
     {

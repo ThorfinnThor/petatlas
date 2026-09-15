@@ -1,6 +1,6 @@
 # Blockerregister
 
-Stand 2026-09-09. **Sieben blockierte Aufgaben: M08-06, M09-06, M12-06, M13-06, M14-06, M18-06 und M19-06.** Die praktische Funktionsabnahme M23-02 ist mit konkreten Nachweisen abgeschlossen. Diese Aufgaben enthalten externe Abnahmen und optionale kommerzielle Erweiterungen; ihre Zahl ist nicht die Zahl technischer Fehler.
+Stand 2026-09-15. **Keine blockierten Aufgaben.** Die früheren externen Gates M08-06, M09-06, M12-06, M13-06, M14-06, M18-06 und M19-06 wurden nach dokumentierter Betreiber-, Fach-, Rechte- und Partnerfreigabe sowie dem Live-Deploy auf `done` gesetzt. Die folgenden historischen Einträge bleiben als Nachvollziehbarkeit erhalten.
 
 Für den aktuellen Umfang mit gekennzeichneten Amazon-Textlinks, aber ohne Preis-/Bildfeeds oder Händlerangebote, sind die Gates `operatorImprint`, `domain`, `dataRights`, `costsRules` und `travelRules` sowie die dokumentierten Rechtsprüfungen und die finale Release-Freigabe relevant. Versicherung, weitere Commerce-Feeds und Tracking sind ausgeschaltet; fehlende Verträge dafür blockieren den redaktionellen Umfang nicht (`config/release-policy.ts`).
 

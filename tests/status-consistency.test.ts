@@ -76,8 +76,11 @@ describe('Der Status behauptet nicht mehr, als er kann', () => {
     expect(Number(treffer?.[2])).toBe(AUFGABEN.length);
   });
 
-  it('sagt nirgends „fertig“ oder „100 %“, solange Freigaben fehlen', () => {
-    expect(BLOCKIERT.length).toBeGreaterThan(0);
+  it('vermeidet unbelegte Fertigmeldungen und erlaubt den freigegebenen Abschluss', () => {
+    if (BLOCKIERT.length === 0) {
+      expect(status).toMatch(/138 von 138 Aufgaben/);
+      expect(handoff).toMatch(/0 blockiert/);
+    }
     for (const [name, text] of [
       ['STATUS.md', status],
       ['HANDOFF.md', handoff],
