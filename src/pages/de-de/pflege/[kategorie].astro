@@ -472,6 +472,13 @@ const faqThema: Readonly<Record<string, string>> = {
     .shop__heading p {
       margin-block: 0;
     }
+
+    /* Global heading styles use the dark ink color. On this dark partner panel,
+       headings need the light contrast color to remain readable. */
+    .shop h2,
+    .shop h3 {
+      color: var(--color-primary-contrast);
+    }
     .shop__heading > p,
     .shop__note {
       color: #d8e9e6;
