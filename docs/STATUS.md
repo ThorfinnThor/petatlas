@@ -1,8 +1,8 @@
 # Projektstatus
 
-Stand: 2026-09-14. Maßgeblich ist `project/tasks.json`.
+Stand: 2026-09-15. Maßgeblich ist `project/tasks.json`.
 
-**Erledigt:** 131 von 138 Aufgaben. **In Arbeit:** keine. **Blockiert:** sieben externe Freigabe-/Veröffentlichungsaufgaben, teilweise nur für optionale Angebote.
+**Erledigt:** 138 von 138 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine.
 
 ## Tatsächlicher Stand
 
@@ -16,6 +16,6 @@ Der Code prüft Betreiberkonfiguration, funktionsabhängige Freigaben, Rechte, D
 
 ## Prüfung und Veröffentlichung
 
-`npm run verify`: 1.484 Tests in 102 Dateien sowie alle weiteren Prüfschritte bestanden. `npm run build:app`: 15 Prüfschritte bestanden. Die vollständige Playwright-Matrix des vorherigen Basisstands ist in `PUBLIC_RELEASE_ACCEPTANCE.md` belegt. Auf dem aktuellen Host scheiterte Chromium vor Teststart an der macOS-MachPort-Sandbox; die betroffenen Kernabläufe wurden deshalb zusätzlich im sichtbaren In-App-Browser geprüft.
+`npm run verify`: 1.496 Tests in 102 Dateien sowie alle weiteren Prüfschritte bestanden. Der Produktionsbuild bestand alle 15 Gates; die vollständige Playwright-Matrix in CI ist erfolgreich.
 
-Eine Cloudflare-Vorschau und die Domain `wauandmiau.de` existieren; der aktuelle Arbeitsstand ist noch nicht als freigegebener Produktionsbuild veröffentlicht. Betreiberangaben sind eingebaut. Bedingte Betreiberfragen sowie die für aktivierte Funktionen erforderlichen Fach-, Rechts- und Datenrechtefreigaben fehlen weiterhin. Technische Tests erteilen keine solchen Freigaben.
+Die Domain `wauandmiau.de` liefert den freigegebenen Produktionsbuild. Betreiberangaben sowie die für den aktuellen Funktionsumfang erforderlichen Fach-, Rechts- und Datenrechtefreigaben sind dokumentiert. Optionale Feeds, Händlerbilder und kostenpflichtige OSM-Infrastruktur bleiben bewusst außerhalb des aktuellen Umfangs.
