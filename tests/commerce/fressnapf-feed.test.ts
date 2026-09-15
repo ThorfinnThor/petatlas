@@ -35,10 +35,18 @@ describe('Awin-Fressnapf-Feed', () => {
   });
 
   it('akzeptiert nur die private Awin-Feedlisten-Adresse', () => {
+    expect(
+      pruefeFeedListenUrl('https://productdata.awin.com/datafeed/list/apikey/secret_key-123'),
+    ).toContain('productdata.awin.com');
     expect(pruefeFeedListenUrl('https://ui.awin.com/awin-feed-download/feedList')).toContain(
       'ui.awin.com',
     );
     expect(() => pruefeFeedListenUrl('https://example.test/feedList')).toThrow();
+    expect(() =>
+      pruefeFeedListenUrl(
+        'https://productdata.awin.com/datafeed/list/apikey/secret_key-123?redirect=example.test',
+      ),
+    ).toThrow();
   });
 
   it('wählt nur den aktiven deutschen Fressnapf-Advertiser', () => {

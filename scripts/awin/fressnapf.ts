@@ -98,10 +98,13 @@ export function parseCsv(text: string, maxRows = 500_000): readonly Record<strin
 
 export function pruefeFeedListenUrl(raw: string): string {
   const url = new URL(raw);
+  const istAktuelleFeedListe =
+    url.hostname === 'productdata.awin.com' &&
+    /^\/datafeed\/list\/apikey\/[A-Za-z0-9_-]+\/?$/.test(url.pathname);
+  const istDarwinFeedListe = url.hostname === 'ui.awin.com' && /\/feedlist\/?$/i.test(url.pathname);
   if (
     url.protocol !== 'https:' ||
-    url.hostname !== 'ui.awin.com' ||
-    !/\/feedlist\/?$/i.test(url.pathname) ||
+    (!istAktuelleFeedListe && !istDarwinFeedListe) ||
     url.username ||
     url.password ||
     url.port ||
