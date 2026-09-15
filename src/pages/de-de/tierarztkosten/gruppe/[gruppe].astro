@@ -38,7 +38,12 @@ const quelle = snapshot.source as unknown as {
 const eigenerPfad = subroutePath(market, 'costs', 'gruppe', gruppe.slug);
 ---
 
-<BaseLayout title={`${gruppe.name} — ${gruppe.teil}`} route="costs" canonicalPfad={eigenerPfad}>
+<BaseLayout
+  title={`${gruppe.name} — ${gruppe.teil}`}
+  description={`${gruppe.name}: Gebührenpositionen aus ${gruppe.teil} der GOT mit Grundbeträgen und Links zu den Einzelpositionen.`}
+  route="costs"
+  canonicalPfad={eigenerPfad}
+>
   <Breadcrumbs
     market={market}
     stufen={[

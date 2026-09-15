@@ -11,6 +11,7 @@
 
 export interface Kopfangaben {
   readonly titel: string | null;
+  readonly beschreibung: string | null;
   readonly h1: readonly string[];
   readonly canonical: string | null;
   readonly robots: string | null;
@@ -59,6 +60,9 @@ export function leseKopf(html: string): Kopfangaben {
 
   return {
     titel: ersterTreffer(html, /<title[^>]*>([\s\S]*?)<\/title>/i),
+    beschreibung:
+      ersterTreffer(html, /<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["']/i) ??
+      ersterTreffer(html, /<meta[^>]+content=["']([^"']*)["'][^>]+name=["']description["']/i),
     h1: alleTreffer(html, /<h1[^>]*>([\s\S]*?)<\/h1>/gi).map(nurText),
     canonical: ersterTreffer(html, /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["']/i),
     robots: metaRobots,

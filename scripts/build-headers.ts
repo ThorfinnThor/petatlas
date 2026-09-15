@@ -45,7 +45,9 @@ const CSP = [
   "font-src 'self'",
   // Der Pagefind-Index liegt auf derselben Herkunft; nichts geht nach außen.
   "connect-src 'self'",
-  "form-action 'none'",
+  // Native GET-Formulare dürfen nur innerhalb der eigenen Website absenden.
+  // `none` würde auch die Startseiten-Suche blockieren.
+  "form-action 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "object-src 'none'",
@@ -70,7 +72,10 @@ export function buildHeadersFile(): string {
     ...GRUNDHEADER.map((header) => `  ${header}`),
     '',
     '# Dateien mit Inhalts-Hash im Namen sind unveränderlich.',
-    '/data/v1/*',
+    '/data/v1/fees/*',
+    '  Cache-Control: public, max-age=31536000, immutable',
+    '',
+    '/data/v1/places/*',
     '  Cache-Control: public, max-age=31536000, immutable',
     '',
     '# Das Manifest entscheidet, welche Chunks gelten; es darf nicht altern.',
@@ -83,6 +88,9 @@ export function buildHeadersFile(): string {
     '',
     '/pagefind/*',
     '  Cache-Control: public, max-age=3600',
+    '',
+    '/_astro/*',
+    '  Cache-Control: public, max-age=31536000, immutable',
     '',
     '# HTML wird bei jedem Deployment neu erzeugt.',
     '/*.html',

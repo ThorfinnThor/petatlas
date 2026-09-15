@@ -79,7 +79,12 @@ const deklariert = produkt.nutrients.filter((eintrag) => eintrag.value !== null)
 const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
 ---
 
-<BaseLayout title={seitentitel} route="food" canonicalPfad={eigenerPfad}>
+<BaseLayout
+  title={seitentitel}
+  description={`${seitentitel}: deklarierte Inhaltswerte, Packungsgröße und Herstellerquelle für den Vergleich von Hunde- und Katzenfutter.`}
+  route="food"
+  canonicalPfad={eigenerPfad}
+>
   <Breadcrumbs
     market={markt}
     stufen={[

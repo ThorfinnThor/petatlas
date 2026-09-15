@@ -171,6 +171,9 @@ export function pruefeSeite(pfad: string, html: string, umgebung: Umgebung): Bea
   }
 
   if (wieIndexierbar) {
+    if (kopf.beschreibung === null || kopf.beschreibung.trim() === '') {
+      melde('Indexierbare Seite ohne Meta-Description.');
+    }
     if (kopf.canonical === null) {
       melde('Indexierbare Seite ohne canonical.');
     } else {

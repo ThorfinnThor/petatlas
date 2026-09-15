@@ -61,6 +61,25 @@ const { marketId, routeKey } = Astro.props as Props;
 const market: MarketConfig = withEnabledFeatures(requireMarket(marketId), devFeatureOverrides());
 const locale = market.locale as LocaleId;
 const titel = translate(locale, `nav.${routeKey}`);
+const beschreibungen: Partial<Record<RouteKey, string>> = {
+  home: 'Wau & Miau hilft bei Tierarztkosten, Orten, Reisen, Futter, Pflege und Spielzeug für Hunde und Katzen.',
+  costs:
+    'Tierarztkosten nach GOT nachvollziehen, Positionen finden und Beträge mit Faktor, Menge und Notdienst transparent berechnen.',
+  map: 'Tierärzte, Tierheime, Zoofachhandel und Hundewiesen in Deutschland suchen – mit Datenstand und Quellen aus OpenStreetMap.',
+  travel:
+    'Reisecheck für Hund und Katze: Anforderungen für vier EU-Ziele prüfen, Fristen verstehen und eine Packliste vorbereiten.',
+  care: 'Pflegezubehör für Hund und Katze nach Fell, Krallen, Zähnen, Mobilität und Textilien auswählen.',
+  toys: 'Spielzeug für Hund und Katze nach belegten Eigenschaften finden – mit nachvollziehbaren Filtern und Herstellerquellen.',
+  food: 'Hunde- und Katzenfutter anhand deklarierter Inhaltswerte und Packungsgrößen vergleichen, ohne Verkaufsrangliste.',
+  supplements:
+    'Ergänzungsfuttermittel für Hund und Katze einordnen, Etiketten vergleichen und Herstellerangaben nachlesen.',
+  insurance:
+    'Tierversicherung für Hund und Katze sachlich prüfen: Leistungen, Ausschlüsse, Selbstbeteiligung und Wartezeiten verstehen.',
+  method:
+    'Methodik von Wau & Miau: Quellen, Datenstände, Filterlogik und Grenzen der Werkzeuge nachvollziehen.',
+  sources:
+    'Quellenregister von Wau & Miau mit Herkunft, Lizenz, Abrufstand und Verwendung der veröffentlichten Daten.',
+};
 
 /**
  * Breite Seiten nutzen den Seitencontainer statt der Lesebreite
@@ -87,6 +106,7 @@ const WEITE_SEITEN: readonly RouteKey[] = [
 
 <BaseLayout
   title={titel}
+  description={beschreibungen[routeKey]}
   route={routeKey}
   neverIndex={!routeIsIndexable(routeKey)}
   weit={WEITE_SEITEN.includes(routeKey)}

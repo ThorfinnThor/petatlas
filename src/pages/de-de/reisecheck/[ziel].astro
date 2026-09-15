@@ -52,7 +52,12 @@ const umfang = reiseUmfang();
 const national = nationalGuidance(code);
 ---
 
-<BaseLayout title={`Mit Hund oder Katze nach ${name}`} route="travel" canonicalPfad={eigenerPfad}>
+<BaseLayout
+  title={`Mit Hund oder Katze nach ${name}`}
+  description={`Reisehinweise für Hund und Katze nach ${name}: Anforderungen, Fristen, Quellen und Packliste für die Vorbereitung.`}
+  route="travel"
+  canonicalPfad={eigenerPfad}
+>
   <Breadcrumbs
     market={market}
     stufen={[{ label: 'Reisecheck', route: 'travel' }, { label: name }]}

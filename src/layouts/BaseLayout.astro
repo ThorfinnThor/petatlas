@@ -43,6 +43,12 @@ interface Props {
 
 const { title, description, route, canonicalPfad, neverIndex = false, weit = false } = Astro.props;
 
+// Jede öffentliche Seite braucht eine eigenständige Suchbeschreibung. Viele
+// dynamische GOT-, Orts- und Futterseiten liefern keinen redaktionellen
+// Beschreibungstext; der Seitentitel hält den Fallback trotzdem eindeutig.
+const fallbackDescription = `${title}: nachvollziehbare Informationen, Quellen und praktische Hinweise für Hund und Katze bei Wau & Miau.`;
+const metaDescription = (description?.trim() || fallbackDescription).slice(0, 160).trimEnd();
+
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -65,9 +71,17 @@ const canonical = canonicalPfad
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} — {site.brandName}</title>
-    {description && <meta name="description" content={description} />}
+    <meta name="description" content={metaDescription} />
     <meta name="robots" content={robots} />
     {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.brandName} />
+    <meta property="og:title" content={`${title} — ${site.brandName}`} />
+    <meta property="og:description" content={metaDescription} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={`${title} — ${site.brandName}`} />
+    <meta name="twitter:description" content={metaDescription} />
   </head>
   <body data-route={route} data-pagefind-ignore={neverIndex ? 'all' : undefined}>
     {
