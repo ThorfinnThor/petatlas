@@ -22,14 +22,18 @@ export const AMAZON_SEARCHES = {
   'canina-barfers-best-katze': "Canina Barfer's Best for Cats 180 g",
 } as const;
 export type AmazonSelection = keyof typeof AMAZON_SEARCHES;
-/** No visitor inputs, session IDs, profiles, prices or intermediary redirects. */
-export function amazonSearchUrl(selection: string): string | null {
-  if (!Object.hasOwn(AMAZON_SEARCHES, selection)) return null;
+/** Build a tagged Amazon search without visitor inputs or intermediary redirects. */
+export function amazonSearchQueryUrl(query: string): string {
   const url = new URL('https://www.amazon.de/s');
-  url.searchParams.set('k', AMAZON_SEARCHES[selection as AmazonSelection]);
+  url.searchParams.set('k', query);
   url.searchParams.set('tag', AMAZON_TAG);
   url.searchParams.set('linkCode', 'll2');
   return url.toString();
+}
+/** No visitor inputs, session IDs, profiles, prices or intermediary redirects. */
+export function amazonSearchUrl(selection: string): string | null {
+  if (!Object.hasOwn(AMAZON_SEARCHES, selection)) return null;
+  return amazonSearchQueryUrl(AMAZON_SEARCHES[selection as AmazonSelection]);
 }
 /** Explicit owner-authorized exception for real-data preview; fixtures remain ad-free. */
 export function amazonEnabled(env: Record<string, string | undefined>): boolean {

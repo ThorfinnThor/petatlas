@@ -62,13 +62,24 @@ for (const width of [390, 1440]) {
         await expect(page.locator('.supplement-products a[rel~="sponsored"]')).toHaveCount(
           supplements.products.length + supplementFressnapfCount,
         );
-        const fressnapfLinks = page.locator('.retail-partner a[rel~="sponsored"]');
+        const fressnapfLinks = page.locator(
+          '.retail-partner a[href*="awin1.com"][rel~="sponsored"]',
+        );
         await expect(fressnapfLinks).toHaveCount(2);
         for (const link of await fressnapfLinks.all()) {
           const url = new URL((await link.getAttribute('href'))!);
           expect(url.hostname).toBe('www.awin1.com');
           expect(url.searchParams.get('awinmid')).toBe('14757');
           expect(url.searchParams.get('awinaffid')).toBe('3037577');
+        }
+        const amazonRetailLinks = page.locator(
+          '.retail-partner a[href*="amazon.de"][rel~="sponsored"]',
+        );
+        await expect(amazonRetailLinks).toHaveCount(2);
+        for (const link of await amazonRetailLinks.all()) {
+          const url = new URL((await link.getAttribute('href'))!);
+          expect(url.hostname).toBe('www.amazon.de');
+          expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
         }
         await expect(page.locator('.supplement-products article')).toHaveCount(6);
         await expect(page.locator('.supplement-products img')).toHaveCount(6);
