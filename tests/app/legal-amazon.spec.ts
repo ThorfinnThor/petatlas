@@ -138,9 +138,8 @@ for (const width of [390, 1440]) {
     await expect(page).toHaveURL(/\/ergaenzungsfuttermittel\/$/);
     await page.goto('/de-de/');
     await expect(page.locator('#produkte a[rel~="sponsored"]')).toHaveCount(2);
-    await expect(page.locator('footer')).toContainText(
-      'Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.',
-    );
+    await expect(page.locator('footer .fuss__werbung')).toHaveCount(1);
+    await expect(page.locator('footer .fuss__werbung')).toContainText('Werbung:');
     await page.goto('/de-de/spielzeug/?tierart=cat');
     await page.getByRole('button', { name: 'Passendes anzeigen' }).click();
     const links = page.locator('#finder-ergebnis a[rel~="sponsored"]');

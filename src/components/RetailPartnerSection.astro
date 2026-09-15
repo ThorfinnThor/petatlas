@@ -2,11 +2,7 @@
 import type { MarketConfig } from '../domain/market.ts';
 import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../features/commerce/links.ts';
 import { commerceProgramme, partnerHinweisErlaubt } from '../features/commerce/partner.ts';
-import {
-  AMAZON_DISCLOSURE,
-  amazonEnabled,
-  amazonSearchQueryUrl,
-} from '../features/commerce/amazon.ts';
+import { amazonEnabled, amazonSearchQueryUrl } from '../features/commerce/amazon.ts';
 
 interface Props {
   market: MarketConfig;
@@ -94,20 +90,11 @@ const amazonZiele = new Map(
     <section class="retail-partner" aria-labelledby={`retail-${page}`}>
       <div class="retail-partner__heading">
         <div>
-          <p class="eyebrow">Weitere Einkaufsmöglichkeit · Werbung</p>
+          <p class="eyebrow">Weitere Einkaufsmöglichkeit</p>
           <h2 id={`retail-${page}`}>
             {amazonAktiv ? 'Bei Fressnapf und Amazon ansehen' : 'Bei Fressnapf ansehen'}
           </h2>
         </div>
-        <p class="retail-partner__disclosure">
-          {entscheidung.programm.disclosureText}
-          {amazonAktiv && (
-            <>
-              <br />
-              {AMAZON_DISCLOSURE}
-            </>
-          )}
-        </p>
       </div>
       <p>
         Die Fressnapf-Links führen über Awin zu passenden Kategorien. Amazon-Links öffnen eine
@@ -161,12 +148,6 @@ const amazonZiele = new Map(
   .retail-partner__heading h2,
   .retail-partner__heading p {
     margin-block: 0;
-  }
-
-  .retail-partner__disclosure {
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-    max-inline-size: 52ch;
   }
 
   .retail-partner__grid {

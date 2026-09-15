@@ -8,7 +8,7 @@
  * Die Gruppen entstehen aus der Route Registry. Eine Funktion, die es im
  * Markt nicht gibt, taucht hier nicht auf — der Fuß verlinkt nichts Leeres.
  */
-import { amazonEnabled, AMAZON_DISCLOSURE } from '../features/commerce/amazon.ts';
+import { amazonEnabled } from '../features/commerce/amazon.ts';
 import { createSiteConfig, readBuildMode } from '../../config/site.ts';
 import { isFeatureEnabled, type MarketConfig } from '../domain/market.ts';
 import { translate, type LocaleId } from '../domain/i18n.ts';
@@ -83,19 +83,10 @@ const SPALTEN = [
     </div>
 
     {
-      amazonEnabled(process.env) && (
+      (amazonEnabled(process.env) || awinAktiv) && (
         <p class="fuss__werbung">
-          Werbung: {AMAZON_DISCLOSURE} Als „Werbung“ gekennzeichnete Links führen zu Amazon. Eine
-          Provision verändert die Reihenfolge im Finder nicht.
-        </p>
-      )
-    }
-    {
-      awinAktiv && (
-        <p class="fuss__werbung">
-          Werbung: Gekennzeichnete Links zu Fressnapf und HanseMerkur führen über Awin. Bei einem
-          Kauf oder Abschluss können wir eine Provision erhalten; der Preis und die redaktionelle
-          Reihenfolge ändern sich dadurch nicht.
+          Werbung: Amazon- und Awin-Partnerlinks können bei qualifizierten Käufen oder Abschlüssen
+          eine Provision auslösen. Preise und redaktionelle Reihenfolge ändern sich dadurch nicht.
         </p>
       )
     }

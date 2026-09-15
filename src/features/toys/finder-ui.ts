@@ -73,7 +73,7 @@ function trefferMarkup(treffer: Treffer): string {
   try {
     const links = JSON.parse(configured ?? '{}') as Record<string, unknown>;
     if (expected && links[treffer.productId] === expected)
-      amazon = `<p class="finder__aktion"><a href="${escape(expected)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Amazon suchen ↗ (Werbung)</a></p>`;
+      amazon = `<p class="finder__aktion"><a href="${escape(expected)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Amazon suchen ↗ <span class="sr-only">(Werbung)</span></a></p>`;
   } catch {
     /* Missing or malformed configuration never creates a link. */
   }
@@ -92,7 +92,7 @@ function trefferMarkup(treffer: Treffer): string {
       const affiliateUrl = new URL(offer.affiliateUrl);
       if (imageUrl.protocol === 'https:' && affiliateUrl.protocol === 'https:') {
         feedImage = { imageUrl: imageUrl.toString(), affiliateUrl: affiliateUrl.toString() };
-        fressnapf = `<p class="finder__aktion"><a href="${escape(feedImage.affiliateUrl)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Fressnapf ansehen ↗ (Werbung)</a></p>`;
+        fressnapf = `<p class="finder__aktion"><a href="${escape(feedImage.affiliateUrl)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Fressnapf ansehen ↗ <span class="sr-only">(Werbung)</span></a></p>`;
       }
     }
   } catch {

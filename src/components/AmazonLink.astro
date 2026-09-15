@@ -13,7 +13,7 @@ const href = amazonEnabled(process.env) ? amazonSearchUrl(selection) : null;
   href && (
     <p class="amazon-link">
       <a href={href} {...PARTNER_LINK_ATTRIBUTE}>
-        {label} ↗ (Werbung)
+        {label} ↗ <span class="sr-only">(Werbung)</span>
       </a>
     </p>
   )
