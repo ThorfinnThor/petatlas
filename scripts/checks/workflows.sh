@@ -61,12 +61,16 @@ fi
 #   keinen anderen Host als api.cloudflare.com und protokolliert nur den
 #   Ursprung, nie den Pfad.
 #
+#   AWIN_FEED_LIST_URL - die private Awin-Feedlisten-Adresse. Sie wird nur im
+#   manuellen beziehungsweise freigegebenen Feed-Sync verwendet; der Workflow
+#   persistiert weder diese Adresse noch die darin enthaltenen Zugangsdaten.
+#
 # Jeder weitere Name muss hier bewusst eingetragen werden. Wer ein Secret
 # ergänzt, ohne diese Liste anzufassen, bekommt einen roten Lauf - genau das
 # ist der Zweck.
 if unerklaert=$(grep -rnE '\$\{\{[[:space:]]*secrets\.' "$verzeichnis" \
-  | grep -vE '\$\{\{[[:space:]]*secrets\.(GITHUB_TOKEN|CLOUDFLARE_DEPLOY_HOOK)[[:space:]]*\}\}'); then
-  melde "Nicht erklärter Secret-Verweis; erklärt sind nur GITHUB_TOKEN und CLOUDFLARE_DEPLOY_HOOK:"
+  | grep -vE '\$\{\{[[:space:]]*secrets\.(GITHUB_TOKEN|CLOUDFLARE_DEPLOY_HOOK|AWIN_FEED_LIST_URL)[[:space:]]*\}\}'); then
+  melde "Nicht erklärter Secret-Verweis; erklärt sind nur GITHUB_TOKEN, CLOUDFLARE_DEPLOY_HOOK und AWIN_FEED_LIST_URL:"
   melde "$unerklaert"
 fi
 

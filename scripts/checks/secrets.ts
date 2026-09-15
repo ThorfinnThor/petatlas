@@ -75,7 +75,7 @@ export const SECRET_RULES: readonly SecretRule[] = [
     description: 'Zuweisung eines Werts an einen bekannten Secret-Namen',
     // Nur mit Wert: leere Zuweisungen in .env.example bleiben zulässig.
     pattern:
-      /\b(?:AWIN_FEED_URL|CLOUDFLARE_BUILD_HOOK|GITHUB_TOKEN|NPM_TOKEN|CLOUDFLARE_API_TOKEN)\s*[:=]\s*(?!["']?\s*$)["']?[^\s"',}]{8,}/,
+      /\b(?:AWIN_FEED_URL|AWIN_FEED_LIST_URL|CLOUDFLARE_BUILD_HOOK|GITHUB_TOKEN|NPM_TOKEN|CLOUDFLARE_API_TOKEN)\s*[:=]\s*(?!["']?\s*$)["']?[^\s"',}]{8,}/,
   },
   {
     id: 'public-prefixed-secret',

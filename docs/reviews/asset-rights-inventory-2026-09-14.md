@@ -15,6 +15,7 @@ verwendeten Ressourcen zu. Es ersetzt keine rechtliche Prüfung ungeklärter Son
 | Produkt- und Futterangaben | Verlinkte Herstellerseiten, Stand je Eintrag | Redaktionelle Fakten und Vergleichsmerkmale, keine kopierten Produktbilder oder Bewertungen | Je Produkt Quelle und Prüfdatum in `content-data/products/editorial.json` und `content-data/food/real-products.json`; nur als Herstellerangabe bezeichnet |
 | Ergänzungsfuttermittel | Hersteller-, Verbands- und Behördenquellen | Redaktionelle Einordnung, keine Dosierungsempfehlung | Getrennte Quellen in `config/editorial-sources.json`; eigene inhaltsgebundene Fachfreigabe in `config/reviews/nutrition.json` |
 | Amazon | Vom Betreiber autorisierte Suchlinks mit Partner-ID | Gekennzeichneter Textlink; keine Preise, Bilder, Widgets, Rezensionen oder Produktdaten | Status getrennt in `config/commerce/status.json`; Vertrags-/Feedrechte werden nicht aus der Textlink-Autorisierung abgeleitet |
+| Fressnapf über Awin | Freigegebener Produktfeed, Advertiser 14757 | Produktbild und Deep Link nur für eindeutig zugeordnete redaktionelle Produkte; keine Preise, Verfügbarkeiten, Bewertungen oder Händlertexte | Betreiberbestätigung vom 15.09.2026; Importregeln in `scripts/awin/`, Status in `config/commerce/status.json` |
 | Eigene Seitentexte und UI | Repository Wau & Miau | HTML, Suchindex und Druckansichten | Eigene redaktionelle und technische Arbeit; das Repository ist als `UNLICENSED` gekennzeichnet |
 
 Die vollständige maschinenlesbare Quellenliste entsteht aus `config/sources/*.json`,
@@ -45,8 +46,9 @@ Die PNG-Originale liegen in `design-assets/`; `scripts/design/images.ts` erzeugt
 ausgelieferten AVIF- und WebP-Varianten. `design-assets/README.md` protokolliert Zweck und
 Erstellungsweg. Die Produktsymbole werden in `docs/GENERATED_PRODUCT_SYMBOLS.md` dokumentiert.
 Die Bilder stellen weder konkrete Produkte noch gelistete Praxen oder
-unabhängige Produkttests dar. Es werden keine Herstellerfotos, Logos oder Amazon-Bilder
-ausgeliefert.
+unabhängige Produkttests dar. Es werden keine separat kopierten Herstellerfotos, Logos oder
+Amazon-Bilder ausgeliefert. Fressnapf-Produktbilder werden von der im Awin-Feed angegebenen
+Bildadresse geladen und nicht in das Repository kopiert.
 
 ## Schriften und Laufzeitbibliotheken
 
@@ -69,6 +71,7 @@ Nachweise, Quell-Snapshots oder Originalbilder versehentlich in `dist/` gelangen
 
 Der Betreiber hat am 14.09.2026 den Abschluss der menschlichen Rechteprüfung für die in
 diesem Inventar aufgeführten Ressourcen und Ausgabeformen bestätigt. Die globale
-Datenrechtefreigabe verweist auf dieses Inventar. Nicht aufgeführte Partnerfeeds,
-exakten Händler- oder Herstellerbilder, Preise und Logos bleiben technisch deaktiviert und sind
-von dieser Freigabe nicht erfasst. Die oben dokumentierten, eigenen Symbolbilder sind freigegeben.
+Datenrechtefreigabe verweist auf dieses Inventar. Die Fressnapf-Feedbilder wurden am 15.09.2026
+ergänzt. Nicht aufgeführte Partnerfeeds, Händler- oder Herstellerbilder, Preise und Logos bleiben
+technisch deaktiviert und sind von dieser Freigabe nicht erfasst. Die oben dokumentierten, eigenen
+Symbolbilder sind freigegeben.

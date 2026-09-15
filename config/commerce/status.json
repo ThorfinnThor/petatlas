@@ -9,11 +9,11 @@
     "scope": "Statische, als Werbung gekennzeichnete Suchlinks für Spielzeug und Ergänzungsfuttermittel"
   },
   "offerFeedStatus": {
-    "status": "disabled",
-    "program": null,
-    "approvedBy": null,
-    "approvedAt": null,
+    "status": "approved",
+    "program": "Awin · Fressnapf-Online-Shop DE · Advertiser 14757",
+    "approvedBy": "Schayan Yousefian",
+    "approvedAt": "2026-09-15",
     "evidence": "docs/reviews/commerce-partner.md",
-    "scope": "Keine Preise, Verfügbarkeiten, Produktbilder oder automatischen Angebotsdaten"
+    "scope": "Awin-Feedbilder und produktspezifische Fressnapf-Deep-Links für eindeutig zugeordnete redaktionelle Produkte; keine Preise, Verfügbarkeiten oder Bewertungen"
   }
 }

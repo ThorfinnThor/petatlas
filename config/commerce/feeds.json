@@ -7,9 +7,9 @@
       "feedId": "awin-de",
       "network": "awin",
       "marketId": "DE",
-      "secretName": "AWIN_FEED_URL",
-      "allowedHosts": ["productdata.awin.com", "ui2.awin.com"],
-      "note": "Ohne Partnervertrag ist der Slot aus: die Anzeige-Erlaubnis kommt aus config/publishers/, nicht aus dem Vorhandensein eines Feeds."
+      "secretName": "AWIN_FEED_LIST_URL",
+      "allowedHosts": ["ui.awin.com", "productdata.awin.com", "datafeed.api.productserve.com"],
+      "note": "Der Feed wird ausschließlich für eindeutig zugeordnete Fressnapf-Produktbilder und Deep Links genutzt. Preise und Verfügbarkeiten werden nicht übernommen."
     }
   ]
 }

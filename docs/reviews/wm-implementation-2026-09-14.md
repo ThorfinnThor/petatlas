@@ -63,5 +63,5 @@ Veröffentlichung autorisiert. Der genaue Umfang ist in
 GOT, der signierte Reiseregelstand und die allgemeine Einordnung von
 Ergänzungsfuttermitteln sind für ihren jeweils begrenzten Inhalt freigegeben. Positive
 Reiseergebnisse und die Fachstatusanzeigen dürfen deshalb im Produktionsbuild erscheinen.
-Versicherungsangebote, Produktbilder, Preis-/Angebotsfeeds und Tracking bleiben deaktiviert,
+Preis-/Verfügbarkeitsfeeds, Amazon-Bilder, Analyse-Tracking und individualisierte Versicherungsangebote bleiben deaktiviert,
 weil sie nicht zum freigegebenen Produktionsumfang gehören.

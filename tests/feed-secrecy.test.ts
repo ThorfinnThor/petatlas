@@ -67,7 +67,7 @@ describe('Secrets', () => {
     const stand = secretStand({});
     expect(stand.length).toBe(FEEDS.length);
     expect(stand[0]?.vorhanden).toBe(false);
-    expect(stand[0]?.meldung).toContain('AWIN_FEED_URL');
+    expect(stand[0]?.meldung).toContain('AWIN_FEED_LIST_URL');
     expect(stand[0]?.meldung).toContain('fehlt');
   });
 

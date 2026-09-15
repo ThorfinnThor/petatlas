@@ -23,6 +23,7 @@ import { attributPruefung } from '../../features/care/attributes.ts';
 import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
 import RetailPartnerSection from '../RetailPartnerSection.astro';
 import type { MarketConfig } from '../../domain/market.ts';
+import { fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
 
 interface Props {
   market: MarketConfig;
@@ -33,6 +34,12 @@ const { market } = Astro.props;
 const taxonomie = spielzeugTaxonomie();
 const pruefung = attributPruefung();
 const synthetisch = pruefung.dataKind === 'synthetic';
+const fressnapfProducts = Object.fromEntries(
+  fressnapfAngebote().map((product) => [
+    product.productId,
+    { imageUrl: product.imageUrl, affiliateUrl: product.affiliateUrl },
+  ]),
+);
 ---
 
 <h1>Spielzeug finden</h1>
@@ -77,6 +84,7 @@ const synthetisch = pruefung.dataKind === 'synthetic';
         ),
       )
     : undefined}
+  data-fressnapf-offers={JSON.stringify(fressnapfProducts)}
 >
   <div class="feld">
     <label for="finder-tierart">Tierart</label>
@@ -129,7 +137,8 @@ const synthetisch = pruefung.dataKind === 'synthetic';
       taxonomie.categories.some((category) => category.categoryId === product.categoryId),
     ).length
   } redaktionell erfasste Spielzeuge und Kratzmöbel. Er bildet nicht das gesamte Amazon-Sortiment ab.
-  Wünsche ändern die Reihenfolge; ausgeschlossene Tierarten erscheinen nicht.
+  Wünsche ändern die Reihenfolge; ausgeschlossene Tierarten erscheinen nicht. Eindeutig zugeordnete Fressnapf-Produkte
+  erhalten ein Bild und einen direkten Händlerlink aus dem freigegebenen Awin-Feed.
 </p>
 <div id="finder-ergebnis" role="status" aria-live="polite"></div>
 
@@ -296,6 +305,10 @@ const synthetisch = pruefung.dataKind === 'synthetic';
   }
 
   #finder-ergebnis :global(.finder__aktion) {
+    margin-block: var(--space-2) 0;
+  }
+
+  #finder-ergebnis :global(.finder__aktionen) {
     margin-top: auto;
     padding-top: var(--space-4);
   }

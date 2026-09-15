@@ -77,8 +77,31 @@ function trefferMarkup(treffer: Treffer): string {
   } catch {
     /* Missing or malformed configuration never creates a link. */
   }
+  const configuredFressnapf =
+    document.querySelector<HTMLFormElement>('#finder')?.dataset.fressnapfOffers;
+  let fressnapf = '';
+  let feedImage: { imageUrl: string; affiliateUrl: string } | null = null;
+  try {
+    const offers = JSON.parse(configuredFressnapf ?? '{}') as Record<
+      string,
+      { imageUrl?: unknown; affiliateUrl?: unknown }
+    >;
+    const offer = offers[treffer.productId];
+    if (typeof offer?.imageUrl === 'string' && typeof offer.affiliateUrl === 'string') {
+      const imageUrl = new URL(offer.imageUrl);
+      const affiliateUrl = new URL(offer.affiliateUrl);
+      if (imageUrl.protocol === 'https:' && affiliateUrl.protocol === 'https:') {
+        feedImage = { imageUrl: imageUrl.toString(), affiliateUrl: affiliateUrl.toString() };
+        fressnapf = `<p class="finder__aktion"><a href="${escape(feedImage.affiliateUrl)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Fressnapf ansehen ↗ (Werbung)</a></p>`;
+      }
+    }
+  } catch {
+    /* Missing or malformed feed data falls back to the local symbol. */
+  }
   const identity = productIdentity(treffer.productId);
   const bild = symbolbild(identity);
+  const bildQuelle = feedImage?.imageUrl ?? bild.src;
+  const bildAlt = feedImage ? `${identity?.name ?? treffer.productId} bei Fressnapf` : bild.alt;
   const source = identity
     ? `<p><a href="${escape(identity.sourceUrl)}" rel="noopener">Herstellerangaben ansehen</a> · ${escape(identity.checkedAt)}</p>`
     : '';
@@ -98,8 +121,8 @@ function trefferMarkup(treffer: Treffer): string {
   return `
     <li data-produkt="${escape(treffer.productId)}" data-punkte="${treffer.punkte}">
       <figure class="finder__bild">
-        <img src="${bild.src}" alt="${escape(bild.alt)}" width="720" height="720" loading="lazy" decoding="async">
-        <figcaption>Symbolbild</figcaption>
+        <img src="${escape(bildQuelle)}" alt="${escape(bildAlt)}" width="720" height="720" loading="lazy" decoding="async" referrerpolicy="no-referrer"${feedImage ? ` data-feed-image data-fallback-src="${bild.src}" data-fallback-alt="${escape(bild.alt)}"` : ''}>
+        <figcaption>${feedImage ? 'Produktbild · Fressnapf-Feed' : 'Symbolbild'}</figcaption>
       </figure>
       <h3>${escape(productIdentity(treffer.productId)?.name ?? treffer.productId)}</h3>
       <p class="finder__kategorie">${identity ? `${escape(identity.brand)} · ` : ''}Kategorie: ${escape(kategorie(treffer.categoryId)?.label ?? treffer.categoryId)}</p>
@@ -107,7 +130,7 @@ function trefferMarkup(treffer: Treffer): string {
       ${begruendung}
       ${offen}
       ${source}
-      ${amazon}
+      <div class="finder__aktionen">${fressnapf}${amazon}</div>
     </li>`;
 }
 
@@ -158,5 +181,18 @@ export function finderStarten(): void {
           'Die Reihenfolge zählt belegte Übereinstimmungen — sie ist keine Bewertung des Produkts.</p>';
 
     ausgabe.innerHTML = `${kopf}<ul class="finder__liste">${treffer.map(trefferMarkup).join('')}</ul>`;
+    for (const image of ausgabe.querySelectorAll<HTMLImageElement>('img[data-feed-image]')) {
+      image.addEventListener(
+        'error',
+        () => {
+          const fallback = image.dataset.fallbackSrc;
+          if (!fallback || image.src.endsWith(fallback)) return;
+          image.src = fallback;
+          image.alt = image.dataset.fallbackAlt ?? 'Neutrales Symbolbild';
+          image.closest('figure')?.querySelector('figcaption')?.replaceChildren('Symbolbild');
+        },
+        { once: true },
+      );
+    }
   });
 }

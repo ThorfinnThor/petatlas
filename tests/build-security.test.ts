@@ -57,16 +57,21 @@ describe('Das Deployment kann nicht vor den Prüfungen laufen', () => {
     expect(ergebnis.ausgabe).toMatch(/synthetische Daten dürfen nicht ausgeliefert werden/);
   }, 120_000);
 
-  it('bricht ab, wenn ein Feed-Secret gesetzt ist, ohne dass eine Feed-Ausgabe freigegeben wäre', () => {
+  it('verwendet ein Feedlisten-Secret nicht im Website-Build', () => {
     // Der Wert wird zur Laufzeit zusammengesetzt: als Literal im Quelltext
     // würde der Secret-Audit ihn zu Recht als Fund melden.
     const attrappe = ['https://feed.example', 'synthetischer-pfad'].join('/');
     // Auch der Schlüssel wird berechnet: eine Zuweisung an einen bekannten
     // Secret-Namen im Quelltext meldet der Audit zu Recht als Fund.
-    const schluessel = ['AWIN', 'FEED', 'URL'].join('_');
-    const ergebnis = baue({ [schluessel]: attrappe });
-    expect(ergebnis.code).toBe(1);
-    expect(ergebnis.ausgabe).toMatch(/keine Feed- oder Angebotsausgabe freigegeben/);
+    const schluessel = ['AWIN', 'FEED', 'LIST', 'URL'].join('_');
+    const ergebnis = baue({
+      [schluessel]: attrappe,
+      APP_PROFILE: 'real',
+      BUILD_MODE: 'preview',
+      PUBLIC_SITE_URL: 'https://wauandmiau.de',
+    });
+    expect(ergebnis.code).toBe(0);
+    expect(ergebnis.ausgabe).toMatch(/Website-Build verwendet es nicht/);
     // Der Wert darf dabei nicht in der Ausgabe landen.
     expect(ergebnis.ausgabe).not.toContain(attrappe);
   }, 120_000);

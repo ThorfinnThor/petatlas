@@ -1,0 +1,94 @@
+# Lädt den bereits freigegebenen Fressnapf-Produktfeed und öffnet nach der
+# vollständigen Prüfkette einen Pull Request. Die geheime Feedlisten-Adresse
+# wird weder ausgegeben noch in erzeugte Dateien übernommen.
+name: Fressnapf-Produktfeed synchronisieren
+
+on:
+  schedule:
+    - cron: '23 3 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-awin-fressnapf
+  cancel-in-progress: false
+
+jobs:
+  synchronisieren:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      AWIN_FEED_LIST_URL: ${{ secrets.AWIN_FEED_LIST_URL }}
+    steps:
+      - name: Feedzugang prüfen
+        id: feedzugang
+        run: |
+          if [ -n "$AWIN_FEED_LIST_URL" ]; then
+            echo "vorhanden=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "Das Repository-Secret AWIN_FEED_LIST_URL fehlt." >&2
+            exit 1
+          else
+            echo "vorhanden=false" >> "$GITHUB_OUTPUT"
+            echo "Kein Feedzugang hinterlegt; der geplante Lauf wird ohne Fehler übersprungen."
+          fi
+
+      - name: Repository auschecken
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Node einrichten
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
+        run: npm ci
+
+      - name: Fressnapf-Produkte zuordnen
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
+        run: npm run sync:fressnapf-feed
+
+      - name: Ausgabe vollständig prüfen
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
+        env:
+          APP_PROFILE: real
+          BUILD_MODE: preview
+          PUBLIC_SITE_URL: https://wauandmiau.de
+        run: |
+          npm run verify
+          npm run build:cloudflare
+          npm run check:dist
+
+      - name: Änderungen als Pull Request bereitstellen
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet -- content-data/products/fressnapf-feed.json; then
+            echo "Keine inhaltliche Änderung im Fressnapf-Feed."
+            exit 0
+          fi
+          branch="awin/fressnapf-${GITHUB_RUN_ID}"
+          git config user.name "wauandmiau-data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add content-data/products/fressnapf-feed.json
+          git commit -m "chore(data): Fressnapf-Produktfeed aktualisieren"
+          git push --set-upstream origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "chore(data): Fressnapf-Produktfeed aktualisieren" \
+            --body "Der freigegebene Awin-Fressnapf-Feed wurde synchronisiert. Nur eindeutig zugeordnete Produktbilder und Deep Links wurden übernommen; die vollständige Prüfkette und der Cloudflare-Build waren erfolgreich."

@@ -30,6 +30,7 @@
     "snapshot:got": "node scripts/ingest/snapshot-got.ts",
     "snapshot:places": "node scripts/ingest/snapshot-places.ts",
     "snapshot:municipal": "node scripts/ingest/snapshot-municipal.ts",
+    "sync:fressnapf-feed": "node scripts/awin/sync-fressnapf.ts",
     "ingest:osm-de": "node scripts/ingest/osm-country.ts",
     "lint": "eslint .",
     "typecheck": "astro check",
