@@ -4,6 +4,8 @@
 name: Fressnapf-Produktfeed synchronisieren
 
 on:
+  schedule:
+    - cron: '23 3 * * 0'
   workflow_dispatch:
 
 permissions:
@@ -23,32 +25,43 @@ jobs:
     env:
       AWIN_FEED_LIST_URL: ${{ secrets.AWIN_FEED_LIST_URL }}
     steps:
+      - name: Feedzugang prüfen
+        id: feedzugang
+        run: |
+          if [ -n "$AWIN_FEED_LIST_URL" ]; then
+            echo "vorhanden=true" >> "$GITHUB_OUTPUT"
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "Das Repository-Secret AWIN_FEED_LIST_URL fehlt." >&2
+            exit 1
+          else
+            echo "vorhanden=false" >> "$GITHUB_OUTPUT"
+            echo "Kein Feedzugang hinterlegt; der geplante Lauf wird ohne Fehler übersprungen."
+          fi
+
       - name: Repository auschecken
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
           persist-credentials: true
 
       - name: Node einrichten
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version-file: .nvmrc
           cache: npm
 
-      - name: Feedzugang prüfen
-        run: |
-          if [ -z "$AWIN_FEED_LIST_URL" ]; then
-            echo "Das Repository-Secret AWIN_FEED_LIST_URL fehlt." >&2
-            exit 1
-          fi
-
       - name: Abhängigkeiten installieren
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
         run: npm ci
 
       - name: Fressnapf-Produkte zuordnen
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
         run: npm run sync:fressnapf-feed
 
       - name: Ausgabe vollständig prüfen
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
         env:
           APP_PROFILE: real
           BUILD_MODE: preview
@@ -59,6 +72,7 @@ jobs:
           npm run check:dist
 
       - name: Änderungen als Pull Request bereitstellen
+        if: ${{ steps.feedzugang.outputs.vorhanden == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

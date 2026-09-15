@@ -54,7 +54,7 @@ Stand 2026-09-06. `offen` heißt: noch nicht geliefert. Keine Zeile behauptet ei
 | 9 | Fachfreigabe Reiseregeln | offen | fachlich geeignete prüfende Person | M12-06 | Wizard-Logik mit fail-closed Ergebnissen |
 | 10 | Tracking-/Ads-Freigabe | offen | Betreiber | M18-06 | Layout ohne Anzeigen |
 | 11 | Secret `CLOUDFLARE_BUILD_HOOK` (GitHub-Secret) | offen | Betreiber | M17-02 | Workflow mit Dry-Run ohne Hook |
-| 12 | Secret `AWIN_FEED_LIST_URL` im Repository `ThorfinnThor/petatlas` | offen; Workflow und Import sind vorbereitet | Betreiber | Fressnapf-Feed-Sync | Kuratierte Produkte bleiben bis dahin bei Symbolbildern und Kategorie-/Amazon-Links |
+| 12 | Secret `AWIN_FEED_LIST_URL` im Repository `ThorfinnThor/petatlas` | offen; wöchentlicher und manueller Workflow sowie Import sind vorbereitet | Betreiber | Fressnapf-Feed-Sync | Kuratierte Produkte bleiben bis dahin bei Symbolbildern und Kategorie-/Amazon-Links |
 
 **Wirkung auf die laufende Arbeit:** keine dieser Voraussetzungen blockiert derzeit eine ausführbare Aufgabe. Erst wenn eine der genannten Aufgaben tatsächlich an der Reihe ist, wird ausschließlich diese Aufgabe auf `blocked` gesetzt und in `docs/BLOCKERS.md` mit Ursache, benötigter Handlung und Zuständigem eingetragen. Bis dahin gibt es keinen eingetragenen Blocker.
 
