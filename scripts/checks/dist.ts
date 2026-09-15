@@ -14,6 +14,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { extname, join, relative, sep } from 'node:path';
 
 import tiles from '../../config/tiles.json' with { type: 'json' };
+import { fressnapfBildUrspruenge } from '../../src/features/commerce/fressnapf-feed.ts';
 
 export interface Fund {
   readonly datei: string;
@@ -135,7 +136,7 @@ export const PRIVATE_FELDER: readonly string[] = [
  * jede erlaubte Unterressource als Fund oder, schlimmer, keine.
  */
 export function erlaubteSubressourcenHosts(): readonly string[] {
-  return (tiles as { hosts: string[] }).hosts.map((eintrag) => {
+  return [...(tiles as { hosts: string[] }).hosts, ...fressnapfBildUrspruenge()].map((eintrag) => {
     try {
       return new URL(eintrag).host;
     } catch {

@@ -64,9 +64,9 @@
       "approved": true,
       "owner": "Betreiber",
       "approvedBy": "Schayan Yousefian",
-      "approvedAt": "2026-09-14",
+      "approvedAt": "2026-09-15",
       "evidence": "docs/reviews/commerce-partner.md",
-      "note": "Fressnapf über Awin freigegeben; statische Kategorie-Deeplinks ohne Preis-, Verfügbarkeits- oder Bildfeed."
+      "note": "Fressnapf über Awin freigegeben; Kategorie- und Produkt-Deeplinks sowie Feedbilder für eindeutig zugeordnete Produkte, ohne Preise, Verfügbarkeiten oder Bewertungen."
     },
     "adsTracking": {
       "approved": false,

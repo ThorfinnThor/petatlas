@@ -8,13 +8,14 @@ describe('Getrennter Partner- und Feedstatus', () => {
     expect(status.affiliateLinkStatus.status).toBe('owner_authorized');
     expect(status.affiliateLinkStatus.siteTag).toBe('wauandmiau-21');
     expect(status.affiliateLinkStatus.approvedBy).toBe('Schayan Yousefian');
-    expect(status.offerFeedStatus.status).toBe('disabled');
+    expect(status.offerFeedStatus.status).toBe('approved');
   });
 
-  it('behauptet für den ausgeschalteten Feed keine Programmfreigabe', () => {
+  it('begrenzt den freigegebenen Feed auf Bilder und Deep Links', () => {
     const feed = commerceStatus().offerFeedStatus;
-    expect(feed.program).toBeNull();
-    expect(feed.approvedBy).toBeNull();
-    expect(feed.scope).toContain('Keine Preise');
+    expect(feed.program).toContain('Fressnapf');
+    expect(feed.approvedBy).toBe('Schayan Yousefian');
+    expect(feed.scope.toLowerCase()).toContain('keine preise');
+    expect(feed.scope).toContain('Produkt');
   });
 });

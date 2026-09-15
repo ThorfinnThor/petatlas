@@ -8,6 +8,8 @@ import supplements from '../../../content-data/products/supplements.json' with {
 import nutritionReview from '../../../config/reviews/nutrition.json' with { type: 'json' };
 import RetailPartnerSection from '../RetailPartnerSection.astro';
 import type { MarketConfig } from '../../domain/market.ts';
+import { fressnapfAngebot, fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
+import { PARTNER_LINK_ATTRIBUTE } from '../../features/commerce/links.ts';
 
 interface Props {
   market: MarketConfig;
@@ -15,6 +17,7 @@ interface Props {
 
 const { market } = Astro.props;
 const methodikPfad = routePath(defaultMarket(), 'method');
+const fressnapfAvailable = fressnapfAngebote().length > 0;
 ---
 
 <p class="eyebrow">Ernährung · Hund und Katze</p>
@@ -39,46 +42,70 @@ const methodikPfad = routePath(defaultMarket(), 'method');
 </p>
 
 {
-  amazonEnabled(process.env) && (
-    <section class="affiliate-section" aria-labelledby="amazon-ergaenzungen">
+  (amazonEnabled(process.env) || fressnapfAvailable) && (
+    <section class="affiliate-section" aria-labelledby="produkt-ergaenzungen">
       <div class="section-heading">
         <div>
           <p class="eyebrow">Konkrete Produkte · Werbung</p>
-          <h2 id="amazon-ergaenzungen">Ergänzungsfuttermittel bei Amazon suchen</h2>
+          <h2 id="produkt-ergaenzungen">Ergänzungsfuttermittel bei Händlern ansehen</h2>
         </div>
         <p class="affiliate-disclosure">{AMAZON_DISCLOSURE}</p>
       </div>
       <p>
-        Die Auswahl führt zu einer Amazon-Suche nach dem jeweils genannten Produkt. Prüfen Sie dort
-        Zusammensetzung, Tierart und Packungsgröße. Die Einordnung stammt aus den verlinkten
-        Herstellerangaben und ist keine Empfehlung, eine Ergänzung zu füttern.
+        Amazon-Links führen zu einer Produktsuche. Eindeutig zugeordnete Fressnapf-Produkte sind
+        zusätzlich direkt verlinkt und verwenden das vom Awin-Feed gelieferte Produktbild. Prüfen
+        Sie beim Händler Zusammensetzung, Tierart und Packungsgröße. Die Einordnung stammt aus den
+        verlinkten Herstellerangaben und ist keine Empfehlung, eine Ergänzung zu füttern.
       </p>
       <div class="supplement-products">
-        {supplements.products.map((product) => (
-          <article class="product-card">
-            <figure>
-              <img
-                src={product.image}
-                alt={`Symbolbild für ${product.category}, keine Produktabbildung`}
-                width="720"
-                height="720"
-                loading="lazy"
-                decoding="async"
-              />
-              <figcaption>Symbolbild</figcaption>
-            </figure>
-            <p class="species-label">{product.species === 'dog' ? 'Für Hunde' : 'Für Katzen'}</p>
-            <h3>{product.name}</h3>
-            <p class="product-meta">
-              {product.brand} · {product.packageSize}
-            </p>
-            <p class="product-category">Kategorie laut Hersteller: {product.category}</p>
-            <a class="source-link" href={product.sourceUrl} rel="noopener noreferrer">
-              {product.sourceLabel} ↗
-            </a>
-            <AmazonLink selection={product.id} label={`${product.name} bei Amazon suchen`} />
-          </article>
-        ))}
+        {supplements.products.map((product) => {
+          const fressnapf = fressnapfAngebot(product.id);
+          const image = fressnapf?.imageUrl ?? product.image;
+          return (
+            <article class="product-card">
+              <figure>
+                <img
+                  src={image}
+                  alt={
+                    fressnapf
+                      ? `${product.name} bei Fressnapf`
+                      : `Symbolbild für ${product.category}, keine Produktabbildung`
+                  }
+                  width="720"
+                  height="720"
+                  loading="lazy"
+                  decoding="async"
+                  referrerpolicy="no-referrer"
+                  data-feed-image={fressnapf ? '' : undefined}
+                  data-fallback-src={fressnapf ? product.image : undefined}
+                  data-fallback-alt={
+                    fressnapf
+                      ? `Symbolbild für ${product.category}, keine Produktabbildung`
+                      : undefined
+                  }
+                />
+                <figcaption>{fressnapf ? 'Produktbild · Fressnapf-Feed' : 'Symbolbild'}</figcaption>
+              </figure>
+              <p class="species-label">{product.species === 'dog' ? 'Für Hunde' : 'Für Katzen'}</p>
+              <h3>{product.name}</h3>
+              <p class="product-meta">
+                {product.brand} · {product.packageSize}
+              </p>
+              <p class="product-category">Kategorie laut Hersteller: {product.category}</p>
+              <a class="source-link" href={product.sourceUrl} rel="noopener noreferrer">
+                {product.sourceLabel} ↗
+              </a>
+              <AmazonLink selection={product.id} label={`${product.name} bei Amazon suchen`} />
+              {fressnapf && (
+                <p class="fressnapf-link">
+                  <a href={fressnapf.affiliateUrl} {...PARTNER_LINK_ATTRIBUTE}>
+                    Bei Fressnapf ansehen ↗ (Werbung)
+                  </a>
+                </p>
+              )}
+            </article>
+          );
+        })}
       </div>
       <p class="affiliate-note">
         Suchergebnisse können abweichende Varianten oder andere Produkte enthalten. Wir zeigen keine
@@ -217,6 +244,20 @@ const methodikPfad = routePath(defaultMarket(), 'method');
   import { supplementComparison } from '../../features/food/supplements.ts';
   const form = document.querySelector<HTMLFormElement>('#supplement-vergleich');
   const output = document.querySelector<HTMLElement>('#supplement-ergebnis');
+
+  for (const image of document.querySelectorAll<HTMLImageElement>('img[data-feed-image]')) {
+    image.addEventListener(
+      'error',
+      () => {
+        const fallback = image.dataset.fallbackSrc;
+        if (!fallback || image.src.endsWith(fallback)) return;
+        image.src = fallback;
+        image.alt = image.dataset.fallbackAlt ?? 'Neutrales Symbolbild';
+        image.closest('figure')?.querySelector('figcaption')?.replaceChildren('Symbolbild');
+      },
+      { once: true },
+    );
+  }
 
   const renderMessage = (message: string, state = 'notice') => {
     if (!output) return;
@@ -396,6 +437,10 @@ const methodikPfad = routePath(defaultMarket(), 'method');
   .source-link {
     margin-block-start: auto;
     font-size: 0.9rem;
+  }
+  .fressnapf-link {
+    margin-block: 0.25rem 0;
+    overflow-wrap: anywhere;
   }
   .affiliate-note {
     margin-block-end: 0;

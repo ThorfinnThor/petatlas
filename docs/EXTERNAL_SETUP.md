@@ -31,7 +31,7 @@ Lokale Entwicklung ist durch die fehlende Domain nicht blockiert; nur `productio
 
 `CLOUDFLARE_BUILD_HOOK`: nur GitHub-Secret für vertrauenswürdigen manuellen/zeitgesteuerten Rebuildjob. Die gesamte Hook-URL ist geheim.
 
-`AWIN_FEED_URL` beziehungsweise konkrete Partnerzugänge: nur Cloudflare-Build-Secrets im freigegebenen Produktionskontext. Kein `PUBLIC_`-Präfix.
+`AWIN_FEED_LIST_URL`: GitHub-Secret für den manuellen Fressnapf-Sync. Es enthält die private Awin-Feedlisten-Adresse und darf weder im Repository noch im Browser landen. Kein `PUBLIC_`-Präfix.
 
 `GITHUB_TOKEN`: automatisch je Workflow, minimale notwendige Job-Rechte. Kein persönlicher breit berechtigter Token als Standardersatz.
 
@@ -54,7 +54,7 @@ Stand 2026-09-06. `offen` heißt: noch nicht geliefert. Keine Zeile behauptet ei
 | 9 | Fachfreigabe Reiseregeln | offen | fachlich geeignete prüfende Person | M12-06 | Wizard-Logik mit fail-closed Ergebnissen |
 | 10 | Tracking-/Ads-Freigabe | offen | Betreiber | M18-06 | Layout ohne Anzeigen |
 | 11 | Secret `CLOUDFLARE_BUILD_HOOK` (GitHub-Secret) | offen | Betreiber | M17-02 | Workflow mit Dry-Run ohne Hook |
-| 12 | Secret `AWIN_FEED_URL` bzw. konkreter Partnerzugang (Cloudflare-Build-Secret) | offen | Betreiber | M13-02 | Fixture-Feed lokal |
+| 12 | Secret `AWIN_FEED_LIST_URL` im Repository `ThorfinnThor/petatlas` | offen; Workflow und Import sind vorbereitet | Betreiber | Fressnapf-Feed-Sync | Kuratierte Produkte bleiben bis dahin bei Symbolbildern und Kategorie-/Amazon-Links |
 
 **Wirkung auf die laufende Arbeit:** keine dieser Voraussetzungen blockiert derzeit eine ausführbare Aufgabe. Erst wenn eine der genannten Aufgaben tatsächlich an der Reihe ist, wird ausschließlich diese Aufgabe auf `blocked` gesetzt und in `docs/BLOCKERS.md` mit Ursache, benötigter Handlung und Zuständigem eingetragen. Bis dahin gibt es keinen eingetragenen Blocker.
 

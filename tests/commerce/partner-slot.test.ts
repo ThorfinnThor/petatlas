@@ -32,10 +32,10 @@ describe('Ausgelieferte Warenkonfiguration', () => {
 });
 
 describe('Begrenzte Erlaubnis', () => {
-  it('erteilt Anzeige-, aber ohne gesonderten Nachweis keine Bilderlaubnis', () => {
+  it('erteilt Anzeige- und die dokumentierte Feedbilderlaubnis', () => {
     const erlaubnis = angebotsErlaubnis('DE', '2026-09-14');
     expect(erlaubnis.anzeigen).toBe(true);
-    expect(erlaubnis.bilder).toBe(false);
+    expect(erlaubnis.bilder).toBe(true);
     expect(erlaubnis.grund).toContain('fressnapf-de');
   });
 

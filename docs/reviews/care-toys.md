@@ -2,7 +2,7 @@
 
 **Stand 2026-09-09:** Drei reale Produkte sind redaktionell anhand ihrer Herstellerquellen erfasst (`content-data/attributes/real-review.json`). KONG Classic: Naturkautschuk und Tierart Hund; West Paw Toppl Large: Zogoflex, Spülmaschineneignung und Tierart Hund; TRIXIE Bürste 2315: Material und Länge. Jedes Attribut trägt Quelle und Erfassungsdatum. Es handelt sich um Herstellerangaben, nicht um eigene Messungen oder eine unabhängige Sicherheits-/Eignungsprüfung.
 
-Die App zeigt diese kleine Auswahl mit erklärten Grenzen. Synthetische Datensätze sind isoliertes Testmaterial. Ohne Partnerfreigabe gibt es weiterhin keine Händlerangebote oder übernommenen Produktbilder. Die übergreifende öffentliche Datenrechte-Freigabe bleibt offen; M14-06 dokumentiert diesen verbleibenden Veröffentlichungs-/Angebotsumfang und bedeutet nicht mehr, dass die realen Attribute technisch fehlen.
+Die App zeigt diese kleine Auswahl mit erklärten Grenzen. Synthetische Datensätze sind isoliertes Testmaterial. Die spätere Fressnapf-Freigabe ergänzt nur eindeutig zugeordnete Bilder und Deep Links aus dem Awin-Feed; sie ändert weder die redaktionellen Attribute noch die Sortierung. Andere Händlerangebote und Produktbilder bleiben ausgeschlossen.
 
 ## Was technisch bereits steht (M14-01 bis M14-05)
 

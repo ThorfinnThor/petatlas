@@ -1,0 +1,80 @@
+{
+  "advertiserId": "14757",
+  "publisherId": "3037577",
+  "targets": [
+    {
+      "productId": "kong-classic",
+      "brand": "kong",
+      "aliases": ["kong classic"],
+      "exclude": ["extreme", "puppy", "senior"]
+    },
+    { "productId": "kong-wobbler", "brand": "kong", "aliases": ["kong wobbler"] },
+    {
+      "productId": "kong-cat-tennis-balls",
+      "brand": "kong",
+      "aliases": ["cat active tennis balls", "cat tennis balls"]
+    },
+    {
+      "productId": "catit-senses-play-circuit",
+      "brand": "catit",
+      "aliases": ["senses spielschiene play", "senses play circuit"],
+      "exclude": ["super"]
+    },
+    { "productId": "catit-senses-digger", "brand": "catit", "aliases": ["senses digger"] },
+    {
+      "productId": "catit-senses-food-tree",
+      "brand": "catit",
+      "aliases": ["senses food tree", "senses futterbaum"]
+    },
+    {
+      "productId": "catit-senses-treat-puzzle",
+      "brand": "catit",
+      "aliases": ["senses treat puzzle"],
+      "required": ["43010"]
+    },
+    {
+      "productId": "catit-senses-treat-spinner",
+      "brand": "catit",
+      "aliases": ["senses treat spinner"],
+      "required": ["43750"]
+    },
+    {
+      "productId": "west-paw-toppl-large",
+      "brand": "west paw",
+      "aliases": ["toppl"],
+      "required": ["large"]
+    },
+    { "productId": "west-paw-hurley", "brand": "west paw", "aliases": ["hurley"] },
+    { "productId": "west-paw-zisc", "brand": "west paw", "aliases": ["zisc"] },
+    { "productId": "west-paw-qwizl", "brand": "west paw", "aliases": ["qwizl"] },
+    {
+      "productId": "trixie-buerste-2315",
+      "brand": "trixie",
+      "aliases": ["doppelseitige burste", "brush double sided"],
+      "required": ["2315"]
+    },
+    {
+      "productId": "canina-caniflora-vital-hund",
+      "brand": "canina",
+      "aliases": ["caniflora vital"]
+    },
+    {
+      "productId": "canina-barfers-best-hund",
+      "brand": "canina",
+      "aliases": ["barfers best"],
+      "exclude": ["cat", "katze"]
+    },
+    {
+      "productId": "canina-petvital-darm-gel",
+      "brand": "canina",
+      "aliases": ["petvital darm gel"]
+    },
+    { "productId": "canina-cat-vitamin-tabs", "brand": "canina", "aliases": ["cat vitamin tabs"] },
+    { "productId": "canina-cat-mineral-tabs", "brand": "canina", "aliases": ["cat mineral tabs"] },
+    {
+      "productId": "canina-barfers-best-katze",
+      "brand": "canina",
+      "aliases": ["barfers best for cats", "barfers best katze"]
+    }
+  ]
+}

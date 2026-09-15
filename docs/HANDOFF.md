@@ -8,7 +8,7 @@ M23-03 ist implementiert und lokal geprüft: bestätigte GOT-Sonderabrechnungen,
 
 ## Nächster ausführbarer Schritt
 
-Es gibt keine ausführbare Aufgabe. Der freigegebene Stand ist in `main` integriert und unter `https://wauandmiau.de` veröffentlicht. Betreiber-, Fach-, Rechte- und Partnernachweise stehen in `config/launch.json` und `docs/reviews/`. Weiterer Ausbau betrifft ausschließlich optionale Datenfeeds, Produktbilder mit eigener Nutzungserlaubnis und die regelmäßige Datenpflege.
+Es gibt keine ausführbare Aufgabe. Der Fressnapf-Awin-Feedimport ist technisch vorbereitet. Die externe Hinterlegung des GitHub-Secrets `AWIN_FEED_LIST_URL` ermöglicht dem manuellen Workflow, eindeutig zugeordnete Produktbilder und Deep Links als geprüften Pull Request bereitzustellen. HanseMerkur und die bisherigen Fressnapf-Kategorielinks sind bereits aktiv.
 
 ## Ergänzung 10.09.2026 · Wau & Miau / Rechtliches und Amazon
 
@@ -22,4 +22,4 @@ Der geprüfte Umsetzungsauftrag `IMPLEMENTIERUNG_WAUANDMIAU.md` wurde technisch 
 
 Screenshot-Befund korrigiert: Checkboxkarten mit separaten Erklärungen, Spielzeug- und Futterlisten als 3/2/1-Spaltenraster. Spielzeugbestand von 4 auf 12 (6 je Tierart) erweitert, Herstellerbelege in `docs/reviews/product-finder-2026-09-10.md`. Wasser-Matching ohne belegte Schwimmfähigkeit korrigiert. 1453 Unit-Tests und 15 Build-Prüfschritte lokal bestanden; CUA 390/1440 geprüft. Neue CI-Browserfälle angelegt.
 
-Produktkarten bleiben bewusst bei Symbolbildern und Such-/Herstellerlinks, solange keine Nutzungsrechte für konkrete Händler- oder Herstellerfotos vorliegen. Das ist im Rechteinventar dokumentiert und kein fehlender Produktionsschritt.
+Produktkarten nutzen weiterhin Symbolbilder als Ausweichdarstellung. Für eindeutig zugeordnete Fressnapf-Produkte werden nach dem Feed-Sync die vom Awin-Feed bereitgestellten Produktbilder und direkten Partnerlinks angezeigt.

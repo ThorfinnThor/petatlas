@@ -18,4 +18,4 @@ Der Code prüft Betreiberkonfiguration, funktionsabhängige Freigaben, Rechte, D
 
 `npm run verify`: 1.496 Tests in 102 Dateien sowie alle weiteren Prüfschritte bestanden. Der Produktionsbuild bestand alle 15 Gates; die vollständige Playwright-Matrix in CI ist erfolgreich.
 
-Die Domain `wauandmiau.de` liefert den freigegebenen Produktionsbuild. Betreiberangaben sowie die für den aktuellen Funktionsumfang erforderlichen Fach-, Rechts- und Datenrechtefreigaben sind dokumentiert. Optionale Feeds, Händlerbilder und kostenpflichtige OSM-Infrastruktur bleiben bewusst außerhalb des aktuellen Umfangs.
+Die Domain `wauandmiau.de` liefert den freigegebenen Produktionsbuild. Betreiberangaben sowie die für den aktuellen Funktionsumfang erforderlichen Fach-, Rechts- und Datenrechtefreigaben sind dokumentiert. Der freigegebene Fressnapf-Feedimport für eindeutig zugeordnete Bilder und Deep Links ist vorbereitet; bis zur Hinterlegung des Repository-Secrets bleiben die Karten bei den vorhandenen Symbolbildern. Preise, Verfügbarkeiten und weitere Händlerfeeds bleiben außerhalb des aktuellen Umfangs.

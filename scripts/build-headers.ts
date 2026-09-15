@@ -15,8 +15,10 @@ import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { TILES } from '../src/features/map/tiles.ts';
+import { fressnapfBildUrspruenge } from '../src/features/commerce/fressnapf-feed.ts';
 
 const ZIEL_VERZEICHNIS = 'dist';
+const BILD_URSPRUENGE = [...TILES.hosts, ...fressnapfBildUrspruenge()];
 
 /**
  * Content Security Policy.
@@ -41,7 +43,7 @@ const CSP = [
   // Kartenkacheln kommen von einem fremden Host. Das ist eine bewusste
   // Erweiterung für genau diesen Zweck, kein allgemeines Aufweichen: der
   // Host steht in config/tiles.json und nirgends sonst.
-  `img-src 'self' data: ${TILES.hosts.join(' ')}`,
+  `img-src 'self' data: ${BILD_URSPRUENGE.join(' ')}`,
   "font-src 'self'",
   // Der Pagefind-Index liegt auf derselben Herkunft; nichts geht nach außen.
   "connect-src 'self'",

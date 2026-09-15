@@ -103,9 +103,10 @@ const awinAktiv =
       </p>
       <p>
         Partnerlinks und Angebotsdaten werden getrennt verwaltet. Die vom Betreiber beauftragten
-        Amazon-Textlinks sind aktiv ({partnerstatus.affiliateLinkStatus.siteTag}). Ein automatischer
-        Feed für Preise, Verfügbarkeit oder Produktangebote ist nicht aktiviert; entsprechende
-        Angebotsdaten werden hier nicht ausgeliefert.
+        Amazon-Textlinks sind aktiv ({partnerstatus.affiliateLinkStatus.siteTag}). Der freigegebene
+        Fressnapf-Feed liefert ausschließlich Bilder und Deep Links für eindeutig zugeordnete
+        redaktionelle Produkte. Preise, Verfügbarkeiten, Bewertungen und Händlerbeschreibungen
+        werden daraus nicht veröffentlicht.
       </p>
     </>
   ) : (
@@ -119,9 +120,10 @@ const awinAktiv =
   awinAktiv && (
     <p>
       Fressnapf und HanseMerkur sind als Awin-Partner eingebunden. Jeder Link trägt vier statische
-      ClickRefs für Themenbereich, Platzierung, Inhalt und Seite. Sie enthalten keine Profilangaben,
-      Rechenergebnisse oder Sitzungskennung. Die Händler- und Versicherungslinks stehen in
-      getrennten Werbeblöcken; ihre Position hängt nicht von einer Provision ab.
+      ClickRefs für Themenbereich, Platzierung, Inhalt und Seite oder stammt als geprüfter Deep Link
+      aus dem Fressnapf-Feed. Die Links enthalten keine Profilangaben, Rechenergebnisse oder
+      Sitzungskennung. Die Händler- und Versicherungslinks stehen in getrennten Werbeblöcken; ihre
+      Position hängt nicht von einer Provision ab.
     </p>
   )
 }

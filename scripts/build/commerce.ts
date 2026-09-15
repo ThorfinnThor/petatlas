@@ -248,19 +248,24 @@ export function schreibeAusgabe(pfad: string, inhalt: JsonValue): void {
 
 const ZIEL = 'dist/data/v1/commerce/de/offers.json';
 
-/** No product feed is configured. Remove stale feed offers on every build. */
+/**
+ * Der kuratierte Fressnapf-Feed wird ausschließlich im gesonderten Sync-
+ * Workflow abgerufen und als geprüfte, kleine Datendatei eingecheckt. Ein
+ * normaler Website-Build greift nie auf die geheime Feedlisten-Adresse zu.
+ * Der allgemeine Preiskatalog bleibt leer.
+ */
 export async function prepareCommerce(
   env: Readonly<Record<string, string | undefined>>,
 ): Promise<void> {
   rmSync(ZIEL, { force: true });
   rmSync('.generated/commerce.json', { force: true });
   if (secretStand(env).some((entry) => entry.vorhanden)) {
-    throw new CommerceBuildError(
-      'Feed-Secret gesetzt, aber keine Feed- oder Angebotsausgabe freigegeben. Bitte zuerst Feed-Vertrag und Ausgabeformen konfigurieren.',
+    console.log(
+      'Awin-Feedlisten-Secret vorhanden; der Website-Build verwendet es nicht. Der Feedabruf läuft ausschließlich im geprüften Sync-Workflow.',
     );
   }
   console.log(
-    'Kein Angebotsfeed konfiguriert; statische Partnerlinks und redaktionelle Herstellerangaben bleiben verfügbar.',
+    'Kein Preisfeed im Website-Build; Fressnapf-Bilder und Deep Links stammen aus dem geprüften Sync-Ergebnis.',
   );
 }
 
