@@ -11,6 +11,24 @@ body {
   color: var(--color-text);
 }
 
+/*
+ * Zusätzliche Kennzeichnung für Screenreader, ohne sichtbare Affiliate-Hinweise
+ * an jedem einzelnen Link zu wiederholen. Der Hinweis bleibt im Accessibility-
+ * Baum erhalten; die sichtbare Sammelkennzeichnung steht einmal im Footer.
+ */
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+}
+
 /* ---------- Abschnitt 6: Container ---------- */
 
 .page-container {
