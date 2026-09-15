@@ -2,6 +2,11 @@
 import type { MarketConfig } from '../domain/market.ts';
 import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../features/commerce/links.ts';
 import { commerceProgramme, partnerHinweisErlaubt } from '../features/commerce/partner.ts';
+import {
+  AMAZON_DISCLOSURE,
+  amazonEnabled,
+  amazonSearchQueryUrl,
+} from '../features/commerce/amazon.ts';
 
 interface Props {
   market: MarketConfig;
@@ -9,6 +14,7 @@ interface Props {
 }
 
 const { market, page } = Astro.props;
+const amazonAktiv = amazonEnabled(process.env);
 const programm = commerceProgramme().find((eintrag) => eintrag.programId === 'fressnapf-de');
 const entscheidung = partnerHinweisErlaubt({
   market,
@@ -69,21 +75,43 @@ const links =
         }))
         .filter((eintrag) => eintrag.href !== null)
     : [];
+
+const amazonZiele = new Map(
+  page === 'spielzeug'
+    ? [
+        ['hundespielzeug', amazonSearchQueryUrl('Hundespielzeug')],
+        ['katzenspielzeug', amazonSearchQueryUrl('Katzenspielzeug')],
+      ]
+    : [
+        ['hunde-ergaenzungsfutter', amazonSearchQueryUrl('Ergänzungsfuttermittel Hund')],
+        ['katzen-ergaenzungsfutter', amazonSearchQueryUrl('Ergänzungsfuttermittel Katze')],
+      ],
+);
 ---
 
 {
   links.length > 0 && entscheidung.programm !== null && (
-    <section class="retail-partner" aria-labelledby={`fressnapf-${page}`}>
+    <section class="retail-partner" aria-labelledby={`retail-${page}`}>
       <div class="retail-partner__heading">
         <div>
           <p class="eyebrow">Weitere Einkaufsmöglichkeit · Werbung</p>
-          <h2 id={`fressnapf-${page}`}>Bei Fressnapf ansehen</h2>
+          <h2 id={`retail-${page}`}>
+            {amazonAktiv ? 'Bei Fressnapf und Amazon ansehen' : 'Bei Fressnapf ansehen'}
+          </h2>
         </div>
-        <p class="retail-partner__disclosure">{entscheidung.programm.disclosureText}</p>
+        <p class="retail-partner__disclosure">
+          {entscheidung.programm.disclosureText}
+          {amazonAktiv && (
+            <>
+              <br />
+              {AMAZON_DISCLOSURE}
+            </>
+          )}
+        </p>
       </div>
       <p>
-        Die Links führen über Awin zu passenden Kategorien. Wir erhalten keine Angaben dazu, was Sie
-        dort ansehen oder kaufen; Preise und Verfügbarkeit prüfen Sie beim Händler.
+        Die Fressnapf-Links führen über Awin zu passenden Kategorien. Amazon-Links öffnen eine
+        Produktsuche. Preise und Verfügbarkeit prüfen Sie direkt beim jeweiligen Händler.
       </p>
       <div class="retail-partner__grid">
         {links.map((eintrag) => (
@@ -91,13 +119,24 @@ const links =
             <p class="retail-partner__species">Für {eintrag.tier}</p>
             <h3>{eintrag.titel}</h3>
             <p>{eintrag.beschreibung}</p>
-            <a
-              href={eintrag.href as string}
-              rel={PARTNER_LINK_ATTRIBUTE.rel}
-              target={PARTNER_LINK_ATTRIBUTE.target}
-            >
-              Sortiment öffnen ↗ <span class="sr-only">(Werbung)</span>
-            </a>
+            <div class="retail-partner__actions">
+              <a
+                href={eintrag.href as string}
+                rel={PARTNER_LINK_ATTRIBUTE.rel}
+                target={PARTNER_LINK_ATTRIBUTE.target}
+              >
+                Bei Fressnapf öffnen ↗ <span class="sr-only">(Werbung)</span>
+              </a>
+              {amazonAktiv && (
+                <a
+                  href={amazonZiele.get(eintrag.id)}
+                  rel={PARTNER_LINK_ATTRIBUTE.rel}
+                  target={PARTNER_LINK_ATTRIBUTE.target}
+                >
+                  Bei Amazon suchen ↗ <span class="sr-only">(Werbung)</span>
+                </a>
+              )}
+            </div>
           </article>
         ))}
       </div>
@@ -152,6 +191,13 @@ const links =
     font-size: var(--text-small);
     font-weight: 700;
     margin: 0;
+  }
+
+  .retail-partner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-3);
   }
 
   @media (min-width: 700px) {
