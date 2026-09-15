@@ -9,12 +9,7 @@
  * Zu jedem Ergebnis stehen zwei Dinge: warum es erscheint und was nicht
  * geprüft ist. Ohne die zweite Angabe wäre die Liste eine Empfehlung.
  */
-import {
-  amazonEnabled,
-  amazonSearchUrl,
-  AMAZON_SEARCHES,
-  AMAZON_DISCLOSURE,
-} from '../../features/commerce/amazon.ts';
+import { amazonEnabled, amazonSearchUrl, AMAZON_SEARCHES } from '../../features/commerce/amazon.ts';
 import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
 import { merkmalLabel } from '../../features/care/attributes.ts';
@@ -68,8 +63,7 @@ const fressnapfProducts = Object.fromEntries(
 {
   amazonEnabled(process.env) && (
     <p class="hilfe">
-      Werbung: Händlerlinks öffnen eine Amazon-Suche. {AMAZON_DISCLOSURE} Bitte Tierart, Größe und
-      Ausführung dort prüfen.
+      Händlerlinks öffnen eine Amazon-Suche. Bitte Tierart, Größe und Ausführung dort prüfen.
     </p>
   )
 }
