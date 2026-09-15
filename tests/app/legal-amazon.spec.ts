@@ -1,10 +1,24 @@
 import { expect, test } from '@playwright/test';
 import editorial from '../../content-data/products/editorial.json' with { type: 'json' };
+import supplements from '../../content-data/products/supplements.json' with { type: 'json' };
+import fressnapfFeed from '../../content-data/products/fressnapf-feed.json' with { type: 'json' };
 import AxeBuilder from '@axe-core/playwright';
+
+const supplementIds = new Set(supplements.products.map((product) => product.id));
+const supplementFressnapfCount = fressnapfFeed.products.filter((product) =>
+  supplementIds.has(product.productId),
+).length;
+const transparentPng = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+  'base64',
+);
 
 for (const width of [390, 1440]) {
   test(`operator, privacy and affiliate links at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
+    await page.route('https://images2.productserve.com/**', (route) =>
+      route.fulfill({ status: 200, contentType: 'image/png', body: transparentPng }),
+    );
     const remote: string[] = [];
     page.on('request', (request) => {
       if (
@@ -45,7 +59,9 @@ for (const width of [390, 1440]) {
         await expect(page.locator('main')).not.toContainText('Letzte Quellenprüfung');
         await expect(page.locator('main')).not.toContainText('Fachliche Verantwortung');
         await expect(page.locator('main')).not.toContainText('Freigegeben am');
-        await expect(page.locator('.supplement-products a[rel~="sponsored"]')).toHaveCount(6);
+        await expect(page.locator('.supplement-products a[rel~="sponsored"]')).toHaveCount(
+          supplements.products.length + supplementFressnapfCount,
+        );
         const fressnapfLinks = page.locator('.retail-partner a[rel~="sponsored"]');
         await expect(fressnapfLinks).toHaveCount(2);
         for (const link of await fressnapfLinks.all()) {
@@ -58,13 +74,32 @@ for (const width of [390, 1440]) {
         await expect(page.locator('.supplement-products img')).toHaveCount(6);
         await expect(
           page.locator('.supplement-products figcaption', { hasText: 'Symbolbild' }),
-        ).toHaveCount(6);
+        ).toHaveCount(supplements.products.length - supplementFressnapfCount);
+        await expect(
+          page.locator('.supplement-products figcaption', {
+            hasText: 'Produktbild · Fressnapf-Feed',
+          }),
+        ).toHaveCount(supplementFressnapfCount);
         await expect(page.locator('.supplement-products')).toContainText('Caniflora Vital');
         await expect(page.locator('.supplement-products')).toContainText('Cat-Vitamin Tabs');
-        for (const link of await page.locator('.supplement-products a[rel~="sponsored"]').all()) {
+        const amazonLinks = page.locator(
+          '.supplement-products a[href*="amazon.de"][rel~="sponsored"]',
+        );
+        await expect(amazonLinks).toHaveCount(supplements.products.length);
+        for (const link of await amazonLinks.all()) {
           const url = new URL((await link.getAttribute('href'))!);
           expect(url.hostname).toBe('www.amazon.de');
           expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
+        }
+        const productFressnapfLinks = page.locator(
+          '.supplement-products .fressnapf-link a[rel~="sponsored"]',
+        );
+        await expect(productFressnapfLinks).toHaveCount(supplementFressnapfCount);
+        for (const link of await productFressnapfLinks.all()) {
+          const url = new URL((await link.getAttribute('href'))!);
+          expect(url.hostname).toBe('www.awin1.com');
+          expect(url.searchParams.get('m') ?? url.searchParams.get('awinmid')).toBe('14757');
+          expect(url.searchParams.get('a') ?? url.searchParams.get('awinaffid')).toBe('3037577');
         }
       }
       if (path === 'tierversicherung') {

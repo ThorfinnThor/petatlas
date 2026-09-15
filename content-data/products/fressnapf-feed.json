@@ -2,6 +2,39 @@
   "schemaVersion": 1,
   "advertiserId": "14757",
   "publisherId": "3037577",
-  "generatedAt": null,
-  "products": []
+  "products": [
+    {
+      "productId": "canina-caniflora-vital-hund",
+      "productName": "Caniflora Vital",
+      "merchantProductId": "45953506755",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fe%2Fe%2Fa%2Fc%2Feeac9c1266a9d0c0a254808fd32250ebb861e6aa_2233916_0_de_bfbf54f661b14056b49af01c38686efc.jpg&feedId=44979&k=fe48b956afef82bc208231e0a93f80f89b0708db",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45953506755&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/caniworld-canina-caniflora-vital-fuer-hunde-2233916/"
+    },
+    {
+      "productId": "canina-petvital-darm-gel",
+      "productName": "PETVITAL Darm-Gel",
+      "merchantProductId": "44972474324",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Ff%2F4%2Fe%2Fa%2Ff4ea86fcb95bdd6f002cbbe7a6cc126b9206a2bf_1024493.jpg&feedId=44979&k=caf498ba1df3b5283ffe1a2113bf5bf3536822b4",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44972474324&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/canina-petvital-darm-gel-30ml-1024493/"
+    },
+    {
+      "productId": "kong-classic",
+      "productName": "KONG Classic",
+      "merchantProductId": "27095076249",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fc%2Fc%2F8%2Fa%2Fcc8a19b193d08eab28b7a8aa897e6aefb07b1628_1005028__4_.jpg&feedId=44979&k=9097700aaa705f88dde4bde6b5f51ef3d51986a5",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=27095076249&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/kong-classic-l-1005028/"
+    },
+    {
+      "productId": "kong-wobbler",
+      "productName": "KONG Wobbler",
+      "merchantProductId": "27095083419",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fa%2F2%2Fe%2F1%2Fa2e101602428ae74af23419e18013d7872eaaafb_1009436__3_.jpg&feedId=44979&k=609b10cb6ae4676162f1b0b7960f72032f0568c8",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=27095083419&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/kong-wobbler-l-1009436/"
+    }
+  ],
+  "generatedAt": "2026-09-15T13:46:32.062Z"
 }
