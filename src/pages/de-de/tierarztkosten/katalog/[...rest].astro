@@ -40,7 +40,12 @@ const anzahl = positionen().length;
 const eigenerPfad = subroutePath(market, 'costs', 'katalog');
 ---
 
-<BaseLayout title="Gebührenkatalog" route="costs" canonicalPfad={eigenerPfad}>
+<BaseLayout
+  title="Gebührenkatalog"
+  description="Gebührenkatalog der GOT 2022: Tierarztleistungen, Grundbeträge und Bezugsgrößen mit Quellen und Datenstand."
+  route="costs"
+  canonicalPfad={eigenerPfad}
+>
   <Breadcrumbs
     market={market}
     stufen={[{ label: 'Tierarztkosten', route: 'costs' }, { label: 'Gebührenkatalog' }]}

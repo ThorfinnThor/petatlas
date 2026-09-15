@@ -48,7 +48,9 @@ const taxonomie = pflegeTaxonomie();
             />
             <img
               src={`/images/care/${careGuide(kategorie.categoryId)?.imageStem}-800.webp`}
-              alt=""
+              alt={
+                careGuide(kategorie.categoryId)?.imageAlt ?? `${kategorie.label} für Hund und Katze`
+              }
               width="800"
               height="533"
               loading="lazy"

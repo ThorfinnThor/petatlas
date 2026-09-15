@@ -56,6 +56,7 @@ function seite(
   return [
     '<!doctype html><html lang="de-DE"><head>',
     `<title>${titel}</title>`,
+    '<meta name="description" content="Eine nachvollziehbare Beschreibung für diese Seite.">',
     robots === null ? '' : `<meta name="robots" content="${robots}">`,
     canonical === null ? '' : `<link rel="canonical" href="${canonical}">`,
     kopfExtra,
@@ -163,6 +164,11 @@ describe('Sensible Seitentemplates', () => {
 describe('Grundangaben', () => {
   it('verlangt einen Titel', () => {
     expect(pruefeSeite(PFAD, seite({ titel: '' }), UMGEBUNG)[0]?.problem).toContain('Kein Titel');
+  });
+
+  it('verlangt eine Meta-Description für indexierbare Seiten', () => {
+    const ohneBeschreibung = seite().replace(/<meta name="description"[^>]*>/, '');
+    expect(pruefeSeite(PFAD, ohneBeschreibung, UMGEBUNG)[0]?.problem).toContain('Meta-Description');
   });
 
   it('verlangt genau eine H1', () => {

@@ -69,7 +69,7 @@ describe('Header', () => {
 
   it('verbietet Einbettung und Formularversand nach außen', () => {
     expect(headers).toContain("frame-ancestors 'none'");
-    expect(headers).toContain("form-action 'none'");
+    expect(headers).toContain("form-action 'self'");
     expect(headers).toContain('X-Frame-Options: DENY');
   });
 
@@ -79,7 +79,8 @@ describe('Header', () => {
   });
 
   it('lässt Dateien mit Inhalts-Hash lange cachen, das Manifest aber nicht', () => {
-    expect(headers).toContain('/data/v1/*');
+    expect(headers).toContain('/data/v1/fees/*');
+    expect(headers).toContain('/data/v1/places/*');
     expect(headers).toContain('max-age=31536000, immutable');
     expect(headers).toContain('/data/v1/manifest.json');
     expect(headers).toContain('max-age=0, must-revalidate');
