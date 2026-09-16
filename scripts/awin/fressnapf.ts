@@ -210,6 +210,12 @@ const KATALOG_KATEGORIE_FELDER = [
   'merchant product category',
   'merchant_product_category_name',
   'merchant product category name',
+  'merchant_product_category_path',
+  'merchant product category path',
+  'merchant_product_second_category',
+  'merchant product second category',
+  'merchant_product_third_category',
+  'merchant product third category',
   'category',
   'category_name',
   'category name',
@@ -274,13 +280,17 @@ function katalogKategorie(row: Record<string, string>): {
  * ausreichende Zuordnung und wird deshalb nie dafür verwendet.
  */
 function katalogTierart(row: Record<string, string>): CatalogSpecies | null {
-  const explicit = normalisiere(katalogText(row, KATALOG_TIERART_FELDER));
-  const categories = normalisiere(katalogText(row, KATALOG_KATEGORIE_FELDER));
-  const text = `${explicit} / ${categories}`;
-  const dog = /(^| )(hund|hunde|dog|dogs)( |$)/.test(text);
-  const cat = /(^| )(katze|katzen|cat|cats)( |$)/.test(text);
-  if (dog === cat) return null;
-  return dog ? 'dog' : 'cat';
+  const teile = [...KATALOG_TIERART_FELDER, ...KATALOG_KATEGORIE_FELDER]
+    .map((field) => normalisiere(feld(row, field) ?? ''))
+    .filter(Boolean);
+  const zuordnungen = teile.flatMap((text) => {
+    const dog = /(^| )(hund|hunde|dog|dogs)( |$)/.test(text);
+    const cat = /(^| )(katze|katzen|cat|cats)( |$)/.test(text);
+    return dog === cat ? [] : [dog ? 'dog' : 'cat'];
+  });
+  const arten = new Set(zuordnungen);
+  if (arten.size !== 1) return null;
+  return [...arten][0] as CatalogSpecies;
 }
 
 /**
