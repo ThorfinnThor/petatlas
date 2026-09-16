@@ -321,6 +321,7 @@ export function pruefeHeader(inhalt: string | null): Fund[] {
     'Content-Security-Policy:',
     "default-src 'self'",
     "script-src 'self'",
+    "'wasm-unsafe-eval'",
     "frame-ancestors 'none'",
     "object-src 'none'",
     'X-Content-Type-Options: nosniff',
@@ -330,7 +331,7 @@ export function pruefeHeader(inhalt: string | null): Fund[] {
       funde.push({ datei: '_headers', problem: `Fehlender Bestandteil: ${teil}` });
     }
   }
-  if (/script-src[^;\n]*unsafe-(inline|eval)/.test(inhalt)) {
+  if (/script-src[^;\n]*'unsafe-(inline|eval)'/.test(inhalt)) {
     funde.push({
       datei: '_headers',
       problem: 'script-src erlaubt unsafe-inline oder unsafe-eval.',

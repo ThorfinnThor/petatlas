@@ -94,6 +94,17 @@ export function reisecheckStarten(): void {
   const knopf = document.querySelector<HTMLButtonElement>('#pruefen');
   if (knopf !== null) knopf.hidden = false;
 
+  let hatErgebnis = false;
+  const invalidiere = (): void => {
+    if (!hatErgebnis) return;
+    hatErgebnis = false;
+    ausgabe.innerHTML =
+      '<p class="ergebnis__kopf" data-zustand="unknown" data-veraltet="true">' +
+      'Angaben geändert. Bitte prüfen Sie die Reise erneut.</p>';
+  };
+  form.addEventListener('input', invalidiere);
+  form.addEventListener('change', invalidiere);
+
   form.addEventListener('submit', (ereignis) => {
     ereignis.preventDefault();
     const eingabe = eingabeLesen();
@@ -102,6 +113,7 @@ export function reisecheckStarten(): void {
       ausgabe.innerHTML =
         '<p class="ergebnis__kopf" data-zustand="unknown">Bitte tragen Sie das Reisedatum ein. ' +
         'Ohne den Tag der Reise lassen sich Fristen nicht prüfen.</p>';
+      hatErgebnis = true;
       return;
     }
 
@@ -145,5 +157,6 @@ export function reisecheckStarten(): void {
     }
 
     ausgabe.innerHTML = teile.join('');
+    hatErgebnis = true;
   });
 }

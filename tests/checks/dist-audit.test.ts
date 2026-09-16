@@ -151,7 +151,7 @@ describe('Öffentliche JSON-Dateien', () => {
 
 describe('Header', () => {
   const gut =
-    "Content-Security-Policy: default-src 'self'; script-src 'self'; frame-ancestors 'none'; object-src 'none'\nX-Content-Type-Options: nosniff\n";
+    "Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; frame-ancestors 'none'; object-src 'none'\nX-Content-Type-Options: nosniff\n";
 
   it('nimmt vollständige Header an', () => {
     expect(pruefeHeader(gut)).toEqual([]);
@@ -179,7 +179,7 @@ describe('Ganzes Verzeichnis', () => {
     writeFileSync(join(wurzel, 'de-de', 'index.html'), '<html><body>ok</body></html>');
     writeFileSync(
       join(wurzel, '_headers'),
-      "Content-Security-Policy: default-src 'self'; script-src 'self'; frame-ancestors 'none'; object-src 'none'\nX-Content-Type-Options: nosniff\n",
+      "Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; frame-ancestors 'none'; object-src 'none'\nX-Content-Type-Options: nosniff\n",
     );
     writeFileSync(join(wurzel, 'vergessen.ts'), 'export const x = 1;');
 

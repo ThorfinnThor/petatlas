@@ -11,6 +11,7 @@
 import {
   KATEGORIE_LABEL,
   filtereOrte,
+  filtereOrteMitMeta,
   formatiereEntfernung,
   leereListeHinweis,
   notdienstHinweis,
@@ -160,13 +161,14 @@ export function listeStarten(): void {
     try {
       const orte = await ladeZellenUm(gewaehlt.latitude, gewaehlt.longitude, radiusMeter);
       if (lauf !== suchLauf) return;
-      const treffer = filtereOrte(orte, {
+      const listenErgebnis = filtereOrteMitMeta(orte, {
         mitte: { latitude: gewaehlt.latitude, longitude: gewaehlt.longitude },
         gemeinde: gewaehlt.name,
         radiusMeter,
         kategorien: kategorien(),
         maxTreffer: 100,
       });
+      const treffer = listenErgebnis.treffer;
 
       datenGeladen = true;
       if (erneut) erneut.hidden = true;
@@ -179,7 +181,9 @@ export function listeStarten(): void {
       status!.textContent =
         treffer.length === 0
           ? leereListeHinweis(gewaehlt.name, radiusMeter)
-          : `${treffer.length} erfasste Orte im Umkreis von ${formatiereEntfernung(radiusMeter)} um ${gewaehlt.name}.`;
+          : listenErgebnis.hatWeitere
+            ? `Erste ${treffer.length} von ${listenErgebnis.gesamt} erfassten Orten im Umkreis von ${formatiereEntfernung(radiusMeter)} um ${gewaehlt.name}. Grenze die Suche mit Radius oder Kategorie ein, um weitere passende Orte zu sehen.`
+            : `${listenErgebnis.gesamt} erfasste Orte im Umkreis von ${formatiereEntfernung(radiusMeter)} um ${gewaehlt.name}.`;
     } catch (fehler) {
       if (lauf !== suchLauf) return;
       // Ein Ladefehler wird benannt; die vorherige Liste bleibt stehen.

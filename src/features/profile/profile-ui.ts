@@ -16,27 +16,24 @@ import {
   alsProfil,
   bereinigeInteressen,
   bewerte,
-  gewichtInGramm,
+  pruefeGewicht,
+  type GewichtsPruefung,
   type ProfilEntwurf,
 } from './state.ts';
 import { browserSpeicher, lade, loesche, speichere } from './storage.ts';
 import { EXPORT_WARNUNG, MAX_IMPORT_BYTES, baueExport, pruefeImport } from './import-export.ts';
-import {
-  FAVORITES_STORAGE_KEY,
-  LEERE_MERKLISTE,
-  lese as leseMerkliste,
-  schreibe as schreibeMerkliste,
-} from './favorites.ts';
-import {
-  PACKING_STORAGE_KEY,
-  leererStand,
-  lese as lesePacken,
-  schreibe as schreibePacken,
-} from './packing-state.ts';
+import type { ExportDatei } from './import-export.ts';
+import { ersetzeDurchSicherung, offeneSicherungZuruecksetzen } from './backup-transaction.ts';
+import { FAVORITES_STORAGE_KEY, lese as leseMerkliste } from './favorites.ts';
+import { PACKING_STORAGE_KEY, lese as lesePacken } from './packing-state.ts';
 
 let entwurf: ProfilEntwurf = LEERER_ENTWURF;
 /** Letzte Rückmeldung zu Speichern oder Löschen. `null` = noch keine. */
 let letzteMeldung: string | null = null;
+let entwurfUngespeichert = false;
+let gewichtsPruefung: GewichtsPruefung = { status: 'leer', gramm: null, meldung: null };
+let wartenderImport: ExportDatei | null = null;
+let importLauf = 0;
 
 function escape(text: string): string {
   return text.replace(
@@ -50,7 +47,8 @@ function lies(): ProfilEntwurf {
   const wert = (id: string): string =>
     document.querySelector<HTMLInputElement | HTMLSelectElement>(`#${id}`)?.value.trim() ?? '';
   const art = wert('profil-tierart');
-  const gewicht = gewichtInGramm(wert('profil-gewicht'));
+  gewichtsPruefung = pruefeGewicht(wert('profil-gewicht'));
+  const gewicht = gewichtsPruefung.gramm;
   const geburt = wert('profil-geburtsdatum');
   const rasse = wert('profil-rasse');
   return {
@@ -65,6 +63,21 @@ function lies(): ProfilEntwurf {
       ),
     ),
   };
+}
+
+function gewichtsFehlerZeigen(): void {
+  const feld = document.querySelector<HTMLInputElement>('#profil-gewicht');
+  const fehler = document.querySelector<HTMLElement>('#profil-gewicht-fehler');
+  if (feld === null || fehler === null) return;
+  if (gewichtsPruefung.status === 'ungueltig') {
+    feld.setAttribute('aria-invalid', 'true');
+    fehler.textContent = gewichtsPruefung.meldung;
+    fehler.hidden = false;
+  } else {
+    feld.removeAttribute('aria-invalid');
+    fehler.textContent = '';
+    fehler.hidden = true;
+  }
 }
 
 function zeige(): void {
@@ -98,7 +111,9 @@ function zeige(): void {
         : `${(profil.weightGrams / 1000).toLocaleString('de-DE')} kg`;
     teile.push(
       `<dl class="profil__werte">
-        <dt>Tierart</dt><dd data-feld="species">${escape(profil.species)}</dd>
+        <dt>Tierart</dt><dd data-feld="species">${escape(
+          profil.species === 'dog' ? 'Hund' : profil.species === 'cat' ? 'Katze' : profil.species,
+        )}</dd>
         <dt>Rufname</dt><dd data-feld="displayName">${escape(profil.displayName)}</dd>
         <dt>Gewicht</dt><dd data-feld="weight">${escape(gewicht)}</dd>
         <dt>Interessen</dt><dd data-feld="interests">${
@@ -113,13 +128,16 @@ function zeige(): void {
   teile.push(
     `<p class="profil__hinweis">${escape(
       letzteMeldung === null
-        ? 'Diese Angaben liegen in diesem Tab. Gespeichert wird nur, wenn Sie es sagen; ' +
+        ? entwurfUngespeichert
+          ? 'Änderungen noch nicht gespeichert.'
+          : 'Diese Angaben liegen in diesem Tab. Gespeichert wird nur, wenn Sie es sagen; ' +
             'übertragen wird nie etwas.'
         : letzteMeldung,
     )}</p>`,
   );
 
   ausgabe.innerHTML = teile.join('');
+  gewichtsFehlerZeigen();
 }
 
 /** Setzt die Felder aus einem geladenen Stand. */
@@ -148,16 +166,6 @@ function speicherWert(schluessel: string): string | null {
     return ablage.getItem(schluessel);
   } catch {
     return null;
-  }
-}
-
-function speicherSetzen(schluessel: string, wert: string): void {
-  const ablage = browserSpeicher();
-  if (ablage === null) return;
-  try {
-    ablage.setItem(schluessel, wert);
-  } catch {
-    // Ein voller Speicher ist kein Grund, den Rest abzubrechen.
   }
 }
 
@@ -190,14 +198,14 @@ export function profilStarten(): void {
   const hinweis = document.querySelector<HTMLElement>('#profil-ohne-js');
   if (hinweis !== null) hinweis.hidden = true;
 
-  form.addEventListener('input', () => {
+  const alsUngespeichertMarkieren = (): void => {
     entwurf = lies();
+    entwurfUngespeichert = true;
+    letzteMeldung = 'Änderungen noch nicht gespeichert.';
     zeige();
-  });
-  form.addEventListener('change', () => {
-    entwurf = lies();
-    zeige();
-  });
+  };
+  form.addEventListener('input', alsUngespeichertMarkieren);
+  form.addEventListener('change', alsUngespeichertMarkieren);
   form.addEventListener('submit', (ereignis) => {
     ereignis.preventDefault();
     entwurf = lies();
@@ -210,6 +218,8 @@ export function profilStarten(): void {
     leeren.addEventListener('click', () => {
       form.reset();
       entwurf = LEERER_ENTWURF;
+      gewichtsPruefung = { status: 'leer', gramm: null, meldung: null };
+      entwurfUngespeichert = false;
       letzteMeldung = 'Angaben verworfen. Ein gespeicherter Stand bleibt davon unberührt.';
       zeige();
     });
@@ -220,6 +230,12 @@ export function profilStarten(): void {
     speichern.hidden = false;
     speichern.addEventListener('click', () => {
       entwurf = lies();
+      if (gewichtsPruefung.status === 'ungueltig') {
+        letzteMeldung = 'Bitte korrigieren Sie das Gewicht. Es wurde nichts gespeichert.';
+        zeige();
+        document.querySelector<HTMLInputElement>('#profil-gewicht')?.focus();
+        return;
+      }
       const profil = alsProfil(entwurf);
       if (profil === null) {
         letzteMeldung = 'Zum Speichern fehlen Tierart oder Rufname. Es wurde nichts gespeichert.';
@@ -233,6 +249,7 @@ export function profilStarten(): void {
         new Date().toISOString(),
       );
       letzteMeldung = ergebnis.meldung;
+      if (ergebnis.ok) entwurfUngespeichert = false;
       zeige();
     });
   }
@@ -263,6 +280,52 @@ export function profilStarten(): void {
   }
 
   const importFeld = document.querySelector<HTMLInputElement>('#profil-import');
+  const importBestaetigung = document.querySelector<HTMLElement>('#profil-import-bestaetigung');
+  const importVorschau = document.querySelector<HTMLElement>('#profil-import-vorschau');
+  const importBestaetigen = document.querySelector<HTMLButtonElement>('#profil-import-bestaetigen');
+  const importAbbrechen = document.querySelector<HTMLButtonElement>('#profil-import-abbrechen');
+
+  const importVorschauSchliessen = (): void => {
+    wartenderImport = null;
+    if (importVorschau !== null) importVorschau.textContent = '';
+    if (importBestaetigung !== null) importBestaetigung.hidden = true;
+  };
+
+  importAbbrechen?.addEventListener('click', () => {
+    importLauf += 1;
+    importVorschauSchliessen();
+    letzteMeldung = 'Übernahme abgebrochen. Der lokale Stand blieb unverändert.';
+    zeige();
+  });
+
+  importBestaetigen?.addEventListener('click', () => {
+    if (wartenderImport === null) return;
+    const daten = wartenderImport;
+    const ergebnis = ersetzeDurchSicherung(browserSpeicher(), daten, new Date().toISOString());
+    letzteMeldung = ergebnis.meldung;
+    if (ergebnis.ok) {
+      entwurf =
+        daten.profile === null
+          ? LEERER_ENTWURF
+          : {
+              species: daten.profile.species,
+              displayName: daten.profile.displayName,
+              birthDate: daten.profile.birthDate,
+              weightGrams: daten.profile.weightGrams,
+              breed: daten.profile.breed,
+              interests: bereinigeInteressen(daten.interests),
+            };
+      gewichtsPruefung =
+        entwurf.weightGrams === null
+          ? { status: 'leer', gramm: null, meldung: null }
+          : { status: 'gueltig', gramm: entwurf.weightGrams, meldung: null };
+      entwurfUngespeichert = false;
+      schreibeFelder(entwurf);
+    }
+    importVorschauSchliessen();
+    zeige();
+  });
+
   if (importFeld !== null) {
     importFeld.hidden = false;
     importFeld.addEventListener('change', () => {
@@ -275,37 +338,43 @@ export function profilStarten(): void {
         return;
       }
 
-      void datei.text().then((inhalt) => {
-        const ergebnis = pruefeImport(inhalt);
-        letzteMeldung = ergebnis.meldung;
-        if (ergebnis.ok && ergebnis.daten !== null) {
-          const daten = ergebnis.daten;
-          if (daten.profile !== null) {
-            speichere(browserSpeicher(), daten.profile, daten.interests, new Date().toISOString());
-            entwurf = {
-              species: daten.profile.species,
-              displayName: daten.profile.displayName,
-              birthDate: daten.profile.birthDate,
-              weightGrams: daten.profile.weightGrams,
-              breed: daten.profile.breed,
-              interests: bereinigeInteressen(daten.interests),
-            };
-            schreibeFelder(entwurf);
+      const dieserLauf = ++importLauf;
+      importVorschauSchliessen();
+      void datei
+        .text()
+        .then((inhalt) => {
+          if (dieserLauf !== importLauf) return;
+          const ergebnis = pruefeImport(inhalt);
+          letzteMeldung = ergebnis.meldung;
+          if (ergebnis.ok && ergebnis.daten !== null) {
+            wartenderImport = ergebnis.daten;
+            const profilText = ergebnis.daten.profile
+              ? `${ergebnis.daten.profile.species === 'dog' ? 'Hund' : 'Katze'} „${ergebnis.daten.profile.displayName}“`
+              : 'kein Profil';
+            const favoriten = ergebnis.daten.favorites?.entries.length ?? 0;
+            const packlisten = Object.keys(ergebnis.daten.packing?.ziele ?? {}).length;
+            if (importVorschau !== null) {
+              importVorschau.textContent = `Enthalten: ${profilText}, ${favoriten} Merkliste-Einträge und ${packlisten} Packlisten.`;
+            }
+            if (importBestaetigung !== null) importBestaetigung.hidden = false;
+            importBestaetigen?.focus();
           }
-          speicherSetzen(
-            FAVORITES_STORAGE_KEY,
-            schreibeMerkliste(daten.favorites ?? LEERE_MERKLISTE),
-          );
-          speicherSetzen(
-            PACKING_STORAGE_KEY,
-            schreibePacken(daten.packing ?? leererStand(new Date().toISOString())),
-          );
-        }
-        zeige();
-        importFeld.value = '';
-      });
+          zeige();
+        })
+        .catch(() => {
+          if (dieserLauf !== importLauf) return;
+          letzteMeldung = 'Die Datei konnte nicht gelesen werden. Es wurde nichts übernommen.';
+          importVorschauSchliessen();
+          zeige();
+        })
+        .finally(() => {
+          if (dieserLauf === importLauf) importFeld.value = '';
+        });
     });
   }
+
+  const erholung = offeneSicherungZuruecksetzen(browserSpeicher());
+  if (!erholung.ok) letzteMeldung = erholung.meldung;
 
   // Ein gespeicherter Stand wird geladen — aber nur, wenn es einen gibt.
   const vorhanden = lade(browserSpeicher());
@@ -319,7 +388,8 @@ export function profilStarten(): void {
       interests: bereinigeInteressen(vorhanden.wert.interests),
     };
     schreibeFelder(entwurf);
-    letzteMeldung = 'Gespeicherter Stand geladen — er liegt nur auf diesem Gerät.';
+    if (letzteMeldung === null)
+      letzteMeldung = 'Gespeicherter Stand geladen — er liegt nur auf diesem Gerät.';
   } else if (vorhanden.fehler !== null && vorhanden.fehler !== 'kein_speicher') {
     letzteMeldung = vorhanden.meldung;
   }

@@ -80,14 +80,20 @@ export interface ListenFilter {
 /** Radien, die die Oberfläche anbietet. */
 export const RADIEN_METER: readonly number[] = [5_000, 10_000, 25_000, 50_000];
 
-export function filtereOrte(
+export interface ListenErgebnis {
+  readonly treffer: readonly ListenTreffer[];
+  readonly gesamt: number;
+  readonly hatWeitere: boolean;
+}
+
+export function filtereOrteMitMeta(
   orte: readonly ListenOrt[],
   filter: ListenFilter,
-): readonly ListenTreffer[] {
+): ListenErgebnis {
   const kategorien = new Set(filter.kategorien);
   const maxTreffer = filter.maxTreffer ?? 100;
 
-  return orte
+  const alle = orte
     .filter((ort) => kategorien.size === 0 || kategorien.has(ort.category))
     .map((ort) => {
       const zuordnung = ortsZuordnung(ort.municipality, filter.gemeinde);
@@ -105,10 +111,21 @@ export function filtereOrte(
     .filter((treffer) => treffer.entfernungMeter <= filter.radiusMeter)
     .sort((a, b) => {
       if (a.entfernungMeter !== b.entfernungMeter) return a.entfernungMeter - b.entfernungMeter;
-      // Gleicher Abstand: stabile Reihenfolge über die ID.
       return a.ort.id < b.ort.id ? -1 : 1;
-    })
-    .slice(0, maxTreffer);
+    });
+
+  return {
+    treffer: alle.slice(0, maxTreffer),
+    gesamt: alle.length,
+    hatWeitere: alle.length > maxTreffer,
+  };
+}
+
+export function filtereOrte(
+  orte: readonly ListenOrt[],
+  filter: ListenFilter,
+): readonly ListenTreffer[] {
+  return filtereOrteMitMeta(orte, filter).treffer;
 }
 
 /** Entfernungsangabe für die Anzeige. */

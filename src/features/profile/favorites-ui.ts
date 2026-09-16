@@ -12,6 +12,7 @@
 import { ortMitId } from '../map/data.ts';
 import { futterMitId } from '../food/catalog.ts';
 import { mengenText } from '../food/unit-price.ts';
+import { offeneSicherungZuruecksetzen } from './backup-transaction.ts';
 import {
   FAVORITES_STORAGE_KEY,
   LEERE_MERKLISTE,
@@ -27,7 +28,8 @@ import {
 
 function speicher(): Storage | null {
   try {
-    return window.localStorage;
+    const ablage = window.localStorage;
+    return offeneSicherungZuruecksetzen(ablage).ok ? ablage : null;
   } catch {
     return null;
   }

@@ -5,6 +5,7 @@ import {
   RADIEN_METER,
   mengeMitLabel,
   filtereOrte,
+  filtereOrteMitMeta,
   formatiereEntfernung,
   leereListeHinweis,
   notdienstHinweis,
@@ -91,6 +92,20 @@ describe('Filter', () => {
         maxTreffer: 10,
       }),
     ).toHaveLength(10);
+  });
+
+  it('behält Gesamtzahl und Überlauf neben der begrenzten Liste', () => {
+    const viele = Array.from({ length: 11 }, (_, i) => ort({ id: `osm:node:${i}` }));
+    const ergebnis = filtereOrteMitMeta(viele, {
+      mitte: MITTE,
+      gemeinde: 'Bremen',
+      radiusMeter: 5000,
+      kategorien: [],
+      maxTreffer: 10,
+    });
+    expect(ergebnis.treffer).toHaveLength(10);
+    expect(ergebnis.gesamt).toBe(11);
+    expect(ergebnis.hatWeitere).toBe(true);
   });
 
   it('bietet nur dokumentierte Radien an', () => {

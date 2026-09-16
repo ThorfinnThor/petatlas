@@ -189,6 +189,11 @@ test.describe('Sicherung', () => {
       mimeType: 'application/json',
       buffer: Buffer.from(inhalt, 'utf8'),
     });
+    await expect(page.locator('#profil-import-bestaetigung')).toBeVisible();
+    await expect(page.locator('#profil-import-vorschau')).toContainText(
+      'Katze „Mira“, 0 Merkliste-Einträge und 0 Packlisten',
+    );
+    await page.click('#profil-import-bestaetigen');
 
     await expect(page.locator('#profil-name')).toHaveValue('Mira');
     await expect(page.locator('#profil-gewicht')).toHaveValue('4.5');
@@ -241,6 +246,7 @@ test.describe('Sicherung', () => {
       mimeType: 'application/json',
       buffer: Buffer.from(boese, 'utf8'),
     });
+    await page.click('#profil-import-bestaetigen');
 
     // Der Name erscheint als Text, nicht als Auszeichnung.
     await expect(page.locator('[data-feld="displayName"]')).toHaveText(
@@ -283,8 +289,84 @@ test.describe('Sicherung', () => {
         'utf8',
       ),
     });
+    await page.click('#profil-import-bestaetigen');
 
-    await expect(page.locator('.profil__hinweis')).toContainText('geprüft');
+    await expect(page.locator('.profil__hinweis')).toContainText('vollständig ersetzt');
     expect(fremde).toEqual([]);
   });
+
+  test('ersetzt einen vorhandenen Stand erst nach Bestätigung und kann ihn ausdrücklich leeren', async ({
+    page,
+  }) => {
+    await page.goto(PROFIL);
+    await page.selectOption('#profil-tierart', 'dog');
+    await page.fill('#profil-name', 'Bello');
+    await page.click('#profil-speichern');
+
+    const leer = JSON.stringify({
+      format: 'petatlas-lokal',
+      version: 1,
+      exportedAt: '2026-09-16T10:00:00+00:00',
+      profile: null,
+      interests: [],
+      favorites: null,
+      packing: null,
+    });
+    await page.setInputFiles('#profil-import', {
+      name: 'leer.json',
+      mimeType: 'application/json',
+      buffer: Buffer.from(leer, 'utf8'),
+    });
+
+    expect(
+      await page.evaluate(() => window.localStorage.getItem('petatlas.profile.v1')),
+    ).not.toBeNull();
+    await page.click('#profil-import-abbrechen');
+    expect(
+      await page.evaluate(() => window.localStorage.getItem('petatlas.profile.v1')),
+    ).not.toBeNull();
+
+    await page.setInputFiles('#profil-import', {
+      name: 'leer.json',
+      mimeType: 'application/json',
+      buffer: Buffer.from(leer, 'utf8'),
+    });
+    await page.click('#profil-import-bestaetigen');
+    await expect(page.locator('#profil-name')).toHaveValue('');
+    expect(
+      await page.evaluate(() => window.localStorage.getItem('petatlas.profile.v1')),
+    ).toBeNull();
+  });
+});
+
+test('kennzeichnet ungültiges Gewicht und speichert den alten Stand nicht um', async ({ page }) => {
+  await page.goto(PROFIL);
+  await page.selectOption('#profil-tierart', 'dog');
+  await page.fill('#profil-name', 'Bello');
+  await page.fill('#profil-gewicht', '20');
+  await page.click('#profil-speichern');
+
+  await page.fill('#profil-gewicht', '201');
+  await page.click('#profil-speichern');
+  await expect(page.locator('#profil-gewicht')).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.locator('#profil-gewicht-fehler')).toBeVisible();
+  const gespeichert = await page.evaluate(() =>
+    JSON.parse(window.localStorage.getItem('petatlas.profile.v1') ?? '{}'),
+  );
+  expect(gespeichert.profile.weightGrams).toBe(20_000);
+});
+
+test('zeigt deutsche Tierart und markiert Änderungen nach dem Speichern als ungespeichert', async ({
+  page,
+}) => {
+  await page.goto(PROFIL);
+  await page.selectOption('#profil-tierart', 'cat');
+  await page.fill('#profil-name', 'Mira');
+  await page.click('#profil-speichern');
+  await expect(page.locator('[data-feld="species"]')).toHaveText('Katze');
+
+  await page.fill('#profil-name', 'Minka');
+  await expect(page.locator('.profil__hinweis')).toContainText('noch nicht gespeichert');
+  await page.reload();
+  await expect(page.locator('#profil-name')).toHaveValue('Mira');
 });
