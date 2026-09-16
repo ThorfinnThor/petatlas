@@ -311,7 +311,9 @@ export function katalogProduktAusZeile(
   merchantHosts: ReadonlySet<string>,
 ): CatalogFeedProduct | null {
   const name = feld(row, 'product_name', 'product name', 'name', 'title');
-  const brand = feld(row, 'merchant_product_brand', 'product_brand', 'brand', 'manufacturer');
+  const brand =
+    feld(row, 'merchant_product_brand', 'product_brand', 'brand', 'manufacturer') ??
+    'Herstellerangabe nicht angegeben';
   const merchantProductId = feld(
     row,
     'merchant_product_id',
@@ -321,7 +323,9 @@ export function katalogProduktAusZeile(
   );
   const category = katalogKategorie(row);
   const species = katalogTierart(row);
-  const image = sichereUrl(feld(row, 'large_image', 'merchant_image_url', 'aw_image_url'));
+  const image = sichereUrl(
+    feld(row, 'large_image', 'large_image_url', 'merchant_image_url', 'aw_image_url', 'image_url'),
+  );
   const merchant = sichereUrl(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
