@@ -22,6 +22,15 @@ if (form && feld && status && liste) {
 
   let api = null;
   let laufendeAnfrage = 0;
+  const weitere = document.createElement('button');
+  weitere.type = 'button';
+  weitere.textContent = 'Weitere Treffer anzeigen';
+  weitere.hidden = true;
+  liste.after(weitere);
+  let weitereLaden = null;
+  weitere.addEventListener('click', () => {
+    if (weitereLaden) void weitereLaden();
+  });
 
   async function ladeApi() {
     if (api) return api;
@@ -32,6 +41,8 @@ if (form && feld && status && liste) {
   async function suchen(begriff) {
     const anfrage = ++laufendeAnfrage;
     liste.replaceChildren();
+    weitere.hidden = true;
+    weitereLaden = null;
 
     if (begriff.trim().length < 2) {
       status.textContent = begriff.trim() === '' ? '' : 'Bitte mindestens zwei Zeichen eingeben.';
@@ -53,39 +64,55 @@ if (form && feld && status && liste) {
     }
     if (anfrage !== laufendeAnfrage) return;
 
-    let treffer;
-    try {
-      treffer = await Promise.all(gefunden.results.slice(0, 10).map((r) => r.data()));
-    } catch {
-      if (anfrage === laufendeAnfrage)
+    const gesamt = gefunden.results.length;
+    let angezeigt = 0;
+    let laedt = false;
+
+    weitereLaden = async () => {
+      if (laedt || anfrage !== laufendeAnfrage) return;
+      laedt = true;
+      weitere.disabled = true;
+      const naechste = gefunden.results.slice(angezeigt, angezeigt + 10);
+      try {
+        const treffer = await Promise.all(naechste.map((r) => r.data()));
+        if (anfrage !== laufendeAnfrage) return;
+        for (const eintrag of treffer) {
+          const li = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = eintrag.url;
+          link.textContent = eintrag.meta.title ?? eintrag.url;
+          const auszug = document.createElement('p');
+          // Pagefind liefert den Auszug mit <mark>-Auszeichnung aus dem
+          // eigenen statischen Index; Nutzereingaben sind nicht enthalten.
+          auszug.innerHTML = eintrag.excerpt;
+          li.append(link, auszug);
+          liste.append(li);
+        }
+        angezeigt += treffer.length;
         status.textContent =
-          'Die Suchergebnisse konnten nicht geladen werden. Bitte versuchen Sie es erneut oder laden Sie die Seite neu.';
-      return;
-    }
-    if (anfrage !== laufendeAnfrage) return;
+          gesamt === 0
+            ? `Keine Treffer für „${begriff}“.`
+            : angezeigt < gesamt
+              ? `${angezeigt} von ${gesamt} Treffern für „${begriff}“ angezeigt.`
+              : `${gesamt} Treffer für „${begriff}“.`;
+        weitere.hidden = angezeigt >= gesamt;
+      } catch {
+        if (anfrage === laufendeAnfrage)
+          status.textContent =
+            'Die Suchergebnisse konnten nicht geladen werden. Bitte versuchen Sie es erneut oder laden Sie die Seite neu.';
+      } finally {
+        laedt = false;
+        weitere.disabled = false;
+      }
+    };
 
-    status.textContent =
-      treffer.length === 0
-        ? `Keine Treffer für „${begriff}“.`
-        : `${treffer.length} Treffer für „${begriff}“.`;
-
-    for (const eintrag of treffer) {
-      const li = document.createElement('li');
-      const link = document.createElement('a');
-      link.href = eintrag.url;
-      link.textContent = eintrag.meta.title ?? eintrag.url;
-      const auszug = document.createElement('p');
-      // Pagefind liefert den Auszug mit <mark>-Auszeichnung aus dem eigenen
-      // statischen Index; es sind keine Nutzereingaben enthalten.
-      auszug.innerHTML = eintrag.excerpt;
-      li.append(link, auszug);
-      liste.append(li);
-    }
+    await weitereLaden();
   }
 
   let timer;
   feld.addEventListener('input', () => {
     laufendeAnfrage += 1;
+    weitere.hidden = true;
     window.clearTimeout(timer);
     timer = window.setTimeout(() => void suchen(feld.value), 200);
   });

@@ -27,9 +27,9 @@ const BILD_URSPRUENGE = [...TILES.hosts, ...fressnapfBildUrspruenge()];
  * werden erst nach einem Klick geladen; die Erlaubnis in der Policy ist
  * kein Vorabladen.
  *
- * `script-src 'self'` reicht, weil alle Skripte als eigene Dateien
- * ausgeliefert werden — deshalb liegt die Suchlogik in `public/` und nicht
- * inline im HTML.
+ * Pagefind lädt seinen eigenen WebAssembly-Suchindex. Dafür erlaubt die
+ * Policy gezielt `wasm-unsafe-eval`; allgemeines `unsafe-eval` und
+ * `unsafe-inline` bleiben verboten.
  *
  * Kommt später die Karte hinzu, brauchen Kacheln einen eigenen Eintrag. Das
  * ist dann eine bewusste Erweiterung mit Datenschutzprüfung, kein stilles
@@ -37,7 +37,7 @@ const BILD_URSPRUENGE = [...TILES.hosts, ...fressnapfBildUrspruenge()];
  */
 const CSP = [
   "default-src 'self'",
-  "script-src 'self'",
+  "script-src 'self' 'wasm-unsafe-eval'",
   // Astro schreibt komponentenbezogene Styles in <style>-Elemente.
   "style-src 'self' 'unsafe-inline'",
   // Kartenkacheln kommen von einem fremden Host. Das ist eine bewusste
@@ -60,8 +60,9 @@ const GRUNDHEADER = [
   `Content-Security-Policy: ${CSP}`,
   'X-Content-Type-Options: nosniff',
   'Referrer-Policy: strict-origin-when-cross-origin',
-  // Nichts davon wird gebraucht; alles bleibt aus.
-  'Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=(), interest-cohort=()',
+  // Der Standortknopf braucht Geolocation auf derselben Herkunft. Der Code
+  // fragt sie ausschließlich nach einem ausdrücklichen Klick ab.
+  'Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=(), interest-cohort=()',
   'Cross-Origin-Opener-Policy: same-origin',
   'X-Frame-Options: DENY',
 ];

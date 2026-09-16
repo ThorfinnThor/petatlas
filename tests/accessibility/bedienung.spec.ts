@@ -94,10 +94,39 @@ test.describe('Tastaturbedienung', () => {
 
   test('der Rechner lässt sich ohne Maus bedienen', async ({ page }) => {
     await page.goto('/de-de/tierarztkosten/');
-    const feld = page.locator('#leistung');
-    if ((await feld.count()) === 0) test.skip(true, 'Der Rechner hat kein Auswahlfeld.');
-    await feld.focus();
-    await expect(feld).toBeFocused();
+    const suche = page.locator('#suche');
+    await expect(suche).toBeEnabled({ timeout: 20_000 });
+
+    await suche.focus();
+    await page.keyboard.type('Beratung im einzelnen');
+    const ersterTreffer = page.locator('#treffer button').first();
+    await expect(ersterTreffer).toBeVisible();
+    await ersterTreffer.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#ergebnis table')).toBeVisible();
+
+    const menge = page.locator('#menge');
+    await menge.focus();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.type('0');
+    await page.locator('#position-uebernehmen').focus();
+    await page.keyboard.press('Enter');
+    await expect(menge).toHaveAttribute('aria-invalid', 'true');
+    await expect(page.locator('#rechner-fehler')).toBeFocused();
+
+    await menge.focus();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.type('2');
+    await page.locator('#position-uebernehmen').focus();
+    await page.keyboard.press('Enter');
+    await expect(menge).not.toHaveAttribute('aria-invalid', 'true');
+    await expect(page.locator('#ergebnis tbody tr').first()).toContainText('2');
+
+    const entfernen = page.locator('[data-remove-cost]').first();
+    await entfernen.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#ergebnis table')).toHaveCount(0);
+    await expect(suche).toBeFocused();
   });
 });
 

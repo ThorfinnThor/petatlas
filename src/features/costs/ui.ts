@@ -28,16 +28,47 @@ interface Auswahl extends CostRequestLine {
   readonly label: string;
 }
 
-async function ladeKatalog(): Promise<readonly FeeItem[]> {
-  const manifest = (await (await fetch(MANIFEST)).json()) as {
-    chunks: { kind: string; marketId: string; path: string }[];
-  };
-  const chunk = manifest.chunks.find((c) => c.kind === 'fees' && c.marketId === 'DE');
+export async function ladeKatalog(): Promise<readonly FeeItem[]> {
+  const manifestAntwort = await fetch(MANIFEST);
+  if (!manifestAntwort.ok) {
+    throw new Error(`Das Gebührenmanifest antwortet mit HTTP ${manifestAntwort.status}.`);
+  }
+  const manifest: unknown = await manifestAntwort.json();
+  if (
+    typeof manifest !== 'object' ||
+    manifest === null ||
+    !Array.isArray((manifest as { chunks?: unknown }).chunks)
+  ) {
+    throw new Error('Das Gebührenmanifest hat nicht das erwartete Format.');
+  }
+  const chunks = (manifest as { chunks: unknown[] }).chunks.filter(
+    (eintrag): eintrag is { kind: string; marketId: string; path: string } =>
+      typeof eintrag === 'object' &&
+      eintrag !== null &&
+      typeof (eintrag as { kind?: unknown }).kind === 'string' &&
+      typeof (eintrag as { marketId?: unknown }).marketId === 'string' &&
+      typeof (eintrag as { path?: unknown }).path === 'string',
+  );
+  const chunk = chunks.find((c) => c.kind === 'fees' && c.marketId === 'DE');
   if (!chunk) throw new Error('Das Manifest nennt keine Gebührendaten für den Markt DE.');
+  if (!chunk.path.startsWith('/data/v1/fees/')) {
+    throw new Error('Das Manifest nennt keinen zulässigen internen Gebührenpfad.');
+  }
 
-  const daten = (await (await fetch(chunk.path)).json()) as { records: unknown[] };
+  const datenAntwort = await fetch(chunk.path);
+  if (!datenAntwort.ok) {
+    throw new Error(`Die Gebührendatei antwortet mit HTTP ${datenAntwort.status}.`);
+  }
+  const daten: unknown = await datenAntwort.json();
+  if (
+    typeof daten !== 'object' ||
+    daten === null ||
+    !Array.isArray((daten as { records?: unknown }).records)
+  ) {
+    throw new Error('Die Gebührendatei hat nicht das erwartete Format.');
+  }
   const items: FeeItem[] = [];
-  for (const roh of daten.records) {
+  for (const roh of (daten as { records: unknown[] }).records) {
     // Ein ungültiger Datensatz wird übersprungen, nicht repariert. Geprüft
     // wird mit der handgeschriebenen Fassung (M22-02); dass sie dasselbe
     // sagt wie `FeeItemSchema`, prüft `tests/runtime-guards.test.ts`.
@@ -151,7 +182,10 @@ export function rechnerStarten(): void {
   const bearbeiten = element<HTMLSelectElement>('#position-bearbeiten');
   const uebernehmen = element<HTMLButtonElement>('#position-uebernehmen');
   const entfernen = element<HTMLButtonElement>('#auswahl-entfernen');
+  const katalogErneut = element<HTMLButtonElement>('#katalog-erneut');
   let bearbeitet: number | null = null;
+  let suchLimit = 25;
+  let katalogLaedt = false;
   menge.value = '1';
   faktor.value = '1';
 
@@ -293,17 +327,19 @@ export function rechnerStarten(): void {
     }
 
     const gewaehlteArt = art();
-    const treffer = katalog
+    const alleTreffer = katalog
       .filter((item) => item.originalLabel.toLowerCase().includes(begriff))
       .filter(
         (item) => gewaehlteArt === null || item.species === null || item.species === gewaehlteArt,
-      )
-      .slice(0, 25);
+      );
+    const treffer = alleTreffer.slice(0, suchLimit);
 
     sucheHinweis!.textContent =
       treffer.length === 0
         ? `Keine Position gefunden für „${suche!.value.trim()}“.`
-        : `${treffer.length} Position(en) gefunden.`;
+        : treffer.length < alleTreffer.length
+          ? `${treffer.length} von ${alleTreffer.length} Positionen angezeigt.`
+          : `${alleTreffer.length} Position(en) gefunden.`;
 
     for (const item of treffer) {
       const li = document.createElement('li');
@@ -321,6 +357,20 @@ export function rechnerStarten(): void {
         bearbeitet = auswahl.length - 1;
         auswahlSteuern();
         neuRechnen();
+      });
+      li.append(knopf);
+      trefferListe!.append(li);
+    }
+
+    if (treffer.length < alleTreffer.length) {
+      const li = document.createElement('li');
+      const knopf = document.createElement('button');
+      knopf.type = 'button';
+      knopf.textContent = 'Weitere Positionen anzeigen';
+      knopf.addEventListener('click', () => {
+        suchLimit += 25;
+        trefferZeigen();
+        trefferListe!.querySelector<HTMLButtonElement>('li:last-child button')?.focus();
       });
       li.append(knopf);
       trefferListe!.append(li);
@@ -343,11 +393,15 @@ export function rechnerStarten(): void {
   }
   for (const eingabe of tierartFelder) {
     eingabe.addEventListener('change', () => {
+      suchLimit = 25;
       trefferZeigen();
       neuRechnen();
     });
   }
-  suche.addEventListener('input', trefferZeigen);
+  suche.addEventListener('input', () => {
+    suchLimit = 25;
+    trefferZeigen();
+  });
   form.addEventListener('submit', (event) => event.preventDefault());
   form.addEventListener('formular:ungueltig', () => {
     ergebnis.replaceChildren();
@@ -395,16 +449,36 @@ export function rechnerStarten(): void {
 
   faktorGrenzenSetzen();
 
-  void ladeKatalog()
-    .then((geladen) => {
+  async function katalogLaden(): Promise<void> {
+    if (katalogLaedt) return;
+    katalogLaedt = true;
+    suche!.disabled = true;
+    if (katalogErneut) {
+      katalogErneut.hidden = true;
+      katalogErneut.disabled = true;
+    }
+    sucheHinweis!.textContent = 'Gebührendaten werden geladen …';
+    try {
+      const geladen = await ladeKatalog();
       katalog = geladen;
-      sucheHinweis.textContent = `${geladen.length} Positionen geladen.`;
-      suche.disabled = false;
-    })
-    .catch((fehler: unknown) => {
+      sucheHinweis!.textContent = `${geladen.length} Positionen geladen.`;
+      suche!.disabled = false;
+      status!.textContent = auswahl.length
+        ? status!.textContent
+        : 'Noch keine Position ausgewählt.';
+    } catch (fehler: unknown) {
       // Ohne Katalog wird nichts gerechnet und nichts geschätzt.
-      status.textContent = 'Die Gebührendaten konnten nicht geladen werden.';
-      sucheHinweis.textContent = 'Die Suche steht gerade nicht zur Verfügung.';
+      status!.textContent = 'Die Gebührendaten konnten nicht geladen werden.';
+      sucheHinweis!.textContent =
+        'Die Suche steht gerade nicht zur Verfügung. Sie können das Laden erneut versuchen.';
+      if (katalogErneut) katalogErneut.hidden = false;
       console.error('Gebührendaten:', fehler);
-    });
+    } finally {
+      katalogLaedt = false;
+      if (katalogErneut) katalogErneut.disabled = false;
+    }
+  }
+
+  katalogErneut?.addEventListener('click', () => void katalogLaden());
+  void katalogLaden();
 }

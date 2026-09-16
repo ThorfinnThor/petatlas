@@ -22,7 +22,7 @@ import { createSiteConfig } from '../../../config/site.ts';
 import {
   KATEGORIE_LABEL,
   RADIEN_METER,
-  filtereOrte,
+  filtereOrteMitMeta,
   formatiereEntfernung,
   notdienstHinweis,
   type ListenOrt,
@@ -43,13 +43,14 @@ const STANDARD = { name: 'Berlin', latitude: 52.5174, longitude: 13.3951, radius
 const oeffentlicheOrte = applyDirectoryControls(snapshot.places as unknown as Place[]);
 const alleOrte = oeffentlicheOrte.map(oeffentlicheProjektion) as unknown as ListenOrt[];
 
-const standardTreffer = filtereOrte(alleOrte, {
+const standardErgebnis = filtereOrteMitMeta(alleOrte, {
   mitte: { latitude: STANDARD.latitude, longitude: STANDARD.longitude },
   gemeinde: STANDARD.name,
   radiusMeter: STANDARD.radius,
   kategorien: [],
   maxTreffer: 25,
 });
+const standardTreffer = standardErgebnis.treffer;
 
 // M11-04 — Städte mit eigener Seite. Die Liste kommt aus derselben Prüfung
 // wie die Seiten selbst; sie kann deshalb nicht auf eine Seite verweisen, die
@@ -164,10 +165,11 @@ const abdeckung = {
     <section aria-labelledby="treffer-titel">
       <h2 id="treffer-titel">Treffer</h2>
       <p id="treffer-status" role="status" aria-live="polite">
-        {standardTreffer.length} erfasste Orte im Umkreis von {
-          formatiereEntfernung(STANDARD.radius)
-        } um
-        {' '}{STANDARD.name}.
+        {
+          standardErgebnis.hatWeitere
+            ? `Erste ${standardTreffer.length} von ${standardErgebnis.gesamt} erfassten Orten im Umkreis von ${formatiereEntfernung(STANDARD.radius)} um ${STANDARD.name}. Grenze die Suche mit Radius oder Kategorie ein, um weitere passende Orte zu sehen.`
+            : `${standardErgebnis.gesamt} erfasste Orte im Umkreis von ${formatiereEntfernung(STANDARD.radius)} um ${STANDARD.name}.`
+        }
       </p>
 
       <ul

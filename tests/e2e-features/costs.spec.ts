@@ -37,6 +37,22 @@ test('lädt den vollständigen Katalog aus der statischen Datei', async ({ page 
   expect(fremde).toEqual([]);
 });
 
+test('kann einen vorübergehenden Ladefehler ohne Seitenreload beheben', async ({ page }) => {
+  let versuche = 0;
+  await page.route('**/data/v1/manifest.json', async (route) => {
+    versuche += 1;
+    if (versuche === 1) await route.fulfill({ status: 503, body: 'vorübergehend' });
+    else await route.continue();
+  });
+
+  await page.goto(RECHNER);
+  await expect(page.locator('#katalog-erneut')).toBeVisible();
+  await page.locator('#katalog-erneut').click();
+  await katalogGeladen(page);
+  await expect(page.locator('#suche')).toBeEnabled();
+  expect(versuche).toBe(2);
+});
+
 test('rechnet eine Position nachvollziehbar', async ({ page }) => {
   await page.goto(RECHNER);
   await katalogGeladen(page);
@@ -95,6 +111,20 @@ test('verlangt eine sinnvolle Suchlänge und meldet leere Treffer', async ({ pag
   await expect(page.locator('#suche-hinweis')).toContainText('mindestens drei Zeichen');
   await page.fill('#suche', 'Zebrastreifenkatalog');
   await expect(page.locator('#suche-hinweis')).toContainText('Keine Position gefunden');
+});
+
+test('legt bei vielen Suchtreffern den Gesamtumfang offen und lädt weitere nach', async ({
+  page,
+}) => {
+  await page.goto(RECHNER);
+  await katalogGeladen(page);
+  await page.fill('#suche', 'Untersuchung');
+  const weitere = page.getByRole('button', { name: 'Weitere Positionen anzeigen' });
+  await expect(weitere).toBeVisible();
+  await expect(page.locator('#suche-hinweis')).toContainText(/25 von \d+ Positionen/);
+  const vorher = await page.locator('#treffer li').count();
+  await weitere.click();
+  expect(await page.locator('#treffer li').count()).toBeGreaterThan(vorher);
 });
 
 test('startet ohne Auswahl mit einem klaren Hinweis', async ({ page }) => {

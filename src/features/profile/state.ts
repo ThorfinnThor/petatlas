@@ -51,13 +51,43 @@ export interface ProfilZustand {
   readonly offen: readonly string[];
 }
 
-/** Gewicht aus einer Eingabe in Kilogramm. Unklares bleibt `null`. */
-export function gewichtInGramm(text: string): number | null {
-  const roh = text.trim().replace(',', '.');
-  if (!/^\d+(\.\d{1,3})?$/.test(roh)) return null;
+export type GewichtsPruefung =
+  | { readonly status: 'leer'; readonly gramm: null; readonly meldung: null }
+  | { readonly status: 'gueltig'; readonly gramm: number; readonly meldung: null }
+  | { readonly status: 'ungueltig'; readonly gramm: null; readonly meldung: string };
+
+/**
+ * Prüft eine optionale Kilogramm-Eingabe, ohne „leer“ und „fehlerhaft“ zu
+ * vermischen. Drei Nachkommastellen sind möglich, weil ein Gramm 0,001 kg ist.
+ */
+export function pruefeGewicht(text: string): GewichtsPruefung {
+  const getrimmt = text.trim();
+  if (getrimmt === '') return { status: 'leer', gramm: null, meldung: null };
+
+  const roh = getrimmt.replace(',', '.');
+  if (!/^\d+(\.\d{1,3})?$/.test(roh)) {
+    return {
+      status: 'ungueltig',
+      gramm: null,
+      meldung:
+        'Bitte ein Gewicht zwischen 0,001 und 200 kg mit höchstens drei Nachkommastellen eingeben.',
+    };
+  }
+
   const kilo = Number(roh);
-  if (!Number.isFinite(kilo) || kilo <= 0 || kilo > 200) return null;
-  return Math.round(kilo * 1000);
+  if (!Number.isFinite(kilo) || kilo <= 0 || kilo > 200) {
+    return {
+      status: 'ungueltig',
+      gramm: null,
+      meldung: 'Das Gewicht muss größer als 0 und höchstens 200 kg sein.',
+    };
+  }
+  return { status: 'gueltig', gramm: Math.round(kilo * 1000), meldung: null };
+}
+
+/** Rückwärtskompatible Kurzform für Stellen, die nur Gramm oder `null` brauchen. */
+export function gewichtInGramm(text: string): number | null {
+  return pruefeGewicht(text).gramm;
 }
 
 /**

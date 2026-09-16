@@ -97,6 +97,56 @@ test('eine offene Angabe bleibt offen', async ({ page }) => {
   await expect(page.locator('.ergebnis__kopf')).toHaveAttribute('data-zustand', 'unknown');
 });
 
+test('kennzeichnet ein Ergebnis nach einer Eingabeänderung als veraltet', async ({ page }) => {
+  await page.goto(REISE);
+  await page.check('input[name="tierart"][value="dog"]');
+  await page.selectOption('#ziel', 'AT');
+  await page.fill('#reisedatum', '2026-10-01');
+  await page.fill('#geburtsdatum', '2020-01-01');
+  await page.click('#pruefen');
+  await expect(page.locator('.ergebnis__punkte')).toBeVisible();
+
+  await page.selectOption('#ziel', 'IT');
+  await expect(page.locator('[data-veraltet="true"]')).toContainText('erneut');
+  await expect(page.locator('.ergebnis__punkte')).toHaveCount(0);
+
+  await page.click('#pruefen');
+  await expect(page.locator('[data-veraltet="true"]')).toHaveCount(0);
+  await expect(page.locator('.ergebnis__punkte')).toBeVisible();
+});
+
+test('macht auch eine Profilübernahme nach der Prüfung sichtbar', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem(
+      'petatlas.profile.v1',
+      JSON.stringify({
+        version: 2,
+        profile: {
+          profileId: '00000000-0000-4000-8000-000000000000',
+          schemaVersion: 1,
+          species: 'cat',
+          displayName: 'Mira',
+          birthDate: '2020-01-01',
+          weightGrams: 4500,
+          breed: null,
+        },
+        interests: [],
+        savedAt: '2026-09-16T10:00:00Z',
+      }),
+    );
+  });
+  await page.goto(REISE);
+  await page.check('input[name="tierart"][value="dog"]');
+  await page.selectOption('#ziel', 'AT');
+  await page.fill('#reisedatum', '2026-10-01');
+  await page.fill('#geburtsdatum', '2019-01-01');
+  await page.click('#pruefen');
+
+  await page.getByRole('button', { name: 'Gespeichertes Tierprofil übernehmen' }).click();
+  await expect(page.locator('[data-veraltet="true"]')).toContainText('erneut');
+  await expect(page.locator('input[name="tierart"][value="cat"]')).toBeChecked();
+});
+
 test('ein klarer Mangel wird als Mangel benannt', async ({ page }) => {
   await page.goto(REISE);
   await page.fill('#reisedatum', '2026-10-01');

@@ -19,13 +19,14 @@ import {
   setze,
   type PackStand,
 } from './packing-state.ts';
+import { offeneSicherungZuruecksetzen } from './backup-transaction.ts';
 
 function speicher(): Storage | null {
   try {
     const probe = '__petatlas_probe__';
     window.localStorage.setItem(probe, '1');
     window.localStorage.removeItem(probe);
-    return window.localStorage;
+    return offeneSicherungZuruecksetzen(window.localStorage).ok ? window.localStorage : null;
   } catch {
     return null;
   }

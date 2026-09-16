@@ -9,6 +9,7 @@ import {
   bereinigeInteressen,
   bewerte,
   gewichtInGramm,
+  pruefeGewicht,
   type ProfilEntwurf,
 } from '../../src/features/profile/state.ts';
 
@@ -51,6 +52,17 @@ describe('Gewicht', () => {
   it('lehnt Unsinn ab, statt zu raten', () => {
     for (const text of ['', 'schwer', '-5', '0', '500', 'ca. 20']) {
       expect(gewichtInGramm(text), text).toBeNull();
+    }
+  });
+
+  it('unterscheidet leere, gültige und ungültige Eingaben', () => {
+    expect(pruefeGewicht('   ').status).toBe('leer');
+    expect(pruefeGewicht('12,5')).toEqual({ status: 'gueltig', gramm: 12_500, meldung: null });
+    expect(pruefeGewicht('12.5')).toEqual({ status: 'gueltig', gramm: 12_500, meldung: null });
+    for (const text of ['-1', '0', 'abc', '12,1234', '201']) {
+      const ergebnis = pruefeGewicht(text);
+      expect(ergebnis.status, text).toBe('ungueltig');
+      expect(ergebnis.meldung, text).toBeTruthy();
     }
   });
 });

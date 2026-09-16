@@ -165,6 +165,11 @@ button {
     border-color var(--transition-fast);
 }
 
+/* Eigene Darstellungsregeln dürfen den semantischen HTML-Zustand nicht überstimmen. */
+[hidden] {
+  display: none !important;
+}
+
 button:hover {
   background: var(--color-surface-subtle);
   border-color: var(--color-text-muted);

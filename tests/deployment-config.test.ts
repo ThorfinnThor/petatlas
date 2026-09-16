@@ -64,8 +64,9 @@ describe('Header', () => {
 
   it('setzt eine Content Security Policy nur mit freigegebenen Bildursprüngen', () => {
     expect(headers).toContain("default-src 'self'");
-    expect(headers).toContain("script-src 'self'");
+    expect(headers).toContain("script-src 'self' 'wasm-unsafe-eval'");
     expect(headers).not.toMatch(/script-src[^;]*unsafe-inline/);
+    expect(headers).not.toMatch(/script-src[^;]*'unsafe-eval'/);
     const csp = headers.split('\n').find((line) => line.includes('Content-Security-Policy:')) ?? '';
     const origins = csp.match(/https:\/\/[^\s;]+/g) ?? [];
     expect(origins.sort()).toEqual([...TILES.hosts, ...fressnapfBildUrspruenge()].sort());
@@ -78,7 +79,7 @@ describe('Header', () => {
   });
 
   it('schaltet nicht benötigte Browserfunktionen ab', () => {
-    expect(headers).toContain('geolocation=()');
+    expect(headers).toContain('geolocation=(self)');
     expect(headers).toContain('camera=()');
   });
 
