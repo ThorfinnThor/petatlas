@@ -60,16 +60,25 @@ for (const width of [390, 1440]) {
         await expect(page.locator('main')).not.toContainText('Fachliche Verantwortung');
         await expect(page.locator('main')).not.toContainText('Freigegeben am');
         await expect(page.locator('.supplement-products a[rel~="sponsored"]')).toHaveCount(
-          supplements.products.length + supplementFressnapfCount,
+          supplements.products.length * 2 + supplementFressnapfCount,
         );
         const fressnapfLinks = page.locator(
-          '.retail-partner a[href*="awin1.com"][rel~="sponsored"]',
+          '.retail-partner .retail-link--fressnapf[href*="awin1.com"][rel~="sponsored"]',
         );
         await expect(fressnapfLinks).toHaveCount(2);
         for (const link of await fressnapfLinks.all()) {
           const url = new URL((await link.getAttribute('href'))!);
           expect(url.hostname).toBe('www.awin1.com');
           expect(url.searchParams.get('awinmid')).toBe('14757');
+          expect(url.searchParams.get('awinaffid')).toBe('3037577');
+        }
+        const zooRoyalLinks = page.locator(
+          '.retail-partner .retail-link--zooroyal[href*="awin1.com"][rel~="sponsored"]',
+        );
+        await expect(zooRoyalLinks).toHaveCount(2);
+        for (const link of await zooRoyalLinks.all()) {
+          const url = new URL((await link.getAttribute('href'))!);
+          expect(url.searchParams.get('awinmid')).toBe('14979');
           expect(url.searchParams.get('awinaffid')).toBe('3037577');
         }
         const amazonRetailLinks = page.locator(
@@ -112,6 +121,9 @@ for (const width of [390, 1440]) {
           expect(url.searchParams.get('m') ?? url.searchParams.get('awinmid')).toBe('14757');
           expect(url.searchParams.get('a') ?? url.searchParams.get('awinaffid')).toBe('3037577');
         }
+        await expect(
+          page.locator('.supplement-products .zooroyal-link a[rel~="sponsored"]'),
+        ).toHaveCount(supplements.products.length);
       }
       if (path === 'tierversicherung') {
         await expect(page.getByRole('heading', { name: 'Tierversicherung prüfen' })).toBeVisible();

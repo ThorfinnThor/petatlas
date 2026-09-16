@@ -17,6 +17,7 @@ import { attributPruefung } from '../../../features/care/attributes.ts';
 import { commerceProgramme, partnerHinweisErlaubt } from '../../../features/commerce/partner.ts';
 import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../../../features/commerce/links.ts';
 import type { TaxonomyCategory } from '../../../domain/schemas/taxonomy.ts';
+import { zooroyalCareLink } from '../../../features/commerce/zooroyal.ts';
 
 export function getStaticPaths() {
   const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -41,6 +42,7 @@ const produkte = attributPruefung().products.filter(
   (produkt) => produkt.categoryId === kategorie.categoryId,
 );
 const programm = commerceProgramme().find((eintrag) => eintrag.programId === 'fressnapf-de');
+const zooroyalProgramm = commerceProgramme().find((eintrag) => eintrag.programId === 'zooroyal-de');
 const partnerEntscheidung = partnerHinweisErlaubt({
   market: markt,
   placement: 'neutral_list',
@@ -62,6 +64,25 @@ const shopLinks =
         }))
         .filter((link) => link.href !== null)
     : [];
+const zooEntscheidung = partnerHinweisErlaubt({
+  market: markt,
+  placement: 'neutral_list',
+  stichtag: new Date().toISOString().slice(0, 10),
+  programme: zooroyalProgramm === undefined ? [] : [zooroyalProgramm],
+});
+const zooShopLinks = zooEntscheidung.erlaubt
+  ? guide.shopLinks
+      .map((link) => ({
+        ...link,
+        href: zooroyalCareLink(
+          markt,
+          kategorie.categoryId,
+          link.species === 'Katze' ? 'cat' : 'dog',
+          link.id,
+        ),
+      }))
+      .filter((link) => link.href !== null)
+  : [];
 const faqThema: Readonly<Record<string, string>> = {
   'grooming-brush': 'Bürsten und Kämmen',
   'grooming-claw': 'Krallenpflege',
@@ -169,12 +190,12 @@ const faqThema: Readonly<Record<string, string>> = {
     </section>
 
     {
-      shopLinks.length > 0 && partnerEntscheidung.programm !== null && (
+      (shopLinks.length > 0 || zooShopLinks.length > 0) && (
         <section class="shop" aria-labelledby="shop-title">
           <div class="shop__heading">
             <div>
               <p class="eyebrow">SORTIMENT ÖFFNEN</p>
-              <h2 id="shop-title">Passende Pflegekategorie bei Fressnapf</h2>
+              <h2 id="shop-title">Passende Pflegekategorie bei Fressnapf und ZooRoyal</h2>
             </div>
           </div>
           <div class="shop__grid">
@@ -183,14 +204,26 @@ const faqThema: Readonly<Record<string, string>> = {
                 <p class="shop__species">Für {link.species}</p>
                 <h3>{link.label}</h3>
                 <p>{link.description}</p>
-                <a
-                  class="button-link"
-                  href={link.href as string}
-                  rel={PARTNER_LINK_ATTRIBUTE.rel}
-                  target={PARTNER_LINK_ATTRIBUTE.target}
-                >
-                  Sortiment bei Fressnapf öffnen ↗ <span class="sr-only">(Werbung)</span>
-                </a>
+                {link.href && partnerEntscheidung.programm !== null && (
+                  <a
+                    class="button-link"
+                    href={link.href as string}
+                    rel={PARTNER_LINK_ATTRIBUTE.rel}
+                    target={PARTNER_LINK_ATTRIBUTE.target}
+                  >
+                    Sortiment bei Fressnapf öffnen ↗ <span class="sr-only">(Werbung)</span>
+                  </a>
+                )}
+                {zooShopLinks.find((zooLink) => zooLink.id === link.id)?.href && (
+                  <a
+                    class="button-link"
+                    href={zooShopLinks.find((zooLink) => zooLink.id === link.id)?.href as string}
+                    rel={PARTNER_LINK_ATTRIBUTE.rel}
+                    target={PARTNER_LINK_ATTRIBUTE.target}
+                  >
+                    Sortiment bei ZooRoyal öffnen ↗ <span class="sr-only">(Werbung)</span>
+                  </a>
+                )}
               </article>
             ))}
           </div>

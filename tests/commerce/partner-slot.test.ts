@@ -19,7 +19,7 @@ describe('Ausgelieferte Warenkonfiguration', () => {
   it('entspricht dem Schema und enthält Fressnapf', () => {
     const geprueft = PartnerRegistrySchema.parse(roh);
     expect(geprueft.domain).toBe('commerce');
-    expect(geprueft.programs).toHaveLength(1);
+    expect(geprueft.programs).toHaveLength(2);
     expect(commerceProgramme()[0]?.programId).toBe('fressnapf-de');
   });
 
