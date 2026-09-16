@@ -39,13 +39,14 @@ async function main(): Promise<void> {
     ADVERTISER_ID,
     ZOOROYAL_HOSTS,
   );
-  if (products.length === 0)
-    throw new Error(
-      'Der ZooRoyal-Feed enthält keine eindeutig zugeordneten redaktionellen Produkte.',
-    );
-
   const path = 'content-data/products/zooroyal-feed.json';
   const previous = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>;
+  if (products.length === 0) {
+    console.log(
+      'Der ZooRoyal-Feed enthält derzeit keine eindeutig zugeordneten redaktionellen Produkte; vorhandene Daten bleiben unverändert.',
+    );
+    return;
+  }
   const unchanged = JSON.stringify(previous.products ?? []) === JSON.stringify(products);
   const output = {
     schemaVersion: 1,
