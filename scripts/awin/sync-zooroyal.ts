@@ -34,6 +34,16 @@ async function main(): Promise<void> {
     /category|species|animal|pet|product.?type/i.test(field),
   );
   console.log(`Awin-Feedfelder für Katalogzuordnung: ${katalogFelder.join(', ') || 'keine'}`);
+  const katalogBeispiele = [
+    ...new Set(
+      rows
+        .flatMap((row) => ['category_name', 'merchant_category'].map((field) => row[field] ?? ''))
+        .filter(Boolean),
+    ),
+  ]
+    .slice(0, 12)
+    .map((value) => value.slice(0, 80));
+  console.log(`Awin-Kategoriewerte (Beispiele): ${katalogBeispiele.join(' | ') || 'keine'}`);
   const names = Object.fromEntries(
     [...editorial.products, ...supplements.products].map((product) => [product.id, product.name]),
   );
