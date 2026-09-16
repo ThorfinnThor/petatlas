@@ -261,7 +261,7 @@ Vertrag. Ein Entfernen der Summe würde bestätigte Funktionalität verschlechte
 
 **Dateien:** `public/suche.js`, `src/features/costs/ui.ts`,
 `src/features/map/list.ts`, `src/features/map/list-ui.ts`,
-`src/components/pages/Map.astro`, `tests/e2e/search.spec.ts`,
+`src/components/pages/Map.astro`, `tests/app/acceptance.spec.ts`,
 `tests/e2e-features/costs.spec.ts`, `tests/places/list.test.ts`.
 
 ### QA-07 — Validierter Gebühren-Load mit Recovery
@@ -303,11 +303,14 @@ Regel stellt die HTML-Semantik wieder her.
   Gebührensuche 25→50 von 149, versteckter Retry nach erfolgreichem Load,
   Reiseergebnis-Invalidierung, deutsche Tierart, Dirty-Status und zugänglicher
   Gewichtsfehler bestätigt.
-- **Playwright-CLI:** In der lokalen macOS-Sandbox nicht ausführbar. Chromium
-  scheitert bei der Mach-Port-Registrierung, WebKit mit `Abort trap: 6`, jeweils
-  vor dem ersten Testschritt. Das sind Browser-Startfehler der Umgebung, keine
-  fehlgeschlagenen Anwendungsassertionen. Die neuen E2E-Tests müssen deshalb in
-  der bestehenden GitHub-CI laufen.
+- **GitHub Browser-CI:** 228/228 Basis-E2Es, 110 Accessibility-/Browsermatrix-
+  Tests mit 4 dokumentierten Skips, 312 Feature-E2Es mit 4 dokumentierten
+  Viewport-Skips, 40/40 echte-App-/Viewport-Tests und 12/12 Performance-Tests
+  bestanden.
+- **Lokale Playwright-CLI:** In der lokalen macOS-Sandbox nicht ausführbar.
+  Chromium scheitert bei der Mach-Port-Registrierung, WebKit mit
+  `Abort trap: 6`, jeweils vor dem ersten Testschritt. Die GitHub-gehosteten
+  Browserläufe decken diese Umgebungslücke ab.
 
 ## Geänderte Dateien
 
@@ -334,9 +337,11 @@ Regel stellt die HTML-Semantik wieder her.
 | `tests/costs/ui-loader.test.ts` | HTTP-/Payload-Vertrag |
 | `tests/deployment-config.test.ts` | Headervertrag |
 | `tests/e2e-features/costs.spec.ts` | Retry und Nachladen |
+| `tests/e2e-features/golden-path.spec.ts` | Kartenstatus mit offengelegtem Limit |
+| `tests/e2e-features/map-list.spec.ts` | Kartenstatus ohne JavaScript |
 | `tests/e2e-features/profil.spec.ts` | Import, Gewicht, Dirty-Status, Übersetzung |
 | `tests/e2e-features/reisecheck.spec.ts` | direkte und programmatische Invalidierung |
-| `tests/e2e/search.spec.ts` | Gesamtzahl und Nachladen |
+| `tests/app/acceptance.spec.ts` | Gesamtzahl und Nachladen im vollständigen Index |
 | `tests/places/list.test.ts` | Kartenlimit-Metadaten |
 | `tests/profile/backup-transaction.test.ts` | Clear, Rollback, Recovery |
 | `tests/profile/state.test.ts` | Gewichtsgrenzen |
