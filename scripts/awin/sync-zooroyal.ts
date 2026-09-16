@@ -5,6 +5,7 @@ import editorial from '../../content-data/products/editorial.json' with { type: 
 import supplements from '../../content-data/products/supplements.json' with { type: 'json' };
 import {
   ladeCsv,
+  katalogProdukteAusZeilen,
   ordneProdukteZuPartner,
   partnerFeeds,
   pruefeFeedListenUrl,
@@ -39,29 +40,49 @@ async function main(): Promise<void> {
     ADVERTISER_ID,
     ZOOROYAL_HOSTS,
   );
+  const catalog = katalogProdukteAusZeilen(rows, ADVERTISER_ID, ZOOROYAL_HOSTS);
   const path = 'content-data/products/zooroyal-feed.json';
   const previous = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>;
-  if (products.length === 0) {
-    console.log(
-      'Der ZooRoyal-Feed enthält derzeit keine eindeutig zugeordneten redaktionellen Produkte; vorhandene Daten bleiben unverändert.',
-    );
-    return;
+  if (products.length > 0) {
+    const unchanged = JSON.stringify(previous.products ?? []) === JSON.stringify(products);
+    const output = {
+      schemaVersion: 1,
+      advertiserId: ADVERTISER_ID,
+      publisherId: PUBLISHER_ID,
+      products,
+      generatedAt:
+        unchanged && typeof previous.generatedAt === 'string'
+          ? previous.generatedAt
+          : new Date().toISOString(),
+    };
+    await writeFile(path, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
   }
-  const unchanged = JSON.stringify(previous.products ?? []) === JSON.stringify(products);
-  const output = {
-    schemaVersion: 1,
-    advertiserId: ADVERTISER_ID,
-    publisherId: PUBLISHER_ID,
-    products,
-    generatedAt:
-      unchanged && typeof previous.generatedAt === 'string'
-        ? previous.generatedAt
-        : new Date().toISOString(),
-  };
-  await writeFile(path, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
+  const catalogPath = 'content-data/products/zooroyal-catalog.json';
+  const previousCatalog = JSON.parse(await readFile(catalogPath, 'utf8')) as Record<
+    string,
+    unknown
+  >;
+  if (catalog.length > 0) {
+    const catalogUnchanged =
+      JSON.stringify(previousCatalog.products ?? []) === JSON.stringify(catalog);
+    const catalogOutput = {
+      schemaVersion: 1,
+      advertiserId: ADVERTISER_ID,
+      publisherId: PUBLISHER_ID,
+      merchantName: 'ZooRoyal',
+      products: catalog,
+      generatedAt:
+        catalogUnchanged && typeof previousCatalog.generatedAt === 'string'
+          ? previousCatalog.generatedAt
+          : new Date().toISOString(),
+    };
+    await writeFile(catalogPath, `${JSON.stringify(catalogOutput, null, 2)}\n`, 'utf8');
+  }
   console.log(
-    `ZooRoyal-Feed geprüft: ${rows.length} Zeilen, ${products.length} eindeutige Produktzuordnungen.`,
+    `ZooRoyal-Feed geprüft: ${rows.length} Zeilen, ${products.length} redaktionelle Zuordnungen, ${catalog.length} Katalogprodukte.`,
   );
+  if (products.length === 0)
+    console.log('Keine redaktionelle Zuordnung; der bisherige Zuordnungsstand bleibt erhalten.');
   console.log(
     'Es wurden nur Produktname, Bildadresse und geprüfte Deep Links gespeichert; keine Preise oder Verfügbarkeiten.',
   );

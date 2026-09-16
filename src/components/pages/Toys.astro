@@ -20,6 +20,8 @@ import RetailPartnerSection from '../RetailPartnerSection.astro';
 import type { MarketConfig } from '../../domain/market.ts';
 import { fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
 import { zooroyalAngebote } from '../../features/commerce/zooroyal-feed.ts';
+import { fressnapfKatalog, zooroyalKatalog } from '../../features/commerce/feed-catalog.ts';
+import FeedProductGrid from '../commerce/FeedProductGrid.astro';
 
 interface Props {
   market: MarketConfig;
@@ -42,6 +44,8 @@ const zooroyalProducts = Object.fromEntries(
     { imageUrl: product.imageUrl, affiliateUrl: product.affiliateUrl },
   ]),
 );
+const fressnapfCatalog = fressnapfKatalog();
+const zooroyalCatalog = zooroyalKatalog();
 ---
 
 <h1>Spielzeug finden</h1>
@@ -54,6 +58,19 @@ const zooroyalProducts = Object.fromEntries(
 </p>
 
 <RetailPartnerSection market={market} page="spielzeug" />
+
+<FeedProductGrid
+  offers={fressnapfCatalog}
+  category="toy"
+  title="Spielzeug aus dem Fressnapf-Sortiment"
+  retailerLabel="Fressnapf"
+/>
+<FeedProductGrid
+  offers={zooroyalCatalog}
+  category="toy"
+  title="Spielzeug aus dem ZooRoyal-Sortiment"
+  retailerLabel="ZooRoyal"
+/>
 
 {
   synthetisch && (

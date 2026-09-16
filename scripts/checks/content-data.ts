@@ -44,6 +44,32 @@ import { alleRegeln } from '../../src/features/travel/rules.ts';
 import { reisePackliste } from '../../src/features/travel/packing.ts';
 import { FUTTER_DATENSATZ_SCHEMA } from '../../src/features/food/dataset-schema.ts';
 
+const CATALOG_FEED_SCHEMA = z
+  .object({
+    schemaVersion: z.literal(1),
+    advertiserId: z.string().regex(/^\d+$/),
+    publisherId: z.string().regex(/^\d+$/),
+    merchantName: z.string().min(1),
+    products: z.array(
+      z
+        .object({
+          productId: z.string().min(1),
+          productName: z.string().min(1),
+          brand: z.string().min(1),
+          species: z.enum(['dog', 'cat']),
+          category: z.enum(['toy', 'supplement', 'food', 'care']),
+          categoryLabel: z.string().min(1),
+          merchantProductId: z.string().min(1),
+          imageUrl: z.url().refine((url) => url.startsWith('https://')),
+          affiliateUrl: z.url().refine((url) => url.startsWith('https://')),
+          merchantUrl: z.url().refine((url) => url.startsWith('https://')),
+        })
+        .strict(),
+    ),
+    generatedAt: z.union([z.iso.datetime(), z.null()]),
+  })
+  .strict();
+
 export interface Pruefstueck {
   readonly datei: string;
   readonly schema: z.ZodType;
@@ -106,6 +132,16 @@ export const PRUEFSTUECKE: readonly Pruefstueck[] = [
       })
       .strict(),
     zweck: 'Konkrete Ergänzungsfuttermittel mit Herstellerquelle und Amazon-Suchauswahl',
+  },
+  {
+    datei: 'content-data/products/fressnapf-catalog.json',
+    schema: CATALOG_FEED_SCHEMA,
+    zweck: 'Direkte Fressnapf-Katalogprodukte aus dem freigegebenen Awin-Feed',
+  },
+  {
+    datei: 'content-data/products/zooroyal-catalog.json',
+    schema: CATALOG_FEED_SCHEMA,
+    zweck: 'Direkte ZooRoyal-Katalogprodukte aus dem freigegebenen Awin-Feed',
   },
   {
     datei: 'content-data/taxonomy/care.json',

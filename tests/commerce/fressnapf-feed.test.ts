@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 
 import {
   fressnapfFeeds,
+  katalogProdukteAusZeilen,
+  katalogProduktAusZeile,
   ordneProdukteZu,
   parseCsv,
   produktAusZeile,
@@ -96,5 +98,47 @@ describe('Awin-Fressnapf-Feed', () => {
     expect(
       validiereFressnapfFeedEintrag({ ...valid, merchantUrl: 'https://fressnapf.example/p/x' }),
     ).toBeNull();
+  });
+
+  it('übernimmt neue Katalogartikel nur bei klarer Kategorie und Tierart', () => {
+    const katalogZeile = {
+      ...row('KONG Classic M'),
+      merchant_category: 'Hund > Spielzeug > Beschäftigungsspielzeug',
+      species: 'Hund',
+    };
+    const produkt = katalogProduktAusZeile(
+      katalogZeile,
+      '14757',
+      new Set(['fressnapf.de', 'www.fressnapf.de']),
+    );
+    expect(produkt).toMatchObject({ category: 'toy', species: 'dog', brand: 'KONG' });
+    expect(
+      katalogProduktAusZeile(
+        { ...katalogZeile, merchant_category: 'Hund > Zubehör', species: '' },
+        '14757',
+        new Set(['fressnapf.de', 'www.fressnapf.de']),
+      ),
+    ).toBeNull();
+  });
+
+  it('dedupliziert und begrenzt den Katalog je Tierart und Kategorie', () => {
+    const rows = [
+      { ...row('KONG Alpha'), merchant_category: 'Hund > Spielzeug', species: 'Hund' },
+      {
+        ...row('KONG Beta'),
+        merchant_product_id: '1005029',
+        merchant_category: 'Hund > Spielzeug',
+        species: 'Hund',
+      },
+      {
+        ...row('KONG Katze'),
+        merchant_product_id: '1005030',
+        merchant_category: 'Katze > Spielzeug',
+        species: 'Katze',
+      },
+    ];
+    expect(
+      katalogProdukteAusZeilen(rows, '14757', new Set(['fressnapf.de', 'www.fressnapf.de']), 1),
+    ).toHaveLength(2);
   });
 });

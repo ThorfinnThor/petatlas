@@ -6,6 +6,7 @@ import supplements from '../../content-data/products/supplements.json' with { ty
 import {
   fressnapfFeeds,
   ladeCsv,
+  katalogProdukteAusZeilen,
   ordneProdukteZu,
   pruefeFeedListenUrl,
   type MatchTarget,
@@ -29,32 +30,59 @@ async function main(): Promise<void> {
     [...editorial.products, ...supplements.products].map((product) => [product.id, product.name]),
   );
   const products = ordneProdukteZu(rows, matchesConfig.targets as readonly MatchTarget[], names);
-  if (products.length === 0)
-    throw new Error(
-      'Der Fressnapf-Feed enthält keine eindeutig zugeordneten redaktionellen Produkte.',
-    );
+  const catalog = katalogProdukteAusZeilen(
+    rows,
+    matchesConfig.advertiserId,
+    new Set(['fressnapf.de', 'www.fressnapf.de']),
+  );
 
   const path = 'content-data/products/fressnapf-feed.json';
   const previous = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>;
-  const substantive = {
-    schemaVersion: 1,
-    advertiserId: matchesConfig.advertiserId,
-    publisherId: matchesConfig.publisherId,
-    products,
-  };
-  const unchanged = JSON.stringify(previous.products ?? []) === JSON.stringify(products);
-  const output = {
-    ...substantive,
-    generatedAt:
-      unchanged && typeof previous.generatedAt === 'string'
-        ? previous.generatedAt
-        : new Date().toISOString(),
-  };
-  await writeFile(path, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
+  if (products.length > 0) {
+    const substantive = {
+      schemaVersion: 1,
+      advertiserId: matchesConfig.advertiserId,
+      publisherId: matchesConfig.publisherId,
+      products,
+    };
+    const unchanged = JSON.stringify(previous.products ?? []) === JSON.stringify(products);
+    const output = {
+      ...substantive,
+      generatedAt:
+        unchanged && typeof previous.generatedAt === 'string'
+          ? previous.generatedAt
+          : new Date().toISOString(),
+    };
+    await writeFile(path, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
+  }
+
+  const catalogPath = 'content-data/products/fressnapf-catalog.json';
+  const previousCatalog = JSON.parse(await readFile(catalogPath, 'utf8')) as Record<
+    string,
+    unknown
+  >;
+  if (catalog.length > 0) {
+    const catalogUnchanged =
+      JSON.stringify(previousCatalog.products ?? []) === JSON.stringify(catalog);
+    const catalogOutput = {
+      schemaVersion: 1,
+      advertiserId: matchesConfig.advertiserId,
+      publisherId: matchesConfig.publisherId,
+      merchantName: 'Fressnapf',
+      products: catalog,
+      generatedAt:
+        catalogUnchanged && typeof previousCatalog.generatedAt === 'string'
+          ? previousCatalog.generatedAt
+          : new Date().toISOString(),
+    };
+    await writeFile(catalogPath, `${JSON.stringify(catalogOutput, null, 2)}\n`, 'utf8');
+  }
 
   console.log(
-    `Fressnapf-Feed geprüft: ${rows.length} Zeilen, ${products.length} eindeutige Produktzuordnungen.`,
+    `Fressnapf-Feed geprüft: ${rows.length} Zeilen, ${products.length} redaktionelle Zuordnungen, ${catalog.length} Katalogprodukte.`,
   );
+  if (products.length === 0)
+    console.log('Keine redaktionelle Zuordnung; der bisherige Zuordnungsstand bleibt erhalten.');
   console.log(
     'Es wurden nur Produktname, Bildadresse und geprüfte Deep Links gespeichert; keine Preise oder Verfügbarkeiten.',
   );
