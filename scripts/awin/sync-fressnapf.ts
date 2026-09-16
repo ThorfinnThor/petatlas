@@ -26,6 +26,10 @@ async function main(): Promise<void> {
   if (!selected) throw new Error('Der Fressnapf-Feed konnte nicht ausgewählt werden.');
 
   const rows = await ladeCsv(selected.feedUrl, 268_435_456, 500_000);
+  const katalogFelder = Object.keys(rows[0] ?? {}).filter((field) =>
+    /category|species|animal|pet|product.?type/i.test(field),
+  );
+  console.log(`Awin-Feedfelder für Katalogzuordnung: ${katalogFelder.join(', ') || 'keine'}`);
   const names = Object.fromEntries(
     [...editorial.products, ...supplements.products].map((product) => [product.id, product.name]),
   );
