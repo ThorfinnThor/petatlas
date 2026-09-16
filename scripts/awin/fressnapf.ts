@@ -189,6 +189,17 @@ export function produktAusZeile(
   target: MatchTarget,
   productName: string,
 ): FeedProduct | null {
+  return produktAusZeileFuerPartner(row, target, productName, '14757', FRESSNAPF_HOSTS);
+}
+
+/** Match a product row for another approved Awin retailer. */
+export function produktAusZeileFuerPartner(
+  row: Record<string, string>,
+  target: MatchTarget,
+  productName: string,
+  advertiserId: string,
+  merchantHosts: ReadonlySet<string>,
+): FeedProduct | null {
   const name = feld(row, 'product_name', 'product name', 'name', 'title') ?? '';
   const brand = feld(row, 'merchant_product_brand', 'product_brand', 'brand', 'manufacturer') ?? '';
   const haystack = normalisiere(`${brand} ${name}`);
@@ -202,11 +213,11 @@ export function produktAusZeile(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
   const affiliate = sichereUrl(feld(row, 'aw_deep_link', 'affiliate_url', 'tracking_url'));
-  if (!image || !merchant || !affiliate || !FRESSNAPF_HOSTS.has(merchant.host)) return null;
+  if (!image || !merchant || !affiliate || !merchantHosts.has(merchant.host)) return null;
   if (!AWIN_TRACKING_HOSTS.has(affiliate.host)) return null;
   const advertiser = affiliate.searchParams.get('m') ?? affiliate.searchParams.get('awinmid');
   const publisher = affiliate.searchParams.get('a') ?? affiliate.searchParams.get('awinaffid');
-  if (advertiser !== '14757' || publisher !== '3037577') return null;
+  if (advertiser !== advertiserId || publisher !== '3037577') return null;
 
   return {
     productId: target.productId,
@@ -217,6 +228,83 @@ export function produktAusZeile(
     affiliateUrl: affiliate.toString(),
     merchantUrl: merchant.toString(),
   };
+}
+
+export function partnerFeeds(
+  rows: readonly Record<string, string>[],
+  advertiserId: string,
+  advertiserNeedle: string,
+): readonly EligibleFeed[] {
+  return rows.flatMap((row) => {
+    const id = feld(row, 'advertiser_id', 'advertiser id', 'merchant_id', 'merchant id');
+    const name = feld(row, 'advertiser_name', 'advertiser name', 'merchant_name');
+    const status = feld(row, 'membership_status', 'membership status', 'status');
+    const language = feld(row, 'language', 'feed_language', 'feed language');
+    const rawUrl = feld(
+      row,
+      'url',
+      'download_url',
+      'feed_url',
+      'feed_download_url',
+      'manual_download_url',
+    );
+    const feedUrl = rawUrl ? pruefeDownloadUrl(rawUrl) : null;
+    if (
+      id !== advertiserId ||
+      !name ||
+      !normalisiere(name).includes(normalisiere(advertiserNeedle)) ||
+      (status && !['active', 'joined'].includes(status.toLowerCase())) ||
+      (language && !GERMAN.test(language)) ||
+      !feedUrl
+    )
+      return [];
+    const productCount = Number(feld(row, 'products', 'product_count')?.replace(/[^0-9]/g, ''));
+    return [
+      {
+        advertiserId: id,
+        advertiserName: name,
+        feedUrl,
+        lastUpdated: feld(row, 'last_update', 'last_updated') ?? null,
+        productCount: Number.isFinite(productCount) && productCount > 0 ? productCount : null,
+      },
+    ];
+  });
+}
+
+export function ordneProdukteZuPartner(
+  rows: readonly Record<string, string>[],
+  targets: readonly MatchTarget[],
+  names: Readonly<Record<string, string>>,
+  advertiserId: string,
+  merchantHosts: ReadonlySet<string>,
+): readonly FeedProduct[] {
+  const matches = new Map<string, FeedProduct[]>();
+  for (const row of rows) {
+    const rowMatches = targets.flatMap((target) => {
+      const productName = names[target.productId];
+      if (!productName) return [];
+      const match = produktAusZeileFuerPartner(
+        row,
+        target,
+        productName,
+        advertiserId,
+        merchantHosts,
+      );
+      return match ? [match] : [];
+    });
+    if (rowMatches.length !== 1) continue;
+    const match = rowMatches[0] as FeedProduct;
+    matches.set(match.productId, [...(matches.get(match.productId) ?? []), match]);
+  }
+  return [...matches]
+    .map(
+      ([, candidates]) =>
+        [...candidates].sort((left, right) =>
+          (left.merchantProductId ?? '').localeCompare(right.merchantProductId ?? '', 'de'),
+        )[0],
+    )
+    .filter((product): product is FeedProduct => product !== undefined)
+    .sort((left, right) => left.productId.localeCompare(right.productId, 'de'));
 }
 
 export function ordneProdukteZu(
