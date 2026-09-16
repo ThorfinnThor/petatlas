@@ -61,7 +61,7 @@ const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm, linkConte
       data-testid={`partner-cta-${placement}`}
       data-programm={entscheidung.programm.programId}
     >
-      <p class="partner__kennzeichnung">Anzeige</p>
+      <span class="sr-only">Anzeige</span>
       <p>
         {description ??
           `${entscheidung.programm.advertiser} bietet Tierkrankenversicherungen an. Beiträge und Leistungen stehen dort; diese Seite gibt dazu keine Einschätzung ab.`}
@@ -83,20 +83,14 @@ const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm, linkConte
 
 <style>
   .partner {
-    background: var(--color-surface-subtle);
-    border: 1px dashed var(--color-border-strong);
+    background: var(--color-surface);
+    border: 2px solid var(--color-primary);
+    border-inline-start-width: 6px;
     border-radius: var(--radius-md);
     color: var(--color-text-muted);
-    padding: var(--space-3) var(--space-4);
-    margin-block: var(--space-6);
-  }
-
-  .partner__kennzeichnung {
-    margin: 0 0 var(--space-2);
-    font-size: var(--text-small);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    padding: var(--space-5) var(--space-5);
+    margin-block: var(--space-7);
+    box-shadow: 0 4px 16px rgb(7 63 61 / 8%);
   }
 
   .partner__hinweis {
