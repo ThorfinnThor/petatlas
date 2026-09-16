@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "programId": "hansemerkur-de",
+  "advertiserId": "11705",
+  "publisherId": "3037577",
+  "merchantName": "HanseMerkur",
+  "checkedAt": "2026-09-16",
+  "products": [
+    {
+      "id": "hundekrankenversicherung",
+      "name": "Hundekrankenversicherung",
+      "species": "dog",
+      "productType": "health",
+      "summary": "Krankenversicherung für Hunde. Die konkreten Beiträge, Wartezeiten und Leistungsgrenzen stehen in den Anbieterinformationen.",
+      "sourceUrl": "https://www.hansemerkur.de/hundekrankenversicherung",
+      "sourceLabel": "HanseMerkur · Hundekrankenversicherung",
+      "checkedAt": "2026-09-16"
+    },
+    {
+      "id": "katzenkrankenversicherung",
+      "name": "Katzenkrankenversicherung",
+      "species": "cat",
+      "productType": "health",
+      "summary": "Krankenversicherung für Katzen. Die konkreten Beiträge, Wartezeiten und Leistungsgrenzen stehen in den Anbieterinformationen.",
+      "sourceUrl": "https://www.hansemerkur.de/katzenkrankenversicherung",
+      "sourceLabel": "HanseMerkur · Katzenkrankenversicherung",
+      "checkedAt": "2026-09-16"
+    },
+    {
+      "id": "hunde-op-versicherung",
+      "name": "Hunde-OP-Versicherung",
+      "species": "dog",
+      "productType": "op",
+      "summary": "OP-Versicherung für Hunde. Maßgeblich sind die aktuellen Versicherungsbedingungen des Anbieters.",
+      "sourceUrl": "https://www.hansemerkur.de/hunde-op-versicherung",
+      "sourceLabel": "HanseMerkur · Hunde-OP-Versicherung",
+      "checkedAt": "2026-09-16"
+    },
+    {
+      "id": "katzen-op-versicherung",
+      "name": "Katzen-OP-Versicherung",
+      "species": "cat",
+      "productType": "op",
+      "summary": "OP-Versicherung für Katzen. Maßgeblich sind die aktuellen Versicherungsbedingungen des Anbieters.",
+      "sourceUrl": "https://www.hansemerkur.de/katzen-op-versicherung",
+      "sourceLabel": "HanseMerkur · Katzen-OP-Versicherung",
+      "checkedAt": "2026-09-16"
+    },
+    {
+      "id": "hundehaftpflicht",
+      "name": "Hundehalter-Haftpflichtversicherung",
+      "species": "dog",
+      "productType": "liability",
+      "summary": "Haftpflichtversicherung für Hundehalter. Ob und welche Versicherungspflicht gilt, hängt vom Wohnort und den geltenden Regeln ab.",
+      "sourceUrl": "https://www.hansemerkur.de/hundehaftpflicht",
+      "sourceLabel": "HanseMerkur · Hundehaftpflicht",
+      "checkedAt": "2026-09-16"
+    }
+  ]
+}
