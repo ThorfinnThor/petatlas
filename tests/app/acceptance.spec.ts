@@ -199,6 +199,17 @@ test('global search opens a real indexed result and works again after navigation
   await expect(page.locator('#suche-status')).toContainText(/Treffern? für „Reise“/);
 });
 
+test('global search discloses the full result count and loads another page', async ({ page }) => {
+  await page.goto('/de-de/');
+  await page.fill('#suche-feld', 'Reise');
+  const weitere = page.getByRole('button', { name: 'Weitere Treffer anzeigen' });
+  await expect(weitere).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('#suche-status')).toContainText(/10 von \d+ Treffern/);
+  await weitere.click();
+  await expect(page.locator('#suche-treffer li')).toHaveCount(20);
+  await expect(page.locator('#suche-status')).toContainText(/20 von \d+ Treffern/);
+});
+
 test('failed search fragments show an error and recover after reloading', async ({ page }) => {
   let fail = true;
   await page.route('**/pagefind/fragment/**', (route) =>
