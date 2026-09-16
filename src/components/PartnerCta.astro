@@ -61,6 +61,7 @@ const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm, linkConte
       data-testid={`partner-cta-${placement}`}
       data-programm={entscheidung.programm.programId}
     >
+      <span class="sr-only">Anzeige</span>
       <p>
         {description ??
           `${entscheidung.programm.advertiser} bietet Tierkrankenversicherungen an. Beiträge und Leistungen stehen dort; diese Seite gibt dazu keine Einschätzung ab.`}
