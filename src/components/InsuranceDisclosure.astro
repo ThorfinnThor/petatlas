@@ -2,9 +2,8 @@
 /**
  * M09-02/M09-04 — Was ein Versicherungshinweis hier ist, und was er nicht ist.
  *
- * Dieser Baustein steht **vor** jedem Partnerhinweis und erscheint auch dann,
- * wenn es gar keinen Partner gibt. Denn die wichtigere Aussage ist die zweite:
- * hier wird nicht beraten, nicht verglichen und nichts empfohlen.
+ * Dieser Baustein steht am Seitenende und fasst die wichtigsten Hinweise
+ * kompakt zusammen. Er erscheint auch dann, wenn es gar keinen Partner gibt.
  *
  * Ohne zugelassenes Programm steht hier ausdrücklich, dass es keinen Partner
  * gibt — statt einer leeren Fläche, die aussieht, als sei etwas kaputt.
@@ -23,84 +22,33 @@ interface Props {
 
 const { programm } = Astro.props;
 const kennzeichnung = werbekennzeichnung(programm);
-const ueberAwin = programm?.tracking?.provider === 'awin';
-const hinweise = [
-  {
-    id: 'keine-beratung',
-    heading: 'Keine Beratung oder Rangfolge',
-    text: 'Wir vergleichen keine Tarife und geben keine persönliche Empfehlung.',
-  },
-  {
-    id: 'keine-tarifdaten',
-    heading: 'Keine Tarifdaten',
-    text: 'Beiträge, Leistungen, Selbstbeteiligungen und Wartezeiten stehen beim Anbieter.',
-  },
-  {
-    id: 'keine-erstattungszusage',
-    heading: 'Anbieterbedingungen sind maßgeblich',
-    text: 'Ob und in welchem Umfang Kosten übernommen werden, entscheidet der jeweilige Vertrag.',
-  },
-];
 ---
 
-<section
+<aside
   class="offenlegung"
-  aria-labelledby="offenlegung-titel"
+  aria-label="Hinweis zu Werbung und Information"
   data-testid="versicherung-offenlegung"
 >
-  <h2 id="offenlegung-titel">Hinweise zu dieser Seite</h2>
-
-  {
-    kennzeichnung !== null && (
-      <p class="offenlegung__kennzeichnung" data-testid="werbekennzeichnung">
-        {kennzeichnung}
-      </p>
-    )
-  }
-
-  <ul>
-    {
-      hinweise.map((hinweis) => (
-        <li data-testid={`hinweis-${hinweis.id}`}>
-          <strong>{hinweis.heading}.</strong> {hinweis.text}
-        </li>
-      ))
-    }
+  <p>
+    <strong>Hinweis:</strong> Keine Beratung oder Tarifempfehlung; maßgeblich sind die Anbieterbedingungen.
     {
       programm === null ? (
-        <li data-testid="kein-partner">
-          <strong>Derzeit kein Partner.</strong> Es besteht kein Vertrag mit einem
-          Versicherungsanbieter. Deshalb steht hier kein Anbieterlink — nicht, weil gerade etwas
-          fehlschlägt.
-        </li>
+        <span data-testid="kein-partner"> Derzeit besteht kein Versicherungspartnervertrag.</span>
       ) : (
-        <li>
-          <strong>Werbung.</strong> Der Anbieterlink führt {ueberAwin ? 'über Awin' : 'direkt'} zum
-          Anbieter. Für einen Abschluss kann eine Provision anfallen; der Preis wird dadurch nicht
-          verändert.
-        </li>
+        <span data-testid="werbekennzeichnung"> {kennzeichnung}</span>
       )
     }
-  </ul>
-</section>
+  </p>
+</aside>
 
 <style>
   .offenlegung {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
-    margin-block: var(--space-6);
-  }
-
-  .offenlegung h2 {
-    margin-top: 0;
-    font-size: var(--text-body);
-  }
-
-  .offenlegung__kennzeichnung {
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    margin-block: var(--space-8) var(--space-2);
+    color: var(--color-muted);
     font-size: var(--text-small);
+  }
+
+  .offenlegung p {
+    margin: 0;
   }
 </style>

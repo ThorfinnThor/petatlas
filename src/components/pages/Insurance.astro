@@ -41,8 +41,6 @@ const entscheidung = partnerHinweisErlaubt({
   }}
 />
 
-<InsuranceDisclosure programm={entscheidung.erlaubt ? entscheidung.programm : null} />
-
 <InsuranceProductGrid />
 
 <h2>Vor dem Abschluss vergleichen</h2>
@@ -92,6 +90,8 @@ const entscheidung = partnerHinweisErlaubt({
     zusätzlich zur Anbieterinformation.
   </p>
 </Notice>
+
+<InsuranceDisclosure programm={entscheidung.erlaubt ? entscheidung.programm : null} />
 
 <style>
   .insurance-grid {
