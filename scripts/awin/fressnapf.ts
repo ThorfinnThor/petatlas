@@ -284,8 +284,16 @@ function katalogTierart(row: Record<string, string>): CatalogSpecies | null {
     .map((field) => normalisiere(feld(row, field) ?? ''))
     .filter(Boolean);
   const zuordnungen = teile.flatMap((text) => {
-    const dog = /(^| )(hund|hunde|dog|dogs)( |$)/.test(text);
-    const cat = /(^| )(katze|katzen|cat|cats)( |$)/.test(text);
+    const dog =
+      /(^| )(hund|hunde|dog|dogs)( |$)/.test(text) ||
+      /(^| )(hunde?(futter|spielzeug|bedarf|pflege|zubehoer)|dog(food|toy|care|supplies))( |$)/.test(
+        text,
+      );
+    const cat =
+      /(^| )(katze|katzen|cat|cats)( |$)/.test(text) ||
+      /(^| )(katzen?(futter|spielzeug|bedarf|pflege|zubehoer)|cat(food|toy|care|supplies))( |$)/.test(
+        text,
+      );
     return dog === cat ? [] : [dog ? 'dog' : 'cat'];
   });
   const arten = new Set(zuordnungen);
