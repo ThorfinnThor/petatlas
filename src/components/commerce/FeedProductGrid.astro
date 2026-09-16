@@ -62,9 +62,6 @@ const products = offers.filter((offer) => offer.category === category);
           </li>
         ))}
       </ul>
-      <p class="feed-catalog__note">
-        Hinweis: Dieser Link ist ein Partnerlink. Der Preis ändert sich dadurch nicht.
-      </p>
     </section>
   )
 }
@@ -140,12 +137,6 @@ const products = offers.filter((offer) => offer.category === category);
     margin-block-start: auto;
     padding-block-start: var(--space-3);
     font-weight: 650;
-  }
-
-  .feed-catalog__note {
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-    margin-block: var(--space-3) 0;
   }
 
   @media (min-width: 760px) {
