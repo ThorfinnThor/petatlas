@@ -43,6 +43,7 @@ import { alleKategorien } from '../../src/features/care/taxonomy.ts';
 import { alleRegeln } from '../../src/features/travel/rules.ts';
 import { reisePackliste } from '../../src/features/travel/packing.ts';
 import { FUTTER_DATENSATZ_SCHEMA } from '../../src/features/food/dataset-schema.ts';
+import { InsuranceCatalogSchema } from '../../src/domain/schemas/insurance-catalog.ts';
 
 const CATALOG_FEED_SCHEMA = z
   .object({
@@ -142,6 +143,11 @@ export const PRUEFSTUECKE: readonly Pruefstueck[] = [
     datei: 'content-data/products/zooroyal-catalog.json',
     schema: CATALOG_FEED_SCHEMA,
     zweck: 'Direkte ZooRoyal-Katalogprodukte aus dem freigegebenen Awin-Feed',
+  },
+  {
+    datei: 'content-data/insurance/hansemerkur-products.json',
+    schema: InsuranceCatalogSchema,
+    zweck: 'Redaktionelle HanseMerkur-Versicherungsarten mit offizieller Quelle',
   },
   {
     datei: 'content-data/taxonomy/care.json',

@@ -3,6 +3,7 @@ import type { MarketConfig } from '../../domain/market.ts';
 import InsuranceDisclosure from '../InsuranceDisclosure.astro';
 import PartnerCta from '../PartnerCta.astro';
 import Notice from '../Notice.astro';
+import InsuranceProductGrid from '../InsuranceProductGrid.astro';
 import { insuranceProgramme, partnerHinweisErlaubt } from '../../features/commerce/partner.ts';
 
 interface Props {
@@ -41,6 +42,8 @@ const entscheidung = partnerHinweisErlaubt({
 />
 
 <InsuranceDisclosure programm={entscheidung.erlaubt ? entscheidung.programm : null} />
+
+<InsuranceProductGrid />
 
 <h2>Vor dem Abschluss vergleichen</h2>
 <div class="insurance-grid">
