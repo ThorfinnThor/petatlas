@@ -13,6 +13,7 @@ import { routePath, subroutePath } from '../../lib/routes.ts';
 import { alleFutter, futterDatenArt } from '../../features/food/catalog.ts';
 import { mengenText } from '../../features/food/unit-price.ts';
 import { futterTaxonomie } from '../../features/food/taxonomy.ts';
+import RetailPartnerSection from '../RetailPartnerSection.astro';
 
 const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const basisPfad = routePath(markt, 'food');
@@ -35,6 +36,8 @@ const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
   Katzenfutter. Die Werte stammen von den verlinkten Herstellerseiten; aktuelle Händlerpreise sind
   noch nicht erfasst.
 </p>
+
+<RetailPartnerSection market={markt} page="futter" />
 
 {
   synthetisch && (
