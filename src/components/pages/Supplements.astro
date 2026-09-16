@@ -12,6 +12,8 @@ import { fressnapfAngebot, fressnapfAngebote } from '../../features/commerce/fre
 import { PARTNER_LINK_ATTRIBUTE } from '../../features/commerce/links.ts';
 import { zooroyalLink } from '../../features/commerce/zooroyal.ts';
 import { zooroyalAngebot } from '../../features/commerce/zooroyal-feed.ts';
+import { fressnapfKatalog, zooroyalKatalog } from '../../features/commerce/feed-catalog.ts';
+import FeedProductGrid from '../commerce/FeedProductGrid.astro';
 
 interface Props {
   market: MarketConfig;
@@ -28,6 +30,8 @@ const zooroyalAvailable = supplements.products.some((product) =>
     product.id,
   ),
 );
+const fressnapfCatalog = fressnapfKatalog();
+const zooroyalCatalog = zooroyalKatalog();
 ---
 
 <p class="eyebrow">Ernährung · Hund und Katze</p>
@@ -153,6 +157,19 @@ const zooroyalAvailable = supplements.products.some((product) =>
     </section>
   )
 }
+
+<FeedProductGrid
+  offers={fressnapfCatalog}
+  category="supplement"
+  title="Ergänzungsfuttermittel aus dem Fressnapf-Sortiment"
+  retailerLabel="Fressnapf"
+/>
+<FeedProductGrid
+  offers={zooroyalCatalog}
+  category="supplement"
+  title="Ergänzungsfuttermittel aus dem ZooRoyal-Sortiment"
+  retailerLabel="ZooRoyal"
+/>
 
 <Notice variante="hinweis" titel="Zuerst das Grundfutter prüfen">
   <p>

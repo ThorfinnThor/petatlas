@@ -17,6 +17,23 @@ export interface FeedProduct {
   readonly merchantUrl: string;
 }
 
+export type CatalogCategory = 'toy' | 'supplement' | 'food' | 'care';
+export type CatalogSpecies = 'dog' | 'cat';
+
+/** Ein direkt aus dem freigegebenen Awin-Feed übernommener Katalogeintrag. */
+export interface CatalogFeedProduct {
+  readonly productId: string;
+  readonly productName: string;
+  readonly brand: string;
+  readonly species: CatalogSpecies;
+  readonly category: CatalogCategory;
+  readonly categoryLabel: string;
+  readonly merchantProductId: string;
+  readonly imageUrl: string;
+  readonly affiliateUrl: string;
+  readonly merchantUrl: string;
+}
+
 export interface EligibleFeed {
   readonly advertiserId: string;
   readonly advertiserName: string;
@@ -182,6 +199,159 @@ function sichereUrl(raw: string | undefined): URL | null {
   } catch {
     return null;
   }
+}
+
+const KATALOG_KATEGORIE_FELDER = [
+  'merchant_category',
+  'merchant category',
+  'category',
+  'category_name',
+  'category name',
+  'product_type',
+  'product type',
+  'product_type_name',
+  'product type name',
+  'merchant_product_type',
+  'merchant product type',
+] as const;
+const KATALOG_TIERART_FELDER = [
+  'species',
+  'animal',
+  'animal_type',
+  'animal type',
+  'target_animal',
+  'target animal',
+  'pet_type',
+  'pet type',
+] as const;
+
+function katalogText(row: Record<string, string>, fields: readonly string[]): string {
+  return fields
+    .map((field) => feld(row, field) ?? '')
+    .filter(Boolean)
+    .join(' / ');
+}
+
+function katalogKategorie(row: Record<string, string>): {
+  readonly category: CatalogCategory;
+  readonly label: string;
+} | null {
+  const raw = katalogText(row, KATALOG_KATEGORIE_FELDER);
+  const text = normalisiere(raw);
+  if (!text) return null;
+  if (/(erganzungsfutter|supplement|vitamin|mineral|probiotik)/.test(text)) {
+    return { category: 'supplement', label: 'Ergänzungsfuttermittel' };
+  }
+  if (/(spielzeug|toy|besch[aä]ftigung|kratz|ball|kauartikel)/.test(text)) {
+    return { category: 'toy', label: 'Spielzeug' };
+  }
+  if (/(pflege|buerste|burste|kamm|krallen|zahnpflege|fellpflege|fellbuerste)/.test(text)) {
+    return { category: 'care', label: 'Pflege' };
+  }
+  if (/(hundefutter|katzenfutter|tierfutter|alleinfutter|nassfutter|trockenfutter)/.test(text)) {
+    return { category: 'food', label: 'Futter' };
+  }
+  return null;
+}
+
+/**
+ * Tierart und Kategorie werden ausschließlich aus ausdrücklich dafür
+ * vorgesehenen Feed-Feldern gelesen. Der Produktname allein ist keine
+ * ausreichende Zuordnung und wird deshalb nie dafür verwendet.
+ */
+function katalogTierart(row: Record<string, string>): CatalogSpecies | null {
+  const explicit = normalisiere(katalogText(row, KATALOG_TIERART_FELDER));
+  const categories = normalisiere(katalogText(row, KATALOG_KATEGORIE_FELDER));
+  const text = `${explicit} / ${categories}`;
+  const dog = /(^| )(hund|hunde|dog|dogs)( |$)/.test(text);
+  const cat = /(^| )(katze|katzen|cat|cats)( |$)/.test(text);
+  if (dog === cat) return null;
+  return dog ? 'dog' : 'cat';
+}
+
+/**
+ * Projiziert eine Feedzeile in einen sicheren, kleinen öffentlichen Katalog.
+ * Preise, Verfügbarkeit und weitere Feedfelder werden bewusst verworfen.
+ */
+export function katalogProduktAusZeile(
+  row: Record<string, string>,
+  advertiserId: string,
+  merchantHosts: ReadonlySet<string>,
+): CatalogFeedProduct | null {
+  const name = feld(row, 'product_name', 'product name', 'name', 'title');
+  const brand = feld(row, 'merchant_product_brand', 'product_brand', 'brand', 'manufacturer');
+  const merchantProductId = feld(
+    row,
+    'merchant_product_id',
+    'merchant product id',
+    'aw_product_id',
+    'product_id',
+  );
+  const category = katalogKategorie(row);
+  const species = katalogTierart(row);
+  const image = sichereUrl(feld(row, 'large_image', 'merchant_image_url', 'aw_image_url'));
+  const merchant = sichereUrl(
+    feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
+  );
+  const affiliate = sichereUrl(feld(row, 'aw_deep_link', 'affiliate_url', 'tracking_url'));
+  if (
+    !name ||
+    !brand ||
+    !merchantProductId ||
+    !category ||
+    !species ||
+    !image ||
+    !merchant ||
+    !affiliate ||
+    !merchantHosts.has(merchant.host) ||
+    !AWIN_TRACKING_HOSTS.has(affiliate.host)
+  ) {
+    return null;
+  }
+  const advertiser = affiliate.searchParams.get('m') ?? affiliate.searchParams.get('awinmid');
+  const publisher = affiliate.searchParams.get('a') ?? affiliate.searchParams.get('awinaffid');
+  if (advertiser !== advertiserId || publisher !== '3037577') return null;
+  return {
+    productId: `${advertiserId}:${merchantProductId}`,
+    productName: name,
+    brand,
+    species,
+    category: category.category,
+    categoryLabel: category.label,
+    merchantProductId,
+    imageUrl: image.toString(),
+    affiliateUrl: affiliate.toString(),
+    merchantUrl: merchant.toString(),
+  };
+}
+
+/** Deterministische, deduplizierte Auswahl aus einem Händlerfeed. */
+export function katalogProdukteAusZeilen(
+  rows: readonly Record<string, string>[],
+  advertiserId: string,
+  merchantHosts: ReadonlySet<string>,
+  maxPerBucket = 24,
+): readonly CatalogFeedProduct[] {
+  const unique = new Map<string, CatalogFeedProduct>();
+  for (const row of rows) {
+    const product = katalogProduktAusZeile(row, advertiserId, merchantHosts);
+    if (product && !unique.has(product.merchantProductId))
+      unique.set(product.merchantProductId, product);
+  }
+  const sorted = [...unique.values()].sort((left, right) =>
+    `${left.category}:${left.species}:${left.brand}:${left.productName}:${left.merchantProductId}`.localeCompare(
+      `${right.category}:${right.species}:${right.brand}:${right.productName}:${right.merchantProductId}`,
+      'de',
+    ),
+  );
+  const buckets = new Map<string, number>();
+  return sorted.filter((product) => {
+    const key = `${product.category}:${product.species}`;
+    const count = buckets.get(key) ?? 0;
+    if (count >= maxPerBucket) return false;
+    buckets.set(key, count + 1);
+    return true;
+  });
 }
 
 export function produktAusZeile(

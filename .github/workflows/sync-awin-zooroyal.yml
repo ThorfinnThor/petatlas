@@ -67,7 +67,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if git diff --quiet -- content-data/products/zooroyal-feed.json; then
+          if git diff --quiet -- content-data/products/zooroyal-feed.json content-data/products/zooroyal-catalog.json; then
             echo "Keine inhaltliche Änderung im ZooRoyal-Feed."
             exit 0
           fi
@@ -75,11 +75,11 @@ jobs:
           git config user.name "wauandmiau-data-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
-          git add content-data/products/zooroyal-feed.json
+          git add content-data/products/zooroyal-feed.json content-data/products/zooroyal-catalog.json
           git commit -m "chore(data): ZooRoyal-Produktfeed aktualisieren"
           git push --set-upstream origin "$branch"
           gh pr create \
             --base main \
             --head "$branch" \
             --title "chore(data): ZooRoyal-Produktfeed aktualisieren" \
-            --body "Der freigegebene Awin-ZooRoyal-Feed wurde synchronisiert. Nur eindeutig zugeordnete Produktbilder und Deep Links wurden übernommen; Preise und Verfügbarkeiten bleiben außen vor."
+            --body "Der freigegebene Awin-ZooRoyal-Feed wurde synchronisiert. Eindeutig zugeordnete redaktionelle Angebote und klar kategorisierte Katalogprodukte wurden mit Produktbildern und Deep Links übernommen; Preise und Verfügbarkeiten bleiben außen vor."
