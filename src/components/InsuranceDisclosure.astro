@@ -13,23 +13,34 @@
  * redaktionell und gelten auch ohne Partner; deshalb liegen sie nicht in
  * dieser Datei und nicht in der Partnerkonfiguration.
  */
-import type { PartnerPlacement, PartnerProgram } from '../domain/schemas/partner.ts';
+import type { PartnerProgram } from '../domain/schemas/partner.ts';
 import { werbekennzeichnung } from '../features/commerce/partner.ts';
-import { disclosuresFor } from '../features/commerce/disclosures.ts';
 
 interface Props {
   /** Das zugelassene Programm oder `null`, wenn es keines gibt. */
   programm: PartnerProgram | null;
-  /** Stelle, an der die Offenlegung steht. */
-  placement?: PartnerPlacement;
 }
 
-const { programm, placement = 'information_page' } = Astro.props;
+const { programm } = Astro.props;
 const kennzeichnung = werbekennzeichnung(programm);
 const ueberAwin = programm?.tracking?.provider === 'awin';
-// Die Texte stehen in content-data, nicht in dieser Datei: sie sind
-// redaktionell und werden ohne Codeänderung gepflegt.
-const texte = disclosuresFor(placement, programm !== null);
+const hinweise = [
+  {
+    id: 'keine-beratung',
+    heading: 'Keine Beratung oder Rangfolge',
+    text: 'Wir vergleichen keine Tarife und geben keine persönliche Empfehlung.',
+  },
+  {
+    id: 'keine-tarifdaten',
+    heading: 'Keine Tarifdaten',
+    text: 'Beiträge, Leistungen, Selbstbeteiligungen und Wartezeiten stehen beim Anbieter.',
+  },
+  {
+    id: 'keine-erstattungszusage',
+    heading: 'Anbieterbedingungen sind maßgeblich',
+    text: 'Ob und in welchem Umfang Kosten übernommen werden, entscheidet der jeweilige Vertrag.',
+  },
+];
 ---
 
 <section
@@ -37,7 +48,7 @@ const texte = disclosuresFor(placement, programm !== null);
   aria-labelledby="offenlegung-titel"
   data-testid="versicherung-offenlegung"
 >
-  <h2 id="offenlegung-titel">Was auf dieser Seite steht — und was nicht</h2>
+  <h2 id="offenlegung-titel">Hinweise zu dieser Seite</h2>
 
   {
     kennzeichnung !== null && (
@@ -49,9 +60,9 @@ const texte = disclosuresFor(placement, programm !== null);
 
   <ul>
     {
-      texte.map((text) => (
-        <li data-testid={`hinweis-${text.disclosureId}`}>
-          <strong>{text.heading}.</strong> {text.paragraphs.join(' ')}
+      hinweise.map((hinweis) => (
+        <li data-testid={`hinweis-${hinweis.id}`}>
+          <strong>{hinweis.heading}.</strong> {hinweis.text}
         </li>
       ))
     }
@@ -64,26 +75,13 @@ const texte = disclosuresFor(placement, programm !== null);
         </li>
       ) : (
         <li>
-          <strong>Bezahlte Weiterleitung.</strong> Der Anbieterlink ist bezahlt. Er ist als solcher
-          gekennzeichnet, führt {ueberAwin ? 'über Awin' : 'direkt'} zum Anbieter und überträgt
-          nichts, was Sie hier eingegeben haben.
+          <strong>Werbung.</strong> Der Anbieterlink führt {ueberAwin ? 'über Awin' : 'direkt'} zum
+          Anbieter. Für einen Abschluss kann eine Provision anfallen; der Preis wird dadurch nicht
+          verändert.
         </li>
       )
     }
   </ul>
-
-  {
-    programm !== null && programm.restrictions.length > 0 && (
-      <>
-        <h3>Auflagen aus dem Vertrag</h3>
-        <ul>
-          {programm.restrictions.map((auflage) => (
-            <li>{auflage}</li>
-          ))}
-        </ul>
-      </>
-    )
-  }
 </section>
 
 <style>
