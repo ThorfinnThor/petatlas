@@ -19,6 +19,7 @@ import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
 import RetailPartnerSection from '../RetailPartnerSection.astro';
 import type { MarketConfig } from '../../domain/market.ts';
 import { fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
+import { zooroyalAngebote } from '../../features/commerce/zooroyal-feed.ts';
 
 interface Props {
   market: MarketConfig;
@@ -31,6 +32,12 @@ const pruefung = attributPruefung();
 const synthetisch = pruefung.dataKind === 'synthetic';
 const fressnapfProducts = Object.fromEntries(
   fressnapfAngebote().map((product) => [
+    product.productId,
+    { imageUrl: product.imageUrl, affiliateUrl: product.affiliateUrl },
+  ]),
+);
+const zooroyalProducts = Object.fromEntries(
+  zooroyalAngebote().map((product) => [
     product.productId,
     { imageUrl: product.imageUrl, affiliateUrl: product.affiliateUrl },
   ]),
@@ -79,6 +86,7 @@ const fressnapfProducts = Object.fromEntries(
       )
     : undefined}
   data-fressnapf-offers={JSON.stringify(fressnapfProducts)}
+  data-zooroyal-offers={JSON.stringify(zooroyalProducts)}
 >
   <div class="feld">
     <label for="finder-tierart">Tierart</label>

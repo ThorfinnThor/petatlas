@@ -11,6 +11,7 @@ import type { MarketConfig } from '../../domain/market.ts';
 import { fressnapfAngebot, fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
 import { PARTNER_LINK_ATTRIBUTE } from '../../features/commerce/links.ts';
 import { zooroyalLink } from '../../features/commerce/zooroyal.ts';
+import { zooroyalAngebot } from '../../features/commerce/zooroyal-feed.ts';
 
 interface Props {
   market: MarketConfig;
@@ -62,20 +63,21 @@ const zooroyalAvailable = supplements.products.some((product) =>
       <p>
         Amazon-Links führen zu einer Produktsuche. Eindeutig zugeordnete Fressnapf-Produkte sind
         zusätzlich direkt verlinkt und verwenden das vom Awin-Feed gelieferte Produktbild. ZooRoyal
-        öffnet bis zum Produktfeed die passende Kategorie. Prüfen Sie beim Händler Zusammensetzung,
-        Tierart und Packungsgröße. Die Einordnung stammt aus den verlinkten Herstellerangaben und
-        ist keine Empfehlung, eine Ergänzung zu füttern.
+        öffnet bei vorhandenem Feed den passenden Artikel, sonst die passende Kategorie. Prüfen Sie
+        beim Händler Zusammensetzung, Tierart und Packungsgröße. Die Einordnung stammt aus den
+        verlinkten Herstellerangaben und ist keine Empfehlung, eine Ergänzung zu füttern.
       </p>
       <div class="supplement-products">
         {supplements.products.map((product) => {
           const fressnapf = fressnapfAngebot(product.id);
+          const zooroyalFeed = zooroyalAngebot(product.id);
           const zooroyal = zooroyalLink(
             market,
             'ergaenzungsfuttermittel',
             product.species === 'cat' ? 'cat' : 'dog',
             product.id,
           );
-          const image = fressnapf?.imageUrl ?? product.image;
+          const image = fressnapf?.imageUrl ?? zooroyalFeed?.imageUrl ?? product.image;
           return (
             <article class="product-card">
               <figure>
@@ -84,22 +86,30 @@ const zooroyalAvailable = supplements.products.some((product) =>
                   alt={
                     fressnapf
                       ? `${product.name} bei Fressnapf`
-                      : `Symbolbild für ${product.category}, keine Produktabbildung`
+                      : zooroyalFeed
+                        ? `${product.name} bei ZooRoyal`
+                        : `Symbolbild für ${product.category}, keine Produktabbildung`
                   }
                   width="720"
                   height="720"
                   loading="lazy"
                   decoding="async"
                   referrerpolicy="no-referrer"
-                  data-feed-image={fressnapf ? '' : undefined}
-                  data-fallback-src={fressnapf ? product.image : undefined}
+                  data-feed-image={fressnapf || zooroyalFeed ? '' : undefined}
+                  data-fallback-src={fressnapf || zooroyalFeed ? product.image : undefined}
                   data-fallback-alt={
-                    fressnapf
+                    fressnapf || zooroyalFeed
                       ? `Symbolbild für ${product.category}, keine Produktabbildung`
                       : undefined
                   }
                 />
-                <figcaption>{fressnapf ? 'Produktbild · Fressnapf-Feed' : 'Symbolbild'}</figcaption>
+                <figcaption>
+                  {fressnapf
+                    ? 'Produktbild · Fressnapf-Feed'
+                    : zooroyalFeed
+                      ? 'Produktbild · ZooRoyal-Feed'
+                      : 'Symbolbild'}
+                </figcaption>
               </figure>
               <p class="species-label">{product.species === 'dog' ? 'Für Hunde' : 'Für Katzen'}</p>
               <h3>{product.name}</h3>
@@ -118,10 +128,17 @@ const zooroyalAvailable = supplements.products.some((product) =>
                   </a>
                 </p>
               )}
-              {zooroyal && (
+              {zooroyal && !zooroyalFeed && (
                 <p class="zooroyal-link">
                   <a href={zooroyal} {...PARTNER_LINK_ATTRIBUTE}>
                     Bei ZooRoyal ansehen ↗ <span class="sr-only">(Werbung)</span>
+                  </a>
+                </p>
+              )}
+              {zooroyalFeed && (
+                <p class="zooroyal-link">
+                  <a href={zooroyalFeed.affiliateUrl} {...PARTNER_LINK_ATTRIBUTE}>
+                    {product.name} bei ZooRoyal ansehen ↗ <span class="sr-only">(Werbung)</span>
                   </a>
                 </p>
               )}
