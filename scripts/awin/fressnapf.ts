@@ -204,6 +204,12 @@ function sichereUrl(raw: string | undefined): URL | null {
 const KATALOG_KATEGORIE_FELDER = [
   'merchant_category',
   'merchant category',
+  'merchant_category_name',
+  'merchant category name',
+  'merchant_product_category',
+  'merchant product category',
+  'merchant_product_category_name',
+  'merchant product category name',
   'category',
   'category_name',
   'category name',
@@ -223,6 +229,14 @@ const KATALOG_TIERART_FELDER = [
   'target animal',
   'pet_type',
   'pet type',
+  'merchant_product_type',
+  'merchant product type',
+  'merchant_product_category',
+  'merchant product category',
+  'merchant_product_category_name',
+  'merchant product category name',
+  'merchant_category_name',
+  'merchant category name',
 ] as const;
 
 function katalogText(row: Record<string, string>, fields: readonly string[]): string {
