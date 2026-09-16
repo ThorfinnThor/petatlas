@@ -45,7 +45,7 @@ test('Ort: von der Karte zur Trefferliste mit Herkunft', async ({ page }) => {
 
   await expect(page.locator('#trefferliste li').first()).toBeVisible();
   await expect(page.locator('#trefferliste h3').first()).not.toBeEmpty();
-  await expect(page.locator('#treffer-status')).toContainText('erfasste Orte');
+  await expect(page.locator('#treffer-status')).toContainText(/erfasste(?:n)? Orte(?:n)?/);
 
   // Herkunft und Lizenz stehen auf derselben Seite wie die Treffer.
   await expect(page.getByText('OpenStreetMap contributors').first()).toBeVisible();

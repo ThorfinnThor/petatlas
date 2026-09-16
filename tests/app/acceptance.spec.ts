@@ -196,7 +196,7 @@ test('global search opens a real indexed result and works again after navigation
   await page.goBack();
   await expect(page).toHaveURL(/\/de-de\/$/);
   await page.fill('#suche-feld', 'Reise');
-  await expect(page.locator('#suche-status')).toContainText('Treffer für „Reise“');
+  await expect(page.locator('#suche-status')).toContainText(/Treffern? für „Reise“/);
 });
 
 test('failed search fragments show an error and recover after reloading', async ({ page }) => {

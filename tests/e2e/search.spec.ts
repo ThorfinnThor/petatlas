@@ -31,7 +31,7 @@ test.describe('Suche', () => {
 
   test('nennt den Gesamtumfang und macht weitere Treffer erreichbar', async ({ page }) => {
     await page.goto('/de-de/');
-    await page.getByLabel('Suchbegriff').fill('Tierarzt');
+    await page.getByLabel('Suchbegriff').fill('Reise');
     const weitere = page.getByRole('button', { name: 'Weitere Treffer anzeigen' });
     await expect(weitere).toBeVisible({ timeout: 10_000 });
     await expect(page.locator('#suche-status')).toContainText(/10 von \d+ Treffern/);

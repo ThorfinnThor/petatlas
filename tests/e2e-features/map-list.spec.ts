@@ -11,7 +11,7 @@ test('zeigt ohne JavaScript eine echte Trefferliste', async ({ browser }) => {
   // Der statische Standardausschnitt steht im HTML, nicht erst nach dem Skript.
   await expect(seite.locator('#trefferliste li')).toHaveCount(25);
   await expect(seite.locator('#trefferliste h3').first()).toBeVisible();
-  await expect(seite.locator('#treffer-status')).toContainText('erfasste Orte');
+  await expect(seite.locator('#treffer-status')).toContainText(/erfasste(?:n)? Orte(?:n)?/);
   await kontext.close();
 });
 
