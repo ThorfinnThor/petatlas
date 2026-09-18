@@ -55,6 +55,12 @@ describe('Dateitypen', () => {
     expect(pruefeDateityp('_astro/layers-2x.Bpkbi35X.png')).toEqual([]);
   });
 
+  it('lässt die dokumentierten Markenicons durch', () => {
+    expect(pruefeDateityp('favicon.png')).toEqual([]);
+    expect(pruefeDateityp('favicon-48x48.png')).toEqual([]);
+    expect(pruefeDateityp('apple-touch-icon.png')).toEqual([]);
+  });
+
   it('nennt für jedes erlaubte Bild einen Grund', () => {
     for (const eintrag of ERLAUBTE_BILDER) {
       expect(eintrag.grund.length).toBeGreaterThan(15);

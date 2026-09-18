@@ -70,6 +70,11 @@ export const BILDENDUNGEN: readonly string[] = [
  */
 export const ERLAUBTE_BILDER: readonly { readonly muster: RegExp; readonly grund: string }[] = [
   {
+    muster: /^(favicon|favicon-48x48|apple-touch-icon)\.png$/,
+    grund:
+      'Vom Betreiber bereitgestelltes, KI-erzeugtes Wau-&-Miau-Markenicon; Herkunft und Ableitungen in docs/BRAND_ICON.md.',
+  },
+  {
     muster:
       /^images\/brand\/(hero-dog-alpine-lake|travel-human-dog-sunset|play-dog-alpine-lake|health-dog-home|hero-dog-cat-home|play-cat-home)-(480|800|1200|1536)\.(avif|webp)$/,
     grund:
