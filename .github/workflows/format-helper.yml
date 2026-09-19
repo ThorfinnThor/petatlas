@@ -1,0 +1,41 @@
+name: Format Helper
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  format-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Abhängigkeiten installieren
+        run: npm ci
+      - name: Nur neue Dateien formatieren
+        run: >
+          npx prettier --write
+          src/components/pages/PurchaseGuide.astro
+          src/features/commerce/purchase-guides.ts
+          src/pages/de-de/produkte/[slug].astro
+      - name: Formatierte Dateien sichern
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: purchase-guide-formatted
+          path: |
+            src/components/pages/PurchaseGuide.astro
+            src/features/commerce/purchase-guides.ts
+            src/pages/de-de/produkte/[slug].astro
+          retention-days: 1
