@@ -560,7 +560,13 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       'Bei einem Katzentrinkbrunnen unterscheiden sich Modelle nicht nur im Design. Reservoirgröße, Stromversorgung, Filtertechnik und Bedienung können im Alltag deutlich relevanter sein.',
       'Dieser Vergleich stellt drei aktuelle Catit-PIXI-Modelle anhand dokumentierter Herstellerangaben gegenüber. Aussagen darüber, wie viel eine bestimmte Katze dadurch tatsächlich trinkt, werden daraus nicht abgeleitet.',
     ],
-    tableHeaders: ['Modell', 'Reservoir', 'Strom / Verbindung', 'Wasseraufbereitung', 'Besonderheit'],
+    tableHeaders: [
+      'Modell',
+      'Reservoir',
+      'Strom / Verbindung',
+      'Wasseraufbereitung',
+      'Besonderheit',
+    ],
     products: [
       {
         name: 'Catit PIXI Trinkbrunnen',
@@ -639,8 +645,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
           'Sensor-, Timer- und kontinuierlicher Modus',
           'HD-LCD und UV-C-Wasserklärung während des Wasserflusses',
         ],
-        note:
-          'Die verschiedenen Filter- und UV-C-Funktionen sind technische Merkmale. Aus ihnen wird auf Wau & Miau keine medizinische Wirkung für eine Katze abgeleitet.',
+        note: 'Die verschiedenen Filter- und UV-C-Funktionen sind technische Merkmale. Aus ihnen wird auf Wau & Miau keine medizinische Wirkung für eine Katze abgeleitet.',
       },
     ],
     criteriaTitle: 'Welche Unterschiede sind im Alltag relevant?',
@@ -781,8 +786,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
           'HD-Kamera, Nachtsicht und Zwei-Wege-Audio',
           'WiFi 2,4 und 5 GHz',
         ],
-        note:
-          'Kamera- und Audiofunktionen sind Komfort- und Überwachungsfunktionen. Sie ersetzen keine persönliche Betreuung des Tieres.',
+        note: 'Kamera- und Audiofunktionen sind Komfort- und Überwachungsfunktionen. Sie ersetzen keine persönliche Betreuung des Tieres.',
       },
     ],
     criteriaTitle: 'Welcher Gerätetyp passt zur gewünschten Fütterung?',
@@ -1044,13 +1048,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         sourceUrl: 'https://flexi.de/de/produkte/xtreme-l-gurt-5-m/',
         sourceLabel: 'flexi · Hersteller',
         checkedAt,
-        comparison: [
-          'Xtreme L',
-          '5 m',
-          '65 kg',
-          'ca. 485 g',
-          'X11-Gurt + Soft-Stop',
-        ],
+        comparison: ['Xtreme L', '5 m', '65 kg', 'ca. 485 g', 'X11-Gurt + Soft-Stop'],
         summary: [
           'Die Xtreme L ist ebenfalls 5 Meter lang und wiegt laut flexi ungefähr 485 g. Die angegebene Hundegewichtsgrenze liegt bei maximal 65 kg.',
           'Der Hersteller hebt den X11-Gurt, ein elastisches Soft-Stop-Gurtelement, einen einstellbaren Soft-Griff und die Erweiterbarkeit mit Multi Box und LED Lighting System hervor.',
@@ -1224,8 +1222,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
           'Aluminium/Hartfaser/Kunststoff',
           'Sicherheitsverschluss, Liegematte und Klettstreifen am Boden',
         ],
-        note:
-          'Eine Herstellerprüfung der Produktlinie ersetzt nicht die Prüfung, ob Box, Hund, Fahrzeug und tatsächliche Sicherung im konkreten Auto zusammenpassen.',
+        note: 'Eine Herstellerprüfung der Produktlinie ersetzt nicht die Prüfung, ob Box, Hund, Fahrzeug und tatsächliche Sicherung im konkreten Auto zusammenpassen.',
       },
     ],
     criteriaTitle: 'Was solltest du im Fahrzeug ausmessen?',
@@ -1274,7 +1271,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       { href: '/de-de/reisecheck/', label: 'Reisecheck für Hund und Katze' },
       { href: '/de-de/pflege/', label: 'Pflege und Zubehör' },
     ],
-  }
+  },
 ] as const;
 
 export function purchaseGuideBySlug(slug: string): PurchaseGuide | null {
