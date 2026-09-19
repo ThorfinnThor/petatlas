@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PurchaseGuide from '../../../components/pages/PurchaseGuide.astro';
+import {
+  PURCHASE_GUIDES,
+  type PurchaseGuide as PurchaseGuideData,
+} from '../../../features/commerce/purchase-guides.ts';
+
+export function getStaticPaths() {
+  return PURCHASE_GUIDES.map((guide) => ({
+    params: { slug: guide.slug },
+    props: { guide },
+  }));
+}
+
+interface Props {
+  guide: PurchaseGuideData;
+}
+
+const { guide } = Astro.props;
+const canonicalPfad = `/de-de/produkte/${guide.slug}/`;
+---
+
+<BaseLayout
+  title={guide.metaTitle}
+  description={guide.description}
+  canonicalPfad={canonicalPfad}
+>
+  <PurchaseGuide guide={guide} />
+</BaseLayout>
