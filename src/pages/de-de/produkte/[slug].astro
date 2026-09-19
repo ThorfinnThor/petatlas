@@ -1,6 +1,8 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import PurchaseGuide from '../../../components/pages/PurchaseGuide.astro';
+import { defaultMarket } from '../../../domain/market.ts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
 import {
   PURCHASE_GUIDES,
   type PurchaseGuide as PurchaseGuideData,
@@ -19,8 +21,10 @@ interface Props {
 
 const { guide } = Astro.props;
 const canonicalPfad = `/de-de/produkte/${guide.slug}/`;
+const market = defaultMarket();
 ---
 
 <BaseLayout title={guide.metaTitle} description={guide.description} canonicalPfad={canonicalPfad}>
+  <Breadcrumbs market={market} stufen={[{ label: guide.title }]} />
   <PurchaseGuide guide={guide} />
 </BaseLayout>
