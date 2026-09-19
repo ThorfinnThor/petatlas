@@ -2,12 +2,17 @@
 
 ## Umfang
 
-Vier neue kaufnahe, indexierbare Seiten unter `/de-de/produkte/`:
+Neun kaufnahe, indexierbare Seiten unter `/de-de/produkte/`:
 
 - `katzentransportboxen-vergleich`
 - `hunderampe-auto-vergleich`
 - `kong-hundespielzeug-vergleich`
 - `catit-senses-2-vergleich`
+- `katzentrinkbrunnen-vergleich`
+- `katzen-futterautomat-vergleich`
+- `katzentoilette-vergleich`
+- `flexi-rollleine-vergleich`
+- `hundetransportbox-auto-vergleich`
 
 Die Seiten sind Vergleiche dokumentierter Produkteigenschaften, keine eigenen Produkttests und keine Ranglisten.
 
@@ -39,10 +44,36 @@ KONG Gyro wurde bewusst nicht aufgenommen: Für diese Umsetzung lag am 19.09.202
 ### Catit Senses
 - Play/Wave/Super Circuit, 43154/43155/43156: https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/
 
+### Catit Trinkbrunnen
+- PIXI Trinkbrunnen, 43715: https://www.catit.com/de/produkte/trinkbrunnen/pixi-trinkbrunnen/
+- PIXI Smart-Trinkbrunnen, 43751: https://www.catit.com/de/produkte/trinkbrunnen/pixi-smart-trinkbrunnen/
+- PIXI UV-C Edelstahl-Trinkbrunnen, 43761: https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/
+
+### Catit Futterautomaten
+- PIXI Smart Futterautomat, 43752: https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/
+- PIXI Smart-Futterautomat mit 6 Mahlzeiten, 43754: https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/
+- PIXI Smart-Futterautomat Vision, 43753: https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-vision/
+
+### Catit Katzentoiletten
+- Airsift Standard, 50702: https://www.catit.com/de/produkte/katzentoiletten-zubehoer/katzentoiletten-mit-airsift-filtersystem/
+- PIXI Katzentoilette, 44081: https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/
+- Smartsift Katzentoilette, 50685: https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/
+
+### flexi Rollleinen
+- Classic L Gurt 5 m: https://flexi.de/de/produkte/classic-l-gurt-5-m/
+- Comfort Plus L Gurt 5 m: https://flexi.de/de/produkte/comfort-plus-l-5m-gurt-hundeleine/
+- Xtreme L Gurt 5 m: https://flexi.de/de/produkte/xtreme-l-gurt-5-m/
+- Giant L Gurt 8 m: https://flexi.de/de/produkte/giant-l-8m-gurt-hundeleine/
+
+### TRIXIE Hundetransportboxen
+- Journey M, 39413: https://www.trixie.de/en/dog/transport-travel/transport-boxes/transport-box-journey-1001435619-1001442920
+- Vario S–M, 39722: https://www.trixie.de/en/dog/transport-travel/transport-boxes/dog-crate-vario-1001435619-1001442885
+- Aluminium M–L, 39342: https://www.trixie.de/en/dog/transport-travel/transport-boxes/transport-box-aluminium-1001435619-1001442897
+
 ## Technische Leitplanken
 
 - Astro static, kein neuer Runtime-Dienst.
-- Gemeinsame `PurchaseGuide.astro`-Komponente statt vier kopierter Templates.
+- Gemeinsame `PurchaseGuide.astro`-Komponente statt neun kopierter Templates.
 - Strukturierte Daten in `src/features/commerce/purchase-guides.ts`.
 - Canonicals zeigen auf die jeweilige `/de-de/produkte/<slug>/`-URL.
 - Sitemap und Pagefind übernehmen die statischen Seiten aus dem Build.
