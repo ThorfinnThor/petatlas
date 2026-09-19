@@ -79,3 +79,4 @@ KONG Gyro wurde bewusst nicht aufgenommen: Für diese Umsetzung lag am 19.09.202
 - Sitemap und Pagefind übernehmen die statischen Seiten aus dem Build.
 - Interne Links führen auf bestehende Ratgeber-, Spielzeug- und Pflege-Seiten.
 - Neue Tests prüfen URL-Sicherheit, Amazon-Whitelist, Affiliate-Tag, fehlende Amazon-Netzwerkanfragen beim Seitenaufruf, Accessibility und mobiles Overflow.
+- Die erweiterte Datendatei wurde mit der im Repository gepinnten Prettier-Version formatiert; der temporäre Formatier-Workflow ist nicht Bestandteil des finalen Diffs.
