@@ -2,9 +2,18 @@
 export const AMAZON_TAG = 'wauandmiau-21';
 export const AMAZON_DISCLOSURE = 'Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.';
 export const AMAZON_SEARCHES = {
+  'trixie-capri-1-39811': 'TRIXIE Capri 1 39811 Transportbox',
+  'trixie-capri-3-open-top-39861': 'TRIXIE Capri 3 Open Top 39861',
+  'catit-cabrio-41372': 'Catit Cabrio 41372 Transportbox',
+  'trixie-petwalk-3942': 'TRIXIE Petwalk 3942 Rampe',
+  'trixie-petwalk-teleskop-3940': 'TRIXIE Petwalk 3940 Teleskop Rampe',
+  'petsafe-happy-ride-ptv17-16898': 'PetSafe Happy Ride PTV17-16898 Teleskop Hunderampe',
   'kong-classic': 'KONG Classic Hundespielzeug',
+  'kong-extreme': 'KONG Extreme Hundespielzeug',
   'west-paw-toppl-large': 'West Paw Toppl Large Eggplant Hundespielzeug',
   'catit-senses-play-circuit': 'Catit Senses Play Circuit 43154',
+  'catit-senses-wave-circuit-43155': 'Catit Senses Wave Circuit 43155',
+  'catit-senses-super-circuit-43156': 'Catit Senses Super Circuit 43156',
   'kong-cat-tennis-balls': 'KONG Cat Active Tennis Balls with Bells Katze',
   'kong-wobbler': 'KONG KONG Wobbler Hundespielzeug',
   'west-paw-hurley': 'West Paw Hurley Hundespielzeug',
