@@ -15,7 +15,7 @@ export const AMAZON_SEARCHES = {
   'catit-senses-wave-circuit-43155': 'Catit Senses Wave Circuit 43155',
   'catit-senses-super-circuit-43156': 'Catit Senses Super Circuit 43156',
   'kong-cat-tennis-balls': 'KONG Cat Active Tennis Balls with Bells Katze',
-  'kong-wobbler': 'KONG KONG Wobbler Hundespielzeug',
+  'kong-wobbler': 'KONG Wobbler Hundespielzeug',
   'west-paw-hurley': 'West Paw Hurley Hundespielzeug',
   'west-paw-zisc': 'West Paw Zisc Hundespielzeug',
   'west-paw-qwizl': 'West Paw Qwizl Hundespielzeug',
