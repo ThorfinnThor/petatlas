@@ -1,0 +1,253 @@
+---
+import AmazonLink from '../AmazonLink.astro';
+import Notice from '../Notice.astro';
+import { AMAZON_DISCLOSURE, amazonEnabled } from '../../features/commerce/amazon.ts';
+import type { PurchaseGuide } from '../../features/commerce/purchase-guides.ts';
+
+interface Props {
+  guide: PurchaseGuide;
+}
+
+const { guide } = Astro.props;
+const showAmazon = amazonEnabled(process.env);
+---
+
+<article class="purchase-guide">
+  <header class="purchase-guide__header">
+    <p class="eyebrow">{guide.eyebrow}</p>
+    <h1>{guide.title}</h1>
+    {guide.intro.map((paragraph) => <p>{paragraph}</p>)}
+  </header>
+
+  {
+    showAmazon && (
+      <Notice variante="hinweis" titel="Werbung und Händlerlinks">
+        <p>{AMAZON_DISCLOSURE}</p>
+        <p>
+          Die Amazon-Verweise sind gekennzeichnete Suchlinks. Wau & Miau speichert hier keine
+          Amazon-Preise, Bewertungen, Bestände oder Produktbilder.
+        </p>
+      </Notice>
+    )
+  }
+
+  <section aria-labelledby="vergleich-titel">
+    <h2 id="vergleich-titel">Produkte im direkten Vergleich</h2>
+    <div class="table-scroll" tabindex="0" aria-label="Vergleichstabelle horizontal scrollbar">
+      <table>
+        <thead>
+          <tr>
+            {guide.tableHeaders.map((header) => <th scope="col">{header}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            guide.products.map((product) => (
+              <tr>
+                {product.comparison.map((value, index) =>
+                  index === 0 ? <th scope="row">{value}</th> : <td>{value}</td>,
+                )}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="product-sections" aria-label="Produktdetails">
+    {
+      guide.products.map((product) => (
+        <article class="product-detail">
+          <p class="product-detail__brand">{product.brand}</p>
+          <h2>{product.name}</h2>
+          <p class="product-detail__model">{product.model}</p>
+          {product.summary.map((paragraph) => <p>{paragraph}</p>)}
+          <ul>
+            {product.facts.map((fact) => <li>{fact}</li>)}
+          </ul>
+          {product.note && <p class="product-detail__note">{product.note}</p>}
+          <p class="product-detail__source">
+            <a href={product.sourceUrl} rel="noopener">
+              Herstellerangaben ansehen ↗
+            </a>
+            <small>{product.sourceLabel} · geprüft am {product.checkedAt}</small>
+          </p>
+          <AmazonLink
+            selection={product.amazonSelection}
+            label={`${product.name} bei Amazon suchen (Werbung)`}
+          />
+        </article>
+      ))
+    }
+  </section>
+
+  <section aria-labelledby="kriterien-titel">
+    <h2 id="kriterien-titel">{guide.criteriaTitle}</h2>
+    <div class="criteria-grid">
+      {
+        guide.criteria.map((criterion) => (
+          <article>
+            <h3>{criterion.title}</h3>
+            <p>{criterion.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="kurzentscheidung-titel">
+    <h2 id="kurzentscheidung-titel">Kurz eingeordnet</h2>
+    <ul>
+      {guide.conclusion.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section aria-labelledby="faq-titel">
+    <h2 id="faq-titel">Häufige Fragen</h2>
+    <div class="faq-list">
+      {
+        guide.faqs.map((faq) => (
+          <article>
+            <h3>{faq.question}</h3>
+            <p>{faq.answer}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <aside class="related" aria-labelledby="weiterlesen-titel">
+    <h2 id="weiterlesen-titel">Weiterlesen bei Wau & Miau</h2>
+    <ul>
+      {guide.relatedLinks.map((link) => <li><a href={link.href}>{link.label} →</a></li>)}
+    </ul>
+  </aside>
+</article>
+
+<style>
+  .purchase-guide {
+    padding-block: var(--space-8) var(--space-12);
+  }
+
+  .purchase-guide__header {
+    margin-bottom: var(--space-6);
+  }
+
+  .eyebrow,
+  .product-detail__brand {
+    color: var(--color-primary);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    margin-block: var(--space-4) var(--space-8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  table {
+    width: 100%;
+    min-width: 44rem;
+    border-collapse: collapse;
+    background: var(--color-surface);
+  }
+
+  th,
+  td {
+    padding: var(--space-3);
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  thead th {
+    background: var(--color-primary-soft);
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .product-sections {
+    display: grid;
+    gap: var(--space-5);
+    margin-block: var(--space-8);
+  }
+
+  .product-detail {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .product-detail h2 {
+    margin-top: 0;
+  }
+
+  .product-detail__brand,
+  .product-detail__model,
+  .product-detail__source {
+    margin-block: 0 var(--space-2);
+  }
+
+  .product-detail__model,
+  .product-detail__source small,
+  .product-detail__note {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .product-detail__source small {
+    display: block;
+    margin-top: var(--space-1);
+  }
+
+  .product-detail__note {
+    padding: var(--space-3);
+    border-inline-start: 3px solid var(--color-primary);
+    background: var(--color-primary-soft);
+  }
+
+  .criteria-grid,
+  .faq-list {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .criteria-grid article,
+  .faq-list article {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .criteria-grid h3,
+  .faq-list h3 {
+    margin-top: 0;
+  }
+
+  .related {
+    margin-top: var(--space-10);
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-soft);
+  }
+
+  .related h2 {
+    margin-top: 0;
+  }
+
+  @media (min-width: 800px) {
+    .criteria-grid,
+    .faq-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
