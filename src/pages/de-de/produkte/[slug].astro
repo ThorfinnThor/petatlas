@@ -21,10 +21,6 @@ const { guide } = Astro.props;
 const canonicalPfad = `/de-de/produkte/${guide.slug}/`;
 ---
 
-<BaseLayout
-  title={guide.metaTitle}
-  description={guide.description}
-  canonicalPfad={canonicalPfad}
->
+<BaseLayout title={guide.metaTitle} description={guide.description} canonicalPfad={canonicalPfad}>
   <PurchaseGuide guide={guide} />
 </BaseLayout>

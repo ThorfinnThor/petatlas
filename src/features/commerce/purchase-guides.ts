@@ -61,8 +61,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
           'Sie besteht aus Kunststoff, hat einen Tragegriff, seitliche Lüftungsschlitze und eine Gittertür. Damit ist sie vor allem dann nachvollziehbar interessant, wenn eine kleine, leichte Box mit klassischem Frontzugang gesucht wird.',
         ],
         facts: ['32 × 31 × 48 cm', 'bis 6 kg', '1,2 kg', 'Kunststoff, Tragegriff und Gittertür'],
-        note:
-          'Die Gewichtsgrenze ersetzt keine Größenprüfung: Die Katze muss in der Box ausreichend Platz zum Stehen und Drehen haben.',
+        note: 'Die Gewichtsgrenze ersetzt keine Größenprüfung: Die Katze muss in der Box ausreichend Platz zum Stehen und Drehen haben.',
       },
       {
         name: 'TRIXIE Capri 3 Open Top',
@@ -150,7 +149,10 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       },
     ],
     relatedLinks: [
-      { href: '/de-de/ratgeber/katze-transportbox/', label: 'Transportbox trainieren – Schritt für Schritt' },
+      {
+        href: '/de-de/ratgeber/katze-transportbox/',
+        label: 'Transportbox trainieren – Schritt für Schritt',
+      },
       { href: '/de-de/pflege/', label: 'Pflege und Zubehör' },
     ],
   },
@@ -181,7 +183,12 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
           'Die TRIXIE Petwalk 3942 misst laut Hersteller 38 × 100 cm, wiegt 2,8 kg und ist für bis zu 50 kg angegeben. TRIXIE nennt eine rutschfeste Lauffläche und die Nutzung innen wie außen.',
           'Der entscheidende Unterschied zu den anderen beiden Modellen ist die feste Länge. Dafür ist die Rampe deutlich leichter als die Teleskopvarianten.',
         ],
-        facts: ['38 × 100 cm', 'bis 50 kg', '2,8 kg', 'feste Kunststofframpe mit rutschfester Lauffläche'],
+        facts: [
+          '38 × 100 cm',
+          'bis 50 kg',
+          '2,8 kg',
+          'feste Kunststofframpe mit rutschfester Lauffläche',
+        ],
       },
       {
         name: 'TRIXIE Teleskop-Rampe Petwalk 3940',
@@ -213,20 +220,18 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         sourceUrl: 'https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/',
         sourceLabel: 'PetSafe · Hersteller',
         checkedAt,
-        comparison: [
-          'PetSafe Happy Ride',
-          '99–183 × 43 cm',
-          'bis 181 kg',
-          '6 kg',
-          'Teleskoprampe',
-        ],
+        comparison: ['PetSafe Happy Ride', '99–183 × 43 cm', 'bis 181 kg', '6 kg', 'Teleskoprampe'],
         summary: [
           'PetSafe gibt für die Happy Ride Teleskop-Hunderampe 99 bis 183 cm Länge, 43 cm Breite, etwa 6 kg Eigengewicht und eine Traglast bis 181 kg an.',
           'Der Hersteller nennt außerdem eine rutschfeste Oberfläche, seitliche Führungen und eine Verschlusslasche für den zusammengeschobenen Transportzustand.',
         ],
-        facts: ['99–183 × 43 cm', 'bis 181 kg', '6 kg', 'Aluminium-Teleskoprampe mit Verschlusslasche'],
-        note:
-          'Die hohe Traglast ist ein einzelnes technisches Merkmal und kein pauschales Qualitätsurteil.',
+        facts: [
+          '99–183 × 43 cm',
+          'bis 181 kg',
+          '6 kg',
+          'Aluminium-Teleskoprampe mit Verschlusslasche',
+        ],
+        note: 'Die hohe Traglast ist ein einzelnes technisches Merkmal und kein pauschales Qualitätsurteil.',
       },
     ],
     criteriaTitle: 'Welche Maße solltest du am Auto prüfen?',
@@ -284,7 +289,13 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       'Unter dem Namen KONG werden Spielzeuge mit unterschiedlichen Funktionen verkauft. Classic und Extreme sind befüllbare Naturkautschuk-Spielzeuge; der Wobbler ist dagegen ein beweglicher Futterspender.',
       'Wer nur nach „KONG Hundespielzeug“ sucht, vergleicht deshalb schnell Produkte, die nicht dasselbe Spielprinzip haben. Diese Kaufhilfe trennt die drei Modelle anhand dokumentierter Herstellerangaben.',
     ],
-    tableHeaders: ['Modell', 'Grundprinzip', 'Material / Bauart', 'Befüllbar', 'Wichtiger Unterschied'],
+    tableHeaders: [
+      'Modell',
+      'Grundprinzip',
+      'Material / Bauart',
+      'Befüllbar',
+      'Wichtiger Unterschied',
+    ],
     products: [
       {
         name: 'KONG Classic',
@@ -294,12 +305,23 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         sourceUrl: 'https://www.kongcompany.com/kong-classic/',
         sourceLabel: 'KONG · Hersteller',
         checkedAt,
-        comparison: ['KONG Classic', 'Kauen, Werfen, Befüllen', 'Naturkautschuk', 'ja', 'rote Gummimischung'],
+        comparison: [
+          'KONG Classic',
+          'Kauen, Werfen, Befüllen',
+          'Naturkautschuk',
+          'ja',
+          'rote Gummimischung',
+        ],
         summary: [
           'Der KONG Classic besteht laut Hersteller aus Naturkautschuk, kann mit Futter oder Snacks befüllt werden und springt durch seine Form nicht immer in dieselbe Richtung.',
           'KONG bietet ihn in mehreren Größen an und weist darauf hin, dass kräftige Kauer gegebenenfalls eine größere Größe oder die Extreme-Linie benötigen. Deshalb sollte der Amazon-Link erst nach Auswahl der passenden Variante als konkrete Kaufoption verstanden werden.',
         ],
-        facts: ['100 % Naturkautschuk laut Hersteller', 'befüllbar', 'mehrere Größen', 'unregelmäßiges Sprungverhalten'],
+        facts: [
+          '100 % Naturkautschuk laut Hersteller',
+          'befüllbar',
+          'mehrere Größen',
+          'unregelmäßiges Sprungverhalten',
+        ],
       },
       {
         name: 'KONG Extreme',
@@ -309,12 +331,23 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         sourceUrl: 'https://www.kongcompany.com/kong-extreme/',
         sourceLabel: 'KONG · Hersteller',
         checkedAt,
-        comparison: ['KONG Extreme', 'Kauen, Werfen, Befüllen', 'Naturkautschuk', 'ja', 'schwarze Gummimischung'],
+        comparison: [
+          'KONG Extreme',
+          'Kauen, Werfen, Befüllen',
+          'Naturkautschuk',
+          'ja',
+          'schwarze Gummimischung',
+        ],
         summary: [
           'Der KONG Extreme folgt demselben Grundkonzept wie der Classic: befüllbarer Naturkautschuk und unregelmäßiges Sprungverhalten. KONG positioniert die schwarze Gummimischung ausdrücklich für kräftige Kauer.',
           'Das ist keine Unzerstörbarkeitsgarantie. Der Hersteller verlangt weiterhin beaufsichtigte Nutzung und das Entfernen des Spielzeugs bei Beschädigung.',
         ],
-        facts: ['100 % Naturkautschuk laut Hersteller', 'für kräftige Kauer positioniert', 'befüllbar', 'mehrere Größen'],
+        facts: [
+          '100 % Naturkautschuk laut Hersteller',
+          'für kräftige Kauer positioniert',
+          'befüllbar',
+          'mehrere Größen',
+        ],
         note: 'Nicht als „unkaputtbar“ beschreiben: KONG nennt ausdrücklich Sicherheits- und Austauschinweise bei Schäden.',
       },
       {
@@ -325,12 +358,23 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         sourceUrl: 'https://www.kongcompany.com/wobbler/',
         sourceLabel: 'KONG · Hersteller',
         checkedAt,
-        comparison: ['KONG Wobbler', 'Futterspender zum Anstoßen', 'harter, aufschraubbarer Körper', 'ja', 'kein Kauspielzeug'],
+        comparison: [
+          'KONG Wobbler',
+          'Futterspender zum Anstoßen',
+          'harter, aufschraubbarer Körper',
+          'ja',
+          'kein Kauspielzeug',
+        ],
         summary: [
           'Beim KONG Wobbler ändert sich das Spielprinzip vollständig. Das Spielzeug steht aufrecht und gibt nach dem Anstoßen mit Pfote oder Nase Futter beziehungsweise Snacks ab, während es wackelt, dreht und rollt.',
           'Der obere Teil lässt sich zum Befüllen und Reinigen abschrauben. KONG kennzeichnet den Wobbler ausdrücklich als kein Kauspielzeug und empfiehlt beaufsichtigte Nutzung.',
         ],
-        facts: ['Futterspender', 'aufschraubbar', 'oberer Korb der Spülmaschine laut Hersteller', 'kein Kauspielzeug'],
+        facts: [
+          'Futterspender',
+          'aufschraubbar',
+          'oberer Korb der Spülmaschine laut Hersteller',
+          'kein Kauspielzeug',
+        ],
       },
     ],
     criteriaTitle: 'Welche KONG-Art suchst du eigentlich?',
@@ -374,7 +418,9 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
           'Weil beide Produktfamilien mehrere Größen und Varianten haben. Die Suche hält die Auswahl offen, statt eine möglicherweise unpassende Größe als allgemeine Empfehlung festzuschreiben.',
       },
     ],
-    relatedLinks: [{ href: '/de-de/spielzeug/', label: 'Spielzeug nach belegten Eigenschaften finden' }],
+    relatedLinks: [
+      { href: '/de-de/spielzeug/', label: 'Spielzeug nach belegten Eigenschaften finden' },
+    ],
   },
   {
     slug: 'catit-senses-2-vergleich',
@@ -397,7 +443,13 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         sourceUrl: 'https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/',
         sourceLabel: 'Catit · Hersteller',
         checkedAt,
-        comparison: ['Play Circuit', '43154', '7 + Ball', 'vollständig flach', 'Easy-Click, erweiterbar'],
+        comparison: [
+          'Play Circuit',
+          '43154',
+          '7 + Ball',
+          'vollständig flach',
+          'Easy-Click, erweiterbar',
+        ],
         summary: [
           'Der Play Circuit liegt vollständig flach auf dem Boden. Catit beschreibt einen Aufbau aus einem geraden Teil, vier flachen Kurven, zwei Endteilen und einem Ball.',
           'Damit ist der Play Circuit die konstruktiv einfachste der drei Varianten in diesem Vergleich.',
@@ -412,7 +464,13 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         sourceUrl: 'https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/',
         sourceLabel: 'Catit · Hersteller',
         checkedAt,
-        comparison: ['Wave Circuit', '43155', '7 + Ball', 'flache + erhöhte Kurven', 'Easy-Click, erweiterbar'],
+        comparison: [
+          'Wave Circuit',
+          '43155',
+          '7 + Ball',
+          'flache + erhöhte Kurven',
+          'Easy-Click, erweiterbar',
+        ],
         summary: [
           'Beim Wave Circuit kommen erhöhte, geschwungene Elemente hinzu. Catit nennt ein gerades Element, zwei erhöhte Kurven, zwei flache Kurven, zwei Endstücke und einen Ball.',
           'Die Zahl der Streckenteile entspricht dem Play Circuit, der Verlauf ist jedoch nicht vollständig eben.',
@@ -427,7 +485,13 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         sourceUrl: 'https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/',
         sourceLabel: 'Catit · Hersteller',
         checkedAt,
-        comparison: ['Super Circuit', '43156', '12 + Ball', 'Geraden + flache/erhöhte Kurven', 'Easy-Click, erweiterbar'],
+        comparison: [
+          'Super Circuit',
+          '43156',
+          '12 + Ball',
+          'Geraden + flache/erhöhte Kurven',
+          'Easy-Click, erweiterbar',
+        ],
         summary: [
           'Der Super Circuit ist das größte Set im Vergleich. Catit nennt zwölf Streckenteile: zwei Geraden, zwei erhöhte Kurven, sechs flache Kurven und zwei Endteile, dazu einen Ball.',
           'Catit bewirbt das Set auch für mehrere Katzen. Messbar ist vor allem der größere Lieferumfang; ob mehrere Katzen gleichzeitig damit spielen, ist keine garantierbare Produkteigenschaft.',
@@ -478,7 +542,10 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       },
     ],
     relatedLinks: [
-      { href: '/de-de/ratgeber/katzen-beschaeftigen/', label: 'Wohnungskatzen abwechslungsreich beschäftigen' },
+      {
+        href: '/de-de/ratgeber/katzen-beschaeftigen/',
+        label: 'Wohnungskatzen abwechslungsreich beschäftigen',
+      },
       { href: '/de-de/spielzeug/', label: 'Spielzeug nach belegten Eigenschaften finden' },
     ],
   },
