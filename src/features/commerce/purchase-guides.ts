@@ -548,7 +548,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       },
       { href: '/de-de/spielzeug/', label: 'Spielzeug nach belegten Eigenschaften finden' },
     ],
-  },,
+  },
   {
     slug: 'katzentrinkbrunnen-vergleich',
     metaTitle: 'Katzentrinkbrunnen: Catit PIXI, Smart oder UV-C?',
