@@ -44,7 +44,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       'Eine Katzentransportbox muss nicht möglichst viele Funktionen haben. Entscheidend ist, ob Größe, Öffnung, Eigengewicht und Transportart zu deiner Katze und zu den typischen Wegen passen.',
       'Wir vergleichen deshalb dokumentierte Produkteigenschaften statt Sternebewertungen oder pauschale Testsieger. Preise und Verfügbarkeit werden nicht auf Wau & Miau gespeichert; der Händlerlink öffnet eine konkrete Amazon-Suche.',
     ],
-    tableHeaders: ['Modell', 'Maße', 'Belastung', 'Eigengewicht', 'Zugang'],
+    tableHeaders: ['Modell', 'Maße (Herstellerreihenfolge)', 'Belastung', 'Eigengewicht', 'Zugang'],
     products: [
       {
         name: 'TRIXIE Capri 1',
@@ -372,7 +372,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
         facts: [
           'Futterspender',
           'aufschraubbar',
-          'oberer Korb der Spülmaschine laut Hersteller',
+          'im oberen Korb spülmaschinengeeignet laut Hersteller',
           'kein Kauspielzeug',
         ],
       },
@@ -847,7 +847,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       'Katzentoiletten unterscheiden sich vor allem durch Zugang und Reinigungsprinzip. Eine klassische Haubentoilette, ein Top-Entry-Modell und ein mechanisches Siebsystem lösen dieselbe Grundaufgabe konstruktiv sehr unterschiedlich.',
       'Für diesen Vergleich schauen wir deshalb auf Außenmaße, Einstieg, Reinigung und Herstellerfunktionen. Ob eine einzelne Katze eine bestimmte Bauform akzeptiert, lässt sich daraus nicht garantieren.',
     ],
-    tableHeaders: ['Modell', 'Zugang', 'Maße', 'Reinigung', 'Besonderheit'],
+    tableHeaders: ['Modell', 'Zugang', 'Maße (Herstellerreihenfolge)', 'Reinigung', 'Besonderheit'],
     products: [
       {
         name: 'Catit Katzentoilette Airsift Standard',
@@ -1140,7 +1140,13 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
       'Bei Hundetransportboxen fürs Auto unterscheiden sich starre Kunststoffboxen, faltbare Stoffboxen und Aluminiumkonstruktionen grundlegend in Aufbau und Handhabung.',
       'Für einen nachvollziehbaren Vergleich nehmen wir jeweils eine konkrete Variante aus drei TRIXIE-Produktlinien. Die Box muss zusätzlich zum Hund auch zum verfügbaren Kofferraum und zur vorgesehenen Sicherung im Fahrzeug passen.',
     ],
-    tableHeaders: ['Modell / Variante', 'Bauart', 'Maße', 'Zugang', 'Besonderheit'],
+    tableHeaders: [
+      'Modell / Variante',
+      'Bauart',
+      'Maße (Herstellerreihenfolge)',
+      'Zugang',
+      'Besonderheit',
+    ],
     products: [
       {
         name: 'TRIXIE Transportbox Journey M',

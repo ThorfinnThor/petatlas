@@ -3,6 +3,11 @@ import { AMAZON_SEARCHES, amazonSearchUrl } from '../src/features/commerce/amazo
 import { PURCHASE_GUIDES } from '../src/features/commerce/purchase-guides.ts';
 
 describe('purchase guides', () => {
+  it('keeps the reviewed scope at nine guides and 28 products', () => {
+    expect(PURCHASE_GUIDES).toHaveLength(9);
+    expect(PURCHASE_GUIDES.flatMap((guide) => guide.products)).toHaveLength(28);
+  });
+
   it('has unique, URL-safe slugs and complete comparison rows', () => {
     const slugs = PURCHASE_GUIDES.map((guide) => guide.slug);
     expect(new Set(slugs).size).toBe(slugs.length);

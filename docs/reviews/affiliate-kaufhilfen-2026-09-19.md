@@ -80,3 +80,30 @@ KONG Gyro wurde bewusst nicht aufgenommen: Für diese Umsetzung lag am 19.09.202
 - Interne Links führen auf bestehende Ratgeber-, Spielzeug- und Pflege-Seiten.
 - Neue Tests prüfen URL-Sicherheit, Amazon-Whitelist, Affiliate-Tag, fehlende Amazon-Netzwerkanfragen beim Seitenaufruf, Accessibility und mobiles Overflow.
 - Die erweiterte Datendatei wurde mit der im Repository gepinnten Prettier-Version formatiert; der temporäre Formatier-Workflow ist nicht Bestandteil des finalen Diffs.
+
+## Unabhängiger Review am 21.09.2026
+
+Der vollständige externe Link- und Faktenaudit bestätigte alle 26 eindeutigen
+Herstellerziele für die 28 verglichenen Produkte beziehungsweise Varianten. Alle
+Ziele antworteten mit HTTP 200, die Produktidentitäten und verwendeten Fakten
+stimmten mit den Herstellerseiten überein. Alle 28 Amazon-Suchen wurden im
+Amazon-DE-Suchergebnis geöffnet. Sie führen in die richtige Produktfamilie; beim
+Catit PIXI Smart-Futterautomat Vision 43753 war am Prüftag kein exakter
+Amazon-Treffer vorhanden. Die Seite verspricht weder Bestand noch einen exakten
+Händlerartikel.
+
+Vor der Korrektur wurden zwei begrenzte Punkte festgehalten:
+
+- **P2 · Regressionstest:** Die Vertragstests durchliefen alle vorhandenen
+  Datensätze, sicherten aber die zugesagten Gesamtzahlen von neun Kaufhilfen und
+  28 Produkten nicht ausdrücklich ab. Diese Summen werden nun fest geprüft.
+- **P3 · Maßangaben:** Mehrere Hersteller veröffentlichen Maße ohne einheitliche
+  Achsenreihenfolge. Tabellen, die die Quellreihenfolge unverändert übernehmen,
+  kennzeichnen das nun ausdrücklich. Bei Rampen bleibt die sicher normalisierte
+  Spalte `Länge × Breite` bestehen.
+
+Eine exakte Pagefind-Abfrage bestätigte außerdem, dass die technischen
+Amazon-Parameter `linkCode` und `ll2` nicht im Suchindex stehen. Unscharfe Suchen
+nach diesen Zeichenfolgen liefern zwar Treffer auf Wörter wie „Links“ oder Werte
+wie „2 l“; als exakte Suchbegriffe ergeben beide null Treffer. Die offen
+dokumentierte Partner-ID bleibt erwartungsgemäß auf der Methodikseite auffindbar.
