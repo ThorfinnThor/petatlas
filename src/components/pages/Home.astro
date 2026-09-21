@@ -12,6 +12,7 @@ import products from '../../../content-data/products/editorial.json';
 import places from '../../../data-snapshots/places/places-de.json';
 import fees from '../../../data-snapshots/got/got-2022.json';
 import { publicPlaceCount } from '../../features/map/directory-controls.ts';
+import { PURCHASE_GUIDES } from '../../features/commerce/purchase-guides.ts';
 import type { Place } from '../../domain/schemas/places.ts';
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const path = (key: RouteKey) => routePath(market, key);
@@ -274,6 +275,25 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
               <AmazonLink selection={p.productId} />
             </article>
           ))}
+        </div>
+        <div class="purchase-guides" aria-labelledby="purchase-guides-title">
+          <div class="purchase-guides__intro">
+            <p class="eyebrow">Kaufhilfen nach Merkmalen</p>
+            <h3 id="purchase-guides-title">Vergleiche, bevor du zum Händler gehst.</h3>
+            <p>
+              Maße, Bauformen und Funktionen aus Herstellerquellen gegenübergestellt – ohne
+              Testsieger und ohne gespeicherte Händlerpreise.
+            </p>
+          </div>
+          <div class="purchase-guides__grid">
+            {PURCHASE_GUIDES.map((guide) => (
+              <a class="purchase-guide-card" href={`/de-de/produkte/${guide.slug}/`}>
+                <span>{guide.eyebrow}</span>
+                <strong>{guide.metaTitle}</strong>
+                <small>{guide.products.length} Produkte · Herstellerquellen geprüft</small>
+              </a>
+            ))}
+          </div>
         </div>
       </>
     </section>
@@ -681,6 +701,51 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
     color: var(--color-text-muted);
     margin-top: var(--space-3);
   }
+  .purchase-guides {
+    margin-top: var(--space-8);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+  .purchase-guides__intro {
+    margin-bottom: var(--space-5);
+  }
+  .purchase-guides__intro h3 {
+    margin: var(--space-2) 0;
+    font-size: 1.5rem;
+  }
+  .purchase-guides__intro p:last-child {
+    max-width: 64ch;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  .purchase-guides__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+  .purchase-guide-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .purchase-guide-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+  }
+  .purchase-guide-card span,
+  .purchase-guide-card small {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+  .purchase-guide-card strong {
+    line-height: 1.35;
+  }
   .travel-banner {
     position: relative;
     border-radius: var(--radius-xl);
@@ -818,7 +883,8 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
       display: inline-block;
       margin-top: var(--space-4);
     }
-    .product-grid {
+    .product-grid,
+    .purchase-guides__grid {
       grid-template-columns: 1fr;
     }
     .editorial-product {
