@@ -29,6 +29,7 @@ for (const width of [390, 1440]) {
         expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
         expect(url.searchParams.get('k')).toBeTruthy();
         await expect(link).toHaveAttribute('rel', /nofollow/);
+        await expect(link).not.toHaveAccessibleName(/\(Werbung\).*\(Werbung\)/);
       }
 
       const sourceLinks = page.locator('.product-detail__source a');

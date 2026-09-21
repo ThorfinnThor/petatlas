@@ -7,13 +7,14 @@ interface Props {
 }
 const { selection, label = 'Bei Amazon suchen' } = Astro.props;
 const href = amazonEnabled(process.env) ? amazonSearchUrl(selection) : null;
+const labelIncludesAdvertising = /\bWerbung\b/i.test(label);
 ---
 
 {
   href && (
     <p class="amazon-link">
       <a href={href} {...PARTNER_LINK_ATTRIBUTE}>
-        {label} ↗ <span class="sr-only">(Werbung)</span>
+        {label} ↗ {!labelIncludesAdvertising && <span class="sr-only">(Werbung)</span>}
       </a>
     </p>
   )

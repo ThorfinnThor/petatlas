@@ -92,7 +92,7 @@ Catit PIXI Smart-Futterautomat Vision 43753 war am Prüftag kein exakter
 Amazon-Treffer vorhanden. Die Seite verspricht weder Bestand noch einen exakten
 Händlerartikel.
 
-Vor der Korrektur wurden zwei begrenzte Punkte festgehalten:
+Vor der Korrektur wurden drei begrenzte Punkte festgehalten:
 
 - **P2 · Regressionstest:** Die Vertragstests durchliefen alle vorhandenen
   Datensätze, sicherten aber die zugesagten Gesamtzahlen von neun Kaufhilfen und
@@ -101,6 +101,14 @@ Vor der Korrektur wurden zwei begrenzte Punkte festgehalten:
   Achsenreihenfolge. Tabellen, die die Quellreihenfolge unverändert übernehmen,
   kennzeichnen das nun ausdrücklich. Bei Rampen bleibt die sicher normalisierte
   Spalte `Länge × Breite` bestehen.
+- **P3 · Screenreader-Linkname:** Die Kaufhilfen kennzeichneten Amazon-Links
+  sichtbar mit `(Werbung)`, während die gemeinsame Linkkomponente den Zusatz
+  zusätzlich für Screenreader ausgab. Die Komponente ergänzt den versteckten
+  Hinweis nun nur noch, wenn das übergebene Label ihn nicht bereits enthält.
+
+Die kleine Korrektur am bestehenden `AmazonLink.astro` ist der einzige Grund,
+warum der finale PR-Diff gegenüber den acht ursprünglich erwarteten Dateien eine
+neunte Datei enthält. Sie erweitert weder Amazon-Scope noch Trackingverhalten.
 
 Eine exakte Pagefind-Abfrage bestätigte außerdem, dass die technischen
 Amazon-Parameter `linkCode` und `ll2` nicht im Suchindex stehen. Unscharfe Suchen
