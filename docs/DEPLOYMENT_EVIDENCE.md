@@ -1,8 +1,49 @@
 # Deployment-Nachweise
 
-Stand 2026-09-09. Hier stehen nur Dinge, die tatsächlich passiert sind.
+Stand 2026-09-21. Hier stehen nur Dinge, die tatsächlich passiert sind.
 
-## Was existiert
+## Produktionsdeployment vom 21.09.2026
+
+| | |
+|---|---|
+| Hauptadresse | https://wauandmiau.de |
+| Typ | Cloudflare Workers Static Assets, statischer Produktionsbuild |
+| Deployter Commit | `f1e272df3dc26ccb90205ee86a737dd9723ba2f7` |
+| Build-Modus | `production`, indexierbar, Datenquelle `published` |
+| Build-Zeit | `2026-09-21T21:48:15.662Z` |
+| Build-Nachweis | https://wauandmiau.de/build-info.json |
+| Gesundheitsdaten | https://wauandmiau.de/data/v1/health.json |
+| GitHub-PR | https://github.com/ThorfinnThor/petatlas/pull/53 |
+| GitHub-CI auf dem Merge-Commit | CI und Security erfolgreich |
+
+Der ausgelieferte Build nennt in `/build-info.json` denselben Commit für Code und
+versionierte Daten. Vor dem Merge liefen die vollständige PR-CI und ein
+unabhängiger Review der neun Kaufhilfen. Nach dem Merge bestanden `npm run verify`
+mit 1.522 Unit-Tests sowie der indexierbare Cloudflare-Produktionsbuild mit allen
+15 Prüf- und Veröffentlichungsschritten.
+
+Die anschließende Rauchprobe erfolgte gegen die öffentliche Domain, nicht gegen
+einen lokalen Server:
+
+| Prüfung | Ergebnis |
+|---|---|
+| Neun Kaufhilfen unter `/de-de/produkte/` | je **200**, eigener Canonical, genau eine H1 |
+| 28 Amazon-Suchlinks | Partner-ID, `sponsored nofollow noopener` und Kennzeichnung geprüft |
+| Startseite | alle neun Kaufhilfen verlinkt |
+| Tierarztkarte, Kostenrechner, Reisecheck, Spielzeug, Ergänzungsfuttermittel und Tierversicherung | je **200**, eigener Canonical |
+| Impressum und Datenschutz | je **200**, eigener Canonical |
+| unbekannte Adresse | **404** mit eigener Fehlerseite |
+| Sicherheitsheader | CSP, `X-Frame-Options: DENY`, `nosniff`, COOP, Referrer- und Permissions-Policy ausgeliefert |
+| initiale Kaufhilfe | keine Amazon-Unterressource; Amazon wird erst über den gekennzeichneten Link kontaktiert |
+
+Eine Cloudflare-Version-ID wurde bei dieser Prüfung nicht über die öffentliche
+Website ausgegeben und wird deshalb nicht geraten. Commit, Modus, Buildzeit und
+Datenhashes sind über den veröffentlichten Build-Nachweis reproduzierbar.
+
+## Historische Preview-Deployments bis 09.09.2026
+
+Die folgende Tabelle dokumentiert die damalige, nicht indexierbare Vorschau. Sie
+ist nicht der aktuelle Produktionsstand.
 
 | | |
 |---|---|
@@ -40,12 +81,14 @@ Die Vorschau zeigte drei Tage lang den Stand vom 6. September: ohne Karte, Reise
 
 **Vor dem Ausliefern geprüft** (jeder Schritt exit 0): Output-Audit über 443 Dateien, Secret-Audit über 902 Dateien, Rechteprüfung, SEO-Gates, Rauchprobe am gebauten Verzeichnis. Erst danach `wrangler deploy -c wrangler.preview.jsonc`.
 
-## Was ausdrücklich **nicht** existiert
+## Historischer Stand vor der Produktionsfreigabe
 
-- **Das Produktionsprojekt `petatlas-de` ist nicht angelegt.** Es gibt nichts Produktionsreifes: keine Domain, keine Betreiberangaben, keine fachlich freigegebene Funktion, und alle Gates in `config/launch.json` stehen auf `false`. Ein leeres Produktionsprojekt anzulegen wäre eine Behauptung ohne Inhalt.
-- **Keine Git-Integration.** Cloudflare Builds ist nicht mit dem Repository verbunden; dieses Deployment lief über `wrangler deploy` von der Entwicklungsmaschine. Die Anbindung folgt, wenn es etwas zu veröffentlichen gibt.
-- **Keine Domain, kein DNS-Eintrag, keine Secrets** im Cloudflare-Projekt.
-- **Kein Produktionsdeployment.** `npm run build:production` bricht weiterhin ab.
+Die folgenden Aussagen galten ausschließlich für die Preview-Deployments bis
+09.09.2026: Das Produktionsprojekt, die Domain, die Betreiberangaben und die
+Launch-Freigaben waren damals noch nicht eingerichtet. Seit der späteren
+Freigabe sind `wauandmiau.de`, der Produktionsbuild und die in
+`config/launch.json` dokumentierten Gates aktiv. Die alten Messwerte darunter
+bleiben als historische Nachweise erhalten.
 
 ## Smoke-Test gegen das laufende Deployment (2026-09-08)
 
