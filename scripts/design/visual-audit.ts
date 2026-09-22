@@ -160,7 +160,7 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
         ) ?? null;
       const heroRect = hero?.getBoundingClientRect() ?? null;
 
-      const clipped = [...document.querySelectorAll<HTMLElement>('main *')]
+      const clipped = [...document.querySelectorAll<HTMLElement>('body *')]
         .filter(visible)
         .map((element) => ({ element, rect: element.getBoundingClientRect() }))
         .filter(
@@ -215,7 +215,7 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
       // zusammengeführt, damit verschachteltes Markup keine Scheinlücken erzeugt.
       const contentMarkers = [
         ...document.querySelectorAll<HTMLElement>(
-          'main h1, main h2, main h3, main h4, main p, main li, main img, main figure, main table, main form, main details, main button',
+          'main h1, main h2, main h3, main h4, main p, main li, main a, main img, main figure, main table, main form, main details, main button, main dl, main dt, main dd',
         ),
       ]
         .filter(visible)

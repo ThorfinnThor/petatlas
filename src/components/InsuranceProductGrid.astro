@@ -43,6 +43,7 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
 <style>
   .insurance-products {
     margin-block: var(--space-7);
+    min-inline-size: 0;
   }
 
   .insurance-products__intro {
@@ -69,6 +70,8 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-surface);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
   }
 
   .insurance-products__card h3 {
