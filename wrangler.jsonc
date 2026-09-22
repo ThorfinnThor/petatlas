@@ -27,6 +27,7 @@
   // Hauptdomain um; der Eintrag bleibt für eine verlustarme SEO-Migration bestehen.
   "routes": [
     { "pattern": "deinhaustierportal.de", "custom_domain": true },
+    { "pattern": "www.deinhaustierportal.de", "custom_domain": true },
     { "pattern": "wauandmiau.de", "custom_domain": true },
   ],
 
