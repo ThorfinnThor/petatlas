@@ -1,37 +1,26 @@
 ---
-/**
- * M14-04 — Spielzeugfinder.
- *
- * Der Finder beantwortet eine Frage: was ist nach Ihren Angaben **nicht
- * ausgeschlossen**? Er beantwortet ausdrücklich nicht, was das beste
- * Spielzeug ist — dafür bräuchte es Eigenschaften, die niemand belegt hat.
- *
- * Zu jedem Ergebnis stehen zwei Dinge: warum es erscheint und was nicht
- * geprüft ist. Ohne die zweite Angabe wäre die Liste eine Empfehlung.
- */
 import { amazonEnabled, amazonSearchUrl, AMAZON_SEARCHES } from '../../features/commerce/amazon.ts';
 import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
 import { merkmalLabel } from '../../features/care/attributes.ts';
-import { BEDUERFNISSE } from '../../features/care/matching.ts';
 import { attributPruefung } from '../../features/care/attributes.ts';
 import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
 import RetailPartnerSection from '../RetailPartnerSection.astro';
 import type { MarketConfig } from '../../domain/market.ts';
 import { fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
 import { zooroyalAngebote } from '../../features/commerce/zooroyal-feed.ts';
-import { fressnapfKatalog, zooroyalKatalog } from '../../features/commerce/feed-catalog.ts';
-import FeedProductGrid from '../commerce/FeedProductGrid.astro';
 
 interface Props {
   market: MarketConfig;
 }
 
 const { market } = Astro.props;
-
 const taxonomie = spielzeugTaxonomie();
 const pruefung = attributPruefung();
 const synthetisch = pruefung.dataKind === 'synthetic';
+const spielzeuge = pruefung.products.filter((product) =>
+  taxonomie.categories.some((category) => category.categoryId === product.categoryId),
+);
 const fressnapfProducts = Object.fromEntries(
   fressnapfAngebote().map((product) => [
     product.productId,
@@ -44,147 +33,199 @@ const zooroyalProducts = Object.fromEntries(
     { imageUrl: product.imageUrl, affiliateUrl: product.affiliateUrl },
   ]),
 );
-const fressnapfCatalog = fressnapfKatalog();
-const zooroyalCatalog = zooroyalKatalog();
 ---
 
-<h1>Spielzeug finden</h1>
-
-<p>
-  Ein kurzer Fragebogen, ein nachvollziehbares Ergebnis: Der Finder schließt aus, was laut
-  Herstellerangabe nicht passt, und ordnet den Rest nach belegten Übereinstimmungen. Er bewertet
-  keine Produkte und vergibt keine Punkte für Sicherheit oder Haltbarkeit — solche Zahlen wären
-  erfunden.
-</p>
-
-<RetailPartnerSection market={market} page="spielzeug" />
-
-<FeedProductGrid
-  offers={fressnapfCatalog}
-  category="toy"
-  title="Spielzeug aus dem Fressnapf-Sortiment"
-  retailerLabel="Fressnapf"
-/>
-<FeedProductGrid
-  offers={zooroyalCatalog}
-  category="toy"
-  title="Spielzeug aus dem ZooRoyal-Sortiment"
-  retailerLabel="ZooRoyal"
-/>
+<header class="page-intro">
+  <p class="eyebrow">Spielzeugfinder für Hunde und Katzen</p>
+  <h1>Spielzeug finden, das zu Ihrem Alltag passt</h1>
+  <p>
+    Wählen Sie Tierart, Spielweise und belegbare Eigenschaften. Der Finder zeigt nur Produkte, deren
+    hinterlegte Angaben zu den gewählten Filtern passen. Er vergibt keine erfundenen Sicherheits-
+    oder Haltbarkeitsnoten.
+  </p>
+</header>
 
 {
   synthetisch && (
     <Notice variante="testdaten" titel="Synthetische Produktdaten">
-      <p>
-        Die hinterlegten Produkte sind <strong>erfunden</strong>. Echte Produkte erscheinen erst,
-        wenn Angebotsrechte bestehen und ihre Eigenschaften einzeln geprüft sind.
-      </p>
+      <p>Die Produktdaten in dieser Umgebung sind Testdaten.</p>
     </Notice>
   )
 }
 
-<SavedProfileButton />
-{
-  amazonEnabled(process.env) && (
-    <p class="hilfe">
-      Händlerlinks öffnen eine Amazon-Suche. Bitte Tierart, Größe und Ausführung dort prüfen.
-    </p>
-  )
-}
-<form
-  id="finder"
-  data-amazon-links={amazonEnabled(process.env)
-    ? JSON.stringify(
-        Object.fromEntries(
-          Object.keys(AMAZON_SEARCHES)
-            .filter((key) => !key.startsWith('supplements-'))
-            .map((key) => [key, amazonSearchUrl(key)]),
-        ),
-      )
-    : undefined}
-  data-fressnapf-offers={JSON.stringify(fressnapfProducts)}
-  data-zooroyal-offers={JSON.stringify(zooroyalProducts)}
->
-  <div class="feld">
-    <label for="finder-tierart">Tierart</label>
-    <select id="finder-tierart">
-      <option value="dog">Hund</option>
-      <option value="cat">Katze</option>
-    </select>
-  </div>
-
-  <div class="feld">
-    <label for="finder-gewicht">Gewicht in Kilogramm</label>
-    <input id="finder-gewicht" type="text" inputmode="decimal" placeholder="z. B. 20" />
-    <p class="hilfe">
-      Leer lassen, wenn Sie es nicht wissen. Dann wird nichts wegen der Größe ausgeschlossen — und
-      nichts wegen der Größe empfohlen.
-    </p>
-  </div>
-
-  <fieldset>
-    <legend>Was trifft zu?</legend>
-    <div class="auswahl">
-      {
-        Object.entries(BEDUERFNISSE)
-          .filter(([key]) => key !== 'langhaar')
-          .map(([schluessel, eintrag]) => (
-            <label class="wahl">
-              <input type="checkbox" name="bedarf" value={schluessel} />
-              <span class="wahl__text">
-                <>
-                  <strong>{eintrag.label}</strong>
-                  <span class="hilfe">{eintrag.erklaerung}</span>
-                </>
-              </span>
-            </label>
-          ))
-      }
+<section class="finder-shell" aria-labelledby="finder-heading">
+  <div class="finder-shell__head">
+    <div>
+      <p class="eyebrow">In wenigen Schritten</p>
+      <h2 id="finder-heading">Was soll das Spielzeug können?</h2>
     </div>
-  </fieldset>
+    <p class="finder-shell__count">
+      <strong>{spielzeuge.length}</strong> geprüfte Produkte im Finder
+    </p>
+  </div>
 
-  <p id="finder-ohne-js" class="hilfe">
-    Der Finder rechnet im Browser und braucht dafür JavaScript. Die Kategorien und ihre Grenzen
-    unten bleiben auch ohne lesbar.
-  </p>
-  <p><button type="submit" id="finder-suchen" hidden>Passendes anzeigen</button></p>
-</form>
+  <SavedProfileButton />
 
-<p class="hilfe">
-  Der Katalog enthält {
-    pruefung.products.filter((product) =>
-      taxonomie.categories.some((category) => category.categoryId === product.categoryId),
-    ).length
-  } redaktionell erfasste Spielzeuge und Kratzmöbel. Er bildet nicht das gesamte Amazon-Sortiment ab.
-  Wünsche ändern die Reihenfolge; ausgeschlossene Tierarten erscheinen nicht. Eindeutig zugeordnete Fressnapf-Produkte
-  erhalten ein Bild und einen direkten Händlerlink aus dem freigegebenen Awin-Feed.
+  <form
+    id="finder"
+    data-amazon-links={amazonEnabled(process.env)
+      ? JSON.stringify(
+          Object.fromEntries(
+            Object.keys(AMAZON_SEARCHES)
+              .filter((key) => !key.startsWith('supplements-'))
+              .map((key) => [key, amazonSearchUrl(key)]),
+          ),
+        )
+      : undefined}
+    data-fressnapf-offers={JSON.stringify(fressnapfProducts)}
+    data-zooroyal-offers={JSON.stringify(zooroyalProducts)}
+  >
+    <div class="finder-basics">
+      <div class="feld">
+        <label for="finder-tierart">Für wen suchen Sie?</label>
+        <select id="finder-tierart">
+          <option value="dog">Hund</option>
+          <option value="cat">Katze</option>
+        </select>
+      </div>
+      <div class="feld">
+        <label for="finder-material">Material <span>(optional)</span></label>
+        <select id="finder-material">
+          <option value="all">Alle belegten Materialien</option>
+          <option value="natural-rubber">Naturkautschuk</option>
+          <option value="zogoflex">Zogoflex</option>
+          <option value="plastic">Kunststoff oder Silikon</option>
+          <option value="latex">Latex</option>
+        </select>
+      </div>
+    </div>
+
+    <fieldset class="filter-group">
+      <legend>Wie soll gespielt werden?</legend>
+      <div class="spielarten">
+        <label class="filter-card">
+          <input type="radio" name="spielart" value="all" checked />
+          <span><strong>Alles zeigen</strong><small>Gesamte Auswahl</small></span>
+        </label>
+        <label class="filter-card">
+          <input type="radio" name="spielart" value="fetch" />
+          <span
+            ><strong>Werfen & apportieren</strong><small>Bälle, Sticks, Wurfscheiben</small></span
+          >
+        </label>
+        <label class="filter-card">
+          <input type="radio" name="spielart" value="chew" />
+          <span><strong>Kauen</strong><small>Kauspielzeug ohne Futteranteil</small></span>
+        </label>
+        <label class="filter-card">
+          <input type="radio" name="spielart" value="puzzle" />
+          <span><strong>Denken & Snacks</strong><small>Futterspiele und Beschäftigung</small></span>
+        </label>
+        <label class="filter-card">
+          <input type="radio" name="spielart" value="chase" />
+          <span><strong>Jagen & fangen</strong><small>Angeln und Bewegungsspielzeug</small></span>
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset class="filter-group">
+      <legend>Welche belegten Extras sind wichtig?</legend>
+      <p class="filter-group__hint">Mehrere Extras lassen sich kombinieren.</p>
+      <div class="extras">
+        <label class="check-card">
+          <input type="checkbox" name="extra" value="floats" />
+          <span
+            ><strong>Schwimmfähig</strong><small
+              >Nur mit belegter Hersteller- oder Händlerangabe</small
+            ></span
+          >
+        </label>
+        <label class="check-card">
+          <input type="checkbox" name="extra" value="foodFillable" />
+          <span><strong>Befüllbar</strong><small>Für Futter oder Snacks vorgesehen</small></span>
+        </label>
+        <label class="check-card">
+          <input type="checkbox" name="extra" value="dishwasherSafe" />
+          <span
+            ><strong>Spülmaschinengeeignet</strong><small>Nur wenn ausdrücklich angegeben</small
+            ></span
+          >
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="finder-actions">
+      <button type="submit" id="finder-suchen">Ergebnisse anzeigen</button>
+      <button type="button" id="finder-reset" class="button-secondary">Filter zurücksetzen</button>
+      <p id="finder-ohne-js" class="hilfe">
+        Der Finder benötigt JavaScript. Die Kategorien darunter bleiben ohne JavaScript lesbar.
+      </p>
+    </div>
+  </form>
+</section>
+
+<p id="finder-status" class="sr-only" role="status" aria-live="polite"></p>
+<section id="finder-ergebnis" class="finder-results" aria-label="Ergebnisse"></section>
+
+<p class="affiliate-note">
+  Händlerlinks sind Affiliate-Links. Bei einem Kauf kann eine Provision entstehen; Ihr Preis bleibt
+  unverändert.
 </p>
-<div id="finder-ergebnis" role="status" aria-live="polite"></div>
 
-<h2>Kategorien</h2>
-<ul class="kategorien">
-  {
-    taxonomie.categories.map((kategorie) => (
-      <li data-kategorie={kategorie.categoryId}>
-        <strong>{kategorie.label}.</strong> {kategorie.description}
-        <p class="hilfe">
-          Gefiltert wird nach: {kategorie.matchAttributes.map(merkmalLabel).join(', ')}.
-        </p>
-      </li>
-    ))
-  }
-</ul>
+<RetailPartnerSection market={market} page="spielzeug" />
 
-<h2>Was hier nicht geführt wird</h2>
-<ul class="ausschluesse">
-  {
-    taxonomie.excluded.map((eintrag) => (
-      <li>
-        <strong>{eintrag.topic}.</strong> {eintrag.reason}
-      </li>
-    ))
-  }
-</ul>
+<section class="finder-method" aria-labelledby="finder-method-heading">
+  <div>
+    <p class="eyebrow">So arbeitet der Finder</p>
+    <h2 id="finder-method-heading">Nachvollziehbar statt scheinbar exakt</h2>
+  </div>
+  <div class="finder-method__grid">
+    <article>
+      <strong>Belegte Filter</strong>
+      <p>Schwimmfähigkeit, Material und Reinigung zählen nur mit hinterlegter Quelle.</p>
+    </article>
+    <article>
+      <strong>Keine Sicherheitswertung</strong>
+      <p>Beaufsichtigung, Größe und Zustand des Spielzeugs bleiben im Alltag entscheidend.</p>
+    </article>
+    <article>
+      <strong>Aktuelle Händlerziele</strong>
+      <p>Preise, Varianten und Lieferbarkeit prüfen Sie immer direkt beim Händler.</p>
+    </article>
+  </div>
+</section>
+
+<section aria-labelledby="finder-categories-heading">
+  <h2 id="finder-categories-heading">Welche Spielzeugarten wir unterscheiden</h2>
+  <div class="kategorien">
+    {
+      taxonomie.categories
+        .filter((category) => category.categoryId !== 'scratching')
+        .map((kategorie) => (
+          <article data-kategorie={kategorie.categoryId}>
+            <h3>{kategorie.label}</h3>
+            <p>{kategorie.description}</p>
+            <p class="hilfe">
+              Belegbare Merkmale: {kategorie.matchAttributes.map(merkmalLabel).join(', ')}.
+            </p>
+          </article>
+        ))
+    }
+  </div>
+</section>
+
+<details class="scope">
+  <summary>Was der Spielzeugfinder bewusst nicht abdeckt</summary>
+  <ul>
+    {
+      taxonomie.excluded.map((eintrag) => (
+        <li>
+          <strong>{eintrag.topic}:</strong> {eintrag.reason}
+        </li>
+      ))
+    }
+  </ul>
+</details>
 
 <script>
   import { finderStarten } from '../../features/toys/finder-ui.ts';
@@ -193,166 +234,427 @@ const zooroyalCatalog = zooroyalKatalog();
 </script>
 
 <style>
-  .feld {
-    margin-block: var(--space-4);
+  .page-intro {
+    max-inline-size: 54rem;
+    margin-block-end: var(--space-6);
+  }
+
+  .page-intro h1 {
+    max-inline-size: 17ch;
+    margin-block: var(--space-2) var(--space-3);
+  }
+
+  .finder-shell {
+    padding: clamp(var(--space-4), 4vw, var(--space-7));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(circle at 100% 0%, rgb(232 244 239 / 75%), transparent 35%),
+      var(--color-surface);
+    box-shadow: 0 18px 50px rgb(6 60 58 / 8%);
+  }
+
+  .finder-shell__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-block-end: var(--space-4);
+  }
+
+  .finder-shell__head h2 {
+    margin-block: var(--space-1) 0;
+  }
+
+  .finder-shell__count {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border-radius: 999px;
+    background: var(--color-primary-soft);
+    color: var(--color-primary-hover);
+    font-size: var(--text-small);
+  }
+
+  .finder-basics {
+    display: grid;
+    gap: var(--space-3);
+    margin-block: var(--space-5);
   }
 
   .feld label,
   legend {
     display: block;
-    font-weight: 600;
-    margin-bottom: var(--space-1);
+    margin-bottom: var(--space-2);
+    color: var(--color-text);
+    font-weight: 700;
   }
 
-  input[type='text'],
-  select {
-    width: 100%;
-    max-width: 24rem;
-    padding: var(--space-2);
+  .feld label span {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    font-weight: 500;
+  }
+
+  .feld select,
+  .feld input {
+    inline-size: 100%;
+    min-block-size: 3rem;
+    padding: 0 var(--space-3);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-surface);
+    color: var(--color-text);
   }
 
-  fieldset {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
+  .feld select:focus,
+  .feld input:focus {
+    border-color: var(--color-primary);
+    outline: 3px solid var(--color-primary-soft);
   }
 
-  .wahl {
+  .filter-group {
+    margin: 0;
+    padding: var(--space-5) 0;
+    border: 0;
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .filter-group__hint {
+    margin-block: calc(-1 * var(--space-1)) var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .spielarten,
+  .extras {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .filter-card,
+  .check-card {
+    position: relative;
     display: flex;
-    align-items: flex-start;
+    min-width: 0;
     gap: var(--space-3);
-    padding: var(--space-4);
+    align-items: flex-start;
+    padding: var(--space-3);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-surface);
     cursor: pointer;
-    margin: 0;
   }
 
-  .auswahl {
-    display: grid;
-    gap: var(--space-3);
-    padding-block: var(--space-2);
+  .filter-card:hover,
+  .check-card:hover {
+    border-color: var(--color-primary);
   }
 
-  .wahl:has(input:checked) {
+  .filter-card:has(input:checked),
+  .check-card:has(input:checked) {
     border-color: var(--color-primary);
     background: var(--color-primary-soft);
+    box-shadow: inset 0 0 0 1px var(--color-primary);
   }
 
-  .wahl input {
-    flex: 0 0 20px;
-    margin: 3px 0 0;
+  .filter-card input,
+  .check-card input {
+    flex: 0 0 auto;
+    margin-block-start: 0.2rem;
   }
 
-  .wahl__text {
-    min-width: 0;
-  }
-
-  .wahl__text strong,
-  .wahl__text .hilfe {
+  .filter-card span,
+  .check-card span,
+  .filter-card strong,
+  .filter-card small,
+  .check-card strong,
+  .check-card small {
     display: block;
+  }
+
+  .filter-card small,
+  .check-card small {
+    margin-block-start: 0.2rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+  }
+
+  .finder-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    padding-block-start: var(--space-2);
+  }
+
+  .button-secondary,
+  :global([data-finder-reset]) {
+    border: 1px solid var(--color-primary);
+    background: transparent;
+    color: var(--color-primary);
   }
 
   .hilfe {
     color: var(--color-text-muted);
     font-size: var(--text-small);
-    margin-block: var(--space-1);
   }
 
-  .kategorien,
-  .ausschluesse {
-    padding-inline-start: var(--space-5);
+  .finder-results {
+    scroll-margin-block-start: 7rem;
+    margin-block: var(--space-7);
   }
 
-  .kategorien li,
-  .ausschluesse li {
-    margin-block: var(--space-2);
-  }
-
-  #finder-ergebnis :global(.finder__liste) {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: var(--space-5);
-    margin-block: var(--space-5);
-  }
-
-  #finder-ergebnis :global(.finder__liste > li) {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-5);
-    margin: 0;
-    max-inline-size: none;
-    min-width: 0;
-    background: var(--color-surface);
+  .finder-results :global(.finder__result-head) {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--space-3);
+    margin-block-end: var(--space-4);
+  }
+
+  .finder-results :global(.finder__result-head h2),
+  .finder-results :global(.finder__result-head p) {
+    margin-block: 0;
+  }
+
+  .finder-results :global(.finder__result-head > p) {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__liste) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .finder-results :global(.finder__card) {
+    display: flex;
+    min-width: 0;
+    overflow: hidden;
     flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
   }
 
-  #finder-ergebnis :global(.finder__bild) {
-    margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) var(--space-4);
+  .finder-results :global(.finder__bild) {
     position: relative;
+    margin: 0;
+    background: var(--color-surface-subtle);
   }
 
-  #finder-ergebnis :global(.finder__bild img) {
+  .finder-results :global(.finder__bild img) {
     display: block;
     inline-size: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
   }
 
-  #finder-ergebnis :global(.finder__bild figcaption) {
+  .finder-results :global(.finder__bild figcaption) {
     position: absolute;
     inset-inline-end: var(--space-2);
     inset-block-end: var(--space-2);
-    padding: 0.2rem 0.45rem;
+    padding: 0.2rem 0.5rem;
     border-radius: 999px;
-    background: rgb(255 255 255 / 88%);
-    color: var(--color-text);
+    background: rgb(255 255 255 / 92%);
+    color: var(--color-text-muted);
     font-size: 0.72rem;
-    line-height: 1.3;
   }
 
-  #finder-ergebnis :global(h3) {
-    margin-top: 0;
+  .finder-results :global(.finder__card-body) {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: var(--space-4);
+  }
+
+  .finder-results :global(.finder__kategorie) {
+    margin: 0 0 var(--space-1);
+    color: var(--color-primary-hover);
+    font-size: var(--text-small);
+    font-weight: 700;
+  }
+
+  .finder-results :global(h3) {
+    margin: 0;
     font-size: var(--text-h4);
   }
 
-  #finder-ergebnis :global(.finder__aktion) {
-    margin-block: var(--space-2) 0;
+  .finder-results :global(.finder__brand) {
+    margin-block: var(--space-1);
+    color: var(--color-text-muted);
   }
 
-  #finder-ergebnis :global(.finder__aktionen) {
-    margin-top: auto;
-    padding-top: var(--space-4);
+  .finder-results :global(.finder__facts) {
+    min-block-size: 3em;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__match) {
+    margin-block: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-primary-soft);
+  }
+
+  .finder-results :global(.finder__gruende) {
+    margin-block: var(--space-2) 0;
+    padding-inline-start: var(--space-4);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__neutral) {
+    margin-block: var(--space-2) 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__details) {
+    margin-block: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__details summary) {
+    color: var(--color-primary);
+    cursor: pointer;
+    font-weight: 650;
+  }
+
+  .finder-results :global(.finder__aktionen) {
+    display: grid;
+    gap: var(--space-2);
+    margin-block-start: auto;
+    padding-block-start: var(--space-3);
+  }
+
+  .finder-results :global(.finder__shop-link) {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .finder-results :global(.finder__shop-link--primary) {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .finder-results :global(.finder__leer),
+  .finder-results :global(.finder__fehler) {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-subtle);
+  }
+
+  .affiliate-note {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .finder-method {
+    margin-block: var(--space-8);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .finder-method h2 {
+    margin-block-start: var(--space-1);
+    color: white;
+  }
+
+  .finder-method__grid,
+  .kategorien {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .finder-method__grid article {
+    padding: var(--space-4);
+    border: 1px solid rgb(255 255 255 / 30%);
+    border-radius: var(--radius-md);
+    background: rgb(255 255 255 / 9%);
+  }
+
+  .finder-method__grid p {
+    margin-block-end: 0;
+    color: rgb(255 255 255 / 85%);
+  }
+
+  .kategorien article {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .kategorien h3 {
+    margin-block-start: 0;
+  }
+
+  .scope {
+    margin-block: var(--space-7);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .scope summary {
+    cursor: pointer;
+    font-weight: 700;
   }
 
   @media (min-width: 700px) {
-    .auswahl,
-    #finder-ergebnis :global(.finder__liste) {
+    .finder-basics {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .spielarten {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .extras,
+    .finder-method__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .finder-results :global(.finder__liste),
+    .kategorien {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (min-width: 1100px) {
-    #finder-ergebnis :global(.finder__liste) {
+    .spielarten {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .finder-results :global(.finder__liste) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .kategorien {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
-  #finder-ergebnis :global(.finder__kopf) {
-    font-weight: 600;
-  }
-
-  #finder-ergebnis :global(.finder__offen),
-  #finder-ergebnis :global(.finder__neutral),
-  #finder-ergebnis :global(.finder__kategorie) {
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
+  @media (max-width: 520px) {
+    .finder-shell__head {
+      flex-direction: column;
+    }
   }
 </style>

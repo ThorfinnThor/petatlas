@@ -57,13 +57,16 @@ describe('Real editorial records', () => {
     expect(sucheFutter('Royal Canin').length).toBe(6);
     expect(sucheFutter('4006381333931')).toEqual([]);
   });
-  it('ships sourced manufacturer claims without claiming independent approval', () => {
+  it('ships sourced manufacturer or approved merchant-feed claims', () => {
     expect(AttributeReviewSchema.safeParse(attributes).success).toBe(true);
     expect(attributes.dataKind).toBe('real');
     for (const product of attributes.products)
       for (const attribute of product.attributes) {
-        expect(attribute.verification).toBe('manufacturer_stated');
+        expect(['manufacturer_stated', 'merchant_feed']).toContain(attribute.verification);
         expect(attribute.sourceUrl).toMatch(/^https:\/\//);
+        if (attribute.verification === 'merchant_feed') {
+          expect(new URL(attribute.sourceUrl!).hostname).toBe('www.fressnapf.de');
+        }
       }
   });
 });

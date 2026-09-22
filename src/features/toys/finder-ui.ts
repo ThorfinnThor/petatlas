@@ -1,22 +1,26 @@
-import { PARTNER_LINK_ATTRIBUTE } from '../commerce/links.ts';
-import { amazonSearchUrl } from '../commerce/amazon.ts';
+import { productIdentity, merkmalLabel, attributPruefung } from '../care/attributes.ts';
 import { kategorie } from '../care/taxonomy.ts';
-import { productIdentity, merkmalLabel } from '../care/attributes.ts';
-/**
- * M14-04 — Spielzeugfinder im Browser.
- *
- * Der Finder rechnet lokal und zeigt zu jedem Ergebnis zwei Dinge: **warum**
- * es erscheint und **was nicht geprüft** ist. Das zweite ist der Grund, warum
- * es diesen Finder überhaupt geben darf — eine Liste ohne die Gegenseite
- * wäre eine Empfehlung.
- *
- * Es gibt keinen Sicherheits-, Haltbarkeits- oder Eignungsscore. Die Punkte
- * sind keine Bewertung des Produkts, sondern die Zahl der belegten
- * Übereinstimmungen mit den Angaben im Formular; die Oberfläche sagt das.
- */
-import { attributPruefung } from '../care/attributes.ts';
-import { BEDUERFNISSE, type Bedarf, type Treffer } from '../care/matching.ts';
-import { findeSpielzeug } from './matching.ts';
+import { amazonSearchUrl } from '../commerce/amazon.ts';
+import { PARTNER_LINK_ATTRIBUTE } from '../commerce/links.ts';
+import type { Treffer } from '../care/matching.ts';
+import {
+  findeSpielzeug,
+  SPIELARTEN,
+  type Spielart,
+  type SpielzeugBedarf,
+  type SpielzeugExtra,
+  type SpielzeugMaterial,
+} from './matching.ts';
+
+interface PartnerOffer {
+  readonly imageUrl?: unknown;
+  readonly affiliateUrl?: unknown;
+}
+
+interface SicherePartnerOffer {
+  readonly imageUrl: string;
+  readonly affiliateUrl: string;
+}
 
 function escape(text: string): string {
   return text.replace(
@@ -26,16 +30,28 @@ function escape(text: string): string {
   );
 }
 
-function bedarfLesen(): Bedarf {
-  const art = document.querySelector<HTMLSelectElement>('#finder-tierart')?.value ?? 'dog';
-  const gewichtRoh = document.querySelector<HTMLInputElement>('#finder-gewicht')?.value ?? '';
-  const gewicht = /^\d+(\.\d+)?$/.test(gewichtRoh.trim().replace(',', '.'))
-    ? Number(gewichtRoh.trim().replace(',', '.'))
-    : null;
-  const needs = [
-    ...document.querySelectorAll<HTMLInputElement>('input[name="bedarf"]:checked'),
-  ].map((feld) => feld.value);
-  return { species: art, weightKilograms: gewicht, needs };
+function ausgewaehlterWert<T extends string>(name: string, fallback: T): T {
+  return (document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ??
+    fallback) as T;
+}
+
+function bedarfLesen(): SpielzeugBedarf {
+  const species =
+    document.querySelector<HTMLSelectElement>('#finder-tierart')?.value === 'cat' ? 'cat' : 'dog';
+  const extras = [
+    ...document.querySelectorAll<HTMLInputElement>('input[name="extra"]:checked'),
+  ].map((feld) => feld.value as SpielzeugExtra);
+  const material =
+    (document.querySelector<HTMLSelectElement>('#finder-material')?.value as SpielzeugMaterial) ??
+    'all';
+  return {
+    species,
+    weightKilograms: null,
+    needs: [],
+    playStyle: ausgewaehlterWert<Spielart>('spielart', 'all'),
+    material,
+    extras,
+  };
 }
 
 function symbolbild(identity: ReturnType<typeof productIdentity>): {
@@ -45,179 +61,193 @@ function symbolbild(identity: ReturnType<typeof productIdentity>): {
   if (identity?.species === 'cat') {
     return {
       src: '/images/products/symbol-cat.avif',
-      alt: 'Symbolbild für Katzenspielzeug, keine Herstellerabbildung',
+      alt: 'Neutrales Symbolbild für Katzenspielzeug',
     };
   }
   if (identity?.categoryId === 'fetch-toy') {
     return {
       src: '/images/products/symbol-fetch.avif',
-      alt: 'Symbolbild für Apportierspielzeug, keine Herstellerabbildung',
+      alt: 'Neutrales Symbolbild für Apportierspielzeug',
     };
   }
   if (identity?.categoryId === 'chew-toy') {
     return {
       src: '/images/products/symbol-chew.avif',
-      alt: 'Symbolbild für Kauspielzeug, keine Herstellerabbildung',
+      alt: 'Neutrales Symbolbild für Kauspielzeug',
     };
   }
   return {
     src: '/images/products/symbol-puzzle.avif',
-    alt: 'Symbolbild für Beschäftigungsspielzeug, keine Herstellerabbildung',
+    alt: 'Neutrales Symbolbild für Beschäftigungsspielzeug',
   };
 }
 
-function trefferMarkup(treffer: Treffer): string {
+function sichereAngebote(raw: string | undefined): Record<string, SicherePartnerOffer> {
+  try {
+    const offers = JSON.parse(raw ?? '{}') as Record<string, PartnerOffer>;
+    return Object.fromEntries(
+      Object.entries(offers).flatMap(([id, offer]) => {
+        if (typeof offer.imageUrl !== 'string' || typeof offer.affiliateUrl !== 'string') return [];
+        const imageUrl = new URL(offer.imageUrl);
+        const affiliateUrl = new URL(offer.affiliateUrl);
+        if (imageUrl.protocol !== 'https:' || affiliateUrl.protocol !== 'https:') return [];
+        return [[id, { imageUrl: imageUrl.toString(), affiliateUrl: affiliateUrl.toString() }]];
+      }),
+    );
+  } catch {
+    return {};
+  }
+}
+
+function amazonLink(productId: string): string {
   const configured = document.querySelector<HTMLFormElement>('#finder')?.dataset.amazonLinks;
-  const expected = amazonSearchUrl(treffer.productId);
-  let amazon = '';
+  const expected = amazonSearchUrl(productId);
+  if (!expected) return '';
   try {
     const links = JSON.parse(configured ?? '{}') as Record<string, unknown>;
-    if (expected && links[treffer.productId] === expected)
-      amazon = `<p class="finder__aktion"><a href="${escape(expected)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Amazon suchen ↗ <span class="sr-only">(Werbung)</span></a></p>`;
+    if (links[productId] !== expected) return '';
   } catch {
-    /* Missing or malformed configuration never creates a link. */
+    return '';
   }
-  const configuredFressnapf =
-    document.querySelector<HTMLFormElement>('#finder')?.dataset.fressnapfOffers;
-  const configuredZooRoyal =
-    document.querySelector<HTMLFormElement>('#finder')?.dataset.zooroyalOffers;
-  let fressnapf = '';
-  let feedImage: { imageUrl: string; affiliateUrl: string } | null = null;
-  try {
-    const offers = JSON.parse(configuredFressnapf ?? '{}') as Record<
-      string,
-      { imageUrl?: unknown; affiliateUrl?: unknown }
-    >;
-    const offer = offers[treffer.productId];
-    if (typeof offer?.imageUrl === 'string' && typeof offer.affiliateUrl === 'string') {
-      const imageUrl = new URL(offer.imageUrl);
-      const affiliateUrl = new URL(offer.affiliateUrl);
-      if (imageUrl.protocol === 'https:' && affiliateUrl.protocol === 'https:') {
-        feedImage = { imageUrl: imageUrl.toString(), affiliateUrl: affiliateUrl.toString() };
-        fressnapf = `<p class="finder__aktion"><a href="${escape(feedImage.affiliateUrl)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Fressnapf ansehen ↗ <span class="sr-only">(Werbung)</span></a></p>`;
-      }
-    }
-  } catch {
-    /* Missing or malformed feed data falls back to the local symbol. */
-  }
-  let zooRoyal = '';
-  let zooFeedImage: { imageUrl: string; affiliateUrl: string } | null = null;
-  try {
-    const offers = JSON.parse(configuredZooRoyal ?? '{}') as Record<
-      string,
-      { imageUrl?: unknown; affiliateUrl?: unknown }
-    >;
-    const offer = offers[treffer.productId];
-    if (typeof offer?.imageUrl === 'string' && typeof offer.affiliateUrl === 'string') {
-      const imageUrl = new URL(offer.imageUrl);
-      const affiliateUrl = new URL(offer.affiliateUrl);
-      if (imageUrl.protocol === 'https:' && affiliateUrl.protocol === 'https:') {
-        zooFeedImage = { imageUrl: imageUrl.toString(), affiliateUrl: affiliateUrl.toString() };
-        zooRoyal = `<p class="finder__aktion"><a href="${escape(zooFeedImage.affiliateUrl)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei ZooRoyal ansehen ↗ <span class="sr-only">(Werbung)</span></a></p>`;
-      }
-    }
-  } catch {
-    /* Missing or malformed feed data falls back to the local symbol. */
-  }
-  const identity = productIdentity(treffer.productId);
-  const bild = symbolbild(identity);
-  const bildQuelle = feedImage?.imageUrl ?? zooFeedImage?.imageUrl ?? bild.src;
-  const bildAlt = feedImage
-    ? `${identity?.name ?? treffer.productId} bei Fressnapf`
-    : zooFeedImage
-      ? `${identity?.name ?? treffer.productId} bei ZooRoyal`
-      : bild.alt;
-  const source = identity
-    ? `<p><a href="${escape(identity.sourceUrl)}" rel="noopener">Herstellerangaben ansehen</a> · ${escape(identity.checkedAt)}</p>`
-    : '';
-  const begruendung =
-    treffer.begruendung.length === 0
-      ? '<p class="finder__neutral">Keine belegte Übereinstimmung mit Ihren Angaben — das Produkt ' +
-        'ist nur nicht ausgeschlossen.</p>'
-      : `<ul class="finder__gruende">${treffer.begruendung
-          .map((grund) => `<li>${escape(grund)}</li>`)
-          .join('')}</ul>`;
+  return `<a class="finder__shop-link" href="${escape(expected)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Amazon suchen ↗ <span class="sr-only">(Werbung)</span></a>`;
+}
 
-  const offen =
-    treffer.ungeprueft.length === 0
-      ? ''
-      : `<p class="finder__offen">Nicht geprüft: ${treffer.ungeprueft.map(merkmalLabel).map(escape).join(', ')}.</p>`;
+function trefferMarkup(
+  treffer: Treffer,
+  fressnapfOffers: Readonly<Record<string, SicherePartnerOffer>>,
+  zooRoyalOffers: Readonly<Record<string, SicherePartnerOffer>>,
+): string {
+  const identity = productIdentity(treffer.productId);
+  const fallback = symbolbild(identity);
+  const fressnapf = fressnapfOffers[treffer.productId];
+  const zooRoyal = zooRoyalOffers[treffer.productId];
+  const feedOffer = fressnapf ?? zooRoyal;
+  const retailer = fressnapf ? 'Fressnapf' : zooRoyal ? 'ZooRoyal' : null;
+  const imageUrl = feedOffer?.imageUrl ?? fallback.src;
+  const imageAlt = feedOffer
+    ? `${identity?.name ?? treffer.productId} · Produktbild von ${retailer}`
+    : fallback.alt;
+  const fressnapfLink = fressnapf
+    ? `<a class="finder__shop-link finder__shop-link--primary" href="${escape(fressnapf.affiliateUrl)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei Fressnapf ansehen ↗ <span class="sr-only">(Werbung)</span></a>`
+    : '';
+  const zooRoyalLink = zooRoyal
+    ? `<a class="finder__shop-link finder__shop-link--primary" href="${escape(zooRoyal.affiliateUrl)}" rel="${PARTNER_LINK_ATTRIBUTE.rel}" target="${PARTNER_LINK_ATTRIBUTE.target}">Bei ZooRoyal ansehen ↗ <span class="sr-only">(Werbung)</span></a>`
+    : '';
+  const source = identity
+    ? `<a href="${escape(identity.sourceUrl)}" rel="noopener">Quelle ansehen</a> · Stand ${escape(identity.checkedAt)}`
+    : '';
+  const reasons =
+    treffer.begruendung.length > 0
+      ? `<ul class="finder__gruende">${treffer.begruendung
+          .slice(0, 4)
+          .map((grund) => `<li>${escape(grund)}</li>`)
+          .join('')}</ul>`
+      : '<p class="finder__neutral">Passt zu den gewählten Grundfiltern; weitere Merkmale sind nicht belegt.</p>';
+  const open =
+    treffer.ungeprueft.length > 0
+      ? `<p>Offen: ${treffer.ungeprueft.map(merkmalLabel).map(escape).join(', ')}.</p>`
+      : '';
+  const facts = identity?.facts.length
+    ? `<p class="finder__facts">${identity.facts.map(escape).join(' · ')}</p>`
+    : '';
 
   return `
-    <li data-produkt="${escape(treffer.productId)}" data-punkte="${treffer.punkte}">
+    <li class="finder__card" data-produkt="${escape(treffer.productId)}" data-punkte="${treffer.punkte}">
       <figure class="finder__bild">
-        <img src="${escape(bildQuelle)}" alt="${escape(bildAlt)}" width="720" height="720" loading="lazy" decoding="async" referrerpolicy="no-referrer"${feedImage || zooFeedImage ? ` data-feed-image data-fallback-src="${bild.src}" data-fallback-alt="${escape(bild.alt)}"` : ''}>
-        <figcaption>${feedImage ? 'Produktbild · Fressnapf-Feed' : zooFeedImage ? 'Produktbild · ZooRoyal-Feed' : 'Symbolbild'}</figcaption>
+        <img src="${escape(imageUrl)}" alt="${escape(imageAlt)}" width="720" height="720" loading="lazy" decoding="async" referrerpolicy="no-referrer"${feedOffer ? ` data-feed-image data-fallback-src="${fallback.src}" data-fallback-alt="${escape(fallback.alt)}"` : ''}>
+        <figcaption>${feedOffer ? `Produktbild · ${retailer}-Feed` : 'Symbolbild'}</figcaption>
       </figure>
-      <h3>${escape(productIdentity(treffer.productId)?.name ?? treffer.productId)}</h3>
-      <p class="finder__kategorie">${identity ? `${escape(identity.brand)} · ` : ''}Kategorie: ${escape(kategorie(treffer.categoryId)?.label ?? treffer.categoryId)}</p>
-      ${identity ? `<p>${identity.facts.map(escape).join(' · ')}</p>` : ''}
-      ${begruendung}
-      ${offen}
-      ${source}
-      <div class="finder__aktionen">${fressnapf}${zooRoyal}${amazon}</div>
+      <div class="finder__card-body">
+        <p class="finder__kategorie">${identity?.species === 'cat' ? 'Katze' : 'Hund'} · ${escape(kategorie(treffer.categoryId)?.label ?? treffer.categoryId)}</p>
+        <h3>${escape(identity?.name ?? treffer.productId)}</h3>
+        ${identity ? `<p class="finder__brand">${escape(identity.brand)}</p>` : ''}
+        ${facts}
+        <div class="finder__match"><strong>Warum es erscheint</strong>${reasons}</div>
+        <details class="finder__details">
+          <summary>Quellen und offene Angaben</summary>
+          ${open}
+          <p>${source}</p>
+        </details>
+        <div class="finder__aktionen">${fressnapfLink}${zooRoyalLink}${amazonLink(treffer.productId)}</div>
+      </div>
     </li>`;
+}
+
+function aktuelleFilter(bedarf: SpielzeugBedarf): string[] {
+  const filter: string[] = [
+    bedarf.species === 'cat' ? 'Katze' : 'Hund',
+    SPIELARTEN[bedarf.playStyle ?? 'all'].label,
+  ];
+  if (bedarf.extras?.includes('floats')) filter.push('schwimmfähig');
+  if (bedarf.extras?.includes('foodFillable')) filter.push('befüllbar');
+  if (bedarf.extras?.includes('dishwasherSafe')) filter.push('spülmaschinengeeignet');
+  if (bedarf.material && bedarf.material !== 'all') filter.push('gewähltes Material');
+  return filter;
 }
 
 export function finderStarten(): void {
   const form = document.querySelector<HTMLFormElement>('#finder');
   const ausgabe = document.querySelector<HTMLElement>('#finder-ergebnis');
-  if (form === null || ausgabe === null) return;
+  const status = document.querySelector<HTMLElement>('#finder-status');
+  if (!form || !ausgabe) return;
+  const fressnapfOffers = sichereAngebote(form.dataset.fressnapfOffers);
+  const zooRoyalOffers = sichereAngebote(form.dataset.zooroyalOffers);
 
   const requestedSpecies = new URLSearchParams(window.location.search).get('tierart');
   const speciesField = document.querySelector<HTMLSelectElement>('#finder-tierart');
-  if (speciesField && (requestedSpecies === 'cat' || requestedSpecies === 'dog'))
+  if (speciesField && (requestedSpecies === 'cat' || requestedSpecies === 'dog')) {
     speciesField.value = requestedSpecies;
+  }
+  document.querySelector<HTMLElement>('#finder-ohne-js')?.setAttribute('hidden', '');
 
-  const hinweis = document.querySelector<HTMLElement>('#finder-ohne-js');
-  if (hinweis !== null) hinweis.hidden = true;
-  const knopf = document.querySelector<HTMLButtonElement>('#finder-suchen');
-  if (knopf !== null) knopf.hidden = false;
-
-  form.addEventListener('submit', (ereignis) => {
-    ereignis.preventDefault();
-    const gewichtFeld = document.querySelector<HTMLInputElement>('#finder-gewicht');
-    const roh = gewichtFeld?.value.trim() ?? '';
-    const gewicht = Number(roh.replace(',', '.'));
-    if (
-      roh !== '' &&
-      (!/^\d+(?:[.,]\d+)?$/.test(roh) || !Number.isFinite(gewicht) || gewicht <= 0)
-    ) {
-      gewichtFeld?.setAttribute('aria-invalid', 'true');
-      ausgabe.textContent =
-        'Bitte geben Sie ein positives Gewicht in Kilogramm ein oder lassen Sie das Feld leer, wenn es unbekannt ist.';
-      gewichtFeld?.focus();
-      return;
-    }
-    gewichtFeld?.removeAttribute('aria-invalid');
+  const render = (): void => {
     const bedarf = bedarfLesen();
     const treffer = findeSpielzeug(attributPruefung().products, bedarf);
-
-    const gewaehlt = bedarf.needs
-      .map((eintrag) => BEDUERFNISSE[eintrag]?.label)
-      .filter((label): label is string => label !== undefined);
-
+    if (status) {
+      status.textContent =
+        treffer.length === 0
+          ? 'Keine belegte Kombination gefunden.'
+          : `${treffer.length} passende ${treffer.length === 1 ? 'Option' : 'Optionen'} gefunden.`;
+    }
+    const filter = aktuelleFilter(bedarf);
     const kopf =
       treffer.length === 0
-        ? '<p class="finder__kopf">Kein Produkt bleibt übrig. Das heißt nicht, dass es keines gibt — ' +
-          'nur, dass hier keines erfasst ist, das zu Ihren Angaben passt.</p>'
-        : `<p class="finder__kopf">${treffer.length} Produkt(e) sind nach Ihren Angaben nicht ` +
-          `ausgeschlossen${gewaehlt.length === 0 ? '' : ` (${escape(gewaehlt.join(', '))})`}. ` +
-          'Die Reihenfolge zählt belegte Übereinstimmungen — sie ist keine Bewertung des Produkts.</p>';
-
-    ausgabe.innerHTML = `${kopf}<ul class="finder__liste">${treffer.map(trefferMarkup).join('')}</ul>`;
+        ? '<div class="finder__leer"><h3>Keine belegte Kombination gefunden</h3><p>Entfernen Sie einen Zusatzfilter oder wählen Sie „Alle Spielarten“. Es werden nur Produkte gezeigt, deren Angaben den Filtern nachweisbar entsprechen.</p><button type="button" data-finder-reset>Filter zurücksetzen</button></div>'
+        : `<div class="finder__result-head"><div><p class="eyebrow">Ergebnis</p><h2>${treffer.length} passende ${treffer.length === 1 ? 'Option' : 'Optionen'}</h2></div><p>${escape(filter.join(' · '))}</p></div>`;
+    ausgabe.innerHTML = `${kopf}<ul class="finder__liste">${treffer
+      .map((eintrag) => trefferMarkup(eintrag, fressnapfOffers, zooRoyalOffers))
+      .join('')}</ul>`;
+    ausgabe
+      .querySelector<HTMLButtonElement>('[data-finder-reset]')
+      ?.addEventListener('click', () => {
+        form.reset();
+        render();
+        form.querySelector<HTMLElement>('input, select')?.focus();
+      });
     for (const image of ausgabe.querySelectorAll<HTMLImageElement>('img[data-feed-image]')) {
       image.addEventListener(
         'error',
         () => {
-          const fallback = image.dataset.fallbackSrc;
-          if (!fallback || image.src.endsWith(fallback)) return;
-          image.src = fallback;
+          const fallbackSrc = image.dataset.fallbackSrc;
+          if (!fallbackSrc || image.src.endsWith(fallbackSrc)) return;
+          image.src = fallbackSrc;
           image.alt = image.dataset.fallbackAlt ?? 'Neutrales Symbolbild';
           image.closest('figure')?.querySelector('figcaption')?.replaceChildren('Symbolbild');
         },
         { once: true },
       );
     }
+  };
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    render();
+    ausgabe.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+  form.addEventListener('change', render);
+  document.querySelector<HTMLButtonElement>('#finder-reset')?.addEventListener('click', () => {
+    form.reset();
+    render();
+  });
+  render();
 }

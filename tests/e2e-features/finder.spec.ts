@@ -11,13 +11,26 @@ test('shows real products and explicitly missing suitability data', async ({ pag
   const kong = page.locator('[data-produkt="kong-classic"]');
   await expect(kong).toBeVisible();
   await expect(kong).toContainText('KONG Classic');
-  await expect(kong.locator('.finder__offen')).toContainText('Größenbereich');
+  await kong.locator('.finder__details').click();
+  await expect(kong.locator('.finder__details')).toContainText('Größenbereich');
   await expect(kong).toHaveAttribute('data-punkte', '0');
-  await expect(kong.locator('.finder__neutral')).toContainText('nur nicht ausgeschlossen');
-  await expect(page.locator('.finder__kopf')).toContainText('keine Bewertung des Produkts');
-  await page.fill('#finder-gewicht', '5');
-  await page.click('#finder-suchen');
-  await expect(kong.locator('.finder__offen')).toContainText('Größenbereich');
+  await expect(kong.locator('.finder__neutral')).toContainText('weitere Merkmale');
+  await expect(page.locator('.page-intro')).toContainText('keine erfundenen');
+});
+
+test('filters only on evidenced toy attributes and can be reset', async ({ page }) => {
+  await page.goto(SPIELZEUG);
+  await page.getByLabel('Werfen & apportieren').check();
+  await expect(page.locator('.finder__card')).toHaveCount(4);
+  await page.getByLabel('Schwimmfähig').check();
+  await expect(page.locator('.finder__card')).toHaveCount(3);
+  await expect(page.locator('.finder__card')).toContainText([
+    'Floating Stick M',
+    'Schwimmfähiger Rochen',
+    'Zisc',
+  ]);
+  await page.getByRole('button', { name: 'Filter zurücksetzen' }).click();
+  await expect(page.locator('.finder__card')).toHaveCount(13);
 });
 
 test('vergibt keinen Sicherheits- oder Haltbarkeitsscore', async ({ page }) => {

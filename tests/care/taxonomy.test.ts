@@ -88,9 +88,9 @@ describe('Erlaubte Matchingattribute', () => {
 });
 
 describe('Zuschnitt', () => {
-  it('deckt Pflege und Spielzeug mit je fünf Startkategorien ab', () => {
+  it('deckt Pflege und die sechs Spielzeugarten vollständig ab', () => {
     expect(pflegeTaxonomie().categories.length).toBe(5);
-    expect(spielzeugTaxonomie().categories.length).toBe(5);
+    expect(spielzeugTaxonomie().categories.length).toBe(6);
   });
 
   it('führt Zahnpflege als Zubehör ohne Wirkstoff', () => {
