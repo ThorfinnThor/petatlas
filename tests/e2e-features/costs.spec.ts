@@ -99,6 +99,7 @@ test('nimmt dieselbe Position nicht zweimal auf', async ({ page }) => {
   await page.goto(RECHNER);
   await katalogGeladen(page);
   await positionWaehlen(page, 'Beratung im einzelnen', '1', '1');
+  await page.fill('#suche', 'Beratung im einzelnen');
   await page.locator('#treffer button').first().click();
   await expect(page.locator('#suche-hinweis')).toContainText('bereits ausgewählt');
   await expect(page.locator('#ergebnis tbody tr')).toHaveCount(1);

@@ -21,7 +21,7 @@ for (const width of [360, 390, 430, 768, 1024, 1280, 1440]) {
       if (path === '/de-de/tierarztkosten/') {
         await page.fill('#suche', 'Allgemeine Untersuchung');
         await page
-          .getByRole('button', {
+          .getByRole('option', {
             name: /Allgemeine Untersuchung mit Beratung, Hund, Katze, Frettchen/,
           })
           .click();

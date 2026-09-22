@@ -18,7 +18,7 @@ for (const width of [390, 1280]) {
       await page.goto('/de-de/tierarztkosten/');
       await page.fill('#suche', 'Allgemeine Untersuchung');
       await page
-        .getByRole('button', {
+        .getByRole('option', {
           name: /Allgemeine Untersuchung mit Beratung, Hund, Katze, Frettchen/,
         })
         .click();
@@ -51,7 +51,7 @@ for (const width of [390, 1280]) {
 
     test('filters the initial map list without selecting a city first', async ({ page }) => {
       await page.goto(MAP);
-      await page.getByRole('checkbox', { name: 'Tierarztpraxis (4.928)', exact: true }).check();
+      await page.getByRole('checkbox', { name: /Tierarztpraxis \(\d+\)/ }).check();
       await expect(page.locator('#treffer-status')).toContainText('km um Berlin');
       const categories = await page.locator('#trefferliste .meta').allTextContents();
       expect(categories.length).toBeGreaterThan(0);
