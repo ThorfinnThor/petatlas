@@ -66,6 +66,15 @@ function sortiere(a: AnzeigeFlaeche, b: AnzeigeFlaeche): number {
 }
 
 /**
+ * Korrigiert ausschließlich belegte, offensichtliche Schreibfehler für die
+ * Ausgabe. Der unveränderte Quelltext bleibt im Snapshot erhalten und damit
+ * weiterhin prüfbar; Inhalt und Rechtsaussage werden nicht redigiert.
+ */
+export function kommunalenQuelltextAnzeigen(text: string | null): string | null {
+  return text?.replace(/\bCharakers\b/g, 'Charakters') ?? null;
+}
+
+/**
  * Kommunal ausgewiesene Flächen einer Stadt — oder `null`, wenn für diese
  * Stadt keine kommunale Quelle erfasst ist. `null` heißt „nicht erfasst“,
  * nie „gibt es nicht“.
@@ -94,7 +103,7 @@ export function kommunaleFlaechen(stadtSlug: string): KommunaleAnzeige | null {
       name: flaeche.name,
       address: flaeche.address,
       district: flaeche.district,
-      note: flaeche.note,
+      note: kommunalenQuelltextAnzeigen(flaeche.note),
     }))
     .sort(sortiere);
 
