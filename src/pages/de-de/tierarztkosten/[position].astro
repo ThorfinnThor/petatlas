@@ -61,7 +61,7 @@ const notdienst = faktorzeilen(item, 'emergency');
 const eigenerPfad = subroutePath(market, 'costs', eintrag.slug);
 const rechner = routePath(market, 'costs');
 const verwandte = nachbarn(eintrag);
-const titelIstSehrLang = item.originalLabel.length > 140;
+const titelIstSehrLang = item.originalLabel.length > 95;
 
 function betrag(minor: number): string {
   return formatMoney(money(minor, item.currency), market.locale);

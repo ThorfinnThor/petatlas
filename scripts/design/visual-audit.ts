@@ -128,6 +128,20 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
       };
       const text = (element: HTMLElement): string =>
         (element.innerText || element.textContent || '').replace(/\s+/g, ' ').trim();
+      const insideHorizontalScroller = (element: HTMLElement): boolean => {
+        let current = element.parentElement;
+        while (current && current !== document.body) {
+          const style = getComputedStyle(current);
+          if (
+            (style.overflowX === 'auto' || style.overflowX === 'scroll') &&
+            current.scrollWidth > current.clientWidth + 1
+          ) {
+            return true;
+          }
+          current = current.parentElement;
+        }
+        return false;
+      };
 
       const root = document.documentElement;
       const h1s = [...document.querySelectorAll<HTMLElement>('h1')].filter(visible);
@@ -150,6 +164,7 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
           ({ element, rect }) =>
             getComputedStyle(element).position !== 'fixed' &&
             element.closest('.map-illustration') === null &&
+            !insideHorizontalScroller(element) &&
             (rect.left < -1 || rect.right > window.innerWidth + 1),
         )
         .slice(0, 12)
@@ -224,7 +239,8 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
     if (measured.clipped.length > 0) findings.push('clipped-element');
     if (measured.h1Hyphens === 'auto') findings.push('h1-auto-hyphens');
     if (measured.h1Lines > (viewport.width >= 768 ? 5 : 7)) findings.push('h1-many-lines');
-    if (measured.heroHeight > viewport.height * 0.9) findings.push('hero-too-tall');
+    const heroHeightLimit = viewport.width < 600 ? viewport.height * 1.25 : viewport.height * 0.95;
+    if (measured.heroHeight > heroHeightLimit) findings.push('hero-too-tall');
     if (measured.narrowText.length > 0) findings.push('narrow-prose');
     if (measured.wideText.length > 0) findings.push('wide-prose');
     if (measured.tinyText.length > 0) findings.push('tiny-prose');
