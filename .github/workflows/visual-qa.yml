@@ -58,6 +58,9 @@ jobs:
       - name: Alle öffentlichen Seiten messen
         run: npm run design:audit -- --base http://127.0.0.1:4334
 
+      - name: Eigenständige Seiten und Ausreißer aufnehmen
+        run: npm run design:visual-screenshots -- --base http://127.0.0.1:4334
+
       - name: Messbericht sichern
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7

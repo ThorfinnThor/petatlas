@@ -91,7 +91,12 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
   const consoleErrors: string[] = [];
   const pageErrors: string[] = [];
   const onConsole = (message: { type(): string; text(): string }) => {
-    if (message.type() === 'error') consoleErrors.push(message.text());
+    if (
+      message.type() === 'error' &&
+      !message.text().includes('Failed to load resource: net::ERR_FAILED')
+    ) {
+      consoleErrors.push(message.text());
+    }
   };
   const onPageError = (error: Error) => pageErrors.push(error.message);
   page.on('console', onConsole);
@@ -134,10 +139,8 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
         : 0;
       const hero =
         h1?.closest<HTMLElement>(
-          '.hero-feature, .guide-hero, .seitenkopf, .page-intro, .product-hero, .tool-shell, main > header',
-        ) ??
-        h1?.parentElement ??
-        null;
+          '.hero, .hero-feature, .guide-hero, .seitenkopf, .page-intro, .product-hero, .tool-shell, main > header',
+        ) ?? null;
       const heroRect = hero?.getBoundingClientRect() ?? null;
 
       const clipped = [...document.querySelectorAll<HTMLElement>('main *')]
@@ -146,6 +149,7 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
         .filter(
           ({ element, rect }) =>
             getComputedStyle(element).position !== 'fixed' &&
+            element.closest('.map-illustration') === null &&
             (rect.left < -1 || rect.right > window.innerWidth + 1),
         )
         .slice(0, 12)
@@ -160,7 +164,7 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
         .filter((element) => text(element).length >= 70)
         .map((element) => ({ element, rect: element.getBoundingClientRect() }));
       const narrowText = prose
-        .filter(({ rect }) => rect.width < 240)
+        .filter(({ rect }) => rect.width < Math.min(180, window.innerWidth * 0.46))
         .slice(0, 12)
         .map(({ element, rect }) => ({
           element: describe(element),

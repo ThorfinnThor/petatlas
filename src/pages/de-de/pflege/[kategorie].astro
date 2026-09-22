@@ -385,6 +385,8 @@ const faqThema: Readonly<Record<string, string>> = {
   <style>
     .care-guide {
       --care-accent: #a84e2a;
+      min-inline-size: 0;
+      overflow-wrap: anywhere;
     }
     .eyebrow {
       margin: 0 0 var(--space-2);
@@ -410,6 +412,7 @@ const faqThema: Readonly<Record<string, string>> = {
       margin-block: 0 var(--space-4);
       font-size: clamp(2.5rem, 6vw, 5.5rem);
       line-height: 0.98;
+      overflow-wrap: anywhere;
     }
     .hero__intro {
       max-inline-size: 62ch;

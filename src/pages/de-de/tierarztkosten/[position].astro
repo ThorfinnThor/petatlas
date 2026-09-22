@@ -61,6 +61,7 @@ const notdienst = faktorzeilen(item, 'emergency');
 const eigenerPfad = subroutePath(market, 'costs', eintrag.slug);
 const rechner = routePath(market, 'costs');
 const verwandte = nachbarn(eintrag);
+const titelIstSehrLang = item.originalLabel.length > 140;
 
 function betrag(minor: number): string {
   return formatMoney(money(minor, item.currency), market.locale);
@@ -82,7 +83,14 @@ function betrag(minor: number): string {
     ]}
   />
 
-  <h1>{item.originalLabel}</h1>
+  <h1>{titelIstSehrLang ? `GOT-Position ${item.officialItemId}` : item.originalLabel}</h1>
+  {
+    titelIstSehrLang && (
+      <p class="amtliche-bezeichnung">
+        <strong>Amtliche Bezeichnung:</strong> {item.originalLabel}
+      </p>
+    )
+  }
   <p>
     Position {item.officialItemId} der Gebührenordnung für Tierärztinnen und Tierärzte, Fassung {
       quelle.sourceVersion
@@ -223,6 +231,15 @@ function betrag(minor: number): string {
 </BaseLayout>
 
 <style>
+  h1,
+  .amtliche-bezeichnung {
+    overflow-wrap: anywhere;
+  }
+
+  .amtliche-bezeichnung {
+    max-inline-size: 68ch;
+  }
+
   .gebuehr {
     margin-block: var(--space-6);
     max-inline-size: 22rem;
@@ -251,6 +268,13 @@ function betrag(minor: number): string {
 
   table {
     margin-block: var(--space-4) var(--space-8);
+    max-inline-size: 100%;
+  }
+
+  th,
+  td,
+  caption {
+    overflow-wrap: anywhere;
   }
 
   caption {
@@ -266,7 +290,7 @@ function betrag(minor: number): string {
 
   .fundstelle {
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: max-content minmax(0, 1fr);
     gap: var(--space-2) var(--space-4);
     margin-block: var(--space-4);
   }
@@ -279,5 +303,22 @@ function betrag(minor: number): string {
   .fundstelle dd {
     margin: 0;
     overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 600px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+    }
+
+    .fundstelle {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+
+    .fundstelle dd + dt {
+      margin-block-start: var(--space-2);
+    }
   }
 </style>
