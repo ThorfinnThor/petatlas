@@ -128,37 +128,46 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
         funktioniert trotzdem — er braucht sie nicht.
       </p>
     ) : (
-      <table class="naehrwerte">
-        <thead>
-          <tr>
-            <th scope="col">Angabe</th>
-            <th scope="col">Wert</th>
-            <th scope="col">Bezug</th>
-            <th scope="col">Quelle</th>
-          </tr>
-        </thead>
-        <tbody>
-          {deklariert.map((eintrag) => (
-            <tr data-naehrwert={eintrag.nutrient}>
-              <th scope="row">{NAEHRWERT_TEXT[eintrag.nutrient] ?? eintrag.nutrient}</th>
-              <td>
-                {eintrag.value?.toLocaleString('de-DE')} {eintrag.unit}
-              </td>
-              <td>{eintrag.basis === null ? '—' : (BASIS_TEXT[eintrag.basis] ?? eintrag.basis)}</td>
-              <td>
-                {eintrag.sourceUrl === null ? (
-                  eintrag.sourceLabel
-                ) : (
-                  <a href={eintrag.sourceUrl} rel="nofollow noopener">
-                    {eintrag.sourceLabel}
-                  </a>
-                )}
-                {eintrag.checkedAt === null ? '' : `, geprüft am ${eintrag.checkedAt}`}
-              </td>
+      <div
+        class="naehrwerte-scroll"
+        role="region"
+        aria-label="Deklarierte Nährwerte; auf kleinen Bildschirmen horizontal scrollbar"
+        tabindex="0"
+      >
+        <table class="naehrwerte">
+          <thead>
+            <tr>
+              <th scope="col">Angabe</th>
+              <th scope="col">Wert</th>
+              <th scope="col">Bezug</th>
+              <th scope="col">Quelle</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {deklariert.map((eintrag) => (
+              <tr data-naehrwert={eintrag.nutrient}>
+                <th scope="row">{NAEHRWERT_TEXT[eintrag.nutrient] ?? eintrag.nutrient}</th>
+                <td>
+                  {eintrag.value?.toLocaleString('de-DE')} {eintrag.unit}
+                </td>
+                <td>
+                  {eintrag.basis === null ? '—' : (BASIS_TEXT[eintrag.basis] ?? eintrag.basis)}
+                </td>
+                <td>
+                  {eintrag.sourceUrl === null ? (
+                    eintrag.sourceLabel
+                  ) : (
+                    <a href={eintrag.sourceUrl} rel="nofollow noopener">
+                      {eintrag.sourceLabel}
+                    </a>
+                  )}
+                  {eintrag.checkedAt === null ? '' : `, geprüft am ${eintrag.checkedAt}`}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     )
   }
 
@@ -238,11 +247,19 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
       margin: 0;
     }
 
+    .naehrwerte-scroll {
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      margin-block: var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+    }
+
     .naehrwerte {
       width: 100%;
-      max-width: 100%;
+      min-width: 42rem;
       border-collapse: collapse;
-      margin-block: var(--space-3);
     }
 
     .naehrwerte th,
@@ -251,7 +268,17 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
       padding: var(--space-2);
       text-align: start;
       vertical-align: top;
-      overflow-wrap: anywhere;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
+    .naehrwerte thead th {
+      background: var(--color-primary-soft);
+    }
+
+    .naehrwerte tbody tr:last-child th,
+    .naehrwerte tbody tr:last-child td {
+      border-bottom: 0;
     }
 
     .hilfe {
@@ -265,14 +292,6 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
       display: flex;
       flex-wrap: wrap;
       gap: var(--space-2) var(--space-4);
-    }
-
-    @media (max-width: 600px) {
-      .naehrwerte {
-        display: block;
-        overflow-x: auto;
-        overscroll-behavior-inline: contain;
-      }
     }
   </style>
 </BaseLayout>

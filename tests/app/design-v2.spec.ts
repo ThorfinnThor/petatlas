@@ -90,6 +90,34 @@ test('real homepage meets automated accessibility checks', async ({ page }) => {
   ).toEqual([]);
 });
 
+test('mobile nutrient table keeps words readable inside an accessible scroller', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/de-de/futter/royal-canin-indoor-2kg/');
+  const scroller = page.getByRole('region', { name: /Deklarierte Nährwerte/ });
+  await expect(scroller).toBeVisible();
+  await expect(scroller).toHaveAttribute('tabindex', '0');
+  const layout = await scroller.evaluate((element) => {
+    const firstHeader = element.querySelector('th');
+    const styles = firstHeader ? getComputedStyle(firstHeader) : null;
+    return {
+      scrollable: element.scrollWidth > element.clientWidth,
+      documentOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+      headerWidth: firstHeader?.getBoundingClientRect().width ?? 0,
+      overflowWrap: styles?.overflowWrap,
+      wordBreak: styles?.wordBreak,
+    };
+  });
+  expect(layout).toMatchObject({
+    scrollable: true,
+    documentOverflow: false,
+    overflowWrap: 'normal',
+    wordBreak: 'normal',
+  });
+  expect(layout.headerWidth).toBeGreaterThan(90);
+});
+
 test('mobile map switches views and remains accessible', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/de-de/tierarzt-karte/');

@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   ART_LABEL,
+  kommunalenQuelltextAnzeigen,
   kommunaleFlaechen,
   staedteMitKommunalerQuelle,
 } from '../../src/features/map/municipal.ts';
@@ -54,6 +55,18 @@ describe('kommunaleFlaechen', () => {
 
   it('liefert bei wiederholtem Aufruf dasselbe Ergebnis', () => {
     expect(kommunaleFlaechen('berlin')).toBe(kommunaleFlaechen('berlin'));
+  });
+
+  it('zeigt einen belegten Tippfehler lesbar, ohne den Snapshot umzuschreiben', () => {
+    expect(
+      kommunalenQuelltextAnzeigen(
+        'Wegen des hohen Nutzungsdrucks und des besonderen Charakers der Anlagenteile',
+      ),
+    ).toBe('Wegen des hohen Nutzungsdrucks und des besonderen Charakters der Anlagenteile');
+    expect(kommunalenQuelltextAnzeigen(null)).toBeNull();
+    expect(
+      kommunaleFlaechen('berlin')?.flaechen.some((flaeche) => flaeche.note?.includes('Charakers')),
+    ).toBe(false);
   });
 });
 
