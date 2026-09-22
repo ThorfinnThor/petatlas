@@ -36,6 +36,7 @@ const quelle = snapshot.source as unknown as {
   url: string;
 };
 const eigenerPfad = subroutePath(market, 'costs', 'gruppe', gruppe.slug);
+const titelIstSehrLang = gruppe.name.length > 95;
 ---
 
 <BaseLayout
@@ -53,7 +54,14 @@ const eigenerPfad = subroutePath(market, 'costs', 'gruppe', gruppe.slug);
     ]}
   />
 
-  <h1>{gruppe.name}</h1>
+  <h1>{titelIstSehrLang ? 'GOT-Gebührengruppe' : gruppe.name}</h1>
+  {
+    titelIstSehrLang && (
+      <p class="amtliche-bezeichnung">
+        <strong>Amtliche Bezeichnung:</strong> {gruppe.name}
+      </p>
+    )
+  }
   <p>
     {gruppe.positionen.length}{' '}
     {gruppe.positionen.length === 1 ? 'Position' : 'Positionen'} aus {gruppe.teil} der Fassung {
@@ -101,6 +109,12 @@ const eigenerPfad = subroutePath(market, 'costs', 'gruppe', gruppe.slug);
 </BaseLayout>
 
 <style>
+  h1,
+  .amtliche-bezeichnung,
+  .positionen a {
+    overflow-wrap: anywhere;
+  }
+
   .positionen {
     list-style: none;
     margin: 0;
@@ -117,6 +131,11 @@ const eigenerPfad = subroutePath(market, 'costs', 'gruppe', gruppe.slug);
     padding-block: var(--space-3);
     border-block-end: 1px solid var(--color-border);
     max-inline-size: none;
+    min-inline-size: 0;
+  }
+
+  .positionen a {
+    min-inline-size: 0;
   }
 
   .positionen__nummer {
