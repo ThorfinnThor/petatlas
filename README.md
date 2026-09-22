@@ -1,6 +1,6 @@
-# PetAtlas
+# Dein Haustierportal
 
-Eine statische deutschsprachige Web-App für Tierarztkosten, Hunde-Orte, Reisevorbereitung und belegte Produktinformationen. Astro 7 und TypeScript; Daten werden im Browser lokal verarbeitet. Kein Konto, keine Analyse-Tracker und keine Laufzeitdatenbank.
+Eine statische deutschsprachige Web-App für Tierarztkosten, Haustier-Orte, Reisevorbereitung und belegte Produktinformationen. Die öffentliche Hauptadresse ist `https://deinhaustierportal.de`. Astro 7 und TypeScript; Daten werden im Browser lokal verarbeitet. Kein Konto, keine Analyse-Tracker und keine Laufzeitdatenbank.
 
 ## Lokal starten
 
@@ -36,5 +36,7 @@ Die Browserprüfungen benötigen die Playwright-Browser (`npx playwright install
 ## Veröffentlichung
 
 Cloudflare Workers Static Assets, Konfiguration in `wrangler.preview.jsonc` und `wrangler.jsonc`. Vorschau und Produktion sind getrennt. Der Produktionsbuild verlangt echte Betreiberangaben, eine Domain und dokumentierte Einzelprüfungen. `.env.example` nennt die öffentlichen Konfigurationsfelder. Partnerangebote, Versicherungsangebote und Werbung bleiben bis zu tatsächlichen Verträgen und Freigaben ausgeschaltet.
+
+Die Domainmigration von `wauandmiau.de` zu `deinhaustierportal.de` ist in `docs/DOMAIN_MIGRATION_2026-09-22.md` beschrieben. Die alte Domain bleibt für permanente, pfad- und parametererhaltende Weiterleitungen sowie die Übergangszeit der E-Mail-Adresse bestehen.
 
 Aktueller Arbeits-/Abnahmestand: `docs/HANDOFF.md`. Bekannte Grenzen: `docs/KNOWN_LIMITATIONS.md`. Aufgabenregister: `project/tasks.json`; `npm run status` zeigt den strukturierten Stand. `CLAUDE.md` und die ursprünglichen Planungsdokumente enthalten die Projektregeln und Planungshistorie.

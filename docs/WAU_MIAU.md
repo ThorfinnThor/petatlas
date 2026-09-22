@@ -1,5 +1,7 @@
 # Wau & Miau – Hunde und Katzen
 
+> Historische Produkt- und Namensentscheidung vom 10.09.2026. Seit der Domain- und Markenmigration vom 22.09.2026 lautet der öffentliche Name „Dein Haustierportal“ und die Hauptadresse `https://deinhaustierportal.de`. Die damaligen Quellen- und Umsetzungsnachweise bleiben unverändert erhalten.
+
 Betreiberwunsch vom 10.09.2026: künftige Domain `wauandmiau.de`, sichtbarer Name Wau & Miau. Die Domain ist vorgemerkt, noch nicht technisch verbunden; bestehende Deploymentnamen bleiben unverändert.
 
 Startseite mit gemeinsamer Bildwelt, gleich großen Hunde-/Katzeneinstiegen und je zwei Produktkarten für Hund/Katze. Zwei neue Katzenratgeber, zwei echte Katzenspielzeuge, Royal Canin Indoor in drei belegten Packungsgrößen. Katzenprodukte sind im Finder über die Tierart getrennt.

@@ -5,11 +5,11 @@ import { verzeichnisKontaktLink } from '../../src/features/map/contact.ts';
 describe('Kontakt für Verzeichniseinträge', () => {
   it('übernimmt nur Eintrags-ID und Seitenpfad in die Anfrage', () => {
     const href = verzeichnisKontaktLink(
-      'info@wauandmiau.de',
+      'info@deinhaustierportal.de',
       'osm-node-123',
       '/de-de/tierarzt-karte/berlin/',
     );
-    expect(href).toContain('mailto:info@wauandmiau.de');
+    expect(href).toContain('mailto:info@deinhaustierportal.de');
     expect(decodeURIComponent(href ?? '')).toContain('Eintrags-ID: osm-node-123');
     expect(decodeURIComponent(href ?? '')).toContain('/de-de/tierarzt-karte/berlin/');
     expect(href).not.toContain('https://');

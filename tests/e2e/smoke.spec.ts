@@ -18,7 +18,7 @@ test('Startseite lädt ohne Konsolenfehler und nennt den Aufbaustand', async ({ 
 
   expect(response?.status()).toBe(200);
   await expect(page.locator('h1')).toHaveText('Ein gutes Leben. Mit Hund und Katze.');
-  await expect(page).toHaveTitle(/Wau & Miau/);
+  await expect(page).toHaveTitle(/Dein Haustierportal/);
   // Ein Aufbaustand darf nicht indexierbar sein.
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
   await expect(page.getByTestId('test-data-banner')).toBeVisible();

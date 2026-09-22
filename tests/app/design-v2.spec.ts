@@ -189,7 +189,7 @@ for (const width of [390, 1440]) {
   test(`cat guide leads to cat products at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/de-de/');
-    await expect(page.locator('header')).toContainText('Wau & Miau');
+    await expect(page.locator('header')).toContainText('Dein Haustierportal');
     await expect(page.locator('.pet-world')).toHaveCount(2);
     await expect(page.locator('.editorial-product').filter({ hasText: 'Katze' })).toHaveCount(2);
     await page.getByRole('link', { name: 'Zum Katzen-Ratgeber →', exact: true }).click();

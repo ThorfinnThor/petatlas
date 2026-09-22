@@ -16,7 +16,7 @@ import { leseWeiterleitungen } from '../checks/seo.ts';
 import { sammleSeiten, type Seite } from '../publish/sitemap.ts';
 
 const OUT_DIR = 'dist';
-const BASIS = 'https://wauandmiau.de';
+const BASIS = 'https://deinhaustierportal.de';
 const ZIEL = 'docs/reviews/seo-url-inventory-2026-09-13.csv';
 
 type Seitentyp =

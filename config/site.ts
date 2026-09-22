@@ -100,8 +100,8 @@ export function createSiteConfig(
   }
 
   return {
-    brandName: env.PUBLIC_BRAND_NAME?.trim() || 'Wau & Miau',
-    brandNameIsWorkingTitle: true,
+    brandName: env.PUBLIC_BRAND_NAME?.trim() || 'Dein Haustierportal',
+    brandNameIsWorkingTitle: false,
     defaultMarketId: 'DE',
     baseUrl: isPlaceholder ? DEVELOPMENT_BASE_URL : (configuredUrl ?? DEVELOPMENT_BASE_URL),
     operator,

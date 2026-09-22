@@ -62,7 +62,7 @@ const market: MarketConfig = withEnabledFeatures(requireMarket(marketId), devFea
 const locale = market.locale as LocaleId;
 const titel = translate(locale, `nav.${routeKey}`);
 const beschreibungen: Partial<Record<RouteKey, string>> = {
-  home: 'Wau & Miau hilft bei Tierarztkosten, Orten, Reisen, Futter, Pflege und Spielzeug für Hunde und Katzen.',
+  home: 'Dein Haustierportal hilft bei Tierarztkosten, Orten, Reisen, Futter, Pflege und Spielzeug für Hunde und Katzen.',
   costs:
     'Tierarztkosten nach GOT nachvollziehen, Positionen finden und Beträge mit Faktor, Menge und Notdienst transparent berechnen.',
   map: 'Tierärzte, Tierheime, Zoofachhandel und Hundewiesen in Deutschland suchen – mit Datenstand und Quellen aus OpenStreetMap.',
@@ -76,9 +76,9 @@ const beschreibungen: Partial<Record<RouteKey, string>> = {
   insurance:
     'Tierversicherung für Hund und Katze sachlich prüfen: Leistungen, Ausschlüsse, Selbstbeteiligung und Wartezeiten verstehen.',
   method:
-    'Methodik von Wau & Miau: Quellen, Datenstände, Filterlogik und Grenzen der Werkzeuge nachvollziehen.',
+    'Methodik von Dein Haustierportal: Quellen, Datenstände, Filterlogik und Grenzen der Werkzeuge nachvollziehen.',
   sources:
-    'Quellenregister von Wau & Miau mit Herkunft, Lizenz, Abrufstand und Verwendung der veröffentlichten Daten.',
+    'Quellenregister von Dein Haustierportal mit Herkunft, Lizenz, Abrufstand und Verwendung der veröffentlichten Daten.',
 };
 
 /**

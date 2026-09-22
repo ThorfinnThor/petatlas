@@ -68,7 +68,7 @@ describe('Das Deployment kann nicht vor den Prüfungen laufen', () => {
       [schluessel]: attrappe,
       APP_PROFILE: 'real',
       BUILD_MODE: 'preview',
-      PUBLIC_SITE_URL: 'https://wauandmiau.de',
+      PUBLIC_SITE_URL: 'https://deinhaustierportal.de',
     });
     expect(ergebnis.code).toBe(0);
     expect(ergebnis.ausgabe).toMatch(/Website-Build verwendet es nicht/);

@@ -22,9 +22,13 @@
     "not_found_handling": "404-page",
   },
 
-  // Die öffentliche Domain gehört ausschließlich zum Produktionsprojekt.
-  // www wird auf Cloudflare-Ebene dauerhaft auf diese kanonische Domain umgeleitet.
-  "routes": [{ "pattern": "wauandmiau.de", "custom_domain": true }],
+  // Die neue Hauptdomain und die bisherige Domain bleiben am Produktionsprojekt.
+  // Cloudflare leitet wauandmiau.de dauerhaft und pfaderhaltend auf die neue
+  // Hauptdomain um; der Eintrag bleibt für eine verlustarme SEO-Migration bestehen.
+  "routes": [
+    { "pattern": "deinhaustierportal.de", "custom_domain": true },
+    { "pattern": "wauandmiau.de", "custom_domain": true },
+  ],
 
   // Produktion baut ausschließlich main. Andere Branches erzeugen im
   // Produktionsprojekt kein Deployment (M07-05).

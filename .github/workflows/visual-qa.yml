@@ -40,19 +40,19 @@ jobs:
         env:
           APP_PROFILE: real
           BUILD_MODE: production
-          PUBLIC_SITE_URL: https://wauandmiau.de
+          PUBLIC_SITE_URL: https://deinhaustierportal.de
         run: npm run build:cloudflare
 
       - name: Gebauten Stand ausliefern
         run: |
-          npx astro preview --host 127.0.0.1 --port 4334 --ignore-lock > /tmp/wauandmiau-visual-preview.log 2>&1 &
+          npx astro preview --host 127.0.0.1 --port 4334 --ignore-lock > /tmp/deinhaustierportal-visual-preview.log 2>&1 &
           for versuch in {1..60}; do
             if curl --fail --silent --show-error http://127.0.0.1:4334/de-de/ > /dev/null; then
               exit 0
             fi
             sleep 1
           done
-          cat /tmp/wauandmiau-visual-preview.log
+          cat /tmp/deinhaustierportal-visual-preview.log
           exit 1
 
       - name: Alle öffentlichen Seiten messen

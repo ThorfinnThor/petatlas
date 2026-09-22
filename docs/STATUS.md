@@ -1,6 +1,6 @@
 # Projektstatus
 
-Stand: 2026-09-15. Maßgeblich ist `project/tasks.json`.
+Stand: 2026-09-22. Maßgeblich ist `project/tasks.json`.
 
 **Erledigt:** 138 von 138 Aufgaben. **In Arbeit:** keine. **Blockiert:** keine.
 
@@ -18,4 +18,4 @@ Der Code prüft Betreiberkonfiguration, funktionsabhängige Freigaben, Rechte, D
 
 `npm run verify`: 1.496 Tests in 102 Dateien sowie alle weiteren Prüfschritte bestanden. Der Produktionsbuild bestand alle 15 Gates; die vollständige Playwright-Matrix in CI ist erfolgreich.
 
-Die Domain `wauandmiau.de` liefert den freigegebenen Produktionsbuild. Betreiberangaben sowie die für den aktuellen Funktionsumfang erforderlichen Fach-, Rechts- und Datenrechtefreigaben sind dokumentiert. Der freigegebene Fressnapf-Feedimport für eindeutig zugeordnete Bilder und Deep Links ist vorbereitet; bis zur Hinterlegung des Repository-Secrets bleiben die Karten bei den vorhandenen Symbolbildern. Preise, Verfügbarkeiten und weitere Händlerfeeds bleiben außerhalb des aktuellen Umfangs.
+Die öffentliche Hauptadresse wird am 22.09.2026 von `wauandmiau.de` auf `deinhaustierportal.de` migriert; sichtbarer Name und rechtliche Kontaktadresse werden zu „Dein Haustierportal“ beziehungsweise `info@deinhaustierportal.de`. Die alte Domain wird nach erfolgreicher Live-Prüfung nicht gelöscht, sondern dauerhaft und pfaderhaltend per 301 auf die neue Hauptadresse weitergeleitet. Betreiberangaben sowie die für den aktuellen Funktionsumfang erforderlichen Fach-, Rechts- und Datenrechtefreigaben bleiben unverändert dokumentiert. Der technische Ablauf und die Abnahmekriterien stehen in `docs/DOMAIN_MIGRATION_2026-09-22.md`.
