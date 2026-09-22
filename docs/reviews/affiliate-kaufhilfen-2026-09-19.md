@@ -18,7 +18,7 @@ Die Seiten sind Vergleiche dokumentierter Produkteigenschaften, keine eigenen Pr
 
 ## Amazon
 
-Die bestehende ADR-020 bleibt unverändert: ausschließlich statische, gekennzeichnete Amazon-DE-Suchlinks mit `tag=wauandmiau-21`. Keine Amazon-Produktbilder, Preise, Bewertungen, Bestände, API-Daten oder Shop-Scrapes werden eingebunden oder gespeichert.
+Die bestehende ADR-020 bleibt unverändert: ausschließlich statische, gekennzeichnete Amazon-DE-Suchlinks; seit der Domainmigration mit `tag=deinhaustierportal-21`. Keine Amazon-Produktbilder, Preise, Bewertungen, Bestände, API-Daten oder Shop-Scrapes werden eingebunden oder gespeichert.
 
 Neue Suchbegriffe sind modell- bzw. artikelnummernspezifisch. Produktfamilien mit Größenvarianten (KONG Classic/Extreme) bleiben bewusst Suchlinks, damit keine Größe als allgemeine Empfehlung festgeschrieben wird.
 

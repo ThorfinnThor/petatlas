@@ -31,7 +31,7 @@ describe('purchase guides', () => {
         expect(Object.hasOwn(AMAZON_SEARCHES, product.amazonSelection)).toBe(true);
         const url = new URL(amazonSearchUrl(product.amazonSelection)!);
         expect(url.hostname).toBe('www.amazon.de');
-        expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
+        expect(url.searchParams.get('tag')).toBe('deinhaustierportal-21');
         expect(url.searchParams.get('k')).toBeTruthy();
         expect([...url.searchParams.keys()].sort()).toEqual(['k', 'linkCode', 'tag']);
       }

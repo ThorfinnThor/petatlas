@@ -6,7 +6,7 @@ describe('Getrennter Partner- und Feedstatus', () => {
   it('dokumentiert die beauftragten Textlinks unabhängig vom Feed', () => {
     const status = commerceStatus();
     expect(status.affiliateLinkStatus.status).toBe('owner_authorized');
-    expect(status.affiliateLinkStatus.siteTag).toBe('wauandmiau-21');
+    expect(status.affiliateLinkStatus.siteTag).toBe('deinhaustierportal-21');
     expect(status.affiliateLinkStatus.approvedBy).toBe('Schayan Yousefian');
     expect(status.offerFeedStatus.status).toBe('approved');
   });

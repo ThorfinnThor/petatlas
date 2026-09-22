@@ -89,7 +89,7 @@ for (const width of [390, 1440]) {
         for (const link of await amazonRetailLinks.all()) {
           const url = new URL((await link.getAttribute('href'))!);
           expect(url.hostname).toBe('www.amazon.de');
-          expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
+          expect(url.searchParams.get('tag')).toBe('deinhaustierportal-21');
         }
         await expect(page.locator('.supplement-products article')).toHaveCount(6);
         await expect(page.locator('.supplement-products img')).toHaveCount(6);
@@ -110,7 +110,7 @@ for (const width of [390, 1440]) {
         for (const link of await amazonLinks.all()) {
           const url = new URL((await link.getAttribute('href'))!);
           expect(url.hostname).toBe('www.amazon.de');
-          expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
+          expect(url.searchParams.get('tag')).toBe('deinhaustierportal-21');
         }
         const productFressnapfLinks = page.locator(
           '.supplement-products .fressnapf-link a[rel~="sponsored"]',
@@ -160,7 +160,7 @@ for (const width of [390, 1440]) {
     for (const link of await links.all()) {
       const url = new URL((await link.getAttribute('href'))!);
       expect(url.hostname).toBe('www.amazon.de');
-      expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
+      expect(url.searchParams.get('tag')).toBe('deinhaustierportal-21');
       expect(url.searchParams.get('k')).not.toContain('Hund');
       await expect(link).toContainText('Werbung');
       await expect(link).toHaveAttribute('rel', /nofollow/);

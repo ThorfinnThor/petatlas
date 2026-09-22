@@ -1,5 +1,5 @@
-/** Owner supplied tracking ID, 10.09.2026. Static text links only, no account approval claim. */
-export const AMAZON_TAG = 'wauandmiau-21';
+/** Tracking ID created in the verified PartnerNet account on 23.09.2026. Static text links only. */
+export const AMAZON_TAG = 'deinhaustierportal-21';
 export const AMAZON_DISCLOSURE = 'Als Amazon-Partner verdiene ich an qualifizierten Verkäufen.';
 export const AMAZON_SEARCHES = {
   'trixie-capri-1-39811': 'TRIXIE Capri 1 39811 Transportbox',
