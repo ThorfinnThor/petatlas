@@ -116,15 +116,15 @@ test('mobile map switches views and remains accessible', async ({ page }, testIn
 
 test('saved profile is applied only on request and survives navigation', async ({ page }) => {
   await page.goto('/de-de/mein-tier/');
-  await page.selectOption('#profil-tierart', 'dog');
-  await page.fill('#profil-name', 'Testhund');
+  await page.selectOption('#profil-tierart', 'cat');
+  await page.fill('#profil-name', 'Testkatze');
   await page.fill('#profil-gewicht', '12,5');
   await page.fill('#profil-geburtsdatum', '2020-01-01');
   await page.click('#profil-speichern');
   await page.goto('/de-de/spielzeug/');
-  await expect(page.locator('#finder-gewicht')).toHaveValue('');
+  await expect(page.locator('#finder-tierart')).toHaveValue('dog');
   await page.getByRole('button', { name: 'Gespeichertes Tierprofil übernehmen' }).click();
-  await expect(page.locator('#finder-gewicht')).toHaveValue('12.5');
+  await expect(page.locator('#finder-tierart')).toHaveValue('cat');
   await page.goto('/de-de/reisecheck/');
   await page.getByRole('button', { name: 'Gespeichertes Tierprofil übernehmen' }).click();
   await expect(page.locator('#geburtsdatum')).toHaveValue('2020-01-01');
@@ -172,12 +172,12 @@ for (const width of [390, 1440]) {
     await expect(page.getByText('Fachlich geprüft', { exact: true })).toHaveCount(0);
     await page.getByRole('link', { name: 'Katzenspielzeug vergleichen', exact: true }).click();
     await expect(page.locator('#finder-tierart')).toHaveValue('cat');
-    await page.getByRole('button', { name: 'Passendes anzeigen', exact: true }).click();
+    await page.getByRole('button', { name: 'Ergebnisse anzeigen', exact: true }).click();
     await expect(page.locator('#finder-ergebnis')).toContainText('Senses Play Circuit');
     await expect(page.locator('#finder-ergebnis')).toContainText('Cat Active Tennis Balls');
     await expect(page.locator('#finder-ergebnis')).not.toContainText('KONG Classic');
     await page.selectOption('#finder-tierart', 'dog');
-    await page.getByRole('button', { name: 'Passendes anzeigen', exact: true }).click();
+    await page.getByRole('button', { name: 'Ergebnisse anzeigen', exact: true }).click();
     await expect(page.locator('#finder-ergebnis')).toContainText('KONG Classic');
     await expect(page.locator('#finder-ergebnis')).not.toContainText('Senses Play Circuit');
     await page.goto('/de-de/futter/');

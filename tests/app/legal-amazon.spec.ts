@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test';
-import editorial from '../../content-data/products/editorial.json' with { type: 'json' };
 import supplements from '../../content-data/products/supplements.json' with { type: 'json' };
 import fressnapfFeed from '../../content-data/products/fressnapf-feed.json' with { type: 'json' };
 import AxeBuilder from '@axe-core/playwright';
@@ -153,11 +152,9 @@ for (const width of [390, 1440]) {
     await expect(page.locator('footer .fuss__werbung')).toHaveCount(1);
     await expect(page.locator('footer .fuss__werbung')).toContainText('Werbung:');
     await page.goto('/de-de/spielzeug/?tierart=cat');
-    await page.getByRole('button', { name: 'Passendes anzeigen' }).click();
-    const links = page.locator('#finder-ergebnis a[rel~="sponsored"]');
-    await expect(links).toHaveCount(
-      editorial.products.filter((p) => p.species === 'cat' && p.category === 'Spielzeug').length,
-    );
+    await page.getByRole('button', { name: 'Ergebnisse anzeigen' }).click();
+    const links = page.locator('#finder-ergebnis a[href*="amazon.de"][rel~="sponsored"]');
+    await expect(links).toHaveCount(6);
     for (const link of await links.all()) {
       const url = new URL((await link.getAttribute('href'))!);
       expect(url.hostname).toBe('www.amazon.de');
@@ -166,6 +163,8 @@ for (const width of [390, 1440]) {
       await expect(link).toContainText('Werbung');
       await expect(link).toHaveAttribute('rel', /nofollow/);
     }
+    const fressnapfLinks = page.locator('#finder-ergebnis a[href*="awin1.com"][rel~="sponsored"]');
+    await expect(fressnapfLinks).toHaveCount(6);
     expect(remote).toEqual([]);
   });
 }

@@ -1,6 +1,6 @@
 {
   "reviewId": "manufacturer-attributes-2026-09",
-  "lastEditedAt": "2026-09-10",
+  "lastEditedAt": "2026-09-22",
   "dataKind": "real",
   "products": [
     {
@@ -19,6 +19,15 @@
         {
           "attribute": "species",
           "value": "dog",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.kongcompany.com/kong-classic/",
+          "sourceLabel": "KONG · Hersteller",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
           "unit": null,
           "verification": "manufacturer_stated",
           "sourceUrl": "https://www.kongcompany.com/kong-classic/",
@@ -52,6 +61,15 @@
         {
           "attribute": "species",
           "value": "dog",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/toppl-eggplant",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-09"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
           "unit": null,
           "verification": "manufacturer_stated",
           "sourceUrl": "https://www.westpaw.com/products/toppl-eggplant",
@@ -138,6 +156,15 @@
         },
         {
           "attribute": "dishwasherSafe",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.kongcompany.com/wobbler/",
+          "sourceLabel": "KONG · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "foodFillable",
           "value": true,
           "unit": null,
           "verification": "manufacturer_stated",
@@ -234,6 +261,15 @@
           "sourceUrl": "https://www.westpaw.com/products/qwizl-treat-toy",
           "sourceLabel": "West Paw · Hersteller",
           "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.westpaw.com/products/qwizl-treat-toy",
+          "sourceLabel": "West Paw · Hersteller",
+          "checkedAt": "2026-09-10"
         }
       ]
     },
@@ -249,6 +285,15 @@
           "sourceUrl": "https://www.catit.com/products/toys/senses-digger/",
           "sourceLabel": "Catit · Hersteller",
           "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-digger/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
         }
       ]
     },
@@ -259,6 +304,15 @@
         {
           "attribute": "species",
           "value": "cat",
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-food-tree/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
           "unit": null,
           "verification": "manufacturer_stated",
           "sourceUrl": "https://www.catit.com/products/toys/senses-food-tree/",
@@ -288,6 +342,15 @@
           "sourceUrl": "https://www.catit.com/products/toys/senses-treat-puzzle/",
           "sourceLabel": "Catit · Hersteller",
           "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-treat-puzzle/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
         }
       ]
     },
@@ -312,13 +375,280 @@
           "sourceUrl": "https://www.catit.com/products/toys/senses-treat-spinner/",
           "sourceLabel": "Catit · Hersteller",
           "checkedAt": "2026-09-10"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
+          "unit": null,
+          "verification": "manufacturer_stated",
+          "sourceUrl": "https://www.catit.com/products/toys/senses-treat-spinner/",
+          "sourceLabel": "Catit · Hersteller",
+          "checkedAt": "2026-09-10"
+        }
+      ]
+    },
+    {
+      "productId": "afp-leucht-fussball",
+      "categoryId": "fetch-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/all-for-paws-afp-hundespielzeug-leucht-fussball-4258487/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "afp-floating-stick-m",
+      "categoryId": "fetch-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/all-for-paws-hundespielzeug-floating-stick-m-4188440/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        },
+        {
+          "attribute": "floats",
+          "value": true,
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/all-for-paws-hundespielzeug-floating-stick-m-4188440/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "afp-ball-treat-dispenser",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/all-for-paws-intelligenzspielzeug---ball--treat-dispenser-fuer-hunde-3553210/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/all-for-paws-intelligenzspielzeug---ball--treat-dispenser-fuer-hunde-3553210/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "anione-intelligenzspielzeug-ocean",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-ocean-fuer-hunde-25x25x3-cm-1823155/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "afp-hunde-flirt-pole",
+      "categoryId": "chase-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/all-for-paws-hunde-flirt-pole-teleskopstab-mit-football-seil-4188442/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "anione-schwimmfaehiger-rochen",
+      "categoryId": "fetch-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwimmfaehiger-rochen-2692440/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        },
+        {
+          "attribute": "floats",
+          "value": true,
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwimmfaehiger-rochen-2692440/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "anione-latex-schwein-s",
+      "categoryId": "chew-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "dog",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwein-aus-latex-s-1080671/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        },
+        {
+          "attribute": "material",
+          "value": "Latex",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwein-aus-latex-s-1080671/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "afp-katzenfutter-puzzle",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/all-for-paws-interaktives-katzenspielzeugpuzzle-katzenfutter-1349427/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/all-for-paws-interaktives-katzenspielzeugpuzzle-katzenfutter-1349427/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "anione-intelligenzspielzeug-yin",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-katze-yin-1929132/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "anione-activity-snackboard",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-activity-snackboard-1907436/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-activity-snackboard-1907436/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "anione-snack-roll",
+      "categoryId": "puzzle-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-snack-roll-1907435/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        },
+        {
+          "attribute": "foodFillable",
+          "value": true,
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-snack-roll-1907435/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "anione-katzenangel-3-teilig",
+      "categoryId": "chase-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-katzenangel-3-tlg-1328131/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
+        }
+      ]
+    },
+    {
+      "productId": "anione-katzenangel-qualle",
+      "categoryId": "chase-toy",
+      "attributes": [
+        {
+          "attribute": "species",
+          "value": "cat",
+          "unit": null,
+          "verification": "merchant_feed",
+          "sourceUrl": "https://www.fressnapf.de/ul/p/anione-katzenangel-qualle-1336935/",
+          "sourceLabel": "Fressnapf · Händlerfeed",
+          "checkedAt": "2026-09-22"
         }
       ]
     }
   ],
   "notes": [
-    "Manuell erfasste Herstellerfakten mit Fundstelle. Keine unabhängige Produktprüfung und keine Eignungs- oder Gesundheitsfreigabe.",
+    "Manuell erfasste Hersteller- und Händlerfakten mit Fundstelle. Keine unabhängige Produktprüfung und keine Eignungs- oder Gesundheitsfreigabe.",
     "Keine Annahmen zu Körpergewicht, Sicherheit, Kauintensität oder Fellverträglichkeit.",
-    "Produktbilder und Herstellertexte werden nicht übernommen."
+    "Fressnapf-Produktbilder werden ausschließlich aus dem freigegebenen Awin-Feed übernommen."
   ]
 }

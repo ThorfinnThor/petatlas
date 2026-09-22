@@ -81,23 +81,21 @@ for (const width of [390, 1280]) {
       await expect(page.locator('.merk__kopf')).toHaveAttribute('data-leer', 'true');
     });
 
-    test('validates toy weight and displays readable real product categories', async ({ page }) => {
+    test('filters toys and displays readable real product categories', async ({ page }) => {
       await page.goto('/de-de/spielzeug/');
-      await page.fill('#finder-gewicht', '-1');
-      await page.click('#finder-suchen');
-      await expect(page.locator('#finder-ergebnis')).toContainText('positives Gewicht');
-      await expect(page.locator('#finder-gewicht')).toHaveAttribute('aria-invalid', 'true');
-      await page.fill('#finder-gewicht', '12,5');
-      await page.click('#finder-suchen');
+      await page.getByLabel('Werfen & apportieren').check();
+      await expect(page.locator('.finder__liste > li')).toHaveCount(4);
+      await page.getByRole('button', { name: 'Filter zurücksetzen' }).click();
       await expect(page.locator('.finder__liste h3').first()).toBeVisible();
       await expect(page.locator('.finder__kategorie').first()).not.toContainText('toys-');
-      await expect(page.locator('#finder-gewicht')).not.toHaveAttribute('aria-invalid', 'true');
       await page.selectOption('#finder-tierart', 'cat');
       await page.click('#finder-suchen');
       const cats = editorial.products.filter(
         (p) => p.species === 'cat' && p.category === 'Spielzeug',
       );
-      await expect(page.locator('.finder__kopf')).toContainText(`${cats.length} Produkt(e)`);
+      await expect(page.locator('.finder__result-head')).toContainText(
+        `${cats.length} passende Optionen`,
+      );
       await expect(page.locator('.finder__liste > li')).toHaveCount(cats.length);
       await expect(page.locator('#finder-ergebnis')).toContainText('Senses Play Circuit');
       await expect(page.locator('#finder-ergebnis')).not.toContainText('KONG Classic');

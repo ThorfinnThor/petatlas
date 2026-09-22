@@ -120,6 +120,7 @@ export const MERKMAL_LABEL: Readonly<Record<string, string>> = {
   diameterMillimeters: 'Durchmesser in Millimetern',
   heightCentimeters: 'Höhe in Zentimetern',
   floats: 'Schwimmfähigkeit',
+  foodFillable: 'Befüllbar mit Futter oder Snacks',
   coatLength: 'Fellänge',
   dishwasherSafe: 'Spülmaschinenfest',
   lengthCentimeters: 'Länge in Zentimetern',

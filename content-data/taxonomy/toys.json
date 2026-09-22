@@ -14,20 +14,33 @@
       "label": "Kauspielzeug",
       "species": ["dog"],
       "description": "Kauartikel aus Gummi oder Naturkautschuk, ohne Futterbestandteile.",
-      "matchAttributes": ["sizeRange", "material", "hardnessLevel", "species"]
+      "matchAttributes": ["sizeRange", "material", "hardnessLevel", "foodFillable", "species"]
     },
     {
       "categoryId": "puzzle-toy",
       "label": "Beschäftigungsspielzeug",
       "species": ["dog", "cat"],
       "description": "Schnüffelteppiche, Futterlabyrinthe und Denkspiele.",
-      "matchAttributes": ["difficultyLevel", "dishwasherSafe", "material", "species"]
+      "matchAttributes": [
+        "difficultyLevel",
+        "dishwasherSafe",
+        "foodFillable",
+        "material",
+        "species"
+      ]
     },
     {
       "categoryId": "indoor-cat-toy",
       "label": "Katzenspielzeug für drinnen",
       "species": ["cat"],
       "description": "Federangeln, Bälle und Spielzeug für die Wohnung.",
+      "matchAttributes": ["material", "lengthCentimeters", "species"]
+    },
+    {
+      "categoryId": "chase-toy",
+      "label": "Jagd- und Bewegungsspielzeug",
+      "species": ["dog", "cat"],
+      "description": "Spielangeln und Bewegungsspielzeug zum gemeinsamen Jagen und Fangen.",
       "matchAttributes": ["material", "lengthCentimeters", "species"]
     },
     {

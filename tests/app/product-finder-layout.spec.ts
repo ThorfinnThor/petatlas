@@ -17,12 +17,13 @@ for (const width of [390, 900, 1440]) {
     );
     await page.goto('/de-de/spielzeug/');
     await expect(page.locator('input[value="langhaar"]')).toHaveCount(0);
-    const choice = page.locator('label.wahl').first();
+    const choice = page.locator('label.filter-card').nth(1);
     await choice.click();
     await expect(choice.locator('input')).toBeChecked();
     const checkbox = await choice.locator('input').boundingBox();
-    const label = await choice.locator('.wahl__text').boundingBox();
+    const label = await choice.locator('span').boundingBox();
     expect(label!.x - (checkbox!.x + checkbox!.width)).toBeGreaterThanOrEqual(8);
+    await page.getByLabel('Alles zeigen').check();
     for (const species of ['dog', 'cat']) {
       await page.selectOption('#finder-tierart', species);
       await page.click('#finder-suchen');
@@ -40,7 +41,7 @@ for (const width of [390, 900, 1440]) {
         cards.locator('figcaption', { hasText: 'Produktbild · Fressnapf-Feed' }),
       ).toHaveCount(feedCount);
       await expect(cards.locator('img[data-feed-image]')).toHaveCount(feedCount);
-      await expect(cards.locator('.finder__aktion a[href*="awin1.com"]')).toHaveCount(feedCount);
+      await expect(cards.locator('.finder__aktionen a[href*="awin1.com"]')).toHaveCount(feedCount);
       for (const card of await cards.all()) {
         const productId = await card.getAttribute('data-produkt');
         const image = card.locator('img');

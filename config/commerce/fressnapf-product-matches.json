@@ -8,7 +8,11 @@
       "aliases": ["kong classic"],
       "exclude": ["extreme", "puppy", "senior"]
     },
-    { "productId": "kong-wobbler", "brand": "kong", "aliases": ["kong wobbler"] },
+    {
+      "productId": "kong-wobbler",
+      "brand": "kong",
+      "aliases": ["kong wobbler"]
+    },
     {
       "productId": "kong-cat-tennis-balls",
       "brand": "kong",
@@ -20,7 +24,11 @@
       "aliases": ["senses spielschiene play", "senses play circuit"],
       "exclude": ["super"]
     },
-    { "productId": "catit-senses-digger", "brand": "catit", "aliases": ["senses digger"] },
+    {
+      "productId": "catit-senses-digger",
+      "brand": "catit",
+      "aliases": ["senses digger"]
+    },
     {
       "productId": "catit-senses-food-tree",
       "brand": "catit",
@@ -44,9 +52,21 @@
       "aliases": ["toppl"],
       "required": ["large"]
     },
-    { "productId": "west-paw-hurley", "brand": "west paw", "aliases": ["hurley"] },
-    { "productId": "west-paw-zisc", "brand": "west paw", "aliases": ["zisc"] },
-    { "productId": "west-paw-qwizl", "brand": "west paw", "aliases": ["qwizl"] },
+    {
+      "productId": "west-paw-hurley",
+      "brand": "west paw",
+      "aliases": ["hurley"]
+    },
+    {
+      "productId": "west-paw-zisc",
+      "brand": "west paw",
+      "aliases": ["zisc"]
+    },
+    {
+      "productId": "west-paw-qwizl",
+      "brand": "west paw",
+      "aliases": ["qwizl"]
+    },
     {
       "productId": "trixie-buerste-2315",
       "brand": "trixie",
@@ -69,12 +89,85 @@
       "brand": "canina",
       "aliases": ["petvital darm gel"]
     },
-    { "productId": "canina-cat-vitamin-tabs", "brand": "canina", "aliases": ["cat vitamin tabs"] },
-    { "productId": "canina-cat-mineral-tabs", "brand": "canina", "aliases": ["cat mineral tabs"] },
+    {
+      "productId": "canina-cat-vitamin-tabs",
+      "brand": "canina",
+      "aliases": ["cat vitamin tabs"]
+    },
+    {
+      "productId": "canina-cat-mineral-tabs",
+      "brand": "canina",
+      "aliases": ["cat mineral tabs"]
+    },
     {
       "productId": "canina-barfers-best-katze",
       "brand": "canina",
       "aliases": ["barfers best for cats", "barfers best katze"]
+    },
+    {
+      "productId": "afp-leucht-fussball",
+      "brand": "all for paws",
+      "aliases": ["all for paws afp hundespielzeug leucht-fußball"]
+    },
+    {
+      "productId": "afp-floating-stick-m",
+      "brand": "all for paws",
+      "aliases": ["all for paws hundespielzeug floating stick m"]
+    },
+    {
+      "productId": "afp-ball-treat-dispenser",
+      "brand": "all for paws",
+      "aliases": ["all for paws intelligenzspielzeug - ball & treat dispenser für hunde"]
+    },
+    {
+      "productId": "anione-intelligenzspielzeug-ocean",
+      "brand": "anione",
+      "aliases": ["anione intelligenzspielzeug ocean für hunde 25x25x3 cm"]
+    },
+    {
+      "productId": "afp-hunde-flirt-pole",
+      "brand": "all for paws",
+      "aliases": ["all for paws hunde flirt pole teleskopstab mit football seil"]
+    },
+    {
+      "productId": "anione-schwimmfaehiger-rochen",
+      "brand": "anione",
+      "aliases": ["anione hundespielzeug schwimmfähiger rochen"]
+    },
+    {
+      "productId": "anione-latex-schwein-s",
+      "brand": "anione",
+      "aliases": ["anione hundespielzeug schwein aus latex s"]
+    },
+    {
+      "productId": "afp-katzenfutter-puzzle",
+      "brand": "all for paws",
+      "aliases": ["all for paws interaktives katzenspielzeug–puzzle katzenfutter"]
+    },
+    {
+      "productId": "anione-intelligenzspielzeug-yin",
+      "brand": "anione",
+      "aliases": ["anione  intelligenzspielzeug katze yin"]
+    },
+    {
+      "productId": "anione-activity-snackboard",
+      "brand": "anione",
+      "aliases": ["anione intelligenzspielzeug activity snackboard"]
+    },
+    {
+      "productId": "anione-snack-roll",
+      "brand": "anione",
+      "aliases": ["anione intelligenzspielzeug snack roll"]
+    },
+    {
+      "productId": "anione-katzenangel-3-teilig",
+      "brand": "anione",
+      "aliases": ["anione katzenangel 3-tlg."]
+    },
+    {
+      "productId": "anione-katzenangel-qualle",
+      "brand": "anione",
+      "aliases": ["anione katzenangel qualle"]
     }
   ]
 }

@@ -186,4 +186,40 @@ describe('Spielzeugfinder', () => {
     const bedarf = { ...BEDARF, needs: ['apportieren'] };
     expect(findeSpielzeug([ball], bedarf)[0]).toEqual(finde([ball], bedarf)[0]);
   });
+
+  it('filtert eine gewählte Spielart strikt nach Kategorie', () => {
+    const kau = produkt('chew-toy', [beleg('species', 'dog')], 'synthetisch:kau');
+    const treffer = findeSpielzeug([ball, kau], {
+      ...BEDARF,
+      playStyle: 'fetch',
+    });
+    expect(treffer.map((entry) => entry.productId)).toEqual(['synthetisch:test']);
+    expect(treffer[0]?.begruendung).toContain('Werfen & Apportieren');
+  });
+
+  it('zeigt Extras nur bei ausdrücklich belegtem Ja-Wert', () => {
+    const schwimmend = produkt('fetch-toy', [beleg('floats', true)], 'synthetisch:schwimmend');
+    const unbekannt = produkt('fetch-toy', [offen('floats')], 'synthetisch:unbekannt');
+    const falsch = produkt('fetch-toy', [beleg('floats', false)], 'synthetisch:falsch');
+    const treffer = findeSpielzeug([schwimmend, unbekannt, falsch], {
+      ...BEDARF,
+      extras: ['floats'],
+    });
+    expect(treffer.map((entry) => entry.productId)).toEqual(['synthetisch:schwimmend']);
+  });
+
+  it('filtert Material nur mit belegter Materialangabe', () => {
+    const kautschuk = produkt(
+      'chew-toy',
+      [beleg('material', 'Naturkautschuk')],
+      'synthetisch:kautschuk',
+    );
+    const unbekannt = produkt('chew-toy', [offen('material')], 'synthetisch:unbekannt');
+    expect(
+      findeSpielzeug([kautschuk, unbekannt], {
+        ...BEDARF,
+        material: 'natural-rubber',
+      }).map((entry) => entry.productId),
+    ).toEqual(['synthetisch:kautschuk']);
+  });
 });
