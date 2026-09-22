@@ -42,7 +42,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
     eyebrow: 'Kaufhilfe · Katze',
     intro: [
       'Eine Katzentransportbox muss nicht möglichst viele Funktionen haben. Entscheidend ist, ob Größe, Öffnung, Eigengewicht und Transportart zu deiner Katze und zu den typischen Wegen passen.',
-      'Wir vergleichen deshalb dokumentierte Produkteigenschaften statt Sternebewertungen oder pauschale Testsieger. Preise und Verfügbarkeit werden nicht auf Wau & Miau gespeichert; der Händlerlink öffnet eine konkrete Amazon-Suche.',
+      'Wir vergleichen deshalb dokumentierte Produkteigenschaften statt Sternebewertungen oder pauschale Testsieger. Preise und Verfügbarkeit werden nicht auf Dein Haustierportal gespeichert; der Händlerlink öffnet eine konkrete Amazon-Suche.',
     ],
     tableHeaders: ['Modell', 'Maße (Herstellerreihenfolge)', 'Belastung', 'Eigengewicht', 'Zugang'],
     products: [
@@ -645,7 +645,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
           'Sensor-, Timer- und kontinuierlicher Modus',
           'HD-LCD und UV-C-Wasserklärung während des Wasserflusses',
         ],
-        note: 'Die verschiedenen Filter- und UV-C-Funktionen sind technische Merkmale. Aus ihnen wird auf Wau & Miau keine medizinische Wirkung für eine Katze abgeleitet.',
+        note: 'Die verschiedenen Filter- und UV-C-Funktionen sind technische Merkmale. Aus ihnen wird auf Dein Haustierportal keine medizinische Wirkung für eine Katze abgeleitet.',
       },
     ],
     criteriaTitle: 'Welche Unterschiede sind im Alltag relevant?',
@@ -833,7 +833,7 @@ export const PURCHASE_GUIDES: readonly PurchaseGuide[] = [
     ],
     relatedLinks: [
       { href: '/de-de/futter/', label: 'Futter für Hund und Katze vergleichen' },
-      { href: '/de-de/methodik/', label: 'So arbeitet Wau & Miau mit Produktangaben' },
+      { href: '/de-de/methodik/', label: 'So arbeitet Dein Haustierportal mit Produktangaben' },
     ],
   },
   {

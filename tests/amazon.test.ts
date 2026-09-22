@@ -67,7 +67,7 @@ describe('Owner supplied Amazon text links', () => {
   it('uses supplied operator data in the real app and supports explicit overrides', () => {
     expect(readOperator({ APP_PROFILE: 'real' })).toMatchObject({
       legalName: 'Schayan Yousefian · SeitenHafen361 (Einzelunternehmen)',
-      contactEmail: 'info@wauandmiau.de',
+      contactEmail: 'info@deinhaustierportal.de',
       responsibleForContent: 'Schayan Yousefian',
       vatId: null,
       registerEntry: null,

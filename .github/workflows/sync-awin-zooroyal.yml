@@ -57,7 +57,7 @@ jobs:
         env:
           APP_PROFILE: real
           BUILD_MODE: preview
-          PUBLIC_SITE_URL: https://wauandmiau.de
+          PUBLIC_SITE_URL: https://deinhaustierportal.de
         run: |
           npm run verify
           npm run build:cloudflare
@@ -72,7 +72,7 @@ jobs:
             exit 0
           fi
           branch="awin/zooroyal-${GITHUB_RUN_ID}"
-          git config user.name "wauandmiau-data-bot"
+          git config user.name "deinhaustierportal-data-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"
           git add content-data/products/zooroyal-feed.json content-data/products/zooroyal-catalog.json

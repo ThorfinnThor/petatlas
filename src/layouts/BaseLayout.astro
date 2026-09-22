@@ -46,7 +46,7 @@ const { title, description, route, canonicalPfad, neverIndex = false, weit = fal
 // Jede öffentliche Seite braucht eine eigenständige Suchbeschreibung. Viele
 // dynamische GOT-, Orts- und Futterseiten liefern keinen redaktionellen
 // Beschreibungstext; der Seitentitel hält den Fallback trotzdem eindeutig.
-const fallbackDescription = `${title}: nachvollziehbare Informationen, Quellen und praktische Hinweise für Hund und Katze bei Wau & Miau.`;
+const fallbackDescription = `${title}: nachvollziehbare Informationen, Quellen und praktische Hinweise für Hund und Katze bei Dein Haustierportal.`;
 const metaDescription = (description?.trim() || fallbackDescription).slice(0, 160).trimEnd();
 
 const build = resolveBuildConfig();

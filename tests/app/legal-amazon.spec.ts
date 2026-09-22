@@ -41,7 +41,9 @@ for (const width of [390, 1440]) {
         await expect(page.locator('main')).toContainText('Schayan Yousefian');
         await expect(page.locator('main')).toContainText('SeitenHafen361');
         await expect(page.locator('main')).toContainText('Freienwalder Str. 34');
-        await expect(page.locator('main a[href="mailto:info@wauandmiau.de"]')).toBeVisible();
+        await expect(
+          page.locator('main a[href="mailto:info@deinhaustierportal.de"]'),
+        ).toBeVisible();
       }
       if (path === 'datenschutz') {
         for (const text of [

@@ -40,8 +40,8 @@ describe('createSiteConfig', () => {
     expect(site.defaultMarketId).toBe('DE');
   });
 
-  it('kennzeichnet den Namen als Arbeitstitel', () => {
-    expect(createSiteConfig('development', {}).brandNameIsWorkingTitle).toBe(true);
+  it('kennzeichnet den veröffentlichten Namen als final', () => {
+    expect(createSiteConfig('development', {}).brandNameIsWorkingTitle).toBe(false);
   });
 
   it('sperrt production ohne konfigurierte Domain', () => {
