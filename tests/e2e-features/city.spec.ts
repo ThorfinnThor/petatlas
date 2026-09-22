@@ -21,16 +21,36 @@ test('die Kartenseite verlinkt jede Stadtseite', async ({ page }) => {
   }
 });
 
-test('die Stadtseite zeigt alle vier Kategorien mit Einträgen', async ({ page }) => {
+test('die Stadtseite zeigt alle vier Kategorien als lokale Filter mit Einträgen', async ({
+  page,
+}) => {
   await page.goto(`${KARTE}${ERSTE.slug}/`);
   await expect(page.locator('h1')).toContainText(ERSTE.name);
 
-  for (const titel of ['Tierarztpraxen', 'Tierheime', 'Zoofachgeschäfte', 'Hundewiesen']) {
-    const abschnitt = page.locator('section', {
-      has: page.getByRole('heading', { level: 2, name: new RegExp(titel) }),
-    });
-    await expect(abschnitt.locator('.treffer > li').first()).toBeVisible();
+  for (const label of ['Tierarztpraxis', 'Tierheim', 'Zoofachhandel', 'Hundewiese']) {
+    await expect(page.getByRole('checkbox', { name: new RegExp(label) })).toBeVisible();
   }
+  await expect(page.locator('#trefferliste > li').first()).toBeVisible();
+  await expect(page.locator('[data-category-count]')).toHaveCount(4);
+});
+
+test('die Stadtseite filtert die Liste und enthält eine eingebettete Karte', async ({ page }) => {
+  await page.route('https://tile.openstreetmap.org/**', (route) =>
+    route.fulfill({
+      contentType: 'image/png',
+      body: Buffer.from(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j8L8AAAAASUVORK5CYII=',
+        'base64',
+      ),
+    }),
+  );
+  await page.goto(`${KARTE}${ERSTE.slug}/`);
+  await page.getByRole('checkbox', { name: /Tierarztpraxis/ }).check();
+  await expect(page.locator('#treffer-status')).toContainText('erfasste Orte');
+  const kategorien = await page.locator('#trefferliste .meta').allTextContents();
+  expect(kategorien.every((text) => text.includes('Tierarztpraxis'))).toBe(true);
+  await page.getByRole('button', { name: 'Karte anzeigen' }).click();
+  await expect(page.locator('#karte .leaflet-map-pane')).toHaveCount(1);
 });
 
 test('nennt Quelle, Lizenz und die Grenzen der Daten', async ({ page }) => {

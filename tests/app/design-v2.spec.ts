@@ -146,7 +146,7 @@ test('an opened map follows place, category and radius changes', async ({ page }
   await expect(page.locator('#karte-status')).toHaveText(/\d+ Orte auf der Karte\./);
   await page.fill('#ort', 'Hamburg');
   await page.getByRole('button', { name: 'Hamburg', exact: true }).click();
-  await page.getByRole('checkbox', { name: 'Tierarztpraxis (4.928)', exact: true }).check();
+  await page.getByRole('checkbox', { name: /Tierarztpraxis \(\d+/ }).check();
   await expect(page.locator('#treffer-status')).toContainText('21 erfasste Orte');
   await expect(page.locator('#karte-status')).toHaveText('21 Orte auf der Karte.');
   await page.selectOption('#radius', '10000');

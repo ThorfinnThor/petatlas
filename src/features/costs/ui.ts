@@ -189,6 +189,11 @@ export function rechnerStarten(): void {
   menge.value = '1';
   faktor.value = '1';
 
+  function trefferSichtbar(sichtbar: boolean): void {
+    trefferListe!.hidden = !sichtbar;
+    suche!.setAttribute('aria-expanded', String(sichtbar));
+  }
+
   function auswahlSteuern(): void {
     if (!bearbeiten || !uebernehmen || !entfernen) return;
     const steuerung = element<HTMLElement>('#auswahl-steuerung');
@@ -323,6 +328,7 @@ export function rechnerStarten(): void {
 
     if (begriff.length < 3) {
       sucheHinweis!.textContent = begriff === '' ? '' : 'Bitte mindestens drei Zeichen eingeben.';
+      trefferSichtbar(false);
       return;
     }
 
@@ -340,11 +346,14 @@ export function rechnerStarten(): void {
         : treffer.length < alleTreffer.length
           ? `${treffer.length} von ${alleTreffer.length} Positionen angezeigt.`
           : `${alleTreffer.length} Position(en) gefunden.`;
+    trefferSichtbar(treffer.length > 0);
 
     for (const item of treffer) {
       const li = document.createElement('li');
+      li.role = 'presentation';
       const knopf = document.createElement('button');
       knopf.type = 'button';
+      knopf.role = 'option';
       knopf.textContent = `${item.originalLabel} — ${geld(item.baseAmountMinor)}`;
       knopf.addEventListener('click', () => {
         if (auswahl.some((eintrag) => eintrag.officialItemId === item.officialItemId)) {
@@ -357,6 +366,10 @@ export function rechnerStarten(): void {
         bearbeitet = auswahl.length - 1;
         auswahlSteuern();
         neuRechnen();
+        suche!.value = '';
+        sucheHinweis!.textContent = 'Position hinzugefügt. Sie können nach einer weiteren suchen.';
+        trefferSichtbar(false);
+        suche!.focus({ preventScroll: true });
       });
       li.append(knopf);
       trefferListe!.append(li);
@@ -364,6 +377,7 @@ export function rechnerStarten(): void {
 
     if (treffer.length < alleTreffer.length) {
       const li = document.createElement('li');
+      li.role = 'presentation';
       const knopf = document.createElement('button');
       knopf.type = 'button';
       knopf.textContent = 'Weitere Positionen anzeigen';
@@ -401,6 +415,24 @@ export function rechnerStarten(): void {
   suche.addEventListener('input', () => {
     suchLimit = 25;
     trefferZeigen();
+  });
+  suche.addEventListener('focus', () => {
+    if (suche.value.trim().length >= 3 && trefferListe.childElementCount > 0) trefferSichtbar(true);
+  });
+  suche.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      trefferSichtbar(false);
+      suche.focus();
+    }
+    if (event.key === 'ArrowDown' && !trefferListe.hidden) {
+      event.preventDefault();
+      trefferListe.querySelector<HTMLButtonElement>('button')?.focus();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    const ziel = event.target;
+    if (ziel instanceof Node && !suche.closest('.search-combobox')?.contains(ziel))
+      trefferSichtbar(false);
   });
   form.addEventListener('submit', (event) => event.preventDefault());
   form.addEventListener('formular:ungueltig', () => {

@@ -211,16 +211,22 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
           Bereits ausgewählte Positionen können Sie darunter ändern.
         </p>
         <label for="suche">Leistung suchen</label>
-        <input
-          id="suche"
-          type="search"
-          autocomplete="off"
-          placeholder="z. B. Untersuchung"
-          disabled
-        />
+        <div class="search-combobox">
+          <input
+            id="suche"
+            type="search"
+            autocomplete="off"
+            placeholder="z. B. Untersuchung"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-controls="treffer"
+            aria-expanded="false"
+            disabled
+          />
+          <ul id="treffer" class="treffer" role="listbox" hidden></ul>
+        </div>
         <p id="suche-hinweis" class="hilfe" role="status" aria-live="polite"></p>
         <button type="button" id="katalog-erneut" hidden>Gebührendaten erneut laden</button>
-        <ul id="treffer" class="treffer"></ul>
         <div id="auswahl-steuerung" hidden>
           <label for="position-bearbeiten">Ausgewählte Position bearbeiten</label>
           <select id="position-bearbeiten"></select>
@@ -260,6 +266,16 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 
   <Fragment slot="ergebnis">
     <p id="rechner-status" role="status" aria-live="polite">Noch keine Position ausgewählt.</p>
+    <div class="preis-hinweis">
+      <h3>Warum ein Einzelbetrag niedrig wirken kann</h3>
+      <p>
+        Angezeigt werden nur die Positionen, die Sie selbst hinzufügen. Eine allgemeine Untersuchung
+        oder Beratung kann als eigene GOT-Position dazukommen. Zeitaufwand und Schwierigkeit
+        beeinflussen den Faktor; Medikamente, Material, Labor, Auslagen oder Wegegeld können
+        zusätzlich berechnet werden. Eine pauschale weitere „Arbeitszeitgebühr“ setzt der Rechner
+        nicht an.
+      </p>
+    </div>
     <div
       id="ergebnis"
       role="region"
@@ -356,9 +372,27 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
   .treffer {
     list-style: none;
     padding: 0;
-    margin: var(--space-2) 0;
+    margin: var(--space-1) 0 0;
     max-height: 18rem;
     overflow-y: auto;
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    z-index: 20;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .search-combobox {
+    position: relative;
+    width: 100%;
+    max-width: 28rem;
+  }
+
+  .search-combobox input[type='search'] {
+    max-width: none;
   }
 
   .treffer li {
@@ -379,6 +413,28 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 
   .treffer button:hover {
     background: var(--color-surface-subtle);
+  }
+
+  .treffer button:focus-visible {
+    background: var(--color-surface-subtle);
+    outline-offset: -3px;
+  }
+
+  .preis-hinweis {
+    background: var(--color-surface-subtle);
+    border-inline-start: 3px solid var(--color-primary);
+    padding: var(--space-3) var(--space-4);
+    margin-block: var(--space-4);
+  }
+
+  .preis-hinweis h3 {
+    font-size: var(--text-body);
+    margin: 0 0 var(--space-1);
+  }
+
+  .preis-hinweis p {
+    font-size: var(--text-small);
+    margin: 0;
   }
 
   :global(#ergebnis table) {

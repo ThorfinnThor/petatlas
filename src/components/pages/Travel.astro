@@ -323,58 +323,57 @@ const transit = umfang.transitCountries.map(name);
   </div>
 </section>
 
-<h2>Länderregeln und Packlisten</h2>
-<ul>
-  {
-    Object.values(ZIELLAENDER).map((country) => (
-      <li>
-        <a
-          href={subroutePath(
-            withEnabledFeatures(defaultMarket(), devFeatureOverrides()),
-            'travel',
-            country.slug,
-          )}
-        >
-          {country.name}
-        </a>
-      </li>
-    ))
-  }
-</ul>
-<h2>Geprüfter Umfang (Fassung {umfang.scopeVersion})</h2>
-<dl class="umfang">
-  <dt>Von</dt>
-  <dd>{name(umfang.origin)}</dd>
-  <dt>Nach</dt>
-  <dd>{ziele.join(', ')}</dd>
-  <dt>Richtung</dt>
-  <dd>Hinreise und Rückreise</dd>
-  <dt>Durchreise</dt>
-  <dd>{transit.join(', ')}</dd>
-  <dt>Tiere</dt>
-  <dd>
-    eigener Hund oder eigene Katze, ab {umfang.minAgeMonths} Monaten, bis zu {umfang.maxAnimals} Tiere
-  </dd>
-  <dt>Anlass</dt>
-  <dd>private Reise mit Begleitperson</dd>
-</dl>
-
-<h2>Ausdrücklich nicht geprüft</h2>
-<p>
-  Diese Fälle prüft der Check nicht. Das ist keine Aussage darüber, ob sie zulässig sind — nur
-  darüber, dass hier niemand sie beurteilt.
-</p>
-<ul class="ausnahmen">
-  {
-    umfang.unsupported.map((fall) => (
-      <li data-testid={`nicht-geprueft-${fall.caseId}`}>
-        <strong>{fall.label}.</strong> {fall.reason}
-      </li>
-    ))
-  }
-</ul>
-
-{umfang.notes.map((hinweis) => <p class="hinweis">{hinweis}</p>)}
+<section class="reise-info" aria-label="Umfang und Grenzen des Reisechecks">
+  <div class="reise-info__bereich">
+    <h2>Länderregeln und Packlisten</h2>
+    <ul class="laenderlinks">
+      {
+        Object.values(ZIELLAENDER).map((country) => (
+          <li>
+            <a
+              href={subroutePath(
+                withEnabledFeatures(defaultMarket(), devFeatureOverrides()),
+                'travel',
+                country.slug,
+              )}
+            >
+              {country.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <h2>Geprüfter Umfang <span class="fassung">Fassung {umfang.scopeVersion}</span></h2>
+    <dl class="umfang">
+      <dt>Von</dt><dd>{name(umfang.origin)}</dd>
+      <dt>Nach</dt><dd>{ziele.join(', ')}</dd>
+      <dt>Richtung</dt><dd>Hinreise und Rückreise</dd>
+      <dt>Durchreise</dt><dd>{transit.join(', ')}</dd>
+      <dt>Tiere</dt>
+      <dd>
+        eigener Hund oder eigene Katze, ab {umfang.minAgeMonths} Monaten, bis zu {umfang.maxAnimals} Tiere
+      </dd>
+      <dt>Anlass</dt><dd>private Reise mit Begleitperson</dd>
+    </dl>
+  </div>
+  <div class="reise-info__bereich">
+    <h2>Ausdrücklich nicht geprüft</h2>
+    <p>
+      Diese Fälle prüft der Check nicht. Das ist keine Aussage darüber, ob sie zulässig sind,
+      sondern nur über den geprüften Umfang dieses Werkzeugs.
+    </p>
+    <ul class="ausnahmen">
+      {
+        umfang.unsupported.map((fall) => (
+          <li data-testid={`nicht-geprueft-${fall.caseId}`}>
+            <strong>{fall.label}.</strong> {fall.reason}
+          </li>
+        ))
+      }
+    </ul>
+    {umfang.notes.map((hinweis) => <p class="hinweis">{hinweis}</p>)}
+  </div>
+</section>
 
 <script>
   import { schritteVerfolgen } from '../../features/travel/stepper.ts';
@@ -390,9 +389,13 @@ const transit = umfang.transitCountries.map(name);
     margin-block: var(--space-4);
   }
 
-  .feld label,
+  .feld label {
+    display: block;
+    margin-block: 0 var(--space-2);
+  }
+
   .schritt {
-    margin-block: var(--space-8);
+    margin-block: var(--space-6);
   }
 
   .feld__frage {
@@ -472,10 +475,28 @@ const transit = umfang.transitCountries.map(name);
     padding-inline-start: var(--space-3);
   }
 
+  #reiseergebnis :global(.ergebnis__hinweise) {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    margin-block: var(--space-4);
+  }
+
+  #reiseergebnis :global(.ergebnis__hinweis) {
+    max-width: none;
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-muted);
+  }
+
   #reiseergebnis :global(.ergebnis__punkte),
   #reiseergebnis :global(.ergebnis__gruende) {
     list-style: none;
     padding: 0;
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
   }
 
   #reiseergebnis :global(.ergebnis__punkte > li),
@@ -483,7 +504,7 @@ const transit = umfang.transitCountries.map(name);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-3) var(--space-4);
-    margin-block: var(--space-3);
+    margin-block: 0;
   }
 
   #reiseergebnis :global(.punkt__zustand) {
@@ -517,5 +538,45 @@ const transit = umfang.transitCountries.map(name);
   .hinweis {
     color: var(--color-text-muted);
     font-size: var(--text-small);
+  }
+
+  .reise-info {
+    display: grid;
+    gap: var(--space-6);
+    margin-block-start: var(--space-12);
+  }
+
+  .reise-info__bereich {
+    min-width: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+
+  .reise-info__bereich > :first-child {
+    margin-top: 0;
+  }
+
+  .fassung {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    font-weight: 400;
+  }
+
+  .laenderlinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 1000px) {
+    .reise-info {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      align-items: start;
+    }
   }
 </style>
