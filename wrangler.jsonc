@@ -22,13 +22,12 @@
     "not_found_handling": "404-page",
   },
 
-  // Die neue Hauptdomain und die bisherige Domain bleiben am Produktionsprojekt.
-  // Cloudflare leitet wauandmiau.de dauerhaft und pfaderhaltend auf die neue
-  // Hauptdomain um; der Eintrag bleibt für eine verlustarme SEO-Migration bestehen.
+  // Ausschließlich die neue Hauptdomain bleibt am Produktionsprojekt. Die frühere
+  // Domain wurde auf Betreiberwunsch nach der geprüften Migration vollständig
+  // getrennt; sie darf weder Inhalte noch Weiterleitungen dieses Workers ausliefern.
   "routes": [
     { "pattern": "deinhaustierportal.de", "custom_domain": true },
     { "pattern": "www.deinhaustierportal.de", "custom_domain": true },
-    { "pattern": "wauandmiau.de", "custom_domain": true },
   ],
 
   // Produktion baut ausschließlich main. Andere Branches erzeugen im

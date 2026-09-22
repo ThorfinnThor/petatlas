@@ -37,6 +37,6 @@ Die Browserprüfungen benötigen die Playwright-Browser (`npx playwright install
 
 Cloudflare Workers Static Assets, Konfiguration in `wrangler.preview.jsonc` und `wrangler.jsonc`. Vorschau und Produktion sind getrennt. Der Produktionsbuild verlangt echte Betreiberangaben, eine Domain und dokumentierte Einzelprüfungen. `.env.example` nennt die öffentlichen Konfigurationsfelder. Partnerangebote, Versicherungsangebote und Werbung bleiben bis zu tatsächlichen Verträgen und Freigaben ausgeschaltet.
 
-Die Domainmigration von `wauandmiau.de` zu `deinhaustierportal.de` ist in `docs/DOMAIN_MIGRATION_2026-09-22.md` beschrieben. Die alte Domain bleibt für permanente, pfad- und parametererhaltende Weiterleitungen sowie die Übergangszeit der E-Mail-Adresse bestehen.
+Die Domainmigration von der früheren Domain zu `deinhaustierportal.de` ist in `docs/DOMAIN_MIGRATION_2026-09-22.md` beschrieben. Nach der geprüften Umstellung wurde die alte Domain auf Betreiberwunsch vollständig vom Worker, der Weiterleitung und der E-Mail-Zustellung getrennt.
 
 Aktueller Arbeits-/Abnahmestand: `docs/HANDOFF.md`. Bekannte Grenzen: `docs/KNOWN_LIMITATIONS.md`. Aufgabenregister: `project/tasks.json`; `npm run status` zeigt den strukturierten Stand. `CLAUDE.md` und die ursprünglichen Planungsdokumente enthalten die Projektregeln und Planungshistorie.
