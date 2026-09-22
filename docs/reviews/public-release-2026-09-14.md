@@ -16,7 +16,7 @@ sind, und die öffentliche Veröffentlichung ausdrücklich autorisiert.
 - GOT-Katalog und Kostenrechner mit den veröffentlichten Grenzen und Hinweisen
 - signierter Reiseregelstand `eu-intra-2026` für den ausdrücklich beschriebenen Umfang
 - allgemeine Einordnung von Ergänzungsfuttermitteln ohne Dosierungs- oder Therapierat
-- statische, gekennzeichnete Amazon-Suchlinks mit `tag=wauandmiau-21`
+- statische, gekennzeichnete Amazon-Suchlinks; seit der Domainmigration mit `tag=deinhaustierportal-21`
 - statische, gekennzeichnete Fressnapf-Kategorielinks über Awin
 - neutrale Tierversicherungsinformation mit gekennzeichnetem HanseMerkur-Link über Awin
 

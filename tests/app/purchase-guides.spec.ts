@@ -26,7 +26,7 @@ for (const width of [390, 1440]) {
         const href = await link.getAttribute('href');
         const url = new URL(href!);
         expect(url.hostname).toBe('www.amazon.de');
-        expect(url.searchParams.get('tag')).toBe('wauandmiau-21');
+        expect(url.searchParams.get('tag')).toBe('deinhaustierportal-21');
         expect(url.searchParams.get('k')).toBeTruthy();
         await expect(link).toHaveAttribute('rel', /nofollow/);
         await expect(link).not.toHaveAccessibleName(/\(Werbung\).*\(Werbung\)/);
