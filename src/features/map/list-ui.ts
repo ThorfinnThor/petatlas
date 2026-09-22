@@ -131,10 +131,12 @@ export function listeStarten(): void {
   const karteBehaelter = document.querySelector<HTMLElement>('#karte');
   const karteStatus = document.querySelector<HTMLElement>('#karte-status');
 
+  const initialLatitude = Number(form.dataset.initialLatitude ?? '52.5174');
+  const initialLongitude = Number(form.dataset.initialLongitude ?? '13.3951');
   let gewaehlt: { name: string; latitude: number; longitude: number } | null = {
-    name: 'Berlin',
-    latitude: 52.5174,
-    longitude: 13.3951,
+    name: form.dataset.initialName?.trim() || 'Berlin',
+    latitude: Number.isFinite(initialLatitude) ? initialLatitude : 52.5174,
+    longitude: Number.isFinite(initialLongitude) ? initialLongitude : 13.3951,
   };
   let datenGeladen = false;
   let letzteOrte: readonly ListenOrt[] = [];
@@ -149,6 +151,25 @@ export function listeStarten(): void {
     );
   }
 
+  function zaehlerAktualisieren(orte: readonly ListenOrt[], radiusMeter: number): void {
+    if (gewaehlt === null) return;
+    const lokal = filtereOrteMitMeta(orte, {
+      mitte: { latitude: gewaehlt.latitude, longitude: gewaehlt.longitude },
+      gemeinde: gewaehlt.name,
+      radiusMeter,
+      kategorien: [],
+      maxTreffer: orte.length,
+    }).treffer;
+    const anzahl = new Map<string, number>();
+    for (const eintrag of lokal) {
+      anzahl.set(eintrag.ort.category, (anzahl.get(eintrag.ort.category) ?? 0) + 1);
+    }
+    for (const ausgabe of document.querySelectorAll<HTMLElement>('[data-category-count]')) {
+      const kategorie = ausgabe.dataset.categoryCount ?? '';
+      ausgabe.textContent = (anzahl.get(kategorie) ?? 0).toLocaleString('de-DE');
+    }
+  }
+
   async function aktualisiere(): Promise<void> {
     if (gewaehlt === null) return;
     const lauf = ++suchLauf;
@@ -161,6 +182,7 @@ export function listeStarten(): void {
     try {
       const orte = await ladeZellenUm(gewaehlt.latitude, gewaehlt.longitude, radiusMeter);
       if (lauf !== suchLauf) return;
+      zaehlerAktualisieren(orte, radiusMeter);
       const listenErgebnis = filtereOrteMitMeta(orte, {
         mitte: { latitude: gewaehlt.latitude, longitude: gewaehlt.longitude },
         gemeinde: gewaehlt.name,

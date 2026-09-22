@@ -51,6 +51,19 @@ const standardErgebnis = filtereOrteMitMeta(alleOrte, {
   maxTreffer: 25,
 });
 const standardTreffer = standardErgebnis.treffer;
+const standardAlle = filtereOrteMitMeta(alleOrte, {
+  mitte: { latitude: STANDARD.latitude, longitude: STANDARD.longitude },
+  gemeinde: STANDARD.name,
+  radiusMeter: STANDARD.radius,
+  kategorien: [],
+  maxTreffer: alleOrte.length,
+}).treffer;
+const standardZaehler = Object.fromEntries(
+  Object.keys(KATEGORIE_LABEL).map((kategorie) => [
+    kategorie,
+    standardAlle.filter((eintrag) => eintrag.ort.category === kategorie).length,
+  ]),
+);
 
 // M11-04 — Städte mit eigener Seite. Die Liste kommt aus derselben Prüfung
 // wie die Seiten selbst; sie kann deshalb nicht auf eine Seite verweisen, die
@@ -142,7 +155,11 @@ const abdeckung = {
           Object.entries(KATEGORIE_LABEL).map(([schluessel, label]) => (
             <label class="wahl">
               <input type="checkbox" name="kategorie" value={schluessel} />
-              {label} ({(abdeckung.byCategory[schluessel] ?? 0).toLocaleString('de-DE')})
+              {label} (
+              <span data-category-count={schluessel}>
+                {(standardZaehler[schluessel] ?? 0).toLocaleString('de-DE')}
+              </span>
+              )
             </label>
           ))
         }

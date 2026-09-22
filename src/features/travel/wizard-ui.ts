@@ -126,8 +126,12 @@ export function reisecheckStarten(): void {
       )}</p>`,
     );
 
-    for (const hinweis of ergebnis.hinweise) {
-      teile.push(`<p class="ergebnis__hinweis">${escape(hinweis)}</p>`);
+    if (ergebnis.hinweise.length > 0) {
+      teile.push('<div class="ergebnis__hinweise">');
+      for (const hinweis of ergebnis.hinweise) {
+        teile.push(`<p class="ergebnis__hinweis">${escape(hinweis)}</p>`);
+      }
+      teile.push('</div>');
     }
 
     if (!ergebnis.umfang.unterstuetzt) {

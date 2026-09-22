@@ -1,15 +1,7 @@
 ---
 /**
- * M11-04 — Lokale Stadtseite.
- *
- * Gebaut wird eine Seite nur für Städte, die auf der Allowlist stehen **und**
- * die Qualitätskriterien im aktuellen Datenstand erfüllen (siehe
- * `src/features/map/city.ts`). Eine Kategorie ohne Eintrag verhindert die
- * Seite; sie erscheint nicht als leere Rubrik.
- *
- * Der Verzeichnisname wiederholt den Kartenslug, weil Astro die Route aus dem
- * Dateipfad ableitet. Verlinkt wird trotzdem ausschließlich über
- * `subroutePath`, damit kein zweiter Ort entsteht, an dem Pfade entstehen.
+ * Lokale Stadtseite mit derselben interaktiven Umkreislogik wie die Hauptkarte.
+ * Gebaut wird sie nur für Orte, die die Qualitätskriterien der Allowlist erfüllen.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
@@ -20,20 +12,17 @@ import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../d
 import { devFeatureOverrides, resolveBuildConfig } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
 import { PFLICHT_KATEGORIEN, STADT_KRITERIEN } from '../../../features/map/city.ts';
-import {
-  baubareStadtseiten,
-  nachKategorie,
-  type Stadtseite,
-} from '../../../features/map/city-allowlist.ts';
+import { baubareStadtseiten, type Stadtseite } from '../../../features/map/city-allowlist.ts';
 import {
   KATEGORIE_LABEL,
-  KATEGORIE_ZAEHLFORM,
+  RADIEN_METER,
   formatiereEntfernung,
   mengeMitLabel,
   notdienstHinweis,
   type ListenOrt,
 } from '../../../features/map/list.ts';
 import { ART_LABEL, kommunaleFlaechen } from '../../../features/map/municipal.ts';
+import { TILES } from '../../../features/map/tiles.ts';
 import { formatCalendarDate } from '../../../domain/dates.ts';
 import { verzeichnisKontaktLink } from '../../../features/map/contact.ts';
 import { createSiteConfig } from '../../../../config/site.ts';
@@ -42,13 +31,10 @@ import { oeffentlicheProjektion } from '../../../../scripts/publish/places.ts';
 import type { Place } from '../../../domain/schemas/places.ts';
 import { applyDirectoryControls } from '../../../features/map/directory-controls.ts';
 
-/** Wie viele Einträge je Kategorie auf der Seite stehen. */
-const JE_KATEGORIE = 12;
+const MAX_TREFFER = 100;
 
 export function getStaticPaths() {
   const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
-  // Ohne Kartenfunktion gibt es keine Kartenroute — und damit auch keine
-  // Unterseite darunter.
   if (!isFeatureEnabled(market, 'map')) return [];
 
   const orte = applyDirectoryControls(snapshot.places as unknown as Place[]).map(
@@ -72,8 +58,6 @@ interface Nachbar {
 
 const { seite, nachbarn } = Astro.props as { seite: Stadtseite; nachbarn: readonly Nachbar[] };
 const market = defaultMarket();
-const gruppen = nachKategorie(seite.treffer);
-
 const quelle = snapshot.source as {
   name: string;
   licenseId: string;
@@ -81,182 +65,231 @@ const quelle = snapshot.source as {
   attributionUrl: string;
   retrievalDate: string;
 };
-
-const kartenPfad = routePath(withEnabledFeatures(market, devFeatureOverrides()), 'map');
-const eigenerPfad = subroutePath(
-  withEnabledFeatures(market, devFeatureOverrides()),
-  'map',
-  seite.slug,
-);
+const kartenMarkt = withEnabledFeatures(market, devFeatureOverrides());
+const kartenPfad = routePath(kartenMarkt, 'map');
+const eigenerPfad = subroutePath(kartenMarkt, 'map', seite.slug);
 const umkreis = formatiereEntfernung(STADT_KRITERIEN.radiusMeter);
 const build = resolveBuildConfig();
 const kontakt = createSiteConfig(build.mode, process.env).operator.contactEmail;
-
-// „77 Tierarztpraxen, 1 Tierheim, 34 Zoofachgeschäfte und 5 Hundewiesen“ —
-// die Zahlen kommen aus der Messung, die Grammatik aus der Zählform.
 const mengen = PFLICHT_KATEGORIEN.map((kategorie) =>
   mengeMitLabel(seite.befund.jeKategorie[kategorie] ?? 0, kategorie),
 );
 const bestand = `${mengen.slice(0, -1).join(', ')} und ${mengen[mengen.length - 1]}`;
-
-// Kommunal ausgewiesene Flächen. `null` heißt: für diese Stadt ist keine
-// Verwaltungsquelle erfasst — nicht, dass es dort keine gäbe.
+const initialTreffer = seite.treffer.slice(0, MAX_TREFFER);
 const kommunal = kommunaleFlaechen(seite.slug);
-/** Wie viele Flächen auf der Seite stehen, bevor auf die Quelle verwiesen wird. */
 const KOMMUNAL_MAX = 30;
 ---
 
 <BaseLayout
   title={`Tierärzte und Tierbedarf in ${seite.stadt.name}`}
-  description={`Tierärzte, Tierbedarf, Tierheime und Hundewiesen in ${seite.stadt.name} und Umgebung – erfasste Orte mit Datenstand und Quellen.`}
+  description={`Tierärzte, Tierbedarf, Tierheime und Hundewiesen in ${seite.stadt.name} und Umgebung – mit Filtern, Karte, Datenstand und Quellen.`}
   route="map"
   canonicalPfad={eigenerPfad}
+  weit
 >
   <Breadcrumbs
-    market={withEnabledFeatures(market, devFeatureOverrides())}
+    market={kartenMarkt}
     stufen={[{ label: 'Tierärzte in der Nähe', route: 'map' }, { label: seite.stadt.name }]}
   />
 
-  <h1>Tierärzte und Tierbedarf in {seite.stadt.name}</h1>
+  <header class="city-hero">
+    <div>
+      <p class="eyebrow">Lokales Verzeichnis · {umkreis} Umkreis</p>
+      <h1>Tierärzte und Tierbedarf in {seite.stadt.name}</h1>
+      <p>
+        Rund um {seite.stadt.name} sind {seite.befund.gesamt} Orte erfasst: {bestand}. Filtern Sie
+        die Liste nach Kategorie und Umkreis oder öffnen Sie die Karte direkt auf dieser Seite.
+      </p>
+      <DataStatus
+        stand={quelle.retrievalDate}
+        quelle={`${quelle.name} · ${quelle.licenseId}`}
+        locale={market.locale}
+      />
+    </div>
+    <div class="city-notices">
+      <Notice variante="hinweis" titel="Daten einordnen">
+        <p>
+          Die Liste zeigt Einträge aus OpenStreetMap. Sie ist{' '}
+          <strong>nicht vollständig</strong>; Öffnungszeiten können veraltet sein. Vor einem Besuch
+          bitte anrufen. Sortiert wird nach Entfernung, nicht nach Bewertung oder Bezahlung.
+        </p>
+      </Notice>
+      <Notice variante="warnung" titel="Kein Notdienstverzeichnis">
+        <p>
+          Im Notfall gilt der Notdienstplan der zuständigen Tierärztekammer oder die telefonische
+          Auskunft einer Praxis.
+        </p>
+      </Notice>
+    </div>
+  </header>
 
-  <p>
-    In {seite.stadt.name} und im Umkreis von {umkreis} sind {seite.befund.gesamt} Orte erfasst:
-    {' '}{bestand}. {seite.befund.inGemeinde} davon sind laut Quelle {seite.stadt.name} selbst zugeordnet,
-    die übrigen liegen im Umland.
-  </p>
+  <section class="city-directory" aria-labelledby="verzeichnis-titel">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Filtern und ansehen</p>
+        <h2 id="verzeichnis-titel">Orte rund um {seite.stadt.name}</h2>
+      </div>
+      <a href={kartenPfad}>Anderen Ort suchen</a>
+    </div>
 
-  <DataStatus
-    stand={quelle.retrievalDate}
-    quelle={`${quelle.name} · ${quelle.licenseId}`}
-    locale={market.locale}
-  />
+    <div class="city-tools">
+      <form
+        id="ortsfilter"
+        class="city-filter"
+        aria-labelledby="filter-titel"
+        data-initial-name={seite.stadt.name}
+        data-initial-latitude={seite.stadt.latitude}
+        data-initial-longitude={seite.stadt.longitude}
+      >
+        <h3 id="filter-titel">Auswahl</h3>
+        <input id="ort" type="hidden" value={seite.stadt.name} />
+        <p id="ort-hinweis" hidden>Ausschnitt um {seite.stadt.name}.</p>
+        <ul id="ort-treffer" hidden></ul>
+        <p id="orts-ladefehler" role="status" hidden></p>
+        <button id="ortsdaten-erneut" type="button" hidden>Ortsdaten erneut laden</button>
 
-  <Notice variante="hinweis" titel="Was diese Seite ist — und was nicht">
-    <p>
-      Diese Liste zeigt, was in OpenStreetMap erfasst ist. Sie ist
-      <strong>nicht vollständig</strong>: eine Praxis, die hier fehlt, existiert deshalb nicht
-      weniger. Angaben wie Öffnungszeiten stammen aus der Quelle und können veraltet sein — vor
-      einem Besuch bitte anrufen. Es gibt hier keine Bewertungen, keine Rangfolge und keine
-      bezahlten Platzierungen; sortiert wird ausschließlich nach Entfernung zum Stadtmittelpunkt.
-    </p>
-  </Notice>
+        <fieldset>
+          <legend>Kategorie</legend>
+          {
+            Object.entries(KATEGORIE_LABEL).map(([schluessel, label]) => (
+              <label class="wahl">
+                <input type="checkbox" name="kategorie" value={schluessel} />
+                <span>{label}</span>
+                <span class="anzahl" data-category-count={schluessel}>
+                  {(seite.befund.jeKategorie[schluessel] ?? 0).toLocaleString('de-DE')}
+                </span>
+              </label>
+            ))
+          }
+          <p class="hilfe">Ohne Auswahl werden alle Kategorien gezeigt.</p>
+        </fieldset>
 
-  <Notice variante="warnung" titel="Kein Notdienstverzeichnis">
-    <p>
-      Auch wenn hier Praxen stehen: eine Notdienstauskunft ist das nicht. Im Notfall hilft der
-      Notdienstplan der zuständigen Tierärztekammer oder ein Anruf in der Praxis.
-    </p>
-  </Notice>
+        <label for="radius">Umkreis</label>
+        <select id="radius">
+          {
+            RADIEN_METER.map((meter) => (
+              <option value={meter} selected={meter === STADT_KRITERIEN.radiusMeter}>
+                {formatiereEntfernung(meter)}
+              </option>
+            ))
+          }
+        </select>
+      </form>
 
-  {
-    Object.keys(KATEGORIE_LABEL).map((kategorie) => {
-      const eintraege = gruppen.get(kategorie) ?? [];
-      // Eine Kategorie ohne Eintrag kommt auf einer gebauten Seite nicht vor;
-      // sollte sie es doch, bleibt sie weg statt leer dazustehen.
-      if (eintraege.length === 0) return null;
-      return (
-        <section aria-labelledby={`titel-${kategorie}`}>
-          <h2 id={`titel-${kategorie}`}>
-            {KATEGORIE_ZAEHLFORM[kategorie]?.[1] ?? KATEGORIE_LABEL[kategorie]} in{' '}
-            {seite.stadt.name} ({eintraege.length})
-          </h2>
-          {eintraege.length > JE_KATEGORIE && (
-            <p class="hilfe">
-              Die {JE_KATEGORIE} nächstgelegenen von {eintraege.length} erfassten. Alle weiteren
-              stehen in der <a href={kartenPfad}>Karte und Liste</a>.
-            </p>
-          )}
-          <ul class="treffer">
-            {eintraege.slice(0, JE_KATEGORIE).map((treffer) => (
-              <li>
-                <h3>{treffer.ort.name}</h3>
-                <p class="meta">
-                  {formatiereEntfernung(treffer.entfernungMeter)} vom Stadtmittelpunkt ·{' '}
-                  {treffer.ortsLabel}
-                  {treffer.punktBerechnet && ' · Position berechnet'}
+      <section class="map-output" aria-labelledby="karte-titel">
+        <div class="map-copy">
+          <div>
+            <p class="eyebrow">Interaktive Karte</p>
+            <h3 id="karte-titel">{seite.stadt.name} und Umgebung</h3>
+          </div>
+          <button type="button" id="karte-anzeigen">Karte anzeigen</button>
+        </div>
+        <p class="kartenhinweis">
+          Die Karte lädt erst auf Klick. {TILES.noticeText}
+        </p>
+        <div id="karte" class="karte" hidden></div>
+        <p id="karte-status" class="hilfe" role="status" aria-live="polite"></p>
+      </section>
+    </div>
+
+    <section class="results" aria-labelledby="treffer-titel">
+      <div class="results-heading">
+        <h3 id="treffer-titel">Treffer</h3>
+        <p id="treffer-status" role="status" aria-live="polite">
+          {
+            initialTreffer.length < seite.befund.gesamt
+              ? `Erste ${initialTreffer.length} von ${seite.befund.gesamt} erfassten Orten im Umkreis von ${umkreis} um ${seite.stadt.name}.`
+              : `${seite.befund.gesamt} erfasste Orte im Umkreis von ${umkreis} um ${seite.stadt.name}.`
+          }
+        </p>
+      </div>
+      <ul
+        id="trefferliste"
+        class="treffer"
+        tabindex="0"
+        aria-label={`Erfasste Orte rund um ${seite.stadt.name}`}
+        data-profile={String(kartenMarkt.featureFlags.profile === true)}
+        data-contact-email={kontakt ?? ''}
+        data-page-path={eigenerPfad}
+      >
+        {
+          initialTreffer.map((treffer) => (
+            <li>
+              <p class="kategorie">
+                {KATEGORIE_LABEL[treffer.ort.category] ?? treffer.ort.category}
+              </p>
+              <h3>{treffer.ort.name}</h3>
+              <p class="meta">
+                {formatiereEntfernung(treffer.entfernungMeter)} vom Stadtmittelpunkt ·{' '}
+                {treffer.ortsLabel}
+                {treffer.punktBerechnet && ' · Position berechnet'}
+              </p>
+              {treffer.ort.openingHours !== null ? (
+                <p>Öffnungszeiten: {treffer.ort.openingHours}</p>
+              ) : (
+                <p class="unbekannt">Öffnungszeiten nicht erfasst</p>
+              )}
+              {treffer.ort.phone !== null && (
+                <p>
+                  Telefon:{' '}
+                  <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
                 </p>
-                {treffer.ort.openingHours !== null ? (
-                  <p>Öffnungszeiten: {treffer.ort.openingHours}</p>
-                ) : (
-                  <p class="unbekannt">Öffnungszeiten nicht erfasst</p>
-                )}
-                {treffer.ort.phone !== null && (
-                  <p>
-                    Telefon:{' '}
-                    <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
-                  </p>
-                )}
-                {(() => {
-                  const web = darstellung(treffer.ort.website);
-                  if (web.art === 'link') {
-                    return (
-                      <p>
-                        <a href={web.url} rel="nofollow noopener">
-                          Website
-                        </a>
-                      </p>
-                    );
-                  }
-                  if (web.art === 'text') {
-                    return (
-                      <p class="unbekannt">
-                        Website: {web.adresse} ({web.hinweis})
-                      </p>
-                    );
-                  }
-                  return null;
-                })()}
-                {notdienstHinweis(treffer.ort.emergency) !== null && (
-                  <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
-                )}
-                {verzeichnisKontaktLink(kontakt, treffer.ort.id, eigenerPfad) !== null && (
-                  <p class="hilfe">
-                    <a href={verzeichnisKontaktLink(kontakt, treffer.ort.id, eigenerPfad)!}>
-                      Eintrag berichtigen oder Datenschutzanfrage stellen
-                    </a>
-                  </p>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
-      );
-    })
-  }
+              )}
+              {(() => {
+                const web = darstellung(treffer.ort.website);
+                if (web.art === 'link')
+                  return (
+                    <p>
+                      <a href={web.url} rel="nofollow noopener">
+                        Website
+                      </a>
+                    </p>
+                  );
+                if (web.art === 'text')
+                  return (
+                    <p class="unbekannt">
+                      Website: {web.adresse} ({web.hinweis})
+                    </p>
+                  );
+                return null;
+              })()}
+              {notdienstHinweis(treffer.ort.emergency) !== null && (
+                <p class="notdienst">{notdienstHinweis(treffer.ort.emergency)}</p>
+              )}
+              {verzeichnisKontaktLink(kontakt, treffer.ort.id, eigenerPfad) !== null && (
+                <p class="hilfe">
+                  <a href={verzeichnisKontaktLink(kontakt, treffer.ort.id, eigenerPfad)!}>
+                    Eintrag berichtigen oder Datenschutzanfrage stellen
+                  </a>
+                </p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </section>
 
   {
     kommunal !== null && (
       <section aria-labelledby="kommunal-titel" class="kommunal">
-        <h2 id="kommunal-titel">
-          Von der Verwaltung ausgewiesene Flächen ({kommunal.flaechen.length})
-        </h2>
+        <h2 id="kommunal-titel">Von der Verwaltung ausgewiesene Flächen</h2>
         <p>
-          Diese Flächen stammen nicht aus OpenStreetMap, sondern aus dem Datensatz der Verwaltung
-          von {kommunal.gemeinde}. Sie sind damit die verbindlichere Angabe: {kommunal.freilauf}{' '}
-          ausgewiesene Freilauffläche{kommunal.freilauf === 1 ? '' : 'n'}
-          {kommunal.verbot > 0 && (
-            <>
-              {' '}
-              und {kommunal.verbot} Hundemitnahmeverbot{kommunal.verbot === 1 ? '' : 'e'}
-            </>
-          )}
+          Der Datensatz von {kommunal.gemeinde} führt {kommunal.freilauf} ausgewiesene
+          Freilauffläche{kommunal.freilauf === 1 ? '' : 'n'}
+          {kommunal.verbot > 0 &&
+            ` und ${kommunal.verbot} Hundemitnahmeverbot${kommunal.verbot === 1 ? '' : 'e'}`}
           .
         </p>
         <p class="hilfe">
-          Datenstand des Abrufs: {formatCalendarDate(kommunal.stand.slice(0, 10), market.locale)}
+          Datenstand: {formatCalendarDate(kommunal.stand.slice(0, 10), market.locale)} ·{' '}
+          <a href={kommunal.attributionUrl} rel="nofollow noopener">
+            Quelle und Lizenz
+          </a>
         </p>
-
-        <Notice variante="hinweis" titel="Wofür dieser Datensatz gilt">
+        <Notice variante="hinweis" titel="Geltungsbereich der Verwaltungsdaten">
           <p>{kommunal.geltung}</p>
         </Notice>
-
-        {kommunal.flaechen.length > KOMMUNAL_MAX && (
-          <p class="hilfe">
-            Die ersten {KOMMUNAL_MAX} von {kommunal.flaechen.length} Flächen, nach Bezeichnung
-            sortiert. Der vollständige Datensatz steht bei der Quelle.
-          </p>
-        )}
-
         <ul class="flaechen">
           {kommunal.flaechen.slice(0, KOMMUNAL_MAX).map((flaeche) => (
             <li>
@@ -265,56 +298,27 @@ const KOMMUNAL_MAX = 30;
                 {ART_LABEL[flaeche.kind]}
               </p>
               {flaeche.address !== null && flaeche.address !== flaeche.name && (
-                <p class="meta">{flaeche.address}</p>
+                <p>{flaeche.address}</p>
               )}
-              {flaeche.district !== null && <p class="meta">Bezirk: {flaeche.district}</p>}
-              {flaeche.note !== null && <p class="meta">{flaeche.note}</p>}
+              {flaeche.district !== null && <p>Bezirk: {flaeche.district}</p>}
+              {flaeche.note !== null && <p>{flaeche.note}</p>}
             </li>
           ))}
         </ul>
-
-        <p class="hilfe">
-          {kommunal.attribution} ·{' '}
-          <a href={kommunal.attributionUrl} rel="nofollow noopener">
-            Datensatz und Lizenz ({kommunal.licenseId})
-          </a>
-        </p>
       </section>
     )
   }
 
-  <section aria-labelledby="karte-titel">
-    <h2 id="karte-titel">Karte und eigener Umkreis</h2>
-    <p>
-      Für einen anderen Umkreis, andere Kategorien oder Ihren eigenen Standort:
-      {' '}<a href={kartenPfad}>Tierärzte und Orte in der Nähe</a>. Dort lässt sich der Ausschnitt
-      frei wählen; die Karte lädt erst auf Klick.
-    </p>
-  </section>
-
   {
     nachbarn.length > 1 && (
-      <section aria-labelledby="staedte-titel">
-        <h2 id="staedte-titel">Weitere Städte mit eigener Seite</h2>
-        <p class="hilfe">
-          Eine Stadt bekommt hier nur dann eine Seite, wenn in allen vier Kategorien genug erfasst
-          ist. Fehlt Ihre Stadt, heißt das: die Daten reichen dafür nicht — nicht, dass es dort
-          nichts gibt.
-        </p>
+      <section aria-labelledby="staedte-titel" class="other-cities">
+        <h2 id="staedte-titel">Weitere Städte</h2>
         <ul class="staedte">
           {nachbarn
             .filter((nachbar) => nachbar.slug !== seite.slug)
             .map((nachbar) => (
               <li>
-                <a
-                  href={subroutePath(
-                    withEnabledFeatures(market, devFeatureOverrides()),
-                    'map',
-                    nachbar.slug,
-                  )}
-                >
-                  {nachbar.name}
-                </a>
+                <a href={subroutePath(kartenMarkt, 'map', nachbar.slug)}>{nachbar.name}</a>
               </li>
             ))}
         </ul>
@@ -322,97 +326,234 @@ const KOMMUNAL_MAX = 30;
     )
   }
 
-  <h2>Quelle</h2>
-  <p>
-    {quelle.attribution}. Die Daten stehen unter der Open Database License;
-    {' '}<a href={quelle.attributionUrl} rel="nofollow noopener">Herkunft und Lizenz</a>. Die
-    ausgelieferten Ortsdaten sind eine abgeleitete Datenbank und werden unter derselben Lizenz
-    weitergegeben.
-  </p>
+  <section class="source" aria-labelledby="quelle-titel">
+    <h2 id="quelle-titel">Quelle</h2>
+    <p>
+      {quelle.attribution}. Die Ortsdaten stehen unter der Open Database License;{' '}
+      <a href={quelle.attributionUrl} rel="nofollow noopener">Herkunft und Lizenz</a>.
+    </p>
+  </section>
+
+  <script>
+    import { listeStarten } from '../../../features/map/list-ui.ts';
+    listeStarten();
+  </script>
 
   <style>
-    .hilfe {
-      color: var(--color-text-muted);
+    .eyebrow,
+    .kategorie {
+      color: var(--color-primary);
       font-size: var(--text-small);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin: 0 0 var(--space-2);
+      text-transform: uppercase;
     }
 
-    .treffer,
-    .staedte {
-      list-style: none;
+    .city-hero {
+      display: grid;
+      gap: var(--space-8);
+      margin-block-end: var(--space-10);
+    }
+
+    .city-hero h1,
+    .section-heading h2,
+    .map-copy h3,
+    .results-heading h3 {
+      margin-block-start: 0;
+    }
+
+    .city-notices :global(.hinweisbox) {
+      margin-block: 0 var(--space-3);
+    }
+
+    .city-directory {
+      background: var(--color-surface-subtle);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5);
+    }
+
+    .section-heading,
+    .map-copy,
+    .results-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+
+    .city-tools {
+      display: grid;
+      gap: var(--space-5);
+      margin-block: var(--space-5) var(--space-8);
+    }
+
+    .city-filter,
+    .map-output {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      min-width: 0;
+    }
+
+    .city-filter h3 {
+      margin-top: 0;
+    }
+
+    .city-filter fieldset {
+      border: 0;
       padding: 0;
+      margin: 0 0 var(--space-4);
     }
 
-    .treffer > li {
+    .city-filter legend,
+    .city-filter > label {
+      font-weight: 600;
+      margin-block-end: var(--space-2);
+    }
+
+    .wahl {
+      align-items: center;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-2);
+      min-height: 2.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .anzahl {
+      color: var(--color-text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    select {
+      width: 100%;
+      padding: var(--space-2);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
-      padding: var(--space-3) var(--space-4);
-      margin-block: var(--space-3);
+      background: var(--color-surface);
     }
 
-    .treffer h3 {
-      margin: 0 0 var(--space-1);
-      font-size: var(--text-body);
-    }
-
-    .treffer p {
-      margin-block: var(--space-1);
-    }
-
+    .kartenhinweis,
+    .hilfe,
     .meta {
       color: var(--color-text-muted);
       font-size: var(--text-small);
     }
 
-    .unbekannt {
-      color: var(--color-text-muted);
-      font-style: italic;
-      overflow-wrap: anywhere;
+    .karte {
+      height: 28rem;
+      max-height: 65vh;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      margin-block-start: var(--space-3);
     }
 
-    .treffer a,
-    .treffer .meta {
-      overflow-wrap: anywhere;
-    }
-
-    .notdienst {
-      border-inline-start: 3px solid var(--color-warning);
-      padding-inline-start: var(--space-2);
-    }
-
-    .flaechen {
+    .treffer,
+    .flaechen,
+    .staedte {
       list-style: none;
       padding: 0;
     }
 
+    .treffer {
+      display: grid;
+      gap: var(--space-3);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+      max-height: 54rem;
+      overflow-y: auto;
+      padding-inline-end: var(--space-1);
+    }
+
+    .treffer > li,
     .flaechen > li {
+      background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
       padding: var(--space-3) var(--space-4);
-      margin-block: var(--space-3);
+      min-width: 0;
     }
 
+    .treffer h3,
     .flaechen h3 {
-      margin: 0 0 var(--space-1);
       font-size: var(--text-body);
+      margin: 0 0 var(--space-1);
     }
 
+    .treffer p,
     .flaechen p {
       margin-block: var(--space-1);
+      overflow-wrap: anywhere;
+    }
+
+    .unbekannt {
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    .notdienst,
+    .ausweisung {
+      border-inline-start: 3px solid var(--color-warning);
+      padding-inline-start: var(--space-2);
     }
 
     .ausweisung {
-      border-inline-start: 3px solid var(--color-success);
-      padding-inline-start: var(--space-2);
+      border-inline-start-color: var(--color-success);
     }
 
     .ausweisung.verbot {
       border-inline-start-color: var(--color-warning);
     }
 
+    .kommunal,
+    .other-cities,
+    .source {
+      margin-block-start: var(--space-12);
+    }
+
+    .flaechen {
+      display: grid;
+      gap: var(--space-3);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    }
+
     .staedte {
       display: flex;
       flex-wrap: wrap;
       gap: var(--space-2) var(--space-4);
+    }
+
+    @media (min-width: 900px) {
+      .city-hero {
+        grid-template-columns: minmax(0, 1.25fr) minmax(23rem, 0.75fr);
+        align-items: start;
+      }
+
+      .city-tools {
+        grid-template-columns: 18rem minmax(0, 1fr);
+      }
+
+      .map-output {
+        min-height: 25rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .city-directory {
+        padding: var(--space-3);
+      }
+
+      .section-heading,
+      .map-copy,
+      .results-heading {
+        display: block;
+      }
+
+      .map-copy button {
+        margin-block: var(--space-2);
+      }
     }
   </style>
 </BaseLayout>
