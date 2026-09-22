@@ -16,7 +16,7 @@ import { resolve } from 'node:path';
 
 import { chromium, type BrowserContext, type Page } from '@playwright/test';
 
-type ViewportName = 'desktop' | 'desktop-small' | 'tablet' | 'mobile';
+type ViewportName = 'desktop' | 'desktop-small' | 'tablet' | 'mobile' | 'mobile-narrow';
 
 interface Viewport {
   readonly name: ViewportName;
@@ -55,6 +55,8 @@ interface PageMetrics {
   readonly narrowText: readonly ElementFinding[];
   readonly wideText: readonly ElementFinding[];
   readonly tinyText: readonly ElementFinding[];
+  readonly largeVerticalGaps: readonly ElementFinding[];
+  readonly emptyGridAreas: readonly ElementFinding[];
   readonly consoleErrors: readonly string[];
   readonly pageErrors: readonly string[];
   readonly findings: readonly string[];
@@ -65,6 +67,7 @@ const VIEWPORTS: readonly Viewport[] = [
   { name: 'desktop-small', width: 1280, height: 800 },
   { name: 'tablet', width: 768, height: 1024 },
   { name: 'mobile', width: 390, height: 844 },
+  { name: 'mobile-narrow', width: 360, height: 800 },
 ];
 
 const REPORT_DIR = resolve('reports/visual-audit');
@@ -157,7 +160,7 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
         ) ?? null;
       const heroRect = hero?.getBoundingClientRect() ?? null;
 
-      const clipped = [...document.querySelectorAll<HTMLElement>('main *')]
+      const clipped = [...document.querySelectorAll<HTMLElement>('body *')]
         .filter(visible)
         .map((element) => ({ element, rect: element.getBoundingClientRect() }))
         .filter(
@@ -207,6 +210,86 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
           value: Number.parseFloat(getComputedStyle(element).fontSize),
         }));
 
+      // Große leere Vertikalflächen werden zwischen sichtbaren Inhaltsträgern
+      // gemessen. Überlappende Elemente werden vorher zu belegten Intervallen
+      // zusammengeführt, damit verschachteltes Markup keine Scheinlücken erzeugt.
+      const contentMarkers = [
+        ...document.querySelectorAll<HTMLElement>(
+          'main h1, main h2, main h3, main h4, main p, main li, main a, main img, main figure, main table, main form, main details, main button, main dl, main dt, main dd',
+        ),
+      ]
+        .filter(visible)
+        .filter((element) => getComputedStyle(element).position !== 'fixed')
+        .map((element) => ({
+          element,
+          top: element.getBoundingClientRect().top + window.scrollY,
+          bottom: element.getBoundingClientRect().bottom + window.scrollY,
+        }))
+        .filter(({ top, bottom }) => bottom >= 0 && top <= root.scrollHeight)
+        .sort((a, b) => a.top - b.top || a.bottom - b.bottom);
+      const occupied: Array<{ top: number; bottom: number; last: HTMLElement }> = [];
+      for (const marker of contentMarkers) {
+        const previous = occupied.at(-1);
+        if (previous && marker.top <= previous.bottom + 1) {
+          if (marker.bottom > previous.bottom) {
+            previous.bottom = marker.bottom;
+            previous.last = marker.element;
+          }
+        } else {
+          occupied.push({ top: marker.top, bottom: marker.bottom, last: marker.element });
+        }
+      }
+      const gapLimit = Math.max(480, window.innerHeight * 0.65);
+      const largeVerticalGaps = occupied
+        .slice(1)
+        .map((interval, index) => {
+          const previous = occupied[index]!;
+          return {
+            element: `${describe(previous.last)} → ${describe(interval.last)}`,
+            text: `${text(previous.last).slice(0, 40)} → ${text(interval.last).slice(0, 40)}`,
+            value: Math.round(interval.top - previous.bottom),
+          };
+        })
+        .filter((gap) => gap.value > gapLimit)
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 8);
+
+      // Ein mehrspaltiges CSS-Grid mit weniger sichtbaren Kindern als Spalten
+      // kann einen unbeabsichtigt reservierten, leeren Rasterbereich erzeugen.
+      const emptyGridAreas = [...document.querySelectorAll<HTMLElement>('main *')]
+        .filter(visible)
+        .map((element) => {
+          const style = getComputedStyle(element);
+          const rect = element.getBoundingClientRect();
+          const tracks = style.gridTemplateColumns
+            .split(/\s+/)
+            .filter((track) => track && track !== 'none').length;
+          const children = [...element.children]
+            .filter((child): child is HTMLElement => child instanceof HTMLElement)
+            .filter(visible);
+          return { element, rect, tracks, children };
+        })
+        .filter(
+          ({ rect, tracks, children }) =>
+            tracks >= 2 &&
+            children.length > 0 &&
+            children.length < tracks &&
+            rect.width >= 600 &&
+            rect.height >= 120,
+        )
+        .filter(({ rect, children }) => {
+          const rightmost = Math.max(
+            ...children.map((child) => child.getBoundingClientRect().right),
+          );
+          return rightmost - rect.left < rect.width * 0.72;
+        })
+        .slice(0, 8)
+        .map(({ element, rect, tracks, children }) => ({
+          element: describe(element),
+          text: `${children.length} sichtbare Kinder in ${tracks} Spalten`,
+          value: Math.round(rect.width),
+        }));
+
       return {
         title: document.title,
         h1Text: h1 ? text(h1) : '',
@@ -229,6 +312,8 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
         narrowText,
         wideText,
         tinyText,
+        largeVerticalGaps,
+        emptyGridAreas,
       };
     });
 
@@ -244,6 +329,8 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
     if (measured.narrowText.length > 0) findings.push('narrow-prose');
     if (measured.wideText.length > 0) findings.push('wide-prose');
     if (measured.tinyText.length > 0) findings.push('tiny-prose');
+    if (measured.largeVerticalGaps.length > 0) findings.push('large-empty-gap');
+    if (measured.emptyGridAreas.length > 0) findings.push('empty-grid-area');
     if (consoleErrors.length > 0) findings.push('console-error');
     if (pageErrors.length > 0) findings.push('page-error');
 
@@ -306,6 +393,8 @@ async function scanViewport(
             narrowText: [],
             wideText: [],
             tinyText: [],
+            largeVerticalGaps: [],
+            emptyGridAreas: [],
             consoleErrors: [],
             pageErrors: [shortText(error instanceof Error ? error.message : String(error), 180)],
             findings: ['scan-error'],
@@ -396,6 +485,10 @@ async function main(): Promise<void> {
   writeFileSync(resolve(REPORT_DIR, 'report.md'), report);
   console.log(`\n${report.split('\n').slice(0, 25).join('\n')}`);
   console.log(`\nVollständiger Bericht: ${resolve(REPORT_DIR, 'report.md')}`);
+  const findingCount = results.filter((result) => result.findings.length > 0).length;
+  if (findingCount > 0) {
+    throw new Error(`Visual-QA fehlgeschlagen: ${findingCount} auffällige Messungen.`);
+  }
 }
 
 main().catch((error: unknown) => {

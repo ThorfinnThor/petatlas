@@ -83,6 +83,7 @@ const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm, linkConte
 
 <style>
   .partner {
+    min-inline-size: 0;
     background: var(--color-surface);
     border: 2px solid var(--color-primary);
     border-inline-start-width: 6px;
@@ -91,6 +92,7 @@ const ziel = entscheidung.erlaubt ? partnerZiel(entscheidung.programm, linkConte
     padding: var(--space-5) var(--space-5);
     margin-block: var(--space-7);
     box-shadow: 0 4px 16px rgb(7 63 61 / 8%);
+    overflow-wrap: anywhere;
   }
 
   .partner__hinweis {
