@@ -1,0 +1,67 @@
+name: Vollständige Visual-QA
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-qa-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  layoutscan:
+    name: 1.237 Seiten in vier Viewports
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Chromium installieren
+        run: npx playwright install --with-deps chromium
+
+      - name: Produktionsbuild
+        env:
+          APP_PROFILE: real
+          BUILD_MODE: production
+          PUBLIC_SITE_URL: https://wauandmiau.de
+        run: npm run build:cloudflare
+
+      - name: Gebauten Stand ausliefern
+        run: |
+          npx astro preview --host 127.0.0.1 --port 4334 --ignore-lock > /tmp/wauandmiau-visual-preview.log 2>&1 &
+          for versuch in {1..60}; do
+            if curl --fail --silent --show-error http://127.0.0.1:4334/de-de/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/wauandmiau-visual-preview.log
+          exit 1
+
+      - name: Alle öffentlichen Seiten messen
+        run: npm run design:audit -- --base http://127.0.0.1:4334
+
+      - name: Messbericht sichern
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: visual-qa-report
+          path: reports/visual-audit/
+          retention-days: 14
