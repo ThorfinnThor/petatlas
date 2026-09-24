@@ -17,6 +17,7 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
 import { resolveBuildConfig } from '../../config/build.ts';
+import { SEO_INDEX_BUDGET } from '../../src/features/seo/index-quality.ts';
 import { leseKopf, nichtIndexierbar } from '../../src/lib/html-head.ts';
 
 const OUT_DIR = 'dist';
@@ -91,6 +92,22 @@ export function baueRobots(indexierbar: boolean, baseUrl: string): string {
   ].join('\n');
 }
 
+export function pruefeIndexBudget(anzahl: number): string | null {
+  if (anzahl < SEO_INDEX_BUDGET.minimum) {
+    return (
+      `Nur ${anzahl} Seiten sind indexierbar; vereinbart sind ` +
+      `${SEO_INDEX_BUDGET.minimum} bis ${SEO_INDEX_BUDGET.maximum}.`
+    );
+  }
+  if (anzahl > SEO_INDEX_BUDGET.maximum) {
+    return (
+      `${anzahl} Seiten sind indexierbar; höchstens ${SEO_INDEX_BUDGET.maximum} sind freigegeben. ` +
+      'Neue Seiten brauchen eine bewusste Qualitätsentscheidung.'
+    );
+  }
+  return null;
+}
+
 function main(): number {
   const build = resolveBuildConfig();
   const seiten = sammleSeiten();
@@ -108,6 +125,12 @@ function main(): number {
         'deshalb entsteht keine Sitemap.',
     );
     return 0;
+  }
+
+  const budgetProblem = pruefeIndexBudget(indexierbare.length);
+  if (budgetProblem !== null) {
+    console.error(`Indexierungsbudget verletzt: ${budgetProblem}`);
+    return 1;
   }
 
   writeFileSync(join(OUT_DIR, 'sitemap.xml'), baueSitemap(seiten, build.baseUrl), 'utf8');

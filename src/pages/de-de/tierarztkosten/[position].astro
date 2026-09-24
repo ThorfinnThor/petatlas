@@ -26,6 +26,7 @@ import {
   positionen,
   type Gebuehrenposition,
 } from '../../../features/costs/detail.ts';
+import { istIndexierbareGotPosition } from '../../../features/seo/index-quality.ts';
 import snapshot from '../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 
 export function getStaticPaths() {
@@ -44,7 +45,7 @@ interface Props {
   eintrag: Gebuehrenposition;
 }
 
-const { eintrag } = Astro.props;
+const { eintrag } = Astro.props as Props;
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const { item } = eintrag;
 
@@ -73,6 +74,7 @@ function betrag(minor: number): string {
   description={`GOT-Nr. ${item.officialItemId}: Grundbetrag, Gebührensätze und Berechnungsgrundlagen für „${item.originalLabel}“ nachvollziehen.`}
   route="costs"
   canonicalPfad={eigenerPfad}
+  neverIndex={!istIndexierbareGotPosition(eintrag)}
 >
   <Breadcrumbs
     market={market}

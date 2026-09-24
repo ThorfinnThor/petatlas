@@ -52,6 +52,7 @@
     "check:budgets": "node scripts/checks/budgets.ts",
     "check:seo": "node scripts/checks/seo.ts",
     "audit:seo-inventory": "node scripts/audit/seo-inventory.ts",
+    "audit:seo-ranking": "node scripts/audit/seo-quality-ranking.ts",
     "check:dist": "node scripts/checks/dist.ts",
     "check:links": "node scripts/checks/links.ts",
     "check:release": "node scripts/checks/release.ts",

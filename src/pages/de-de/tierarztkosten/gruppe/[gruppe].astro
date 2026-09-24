@@ -15,6 +15,7 @@ import { subroutePath } from '../../../../lib/routes.ts';
 import { formatMoney, money } from '../../../../domain/money.ts';
 import { COST_CONFIG } from '../../../../features/costs/engine.ts';
 import { gruppen, type Gruppe } from '../../../../features/costs/detail.ts';
+import { istIndexierbareGotGruppe } from '../../../../features/seo/index-quality.ts';
 import snapshot from '../../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 
 export function getStaticPaths() {
@@ -27,7 +28,7 @@ interface Props {
   gruppe: Gruppe;
 }
 
-const { gruppe } = Astro.props;
+const { gruppe } = Astro.props as Props;
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const quelle = snapshot.source as unknown as {
   effectiveFrom: string;
@@ -44,6 +45,7 @@ const titelIstSehrLang = gruppe.name.length > 95;
   description={`${gruppe.name}: Gebührenpositionen aus ${gruppe.teil} der GOT mit Grundbeträgen und Links zu den Einzelpositionen.`}
   route="costs"
   canonicalPfad={eigenerPfad}
+  neverIndex={!istIndexierbareGotGruppe(gruppe)}
 >
   <Breadcrumbs
     market={market}
