@@ -23,6 +23,7 @@ import {
   baueRobots,
   baueSitemap,
   pfadAusDatei,
+  pruefeIndexBudget,
   sammleSeiten,
 } from '../../scripts/publish/sitemap.ts';
 
@@ -361,6 +362,19 @@ describe('Sitemap', () => {
       nichtIndexierbarUmgebung,
     );
     expect(befund[0]?.problem).toContain('nicht indexiert werden soll');
+  });
+});
+
+describe('Indexierungsbudget', () => {
+  it('akzeptiert den Zielkorridor von 400 bis 500 Seiten', () => {
+    expect(pruefeIndexBudget(400)).toBeNull();
+    expect(pruefeIndexBudget(450)).toBeNull();
+    expect(pruefeIndexBudget(500)).toBeNull();
+  });
+
+  it('stoppt zu kleine und zu große öffentliche URL-Bestände', () => {
+    expect(pruefeIndexBudget(399)).toContain('Nur 399');
+    expect(pruefeIndexBudget(501)).toContain('höchstens 500');
   });
 });
 

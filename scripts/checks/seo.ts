@@ -407,7 +407,10 @@ function main(): number {
     const html = readFileSync(seite.datei, 'utf8');
     beanstandungen.push(...pruefeSeite(seite.pfad, html, umgebung));
     beanstandungen.push(...pruefeSensiblenInhalt(seite.pfad, html));
-    titel.push({ pfad: seite.pfad, titel: leseKopf(html).titel });
+    // Doppelte Titel sind nur für Seiten relevant, die tatsächlich im
+    // Suchindex konkurrieren. 404-, Probe- und sonstige noindex-Seiten dürfen
+    // denselben technischen Titel tragen.
+    if (seite.indexierbar) titel.push({ pfad: seite.pfad, titel: leseKopf(html).titel });
   }
   beanstandungen.push(...pruefeTitelEindeutig(titel));
 
