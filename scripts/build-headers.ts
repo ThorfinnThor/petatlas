@@ -5,9 +5,9 @@
  * Datei wird hier erzeugt statt von Hand gepflegt, damit sie zu dem passt,
  * was der Build tatsächlich ausliefert.
  *
- * Grundhaltung: möglichst wenig erlauben. Der Startumfang lädt nichts von
- * Dritten, führt kein Inline-Skript aus und bettet nichts ein. Die Content
- * Security Policy sagt das ausdrücklich, statt es nur zu hoffen.
+ * Grundhaltung: möglichst wenig erlauben. Externe Ursprünge werden nur für
+ * klar benannte Funktionen freigegeben; Inline-Skripte und Einbettungen
+ * bleiben verboten. Die Content Security Policy sagt das ausdrücklich.
  *
  * Ausführen: `npm run build:headers` (läuft in `build:site` mit).
  */
@@ -19,6 +19,8 @@ import { fressnapfBildUrspruenge } from '../src/features/commerce/fressnapf-feed
 
 const ZIEL_VERZEICHNIS = 'dist';
 const BILD_URSPRUENGE = [...TILES.hosts, ...fressnapfBildUrspruenge()];
+export const CLOUDFLARE_WEB_ANALYTICS_SCRIPT =
+  'https://static.cloudflareinsights.com/beacon.min.js';
 
 /**
  * Content Security Policy.
@@ -31,13 +33,14 @@ const BILD_URSPRUENGE = [...TILES.hosts, ...fressnapfBildUrspruenge()];
  * Policy gezielt `wasm-unsafe-eval`; allgemeines `unsafe-eval` und
  * `unsafe-inline` bleiben verboten.
  *
- * Kommt später die Karte hinzu, brauchen Kacheln einen eigenen Eintrag. Das
- * ist dann eine bewusste Erweiterung mit Datenschutzprüfung, kein stilles
- * Aufweichen.
+ * Cloudflare fügt das Web-Analytics-Beacon am Edge in gültige HTML-Seiten ein.
+ * Die Policy erlaubt genau diese eine externe Skriptdatei. Das Beacon sendet
+ * bei der automatischen Einrichtung an `/cdn-cgi/rum` auf derselben Herkunft;
+ * `connect-src 'self'` reicht deshalb aus.
  */
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'wasm-unsafe-eval'",
+  `script-src 'self' 'wasm-unsafe-eval' ${CLOUDFLARE_WEB_ANALYTICS_SCRIPT}`,
   // Astro schreibt komponentenbezogene Styles in <style>-Elemente.
   "style-src 'self' 'unsafe-inline'",
   // Kartenkacheln kommen von einem fremden Host. Das ist eine bewusste
@@ -45,7 +48,8 @@ const CSP = [
   // Host steht in config/tiles.json und nirgends sonst.
   `img-src 'self' data: ${BILD_URSPRUENGE.join(' ')}`,
   "font-src 'self'",
-  // Der Pagefind-Index liegt auf derselben Herkunft; nichts geht nach außen.
+  // Pagefind und das automatisch injizierte RUM-Beacon senden nur an dieselbe
+  // Herkunft. Für das Beacon ist das der Endpunkt `/cdn-cgi/rum`.
   "connect-src 'self'",
   // Native GET-Formulare dürfen nur innerhalb der eigenen Website absenden.
   // `none` würde auch die Startseiten-Suche blockieren.
