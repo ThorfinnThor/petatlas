@@ -1,11 +1,26 @@
 import { expect, test } from '@playwright/test';
+import editorial from '../../content-data/products/editorial.json' with { type: 'json' };
 import supplements from '../../content-data/products/supplements.json' with { type: 'json' };
 import fressnapfFeed from '../../content-data/products/fressnapf-feed.json' with { type: 'json' };
+import toys from '../../content-data/taxonomy/toys.json' with { type: 'json' };
+import { AMAZON_SEARCHES } from '../../src/features/commerce/amazon.ts';
 import AxeBuilder from '@axe-core/playwright';
 
 const supplementIds = new Set(supplements.products.map((product) => product.id));
 const supplementFressnapfCount = fressnapfFeed.products.filter((product) =>
   supplementIds.has(product.productId),
+).length;
+const toyCategoryIds = new Set(toys.categories.map((category) => category.categoryId));
+const catToyIds = new Set(
+  editorial.products
+    .filter((product) => product.species === 'cat' && toyCategoryIds.has(product.categoryId))
+    .map((product) => product.id),
+);
+const catToyAmazonCount = [...catToyIds].filter((productId) =>
+  Object.hasOwn(AMAZON_SEARCHES, productId),
+).length;
+const catToyFressnapfCount = fressnapfFeed.products.filter((product) =>
+  catToyIds.has(product.productId),
 ).length;
 const transparentPng = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
@@ -156,7 +171,7 @@ for (const width of [390, 1440]) {
     await page.goto('/de-de/spielzeug/?tierart=cat');
     await page.getByRole('button', { name: 'Ergebnisse anzeigen' }).click();
     const links = page.locator('#finder-ergebnis a[href*="amazon.de"][rel~="sponsored"]');
-    await expect(links).toHaveCount(6);
+    await expect(links).toHaveCount(catToyAmazonCount);
     for (const link of await links.all()) {
       const url = new URL((await link.getAttribute('href'))!);
       expect(url.hostname).toBe('www.amazon.de');
@@ -166,7 +181,7 @@ for (const width of [390, 1440]) {
       await expect(link).toHaveAttribute('rel', /nofollow/);
     }
     const fressnapfLinks = page.locator('#finder-ergebnis a[href*="awin1.com"][rel~="sponsored"]');
-    await expect(fressnapfLinks).toHaveCount(6);
+    await expect(fressnapfLinks).toHaveCount(catToyFressnapfCount);
     expect(remote).toEqual([]);
   });
 }
