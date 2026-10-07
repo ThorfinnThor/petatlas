@@ -46,7 +46,7 @@ test.describe('Druckansicht', () => {
 
   test('bietet einen Druckknopf, der im Bildschirmmodus sichtbar ist', async ({ page }) => {
     await expect(page.locator('#drucken')).toBeVisible();
-    await expect(page.locator('#drucken')).toHaveText('Berechnungsübersicht drucken');
+    await expect(page.locator('#drucken')).toHaveText('Übersicht drucken');
   });
 });
 

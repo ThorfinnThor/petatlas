@@ -215,7 +215,7 @@ const faqThema: Readonly<Record<string, string>> = {
                     rel={PARTNER_LINK_ATTRIBUTE.rel}
                     target={PARTNER_LINK_ATTRIBUTE.target}
                   >
-                    Sortiment bei Fressnapf öffnen ↗ <span class="sr-only">(Werbung)</span>
+                    Bei Fressnapf ansehen ↗ <span class="sr-only">(Werbung)</span>
                   </a>
                 )}
                 {zooShopLinks.find((zooLink) => zooLink.id === link.id)?.href && (
@@ -225,7 +225,7 @@ const faqThema: Readonly<Record<string, string>> = {
                     rel={PARTNER_LINK_ATTRIBUTE.rel}
                     target={PARTNER_LINK_ATTRIBUTE.target}
                   >
-                    Sortiment bei ZooRoyal öffnen ↗ <span class="sr-only">(Werbung)</span>
+                    Bei ZooRoyal ansehen ↗ <span class="sr-only">(Werbung)</span>
                   </a>
                 )}
               </article>
@@ -560,6 +560,7 @@ const faqThema: Readonly<Record<string, string>> = {
       display: inline-block;
       margin-block-start: var(--space-2);
       font-weight: 800;
+      white-space: nowrap;
     }
     .check-list,
     .steps,

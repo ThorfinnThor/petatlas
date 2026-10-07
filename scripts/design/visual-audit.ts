@@ -1,22 +1,25 @@
 /**
- * Vollständiger Layout-Audit über alle indexierbaren Seiten.
+ * Vollständiger Layout-Audit über alle indexierbaren Seiten und alle
+ * öffentlich gebauten HTML-Seiten in mobilen Viewports.
  *
  * Voraussetzung: Ein Produktionsbuild liegt in `dist/` und wird lokal oder
  * unter der mit `--base` angegebenen Adresse ausgeliefert. Der Audit liest
- * ausschließlich die versionierte Sitemap des Builds. Dadurch gibt es keine
- * handgepflegte, unvollständige Routenliste.
+ * die versionierte Sitemap sowie den tatsächlichen Buildoutput. Dadurch gibt
+ * es keine handgepflegte, unvollständige Routenliste und auch noindex-Seiten
+ * bleiben mobil geprüft.
  *
  * Beispiele:
  *   npm run design:audit
  *   npm run design:audit -- --base http://localhost:4334
  */
 
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { join, relative, resolve, sep } from 'node:path';
 
 import { chromium, type BrowserContext, type Page } from '@playwright/test';
 
-type ViewportName = 'desktop' | 'desktop-small' | 'tablet' | 'mobile' | 'mobile-narrow';
+type ViewportName =
+  'desktop' | 'desktop-small' | 'tablet' | 'mobile' | 'mobile-narrow' | 'mobile-small';
 
 interface Viewport {
   readonly name: ViewportName;
@@ -57,6 +60,7 @@ interface PageMetrics {
   readonly tinyText: readonly ElementFinding[];
   readonly largeVerticalGaps: readonly ElementFinding[];
   readonly emptyGridAreas: readonly ElementFinding[];
+  readonly wrappedActions: readonly ElementFinding[];
   readonly consoleErrors: readonly string[];
   readonly pageErrors: readonly string[];
   readonly findings: readonly string[];
@@ -68,6 +72,7 @@ const VIEWPORTS: readonly Viewport[] = [
   { name: 'tablet', width: 768, height: 1024 },
   { name: 'mobile', width: 390, height: 844 },
   { name: 'mobile-narrow', width: 360, height: 800 },
+  { name: 'mobile-small', width: 320, height: 720 },
 ];
 
 const REPORT_DIR = resolve('reports/visual-audit');
@@ -83,6 +88,33 @@ function sitemapPaths(path: string): string[] {
   return [...xml.matchAll(/<loc>(.*?)<\/loc>/g)]
     .map((match) => new URL(match[1]!).pathname)
     .sort((a, b) => a.localeCompare(b, 'de'));
+}
+
+function builtHtmlPaths(directory: string): string[] {
+  return (
+    readdirSync(directory, { withFileTypes: true, recursive: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith('.html'))
+      .map((entry) => {
+        const file = join(entry.parentPath, entry.name);
+        const local = relative(directory, file).split(sep).join('/');
+        const path =
+          local === 'index.html'
+            ? '/'
+            : local.endsWith('/index.html')
+              ? `/${local.slice(0, -'index.html'.length)}`
+              : `/${local}`;
+        return { file, path };
+      })
+      .filter(({ path }) => !path.startsWith('/entwicklung/'))
+      // Weiterleitungsdateien enthalten keinen zu prüfenden Seiteninhalt. Das
+      // sofortige Meta-Refresh würde zudem eine laufende Messung absichtlich
+      // durch eine zweite Navigation ersetzen.
+      .filter(
+        ({ file }) => !/<meta[^>]+http-equiv=["']refresh["']/i.test(readFileSync(file, 'utf8')),
+      )
+      .map(({ path }) => path)
+      .sort((a, b) => a.localeCompare(b, 'de'))
+  );
 }
 
 function shortText(value: string | null | undefined, length = 90): string {
@@ -210,6 +242,50 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
           value: Number.parseFloat(getComputedStyle(element).fontSize),
         }));
 
+      /**
+       * Kompakte Bedienelemente sind auf schmalen Bildschirmen als eine
+       * geschlossene Beschriftung leichter zu erfassen. Range-Rechtecke
+       * messen echte Textzeilen; Höhe oder min-height würden bei kleinen
+       * Schaltflächen fälschlich zwei Zeilen melden. Visuell versteckte
+       * Zusätze gehören zur zugänglichen Benennung, nicht zum Layout.
+       */
+      const actionLineCount = (element: HTMLElement): number => {
+        const lineTops: number[] = [];
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+        let node = walker.nextNode();
+        while (node) {
+          const parent = node.parentElement;
+          if (node.textContent?.trim() && parent && !parent.closest('.sr-only')) {
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            for (const rect of range.getClientRects()) {
+              if (rect.width < 1 || rect.height < 1) continue;
+              if (!lineTops.some((top) => Math.abs(top - rect.top) < 2)) lineTops.push(rect.top);
+            }
+          }
+          node = walker.nextNode();
+        }
+        return lineTops.length;
+      };
+      const wrappedActions = [
+        ...document.querySelectorAll<HTMLElement>(
+          'button, a.knopf, a.action, a.article-action, a.button-link, a.retail-link, a.finder__shop-link',
+        ),
+      ]
+        .filter(visible)
+        .filter((element) => text(element).length > 0)
+        .map((element) => ({
+          element,
+          lines: actionLineCount(element),
+        }))
+        .filter(({ lines }) => lines > 1)
+        .slice(0, 12)
+        .map(({ element, lines }) => ({
+          element: describe(element),
+          text: text(element).slice(0, 90),
+          value: lines,
+        }));
+
       // Große leere Vertikalflächen werden zwischen sichtbaren Inhaltsträgern
       // gemessen. Überlappende Elemente werden vorher zu belegten Intervallen
       // zusammengeführt, damit verschachteltes Markup keine Scheinlücken erzeugt.
@@ -314,6 +390,7 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
         tinyText,
         largeVerticalGaps,
         emptyGridAreas,
+        wrappedActions,
       };
     });
 
@@ -331,6 +408,8 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
     if (measured.tinyText.length > 0) findings.push('tiny-prose');
     if (measured.largeVerticalGaps.length > 0) findings.push('large-empty-gap');
     if (measured.emptyGridAreas.length > 0) findings.push('empty-grid-area');
+    if (viewport.width <= 390 && measured.wrappedActions.length > 0)
+      findings.push('wrapped-action');
     if (consoleErrors.length > 0) findings.push('console-error');
     if (pageErrors.length > 0) findings.push('page-error');
 
@@ -395,6 +474,7 @@ async function scanViewport(
             tinyText: [],
             largeVerticalGaps: [],
             emptyGridAreas: [],
+            wrappedActions: [],
             consoleErrors: [],
             pageErrors: [shortText(error instanceof Error ? error.message : String(error), 180)],
             findings: ['scan-error'],
@@ -412,7 +492,11 @@ async function scanViewport(
   return results.sort((a, b) => a.path.localeCompare(b.path, 'de'));
 }
 
-function markdown(results: readonly PageMetrics[], urlCount: number): string {
+function markdown(
+  results: readonly PageMetrics[],
+  indexableCount: number,
+  mobileCount: number,
+): string {
   const counts = new Map<string, number>();
   for (const result of results) {
     for (const finding of result.findings) counts.set(finding, (counts.get(finding) ?? 0) + 1);
@@ -423,7 +507,8 @@ function markdown(results: readonly PageMetrics[], urlCount: number): string {
   return [
     '# Visual-QA-Messbericht',
     '',
-    `- Öffentliche URLs: ${urlCount}`,
+    `- Indexierbare URLs: ${indexableCount}`,
+    `- Mobil geprüfte öffentliche HTML-Seiten: ${mobileCount}`,
     `- Viewports: ${VIEWPORTS.map((item) => `${item.name} ${item.width}×${item.height}`).join(', ')}`,
     `- Messungen: ${results.length}`,
     `- Auffällige Messungen: ${outliers.length}`,
@@ -452,15 +537,19 @@ async function main(): Promise<void> {
   const base = argument('--base', 'http://localhost:4334').replace(/\/$/, '');
   const sitemap = resolve(argument('--sitemap', 'dist/sitemap.xml'));
   const paths = sitemapPaths(sitemap);
+  const publicPaths = builtHtmlPaths(resolve('dist'));
   if (paths.length === 0) throw new Error(`Keine URLs in ${sitemap}.`);
   mkdirSync(REPORT_DIR, { recursive: true });
 
-  console.log(`Visual-QA: ${paths.length} URLs × ${VIEWPORTS.length} Viewports`);
+  console.log(
+    `Visual-QA: ${paths.length} indexierbare URLs; ${publicPaths.length} öffentliche HTML-Seiten mobil`,
+  );
   const browser = await chromium.launch();
   const results: PageMetrics[] = [];
   try {
     for (const viewport of VIEWPORTS) {
       console.log(`\n${viewport.name} ${viewport.width}×${viewport.height}`);
+      const viewportPaths = viewport.width <= 390 ? publicPaths : paths;
       const context = await browser.newContext({
         viewport: { width: viewport.width, height: viewport.height },
         reducedMotion: 'reduce',
@@ -471,7 +560,7 @@ async function main(): Promise<void> {
         else await route.abort();
       });
       try {
-        results.push(...(await scanViewport(context, base, paths, viewport)));
+        results.push(...(await scanViewport(context, base, viewportPaths, viewport)));
       } finally {
         await context.close();
       }
@@ -481,7 +570,7 @@ async function main(): Promise<void> {
   }
 
   writeFileSync(resolve(REPORT_DIR, 'results.json'), `${JSON.stringify(results, null, 2)}\n`);
-  const report = markdown(results, paths.length);
+  const report = markdown(results, paths.length, publicPaths.length);
   writeFileSync(resolve(REPORT_DIR, 'report.md'), report);
   console.log(`\n${report.split('\n').slice(0, 25).join('\n')}`);
   console.log(`\nVollständiger Bericht: ${resolve(REPORT_DIR, 'report.md')}`);

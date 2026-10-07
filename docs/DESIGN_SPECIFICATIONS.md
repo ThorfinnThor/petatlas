@@ -2068,7 +2068,9 @@ Zusätzlich:
 - Tool-CTAs bleiben erreichbar.
 - Header verdeckt keine fokussierten Elemente.
 - Tabellen/Charts dürfen nur in bewusst markierten Scrollcontainern horizontal scrollen.
-- Buttons dürfen umbrechen, statt Text abzuschneiden.
+- Kompakte Aktionsbeschriftungen bleiben einzeilig. Passt eine Beschriftung bei
+  320 CSS px nicht, wird sie gekürzt oder der Button erhält mehr Breite; Text
+  wird weder abgeschnitten noch verkleinert.
 - Produktpreise niemals abgeschnitten.
 - lange deutsche Wörter dürfen sinnvoll umbrechen (`overflow-wrap: anywhere` nur dort, wo nötig).
 
@@ -2593,7 +2595,8 @@ Obwohl zunächst Deutsch live ist, darf das Design keine deutschen Textlängen a
 
 Regeln:
 
-- Buttons dürfen wachsen/umbrechen
+- Buttons dürfen wachsen; kompakte Aktionsbeschriftungen bleiben einzeilig und
+  werden bei Bedarf sprachlich gekürzt
 - keine fixen Breiten für Navlabels
 - Formlabels nicht in feste 1-Zeilen-Höhen zwingen
 - `lang` korrekt aus Market/Locale setzen

@@ -142,7 +142,7 @@ test('macht auch eine Profilübernahme nach der Prüfung sichtbar', async ({ pag
   await page.fill('#geburtsdatum', '2019-01-01');
   await page.click('#pruefen');
 
-  await page.getByRole('button', { name: 'Gespeichertes Tierprofil übernehmen' }).click();
+  await page.getByRole('button', { name: 'Tierprofil übernehmen' }).click();
   await expect(page.locator('[data-veraltet="true"]')).toContainText('erneut');
   await expect(page.locator('input[name="tierart"][value="cat"]')).toBeChecked();
 });

@@ -423,6 +423,12 @@ const zooroyalCatalog = zooroyalKatalog();
   .section-heading .eyebrow {
     margin-block: 0;
   }
+  .section-heading > div {
+    min-inline-size: 0;
+  }
+  .section-heading h2 {
+    hyphens: auto;
+  }
   .affiliate-disclosure {
     max-inline-size: 25rem;
     margin: 0;
@@ -434,6 +440,12 @@ const zooroyalCatalog = zooroyalKatalog();
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
     margin-block: 1.5rem;
+  }
+  .supplement-grid article {
+    min-inline-size: 0;
+  }
+  .supplement-grid h3 {
+    hyphens: auto;
   }
   .supplement-products {
     display: grid;

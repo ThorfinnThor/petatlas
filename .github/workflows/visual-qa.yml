@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   layoutscan:
-    name: Alle Sitemap-Seiten in fünf Viewports
+    name: Alle Seiten mobil, indexierbare Seiten in sechs Viewports
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -55,7 +55,7 @@ jobs:
           cat /tmp/deinhaustierportal-visual-preview.log
           exit 1
 
-      - name: Alle öffentlichen Seiten messen
+      - name: Indexierbare und mobile öffentliche Seiten messen
         run: npm run design:audit -- --base http://127.0.0.1:4334
 
       - name: Eigenständige Seiten und Ausreißer aufnehmen

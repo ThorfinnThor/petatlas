@@ -27,7 +27,7 @@ test('fragt den Standort beim Laden der Seite nicht ab', async ({ page }) => {
 
 test('sagt vor der Abfrage, dass nichts gespeichert oder übertragen wird', async ({ page }) => {
   await page.goto(KARTE);
-  await expect(page.getByRole('button', { name: 'Meinen Standort verwenden' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Standort verwenden' })).toBeVisible();
   await expect(page.getByText(/nicht gespeichert und nicht übertragen/)).toBeVisible();
 });
 

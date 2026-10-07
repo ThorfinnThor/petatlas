@@ -301,6 +301,12 @@ import Button from '../ui/Button.astro';
     border-block-start: 1px solid var(--color-border);
     margin-block-start: var(--space-10);
   }
+  @media (max-width: 759px) {
+    .guide-hero :global(picture) {
+      min-block-size: 15rem;
+      aspect-ratio: 16 / 11;
+    }
+  }
   @media (min-width: 760px) {
     .guide-hero {
       grid-template-columns: 1.08fr 0.92fr;

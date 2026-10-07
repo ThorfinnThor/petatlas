@@ -151,10 +151,10 @@ test('saved profile is applied only on request and survives navigation', async (
   await page.click('#profil-speichern');
   await page.goto('/de-de/spielzeug/');
   await expect(page.locator('#finder-tierart')).toHaveValue('dog');
-  await page.getByRole('button', { name: 'Gespeichertes Tierprofil übernehmen' }).click();
+  await page.getByRole('button', { name: 'Tierprofil übernehmen' }).click();
   await expect(page.locator('#finder-tierart')).toHaveValue('cat');
   await page.goto('/de-de/reisecheck/');
-  await page.getByRole('button', { name: 'Gespeichertes Tierprofil übernehmen' }).click();
+  await page.getByRole('button', { name: 'Tierprofil übernehmen' }).click();
   await expect(page.locator('#geburtsdatum')).toHaveValue('2020-01-01');
   await expect(page.locator('#chip')).toHaveValue('unbekannt');
 });
