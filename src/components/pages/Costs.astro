@@ -226,7 +226,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
           <ul id="treffer" class="treffer" role="listbox" hidden></ul>
         </div>
         <p id="suche-hinweis" class="hilfe" role="status" aria-live="polite"></p>
-        <button type="button" id="katalog-erneut" hidden>Gebührendaten erneut laden</button>
+        <button type="button" id="katalog-erneut" hidden>Daten erneut laden</button>
         <div id="auswahl-steuerung" hidden>
           <label for="position-bearbeiten">Ausgewählte Position bearbeiten</label>
           <select id="position-bearbeiten"></select>
@@ -257,8 +257,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
         />
         <p>
           <button type="submit" id="position-uebernehmen" disabled>Änderungen übernehmen</button>
-          <button type="button" id="auswahl-entfernen" hidden>Ausgewählte Position entfernen</button
-          >
+          <button type="button" id="auswahl-entfernen" hidden>Position entfernen</button>
         </p>
       </fieldset>
     </form>
@@ -285,7 +284,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     >
     </div>
     <div class="drucken">
-      <button type="button" id="drucken" disabled>Berechnungsübersicht drucken</button>
+      <button type="button" id="drucken" disabled>Übersicht drucken</button>
       <p class="hilfe">
         Auf dem Ausdruck stehen Quelle, Fassung und die Fundstelle jeder Position.
       </p>

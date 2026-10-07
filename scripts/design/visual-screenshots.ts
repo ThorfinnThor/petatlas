@@ -4,7 +4,7 @@
  * Alle eigenständigen Seiten, alle Ratgeber, Vergleiche, Pflege- und
  * Futterseiten sowie repräsentative Orts- und GOT-Ausreißer werden auf
  * Desktop und Mobil vollständig aufgenommen. Die flächendeckenden Messungen
- * für vier Viewports übernimmt visual-audit.ts.
+ * für sechs Viewports übernimmt visual-audit.ts.
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -14,6 +14,7 @@ import { chromium } from '@playwright/test';
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'mobile', width: 390, height: 844 },
+  { name: 'mobile-small', width: 320, height: 720 },
 ] as const;
 
 const OUTPUT = resolve('reports/visual-audit/screenshots');

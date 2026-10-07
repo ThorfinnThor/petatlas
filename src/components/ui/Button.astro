@@ -123,8 +123,10 @@ const klassen = [
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    /* Abschnitt 54: lieber umbrechen als Text abschneiden. */
-    white-space: normal;
+    /* Kurze Aktionen bleiben als eine zusammengehörige Beschriftung lesbar.
+       Lange Erklärungen gehören in den Begleittext, nicht in den Knopf. */
+    white-space: nowrap;
+    max-inline-size: 100%;
     transition:
       background-color var(--transition-fast),
       border-color var(--transition-fast);

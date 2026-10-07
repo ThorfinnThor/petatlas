@@ -59,6 +59,15 @@ h4 {
   color: var(--color-ink);
 }
 
+/* 320-CSS-px-Geräte sind laut Responsive-Vertrag unterstützt. Die kleine
+   Abstufung hält lange deutsche Hauptbegriffe im Inhaltsbereich, ohne die
+   Schrift von Fließtext oder Bedienelementen zu verkleinern. */
+@media (max-width: 359px) {
+  h1 {
+    font-size: 1.9rem;
+  }
+}
+
 /* Abschnitt 4.3: Fließtext höchstens 68ch, Tool-Erklärungen 60ch. */
 p,
 li {
