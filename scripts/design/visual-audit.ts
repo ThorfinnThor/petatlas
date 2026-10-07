@@ -91,17 +91,30 @@ function sitemapPaths(path: string): string[] {
 }
 
 function builtHtmlPaths(directory: string): string[] {
-  return readdirSync(directory, { withFileTypes: true, recursive: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.html'))
-    .map((entry) => {
-      const file = join(entry.parentPath, entry.name);
-      const local = relative(directory, file).split(sep).join('/');
-      if (local === 'index.html') return '/';
-      if (local.endsWith('/index.html')) return `/${local.slice(0, -'index.html'.length)}`;
-      return `/${local}`;
-    })
-    .filter((path) => !path.startsWith('/entwicklung/'))
-    .sort((a, b) => a.localeCompare(b, 'de'));
+  return (
+    readdirSync(directory, { withFileTypes: true, recursive: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith('.html'))
+      .map((entry) => {
+        const file = join(entry.parentPath, entry.name);
+        const local = relative(directory, file).split(sep).join('/');
+        const path =
+          local === 'index.html'
+            ? '/'
+            : local.endsWith('/index.html')
+              ? `/${local.slice(0, -'index.html'.length)}`
+              : `/${local}`;
+        return { file, path };
+      })
+      .filter(({ path }) => !path.startsWith('/entwicklung/'))
+      // Weiterleitungsdateien enthalten keinen zu prüfenden Seiteninhalt. Das
+      // sofortige Meta-Refresh würde zudem eine laufende Messung absichtlich
+      // durch eine zweite Navigation ersetzen.
+      .filter(
+        ({ file }) => !/<meta[^>]+http-equiv=["']refresh["']/i.test(readFileSync(file, 'utf8')),
+      )
+      .map(({ path }) => path)
+      .sort((a, b) => a.localeCompare(b, 'de'))
+  );
 }
 
 function shortText(value: string | null | undefined, length = 90): string {

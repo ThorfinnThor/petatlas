@@ -96,7 +96,7 @@ const { eyebrow, title, description, image, annotation } = Astro.props;
       padding: var(--space-8) var(--space-5);
     }
     h1 {
-      font-size: 2.625rem;
+      font-size: clamp(2rem, 10.5vw, 2.625rem);
       max-width: 13ch;
     }
     .hero-visual {
@@ -109,6 +109,18 @@ const { eyebrow, title, description, image, annotation } = Astro.props;
     }
     .hero-actions :global(a:first-child) {
       flex-basis: 100%;
+    }
+  }
+  @media (max-width: 359px) {
+    .hero-copy {
+      padding: var(--space-6) var(--space-4);
+    }
+    h1 {
+      font-size: 1.9rem;
+      line-height: 1.08;
+    }
+    .hero-visual {
+      height: 220px;
     }
   }
 </style>
