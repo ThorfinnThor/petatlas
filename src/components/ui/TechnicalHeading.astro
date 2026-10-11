@@ -1,0 +1,31 @@
+---
+import { technicalHeadingParts } from '../../lib/technical-heading.ts';
+
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+const parts = technicalHeadingParts(text);
+---
+
+<h1 class="technical-heading" aria-label={text}>
+  {
+    parts.map((part) => (
+      <>
+        {part.text}
+        {part.breakAfter === 'soft-hyphen' && '\u00ad'}
+        {part.breakAfter === 'word-break' && <wbr />}
+      </>
+    ))
+  }
+</h1>
+
+<style>
+  .technical-heading {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: manual;
+    text-wrap: balance;
+  }
+</style>

@@ -7,6 +7,7 @@
  */
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../../components/ui/Breadcrumbs.astro';
+import TechnicalHeading from '../../../../components/ui/TechnicalHeading.astro';
 import DataStatus from '../../../../components/DataStatus.astro';
 import ReviewStatus from '../../../../components/ReviewStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
@@ -56,7 +57,7 @@ const titelIstSehrLang = gruppe.name.length > 95;
     ]}
   />
 
-  <h1>{titelIstSehrLang ? 'GOT-Gebührengruppe' : gruppe.name}</h1>
+  <TechnicalHeading text={titelIstSehrLang ? 'GOT-Gebührengruppe' : gruppe.name} />
   {
     titelIstSehrLang && (
       <p class="amtliche-bezeichnung">
@@ -111,7 +112,6 @@ const titelIstSehrLang = gruppe.name.length > 95;
 </BaseLayout>
 
 <style>
-  h1,
   .amtliche-bezeichnung,
   .positionen a {
     overflow-wrap: anywhere;

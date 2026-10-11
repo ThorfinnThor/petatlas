@@ -412,7 +412,9 @@ const faqThema: Readonly<Record<string, string>> = {
       margin-block: 0 var(--space-4);
       font-size: clamp(2.5rem, 6vw, 5.5rem);
       line-height: 0.98;
-      overflow-wrap: anywhere;
+      overflow-wrap: normal;
+      word-break: normal;
+      hyphens: auto;
     }
     .hero__intro {
       max-inline-size: 62ch;
