@@ -118,6 +118,42 @@ test('mobile nutrient table keeps words readable inside an accessible scroller',
   expect(layout.headerWidth).toBeGreaterThan(90);
 });
 
+test('mobile insurance cards keep product names and source actions readable', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto('/de-de/tierversicherung/');
+  const cards = page.locator('.insurance-products__card');
+  await expect(cards).toHaveCount(5);
+
+  const layout = await cards.evaluateAll((elements) =>
+    elements.map((card) => {
+      const heading = card.querySelector<HTMLElement>('h3')!;
+      const link = card.querySelector<HTMLElement>('.insurance-products__source a')!;
+      const headingStyle = getComputedStyle(heading);
+      const linkStyle = getComputedStyle(link);
+      return {
+        heading: heading.innerText,
+        headingLines: Math.round(
+          heading.getBoundingClientRect().height / Number.parseFloat(headingStyle.lineHeight),
+        ),
+        overflowWrap: headingStyle.overflowWrap,
+        wordBreak: headingStyle.wordBreak,
+        link: link.innerText,
+        linkWhiteSpace: linkStyle.whiteSpace,
+      };
+    }),
+  );
+
+  expect(layout.slice(0, 4).every((item) => item.headingLines === 1)).toBe(true);
+  expect(layout.at(-1)?.headingLines).toBeLessThanOrEqual(2);
+  expect(layout.every((item) => item.overflowWrap === 'normal')).toBe(true);
+  expect(layout.every((item) => item.wordBreak === 'normal')).toBe(true);
+  expect(layout.every((item) => item.link === 'Bei HanseMerkur ansehen ↗')).toBe(true);
+  expect(layout.every((item) => item.linkWhiteSpace === 'nowrap')).toBe(true);
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
+  ).toBe(true);
+});
+
 test('mobile map switches views and remains accessible', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/de-de/tierarzt-karte/');

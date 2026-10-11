@@ -61,6 +61,7 @@ interface PageMetrics {
   readonly largeVerticalGaps: readonly ElementFinding[];
   readonly emptyGridAreas: readonly ElementFinding[];
   readonly wrappedActions: readonly ElementFinding[];
+  readonly poorHeadingWraps: readonly ElementFinding[];
   readonly consoleErrors: readonly string[];
   readonly pageErrors: readonly string[];
   readonly findings: readonly string[];
@@ -286,6 +287,66 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
           value: lines,
         }));
 
+      /**
+       * Ermittelt den tatsächlich gerenderten Text je Zeile. Das fängt
+       * insbesondere geerbtes `overflow-wrap: anywhere` ab, das auf Safari
+       * bei langen deutschen Komposita einen einzelnen Schlussbuchstaben in
+       * die nächste Zeile schieben kann. Kurze, aber semantisch korrekte
+       * Zeilen wie „1,8 kg“, „e.V.“ oder Gliederungsnummern sind zulässig.
+       */
+      const renderedTextLines = (element: HTMLElement): string[] => {
+        const lines: Array<{ top: number; text: string }> = [];
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+        let node = walker.nextNode();
+        while (node) {
+          const value = node.textContent ?? '';
+          const parent = node.parentElement;
+          if (value.trim() && parent && !parent.closest('.sr-only')) {
+            for (let index = 0; index < value.length; index += 1) {
+              const range = document.createRange();
+              range.setStart(node, index);
+              range.setEnd(node, index + 1);
+              const rect = range.getBoundingClientRect();
+              if (rect.width < 0.1 || rect.height < 1) continue;
+              let line = lines.find((entry) => Math.abs(entry.top - rect.top) < 2);
+              if (!line) {
+                line = { top: rect.top, text: '' };
+                lines.push(line);
+              }
+              line.text += value[index];
+            }
+          }
+          node = walker.nextNode();
+        }
+        return lines
+          .sort((a, b) => a.top - b.top)
+          .map((line) => line.text.replace(/\s+/g, ' ').trim())
+          .filter(Boolean);
+      };
+      const poorHeadingWraps = [
+        ...document.querySelectorAll<HTMLElement>('main h1, main h2, main h3, main h4'),
+      ]
+        .filter(visible)
+        .map((element) => ({
+          element,
+          lines: renderedTextLines(element),
+          style: getComputedStyle(element),
+        }))
+        .filter(({ lines }) => lines.length > 1)
+        .map(({ element, lines, style }) => ({
+          element,
+          lines,
+          unsafeBreaks: style.overflowWrap === 'anywhere' || style.wordBreak !== 'normal',
+          shortest: Math.min(...lines.map((line) => (line.match(/[\p{L}\p{N}]/gu) ?? []).length)),
+        }))
+        .filter(({ shortest, unsafeBreaks }) => shortest <= 2 && unsafeBreaks)
+        .slice(0, 12)
+        .map(({ element, lines, shortest }) => ({
+          element: describe(element),
+          text: lines.join(' / ').slice(0, 90),
+          value: shortest,
+        }));
+
       // Große leere Vertikalflächen werden zwischen sichtbaren Inhaltsträgern
       // gemessen. Überlappende Elemente werden vorher zu belegten Intervallen
       // zusammengeführt, damit verschachteltes Markup keine Scheinlücken erzeugt.
@@ -391,6 +452,7 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
         largeVerticalGaps,
         emptyGridAreas,
         wrappedActions,
+        poorHeadingWraps,
       };
     });
 
@@ -399,7 +461,6 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
     if (measured.h1Count !== 1) findings.push('h1-count');
     if (measured.horizontalOverflow > 1) findings.push('horizontal-overflow');
     if (measured.clipped.length > 0) findings.push('clipped-element');
-    if (measured.h1Hyphens === 'auto') findings.push('h1-auto-hyphens');
     if (measured.h1Lines > (viewport.width >= 768 ? 5 : 7)) findings.push('h1-many-lines');
     const heroHeightLimit = viewport.width < 600 ? viewport.height * 1.25 : viewport.height * 0.95;
     if (measured.heroHeight > heroHeightLimit) findings.push('hero-too-tall');
@@ -410,6 +471,8 @@ async function scanPage(page: Page, base: string, path: string, viewport: Viewpo
     if (measured.emptyGridAreas.length > 0) findings.push('empty-grid-area');
     if (viewport.width <= 390 && measured.wrappedActions.length > 0)
       findings.push('wrapped-action');
+    if (viewport.width <= 390 && measured.poorHeadingWraps.length > 0)
+      findings.push('poor-heading-wrap');
     if (consoleErrors.length > 0) findings.push('console-error');
     if (pageErrors.length > 0) findings.push('page-error');
 
@@ -475,6 +538,7 @@ async function scanViewport(
             largeVerticalGaps: [],
             emptyGridAreas: [],
             wrappedActions: [],
+            poorHeadingWraps: [],
             consoleErrors: [],
             pageErrors: [shortText(error instanceof Error ? error.message : String(error), 180)],
             findings: ['scan-error'],

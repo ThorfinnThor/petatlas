@@ -29,8 +29,13 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
             <h3>{produkt.name}</h3>
             <p>{produkt.summary}</p>
             <p class="insurance-products__source">
-              <a href={produkt.sourceUrl} target="_blank" rel="noopener noreferrer">
-                {produkt.sourceLabel} ↗
+              <a
+                href={produkt.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${produkt.name} bei HanseMerkur ansehen (öffnet ein neues Fenster)`}
+              >
+                Bei HanseMerkur ansehen ↗
               </a>
             </p>
           </li>
@@ -71,11 +76,13 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
     border-radius: var(--radius-md);
     background: var(--color-surface);
     min-inline-size: 0;
-    overflow-wrap: anywhere;
   }
 
   .insurance-products__card h3 {
     margin-block: var(--space-2);
+    max-inline-size: 100%;
+    font-size: clamp(1.125rem, 5.25vw, var(--text-h3));
+    text-wrap: pretty;
   }
 
   .insurance-products__card p {
@@ -97,5 +104,9 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
     margin-top: auto;
     padding-top: var(--space-3);
     font-size: var(--text-small);
+  }
+
+  .insurance-products__source a {
+    white-space: nowrap;
   }
 </style>

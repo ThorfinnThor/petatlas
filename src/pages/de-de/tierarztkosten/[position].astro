@@ -13,6 +13,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Button from '../../../components/ui/Button.astro';
+import TechnicalHeading from '../../../components/ui/TechnicalHeading.astro';
 import DataStatus from '../../../components/DataStatus.astro';
 import ReviewStatus from '../../../components/ReviewStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
@@ -85,7 +86,9 @@ function betrag(minor: number): string {
     ]}
   />
 
-  <h1>{titelIstSehrLang ? `GOT-Position ${item.officialItemId}` : item.originalLabel}</h1>
+  <TechnicalHeading
+    text={titelIstSehrLang ? `GOT-Position ${item.officialItemId}` : item.originalLabel}
+  />
   {
     titelIstSehrLang && (
       <p class="amtliche-bezeichnung">
@@ -233,7 +236,6 @@ function betrag(minor: number): string {
 </BaseLayout>
 
 <style>
-  h1,
   .amtliche-bezeichnung {
     overflow-wrap: anywhere;
   }

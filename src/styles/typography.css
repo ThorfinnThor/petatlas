@@ -59,6 +59,23 @@ h4 {
   color: var(--color-ink);
 }
 
+/* Karten und Inhaltsbereiche dürfen für lange URLs `overflow-wrap: anywhere`
+   verwenden. Diese Eigenschaft wird jedoch vererbt und würde deutsche
+   Überschriften mitten im Wort trennen (zum Beispiel
+   „Katzenkrankenversicherun / g“). Überschriften bekommen deshalb eine
+   eigene, sprachgerechte Umbruchregel. Der Browser darf anhand des deutschen
+   `lang`-Attributs an einer passenden Stelle mit sichtbarem Trennstrich
+   umbrechen. So bleiben auch sehr lange Hauptüberschriften auf 320 px Breite
+   vollständig lesbar, ohne einzelne Buchstaben abzutrennen. */
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: auto;
+}
+
 /* 320-CSS-px-Geräte sind laut Responsive-Vertrag unterstützt. Die kleine
    Abstufung hält lange deutsche Hauptbegriffe im Inhaltsbereich, ohne die
    Schrift von Fließtext oder Bedienelementen zu verkleinern. */

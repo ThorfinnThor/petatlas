@@ -128,7 +128,9 @@ const products = offers.filter((offer) => offer.category === category);
   .feed-catalog__body h3 {
     margin: 0 0 var(--space-1);
     font-size: var(--text-h4);
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: auto;
   }
 
   .feed-catalog__meta {
