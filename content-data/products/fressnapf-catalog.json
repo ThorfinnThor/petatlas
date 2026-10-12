@@ -5,126 +5,6 @@
   "merchantName": "Fressnapf",
   "products": [
     {
-      "productId": "14757:44300319314",
-      "productName": "Bio Schutz Hunde Fernhaltespray 500ml",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "44300319314",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fb%2F2%2Ff%2Ff%2Fb2ff6d0bc4920ce4f5a35370e580c43afe653c72_1238320_0_de_f48796eed5dd49388c58a8790f160362.png&feedId=44979&k=4312663a3495da27d9fb78f861c5393a5cc6e553",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44300319314&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/bio-schutz-hunde-fernhaltespray-500ml-1238320/"
-    },
-    {
-      "productId": "14757:43024460287",
-      "productName": "Bugalugs Geruchs- und Fleckenentferner Duftrichtung Lavendel 1 l",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "43024460287",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F9%2F7%2F5%2Fd%2F975d2c6643aef2d6aeaa0c7c1dca91920a8be5ce_2265184_0_de_c555b90a75944d81ae1e0b340c00bb5a.jpg&feedId=44979&k=4c4889c349e907d6b69b03ac1c1829bd7073a2d7",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=43024460287&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/bugalugs-geruchs--und-fleckenentferner-duftrichtung-lavendel-1-l-2265184/"
-    },
-    {
-      "productId": "14757:41885108290",
-      "productName": "Bugalugs Geruchs- und Fleckenentferner Duftrichtung Rasen 1 l",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "41885108290",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fc%2Fa%2Ff%2F5%2Fcaf576def8b8094edb1eade1abb71b86ec417764_2265183_0_de_a8146b4c0d124b2ebe89cf62e5cbba38.jpg&feedId=44979&k=59366d5bc59814e5220820a0d3765fd39d001fa3",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=41885108290&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/bugalugs-geruchs--und-fleckenentferner-duftrichtung-rasen-1-l-2265183/"
-    },
-    {
-      "productId": "14757:39675021189",
-      "productName": "Josty Mud Dog Hunde-Reisedusche",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "39675021189",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fa%2F7%2Fd%2Fd%2Fa7dd3840075c7c0919f3d2b84fb73d2bf7daf4b9_1382705_0_de_fe36c8cbbc0e4b25bacdad6fa9b5110d.jpg&feedId=44979&k=14d024e4feeaed55200d9f7e7606337410e9db24",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=39675021189&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/josty-mud-dog-hunde-reisedusche-1382705/"
-    },
-    {
-      "productId": "14757:43596127152",
-      "productName": "Peticare Living Clean 2010 - Desinfektionsmittel für Oberflächen",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "43596127152",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F9%2Fa%2Fc%2F4%2F9ac45090202aea42ae7138d55892eb177fdfacaa_2657577_0_de_7856f68ec4dd4f8b874b67ec3f3476c3.jpg&feedId=44979&k=5baa9aa611fc2c167fb3fae513ba700831fc3eb9",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=43596127152&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/peticare-living-clean-2010---desinfektionsmittel-fuer-oberflaechen-2657577/"
-    },
-    {
-      "productId": "14757:39662240805",
-      "productName": "Schlitzohr Fusselrolle Hairbert Fusselbürste Tierhaarentferner",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "39662240805",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F5%2F9%2F6%2F9%2F5969e093726a1cdf9f42a6c887e447b29e7507bd_2028261_0_de_b3143136e2ac4aa0bab4a61a4e89b9e2.jpg&feedId=44979&k=836ba84eeb0ba97f6e0908b250d62fdb62743582",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=39662240805&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/schlitzohr-fusselrolle-hairbert-fusselbuerste-tierhaarentferner-2028261/"
-    },
-    {
-      "productId": "14757:42199882873",
-      "productName": "ViPiBaX Giardien EX ® Hygiene-Spray 500ml",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "42199882873",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F8%2Fc%2F3%2F3%2F8c335947b19c651c2e334e03e4bc5086c5831da3_2300143_0_de_8c09bc5c45fb4ff49608b1c8a85cdb95.png&feedId=44979&k=9af7b5d4c2b95275c70ca337f00552226c2613c3",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=42199882873&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/vipibax-giardien-ex--hygiene-spray-500ml-2300143/"
-    },
-    {
-      "productId": "14757:42199883024",
-      "productName": "ViPiBaX Giardien EX ® Hygiene-Spray Nachfüllpack 2.5 Liter",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "42199883024",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fd%2F6%2F1%2Ff%2Fd61fcb26d623ea79443e6738435631fc24ebb08f_2300147_0_de_7ba47eba174c460cba5e46582135172e.jpg&feedId=44979&k=93532754c4e1ae0a45afbd4c14a0268940d5307a",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=42199883024&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/vipibax-giardien-ex--hygiene-spray-nachfuellpack-25-liter-2300147/"
-    },
-    {
-      "productId": "14757:45690436621",
-      "productName": "ViPiBaX Giardien EX ® Wischkonzentrat 2,5 l",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "45690436621",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fb%2F5%2F0%2Ff%2Fb50fe4891c6a0a677a04180a6cf831771aee8bf2_2410814_0_de_2863dab7109f45a9be8c05909315cb58.jpg&feedId=44979&k=3bc34f93ac2aa558212dc89239febbb4575da387",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45690436621&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/vipibax-giardien-ex--wischkonzentrat-25-l-2410814/"
-    },
-    {
-      "productId": "14757:45690437201",
-      "productName": "ViPiBaX Giardien EX ® Wischkonzentrat 5 l",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "merchantProductId": "45690437201",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fd%2F8%2F7%2F2%2Fd872e1ecb2d5c8baf713abc8bc8c7b913a83e02f_2300146_0_de_204bbcb318f745aaa5922fd02f33de9f.png&feedId=44979&k=76c7f482f3d2a18c935125cf07303ab5691e646b",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45690437201&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/vipibax-giardien-ex--wischkonzentrat-5-l-2300146/"
-    },
-    {
       "productId": "14757:37916609566",
       "productName": "ACANA Bountiful Catch mit Lachs, Hering und Seehecht 1,8 kg",
       "brand": "Herstellerangabe nicht angegeben",
@@ -209,18 +89,6 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/acana-indoor-entre-mit-huhn-truthahn-und-hering-45-kg-1379907/"
     },
     {
-      "productId": "14757:37504220788",
-      "productName": "ACANA Premium Pâté Huhn 24x85 g",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "cat",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "merchantProductId": "37504220788",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F5%2Fc%2F9%2F1%2F5c91b0c1af591350f032fc00a5e8840e2be53f5b_1724086_0.jpg&feedId=44979&k=2e77014ec07dc68370742d737e4a7e99d564ec3d",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=37504220788&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/acana-premium-pt-huhn-24x85-g-1724086/"
-    },
-    {
       "productId": "14757:36736586180",
       "productName": "ACANA Premium Pâté Kitten Huhn und Fisch 24x85 g",
       "brand": "Herstellerangabe nicht angegeben",
@@ -255,18 +123,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F0%2F8%2F0%2F8%2F080848319f8aafac061fcff832471295120d6e74_1724088_0.jpg&feedId=44979&k=42cbbe31f96a7bd697818862e6add66ef5c16c32",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=36733083635&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/acana-premium-pt-lamm-24x85-g-1724088/"
-    },
-    {
-      "productId": "14757:37557548431",
-      "productName": "ACANA Premium Pâté Rind 24x85 g",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "cat",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "merchantProductId": "37557548431",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F8%2Fe%2Fb%2F9%2F8eb92ca35554b92cbdc91e81b5b4d5828034315a_1724087_0.jpg&feedId=44979&k=67f55fd3ac1dcd5e96fad1ea735e32e33eb5001a",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=37557548431&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/acana-premium-pt-rind-24x85-g-1724087/"
     },
     {
       "productId": "14757:36733083636",
@@ -413,6 +269,30 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/almo-nature-almo-hfc-6x70g-huhn-und-garnele-1479705/"
     },
     {
+      "productId": "14757:38904425742",
+      "productName": "Almo nature Almo HFC 6x70g Hühnchenbrustfilet",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "cat",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "merchantProductId": "38904425742",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fa%2F5%2F2%2F1%2Fa521d041047bc6e135a2cf6baf6bdf007143d799_1359135.jpg&feedId=44979&k=1658a4c234a5af6307bc6f64ab7956fb1ce03229",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=38904425742&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/almo-nature-almo-hfc-6x70g-huehnchenbrustfilet-1359135/"
+    },
+    {
+      "productId": "14757:35754670602",
+      "productName": "Almo nature Almo HFC 6x70g Hühnerbrust",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "cat",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "merchantProductId": "35754670602",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F2%2F9%2F5%2F2%2F295280e213fe1d0d655107a0f3d607cce1d92d1b_1479701_0.jpg&feedId=44979&k=ac6877c59444be00cffef4af97771944477ee0f6",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=35754670602&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/almo-nature-almo-hfc-6x70g-huehnerbrust-1479701/"
+    },
+    {
       "productId": "14757:45509164910",
       "productName": "4 Animals Käseknochen für Hunde – Kausnack aus 99,9 % Kuhmilch Kauspaß proteinreich 120 g",
       "brand": "Herstellerangabe nicht angegeben",
@@ -557,16 +437,16 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-dental-kauknochen-zahnpflege-m-1-stueck-1001750004/"
     },
     {
-      "productId": "14757:41473884713",
-      "productName": "8in1 Delights Kauknochen Hähnchenfleisch im Beutel S 6 Stück",
+      "productId": "14757:46001791620",
+      "productName": "8in1 Delights Dental Kauknochen Zahnpflege XS 7 Stück",
       "brand": "Herstellerangabe nicht angegeben",
       "species": "dog",
       "category": "food",
       "categoryLabel": "Futter",
-      "merchantProductId": "41473884713",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fa%2F7%2Fe%2Fe%2Fa7eecc4837a33e3c9a1f311116ac2b583831e892_1002057_0.png&feedId=44979&k=8ffa25770fd4045a2de9f7c555f610c764b40a5b",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=41473884713&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-kauknochen-haehnchenfleisch-im-beutel-s-6-stueck-1002057/"
+      "merchantProductId": "46001791620",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F9%2F2%2F0%2F1%2F9201298618c10833baa511b443c8a607561ac000_1001750001_0.png&feedId=44979&k=0482912488a7eb63ff187265a5a95d5ce6fed8b9",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=46001791620&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-dental-kauknochen-zahnpflege-xs-7-stueck-1001750001/"
     },
     {
       "productId": "14757:40762912159",
@@ -581,18 +461,6 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-kauknochen-haehnchenfleisch-im-beutel-xs-21-stueck-1002056/"
     },
     {
-      "productId": "14757:27095066123",
-      "productName": "8in1 Delights Kauknochen Hähnchenfleisch XS 7 Stück",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "merchantProductId": "27095066123",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Ff%2Fb%2Fa%2F1%2Ffba10c94872226eb4ded342bea0ec21ac38296cb_1001749001_0.png&feedId=44979&k=233f6e93504e14d9369f7de9db66778ba485ded7",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=27095066123&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-kauknochen-haehnchenfleisch-xs-7-stueck-1001749001/"
-    },
-    {
       "productId": "14757:40690063487",
       "productName": "8in1 Delights Kausticks 1x3 Stück Rind",
       "brand": "Herstellerangabe nicht angegeben",
@@ -603,18 +471,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fe%2Fb%2F1%2F2%2Feb12d5a2fd9e3a3b0d377f821d3cc216526d7e72_1002106_0.png&feedId=44979&k=83dc1727e1e581bf3a8288f3d0dc1ff71dbae0cf",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=40690063487&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-kausticks-1x3-stueck-rind-1002106/"
-    },
-    {
-      "productId": "14757:44774082719",
-      "productName": "8in1 Delights Pro Dental Twisted Sticks 10 Stück",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "merchantProductId": "44774082719",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F6%2Ff%2F7%2Ff%2F6f7fe8f5a07b8d5305e48dd8bffb209856e75597_1196002003_0.png&feedId=44979&k=732edbe1a8cc23804cdaa6e6d45826c18a5ce5e0",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44774082719&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-pro-dental-twisted-sticks-10-stueck-1196002003/"
     },
     {
       "productId": "14757:40888826154",
@@ -701,6 +557,30 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-meaty-sausage-wraps-80g-2205679/"
     },
     {
+      "productId": "14757:46234601706",
+      "productName": "8in1 Snack Weihnachts-Strumpf für Hunde 90 g",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "dog",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "merchantProductId": "46234601706",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fe%2F0%2F2%2Fc%2Fe02cd2fd42f3f2429743098b7cc5dc97ad56de4d_4048422205975_1.png&feedId=44979&k=060321a8efce82c6d9c2bb1596ab919919ceb861",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=46234601706&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-snack-weihnachts-strumpf-fuer-hunde-90-g-3523307/"
+    },
+    {
+      "productId": "14757:42833755941",
+      "productName": "8in1 Triple Flavour Mega Ribs 140g",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "dog",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "merchantProductId": "42833755941",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Ff%2F6%2Fc%2Ff%2Ff6cf72bd47bf2b7bdeef54cef60c3b9663ea76de_1941675__2_.png&feedId=44979&k=ca628a53fbd88c8694847787be33c95729612d80",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=42833755941&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-triple-flavour-mega-ribs-140g-1941675/"
+    },
+    {
       "productId": "14757:43933611448",
       "productName": "All for paws 3-in-1 Donut Katzentunnel braun/ caramell",
       "brand": "Herstellerangabe nicht angegeben",
@@ -780,7 +660,7 @@
       "category": "toy",
       "categoryLabel": "Spielzeug",
       "merchantProductId": "43896365191",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F6%2F0%2F2%2F2%2F602258041ada51d2cd5721f31fa2f91ef4f75e64_3129912_0_de_1a0c3fa71f314400accebd1f69daa909.png&feedId=44979&k=68202df0fd342dbb64f6a85ddac342a9d4a3f16c",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Ff%2F8%2F4%2Ff%2Ff84f37582e5df69a3b50c73f704a4d4033e9c840_3129912_0_de_f18e97f3c5514cec939bf2960486ae04.jpg&feedId=44979&k=bb845c0f96cd9c6ac15ca400d848478a920ea642",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=43896365191&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-interaktives-katzenspielzeug---hide-n-seek-3129912/"
     },
@@ -834,7 +714,7 @@
     },
     {
       "productId": "14757:46006675070",
-      "productName": "All for paws Katzentunnel Set faltbar mit Spielzeug",
+      "productName": "All for paws Katzentunnel 3er-Set faltbar mit Spielzeug",
       "brand": "Herstellerangabe nicht angegeben",
       "species": "cat",
       "category": "toy",
@@ -842,7 +722,7 @@
       "merchantProductId": "46006675070",
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F0%2F7%2F2%2Fa%2F072a900ef12ec96ed68bcdcf8b6a0012a081cf00_4371453_0_de_637924be2599467e81e33a0d1794e856.jpg&feedId=44979&k=c22349c89911e18edd7cd9b29bccfdd636ca957c",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=46006675070&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-katzentunnel-set-faltbar-mit-spielzeug-4371453/"
+      "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-katzentunnel-3er-set-faltbar-mit-spielzeug-4371453/"
     },
     {
       "productId": "14757:45699443143",
@@ -891,18 +771,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fc%2F8%2Ff%2F6%2Fc8f67265a70d4452a6b58eb4f4ead20ea846ef74_1702327_0.png&feedId=44979&k=feb8813799b51b372068590e0bac6c35936f3bd3",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=44972475369&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/anione-baldrian-spielrolle-1702328/"
-    },
-    {
-      "productId": "14757:45141697033",
-      "productName": "AniOne Baldrianspray 175ml",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "cat",
-      "category": "toy",
-      "categoryLabel": "Spielzeug",
-      "merchantProductId": "45141697033",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F3%2Fa%2Fa%2F3%2F3aa390e5c18aad708f1e25bc7ca25f813493f6d7_1966063_0.png&feedId=44979&k=31ce876699fadc5bfb2da923ef4c3a82640670c3",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45141697033&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/anione-baldrianspray-175ml-1966063/"
     },
     {
       "productId": "14757:40795366122",
@@ -989,6 +857,18 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/anione-katzenangel-qualle-1336935/"
     },
     {
+      "productId": "14757:38939850978",
+      "productName": "AniOne Katzenangel Tiger",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "cat",
+      "category": "toy",
+      "categoryLabel": "Spielzeug",
+      "merchantProductId": "38939850978",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F7%2Fd%2Fe%2Fb%2F7debd8b4d0506ea105738a4f24d60d2360cef01d_1414251_1_AO_K.png&feedId=44979&k=fe1c2c109ec0ae8d52579da466c3bc5ec389c9f9",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=38939850978&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/anione-katzenangel-tiger-1414251/"
+    },
+    {
       "productId": "14757:46009508415",
       "productName": "All for paws AFP Hundespielzeug Air Pups Sneaker M",
       "brand": "Herstellerangabe nicht angegeben",
@@ -1038,7 +918,7 @@
     },
     {
       "productId": "14757:43953910564",
-      "productName": "All for paws Herzschlag Simulator",
+      "productName": "All for paws Ersatz-Herzschlag Simulator für Herzschlag Spielzeug",
       "brand": "Herstellerangabe nicht angegeben",
       "species": "dog",
       "category": "toy",
@@ -1046,7 +926,19 @@
       "merchantProductId": "43953910564",
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Ff%2Fd%2F9%2Fc%2Ffd9c9052f357ca4b9881adda012055c8644860c7_3129927_0_de_843fc3a4d7f743a4a0234797c94b8236.png&feedId=44979&k=5811feb45ca8f5b643f8d510cdb8536cc50fc9b3",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=43953910564&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-herzschlag-simulator-3129927/"
+      "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-ersatz-herzschlag-simulator-fuer-herzschlag-spielzeug-3129927/"
+    },
+    {
+      "productId": "14757:43673241723",
+      "productName": "All for paws Herzschlag Kuscheltier für Welpen – Lämmchen",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "dog",
+      "category": "toy",
+      "categoryLabel": "Spielzeug",
+      "merchantProductId": "43673241723",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fa%2F2%2F3%2F8%2Fa2380c1ac092bc0838c3b34138698dcf0c7e586c_1274320_0_de_0a40a0631a5747baba904d66792efa5b.png&feedId=44979&k=c9838b7af1ed2902450048118221889387d0a4ce",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=43673241723&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-herzschlag-kuscheltier-fuer-welpen--laemmchen-1274320/"
     },
     {
       "productId": "14757:45947673450",
@@ -1145,18 +1037,6 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-hundespielzeug-ultraschall-plueschspielzeug-rosa-4147187/"
     },
     {
-      "productId": "14757:44328013631",
-      "productName": "All for paws Intelligenzspielzeug - Ball & Treat Dispenser für Hunde",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "toy",
-      "categoryLabel": "Spielzeug",
-      "merchantProductId": "44328013631",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F7%2F2%2F0%2Fd%2F720d771b0351b8d07bbeddfc69ac0ed754e8b4b8_3553210_0_de_7e3d3aa1484c40519b732dc4a393e3d6.jpg&feedId=44979&k=5e57fe72fd94275b358c45da8dd2712b690f8448",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44328013631&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-intelligenzspielzeug---ball--treat-dispenser-fuer-hunde-3553210/"
-    },
-    {
       "productId": "14757:43945927064",
       "productName": "All for paws Interactives - Motion Activated Hundeball",
       "brand": "Herstellerangabe nicht angegeben",
@@ -1253,18 +1133,6 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-fisch-2479746/"
     },
     {
-      "productId": "14757:41143181569",
-      "productName": "AniOne Hundespielzeug Schwein aus Latex S",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "toy",
-      "categoryLabel": "Spielzeug",
-      "merchantProductId": "41143181569",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F2%2F3%2Fd%2F3%2F23d3c87e72d1d8bf27d536c07ceb9ec31c6f69d4_d17100b90da014c3a1cc817eef840e151a6cc644.jpg&feedId=44979&k=3964871ec118237bc2d6a8a48c5c7de27c863a06",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=41143181569&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwein-aus-latex-s-1080671/"
-    },
-    {
       "productId": "14757:45072304920",
       "productName": "AniOne Hundespielzeug schwimmfähiger Rochen",
       "brand": "Herstellerangabe nicht angegeben",
@@ -1275,7 +1143,19 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fc%2Fe%2F9%2Fb%2Fce9b7643dca0da02e2691597bc9227d3ee4e37f0_2692440_AO_H.jpg&feedId=44979&k=79f3f916113cbf5cb7410107f5680dc735ac341d",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=45072304920&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwimmfaehiger-rochen-2692440/"
+    },
+    {
+      "productId": "14757:45112775183",
+      "productName": "AniOne Hundespielzeug schwimmfähiger Spielspaß",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "dog",
+      "category": "toy",
+      "categoryLabel": "Spielzeug",
+      "merchantProductId": "45112775183",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fb%2Ff%2Fe%2F6%2Fbfe6483fdd48853df3d26365f007c746d6a86885_2692439_AO_H.png&feedId=44979&k=34799c2c4690cb967c29452429cda100bde8c8e5",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45112775183&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwimmfaehiger-spielspass-2692439/"
     }
   ],
-  "generatedAt": "2026-09-27T09:24:08.937Z"
+  "generatedAt": "2026-10-12T08:54:29.846Z"
 }
