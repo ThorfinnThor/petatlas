@@ -121,6 +121,24 @@ describe('Awin-Fressnapf-Feed', () => {
     ).toBeNull();
   });
 
+  it('übernimmt aus der groben Pflegerubrik nur eindeutig passende Artikel', () => {
+    const pflegeZeile = {
+      ...row('Krallenschere für Hunde'),
+      merchant_category: 'Hund > Pflege',
+      species: 'Hund',
+    };
+    expect(
+      katalogProduktAusZeile(pflegeZeile, '14757', new Set(['fressnapf.de', 'www.fressnapf.de'])),
+    ).toMatchObject({ category: 'care', productName: 'Krallenschere für Hunde' });
+    expect(
+      katalogProduktAusZeile(
+        { ...pflegeZeile, product_name: 'Bio Schutz Hunde Fernhaltespray 500ml' },
+        '14757',
+        new Set(['fressnapf.de', 'www.fressnapf.de']),
+      ),
+    ).toBeNull();
+  });
+
   it('dedupliziert und begrenzt den Katalog je Tierart und Kategorie', () => {
     const rows = [
       { ...row('KONG Alpha'), merchant_category: 'Hund > Spielzeug', species: 'Hund' },

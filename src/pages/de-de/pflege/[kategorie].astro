@@ -19,6 +19,7 @@ import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../../../features/commerce/
 import type { TaxonomyCategory } from '../../../domain/schemas/taxonomy.ts';
 import { zooroyalCareLink } from '../../../features/commerce/zooroyal.ts';
 import { fressnapfKatalog, zooroyalKatalog } from '../../../features/commerce/feed-catalog.ts';
+import { pflegeKatalogProdukteFuerKategorie } from '../../../features/commerce/care-product-relevance.ts';
 import FeedProductGrid from '../../../components/commerce/FeedProductGrid.astro';
 
 export function getStaticPaths() {
@@ -85,8 +86,11 @@ const zooShopLinks = zooEntscheidung.erlaubt
       }))
       .filter((link) => link.href !== null)
   : [];
-const fressnapfCatalog = fressnapfKatalog();
-const zooroyalCatalog = zooroyalKatalog();
+const fressnapfCatalog = pflegeKatalogProdukteFuerKategorie(
+  fressnapfKatalog(),
+  kategorie.categoryId,
+);
+const zooroyalCatalog = pflegeKatalogProdukteFuerKategorie(zooroyalKatalog(), kategorie.categoryId);
 const faqThema: Readonly<Record<string, string>> = {
   'grooming-brush': 'Bürsten und Kämmen',
   'grooming-claw': 'Krallenpflege',
@@ -243,13 +247,13 @@ const faqThema: Readonly<Record<string, string>> = {
     <FeedProductGrid
       offers={fressnapfCatalog}
       category="care"
-      title="Pflegeprodukte aus dem Fressnapf-Sortiment"
+      title={`${kategorie.label} aus dem Fressnapf-Sortiment`}
       retailerLabel="Fressnapf"
     />
     <FeedProductGrid
       offers={zooroyalCatalog}
       category="care"
-      title="Pflegeprodukte aus dem ZooRoyal-Sortiment"
+      title={`${kategorie.label} aus dem ZooRoyal-Sortiment`}
       retailerLabel="ZooRoyal"
     />
 
