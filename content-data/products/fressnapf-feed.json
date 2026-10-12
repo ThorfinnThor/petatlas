@@ -4,14 +4,6 @@
   "publisherId": "3037577",
   "products": [
     {
-      "productId": "afp-ball-treat-dispenser",
-      "productName": "Ball & Treat Dispenser für Hunde",
-      "merchantProductId": "44328013631",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F7%2F2%2F0%2Fd%2F720d771b0351b8d07bbeddfc69ac0ed754e8b4b8_3553210_0_de_7e3d3aa1484c40519b732dc4a393e3d6.jpg&feedId=44979&k=5e57fe72fd94275b358c45da8dd2712b690f8448",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44328013631&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-intelligenzspielzeug---ball--treat-dispenser-fuer-hunde-3553210/"
-    },
-    {
       "productId": "afp-floating-stick-m",
       "productName": "Hundespielzeug Floating Stick M",
       "merchantProductId": "45690435742",
@@ -76,14 +68,6 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/anione-katzenangel-qualle-1336935/"
     },
     {
-      "productId": "anione-latex-schwein-s",
-      "productName": "Hundespielzeug Schwein aus Latex S",
-      "merchantProductId": "41143181569",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F2%2F3%2Fd%2F3%2F23d3c87e72d1d8bf27d536c07ceb9ec31c6f69d4_d17100b90da014c3a1cc817eef840e151a6cc644.jpg&feedId=44979&k=3964871ec118237bc2d6a8a48c5c7de27c863a06",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=41143181569&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwein-aus-latex-s-1080671/"
-    },
-    {
       "productId": "anione-schwimmfaehiger-rochen",
       "productName": "Schwimmfähiger Rochen",
       "merchantProductId": "45072304920",
@@ -132,5 +116,5 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/kong-wobbler-l-1009436/"
     }
   ],
-  "generatedAt": "2026-09-27T09:24:08.935Z"
+  "generatedAt": "2026-10-12T08:54:29.844Z"
 }
