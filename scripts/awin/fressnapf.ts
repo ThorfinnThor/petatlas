@@ -1,4 +1,5 @@
 import { gunzipSync } from 'node:zlib';
+import { pflegeKategorieFuerProduktname } from '../../src/features/commerce/care-product-relevance.ts';
 
 export interface MatchTarget {
   readonly productId: string;
@@ -330,6 +331,9 @@ export function katalogProduktAusZeile(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
   const affiliate = sichereUrl(feld(row, 'aw_deep_link', 'affiliate_url', 'tracking_url'));
+  const istKonkretesPflegeprodukt =
+    category?.category !== 'care' ||
+    (name !== undefined && pflegeKategorieFuerProduktname(name) !== null);
   if (
     !name ||
     !brand ||
@@ -339,6 +343,7 @@ export function katalogProduktAusZeile(
     !image ||
     !merchant ||
     !affiliate ||
+    !istKonkretesPflegeprodukt ||
     !merchantHosts.has(merchant.host) ||
     !AWIN_TRACKING_HOSTS.has(affiliate.host)
   ) {
