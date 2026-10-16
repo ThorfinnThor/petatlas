@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+
+import { articlePath } from '../../../features/editorial/paths.ts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const articles = (await getCollection('ratgeber'))
+  .filter(
+    (entry) =>
+      entry.data.section === 'blog' && entry.data.status === 'published' && entry.data.indexable,
+  )
+  .sort(
+    (a, b) =>
+      b.data.publishedAt.localeCompare(a.data.publishedAt) ||
+      a.data.title.localeCompare(b.data.title, 'de'),
+  );
+---
+
+<BaseLayout
+  title="Blog für Hunde- und Katzenwissen"
+  description="Neue, quellenbasierte Artikel zu Tierarztkosten, Fütterung und dem Alltag mit Hund und Katze."
+  canonicalPfad="/de-de/blog/"
+>
+  <header class="blog-header">
+    <p class="eyebrow">Blog</p>
+    <h1>Wissen für den Alltag mit Hund und Katze</h1>
+    <p>
+      Verständliche Einordnungen aus unseren kuratierten Daten und nachvollziehbaren Quellen. Neue
+      Beiträge erklären Rechenwege, Begriffe und praktische Entscheidungen Schritt für Schritt.
+    </p>
+  </header>
+
+  <section aria-labelledby="blog-articles-title">
+    <h2 id="blog-articles-title">Aktuelle Artikel</h2>
+    <div class="blog-grid">
+      {
+        articles.map((article) => (
+          <article class="blog-card">
+            <p class="eyebrow">{article.data.topicCluster}</p>
+            <h3>
+              <a href={articlePath(article.data)}>{article.data.title}</a>
+            </h3>
+            <p>{article.data.description}</p>
+            <p class="blog-card__meta">
+              <time datetime={article.data.publishedAt}>
+                {new Intl.DateTimeFormat('de-DE', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                }).format(new Date(`${article.data.publishedAt}T00:00:00Z`))}
+              </time>
+              <span aria-hidden="true">·</span>
+              Quellen im Artikel
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-header {
+    max-inline-size: 72ch;
+    margin-block: var(--space-4) var(--space-10);
+  }
+
+  .blog-header > p:last-child {
+    max-inline-size: 62ch;
+    color: var(--color-text-muted);
+    font-size: var(--text-lead);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: var(--space-5);
+    margin-block: var(--space-5) var(--space-12);
+  }
+
+  .blog-card {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .blog-card h3 {
+    margin-block: var(--space-2) var(--space-3);
+  }
+
+  .blog-card h3 a {
+    color: var(--color-ink);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.14em;
+  }
+
+  .blog-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    margin-block-end: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+</style>

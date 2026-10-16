@@ -70,6 +70,12 @@ const groups: { label: string; keys: RouteKey[] }[] = [
             ))
         }
         <li><a href={`${home}#ratgeber`}>Ratgeber</a></li>
+        <li>
+          <a
+            href="/de-de/blog/"
+            aria-current={aktuellerPfad === '/de-de/blog/' ? 'page' : undefined}>Blog</a
+          >
+        </li>
         {
           routeExists(market, 'map') && (
             <li>

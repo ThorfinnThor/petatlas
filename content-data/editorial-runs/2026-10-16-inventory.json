@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-10-16-inventory",
+  "createdAt": "2026-10-16T08:00:00.000Z",
+  "stage": "published",
+  "candidates": [
+    {
+      "slug": "got-faktor-eins-bis-drei",
+      "question": "Was verändert der GOT-Faktor zwischen dem einfachen und dem dreifachen Satz?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "high",
+      "decision": "published",
+      "reason": "Ausgewählt: eigenständiger Suchzweck gegenüber der allgemeinen Rechnungsseite, belastbare Primärquellen und direkter Bezug zum Kostenrechner; variable Gesamtkosten bleiben klar abgegrenzt."
+    },
+    {
+      "slug": "allgemeine-untersuchung-hund-rechnung",
+      "question": "Welche Bestandteile kann eine Rechnung für eine allgemeine Untersuchung beim Hund enthalten?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": [
+        "data-snapshots/got/got-2022.json",
+        "content-data/cost-scenarios/allgemeine-untersuchung-hund.json"
+      ],
+      "risk": "high",
+      "decision": "published",
+      "reason": "Ausgewählt: konkrete Nutzerfrage mit eigenem Rechenablauf und geprüftem Projektszenario; der Artikel darf keine vollständige oder für jeden Fall geltende Tierarztrechnung versprechen."
+    },
+    {
+      "slug": "beratung-ohne-untersuchung-got",
+      "question": "Wie wird eine Beratung ohne Untersuchung in der GOT eingeordnet?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": [
+        "data-snapshots/got/got-2022.json",
+        "content-data/cost-scenarios/beratung-ohne-untersuchung.json"
+      ],
+      "risk": "high",
+      "decision": "draft",
+      "reason": "Das Szenario enthält eine belegbare Ausgangslage; der Text muss medizinische Notwendigkeit und konkrete Praxisabrechnung offenlassen."
+    },
+    {
+      "slug": "tierarzt-und-tierbedarf-in-berlin-daten",
+      "question": "Was zeigen die Ortsdaten über Tierarztpraxen und Tierbedarf in Berlin?",
+      "topicCluster": "Ortsdaten",
+      "sourceIds": ["osm-standard-tiles"],
+      "dataFiles": ["data-snapshots/places/places-de.json", "content-data/city-allowlist.json"],
+      "risk": "medium",
+      "decision": "draft",
+      "reason": "Die Daten enthalten Kategorien und Abdeckung, aber keine Vollständigkeitsgarantie; die redaktionelle Aussage muss Stadt, Radius und Datenstand immer gemeinsam nennen."
+    },
+    {
+      "slug": "lokale-tierverzeichnisse-vollstaendigkeit",
+      "question": "Wie vollständig kann ein lokales Tierverzeichnis aus offenen Ortsdaten sein?",
+      "topicCluster": "Ortsdaten",
+      "sourceIds": ["osm-standard-tiles"],
+      "dataFiles": ["data-snapshots/places/places-de.json"],
+      "risk": "medium",
+      "decision": "draft",
+      "reason": "9381 erfasste Orte und die Kategorien zeigen die Abdeckung; der Mehrwert liegt in der Einordnung von Lücken statt in einer scheinbaren Rangliste."
+    },
+    {
+      "slug": "transportbox-katze-vorbereiten",
+      "question": "Wie lässt sich eine Katze Schritt für Schritt an die Transportbox gewöhnen?",
+      "topicCluster": "Katzenhaltung",
+      "sourceIds": ["cat-friendly-vet-guidelines-2022", "cats-protection-carrier"],
+      "dataFiles": ["src/content/ratgeber/katze-transportbox.md"],
+      "risk": "medium",
+      "decision": "blocked",
+      "reason": "Nicht als neue Seite ausgewählt: Der bestehende indexierbare Ratgeber zur Transportbox beantwortet bereits dieselbe Suchabsicht mit einem vollständigen Schritt-für-Schritt-Ablauf."
+    },
+    {
+      "slug": "wohnungskatze-spielroutine",
+      "question": "Wie lässt sich für eine Wohnungskatze eine abwechslungsreiche Spielroutine planen?",
+      "topicCluster": "Katzenhaltung",
+      "sourceIds": ["cat-environment-guidelines-2024", "cats-protection-play"],
+      "dataFiles": ["src/content/ratgeber/katzen-beschaeftigen.md"],
+      "risk": "medium",
+      "decision": "blocked",
+      "reason": "Nicht als neue Seite ausgewählt: Der bestehende indexierbare Ratgeber enthält bereits einen Wochenplan und deckt die Suchabsicht einer Spielroutine für Wohnungskatzen ab."
+    },
+    {
+      "slug": "alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden",
+      "question": "Woran lassen sich Alleinfuttermittel und Ergänzungsfuttermittel auf der Packung unterscheiden?",
+      "topicCluster": "Ernährung",
+      "sourceIds": [
+        "eu-feed-marketing-regulation-767-2009",
+        "nutrition-uk-pet-food-supplements",
+        "nutrition-wsava-guidelines"
+      ],
+      "dataFiles": [
+        "content-data/food/real-products.json",
+        "content-data/products/supplements.json"
+      ],
+      "risk": "high",
+      "decision": "published",
+      "reason": "Ausgewählt: eigenständige Etikettenfrage für Hund und Katze, belegte Deklarationen und Fachleitlinien sowie klare Abgrenzung von der bestehenden Produktübersicht; keine individuelle Fütterungs- oder Therapieempfehlung."
+    },
+    {
+      "slug": "hundespielzeug-beschaeftigungssituation",
+      "question": "Wie wählt man Hundespielzeug passend zu Beschäftigungssituation und beaufsichtigter Nutzung aus?",
+      "topicCluster": "Spielzeug",
+      "sourceIds": [
+        "manufacturer-kong-kong-classic",
+        "manufacturer-west-paw-products-hurley-dog-bone"
+      ],
+      "dataFiles": ["content-data/products/editorial.json", "content-data/taxonomy/toys.json"],
+      "risk": "medium",
+      "decision": "draft",
+      "reason": "26 geprüfte redaktionelle Produktdatensätze bieten belegte Merkmale; es gibt keine Haltbarkeitsgarantie und keine Bestenliste."
+    },
+    {
+      "slug": "fressnapf-produktmerkmale-richtig-lesen",
+      "question": "Welche Produktmerkmale aus einem Händlerfeed lassen sich für eine Auswahlhilfe sinnvoll nutzen?",
+      "topicCluster": "Produktauswahl",
+      "sourceIds": ["nutrition-uk-pet-food-supplements"],
+      "dataFiles": ["content-data/products/fressnapf-feed.json"],
+      "risk": "medium",
+      "decision": "blocked",
+      "reason": "Der Fressnapf-Feed enthält 14 Datensätze, aber Händlerfeed-Metadaten allein belegen keine Eignung; zuerst müssen Kategorien, Herstellerangaben und Rechteprüfung je Produkt geklärt werden."
+    }
+  ],
+  "checks": {
+    "sources": "passed",
+    "editorial": "passed",
+    "technical": "passed",
+    "indexBudget": "passed"
+  },
+  "publishedSlugs": [
+    "got-faktor-eins-bis-drei",
+    "allgemeine-untersuchung-hund-rechnung",
+    "alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden"
+  ],
+  "notes": [
+    "Inventur basiert ausschließlich auf versionierten Projektdateien; seit dem Pilotlauf wurden keine amtlichen GOT-, Orts- oder redaktionellen Produktdaten ersetzt.",
+    "Datenstand: 1006 GOT-Positionen, 9381 Ortsdatensätze in 4 Kategorien und 42 freigegebene Städte.",
+    "Fressnapf-Feed: 14 Datensätze, erzeugt am 12.10.2026. ZooRoyal-Feed: 0 kategorisierbare Datensätze; es wurden keine Produkte erfunden.",
+    "Sol-Auswahl: GOT-Faktor, allgemeine Untersuchung beim Hund sowie Allein- und Ergänzungsfuttermittel gehen in die Quellenpakete; bei drei neuen Seiten läge das Indexbudget rechnerisch bei 456 URLs.",
+    "Quellenbriefings für die drei ausgewählten Themen: docs/editorial-briefings/2026-10-16-selected.json. Quellen-, Risiko- und Betreiberprüfung sind dokumentiert.",
+    "Die drei Artikel wurden nach ausdrücklicher Betreiberentscheidung als quellenbasierte Blogartikel veröffentlicht und indexierbar gesetzt.",
+    "Transportbox und Spielroutine für Wohnungskatzen sind wegen nahezu identischer bestehender Suchabsichten blockiert; der Händlerfeed-Kandidat bleibt wegen fehlender belegter Eignungsmerkmale blockiert.",
+    "Die Quellenpakete und Blogartikel sind abgeschlossen und zur Veröffentlichung freigegeben.",
+    "Die interne Risikoprüfung vom 16.10.2026 ist in docs/reviews/editorial-2026-10-16-risk-review.md dokumentiert.",
+    "Die technische Endabnahme ist bestanden. Der Betreiber hat am 16.10.2026 entschieden, dass die kuratierten Daten und Quellen für diese drei begrenzten Artikel ausreichen; siehe docs/reviews/editorial-2026-10-16-final-approval.md."
+  ]
+}

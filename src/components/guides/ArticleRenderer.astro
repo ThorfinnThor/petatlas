@@ -10,7 +10,7 @@ import CatCarrierGuide from './CatCarrierGuide.astro';
 import CatEnrichmentGuide from './CatEnrichmentGuide.astro';
 
 interface RelatedArticle {
-  readonly slug: string;
+  readonly href: string;
   readonly title: string;
 }
 
@@ -31,6 +31,7 @@ interface Props {
 
 const { article, Content, headings, sources, relatedArticles, toolLinks } = Astro.props;
 const data = article.data;
+const publicationApproved = data.status === 'published';
 const mainHeadings = headings.filter((heading) => heading.depth === 2);
 const formatDate = (date: string): string =>
   new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
@@ -40,12 +41,15 @@ const formatDate = (date: string): string =>
 
 <article
   class:list={['editorial-article', data.legacyRenderer && 'editorial-article--legacy']}
-  data-review-status="approved"
+  data-review-status={publicationApproved ? 'approved' : 'pending'}
   data-last-verified-at={data.updatedAt}
-  data-review-responsibility="SeitenHafen361"
+  data-review-responsibility={publicationApproved
+    ? 'SeitenHafen361'
+    : 'Redaktionelle Prüfung offen'}
 >
   <p class="article-meta">
-    Veröffentlicht am <time datetime={data.publishedAt}>{formatDate(data.publishedAt)}</time>
+    {data.status === 'published' ? 'Veröffentlicht am' : 'Entwurf vom'}{' '}
+    <time datetime={data.publishedAt}>{formatDate(data.publishedAt)}</time>
     <span aria-hidden="true">·</span>
     Aktualisiert am <time datetime={data.updatedAt}>{formatDate(data.updatedAt)}</time>
   </p>
@@ -67,7 +71,7 @@ const formatDate = (date: string): string =>
         </header>
 
         {mainHeadings.length > 1 && (
-          <nav class="article-toc" aria-label="Inhalt dieses Ratgebers">
+          <nav class="article-toc" aria-label="Inhalt dieses Artikels">
             <strong>Auf dieser Seite</strong>
             <ol>
               {mainHeadings.map((heading) => (
@@ -119,7 +123,7 @@ const formatDate = (date: string): string =>
             </a>
           ))}
           {relatedArticles.map((related) => (
-            <a href={`/de-de/ratgeber/${related.slug}/`}>
+            <a href={related.href}>
               <span>Ratgeber</span>
               <strong>{related.title}</strong>
             </a>

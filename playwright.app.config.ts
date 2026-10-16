@@ -14,7 +14,7 @@ export default defineConfig({
     command: 'npm run build:app && npx astro preview --port 4332 --ignore-lock',
     env: { ASTRO_PREVIEW_BACKGROUND: 'false' },
     port: 4332,
-    reuseExistingServer: false,
+    reuseExistingServer: !process.env.CI,
     timeout: 180000,
   },
 });

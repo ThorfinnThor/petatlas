@@ -18,6 +18,7 @@ import {
   type EditorialArticleCandidate,
 } from '../../../features/editorial/quality.ts';
 import { ARTICLE_TOOL_LABELS } from '../../../features/editorial/navigation.ts';
+import { articlePath } from '../../../features/editorial/paths.ts';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { routeExists, routePath, type RouteKey } from '../../../lib/routes.ts';
 
@@ -28,7 +29,7 @@ export async function getStaticPaths() {
   const staticMarket = withEnabledFeatures(defaultMarket(), productionFeatures());
   const articles = await getCollection('ratgeber');
   const paths = new Set<string>();
-  for (const article of articles) paths.add(`/de-de/ratgeber/${article.data.slug}/`);
+  for (const article of articles) paths.add(articlePath(article.data));
   for (const key of Object.keys(ARTICLE_TOOL_LABELS) as RouteKey[]) {
     if (routeExists(staticMarket, key)) paths.add(routePath(staticMarket, key));
   }
@@ -51,7 +52,9 @@ export async function getStaticPaths() {
     );
   }
 
-  return articles.map((article) => ({ params: { slug: article.data.slug }, props: { article } }));
+  return articles
+    .filter((article) => article.data.section === 'guide')
+    .map((article) => ({ params: { slug: article.data.slug }, props: { article } }));
 }
 
 interface Props {
@@ -66,11 +69,11 @@ const sources = article.data.sourceIds.map((id) => sourceById.get(id)!);
 const relatedArticles = article.data.relatedArticles
   .map((slug) => allArticles.find((entry) => entry.data.slug === slug))
   .filter((entry): entry is CollectionEntry<'ratgeber'> => entry !== undefined)
-  .map((entry) => ({ slug: entry.data.slug, title: entry.data.title }));
+  .map((entry) => ({ href: articlePath(entry.data), title: entry.data.title }));
 const toolLinks = article.data.relatedTools
   .filter((key) => routeExists(market, key))
   .map((key) => ({ key, label: ARTICLE_TOOL_LABELS[key] ?? key, path: routePath(market, key) }));
-const path = `/de-de/ratgeber/${article.data.slug}/`;
+const path = articlePath(article.data);
 const canonical = new URL(path, build.baseUrl).toString();
 const site = createSiteConfig(build.mode, process.env);
 const shouldIndex = article.data.status === 'published' && article.data.indexable;

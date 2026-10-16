@@ -79,14 +79,27 @@
       "evidence": "src/features/travel/national.ts"
     },
     {
+      "id": "eu-feed-marketing-regulation-767-2009",
+      "category": "redaktionelle Fachquelle",
+      "title": "Verordnung (EG) Nr. 767/2009 über das Inverkehrbringen und die Verwendung von Futtermitteln",
+      "publisher": "Europäische Union",
+      "url": "https://eur-lex.europa.eu/eli/reg/2009/767/oj/deu",
+      "usage": "Amtliche Begriffsbestimmungen und Kennzeichnungsanforderungen für Allein- und Ergänzungsfuttermittel",
+      "version": "Geltender Rechtsakt; konsolidierte Fassung vom 26.12.2018, geprüft am 16.10.2026",
+      "checkedAt": "2026-10-16",
+      "rightsBasis": "Amtliche Rechtsquelle; verlinkt und in eigenen Worten ausgewertet",
+      "allowedOutputs": "Quellenlink, Fundstellen und eigene Zusammenfassung; keine fremden Bilder",
+      "evidence": "src/content/ratgeber/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden.md"
+    },
+    {
       "id": "nutrition-uk-pet-food-supplements",
       "category": "redaktionelle Fachquelle",
       "title": "Pet supplements: are they necessary?",
       "publisher": "UK Pet Food",
       "url": "https://www.ukpetfood.org/resource/pet-supplements-are-they-necessary.html",
       "usage": "Allgemeine Einordnung von Ergänzungsfuttermitteln",
-      "version": "Prüfstand 09.09.2026",
-      "checkedAt": "2026-09-09",
+      "version": "Prüfstand 16.10.2026",
+      "checkedAt": "2026-10-16",
       "rightsBasis": "Quellenverweis und eigene Zusammenfassung",
       "allowedOutputs": "Quellenlink und eigene Zusammenfassung",
       "evidence": "src/components/pages/Supplements.astro"
@@ -98,8 +111,8 @@
       "publisher": "World Small Animal Veterinary Association",
       "url": "https://wsava.org/global-guidelines/global-nutrition-guidelines/",
       "usage": "Auswahlfragen zur tierärztlichen Ernährungsberatung",
-      "version": "Prüfstand 09.09.2026",
-      "checkedAt": "2026-09-09",
+      "version": "Prüfstand 16.10.2026",
+      "checkedAt": "2026-10-16",
       "rightsBasis": "Quellenverweis und eigene Zusammenfassung",
       "allowedOutputs": "Quellenlink und eigene Zusammenfassung",
       "evidence": "src/components/pages/Supplements.astro"
@@ -137,8 +150,8 @@
       "publisher": "Bundesministerium der Justiz und Bundesamt für Justiz",
       "url": "https://www.gesetze-im-internet.de/got_2022/",
       "usage": "Amtliche Rechtsgrundlage für Gebühren, Faktoren und Rechnungsbestandteile",
-      "version": "GOT 2022, Onlinefassung geprüft am 15.10.2026",
-      "checkedAt": "2026-10-15",
+      "version": "GOT 2022, Onlinefassung geprüft am 16.10.2026",
+      "checkedAt": "2026-10-16",
       "rightsBasis": "Amtliche Rechtsquelle; verlinkt und in eigenen Worten ausgewertet",
       "allowedOutputs": "Quellenlink, Fundstellen und eigene Zusammenfassung; keine fremden Bilder",
       "evidence": "data-snapshots/got/got-2022.json"
@@ -150,8 +163,8 @@
       "publisher": "Bundestierärztekammer e. V.",
       "url": "https://www.bundestieraerztekammer.de/tieraerzte/beruf/got/",
       "usage": "Fachliche Einordnung des Gebührenrahmens und der variablen Gebührenhöhe",
-      "version": "Webseite geprüft am 15.10.2026",
-      "checkedAt": "2026-10-15",
+      "version": "Webseite geprüft am 16.10.2026",
+      "checkedAt": "2026-10-16",
       "rightsBasis": "Quellenverweis; Inhalte werden nur in eigenen Worten zusammengefasst",
       "allowedOutputs": "Quellenlink und eigene Zusammenfassung; keine Übernahme von Bildern oder Seitentexten",
       "evidence": "src/content/ratgeber/tierarztrechnung-zusammensetzung.md"

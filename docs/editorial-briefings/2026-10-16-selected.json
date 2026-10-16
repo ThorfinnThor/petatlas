@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-10-16-selected",
+  "createdAt": "2026-10-16T08:30:00.000Z",
+  "stage": "review",
+  "briefings": [
+    {
+      "slug": "got-faktor-eins-bis-drei",
+      "question": "Was verändert der GOT-Faktor zwischen dem einfachen und dem dreifachen Satz?",
+      "format": "decision-matrix",
+      "risk": "high",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "dataStand": "GOT 2022; amtliche Fassung und fachliche Einordnung geprüft am 16.10.2026",
+      "facts": [
+        {
+          "claim": "Der reguläre Gebührenrahmen reicht vom einfachen bis zum dreifachen Satz der jeweiligen GOT-Position.",
+          "support": "got-2022-official; btk-got-guidance",
+          "allowedFormulation": "Der Faktor multipliziert den einfachen Gebührensatz; im regulären Rahmen sind ein- bis dreifache Sätze möglich.",
+          "limits": "Der Faktor ist keine Qualitätsnote und erlaubt keine Aussage über die Angemessenheit einer konkreten Rechnung. Notdienstregeln können abweichen."
+        },
+        {
+          "claim": "Die konkrete Gebührenhöhe hängt von den Umständen der Leistung ab.",
+          "support": "btk-got-guidance",
+          "allowedFormulation": "Für die Einordnung spielen unter anderem Schwierigkeit, Zeitaufwand und besondere Umstände der Behandlung eine Rolle.",
+          "limits": "Keine individuelle Rechnung bewerten; keine pauschale Empfehlung für einen Faktor oder eine Praxis ableiten."
+        }
+      ],
+      "workedExample": {
+        "description": "Rechenweg an einer frei gewählten GOT-Position zeigen, ohne eine Behandlung zu empfehlen.",
+        "formula": "einfacher Satz × Faktor = Gebührenposition vor weiteren Rechnungsbestandteilen",
+        "mustState": [
+          "Beispiel ist keine Prognose",
+          "weitere Positionen, Material, Arzneimittel, Labor, Wegegeld und Umsatzsteuer können hinzukommen"
+        ]
+      },
+      "internalLinks": [
+        "/de-de/tierarztkosten/",
+        "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"
+      ],
+      "externalReviewRequired": false
+    },
+    {
+      "slug": "allgemeine-untersuchung-hund-rechnung",
+      "question": "Welche Bestandteile kann eine Rechnung für eine allgemeine Untersuchung beim Hund enthalten?",
+      "format": "scenario-explainer",
+      "risk": "high",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": [
+        "data-snapshots/got/got-2022.json",
+        "content-data/cost-scenarios/allgemeine-untersuchung-hund.json"
+      ],
+      "dataStand": "GOT 2022; Projektszenario zuletzt geprüft am 16.10.2026",
+      "scenario": {
+        "scenarioId": "allgemeine-untersuchung-hund",
+        "officialItemId": "16",
+        "officialLabel": "Allgemeine Untersuchung mit Beratung, Hund, Katze, Frettchen",
+        "quantity": 1,
+        "factor": 1,
+        "baseAmountMinor": 2362,
+        "baseUnit": "Einzelleistung",
+        "exclusions": [
+          "weiterführende Diagnostik",
+          "Impfung",
+          "Arzneimittel und Verbrauchsmaterial",
+          "Fremdlabor",
+          "Wegegeld"
+        ],
+        "clinicalReview": "unreviewed"
+      },
+      "facts": [
+        {
+          "claim": "Das Projektszenario rechnet ausschließlich die dokumentierte GOT-Position 16 mit Menge 1 und Faktor 1.",
+          "support": "data-snapshots/got/got-2022.json; content-data/cost-scenarios/allgemeine-untersuchung-hund.json",
+          "allowedFormulation": "Das Beispiel zeigt, wie die ausgewählte Position im Rechner angesetzt wird.",
+          "limits": "Es ist keine vollständige Tierarztrechnung und keine Aussage darüber, welche Leistungen eine konkrete Praxis berechnet."
+        },
+        {
+          "claim": "Weitere Kostenbestandteile sind im Szenario ausdrücklich ausgeschlossen.",
+          "support": "content-data/cost-scenarios/allgemeine-untersuchung-hund.json",
+          "allowedFormulation": "Weiterführende Diagnostik, Impfungen, Arznei- und Verbrauchsmaterial, Fremdlabor sowie Wegegeld sind in diesem Beispiel nicht enthalten.",
+          "limits": "Die Liste ist eine Szenariogrenze, keine allgemeine Rechts- oder Abrechnungsregel."
+        }
+      ],
+      "internalLinks": [
+        "/de-de/tierarztkosten/",
+        "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"
+      ],
+      "externalReviewRequired": false
+    },
+    {
+      "slug": "alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden",
+      "question": "Woran lassen sich Alleinfuttermittel und Ergänzungsfuttermittel auf der Packung unterscheiden?",
+      "format": "label-reading-guide",
+      "risk": "high",
+      "sourceIds": [
+        "eu-feed-marketing-regulation-767-2009",
+        "nutrition-uk-pet-food-supplements",
+        "nutrition-wsava-guidelines"
+      ],
+      "dataFiles": [
+        "content-data/food/real-products.json",
+        "content-data/products/supplements.json"
+      ],
+      "dataStand": "EU-Verordnung 767/2009 in der konsolidierten Fassung vom 26.12.2018, geprüft am 16.10.2026; Produktdeklarationen zuletzt bearbeitet bzw. geprüft am 10.09.2026 und 14.09.2026; ergänzende Fachquellen geprüft am 16.10.2026",
+      "facts": [
+        {
+          "claim": "Die EU-Verordnung unterscheidet Alleinfuttermittel und Ergänzungsfuttermittel anhand ihrer Eignung für die tägliche Ration.",
+          "support": "eu-feed-marketing-regulation-767-2009",
+          "allowedFormulation": "Alleinfuttermittel reichen wegen ihrer Zusammensetzung für eine tägliche Ration aus; Ergänzungsfuttermittel nur zusammen mit anderen Futtermitteln.",
+          "limits": "Die rechtliche Produktart ist keine individuelle Eignungs-, Qualitäts- oder Therapieaussage."
+        },
+        {
+          "claim": "Die Produktdaten unterscheiden Datensätze mit kind=complete von Datensätzen, die als Ergänzungsfuttermittel kategorisiert sind.",
+          "support": "content-data/food/real-products.json; content-data/products/supplements.json",
+          "allowedFormulation": "Auf der Packung ist zuerst die vom Hersteller angegebene Produktkategorie zu prüfen; ein als Alleinfuttermittel gekennzeichnetes Produkt ist anders einzuordnen als ein Ergänzungsfuttermittel.",
+          "limits": "Die gespeicherten Produkt-Snapshots sind keine allgemeine Empfehlung, keine Dosisangabe und kein Nachweis, dass ein Produkt zu einem bestimmten Tier passt."
+        },
+        {
+          "claim": "Ergänzungsfuttermittel sind im Datensatz ausdrücklich als Ergänzung und nicht als vollständige tägliche Fütterung erfasst.",
+          "support": "nutrition-uk-pet-food-supplements; nutrition-wsava-guidelines; content-data/products/supplements.json",
+          "allowedFormulation": "Vor der Verwendung sollten Tierart, Fütterungszweck, Zusammensetzung und Fütterungshinweise des Herstellers gelesen werden.",
+          "limits": "Keine therapeutischen Aussagen, keine individuelle Fütterungsberatung und keine Empfehlung zur Kombination mehrerer Produkte."
+        }
+      ],
+      "internalLinks": ["/de-de/ergaenzungsfuttermittel/", "/de-de/ratgeber/"],
+      "externalReviewRequired": false
+    }
+  ],
+  "checks": {
+    "sourceCompleteness": "passed",
+    "dataFreshness": "passed",
+    "riskFlags": "passed"
+  },
+  "notes": [
+    "Die Briefings trennen belegte Tatsachen, zulässige Formulierungen und redaktionelle Grenzen.",
+    "Der Betreiber hat die Veröffentlichung der drei quellenbasierten Artikel am 16.10.2026 ausdrücklich freigegeben; eine zusätzliche externe Fachprüfung wird für diese begrenzten Inhalte nicht verlangt.",
+    "Preise und Produktdeklarationen dürfen im Artikel nur als Datenstand bzw. Projektszenario erscheinen, nicht als zeitlose Zusage.",
+    "Die interne Risikoprüfung und die abschließende Betreiberentscheidung vom 16.10.2026 sind unter docs/reviews dokumentiert."
+  ]
+}
