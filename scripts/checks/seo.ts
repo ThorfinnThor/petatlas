@@ -237,7 +237,9 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
   const istRatgeber = /^\/de-de\/ratgeber\/[^/]+\/$/.test(pfad);
   const istSensiblerRatgeber = [
     '/de-de/ratgeber/tierarztrechnung-verstehen/',
+    '/de-de/ratgeber/tierarztrechnung-zusammensetzung/',
     '/de-de/ratgeber/reise-vorbereiten/',
+    '/de-de/ratgeber/eu-heimtierausweis-pruefen/',
   ].includes(pfad);
   const istErgaenzung = pfad === '/de-de/ergaenzungsfuttermittel/';
   const istProduktOderRatgeber = istRatgeber || /^\/de-de\/(?:futter|pflege)\/[^/]+\/$/.test(pfad);

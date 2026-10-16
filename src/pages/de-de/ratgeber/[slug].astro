@@ -1,215 +1,125 @@
 ---
+import { existsSync } from 'node:fs';
+
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+import {
+  devFeatureOverrides,
+  productionFeatures,
+  resolveBuildConfig,
+} from '../../../../config/build.ts';
 import { createSiteConfig } from '../../../../config/site.ts';
+import ArticleRenderer from '../../../components/guides/ArticleRenderer.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import BrandImage from '../../../components/BrandImage.astro';
-import CatCarrierGuide from '../../../components/guides/CatCarrierGuide.astro';
-import CatEnrichmentGuide from '../../../components/guides/CatEnrichmentGuide.astro';
-import ReviewStatus from '../../../components/ReviewStatus.astro';
-import { devFeatureOverrides } from '../../../../config/build.ts';
+import { editorialSources } from '../../../domain/editorial-sources.ts';
 import { defaultMarket, withEnabledFeatures } from '../../../domain/market.ts';
-import { routeExists, routePath } from '../../../lib/routes.ts';
-
-const INDEXIERBARE_RATGEBER = new Set(['katzen-beschaeftigen', 'katze-transportbox']);
-
-export function getStaticPaths() {
-  return [
-    'tierarztrechnung-verstehen',
-    'hundeorte-finden',
-    'reise-vorbereiten',
-    'katzen-beschaeftigen',
-    'katze-transportbox',
-  ].map((slug) => ({ params: { slug } }));
-}
-
-const slug = Astro.params.slug!;
-const texts = {
-  'katzen-beschaeftigen': {
-    title: 'Wohnungskatzen beschäftigen: ein Wochenplan, der zu deiner Katze passt',
-    description:
-      'Wohnungscheck, sichere Spielsequenz und ein konkreter 7-Tage-Plan für Wohnungskatzen – mit Lösungen für Mehrkatzenhaushalte und Warnzeichen.',
-    category: 'Katzen verstehen',
-  },
-  'katze-transportbox': {
-    title: 'Katze an die Transportbox gewöhnen: Schritt für Schritt',
-    description:
-      'Transportbox auswählen, in fünf ruhigen Schritten trainieren und die Fahrt zur Tierarztpraxis vorbereiten – inklusive druckbarer Checkliste.',
-    category: 'Mit Katze zur Praxis',
-  },
-  'tierarztrechnung-verstehen': {
-    title: 'Deine Tierarztrechnung verstehen',
-    description:
-      'Ein kurzer Einstieg in Positionen, Faktoren und zusätzliche Kosten einer Tierarztrechnung.',
-    category: 'Kosten verstehen',
-    image: 'health-dog-home',
-    intro:
-      'Eine Rechnung besteht aus einzelnen Leistungen. Mit dem Gebührenkatalog kannst du ihre Bezeichnungen und Grundlagen nachvollziehen.',
-    sections: [
-      [
-        'Die einzelne Leistung finden',
-        'Such im Katalog nach der Bezeichnung oder Positionsnummer auf deiner Rechnung. Die angegebene Grundgebühr ist der Ausgangswert dieser Position, nicht automatisch der Gesamtpreis eines Besuchs.',
-      ],
-      [
-        'Deine Eingaben nachvollziehen',
-        'Wähle im Rechner die passende Position, Menge und den Faktor deiner Rechnung. Die Berechnung trennt Positionen und Umsatzsteuer. Hinweise zum Notdienst und zu weiteren Kosten stehen direkt am Ergebnis.',
-      ],
-      [
-        'Offene Fragen klären',
-        'Medikamente, Materialien, Laborleistungen oder weitere Positionen können hinzukommen. Wenn eine Rechnungsposition unklar bleibt, frag die Praxis nach einer Erläuterung.',
-      ],
-    ],
-    source: 'https://www.gesetze-im-internet.de/got_2022/',
-    sourceName: 'Amtliche Gebührenordnung für Tierärzte',
-    tool: 'costs' as const,
-    action: 'Gebühren nachschlagen',
-  },
-  'hundeorte-finden': {
-    title: 'Gute Hunde-Orte in deiner Nähe finden',
-    description:
-      'So nutzt du Kartenfilter und Herkunftsangaben, um erfasste Hundeorte in deiner Nähe zu prüfen.',
-    category: 'Draußen unterwegs',
-    image: 'play-dog-alpine-lake',
-    intro:
-      'Die Karte zeigt erfasste Orte, keine vollständige Liste aller Angebote. So nutzt du sie für deinen nächsten Ausflug oder die Suche nach einer Praxis.',
-    sections: [
-      [
-        'Ort auswählen',
-        'Gib eine Stadt oder Postleitzahl ein und wähle den passenden Vorschlag. Der Radius bezieht sich auf diesen Mittelpunkt. Du musst deinen persönlichen Standort nicht freigeben.',
-      ],
-      [
-        'Ergebnisse eingrenzen',
-        'Nutze Kategorien und Radius, um die Liste einzugrenzen. Die Listenansicht enthält dieselben Orte wie die Karte und bleibt ohne externe Kartenbilder nutzbar.',
-      ],
-      [
-        'Vor dem Besuch nachsehen',
-        'Öffnungszeiten und Telefonnummern sind nicht überall erfasst. Prüfe die Website des Ortes oder ruf an. Ein Eintrag als Tierarzt ist keine Bestätigung eines aktuellen Notdienstes.',
-      ],
-    ],
-    source: 'https://www.openstreetmap.org/about',
-    sourceName: 'OpenStreetMap · Über die Daten',
-    tool: 'map' as const,
-    action: 'Hunde-Orte finden',
-  },
-  'reise-vorbereiten': {
-    title: 'Mit Hund oder Katze verreisen: die Vorbereitung',
-    description:
-      'Ein kurzer Einstieg in Reisecheck, Unterlagen und Packliste für Reisen mit Hund oder Katze.',
-    category: 'Zusammen reisen',
-    image: 'travel-human-dog-sunset',
-    intro:
-      'Ein guter Reiseplan beginnt mit dem Ziel, dem Transport und den Angaben zu deinem Tier. Der Reisecheck hilft dir, offene Punkte geordnet zu sammeln.',
-    sections: [
-      [
-        'Reise und Tier festhalten',
-        'Wähle im Reisecheck eines der unterstützten Ziele und gib die vorhandenen Informationen zu deinem Tier ein. Unbekannte Angaben solltest du offenlassen, statt sie zu schätzen.',
-      ],
-      [
-        'Unterlagen und Quellen prüfen',
-        'Die Auswertung zeigt Hinweise und Fundstellen. Prüfe die aktuellen Informationen des Ziellandes und kläre Tiergesundheitsfragen mit deiner Tierarztpraxis.',
-      ],
-      [
-        'Packliste anpassen',
-        'Nutze die lokale Packliste für Dokumente und Alltagsausstattung. Ergänze die Vorgaben der Unterkunft und des Transportanbieters.',
-      ],
-    ],
-    source:
-      'https://europa.eu/youreurope/citizens/travel/carry/pets-and-other-animals/index_de.htm',
-    sourceName: 'Your Europe · Reisen mit Heimtieren',
-    tool: 'travel' as const,
-    action: 'Reisecheck öffnen',
-  },
-};
-
-const article = texts[slug as keyof typeof texts];
-if (!article) throw new Error(`Unbekannter Ratgeber: ${slug}`);
+import {
+  validateEditorialArticles,
+  type EditorialArticleCandidate,
+} from '../../../features/editorial/quality.ts';
+import { ARTICLE_TOOL_LABELS } from '../../../features/editorial/navigation.ts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { routeExists, routePath, type RouteKey } from '../../../lib/routes.ts';
 
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
-const istKatzenRatgeber = slug === 'katzen-beschaeftigen' || slug === 'katze-transportbox';
-const fachreviewNoetig = ['tierarztrechnung-verstehen', 'reise-vorbereiten'].includes(slug);
+const build = resolveBuildConfig();
+
+export async function getStaticPaths() {
+  const staticMarket = withEnabledFeatures(defaultMarket(), productionFeatures());
+  const articles = await getCollection('ratgeber');
+  const paths = new Set<string>();
+  for (const article of articles) paths.add(`/de-de/ratgeber/${article.data.slug}/`);
+  for (const key of Object.keys(ARTICLE_TOOL_LABELS) as RouteKey[]) {
+    if (routeExists(staticMarket, key)) paths.add(routePath(staticMarket, key));
+  }
+
+  const candidates: EditorialArticleCandidate[] = articles.map((article) => ({
+    id: article.id,
+    data: article.data,
+    body: article.body ?? '',
+  }));
+  const issues = validateEditorialArticles(candidates, editorialSources(), {
+    now: new Date().toISOString().slice(0, 10),
+    validInternalPaths: paths,
+    dataFileExists: existsSync,
+  });
+  if (issues.length > 0) {
+    throw new Error(
+      `Redaktionelle Qualitätsprüfung fehlgeschlagen:\n${issues
+        .map((issue) => `- ${issue.slug} · ${issue.field}: ${issue.problem}`)
+        .join('\n')}`,
+    );
+  }
+
+  return articles.map((article) => ({ params: { slug: article.data.slug }, props: { article } }));
+}
+
+interface Props {
+  article: CollectionEntry<'ratgeber'>;
+}
+
+const { article } = Astro.props;
+const allArticles = await getCollection('ratgeber');
+const { Content, headings } = await render(article);
+const sourceById = new Map(editorialSources().map((source) => [source.id, source]));
+const sources = article.data.sourceIds.map((id) => sourceById.get(id)!);
+const relatedArticles = article.data.relatedArticles
+  .map((slug) => allArticles.find((entry) => entry.data.slug === slug))
+  .filter((entry): entry is CollectionEntry<'ratgeber'> => entry !== undefined)
+  .map((entry) => ({ slug: entry.data.slug, title: entry.data.title }));
+const toolLinks = article.data.relatedTools
+  .filter((key) => routeExists(market, key))
+  .map((key) => ({ key, label: ARTICLE_TOOL_LABELS[key] ?? key, path: routePath(market, key) }));
+const path = `/de-de/ratgeber/${article.data.slug}/`;
+const canonical = new URL(path, build.baseUrl).toString();
+const site = createSiteConfig(build.mode, process.env);
+const shouldIndex = article.data.status === 'published' && article.data.indexable;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.data.title,
+    description: article.data.description,
+    datePublished: article.data.publishedAt,
+    dateModified: article.data.updatedAt,
+    mainEntityOfPage: canonical,
+    isAccessibleForFree: true,
+    author: { '@type': 'Organization', name: site.brandName },
+    publisher: { '@type': 'Organization', name: site.brandName, url: build.baseUrl },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Start',
+        item: new URL('/de-de/', build.baseUrl).toString(),
+      },
+      { '@type': 'ListItem', position: 2, name: article.data.title, item: canonical },
+    ],
+  },
+];
 ---
 
 <BaseLayout
-  title={article.title}
-  description={article.description}
-  canonicalPfad={`/de-de/ratgeber/${slug}/`}
-  neverIndex={!INDEXIERBARE_RATGEBER.has(slug)}
-  weit={istKatzenRatgeber}
+  title={article.data.title}
+  description={article.data.description}
+  canonicalPfad={path}
+  neverIndex={!shouldIndex}
+  weit={article.data.legacyRenderer !== undefined}
+  structuredData={structuredData}
+  ogType="article"
 >
-  <Breadcrumbs market={market} stufen={[{ label: article.title }]} />
-  <a href="/de-de/#ratgeber">← Alle Ratgeber</a>
-
-  {slug === 'katzen-beschaeftigen' && <CatEnrichmentGuide />}
-  {slug === 'katze-transportbox' && <CatCarrierGuide />}
-
-  {
-    !istKatzenRatgeber && 'image' in article && (
-      <article class="compact-guide">
-        <p class="eyebrow">{article.category}</p>
-        <h1>{article.title}</h1>
-        <p class="intro">{article.intro}</p>
-        <p class="article-meta">
-          {createSiteConfig('preview', import.meta.env).brandName} · Redaktionelle Orientierung ·
-          14.09.2026
-        </p>
-        {fachreviewNoetig && (
-          <ReviewStatus
-            status="approved"
-            reviewedAt="2026-09-14"
-            reviewedBy="SeitenHafen361"
-            lastVerifiedAt="2026-09-14"
-            responsibility="SeitenHafen361"
-            sources={[{ label: article.sourceName, url: article.source }]}
-          />
-        )}
-        <BrandImage name={article.image} sizes="(max-width: 768px) 100vw, 760px" />
-        {article.sections.map(([title, body]) => (
-          <section>
-            <h2>{title}</h2>
-            <p>{body}</p>
-          </section>
-        ))}
-        {routeExists(market, article.tool) && (
-          <p>
-            <a class="article-action" href={routePath(market, article.tool)}>
-              {article.action} →
-            </a>
-          </p>
-        )}
-        <h2>Quellen und Einordnung</h2>
-        <p>
-          <a href={article.source} rel="noopener">
-            {article.sourceName} ↗
-          </a>
-        </p>
-        <p>
-          Diese kompakte Seite bleibt erreichbar, wird aber erst nach einer eigenständigen
-          inhaltlichen Überarbeitung für Suchmaschinen freigegeben.
-        </p>
-      </article>
-    )
-  }
+  <Breadcrumbs market={market} stufen={[{ label: article.data.title }]} />
+  <a class="back-link" href="/de-de/#ratgeber">← Alle Ratgeber</a>
+  <ArticleRenderer {article} {Content} {headings} {sources} {relatedArticles} {toolLinks} />
 </BaseLayout>
 
 <style>
-  .compact-guide .intro {
-    font-size: var(--text-lead);
-  }
-  .compact-guide .article-meta {
-    font-size: var(--text-small);
-    color: var(--color-text-muted);
-  }
-  .compact-guide :global(picture) {
-    border-radius: var(--radius-xl);
-    aspect-ratio: 1.7;
-  }
-  .article-action {
+  .back-link {
     display: inline-block;
-    padding: var(--space-3) var(--space-6);
-    border-radius: var(--radius-pill);
-    background: var(--color-primary);
-    color: var(--color-primary-contrast);
-    text-decoration: none;
-    font-weight: 700;
-    margin-top: var(--space-6);
+    margin-block-end: var(--space-2);
   }
 </style>

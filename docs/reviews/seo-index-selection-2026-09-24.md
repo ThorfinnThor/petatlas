@@ -1,6 +1,6 @@
 # SEO-Indexauswahl vom 24.09.2026
 
-**Freigegeben:** 450 von 1253 gebauten HTML-Seiten.
+**Freigegeben:** 453 von 1252 gebauten HTML-Seiten.
 Zielkorridor: 400–500, Zielwert: 450.
 
 ## Verteilung der indexierbaren Seiten
@@ -13,10 +13,10 @@ Zielkorridor: 400–500, Zielwert: 450.
 | Kaufberatung | 9 |
 | Futterprodukt | 7 |
 | Pflegekategorie | 5 |
+| Ratgeber | 5 |
 | Reiseland | 4 |
 | Tool | 4 |
 | Kategorie | 3 |
-| Ratgeber | 2 |
 | Vertrauensseite | 2 |
 | Informationsseite | 1 |
 | Katalog | 1 |

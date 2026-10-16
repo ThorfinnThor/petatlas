@@ -1,0 +1,276 @@
+---
+import type { MarkdownHeading } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+
+import type { EditorialSource } from '../../domain/editorial-sources.ts';
+import type { RouteKey } from '../../lib/routes.ts';
+import BrandImage from '../BrandImage.astro';
+import CatCarrierGuide from './CatCarrierGuide.astro';
+import CatEnrichmentGuide from './CatEnrichmentGuide.astro';
+
+interface RelatedArticle {
+  readonly slug: string;
+  readonly title: string;
+}
+
+interface ToolLink {
+  readonly key: RouteKey;
+  readonly label: string;
+  readonly path: string;
+}
+
+interface Props {
+  article: CollectionEntry<'ratgeber'>;
+  Content: AstroComponentFactory;
+  headings: readonly MarkdownHeading[];
+  sources: readonly EditorialSource[];
+  relatedArticles: readonly RelatedArticle[];
+  toolLinks: readonly ToolLink[];
+}
+
+const { article, Content, headings, sources, relatedArticles, toolLinks } = Astro.props;
+const data = article.data;
+const mainHeadings = headings.filter((heading) => heading.depth === 2);
+const formatDate = (date: string): string =>
+  new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
+    new Date(`${date}T00:00:00Z`),
+  );
+---
+
+<article
+  class:list={['editorial-article', data.legacyRenderer && 'editorial-article--legacy']}
+  data-review-status="approved"
+  data-last-verified-at={data.updatedAt}
+  data-review-responsibility="SeitenHafen361"
+>
+  <p class="article-meta">
+    Veröffentlicht am <time datetime={data.publishedAt}>{formatDate(data.publishedAt)}</time>
+    <span aria-hidden="true">·</span>
+    Aktualisiert am <time datetime={data.updatedAt}>{formatDate(data.updatedAt)}</time>
+  </p>
+
+  {
+    data.legacyRenderer === 'cat-enrichment' ? (
+      <CatEnrichmentGuide />
+    ) : data.legacyRenderer === 'cat-carrier' ? (
+      <CatCarrierGuide />
+    ) : (
+      <>
+        <header class="article-header">
+          <p class="eyebrow">{data.topicCluster}</p>
+          <h1>{data.title}</h1>
+          <p class="article-intro">{data.intro}</p>
+          {data.image && (
+            <BrandImage name={data.image} alt="" sizes="(max-width: 759px) 100vw, 760px" priority />
+          )}
+        </header>
+
+        {mainHeadings.length > 1 && (
+          <nav class="article-toc" aria-label="Inhalt dieses Ratgebers">
+            <strong>Auf dieser Seite</strong>
+            <ol>
+              {mainHeadings.map((heading) => (
+                <li>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
+        <div class="article-body">
+          <Content />
+        </div>
+      </>
+    )
+  }
+
+  <section class="article-sources" aria-labelledby="article-sources-title">
+    <h2 id="article-sources-title">Quellen und Einordnung</h2>
+    <p>
+      Stand: <time datetime={data.updatedAt}>{formatDate(data.updatedAt)}</time>. Die Aussagen
+      wurden aus den folgenden Quellen und den im Projekt genannten Datengrundlagen abgeleitet.
+      Herstellerangaben bleiben dem jeweiligen Hersteller zugeordnet.
+    </p>
+    <ul>
+      {
+        sources.map((source) => (
+          <li>
+            <a href={source.url} rel="noopener">
+              {source.publisher}: {source.title} ↗
+            </a>
+            <span>{source.version}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    (toolLinks.length > 0 || relatedArticles.length > 0) && (
+      <section class="article-related" aria-labelledby="article-related-title">
+        <h2 id="article-related-title">Passend dazu</h2>
+        <div class="related-grid">
+          {toolLinks.map((tool) => (
+            <a href={tool.path}>
+              <span>Werkzeug</span>
+              <strong>{tool.label}</strong>
+            </a>
+          ))}
+          {relatedArticles.map((related) => (
+            <a href={`/de-de/ratgeber/${related.slug}/`}>
+              <span>Ratgeber</span>
+              <strong>{related.title}</strong>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</article>
+
+<style>
+  .editorial-article {
+    --article-measure: 72ch;
+    margin-block-end: var(--space-12);
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    margin-block: var(--space-3) var(--space-5);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .article-header {
+    margin-block-end: var(--space-7);
+  }
+
+  .article-header h1 {
+    max-inline-size: 18ch;
+    overflow-wrap: normal;
+    hyphens: auto;
+  }
+
+  .article-intro {
+    max-inline-size: 62ch;
+    color: var(--color-text-muted);
+    font-size: var(--text-lead);
+  }
+
+  .article-header :global(picture) {
+    display: block;
+    max-inline-size: var(--article-measure);
+    margin-block-start: var(--space-6);
+    border-radius: var(--radius-xl);
+    overflow: clip;
+    aspect-ratio: 16 / 8;
+  }
+
+  .article-header :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .article-toc {
+    max-inline-size: var(--article-measure);
+    margin-block: var(--space-6) var(--space-9);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-subtle);
+  }
+
+  .article-toc ol {
+    margin-block-end: 0;
+    padding-inline-start: 1.25rem;
+    columns: 2 16rem;
+  }
+
+  .article-toc li {
+    break-inside: avoid;
+    margin-block: var(--space-2);
+  }
+
+  .article-body {
+    max-inline-size: var(--article-measure);
+  }
+
+  .article-body :global(h2) {
+    margin-block-start: var(--space-10);
+    scroll-margin-block-start: 7rem;
+  }
+
+  .article-body :global(h3) {
+    margin-block-start: var(--space-7);
+  }
+
+  .article-body :global(p),
+  .article-body :global(li) {
+    max-inline-size: 70ch;
+  }
+
+  .article-sources,
+  .article-related {
+    max-inline-size: var(--article-measure);
+    margin-block-start: var(--space-10);
+    padding-block-start: var(--space-7);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .article-sources li {
+    margin-block: var(--space-3);
+  }
+
+  .article-sources li span {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .related-grid {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .related-grid a {
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .related-grid a:hover {
+    border-color: var(--color-primary);
+    background: var(--color-brand-050);
+  }
+
+  .related-grid span {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  @media (min-width: 640px) {
+    .related-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 639px) {
+    .article-header h1 {
+      font-size: clamp(2rem, 10vw, 3rem);
+      overflow-wrap: break-word;
+    }
+
+    .article-toc ol {
+      columns: 1;
+    }
+  }
+</style>

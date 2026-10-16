@@ -44,6 +44,7 @@ import { alleRegeln } from '../../src/features/travel/rules.ts';
 import { reisePackliste } from '../../src/features/travel/packing.ts';
 import { FUTTER_DATENSATZ_SCHEMA } from '../../src/features/food/dataset-schema.ts';
 import { InsuranceCatalogSchema } from '../../src/domain/schemas/insurance-catalog.ts';
+import { EditorialRunSchema } from '../../src/features/editorial/schema.ts';
 
 const CATALOG_FEED_SCHEMA = z
   .object({
@@ -207,6 +208,11 @@ export const VERZEICHNISSE: readonly {
   readonly schema: z.ZodType;
   readonly zweck: string;
 }[] = [
+  {
+    verzeichnis: 'content-data/editorial-runs',
+    schema: EditorialRunSchema,
+    zweck: 'Redaktionelle Kandidaten, Entscheidungen und Prüfergebnisse je Veröffentlichungsrunde',
+  },
   {
     verzeichnis: 'content-data/insurance-disclosures',
     schema: InsuranceDisclosureSchema,
