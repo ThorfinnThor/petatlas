@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runId": "2026-10-16-inventory",
   "createdAt": "2026-10-16T08:00:00.000Z",
-  "stage": "briefing",
+  "stage": "review",
   "candidates": [
     {
       "slug": "got-faktor-eins-bis-drei",
@@ -130,7 +130,8 @@
     "Fressnapf-Feed: 14 Datensätze, erzeugt am 12.10.2026. ZooRoyal-Feed: 0 kategorisierbare Datensätze; es wurden keine Produkte erfunden.",
     "Sol-Auswahl: GOT-Faktor, allgemeine Untersuchung beim Hund sowie Allein- und Ergänzungsfuttermittel gehen in die Quellenpakete; bei drei neuen Seiten läge das Indexbudget rechnerisch bei 456 URLs.",
     "Quellenbriefings für die drei ausgewählten Themen: docs/editorial-briefings/2026-10-16-selected.json. Quellen- und Risikoprüfung bestanden; externe fachliche Prüfung bleibt vor Veröffentlichung erforderlich.",
+    "Die drei Artikelentwürfe wurden im Status review und mit indexable=false angelegt. Erst eine dokumentierte Fachfreigabe darf Status und Indexierung ändern.",
     "Transportbox und Spielroutine für Wohnungskatzen sind wegen nahezu identischer bestehender Suchabsichten blockiert; der Händlerfeed-Kandidat bleibt wegen fehlender belegter Eignungsmerkmale blockiert.",
-    "Vor Artikelarbeit sind die drei ausgewählten Quellenpakete abgeschlossen; die Artikel selbst sind noch nicht geschrieben oder veröffentlicht."
+    "Die Quellenpakete und Artikelentwürfe sind abgeschlossen; die drei Artikel sind noch nicht fachlich freigegeben oder veröffentlicht."
   ]
 }

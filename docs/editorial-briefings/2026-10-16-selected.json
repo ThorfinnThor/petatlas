@@ -11,7 +11,7 @@
       "risk": "high",
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
-      "dataStand": "GOT 2022; amtliche Fassung und fachliche Einordnung geprüft am 15.10.2026",
+      "dataStand": "GOT 2022; amtliche Fassung und fachliche Einordnung geprüft am 16.10.2026",
       "facts": [
         {
           "claim": "Der reguläre Gebührenrahmen reicht vom einfachen bis zum dreifachen Satz der jeweiligen GOT-Position.",
@@ -29,9 +29,15 @@
       "workedExample": {
         "description": "Rechenweg an einer frei gewählten GOT-Position zeigen, ohne eine Behandlung zu empfehlen.",
         "formula": "einfacher Satz × Faktor = Gebührenposition vor weiteren Rechnungsbestandteilen",
-        "mustState": ["Beispiel ist keine Prognose", "weitere Positionen, Material, Arzneimittel, Labor, Wegegeld und Umsatzsteuer können hinzukommen"]
+        "mustState": [
+          "Beispiel ist keine Prognose",
+          "weitere Positionen, Material, Arzneimittel, Labor, Wegegeld und Umsatzsteuer können hinzukommen"
+        ]
       },
-      "internalLinks": ["/de-de/tierarztkosten/", "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"],
+      "internalLinks": [
+        "/de-de/tierarztkosten/",
+        "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"
+      ],
       "externalReviewRequired": true
     },
     {
@@ -76,7 +82,10 @@
           "limits": "Die Liste ist eine Szenariogrenze, keine allgemeine Rechts- oder Abrechnungsregel."
         }
       ],
-      "internalLinks": ["/de-de/tierarztkosten/", "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"],
+      "internalLinks": [
+        "/de-de/tierarztkosten/",
+        "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"
+      ],
       "externalReviewRequired": true
     },
     {
@@ -89,7 +98,7 @@
         "content-data/food/real-products.json",
         "content-data/products/supplements.json"
       ],
-      "dataStand": "Produktdeklarationen zuletzt bearbeitet bzw. geprüft am 10.09.2026 und 14.09.2026; Fachquellen geprüft am 09.09.2026",
+      "dataStand": "Produktdeklarationen zuletzt bearbeitet bzw. geprüft am 10.09.2026 und 14.09.2026; Fachquellen geprüft am 16.10.2026",
       "facts": [
         {
           "claim": "Die Produktdaten unterscheiden Datensätze mit kind=complete von Datensätzen, die als Ergänzungsfuttermittel kategorisiert sind.",

@@ -6,6 +6,12 @@ const PILOTS = [
   '/de-de/ratgeber/hundespielzeug-starke-kauer/',
 ] as const;
 
+const REVIEW_ARTICLES = [
+  '/de-de/ratgeber/got-faktor-eins-bis-drei/',
+  '/de-de/ratgeber/allgemeine-untersuchung-hund-rechnung/',
+  '/de-de/ratgeber/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden/',
+] as const;
+
 for (const path of PILOTS) {
   test(`${path} rendert Metadaten, Quellen und strukturierte Daten`, async ({ page }) => {
     await page.goto(path);
@@ -27,6 +33,32 @@ for (const path of PILOTS) {
     expect(types).toEqual(expect.arrayContaining(['Article', 'BreadcrumbList']));
   });
 }
+
+for (const path of REVIEW_ARTICLES) {
+  test(`${path} bleibt bis zur Fachfreigabe nicht indexierbar`, async ({ page }) => {
+    await page.goto(path);
+
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.locator('article[data-review-status="pending"]')).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+    await expect(page.getByRole('heading', { name: 'Quellen und Einordnung' })).toBeVisible();
+  });
+}
+
+test('Review-Artikel bleiben auf schmalen Smartphones ohne horizontalen Überlauf', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+
+  for (const path of REVIEW_ARTICLES) {
+    await page.goto(path);
+    const dimensions = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+    }));
+    expect(dimensions.scrollWidth, path).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+  }
+});
 
 for (const viewport of [
   { name: 'smartphone', width: 320, height: 800 },

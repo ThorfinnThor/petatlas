@@ -238,6 +238,9 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
   const istSensiblerRatgeber = [
     '/de-de/ratgeber/tierarztrechnung-verstehen/',
     '/de-de/ratgeber/tierarztrechnung-zusammensetzung/',
+    '/de-de/ratgeber/got-faktor-eins-bis-drei/',
+    '/de-de/ratgeber/allgemeine-untersuchung-hund-rechnung/',
+    '/de-de/ratgeber/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden/',
     '/de-de/ratgeber/reise-vorbereiten/',
     '/de-de/ratgeber/eu-heimtierausweis-pruefen/',
   ].includes(pfad);
