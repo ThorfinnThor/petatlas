@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runId": "2026-10-16-inventory",
   "createdAt": "2026-10-16T08:00:00.000Z",
-  "stage": "candidates",
+  "stage": "briefing",
   "candidates": [
     {
       "slug": "got-faktor-eins-bis-drei",
@@ -118,7 +118,7 @@
     }
   ],
   "checks": {
-    "sources": "pending",
+    "sources": "passed",
     "editorial": "passed",
     "technical": "passed",
     "indexBudget": "passed"
@@ -129,7 +129,8 @@
     "Datenstand: 1006 GOT-Positionen, 9381 Ortsdatensätze in 4 Kategorien und 42 freigegebene Städte.",
     "Fressnapf-Feed: 14 Datensätze, erzeugt am 12.10.2026. ZooRoyal-Feed: 0 kategorisierbare Datensätze; es wurden keine Produkte erfunden.",
     "Sol-Auswahl: GOT-Faktor, allgemeine Untersuchung beim Hund sowie Allein- und Ergänzungsfuttermittel gehen in die Quellenpakete; bei drei neuen Seiten läge das Indexbudget rechnerisch bei 456 URLs.",
+    "Quellenbriefings für die drei ausgewählten Themen: docs/editorial-briefings/2026-10-16-selected.json. Quellen- und Risikoprüfung bestanden; externe fachliche Prüfung bleibt vor Veröffentlichung erforderlich.",
     "Transportbox und Spielroutine für Wohnungskatzen sind wegen nahezu identischer bestehender Suchabsichten blockiert; der Händlerfeed-Kandidat bleibt wegen fehlender belegter Eignungsmerkmale blockiert.",
-    "Vor Artikelarbeit müssen die drei ausgewählten Themen jeweils ein enges Quellenpaket erhalten; Quellen- und Risikoprüfung bleiben deshalb pending."
+    "Vor Artikelarbeit sind die drei ausgewählten Quellenpakete abgeschlossen; die Artikel selbst sind noch nicht geschrieben oder veröffentlicht."
   ]
 }
