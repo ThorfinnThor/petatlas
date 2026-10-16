@@ -11,6 +11,7 @@ primaryIntent: "Alleinfuttermittel und Ergänzungsfuttermittel anhand der Packun
 animal: "both"
 topicCluster: "Ernährung"
 sourceIds:
+  - "eu-feed-marketing-regulation-767-2009"
   - "nutrition-uk-pet-food-supplements"
   - "nutrition-wsava-guidelines"
 dataFiles:
@@ -33,9 +34,9 @@ editorialLinks:
 
 Auf einer Futterpackung stehen viele auffällige Begriffe: Geschmack, Zutaten, besondere Inhaltsstoffe oder ein versprochener Verwendungszweck. Für die grundlegende Einordnung ist zuerst die sachliche Produktbezeichnung wichtig. Sie zeigt, ob der Hersteller das Produkt als Alleinfuttermittel oder als Ergänzungsfuttermittel deklariert und für welche Tierart es gedacht ist.
 
-Ein Alleinfuttermittel ist für die vollständige tägliche Versorgung innerhalb des angegebenen Einsatzbereichs konzipiert. Dieser Bereich kann etwa Tierart und Lebensphase begrenzen. Die Bezeichnung bedeutet deshalb nicht automatisch „für jedes Tier in jeder Situation geeignet“. Ein Produkt für ausgewachsene Hunde ist nicht allein aufgrund des Wortes Alleinfuttermittel die passende vollständige Nahrung für eine wachsende Katze.
+Die Verordnung (EG) Nr. 767/2009 definiert Alleinfuttermittel als Mischfuttermittel, das wegen seiner Zusammensetzung für eine tägliche Ration ausreicht. Der auf der Packung angegebene Einsatzbereich kann etwa Tierart und Lebensphase begrenzen. Die Bezeichnung bedeutet deshalb nicht automatisch „für jedes Tier in jeder Situation geeignet“. Ein Produkt für ausgewachsene Hunde ist nicht allein aufgrund des Wortes Alleinfuttermittel die passende Nahrung für eine wachsende Katze.
 
-Ein Ergänzungsfuttermittel ist dagegen zur Ergänzung der übrigen Fütterung vorgesehen. Es ersetzt nicht stillschweigend eine vollständige Tagesration. Dazu können sehr unterschiedliche Produkte zählen, etwa Pulver, Öle, Pasten oder Snacks. Der Sammelbegriff sagt noch nicht, welchen Nutzen ein bestimmtes Produkt für ein bestimmtes Tier hat.
+Ergänzungsfuttermittel definiert dieselbe EU-Verordnung als Mischfuttermittel mit einem hohen Gehalt an bestimmten Stoffen, das nur zusammen mit anderen Futtermitteln für eine tägliche Ration ausreicht. Es ersetzt daher nicht allein eine vollständige Tagesration. Dazu können sehr unterschiedliche Produkte zählen, etwa Pulver, Öle, Pasten oder Snacks. Der Sammelbegriff sagt noch nicht, welchen Nutzen ein bestimmtes Produkt für ein bestimmtes Tier hat.
 
 ## Die fünf Angaben, die zusammengehören
 
@@ -53,7 +54,7 @@ Die [Futterübersicht](/de-de/futter/) macht ausgewählte Herstellerdeklaratione
 
 ## Was „Alleinfuttermittel“ praktisch bedeutet
 
-Für ein als Alleinfuttermittel gekennzeichnetes Produkt sollte die Fütterungsanleitung die tägliche Verwendung im deklarierten Einsatzbereich beschreiben. Prüfe dabei die Bezugsgröße: Manche Angaben richten sich nach dem Körpergewicht, andere unterscheiden Aktivität oder Lebensphase. Die genannte Menge ist häufig ein Ausgangspunkt, weil Energiebedarf, Körperzustand und Aktivität individuell variieren können.
+Für ein als Alleinfuttermittel gekennzeichnetes Produkt sollte die Fütterungsanleitung die Verwendung im deklarierten Einsatzbereich beschreiben. Prüfe dabei die Bezugsgröße: Manche Angaben richten sich nach dem Körpergewicht, andere unterscheiden Aktivität oder Lebensphase. Die genannte Menge muss zusammen mit den Angaben für das konkrete Tier gelesen werden; Körperzustand, Aktivität und gesundheitliche Situation können eine individuelle Beurteilung erfordern.
 
 Die im Projekt gespeicherten realen Futterdeklarationen tragen intern die Kategorie `complete`. Diese technische Zuordnung übernimmt die dokumentierte Produktart und ermöglicht den Vergleich ausgewählter Nährstoffangaben. Sie ist kein eigenes Gütesiegel von Dein Haustierportal und keine Laborprüfung des Produkts.
 

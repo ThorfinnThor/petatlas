@@ -79,6 +79,19 @@
       "evidence": "src/features/travel/national.ts"
     },
     {
+      "id": "eu-feed-marketing-regulation-767-2009",
+      "category": "redaktionelle Fachquelle",
+      "title": "Verordnung (EG) Nr. 767/2009 über das Inverkehrbringen und die Verwendung von Futtermitteln",
+      "publisher": "Europäische Union",
+      "url": "https://eur-lex.europa.eu/eli/reg/2009/767/oj/deu",
+      "usage": "Amtliche Begriffsbestimmungen und Kennzeichnungsanforderungen für Allein- und Ergänzungsfuttermittel",
+      "version": "Geltender Rechtsakt; konsolidierte Fassung vom 26.12.2018, geprüft am 16.10.2026",
+      "checkedAt": "2026-10-16",
+      "rightsBasis": "Amtliche Rechtsquelle; verlinkt und in eigenen Worten ausgewertet",
+      "allowedOutputs": "Quellenlink, Fundstellen und eigene Zusammenfassung; keine fremden Bilder",
+      "evidence": "src/content/ratgeber/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden.md"
+    },
+    {
       "id": "nutrition-uk-pet-food-supplements",
       "category": "redaktionelle Fachquelle",
       "title": "Pet supplements: are they necessary?",

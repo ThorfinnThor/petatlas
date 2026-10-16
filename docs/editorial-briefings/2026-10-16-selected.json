@@ -93,13 +93,23 @@
       "question": "Woran lassen sich Alleinfuttermittel und Ergänzungsfuttermittel auf der Packung unterscheiden?",
       "format": "label-reading-guide",
       "risk": "high",
-      "sourceIds": ["nutrition-uk-pet-food-supplements", "nutrition-wsava-guidelines"],
+      "sourceIds": [
+        "eu-feed-marketing-regulation-767-2009",
+        "nutrition-uk-pet-food-supplements",
+        "nutrition-wsava-guidelines"
+      ],
       "dataFiles": [
         "content-data/food/real-products.json",
         "content-data/products/supplements.json"
       ],
-      "dataStand": "Produktdeklarationen zuletzt bearbeitet bzw. geprüft am 10.09.2026 und 14.09.2026; Fachquellen geprüft am 16.10.2026",
+      "dataStand": "EU-Verordnung 767/2009 in der konsolidierten Fassung vom 26.12.2018, geprüft am 16.10.2026; Produktdeklarationen zuletzt bearbeitet bzw. geprüft am 10.09.2026 und 14.09.2026; ergänzende Fachquellen geprüft am 16.10.2026",
       "facts": [
+        {
+          "claim": "Die EU-Verordnung unterscheidet Alleinfuttermittel und Ergänzungsfuttermittel anhand ihrer Eignung für die tägliche Ration.",
+          "support": "eu-feed-marketing-regulation-767-2009",
+          "allowedFormulation": "Alleinfuttermittel reichen wegen ihrer Zusammensetzung für eine tägliche Ration aus; Ergänzungsfuttermittel nur zusammen mit anderen Futtermitteln.",
+          "limits": "Die rechtliche Produktart ist keine individuelle Eignungs-, Qualitäts- oder Therapieaussage."
+        },
         {
           "claim": "Die Produktdaten unterscheiden Datensätze mit kind=complete von Datensätzen, die als Ergänzungsfuttermittel kategorisiert sind.",
           "support": "content-data/food/real-products.json; content-data/products/supplements.json",
@@ -125,6 +135,7 @@
   "notes": [
     "Die Briefings trennen belegte Tatsachen, zulässige Formulierungen und redaktionelle Grenzen.",
     "Alle drei Themen benötigen vor Veröffentlichung eine externe fachliche Prüfung; die Briefings veröffentlichen noch keine neuen Artikel.",
-    "Preise und Produktdeklarationen dürfen im Artikel nur als Datenstand bzw. Projektszenario erscheinen, nicht als zeitlose Zusage."
+    "Preise und Produktdeklarationen dürfen im Artikel nur als Datenstand bzw. Projektszenario erscheinen, nicht als zeitlose Zusage.",
+    "Die interne Risikoprüfung vom 16.10.2026 ist in docs/reviews/editorial-2026-10-16-risk-review.md dokumentiert; sie ersetzt keine externe Fachfreigabe."
   ]
 }

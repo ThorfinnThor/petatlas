@@ -84,7 +84,11 @@
       "slug": "alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden",
       "question": "Woran lassen sich Alleinfuttermittel und Ergänzungsfuttermittel auf der Packung unterscheiden?",
       "topicCluster": "Ernährung",
-      "sourceIds": ["nutrition-uk-pet-food-supplements", "nutrition-wsava-guidelines"],
+      "sourceIds": [
+        "eu-feed-marketing-regulation-767-2009",
+        "nutrition-uk-pet-food-supplements",
+        "nutrition-wsava-guidelines"
+      ],
       "dataFiles": [
         "content-data/food/real-products.json",
         "content-data/products/supplements.json"
@@ -132,6 +136,7 @@
     "Quellenbriefings für die drei ausgewählten Themen: docs/editorial-briefings/2026-10-16-selected.json. Quellen- und Risikoprüfung bestanden; externe fachliche Prüfung bleibt vor Veröffentlichung erforderlich.",
     "Die drei Artikelentwürfe wurden im Status review und mit indexable=false angelegt. Erst eine dokumentierte Fachfreigabe darf Status und Indexierung ändern.",
     "Transportbox und Spielroutine für Wohnungskatzen sind wegen nahezu identischer bestehender Suchabsichten blockiert; der Händlerfeed-Kandidat bleibt wegen fehlender belegter Eignungsmerkmale blockiert.",
-    "Die Quellenpakete und Artikelentwürfe sind abgeschlossen; die drei Artikel sind noch nicht fachlich freigegeben oder veröffentlicht."
+    "Die Quellenpakete und Artikelentwürfe sind abgeschlossen; die drei Artikel sind noch nicht fachlich freigegeben oder veröffentlicht.",
+    "Die interne Risikoprüfung vom 16.10.2026 ist in docs/reviews/editorial-2026-10-16-risk-review.md dokumentiert; sie ersetzt keine externe Fachfreigabe."
   ]
 }

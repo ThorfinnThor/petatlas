@@ -1,7 +1,7 @@
 ---
 title: "Allgemeine Untersuchung beim Hund: Was kann auf der Rechnung stehen?"
 cardTitle: "Allgemeine Untersuchung beim Hund richtig einordnen."
-description: "GOT-Position 16, Faktor, Umsatzsteuer und mögliche weitere Rechnungsbestandteile bei einer allgemeinen Untersuchung des Hundes nachvollziehbar einordnen."
+description: "GOT-Position 16, Faktor und mögliche weitere Rechnungsbestandteile bei einer allgemeinen Untersuchung des Hundes nachvollziehbar einordnen."
 intro: "Die GOT nennt für die allgemeine Untersuchung mit Beratung bei Hund, Katze und Frettchen eine eigene Gebührenposition. Diese Position ist ein sinnvoller Ausgangspunkt für eine Beispielrechnung, aber kein Pauschalpreis für den gesamten Praxisbesuch: Befund, weitere Leistungen, Material und Medikamente können den tatsächlichen Umfang verändern."
 slug: "allgemeine-untersuchung-hund-rechnung"
 publishedAt: "2026-10-16"
@@ -38,22 +38,20 @@ Die Leistungsbezeichnung ist bewusst weiter gefasst als ein bestimmtes Organ ode
 
 Das im Projekt hinterlegte Beispielszenario wählt Position 16 einmal und rechnet mit Faktor 1,0. Es dient dazu, den Rechenweg im [Tierarztkostenrechner](/de-de/tierarztkosten/) sichtbar zu machen. Sein Status ist fachlich noch nicht freigegeben; es ist daher weder ein Behandlungsvorschlag noch eine Aussage darüber, was eine Praxis bei deinem Hund berechnen wird.
 
-## Was ergibt das enge Beispielszenario?
+## Was zeigt das enge Beispielszenario?
 
-Für das Szenario gelten genau drei Eingaben: Position 16, Menge 1 und Faktor 1,0. Der Nettobetrag dieser Position beträgt damit 23,62 Euro. Da die Gebührensätze im Verzeichnis keine Umsatzsteuer enthalten, ergibt sich bei einer angenommenen Umsatzsteuer von 19 Prozent für diese isolierte Position ein Bruttobetrag von 28,11 Euro, kaufmännisch auf Cent gerundet.
+Für das Szenario gelten genau drei Eingaben: Position 16, Menge 1 und Faktor 1,0. Der Nettobetrag dieser Position beträgt damit 23,62 Euro. Weiter reicht das Beispiel bewusst nicht. Die GOT legt in § 1 fest, dass die Beträge im Gebührenverzeichnis keine Umsatzsteuer enthalten. Welcher Brutto-Endbetrag auf einer konkreten Rechnung steht, hängt außerdem von den tatsächlich berechneten Positionen und weiteren Rechnungsbestandteilen ab.
 
-Der Betrag von 28,11 Euro ist **kein allgemeiner Preis für eine Untersuchung beim Hund**. Er entsteht ausschließlich aus dem engen Rechenbeispiel. Schon ein anderer Faktor verändert die Position. Bei Faktor 2,0 wären es 47,24 Euro netto, bei Faktor 3,0 wären es 70,86 Euro netto. Hinzukommende Leistungen oder Produkte sind dabei weiterhin nicht enthalten.
+Die 23,62 Euro sind **kein allgemeiner Preis für einen Praxisbesuch mit einem Hund**. Sie bilden ausschließlich den einfachen Nettosatz dieser einen Position ab. Schon ein anderer Faktor verändert die Position. Bei Faktor 2,0 wären es 47,24 Euro netto, bei Faktor 3,0 wären es 70,86 Euro netto. Hinzukommende Leistungen oder Produkte sind dabei weiterhin nicht enthalten.
 
 | Bestandteil des Szenarios | Ansatz |
 | --- | ---: |
 | GOT-Position 16 | 23,62 € netto |
 | Menge | 1 |
 | Faktor | 1,0 |
-| Zwischensumme | 23,62 € netto |
-| Beispielhafte Umsatzsteuer 19 % | 4,49 € |
-| Rechenergebnis des engen Beispiels | 28,11 € brutto |
+| Rechenergebnis des engen Beispiels | 23,62 € netto |
 
-Die Steuerbehandlung von Auslagen kann abweichen. Die Tabelle bildet keine Praxisrechnung nach, sondern macht die Annahmen des Projekts offen sichtbar.
+Umsatzsteuer und mögliche weitere Bestandteile sind in diesem Rechenergebnis nicht enthalten. Die Tabelle bildet keine Praxisrechnung nach, sondern macht nur die Annahmen des noch ungeprüften Projektszenarios offen sichtbar.
 
 ## Welche Bestandteile fehlen in diesem Beispiel ausdrücklich?
 
