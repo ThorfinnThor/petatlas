@@ -10,7 +10,6 @@ import Button from '../ui/Button.astro';
     Box soll im Alltag berechenbar werden. Dieses Training arbeitet deshalb mit klaren
     Fortschrittskriterien: Erst wenn ein Schritt ruhig klappt, folgt der nächste.
   </p>
-  <p class="article-meta">Dein Haustierportal · Redaktion · aktualisiert am 14.09.2026</p>
 </header>
 
 <aside class="quick-answer" aria-labelledby="morgen">
@@ -177,34 +176,6 @@ import Button from '../ui/Button.astro';
   </div>
 </section>
 
-<section class="sources" aria-labelledby="quellen-box">
-  <h2 id="quellen-box">Quellen und Einordnung</h2>
-  <p>
-    Die Schrittfolge verbindet praktische Halterhinweise mit den veterinärmedizinischen Leitlinien
-    zur katzenfreundlichen Vorbereitung. Sie ersetzt keine individuelle Empfehlung der behandelnden
-    Praxis.
-  </p>
-  <ul>
-    <li>
-      <a
-        href="https://www.cats.org.uk/help-and-advice/getting-a-cat/how-to-choose-and-use-a-cat-carrier"
-        rel="noopener">Cats Protection: Choosing and Using a Cat Carrier ↗</a
-      >
-    </li>
-    <li>
-      <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10845437/" rel="noopener"
-        >AAFP/ISFM: Cat Friendly Veterinary Interaction Guidelines ↗</a
-      >
-    </li>
-    <li>
-      <a
-        href="https://www.cats.org.uk/help-and-advice/home-and-environment/travelling-with-your-cat"
-        rel="noopener">Cats Protection: Travelling With Your Cat ↗</a
-      >
-    </li>
-  </ul>
-</section>
-
 <script>
   document.querySelector('#transport-checkliste-drucken')?.addEventListener('click', () => {
     window.print();
@@ -221,10 +192,6 @@ import Button from '../ui/Button.astro';
   .lead {
     font-size: var(--text-lead);
     max-inline-size: 58ch;
-  }
-  .article-meta {
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
   }
   .quick-answer {
     display: grid;
@@ -320,10 +287,6 @@ import Button from '../ui/Button.astro';
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-4);
-  }
-  .sources {
-    border-block-start: 1px solid var(--color-border);
-    margin-block-start: var(--space-10);
   }
   @media (min-width: 760px) {
     .quick-answer {

@@ -25,6 +25,9 @@ const SEITEN = [
   '/de-de/barrierefreiheit/',
   '/de-de/impressum/',
   '/de-de/datenschutz/',
+  '/de-de/ratgeber/tierarztrechnung-zusammensetzung/',
+  '/de-de/ratgeber/eu-heimtierausweis-pruefen/',
+  '/de-de/ratgeber/hundespielzeug-starke-kauer/',
 ];
 
 for (const pfad of SEITEN) {

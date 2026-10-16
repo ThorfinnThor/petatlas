@@ -14,6 +14,7 @@ import fees from '../../../data-snapshots/got/got-2022.json';
 import { publicPlaceCount } from '../../features/map/directory-controls.ts';
 import { PURCHASE_GUIDES } from '../../features/commerce/purchase-guides.ts';
 import type { Place } from '../../domain/schemas/places.ts';
+import { getCollection } from 'astro:content';
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const path = (key: RouteKey) => routePath(market, key);
 const has = (key: RouteKey) => routeExists(market, key);
@@ -25,20 +26,20 @@ const tools: { key: RouteKey; name: string; help: string; icon: string }[] = [
   { key: 'toys', name: 'Spielzeug', help: 'Nach Eigenschaften finden', icon: 'toys' },
   { key: 'care', name: 'Gesundheit & Pflege', help: 'Praktisches für den Alltag', icon: 'care' },
 ];
-const guides = [
-  {
-    slug: 'katzen-beschaeftigen',
-    title: 'Mehr Abwechslung für deine Wohnungskatze.',
-    category: 'Katzen verstehen',
-    image: 'play-cat-home',
-  },
-  {
-    slug: 'katze-transportbox',
-    title: 'Transportbox trainieren – Schritt für Schritt.',
-    category: 'Mit Katze zur Praxis',
-    image: 'hero-dog-cat-home',
-  },
-];
+const guides = (await getCollection('ratgeber'))
+  .filter((entry) => entry.data.status === 'published' && entry.data.indexable && entry.data.image)
+  .sort(
+    (a, b) =>
+      b.data.publishedAt.localeCompare(a.data.publishedAt) ||
+      a.data.title.localeCompare(b.data.title, 'de'),
+  )
+  .slice(0, 5)
+  .map((entry) => ({
+    slug: entry.data.slug,
+    title: entry.data.cardTitle ?? entry.data.title,
+    category: entry.data.topicCluster,
+    image: entry.data.image!,
+  }));
 const picks = ['kong-classic', 'catit-senses-play-circuit']
   .map((id) => {
     const p = products.products.find((product) => product.id === id)!;

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-10-15-pilot",
+  "createdAt": "2026-10-15T09:00:00.000Z",
+  "stage": "review",
+  "candidates": [
+    {
+      "slug": "tierarztrechnung-zusammensetzung",
+      "question": "Wie setzt sich eine Tierarztrechnung nach der GOT zusammen?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "high",
+      "decision": "selected",
+      "reason": "Amtliche Daten und Fachquelle erklären die Grenze zwischen Gebührenposition und Gesamtrechnung."
+    },
+    {
+      "slug": "eu-heimtierausweis-pruefen",
+      "question": "Welche Angaben im EU-Heimtierausweis sollten vor einer Reise geprüft werden?",
+      "topicCluster": "Reise",
+      "sourceIds": ["eu-travel-regulation-2026-131", "eu-pet-travel-guidance"],
+      "dataFiles": [
+        "content-data/travel/rules/eu-intra-2026.json",
+        "content-data/travel/scope.json"
+      ],
+      "risk": "high",
+      "decision": "selected",
+      "reason": "Der Artikel ordnet den bereits freigegebenen EU-Reiseumfang in eine überprüfbare Reihenfolge ein."
+    },
+    {
+      "slug": "hundespielzeug-starke-kauer",
+      "question": "Wie lässt sich Hundespielzeug für starke Kauer ohne Haltbarkeitsversprechen auswählen?",
+      "topicCluster": "Spielzeug",
+      "sourceIds": [
+        "manufacturer-kong-kong-classic",
+        "manufacturer-west-paw-products-hurley-dog-bone"
+      ],
+      "dataFiles": ["content-data/products/editorial.json", "content-data/taxonomy/toys.json"],
+      "risk": "medium",
+      "decision": "selected",
+      "reason": "Belegte Produktmerkmale werden als Auswahlkriterien genutzt, ohne Rangliste oder Sicherheitsgarantie."
+    }
+  ],
+  "checks": {
+    "sources": "passed",
+    "editorial": "passed",
+    "technical": "passed",
+    "indexBudget": "passed"
+  },
+  "publishedSlugs": [],
+  "notes": [
+    "Pilotlauf für den neuen Collection-basierten Ratgebertyp.",
+    "Produktions-Build, SEO, Links, responsive Browserprüfung und semantische Accessibility-Prüfung sind bestanden.",
+    "Die lokale Playwright-App-Suite konnte in der Codex-Sandbox keinen Chromium-Prozess starten; die betroffenen neuen Artikelprüfungen wurden im integrierten Browser auf 320, 768, 1440 und 1920 Pixeln ausgeführt."
+  ]
+}

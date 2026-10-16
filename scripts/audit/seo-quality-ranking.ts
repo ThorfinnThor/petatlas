@@ -75,7 +75,7 @@ function bewerte(pfad: string): Bewertung {
       begruendung: 'geprüfter Länderumfang mit Primärquellen',
     };
   }
-  if (/^\/de-de\/ratgeber\/(katzen-beschaeftigen|katze-transportbox)\/$/.test(pfad)) {
+  if (/^\/de-de\/ratgeber\/[^/]+\/$/.test(pfad)) {
     return { typ: 'Ratgeber', score: 910, begruendung: 'eigenständiger ausführlicher Ratgeber' };
   }
   if (/^\/de-de\/produkte\/[^/]+\/$/.test(pfad)) {

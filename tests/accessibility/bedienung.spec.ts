@@ -12,6 +12,7 @@ const SEITEN = [
   '/de-de/tierarztkosten/',
   '/de-de/reisecheck/',
   '/de-de/tierarzt-karte/',
+  '/de-de/ratgeber/eu-heimtierausweis-pruefen/',
 ];
 
 test.describe('Sprungmarke', () => {

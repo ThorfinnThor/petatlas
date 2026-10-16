@@ -39,9 +39,21 @@ interface Props {
    * der Lesebreite — Designvertrag Abschnitt 6.2 und 6.3.
    */
   weit?: boolean;
+  /** Valide JSON-LD-Blöcke, die der jeweilige Seitentyp fachlich verantwortet. */
+  structuredData?: readonly Record<string, unknown>[];
+  ogType?: 'website' | 'article';
 }
 
-const { title, description, route, canonicalPfad, neverIndex = false, weit = false } = Astro.props;
+const {
+  title,
+  description,
+  route,
+  canonicalPfad,
+  neverIndex = false,
+  weit = false,
+  structuredData = [],
+  ogType = 'website',
+} = Astro.props;
 
 // Jede öffentliche Seite braucht eine eigenständige Suchbeschreibung. Viele
 // dynamische GOT-, Orts- und Futterseiten liefern keinen redaktionellen
@@ -77,7 +89,7 @@ const canonical = canonicalPfad
     <meta name="description" content={metaDescription} />
     <meta name="robots" content={robots} />
     {canonical && <link rel="canonical" href={canonical} />}
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.brandName} />
     <meta property="og:title" content={`${title} — ${site.brandName}`} />
     <meta property="og:description" content={metaDescription} />
@@ -85,6 +97,15 @@ const canonical = canonicalPfad
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={`${title} — ${site.brandName}`} />
     <meta name="twitter:description" content={metaDescription} />
+    {
+      structuredData.map((data) => (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(data).replaceAll('<', '\\u003c')}
+        />
+      ))
+    }
   </head>
   <body data-route={route} data-pagefind-ignore={neverIndex ? 'all' : undefined}>
     {
