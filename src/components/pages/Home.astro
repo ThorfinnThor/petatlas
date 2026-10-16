@@ -13,6 +13,7 @@ import places from '../../../data-snapshots/places/places-de.json';
 import fees from '../../../data-snapshots/got/got-2022.json';
 import { publicPlaceCount } from '../../features/map/directory-controls.ts';
 import { PURCHASE_GUIDES } from '../../features/commerce/purchase-guides.ts';
+import { articlePath } from '../../features/editorial/paths.ts';
 import type { Place } from '../../domain/schemas/places.ts';
 import { getCollection } from 'astro:content';
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -39,6 +40,7 @@ const guides = (await getCollection('ratgeber'))
     title: entry.data.cardTitle ?? entry.data.title,
     category: entry.data.topicCluster,
     image: entry.data.image!,
+    href: articlePath(entry.data),
   }));
 const picks = ['kong-classic', 'catit-senses-play-circuit']
   .map((id) => {
@@ -216,7 +218,7 @@ const picks = ['kong-classic', 'catit-senses-play-circuit']
     <div class="editorial-feature" id="ratgeber">
       <p class="eyebrow">Gut zu wissen</p><h3>Kleine Lektüre.<br />Großer Unterschied.</h3>{
         guides.map((g) => (
-          <a class="editorial-card" href={`/de-de/ratgeber/${g.slug}/`}>
+          <a class="editorial-card" href={g.href}>
             <>
               <BrandImage name={g.image} sizes="96px" />
               <div>

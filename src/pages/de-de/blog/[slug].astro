@@ -1,0 +1,97 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+import { devFeatureOverrides, resolveBuildConfig } from '../../../../config/build.ts';
+import { createSiteConfig } from '../../../../config/site.ts';
+import ArticleRenderer from '../../../components/guides/ArticleRenderer.astro';
+import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
+import { editorialSources } from '../../../domain/editorial-sources.ts';
+import { defaultMarket, withEnabledFeatures } from '../../../domain/market.ts';
+import { ARTICLE_TOOL_LABELS } from '../../../features/editorial/navigation.ts';
+import { articlePath } from '../../../features/editorial/paths.ts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { routeExists, routePath } from '../../../lib/routes.ts';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('ratgeber');
+  return articles
+    .filter((article) => article.data.section === 'blog')
+    .map((article) => ({ params: { slug: article.data.slug }, props: { article } }));
+}
+
+interface Props {
+  article: CollectionEntry<'ratgeber'>;
+}
+
+const { article } = Astro.props;
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const build = resolveBuildConfig();
+const allArticles = await getCollection('ratgeber');
+const { Content, headings } = await render(article);
+const sourceById = new Map(editorialSources().map((source) => [source.id, source]));
+const sources = article.data.sourceIds.map((id) => sourceById.get(id)!);
+const relatedArticles = article.data.relatedArticles
+  .map((slug) => allArticles.find((entry) => entry.data.slug === slug))
+  .filter((entry): entry is CollectionEntry<'ratgeber'> => entry !== undefined)
+  .map((entry) => ({ href: articlePath(entry.data), title: entry.data.title }));
+const toolLinks = article.data.relatedTools
+  .filter((key) => routeExists(market, key))
+  .map((key) => ({ key, label: ARTICLE_TOOL_LABELS[key] ?? key, path: routePath(market, key) }));
+const path = articlePath(article.data);
+const canonical = new URL(path, build.baseUrl).toString();
+const site = createSiteConfig(build.mode, process.env);
+const shouldIndex = article.data.status === 'published' && article.data.indexable;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.data.title,
+    description: article.data.description,
+    datePublished: article.data.publishedAt,
+    dateModified: article.data.updatedAt,
+    mainEntityOfPage: canonical,
+    isAccessibleForFree: true,
+    author: { '@type': 'Organization', name: site.brandName },
+    publisher: { '@type': 'Organization', name: site.brandName, url: build.baseUrl },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Start',
+        item: new URL('/de-de/', build.baseUrl).toString(),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: new URL('/de-de/blog/', build.baseUrl).toString(),
+      },
+      { '@type': 'ListItem', position: 3, name: article.data.title, item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={article.data.title}
+  description={article.data.description}
+  canonicalPfad={path}
+  neverIndex={!shouldIndex}
+  structuredData={structuredData}
+  ogType="article"
+>
+  <Breadcrumbs market={market} stufen={[{ label: article.data.title }]} />
+  <a class="back-link" href="/de-de/blog/">← Alle Blogartikel</a>
+  <ArticleRenderer {article} {Content} {headings} {sources} {relatedArticles} {toolLinks} />
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    margin-block-end: var(--space-2);
+  }
+</style>

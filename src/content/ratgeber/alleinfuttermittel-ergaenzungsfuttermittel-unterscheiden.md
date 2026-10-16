@@ -6,10 +6,11 @@ intro: "Ob ein Produkt als Alleinfuttermittel oder Ergänzungsfuttermittel geken
 slug: "alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden"
 publishedAt: "2026-10-16"
 updatedAt: "2026-10-16"
-status: "review"
+status: "published"
 primaryIntent: "Alleinfuttermittel und Ergänzungsfuttermittel anhand der Packungsangaben unterscheiden"
 animal: "both"
 topicCluster: "Ernährung"
+section: "blog"
 sourceIds:
   - "eu-feed-marketing-regulation-767-2009"
   - "nutrition-uk-pet-food-supplements"
@@ -18,7 +19,7 @@ dataFiles:
   - "content-data/food/real-products.json"
   - "content-data/products/supplements.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "food"
   - "supplements"

@@ -38,6 +38,7 @@ function article(overrides: Partial<ArticleData> = {}): ArticleData {
     primaryIntent: 'Eine konkrete und nachvollziehbare Frage vollständig beantworten',
     animal: 'both',
     topicCluster: 'Beispiel',
+    section: 'guide',
     sourceIds: ['quelle-eins', 'quelle-zwei'],
     dataFiles: ['content-data/example.json'],
     reviewLevel: 'editorial',

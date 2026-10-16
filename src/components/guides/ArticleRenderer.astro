@@ -10,7 +10,7 @@ import CatCarrierGuide from './CatCarrierGuide.astro';
 import CatEnrichmentGuide from './CatEnrichmentGuide.astro';
 
 interface RelatedArticle {
-  readonly slug: string;
+  readonly href: string;
   readonly title: string;
 }
 
@@ -31,7 +31,7 @@ interface Props {
 
 const { article, Content, headings, sources, relatedArticles, toolLinks } = Astro.props;
 const data = article.data;
-const reviewApproved = data.status === 'published' && data.reviewLevel === 'human-specialist';
+const publicationApproved = data.status === 'published';
 const mainHeadings = headings.filter((heading) => heading.depth === 2);
 const formatDate = (date: string): string =>
   new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
@@ -41,9 +41,11 @@ const formatDate = (date: string): string =>
 
 <article
   class:list={['editorial-article', data.legacyRenderer && 'editorial-article--legacy']}
-  data-review-status={reviewApproved ? 'approved' : 'pending'}
+  data-review-status={publicationApproved ? 'approved' : 'pending'}
   data-last-verified-at={data.updatedAt}
-  data-review-responsibility={reviewApproved ? 'SeitenHafen361' : 'Fachliche Prüfung noch offen'}
+  data-review-responsibility={publicationApproved
+    ? 'SeitenHafen361'
+    : 'Redaktionelle Prüfung offen'}
 >
   <p class="article-meta">
     {data.status === 'published' ? 'Veröffentlicht am' : 'Entwurf vom'}{' '}
@@ -69,7 +71,7 @@ const formatDate = (date: string): string =>
         </header>
 
         {mainHeadings.length > 1 && (
-          <nav class="article-toc" aria-label="Inhalt dieses Ratgebers">
+          <nav class="article-toc" aria-label="Inhalt dieses Artikels">
             <strong>Auf dieser Seite</strong>
             <ol>
               {mainHeadings.map((heading) => (
@@ -121,7 +123,7 @@ const formatDate = (date: string): string =>
             </a>
           ))}
           {relatedArticles.map((related) => (
-            <a href={`/de-de/ratgeber/${related.slug}/`}>
+            <a href={related.href}>
               <span>Ratgeber</span>
               <strong>{related.title}</strong>
             </a>

@@ -6,10 +6,11 @@ intro: "Die GOT nennt für die allgemeine Untersuchung mit Beratung bei Hund, Ka
 slug: "allgemeine-untersuchung-hund-rechnung"
 publishedAt: "2026-10-16"
 updatedAt: "2026-10-16"
-status: "review"
+status: "published"
 primaryIntent: "Eine mögliche Rechnung für die allgemeine Untersuchung eines Hundes ohne falschen Pauschalpreis verstehen"
 animal: "dog"
 topicCluster: "Tierarztkosten"
+section: "blog"
 sourceIds:
   - "got-2022-official"
   - "btk-got-guidance"
@@ -17,7 +18,7 @@ dataFiles:
   - "data-snapshots/got/got-2022.json"
   - "content-data/cost-scenarios/allgemeine-untersuchung-hund.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
 relatedArticles:
@@ -36,7 +37,7 @@ In der Anlage zur Gebührenordnung für Tierärztinnen und Tierärzte steht unte
 
 Die Leistungsbezeichnung ist bewusst weiter gefasst als ein bestimmtes Organ oder ein einzelner Test. Sie beschreibt eine allgemeine Untersuchung mit Beratung. Welche konkreten Beobachtungen, Handgriffe und Gesprächsthemen im Termin medizinisch erforderlich sind, ergibt sich aus dem Tier und dem Anlass. Ein Onlineartikel kann diesen Inhalt nicht für einen individuellen Besuch festlegen.
 
-Das im Projekt hinterlegte Beispielszenario wählt Position 16 einmal und rechnet mit Faktor 1,0. Es dient dazu, den Rechenweg im [Tierarztkostenrechner](/de-de/tierarztkosten/) sichtbar zu machen. Sein Status ist fachlich noch nicht freigegeben; es ist daher weder ein Behandlungsvorschlag noch eine Aussage darüber, was eine Praxis bei deinem Hund berechnen wird.
+Das im Projekt hinterlegte Beispielszenario wählt Position 16 einmal und rechnet mit Faktor 1,0. Es dient dazu, den Rechenweg im [Tierarztkostenrechner](/de-de/tierarztkosten/) sichtbar zu machen. Es ist weder ein Behandlungsvorschlag noch eine Aussage darüber, was eine Praxis bei deinem Hund berechnen wird.
 
 ## Was zeigt das enge Beispielszenario?
 
@@ -51,7 +52,7 @@ Die 23,62 Euro sind **kein allgemeiner Preis für einen Praxisbesuch mit einem H
 | Faktor | 1,0 |
 | Rechenergebnis des engen Beispiels | 23,62 € netto |
 
-Umsatzsteuer und mögliche weitere Bestandteile sind in diesem Rechenergebnis nicht enthalten. Die Tabelle bildet keine Praxisrechnung nach, sondern macht nur die Annahmen des noch ungeprüften Projektszenarios offen sichtbar.
+Umsatzsteuer und mögliche weitere Bestandteile sind in diesem Rechenergebnis nicht enthalten. Die Tabelle bildet keine Praxisrechnung nach, sondern macht nur die eng begrenzten Annahmen des Projektszenarios offen sichtbar.
 
 ## Welche Bestandteile fehlen in diesem Beispiel ausdrücklich?
 
@@ -67,7 +68,7 @@ Die GOT ist keine Festpreisliste. § 2 nennt im regulären Rahmen den einfachen 
 
 Für das Projektszenario wurde bewusst der einfache Satz gewählt, damit die Berechnung leicht nachvollziehbar bleibt. Daraus folgt nicht, dass Faktor 1,0 für jede allgemeine Untersuchung erwartet werden kann. Ebenso wenig belegt ein höherer Faktor allein, dass eine weitere Leistung erbracht wurde. Er verändert den Satz der ausgewählten Position.
 
-Wenn du die Logik hinter einem konkreten Faktor verstehen möchtest, hilft der Ratgeber zum [GOT-Faktor 1 bis 3](/de-de/ratgeber/got-faktor-eins-bis-drei/) erst nach seiner fachlichen Freigabe. Bis dahin zeigt die [allgemeine Rechnungserklärung](/de-de/ratgeber/tierarztrechnung-zusammensetzung/), wie Position, Faktor, Menge und Zusatzbestandteile zusammenhängen.
+Wenn du die Logik hinter einem konkreten Faktor verstehen möchtest, erklärt der Blogartikel zum [GOT-Faktor 1 bis 3](/de-de/blog/got-faktor-eins-bis-drei/) den Rechenweg. Die [allgemeine Rechnungserklärung](/de-de/ratgeber/tierarztrechnung-zusammensetzung/) zeigt ergänzend, wie Position, Faktor, Menge und Zusatzbestandteile zusammenhängen.
 
 ## So vergleichst du das Beispiel mit einer echten Rechnung
 

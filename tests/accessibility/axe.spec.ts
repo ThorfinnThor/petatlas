@@ -28,9 +28,10 @@ const SEITEN = [
   '/de-de/ratgeber/tierarztrechnung-zusammensetzung/',
   '/de-de/ratgeber/eu-heimtierausweis-pruefen/',
   '/de-de/ratgeber/hundespielzeug-starke-kauer/',
-  '/de-de/ratgeber/got-faktor-eins-bis-drei/',
-  '/de-de/ratgeber/allgemeine-untersuchung-hund-rechnung/',
-  '/de-de/ratgeber/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden/',
+  '/de-de/blog/',
+  '/de-de/blog/got-faktor-eins-bis-drei/',
+  '/de-de/blog/allgemeine-untersuchung-hund-rechnung/',
+  '/de-de/blog/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden/',
 ];
 
 for (const pfad of SEITEN) {

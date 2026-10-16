@@ -6,17 +6,18 @@ intro: "Der Faktor in einer Tierarztrechnung ist ein Multiplikator für eine ein
 slug: "got-faktor-eins-bis-drei"
 publishedAt: "2026-10-16"
 updatedAt: "2026-10-16"
-status: "review"
+status: "published"
 primaryIntent: "Den Faktor einer tierärztlichen GOT-Gebührenposition rechnerisch und sachlich einordnen"
 animal: "both"
 topicCluster: "Tierarztkosten"
+section: "blog"
 sourceIds:
   - "got-2022-official"
   - "btk-got-guidance"
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
 relatedArticles:

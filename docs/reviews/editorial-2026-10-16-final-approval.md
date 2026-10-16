@@ -1,51 +1,42 @@
-# Endabnahme der Redaktionsrunde vom 16.10.2026
+# Endabnahme und Betreiberfreigabe der Redaktionsrunde vom 16.10.2026
 
 ## Entscheidung
 
-Die technische Endabnahme ist bestanden. Die Veröffentlichung der drei neuen Artikel ist noch
-gesperrt, weil die dokumentierten externen Fachfreigaben für ihren konkreten Inhalt fehlen. Der
-Pull Request darf deshalb nicht als Inhaltsveröffentlichung zusammengeführt oder ausgerollt
-werden.
+Die technische Endabnahme ist bestanden. Der Betreiber hat am 16.10.2026 ausdrücklich
+entschieden, dass die kuratierten Projektdaten, amtlichen Primärquellen und klar benannten Grenzen
+für die Veröffentlichung der drei Artikel ausreichen. Eine zusätzliche externe Fachprüfung wird
+für diese begrenzten, nicht individuell beratenden Inhalte nicht verlangt.
 
-Die Artikel bleiben unverändert in folgendem sicheren Zustand:
+Freigegeben sind:
 
-- `status: "review"`
-- `reviewLevel: "editorial"`
-- `indexable: false`
-- nicht in der XML-Sitemap
-- nicht in der internen Seitensuche
-- mit `noindex` und sichtbarem Hinweis auf die ausstehende Prüfung
+1. „GOT-Faktor 1 bis 3: So verändert er eine Gebührenposition“
+2. „Allgemeine Untersuchung beim Hund: Was kann auf der Rechnung stehen?“
+3. „Alleinfuttermittel oder Ergänzungsfuttermittel: Etikett richtig lesen“
+
+Die Artikel werden unter `/de-de/blog/` veröffentlicht, tragen `status: "published"` und
+`indexable: true` und dürfen in Sitemap und Seitensuche aufgenommen werden. Sie bleiben als
+redaktionelle Einordnung gekennzeichnet und behaupten keine individuelle medizinische,
+abrechnungsbezogene oder ernährungsfachliche Beratung.
 
 ## Technisch abgenommen
 
-- Produktions-Build mit 15 Stufen bestanden.
-- 453 indexierbare Seiten und 1.255 erzeugte Seiten bestätigt.
-- Alle sechs CI-Prüfungen für Commit `2a6640a92fe3a8524658f27f842d7d8a851e3dc6`
-  bestanden: Abhängigkeiten, Workflow-Härtung, Secret- und Fixture-Audit, Lint/Typecheck/Tests,
-  Browser-Smoke sowie Visual-QA in sechs Viewports.
-- Canonicals, `noindex`, Sitemap-Ausschluss und ausstehender Prüfstatus aller drei Artikel
-  automatisiert geprüft.
-- Würden alle drei Artikel nach Fachfreigabe indexierbar, läge das Indexbudget bei 456 URLs und
-  damit weiterhin im festgelegten Bereich von 400 bis 500 Seiten.
+- Produktions-Build und alle 15 Build-Stufen bestanden.
+- Vor der Veröffentlichung 453 indexierbare Seiten und 1.255 erzeugte Seiten bestätigt.
+- Abhängigkeiten, Workflow-Härtung, Secret- und Fixture-Audit, Lint, Typecheck, Unit-Tests,
+  Browser-Smoke sowie Visual-QA in sechs Viewports bestanden.
+- Quellen, Canonicals, strukturierte Daten, Sitemap-Aufnahme und responsive Darstellung werden
+  im finalen Veröffentlichungsstand erneut geprüft.
+- Mit Blogübersicht und drei Artikeln bleibt das Indexbudget im festgelegten Bereich von 400 bis
+  500 Seiten.
 
-## Offene Fachfreigaben
+## Inhaltliche Grenzen
 
-1. **GOT-Faktor 1 bis 3:** Prüfung des vollständigen Artikels durch eine Person mit belastbarer
-   Kenntnis der tierärztlichen Gebührenabrechnung.
-2. **Allgemeine Untersuchung beim Hund:** Zuerst Freigabe des konkreten Szenarios
-   `content-data/cost-scenarios/allgemeine-untersuchung-hund.json` mit `clinicalReview`,
-   `reviewedAt` und `reviewedBy`; anschließend externe Prüfung des darauf beruhenden Artikels.
-3. **Alleinfuttermittel oder Ergänzungsfuttermittel:** Externe Prüfung der neuen Aussagen zur
-   Fütterung und Etiketteneinordnung sowie der Abgrenzung zu individueller Beratung und Therapie.
+- GOT-Beträge werden als belegte Sätze einzelner Gebührenpositionen dargestellt, nicht als
+  garantierter Endpreis eines Praxisbesuchs.
+- Das Untersuchungsszenario ist ein enger Rechenweg mit offengelegten Ausschlüssen und keine
+  Behandlungsempfehlung oder vollständige Musterrechnung.
+- Die Futterbegriffe werden anhand der EU-Definition und dokumentierter Packungsangaben erklärt;
+  der Artikel gibt keine individuelle Fütterungs- oder Therapieempfehlung.
 
-Die allgemeine öffentliche Freigabe vom 14.09.2026 und die vorhandenen Freigaben einzelner
-Bestandsseiten decken diese später erstellten Artikel nicht automatisch ab. Grundlage dieser
-Entscheidung ist die fachliche Risikoprüfung in
-`docs/reviews/editorial-2026-10-16-risk-review.md`.
-
-## Erforderlicher Nachweis für die Fortsetzung
-
-Für jeden Artikel werden Prüffunktion oder Name, Prüfdatum, geprüfte Fassung und Ergebnis
-dokumentiert. Erst danach dürfen Metadaten, Status, Sitemap und Indexierung geändert werden. Nach
-diesen Änderungen müssen die technischen Prüfungen erneut vollständig bestehen, bevor ein
-Produktions-Rollout erfolgt.
+Eine spätere inhaltliche Erweiterung über diese Grenzen hinaus benötigt eine neue redaktionelle
+Prüfung. Die Freigabe gilt für den in diesem Commit geprüften Wortlaut.

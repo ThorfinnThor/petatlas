@@ -1,5 +1,10 @@
 # Fachliche Risikoprüfung der Redaktionsentwürfe vom 16.10.2026
 
+> **Abschließende Betreiberentscheidung:** Die nachfolgende Prüfung dokumentiert den ursprünglichen
+> vorsichtigen Entwurfsstand. Der Betreiber hat die drei eng begrenzten, quellenbasierten Artikel
+> anschließend ausdrücklich ohne zusätzliche externe Fachprüfung zur Veröffentlichung freigegeben.
+> Maßgeblich ist `docs/reviews/editorial-2026-10-16-final-approval.md`.
+
 Diese Prüfung kontrolliert Quellenbindung, Reichweite der Aussagen und den vorhandenen Freigabestatus. Sie ist eine interne redaktionelle Risikoprüfung und **keine externe fachliche oder rechtliche Freigabe**. Alle drei Artikel bleiben deshalb im Status `review`, tragen `indexable: false` und dürfen nicht in die Sitemap oder Suchmaschinenindexierung gelangen.
 
 ## Geprüfte Grundlagen

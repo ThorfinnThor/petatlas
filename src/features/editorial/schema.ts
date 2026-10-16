@@ -27,6 +27,7 @@ export const ArticleSchema = z
     primaryIntent: z.string().min(20).max(180),
     animal: z.enum(ARTICLE_ANIMALS),
     topicCluster: z.string().min(3).max(60),
+    section: z.enum(['guide', 'blog']).default('guide'),
     sourceIds: z.array(slugSchema).min(1),
     dataFiles: z.array(z.string().min(3)).min(1),
     reviewLevel: z.enum(ARTICLE_REVIEW_LEVELS),

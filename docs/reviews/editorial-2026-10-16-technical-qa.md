@@ -1,5 +1,9 @@
 # Technische und sprachliche QA der Redaktionsentwürfe vom 16.10.2026
 
+> **Fortsetzung:** Nach dieser Entwurfsprüfung hat der Betreiber die drei quellenbasierten Artikel
+> ausdrücklich zur Veröffentlichung freigegeben. Die finale Entscheidung und die fortbestehenden
+> inhaltlichen Grenzen stehen in `docs/reviews/editorial-2026-10-16-final-approval.md`.
+
 Diese Prüfung ist der mechanische QA-Schritt nach der fachlichen Risikoprüfung. Sie kontrolliert
 keine medizinische, rechtliche oder ernährungsfachliche Freigabe und ändert keinen `reviewLevel`.
 Alle drei Artikel bleiben daher `status: review` und `indexable: false`.

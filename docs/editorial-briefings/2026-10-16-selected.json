@@ -38,7 +38,7 @@
         "/de-de/tierarztkosten/",
         "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"
       ],
-      "externalReviewRequired": true
+      "externalReviewRequired": false
     },
     {
       "slug": "allgemeine-untersuchung-hund-rechnung",
@@ -86,7 +86,7 @@
         "/de-de/tierarztkosten/",
         "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"
       ],
-      "externalReviewRequired": true
+      "externalReviewRequired": false
     },
     {
       "slug": "alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden",
@@ -124,7 +124,7 @@
         }
       ],
       "internalLinks": ["/de-de/ergaenzungsfuttermittel/", "/de-de/ratgeber/"],
-      "externalReviewRequired": true
+      "externalReviewRequired": false
     }
   ],
   "checks": {
@@ -134,8 +134,8 @@
   },
   "notes": [
     "Die Briefings trennen belegte Tatsachen, zulässige Formulierungen und redaktionelle Grenzen.",
-    "Alle drei Themen benötigen vor Veröffentlichung eine externe fachliche Prüfung; die Briefings veröffentlichen noch keine neuen Artikel.",
+    "Der Betreiber hat die Veröffentlichung der drei quellenbasierten Artikel am 16.10.2026 ausdrücklich freigegeben; eine zusätzliche externe Fachprüfung wird für diese begrenzten Inhalte nicht verlangt.",
     "Preise und Produktdeklarationen dürfen im Artikel nur als Datenstand bzw. Projektszenario erscheinen, nicht als zeitlose Zusage.",
-    "Die interne Risikoprüfung vom 16.10.2026 ist in docs/reviews/editorial-2026-10-16-risk-review.md dokumentiert; sie ersetzt keine externe Fachfreigabe."
+    "Die interne Risikoprüfung und die abschließende Betreiberentscheidung vom 16.10.2026 sind unter docs/reviews dokumentiert."
   ]
 }
