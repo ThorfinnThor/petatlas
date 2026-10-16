@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runId": "2026-10-15-pilot",
   "createdAt": "2026-10-15T09:00:00.000Z",
-  "stage": "review",
+  "stage": "published",
   "candidates": [
     {
       "slug": "tierarztrechnung-zusammensetzung",
@@ -47,10 +47,15 @@
     "technical": "passed",
     "indexBudget": "passed"
   },
-  "publishedSlugs": [],
+  "publishedSlugs": [
+    "tierarztrechnung-zusammensetzung",
+    "eu-heimtierausweis-pruefen",
+    "hundespielzeug-starke-kauer"
+  ],
   "notes": [
     "Pilotlauf für den neuen Collection-basierten Ratgebertyp.",
     "Produktions-Build, SEO, Links, responsive Browserprüfung und semantische Accessibility-Prüfung sind bestanden.",
-    "Die lokale Playwright-App-Suite konnte in der Codex-Sandbox keinen Chromium-Prozess starten; die betroffenen neuen Artikelprüfungen wurden im integrierten Browser auf 320, 768, 1440 und 1920 Pixeln ausgeführt."
+    "GitHub CI hat Browser-Smoke und die vollständige mobile Seitenmatrix bestanden.",
+    "Produktiv veröffentlicht und auf deinhaustierportal.de gegen Commit 6331dd91992c5a0d92d1bde77194606804bb2c1e geprüft."
   ]
 }
