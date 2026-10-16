@@ -11,8 +11,8 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "high",
-      "decision": "draft",
-      "reason": "Die amtliche GOT und die Bundestierärztekammer belegen den Gebührenrahmen; ein Artikel muss variable Gesamtkosten klar von einer Beispielposition trennen."
+      "decision": "selected",
+      "reason": "Ausgewählt: eigenständiger Suchzweck gegenüber der allgemeinen Rechnungsseite, belastbare Primärquellen und direkter Bezug zum Kostenrechner; variable Gesamtkosten bleiben klar abgegrenzt."
     },
     {
       "slug": "allgemeine-untersuchung-hund-rechnung",
@@ -24,8 +24,8 @@
         "content-data/cost-scenarios/allgemeine-untersuchung-hund.json"
       ],
       "risk": "high",
-      "decision": "draft",
-      "reason": "Das vorhandene Szenario kann die Rechenlogik erklären, darf aber keine vollständige oder für jeden Fall geltende Tierarztrechnung versprechen."
+      "decision": "selected",
+      "reason": "Ausgewählt: konkrete Nutzerfrage mit eigenem Rechenablauf und geprüftem Projektszenario; der Artikel darf keine vollständige oder für jeden Fall geltende Tierarztrechnung versprechen."
     },
     {
       "slug": "beratung-ohne-untersuchung-got",
@@ -67,8 +67,8 @@
       "sourceIds": ["cat-friendly-vet-guidelines-2022", "cats-protection-carrier"],
       "dataFiles": ["src/content/ratgeber/katze-transportbox.md"],
       "risk": "medium",
-      "decision": "draft",
-      "reason": "Die vorhandene Seite kann durch einen eigenständigen Ablauf mit Vorbereitung, Transport und Nachbereitung ergänzt werden, ohne die bestehende Seite zu duplizieren."
+      "decision": "blocked",
+      "reason": "Nicht als neue Seite ausgewählt: Der bestehende indexierbare Ratgeber zur Transportbox beantwortet bereits dieselbe Suchabsicht mit einem vollständigen Schritt-für-Schritt-Ablauf."
     },
     {
       "slug": "wohnungskatze-spielroutine",
@@ -77,21 +77,21 @@
       "sourceIds": ["cat-environment-guidelines-2024", "cats-protection-play"],
       "dataFiles": ["src/content/ratgeber/katzen-beschaeftigen.md"],
       "risk": "medium",
-      "decision": "draft",
-      "reason": "Die Quellen tragen eine praktische Routine und Umweltanreicherung; der Beitrag muss individuell unterschiedliche Bedürfnisse ausdrücklich offenlassen."
+      "decision": "blocked",
+      "reason": "Nicht als neue Seite ausgewählt: Der bestehende indexierbare Ratgeber enthält bereits einen Wochenplan und deckt die Suchabsicht einer Spielroutine für Wohnungskatzen ab."
     },
     {
       "slug": "alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden",
       "question": "Woran lassen sich Alleinfuttermittel und Ergänzungsfuttermittel auf der Packung unterscheiden?",
       "topicCluster": "Ernährung",
-      "sourceIds": ["nutrition-fediaf-guidelines", "nutrition-wsava-guidelines"],
+      "sourceIds": ["nutrition-uk-pet-food-supplements", "nutrition-wsava-guidelines"],
       "dataFiles": [
         "content-data/food/real-products.json",
         "content-data/products/supplements.json"
       ],
       "risk": "high",
-      "decision": "draft",
-      "reason": "Deklarationen und Fachleitlinien ermöglichen eine Etikettenhilfe; der Artikel darf daraus keine individuelle Fütterungs- oder Therapieempfehlung ableiten."
+      "decision": "selected",
+      "reason": "Ausgewählt: eigenständige Etikettenfrage für Hund und Katze, belegte Deklarationen und Fachleitlinien sowie klare Abgrenzung von der bestehenden Produktübersicht; keine individuelle Fütterungs- oder Therapieempfehlung."
     },
     {
       "slug": "hundespielzeug-beschaeftigungssituation",
@@ -110,7 +110,7 @@
       "slug": "fressnapf-produktmerkmale-richtig-lesen",
       "question": "Welche Produktmerkmale aus einem Händlerfeed lassen sich für eine Auswahlhilfe sinnvoll nutzen?",
       "topicCluster": "Produktauswahl",
-      "sourceIds": ["nutrition-fediaf-guidelines"],
+      "sourceIds": ["nutrition-uk-pet-food-supplements"],
       "dataFiles": ["content-data/products/fressnapf-feed.json"],
       "risk": "medium",
       "decision": "blocked",
@@ -119,7 +119,7 @@
   ],
   "checks": {
     "sources": "pending",
-    "editorial": "pending",
+    "editorial": "passed",
     "technical": "passed",
     "indexBudget": "passed"
   },
@@ -128,6 +128,8 @@
     "Inventur basiert ausschließlich auf versionierten Projektdateien; seit dem Pilotlauf wurden keine amtlichen GOT-, Orts- oder redaktionellen Produktdaten ersetzt.",
     "Datenstand: 1006 GOT-Positionen, 9381 Ortsdatensätze in 4 Kategorien und 42 freigegebene Städte.",
     "Fressnapf-Feed: 14 Datensätze, erzeugt am 12.10.2026. ZooRoyal-Feed: 0 kategorisierbare Datensätze; es wurden keine Produkte erfunden.",
-    "Vor Veröffentlichung müssen Sol die Quellenpakete, Suchintention, Kannibalisierung und fachlichen Risiken prüfen."
+    "Sol-Auswahl: GOT-Faktor, allgemeine Untersuchung beim Hund sowie Allein- und Ergänzungsfuttermittel gehen in die Quellenpakete; bei drei neuen Seiten läge das Indexbudget rechnerisch bei 456 URLs.",
+    "Transportbox und Spielroutine für Wohnungskatzen sind wegen nahezu identischer bestehender Suchabsichten blockiert; der Händlerfeed-Kandidat bleibt wegen fehlender belegter Eignungsmerkmale blockiert.",
+    "Vor Artikelarbeit müssen die drei ausgewählten Themen jeweils ein enges Quellenpaket erhalten; Quellen- und Risikoprüfung bleiben deshalb pending."
   ]
 }
