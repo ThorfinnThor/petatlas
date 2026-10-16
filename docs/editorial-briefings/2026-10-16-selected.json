@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runId": "2026-10-16-selected",
   "createdAt": "2026-10-16T08:30:00.000Z",
-  "stage": "briefing",
+  "stage": "review",
   "briefings": [
     {
       "slug": "got-faktor-eins-bis-drei",
@@ -50,7 +50,7 @@
         "data-snapshots/got/got-2022.json",
         "content-data/cost-scenarios/allgemeine-untersuchung-hund.json"
       ],
-      "dataStand": "GOT 2022; Projektszenario zuletzt geprüft am 15.10.2026",
+      "dataStand": "GOT 2022; Projektszenario zuletzt geprüft am 16.10.2026",
       "scenario": {
         "scenarioId": "allgemeine-untersuchung-hund",
         "officialItemId": "16",

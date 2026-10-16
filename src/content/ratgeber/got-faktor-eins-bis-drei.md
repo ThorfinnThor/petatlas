@@ -31,7 +31,7 @@ editorialLinks:
 
 ## Die kurze Antwort: Der Faktor multipliziert den einfachen Satz
 
-Im Gebührenverzeichnis der Gebührenordnung für Tierärztinnen und Tierärzte steht zu jeder aufgeführten Leistung ein Betrag. Dieser Betrag entspricht nach § 1 GOT dem einfachen Satz. Für den regulären Gebührenrahmen bestimmt § 2: Die einzelne Gebühr liegt grundsätzlich zwischen dem einfachen und dem dreifachen Satz. Der Faktor kann dabei stufenlos gewählt werden; er muss also nicht genau 1,0, 2,0 oder 3,0 betragen.
+Im Gebührenverzeichnis der Gebührenordnung für Tierärztinnen und Tierärzte steht zu jeder aufgeführten Leistung ein Betrag. Dieser Betrag entspricht nach § 1 GOT dem einfachen Satz. Für den regulären Gebührenrahmen bestimmt § 2: Die einzelne Gebühr liegt grundsätzlich zwischen dem einfachen und dem dreifachen Satz. Der Faktor muss dabei nicht genau 1,0, 2,0 oder 3,0 betragen.
 
 Die Rechenregel ist überschaubar: **einfacher Gebührensatz × Faktor = Gebühr für diese Position**. Steht für eine Position beispielsweise ein einfacher Satz von 20 Euro im Verzeichnis, ergeben sich bei Faktor 1,0 genau 20 Euro, bei Faktor 1,5 genau 30 Euro und bei Faktor 3,0 genau 60 Euro. Das sind Beträge für diese eine Gebührenposition vor Umsatzsteuer und möglichen weiteren Bestandteilen.
 
@@ -39,7 +39,7 @@ Der Faktor macht aus einer Position keine andere Leistung. Wenn eine allgemeine 
 
 ## Welcher Faktor kann im regulären Rahmen verwendet werden?
 
-Der amtliche Verordnungstext nennt für den Regelfall den Rahmen vom Einfachen bis zum Dreifachen. Innerhalb dieses Rahmens ist die Gebühr unter Berücksichtigung der besonderen Umstände des Einzelfalls zu bestimmen. § 2 zählt dafür insbesondere fünf Kriterien auf:
+Der amtliche Verordnungstext nennt für den Regelfall den Rahmen vom Einfachen bis zum Dreifachen. Innerhalb dieses Rahmens ist die Gebühr unter Berücksichtigung der besonderen Umstände des Einzelfalls zu bestimmen. Der Faktor muss deshalb nicht genau 1,0, 2,0 oder 3,0 betragen. § 2 zählt dafür insbesondere fünf Kriterien auf:
 
 1. Schwierigkeit der Leistung,
 2. Zeitaufwand,
