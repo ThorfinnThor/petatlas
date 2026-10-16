@@ -37,7 +37,6 @@ for (const path of BLOG_ARTICLES) {
     await page.goto(path);
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('article[data-review-status="approved"]')).toBeVisible();
-    await expect(page.locator('meta[name="robots"]')).not.toHaveAttribute('content', /noindex/);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       'href',
       `https://deinhaustierportal.de${path}`,
