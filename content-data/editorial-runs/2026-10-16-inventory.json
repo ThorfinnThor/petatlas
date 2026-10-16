@@ -137,6 +137,7 @@
     "Die drei Artikelentwürfe wurden im Status review und mit indexable=false angelegt. Erst eine dokumentierte Fachfreigabe darf Status und Indexierung ändern.",
     "Transportbox und Spielroutine für Wohnungskatzen sind wegen nahezu identischer bestehender Suchabsichten blockiert; der Händlerfeed-Kandidat bleibt wegen fehlender belegter Eignungsmerkmale blockiert.",
     "Die Quellenpakete und Artikelentwürfe sind abgeschlossen; die drei Artikel sind noch nicht fachlich freigegeben oder veröffentlicht.",
-    "Die interne Risikoprüfung vom 16.10.2026 ist in docs/reviews/editorial-2026-10-16-risk-review.md dokumentiert; sie ersetzt keine externe Fachfreigabe."
+    "Die interne Risikoprüfung vom 16.10.2026 ist in docs/reviews/editorial-2026-10-16-risk-review.md dokumentiert; sie ersetzt keine externe Fachfreigabe.",
+    "Die technische Endabnahme ist bestanden. Die Veröffentlichungsentscheidung bleibt wegen der drei konkret dokumentierten externen Fachfreigaben gesperrt; siehe docs/reviews/editorial-2026-10-16-final-approval.md."
   ]
 }
