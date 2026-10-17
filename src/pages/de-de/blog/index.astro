@@ -14,93 +14,528 @@ const articles = (await getCollection('ratgeber'))
       b.data.publishedAt.localeCompare(a.data.publishedAt) ||
       a.data.title.localeCompare(b.data.title, 'de'),
   );
+
+const dateFormatter = new Intl.DateTimeFormat('de-DE', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+
+const topicClass = (topic: string) =>
+  topic.toLocaleLowerCase('de').includes('ernährung') ? 'blog-card--nutrition' : 'blog-card--costs';
 ---
 
 <BaseLayout
   title="Blog für Hunde- und Katzenwissen"
   description="Neue, quellenbasierte Artikel zu Tierarztkosten, Fütterung und dem Alltag mit Hund und Katze."
   canonicalPfad="/de-de/blog/"
+  weit
 >
-  <header class="blog-header">
-    <p class="eyebrow">Blog</p>
-    <h1>Wissen für den Alltag mit Hund und Katze</h1>
-    <p>
-      Verständliche Einordnungen aus unseren kuratierten Daten und nachvollziehbaren Quellen. Neue
-      Beiträge erklären Rechenwege, Begriffe und praktische Entscheidungen Schritt für Schritt.
-    </p>
+  <header class="blog-hero">
+    <div class="blog-hero__copy">
+      <p class="eyebrow">Dein Haustierportal Magazin</p>
+      <h1>Wissen, das im Alltag wirklich weiterhilft</h1>
+      <p class="blog-hero__lead">
+        Verständliche Antworten für das Leben mit Hund und Katze – sorgfältig aus kuratierten Daten
+        und nachvollziehbaren Quellen aufbereitet.
+      </p>
+      <a class="blog-hero__link" href="#blog-articles-title">
+        Neue Artikel entdecken <span aria-hidden="true">↓</span>
+      </a>
+    </div>
+    <div class="blog-hero__visual" aria-hidden="true">
+      <picture>
+        <source
+          type="image/avif"
+          srcset="
+            /images/brand/hero-dog-cat-home-480.avif 480w,
+            /images/brand/hero-dog-cat-home-800.avif 800w
+          "
+          sizes="(min-width: 900px) 36rem, 100vw"
+        />
+        <img
+          src="/images/brand/hero-dog-cat-home-800.webp"
+          srcset="
+            /images/brand/hero-dog-cat-home-480.webp 480w,
+            /images/brand/hero-dog-cat-home-800.webp 800w
+          "
+          sizes="(min-width: 900px) 36rem, 100vw"
+          alt=""
+          width="800"
+          height="533"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </picture>
+      <p class="blog-hero__note">Für neugierige Tiermenschen</p>
+    </div>
   </header>
 
-  <section aria-labelledby="blog-articles-title">
-    <h2 id="blog-articles-title">Aktuelle Artikel</h2>
+  <section class="blog-latest" aria-labelledby="blog-articles-title">
+    <div class="blog-latest__heading">
+      <div>
+        <p class="eyebrow">Frisch recherchiert</p>
+        <h2 id="blog-articles-title">Aktuelle Artikel</h2>
+      </div>
+      <p>Praktisch erklärt, transparent belegt und ohne unnötigen Fachjargon.</p>
+    </div>
+
     <div class="blog-grid">
       {
         articles.map((article) => (
-          <article class="blog-card">
-            <p class="eyebrow">{article.data.topicCluster}</p>
-            <h3>
-              <a href={articlePath(article.data)}>{article.data.title}</a>
-            </h3>
-            <p>{article.data.description}</p>
-            <p class="blog-card__meta">
-              <time datetime={article.data.publishedAt}>
-                {new Intl.DateTimeFormat('de-DE', {
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric',
-                }).format(new Date(`${article.data.publishedAt}T00:00:00Z`))}
-              </time>
-              <span aria-hidden="true">·</span>
-              Quellen im Artikel
-            </p>
+          <article class:list={['blog-card', topicClass(article.data.topicCluster)]}>
+            <div class="blog-card__visual" aria-hidden="true">
+              {topicClass(article.data.topicCluster) === 'blog-card--nutrition' ? (
+                <svg viewBox="0 0 160 120" role="presentation">
+                  <path class="illustration-fill" d="M28 75h104l-11 27H39L28 75Z" />
+                  <path class="illustration-line" d="M21 72h118M39 102h82" />
+                  <path
+                    class="illustration-accent"
+                    d="M80 69c-1-25 13-42 38-47-2 25-14 42-38 47Z"
+                  />
+                  <path class="illustration-line" d="M80 69c8-16 20-29 38-47" />
+                  <path
+                    class="illustration-dot"
+                    d="M48 52a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm24-14a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"
+                  />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 160 120" role="presentation">
+                  <rect class="illustration-fill" x="29" y="20" width="102" height="82" rx="15" />
+                  <path class="illustration-line" d="M51 43h58M51 60h26M51 78h17" />
+                  <path
+                    class="illustration-accent"
+                    d="M105 57v14H91v14H77V71H63V57h14V43h14v14h14Z"
+                  />
+                </svg>
+              )}
+            </div>
+            <div class="blog-card__content">
+              <p class="blog-card__topic">{article.data.topicCluster}</p>
+              <h3>
+                <a href={articlePath(article.data)}>{article.data.title}</a>
+              </h3>
+              <p class="blog-card__description">{article.data.description}</p>
+              <div class="blog-card__footer">
+                <p class="blog-card__meta">
+                  <time datetime={article.data.publishedAt}>
+                    {dateFormatter.format(new Date(`${article.data.publishedAt}T00:00:00Z`))}
+                  </time>
+                  <span>Mit Quellen</span>
+                </p>
+                <span class="blog-card__arrow" aria-hidden="true">
+                  →
+                </span>
+              </div>
+            </div>
           </article>
         ))
       }
     </div>
   </section>
+
+  <aside class="blog-promise" aria-label="Unser redaktionelles Versprechen">
+    <p class="blog-promise__mark" aria-hidden="true">✓</p>
+    <div>
+      <h2>Nachvollziehbar statt beliebig</h2>
+      <p>
+        Jeder Beitrag nennt Datenstand und Quellen. Komplexe Themen zerlegen wir in klare Schritte,
+        damit du selbst eine informierte Entscheidung treffen kannst.
+      </p>
+    </div>
+  </aside>
 </BaseLayout>
 
 <style>
-  .blog-header {
-    max-inline-size: 72ch;
-    margin-block: var(--space-4) var(--space-10);
+  .blog-hero {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    min-block-size: 32rem;
+    margin-block-end: var(--space-20);
+    border: 1px solid var(--color-primary-border);
+    border-radius: clamp(1.5rem, 3vw, 2.75rem);
+    background:
+      radial-gradient(circle at 7% 12%, rgb(255 255 255 / 75%) 0 4.5rem, transparent 4.6rem),
+      linear-gradient(
+        135deg,
+        var(--color-primary-soft),
+        var(--color-success-soft) 58%,
+        var(--color-warning-soft)
+      );
+    box-shadow: var(--shadow-md);
+    isolation: isolate;
   }
 
-  .blog-header > p:last-child {
-    max-inline-size: 62ch;
+  .blog-hero::before,
+  .blog-hero::after {
+    position: absolute;
+    z-index: -1;
+    inline-size: 13rem;
+    block-size: 13rem;
+    border: 1px solid rgb(7 54 55 / 9%);
+    border-radius: 50%;
+    content: '';
+  }
+
+  .blog-hero::before {
+    inset-block-start: -7rem;
+    inset-inline-start: 35%;
+  }
+
+  .blog-hero::after {
+    inset-block-end: -8rem;
+    inset-inline-start: 42%;
+  }
+
+  .blog-hero__copy {
+    z-index: 1;
+    align-self: center;
+    padding: clamp(2rem, 5vw, 4.75rem);
+  }
+
+  .blog-hero h1 {
+    max-inline-size: 13ch;
+    margin-block: var(--space-3) var(--space-5);
+    font-size: clamp(2.4rem, 5.2vw, 4.6rem);
+    line-height: 0.98;
+  }
+
+  .blog-hero__lead {
+    max-inline-size: 52ch;
+    margin-block-end: var(--space-6);
+    color: var(--color-text);
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  }
+
+  .blog-hero__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-block-size: 3rem;
+    padding-inline: var(--space-5);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-weight: var(--weight-button);
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .blog-hero__link:hover {
+    background: var(--color-primary-hover);
+    color: var(--color-primary-contrast);
+  }
+
+  .blog-hero__visual {
+    position: relative;
+    min-block-size: 20rem;
+  }
+
+  .blog-hero__visual picture,
+  .blog-hero__visual img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .blog-hero__visual img {
+    object-fit: cover;
+    object-position: center 42%;
+  }
+
+  .blog-hero__note {
+    position: absolute;
+    inset-inline-end: var(--space-5);
+    inset-block-end: var(--space-5);
+    margin: 0;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid rgb(255 255 255 / 60%);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 86%);
+    color: var(--color-ink);
+    font-family: var(--font-hand);
+    font-size: 1.1rem;
+    backdrop-filter: blur(8px);
+    transform: rotate(-2deg);
+  }
+
+  .blog-latest__heading {
+    display: grid;
+    gap: var(--space-3);
+    align-items: end;
+    margin-block-end: var(--space-8);
+  }
+
+  .blog-latest__heading h2 {
+    margin-block: var(--space-2) 0;
+  }
+
+  .blog-latest__heading > p {
+    margin: 0;
     color: var(--color-text-muted);
-    font-size: var(--text-lead);
   }
 
   .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
     gap: var(--space-5);
-    margin-block: var(--space-5) var(--space-12);
   }
 
   .blog-card {
-    padding: var(--space-6);
+    position: relative;
+    display: grid;
+    overflow: hidden;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--transition-normal),
+      box-shadow var(--transition-normal),
+      border-color var(--transition-normal);
+  }
+
+  .blog-card:hover {
+    border-color: var(--color-primary-border);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  .blog-card__visual {
+    display: grid;
+    min-block-size: 10rem;
+    place-items: center;
+    background: var(--color-info-soft);
+  }
+
+  .blog-card--nutrition .blog-card__visual {
+    background: linear-gradient(145deg, var(--color-surface-warm), var(--color-warning-soft));
+  }
+
+  .blog-card--costs .blog-card__visual {
+    background: linear-gradient(145deg, var(--color-info-soft), var(--color-success-soft));
+  }
+
+  .blog-card__visual svg {
+    inline-size: min(62%, 12rem);
+    filter: drop-shadow(0 9px 13px rgb(7 54 55 / 10%));
+  }
+
+  .illustration-fill {
+    fill: rgb(255 255 255 / 72%);
+  }
+
+  .illustration-line {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 5;
+  }
+
+  .illustration-accent,
+  .illustration-dot {
+    fill: var(--color-orange-500);
+  }
+
+  .blog-card--costs .illustration-accent {
+    fill: var(--color-green-500);
+  }
+
+  .blog-card__content {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .blog-card__topic {
+    align-self: flex-start;
+    margin: 0 0 var(--space-4);
+    padding: 0.35rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-button);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .blog-card--nutrition .blog-card__topic {
+    background: var(--color-warning-soft);
+    color: var(--color-warning);
   }
 
   .blog-card h3 {
-    margin-block: var(--space-2) var(--space-3);
+    margin: 0 0 var(--space-3);
   }
 
   .blog-card h3 a {
     color: var(--color-ink);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.14em;
+    text-decoration: none;
+  }
+
+  .blog-card h3 a::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+  }
+
+  .blog-card h3 a:focus-visible::after {
+    outline: 3px solid var(--color-info);
+    outline-offset: -4px;
+    border-radius: var(--radius-xl);
+  }
+
+  .blog-card__description {
+    margin-block-end: var(--space-6);
+    color: var(--color-text-muted);
+  }
+
+  .blog-card__footer {
+    display: flex;
+    gap: var(--space-4);
+    align-items: end;
+    justify-content: space-between;
+    margin-block-start: auto;
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--color-border);
   }
 
   .blog-card__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-1) var(--space-2);
-    margin-block-end: 0;
+    gap: var(--space-1) var(--space-3);
+    margin: 0;
     color: var(--color-text-muted);
     font-size: var(--text-small);
+  }
+
+  .blog-card__meta span::before {
+    margin-inline-end: var(--space-3);
+    content: '•';
+  }
+
+  .blog-card__arrow {
+    display: grid;
+    flex: 0 0 auto;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-size: 1.25rem;
+    transition: transform var(--transition-fast);
+  }
+
+  .blog-card:hover .blog-card__arrow {
+    transform: translateX(3px);
+  }
+
+  .blog-promise {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+    margin-block: var(--space-16) var(--space-8);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-primary);
+    color: var(--color-on-dark-muted);
+  }
+
+  .blog-promise__mark {
+    display: grid;
+    inline-size: 4rem;
+    block-size: 4rem;
+    margin: 0;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 25%);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 10%);
+    color: var(--color-primary-contrast);
+    font-size: 1.6rem;
+  }
+
+  .blog-promise h2 {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary-contrast);
+    font-size: var(--text-h3);
+  }
+
+  .blog-promise p:last-child {
+    margin: 0;
+  }
+
+  @media (min-width: 680px) {
+    .blog-latest__heading {
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, 28rem);
+    }
+
+    .blog-promise {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .blog-hero {
+      grid-template-columns: minmax(0, 1.1fr) minmax(24rem, 0.9fr);
+    }
+
+    .blog-hero__visual {
+      min-block-size: 100%;
+      clip-path: ellipse(78% 80% at 78% 50%);
+    }
+
+    .blog-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 899px) {
+    .blog-hero__visual {
+      order: -1;
+      max-block-size: 22rem;
+    }
+
+    .blog-hero__copy {
+      padding-block-start: var(--space-8);
+    }
+  }
+
+  @media (max-width: 479px) {
+    .blog-hero {
+      margin-inline: -0.5rem;
+      margin-block-end: var(--space-12);
+      border-radius: var(--radius-xl);
+    }
+
+    .blog-hero__visual {
+      min-block-size: 15rem;
+    }
+
+    .blog-hero h1 {
+      font-size: clamp(2.1rem, 12vw, 3rem);
+    }
+
+    .blog-card__meta {
+      display: grid;
+    }
+
+    .blog-card__meta span::before {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blog-card,
+    .blog-card__arrow {
+      transition: none;
+    }
+
+    .blog-card:hover,
+    .blog-card:hover .blog-card__arrow {
+      transform: none;
+    }
   }
 </style>

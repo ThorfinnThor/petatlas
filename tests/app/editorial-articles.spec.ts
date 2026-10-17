@@ -68,11 +68,26 @@ test('Blogartikel bleiben auf schmalen Smartphones ohne horizontalen Überlauf',
 test('Blogübersicht verlinkt alle veröffentlichten Artikel', async ({ page }) => {
   await page.goto('/de-de/blog/');
   await expect(
-    page.getByRole('heading', { level: 1, name: /Wissen für den Alltag/ }),
+    page.getByRole('heading', { level: 1, name: /Wissen, das im Alltag/ }),
   ).toBeVisible();
+  await expect(page.locator('.blog-hero__visual img')).toBeVisible();
+  await expect(page.locator('.blog-card')).toHaveCount(BLOG_ARTICLES.length);
   for (const path of BLOG_ARTICLES) {
     await expect(page.locator(`a[href="${path}"]`)).toBeVisible();
   }
+});
+
+test('Blogübersicht bleibt auf schmalen Smartphones ohne horizontalen Überlauf', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.goto('/de-de/blog/');
+  const dimensions = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+  }));
+  expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
+  await expect(page.locator('.blog-card').first()).toBeVisible();
 });
 
 for (const viewport of [
