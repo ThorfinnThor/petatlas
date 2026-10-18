@@ -49,6 +49,7 @@ export function futtersucheStarten(): void {
   form.addEventListener('submit', (ereignis) => {
     ereignis.preventDefault();
     const begriff = document.querySelector<HTMLInputElement>('#futter-begriff')?.value ?? '';
+    const tierart = document.querySelector<HTMLSelectElement>('#futter-tierart')?.value ?? 'all';
     if (begriff.trim().length < 3) {
       ausgabe.innerHTML =
         '<p class="treffer__kopf">Bitte mindestens drei Zeichen eingeben — oder die vollständige ' +
@@ -56,11 +57,13 @@ export function futtersucheStarten(): void {
       return;
     }
 
-    const treffer = sucheFutter(begriff);
+    const treffer = sucheFutter(begriff).filter(
+      (eintrag) => tierart === 'all' || eintrag.produkt.species === tierart,
+    );
     if (treffer.length === 0) {
       ausgabe.innerHTML =
-        '<p class="treffer__kopf">Kein Treffer. Das heißt nicht, dass es das Produkt nicht gibt — ' +
-        'nur, dass es hier nicht erfasst ist.</p>';
+        '<p class="treffer__kopf">Kein Treffer für die gewählte Tierart. Das heißt nicht, dass es ' +
+        'das Produkt nicht gibt — nur, dass es hier nicht erfasst ist.</p>';
       return;
     }
 

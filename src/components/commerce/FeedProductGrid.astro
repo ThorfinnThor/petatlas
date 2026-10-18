@@ -8,10 +8,42 @@ interface Props {
   category: CatalogCategory;
   title: string;
   retailerLabel: string;
+  perSpeciesLimit?: number;
+  deduplicateVariants?: boolean;
 }
 
-const { offers, category, title, retailerLabel } = Astro.props;
-const products = offers.filter((offer) => offer.category === category);
+const {
+  offers,
+  category,
+  title,
+  retailerLabel,
+  perSpeciesLimit,
+  deduplicateVariants = false,
+} = Astro.props;
+const allProducts = offers.filter((offer) => offer.category === category);
+
+const variantKey = (product: CatalogProductOffer): string =>
+  `${product.species}:${product.brand}:${product.productName}`
+    .toLocaleLowerCase('de-DE')
+    .replace(/\b\d+\s*x\s*\d+(?:[.,]\d+)?\s*(?:kg|g|ml|l)\b/giu, '')
+    .replace(/\b\d+(?:[.,]\d+)?\s*(?:kg|g|ml|l)\b/giu, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const distinctProducts = deduplicateVariants
+  ? allProducts.filter(
+      (product, index, products) =>
+        products.findIndex((candidate) => variantKey(candidate) === variantKey(product)) === index,
+    )
+  : allProducts;
+
+const products =
+  perSpeciesLimit === undefined
+    ? distinctProducts
+    : (['dog', 'cat'] as const).flatMap((species) =>
+        distinctProducts.filter((product) => product.species === species).slice(0, perSpeciesLimit),
+      );
+const selectionIsLimited = products.length < allProducts.length;
 ---
 
 {
@@ -26,6 +58,8 @@ const products = offers.filter((offer) => offer.category === category);
         <p>
           Eine Auswahl realer Artikel aus dem freigegebenen Händlerfeed. Wir zeigen Produktname,
           Tierart und Herstellerbild; Preise und Verfügbarkeit prüfst du direkt beim Händler.
+          {selectionIsLimited &&
+            ` Sichtbar sind ${products.length} von ${allProducts.length} Feedartikeln.`}
         </p>
       </div>
       <ul class="feed-catalog__grid">
