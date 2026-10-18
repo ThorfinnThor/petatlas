@@ -79,6 +79,10 @@
   --shadow-md: 0 12px 32px rgb(18 31 25 / 10%);
 
   --content-max: 82.5rem;
+  /* Entscheidungs- und Vergleichsseiten dürfen auf großen Bildschirmen mehr
+     Raum für Tabellen und Produktkarten nutzen. Fließtext bleibt über seine
+     eigene Zeichenbreite begrenzt. */
+  --content-canvas: 92rem;
   --content-reading: 47.5rem;
   --header-height-mobile: 4rem;
   --header-height-desktop: 4.5rem;
