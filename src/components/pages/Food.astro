@@ -94,7 +94,7 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
         <img
           src="/images/brand/hero-dog-cat-home-1536.webp"
           srcset="/images/brand/hero-dog-cat-home-800.webp 800w, /images/brand/hero-dog-cat-home-1536.webp 1536w"
-          sizes="(min-width: 760px) 42vw, 100vw"
+          sizes="(min-width: 960px) 42vw, 100vw"
           alt="Hund und Katze in einer hellen Wohnumgebung"
           width="1536"
           height="1024"
@@ -880,14 +880,14 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
     }
   }
 
-  @media (min-width: 760px) {
+  @media (min-width: 960px) {
     .food-hero {
       grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
       min-block-size: 34rem;
     }
   }
 
-  @media (max-width: 759px) {
+  @media (max-width: 959px) {
     .food-page {
       gap: var(--space-16);
     }
