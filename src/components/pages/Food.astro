@@ -1,16 +1,15 @@
 ---
 /**
- * M15-03 — Futter suchen.
+ * Futterdaten verstehen und vergleichen.
  *
- * Die Seite sucht über Name, Marke und die Nummer vom Etikett. Sie vergleicht
- * Mengen und Preise; sie bewertet keine Zusammensetzung und vergibt keine
- * Punkte — dafür bräuchte es eine Methodik, die niemand geprüft hat.
+ * Die Seite trennt redaktionell geprüfte Deklarationen klar von Händlerfeeds.
+ * Sie bewertet keine Rezeptur und leitet aus Einzelwerten keine Eignung ab.
  */
 import Notice from '../Notice.astro';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { routePath, subroutePath } from '../../lib/routes.ts';
-import { alleFutter, futterDatenArt } from '../../features/food/catalog.ts';
+import { alleFutter, futterDatenArt, type FutterEintrag } from '../../features/food/catalog.ts';
 import { mengenText } from '../../features/food/unit-price.ts';
 import { futterTaxonomie } from '../../features/food/taxonomy.ts';
 import RetailPartnerSection from '../RetailPartnerSection.astro';
@@ -26,155 +25,364 @@ const fressnapfCatalog = fressnapfKatalog();
 const zooroyalCatalog = zooroyalKatalog();
 
 const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
+const hundeProdukte = produkte.filter((produkt) => produkt.species === 'dog');
+const katzenProdukte = produkte.filter((produkt) => produkt.species === 'cat');
+const produktlinien = produkte.filter(
+  (produkt, index, alle) =>
+    alle.findIndex(
+      (anderes) =>
+        anderes.brand === produkt.brand &&
+        anderes.productName === produkt.productName &&
+        anderes.species === produkt.species,
+    ) === index,
+);
+
+const artText: Readonly<Record<NonNullable<FutterEintrag['kind']>, string>> = {
+  complete: 'Alleinfuttermittel',
+  complementary: 'Ergänzungsfuttermittel',
+};
+
+const phaseText: Readonly<Record<NonNullable<FutterEintrag['lifeStage']>, string>> = {
+  puppy: 'Wachstum',
+  adult: 'Adult',
+  senior: 'Senior',
+  all_stages: 'Alle Lebensphasen',
+};
+
+const artLabel = (produkt: FutterEintrag): string =>
+  produkt.kind === null ? 'Produktart nicht angegeben' : artText[produkt.kind];
+const phaseLabel = (produkt: FutterEintrag): string =>
+  produkt.lifeStage === null ? 'Lebensphase nicht angegeben' : phaseText[produkt.lifeStage];
+
+const uniquePackSizes = (produkt: FutterEintrag): string[] =>
+  produkte
+    .filter(
+      (anderes) =>
+        anderes.brand === produkt.brand &&
+        anderes.productName === produkt.productName &&
+        anderes.species === produkt.species,
+    )
+    .map((variante) => mengenText(variante) ?? 'Menge nicht angegeben');
 ---
 
-<h1>Futter</h1>
-<p>
-  <a href={routePath(markt, 'supplements')}
-    >Ergänzungsfuttermittel einordnen und Etiketten vergleichen</a
-  >
-</p>
-
-<p>
-  Vergleiche deklarierte Inhaltswerte und Packungsgrößen einer kleinen Auswahl echter Hunde- und
-  Katzenfutter. Die Werte stammen von den verlinkten Herstellerseiten; aktuelle Händlerpreise sind
-  noch nicht erfasst.
-</p>
-
-<RetailPartnerSection market={markt} page="futter" />
-
-<FeedProductGrid
-  offers={fressnapfCatalog}
-  category="food"
-  title="Futter aus dem Fressnapf-Sortiment"
-  retailerLabel="Fressnapf"
-/>
-<FeedProductGrid
-  offers={zooroyalCatalog}
-  category="food"
-  title="Futter aus dem ZooRoyal-Sortiment"
-  retailerLabel="ZooRoyal"
-/>
-
-{
-  synthetisch && (
-    <Notice variante="testdaten" titel="Synthetische Futterdaten">
-      <p>
-        Die hinterlegten Produkte sind <strong>erfunden</strong>, einschließlich Marken und Nummern.
-        Echte Produkte erscheinen erst mit Angebotsrechten und geprüften Etikettangaben.
+<article class="food-page">
+  <header class="food-hero">
+    <div class="food-hero__copy">
+      <p class="eyebrow">Futter · Hund und Katze</p>
+      <h1>Futteretiketten verständlich vergleichen</h1>
+      <p class="food-hero__lead">
+        Finde eine erfasste Produktlinie, prüfe Packungsgröße und Deklaration und vergleiche
+        Herstellerwerte auf derselben Bezugsbasis.
       </p>
-    </Notice>
-  )
-}
+      <p>
+        Die Daten zeigen, was auf dem Etikett steht. Sie vergeben keine Punkte und beantworten
+        nicht, welches Futter für ein einzelnes Tier medizinisch geeignet ist.
+      </p>
+      <nav class="food-nav" aria-label="Inhalt der Futterseite">
+        <a href="#futter-finden">Futter finden</a>
+        <a href="#produktlinien">Produktlinien</a>
+        <a href="#deklarationen">Werte vergleichen</a>
+        <a href="#haendler">Bei Händlern ansehen</a>
+      </nav>
+    </div>
+    <figure class="food-hero__visual">
+      <picture>
+        <source
+          srcset="/images/brand/hero-dog-cat-home-800.avif 800w, /images/brand/hero-dog-cat-home-1536.avif 1536w"
+          type="image/avif"
+        />
+        <img
+          src="/images/brand/hero-dog-cat-home-1536.webp"
+          srcset="/images/brand/hero-dog-cat-home-800.webp 800w, /images/brand/hero-dog-cat-home-1536.webp 1536w"
+          sizes="(min-width: 760px) 42vw, 100vw"
+          alt="Hund und Katze in einer hellen Wohnumgebung"
+          width="1536"
+          height="1024"
+          decoding="async"
+        />
+      </picture>
+      <figcaption>Erst einordnen, dann vergleichen</figcaption>
+    </figure>
+  </header>
 
-<form id="futtersuche" data-basis={basisPfad}>
-  <div class="feld">
-    <label for="futter-begriff">Marke, Produktname oder Nummer vom Etikett</label>
-    <input
-      id="futter-begriff"
-      type="search"
-      autocomplete="off"
-      inputmode="text"
-      placeholder="z. B. Royal Canin oder Mini Adult"
+  <section class="food-steps" aria-labelledby="ablauf-titel">
+    <div class="section-heading">
+      <p class="eyebrow">So funktioniert die Seite</p>
+      <h2 id="ablauf-titel">Drei Schritte statt einer beliebigen Produktliste</h2>
+    </div>
+    <ol>
+      <li>
+        <span aria-hidden="true">01</span>
+        <div>
+          <strong>Tierart und Produkt finden</strong><small>Suche nach Marke oder Name.</small>
+        </div>
+      </li>
+      <li>
+        <span aria-hidden="true">02</span>
+        <div>
+          <strong>Etikett einordnen</strong><small>Produktart, Lebensphase und Menge prüfen.</small>
+        </div>
+      </li>
+      <li>
+        <span aria-hidden="true">03</span>
+        <div>
+          <strong>Gleiches mit Gleichem vergleichen</strong><small
+            >Nur Werte derselben Tierart und Bezugsbasis nebeneinander lesen.</small
+          >
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  {
+    synthetisch && (
+      <Notice variante="testdaten" titel="Synthetische Futterdaten">
+        <p>
+          Die hinterlegten Produkte sind <strong>erfunden</strong>, einschließlich Marken und
+          Nummern. Echte Produkte erscheinen erst mit Angebotsrechten und geprüften Etikettangaben.
+        </p>
+      </Notice>
+    )
+  }
+
+  <section class="food-finder" id="futter-finden" aria-labelledby="finder-titel">
+    <div class="food-finder__intro">
+      <p class="eyebrow">Schritt 1 · Suchen</p>
+      <h2 id="finder-titel">Welches Futter möchtest du nachschlagen?</h2>
+      <p>
+        Die Suche läuft nur in deinem Browser. {
+          `Aktuell sind ${produkte.length} Packungsvarianten aus ${produktlinien.length} Produktlinien dokumentiert.`
+        }
+      </p>
+    </div>
+    <form id="futtersuche" data-basis={basisPfad}>
+      <div class="finder-fields">
+        <div class="feld">
+          <label for="futter-tierart">Tierart</label>
+          <select id="futter-tierart">
+            <option value="all">Hund und Katze</option>
+            <option value="dog">Hund</option>
+            <option value="cat">Katze</option>
+          </select>
+        </div>
+        <div class="feld finder-fields__query">
+          <label for="futter-begriff">Marke oder Produktname</label>
+          <input
+            id="futter-begriff"
+            type="search"
+            autocomplete="off"
+            inputmode="text"
+            placeholder="z. B. Royal Canin oder Indoor"
+          />
+          <p class="hilfe">
+            Für die aktuelle Auswahl sind noch keine verifizierten Barcodes hinterlegt.
+          </p>
+        </div>
+      </div>
+      <p id="futter-ohne-js" class="hilfe">
+        Die Suche rechnet im Browser und braucht JavaScript. Alle Produkte stehen zusätzlich im
+        nächsten Abschnitt.
+      </p>
+      <button type="submit" id="futter-suchen" hidden>Produkte finden</button>
+    </form>
+    <div id="futter-treffer" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="product-lines" id="produktlinien" aria-labelledby="produktlinien-titel">
+    <div class="section-heading">
+      <p class="eyebrow">Schritt 2 · Etikett einordnen</p>
+      <h2 id="produktlinien-titel">Erfasste Produkte nach Tierart</h2>
+      <p>
+        Jede Karte führt zur gespeicherten Deklaration. Mehrere Packungsgrößen derselben Linie
+        bleiben getrennt, weil die Menge zum konkreten Artikel gehört.
+      </p>
+    </div>
+    <div class="product-groups">
+      {
+        [
+          { id: 'hund', title: 'Für Hunde', products: hundeProdukte },
+          { id: 'katze', title: 'Für Katzen', products: katzenProdukte },
+        ].map((gruppe) => (
+          <section aria-labelledby={`produkte-${gruppe.id}`}>
+            <header>
+              <h3 id={`produkte-${gruppe.id}`}>{gruppe.title}</h3>
+              <span>{gruppe.products.length} Packungsvarianten</span>
+            </header>
+            <ul class="produkte">
+              {gruppe.products.map((produkt) => (
+                <li data-futter={produkt.foodId}>
+                  <p class="product-card__brand">{produkt.brand}</p>
+                  <h4>{produkt.productName}</h4>
+                  <div class="product-card__tags">
+                    <span>{artLabel(produkt)}</span>
+                    <span>{phaseLabel(produkt)}</span>
+                    <span>{mengenText(produkt) ?? 'Menge nicht angegeben'}</span>
+                  </div>
+                  <a href={subroutePath(markt, 'food', kurz(produkt.foodId))}>
+                    Deklaration ansehen →
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="declaration-guide" aria-labelledby="lesen-titel">
+    <div>
+      <p class="eyebrow">Bevor du Zahlen vergleichst</p>
+      <h2 id="lesen-titel">Was zuerst auf dem Etikett stehen sollte</h2>
+    </div>
+    <div class="declaration-guide__grid">
+      <article>
+        <span aria-hidden="true">A</span>
+        <h3>Produktart</h3>
+        <p>Allein- und Ergänzungsfuttermittel erfüllen unterschiedliche Aufgaben in der Ration.</p>
+      </article>
+      <article>
+        <span aria-hidden="true">B</span>
+        <h3>Tierart und Lebensphase</h3>
+        <p>Eine Deklaration für ausgewachsene Hunde lässt sich nicht auf Katzen übertragen.</p>
+      </article>
+      <article>
+        <span aria-hidden="true">C</span>
+        <h3>Bezugsbasis</h3>
+        <p>
+          Hier stehen Herstellerwerte je 100 g Frischmasse. Andere Bezugsbasen sind nicht direkt
+          vergleichbar.
+        </p>
+      </article>
+    </div>
+    <a
+      class="text-link"
+      href="/de-de/blog/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden/"
+    >
+      Etiketten Schritt für Schritt lesen →
+    </a>
+  </section>
+
+  <section class="comparison-section" id="deklarationen" aria-labelledby="vergleich-titel">
+    <div class="section-heading">
+      <p class="eyebrow">Schritt 3 · Direktvergleich</p>
+      <h2 id="vergleich-titel">Deklarierte Werte nebeneinander</h2>
+      <p id="vergleich-hinweis">
+        Die Tabelle zeigt je Produktlinie eine Packungsvariante. Unterschiedliche Werte sind keine
+        Rangliste und sagen allein nichts über die Eignung aus.
+      </p>
+    </div>
+    <div
+      class="food-comparison"
+      tabindex="0"
+      role="region"
+      aria-label="Nährwertvergleich, horizontal scrollbar"
+      aria-describedby="vergleich-hinweis"
+    >
+      <table>
+        <caption>Erfasste Produktlinien · Werte je 100 g Frischmasse</caption>
+        <thead>
+          <tr>
+            <th scope="col">Produkt</th><th scope="col">Protein</th><th scope="col">Fett</th><th
+              scope="col">Rohfaser</th
+            ><th scope="col">Rohasche</th><th scope="col">Quelle</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            produktlinien.map((product) => (
+              <tr>
+                <th scope="row">
+                  <strong>
+                    {product.brand} {product.productName}
+                  </strong>
+                  <small>
+                    {product.species === 'cat' ? 'Katze' : 'Hund'} ·{' '}
+                    {uniquePackSizes(product).join(', ')}
+                  </small>
+                </th>
+                {['protein', 'fat', 'fiber', 'ash'].map((key) => {
+                  const nutrient = product.nutrients.find((item) => item.nutrient === key);
+                  return (
+                    <td>
+                      {nutrient && nutrient.value !== null
+                        ? `${nutrient.value.toLocaleString('de-DE')} ${nutrient.unit}`
+                        : 'nicht erfasst'}
+                    </td>
+                  );
+                })}
+                <td>
+                  <a href={product.declarationSourceUrl ?? undefined}>Hersteller ↗</a>
+                  <small>geprüft {product.declarationCheckedAt ?? 'ohne Datum'}</small>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="limits" aria-labelledby="grenzen-titel">
+    <div>
+      <p class="eyebrow">Was die Daten leisten</p>
+      <h2 id="grenzen-titel">Sachlich vergleichen, Grenzen kennen</h2>
+    </div>
+    <ul>
+      <li>
+        <strong>Erkennbar:</strong> Produktart, Tierart, Packungsgröße und deklarierte Analysewerte.
+      </li>
+      <li>
+        <strong>Nicht ableitbar:</strong> Verträglichkeit, medizinische Eignung oder eine allgemeine Qualitätsnote.
+      </li>
+      <li>
+        <strong>Wichtig:</strong> Hunde- und Katzenfutter sowie unterschiedliche Bezugsbasen nicht direkt
+        vergleichen.
+      </li>
+    </ul>
+  </section>
+
+  <section class="food-commerce" id="haendler" aria-labelledby="haendler-titel">
+    <div class="section-heading">
+      <p class="eyebrow">Danach einkaufen</p>
+      <h2 id="haendler-titel">Produkte im Händlersortiment ansehen</h2>
+      <p>
+        Die folgenden Karten stammen aus freigegebenen Händlerfeeds. Sie gehören nicht zum
+        redaktionellen Deklarationsvergleich und sind keine Empfehlung oder Rangfolge.
+      </p>
+    </div>
+    <FeedProductGrid
+      offers={fressnapfCatalog}
+      category="food"
+      title="Ausgewählte Futterprodukte bei Fressnapf"
+      retailerLabel="Fressnapf"
+      perSpeciesLimit={6}
+      deduplicateVariants={true}
     />
-    <p class="hilfe">
-      Suche nach Marke oder Name. Für die aktuelle Auswahl sind noch keine verifizierten Barcodes
-      hinterlegt.
-    </p>
-  </div>
-  <p id="futter-ohne-js" class="hilfe">
-    Die Suche rechnet im Browser und braucht JavaScript. Die vollständige Liste steht darunter.
-  </p>
-  <p><button type="submit" id="futter-suchen" hidden>Suchen</button></p>
-</form>
+    <FeedProductGrid
+      offers={zooroyalCatalog}
+      category="food"
+      title="Ausgewählte Futterprodukte bei ZooRoyal"
+      retailerLabel="ZooRoyal"
+      perSpeciesLimit={6}
+      deduplicateVariants={true}
+    />
+    <RetailPartnerSection market={markt} page="futter" />
+  </section>
 
-<div id="futter-treffer" role="status" aria-live="polite"></div>
-
-<h2>Alle erfassten Produkte ({produkte.length})</h2>
-<ul class="produkte">
-  {
-    produkte.map((produkt) => (
-      <li data-futter={produkt.foodId}>
-        <a href={subroutePath(markt, 'food', kurz(produkt.foodId))}>
-          {produkt.brand} — {produkt.productName}
-        </a>
-        <span class="hilfe">
-          {' '}
-          · {produkt.species === 'cat' ? 'Katze' : 'Hund'} ·{' '}
-          {mengenText(produkt) ?? 'Menge nicht angegeben'}
-          {produkt.gtin === null ? '' : ` · ${produkt.gtin}`}
-        </span>
-      </li>
-    ))
-  }
-</ul>
-
-<h2>Deklarationen nebeneinander</h2>
-<p>
-  Herstellerwerte je 100 g Frischmasse. Unterschiedliche Werte sind keine Rangliste und sagen allein
-  nichts über die Eignung für deinen Hund oder deine Katze. Vergleiche nur Futter für dieselbe
-  Tierart; Hundefutter ist kein Ersatz für Katzenfutter.
-</p>
-<div
-  class="food-comparison"
-  tabindex="0"
-  role="region"
-  aria-label="Nährwertvergleich, horizontal scrollbar"
->
-  <table>
-    <caption>Erfasste Produktlinien · Prüfdatum an jeder Quelle</caption>
-    <thead
-      ><tr
-        ><th scope="col">Produkt</th><th scope="col">Protein</th><th scope="col">Fett</th><th
-          scope="col">Rohfaser</th
-        ><th scope="col">Rohasche</th><th scope="col">Quelle</th></tr
-      ></thead
-    >
-    <tbody
-      >{
-        produkte
-          .filter(
-            (product, index, all) =>
-              all.findIndex(
-                (other) =>
-                  other.brand === product.brand && other.productName === product.productName,
-              ) === index,
-          )
-          .map((product) => (
-            <tr>
-              <th scope="row">
-                {product.brand} {product.productName} ·{' '}
-                {product.species === 'cat' ? 'Katze' : 'Hund'}
-              </th>
-              {['protein', 'fat', 'fiber', 'ash'].map((key) => {
-                const nutrient = product.nutrients.find((item) => item.nutrient === key);
-                return (
-                  <td>
-                    {nutrient && nutrient.value !== null
-                      ? `${nutrient.value.toLocaleString('de-DE')} ${nutrient.unit}`
-                      : 'nicht erfasst'}
-                  </td>
-                );
-              })}
-              <td>
-                <a href={product.declarationSourceUrl ?? undefined}>Hersteller</a>
-              </td>
-            </tr>
-          ))
-      }</tbody
-    >
-  </table>
-</div>
-<h2>Was hier nicht passiert</h2>
-<ul class="ausschluesse">
-  {
-    taxonomie.excluded.map((eintrag) => (
-      <li data-ausschluss>
-        <strong>{eintrag.topic}.</strong> {eintrag.reason}
-      </li>
-    ))
-  }
-</ul>
+  <details class="excluded-topics">
+    <summary>Welche Futterthemen sind hier bewusst nicht enthalten?</summary>
+    <ul class="ausschluesse">
+      {
+        taxonomie.excluded.map((eintrag) => (
+          <li data-ausschluss>
+            <strong>{eintrag.topic}.</strong> {eintrag.reason}
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</article>
 
 <script>
   import { futtersucheStarten } from '../../features/food/search-ui.ts';
@@ -183,94 +391,536 @@ const kurz = (foodId: string): string => foodId.replace('synthetisch:', '');
 </script>
 
 <style>
-  .feld {
-    margin-block: var(--space-4);
+  .food-page {
+    display: grid;
+    gap: clamp(3.5rem, 7vw, 7rem);
+    min-inline-size: 0;
+    padding-block: var(--space-3) var(--space-10);
   }
 
-  .feld label {
+  .food-page > * {
+    min-inline-size: 0;
+  }
+
+  .food-hero {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-green-100);
+  }
+
+  .food-hero__copy {
+    padding: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .food-hero h1 {
+    max-inline-size: 16ch;
+    margin-block: var(--space-3) var(--space-5);
+    font-size: clamp(2.35rem, 5vw, 4.75rem);
+  }
+
+  .food-hero__lead {
+    max-inline-size: 55ch;
+    color: var(--color-ink);
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  }
+
+  .food-hero__copy > p:not(.eyebrow) {
+    max-inline-size: 64ch;
+  }
+
+  .food-hero__visual {
+    position: relative;
+    min-block-size: 18rem;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .food-hero__visual picture,
+  .food-hero__visual img {
     display: block;
-    font-weight: 600;
-    margin-bottom: var(--space-1);
+    inline-size: 100%;
+    block-size: 100%;
   }
 
-  input[type='search'] {
-    width: 100%;
-    max-width: 24rem;
-    padding: var(--space-2);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
+  .food-hero__visual img {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
   }
 
-  .hilfe {
-    color: var(--color-text-muted);
+  .food-hero__visual figcaption {
+    position: absolute;
+    inset-inline-end: var(--space-5);
+    inset-block-end: var(--space-5);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 92%);
+    color: var(--color-primary);
+    font-family: var(--font-hand);
+    font-size: 1.15rem;
+  }
+
+  .food-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-start: var(--space-6);
+  }
+
+  .food-nav a {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 72%);
+    color: var(--color-primary-hover);
     font-size: var(--text-small);
+    font-weight: var(--weight-label);
+    text-decoration: none;
   }
 
-  .ausschluesse {
-    padding-inline-start: var(--space-5);
+  .eyebrow,
+  .product-card__brand {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
   }
 
-  .ausschluesse li {
-    margin-block: var(--space-2);
+  .section-heading {
+    max-inline-size: 72ch;
+    margin-block-end: var(--space-6);
   }
 
-  .produkte,
-  #futter-treffer :global(.treffer__liste) {
-    list-style: none;
+  .section-heading h2,
+  .food-finder__intro h2 {
+    margin-block: var(--space-2) var(--space-3);
+  }
+
+  .section-heading p:last-child,
+  .food-finder__intro p:last-child {
+    margin-block-end: 0;
+    color: var(--color-text-muted);
+  }
+
+  .food-steps {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .food-steps ol {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
     padding: 0;
+    list-style: none;
+  }
+
+  .food-steps li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+    align-items: start;
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .food-steps li > span {
+    color: var(--color-orange-600);
+    font-size: var(--text-h4);
+    font-weight: var(--weight-h2);
+  }
+
+  .food-steps strong,
+  .food-steps small {
+    display: block;
+  }
+
+  .food-steps small {
+    margin-block-start: var(--space-1);
+    color: var(--color-text-muted);
+  }
+
+  .food-finder {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(1.5rem, 4vw, 4rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-brand-900);
+    color: var(--color-on-dark-muted);
+    scroll-margin-top: 6rem;
+  }
+
+  .food-finder h2,
+  .food-finder .eyebrow {
+    color: var(--color-on-dark);
+  }
+
+  .food-finder__intro p:last-child {
+    color: var(--color-on-dark-muted);
+  }
+
+  .food-finder form {
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .finder-fields {
     display: grid;
     gap: var(--space-4);
   }
 
-  .produkte > li,
-  #futter-treffer :global(.treffer__liste > li) {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-    margin: 0;
-    min-width: 0;
-    max-inline-size: none;
-    background: var(--color-surface);
+  .feld label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--color-ink);
+    font-weight: var(--weight-label);
   }
 
-  .produkte .hilfe {
-    display: block;
+  input[type='search'],
+  select {
+    inline-size: 100%;
+    min-block-size: 48px;
+    padding: var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-ink);
   }
-  @media (min-width: 700px) {
-    .produkte,
-    #futter-treffer :global(.treffer__liste) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+
+  #futter-suchen {
+    min-block-size: 46px;
+    padding-inline: var(--space-5);
   }
-  @media (min-width: 1100px) {
-    .produkte,
-    #futter-treffer :global(.treffer__liste) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-  #futter-treffer :global(.treffer__meta) {
+
+  .hilfe,
+  .treffer__meta {
     color: var(--color-text-muted);
     font-size: var(--text-small);
   }
 
   #futter-treffer :global(.treffer__kopf) {
-    font-weight: 600;
+    color: var(--color-on-dark);
+    font-weight: var(--weight-label);
   }
-</style>
 
-<style>
+  #futter-treffer :global(.treffer__liste) {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #futter-treffer :global(.treffer__liste > li) {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  #futter-treffer :global(.treffer__liste h3) {
+    margin-block: 0 var(--space-1);
+    font-size: var(--text-h4);
+  }
+
+  #futter-treffer :global(.treffer__liste p) {
+    margin: 0;
+  }
+
+  .product-lines,
+  .comparison-section,
+  .food-commerce {
+    scroll-margin-top: 6rem;
+  }
+
+  .product-groups {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .product-groups > section {
+    min-inline-size: 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .product-groups > section > header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    align-items: baseline;
+    justify-content: space-between;
+    margin-block-end: var(--space-4);
+  }
+
+  .product-groups h3 {
+    margin: 0;
+  }
+
+  .product-groups header span {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .produkte {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .produkte > li {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-warm);
+  }
+
+  .produkte h4 {
+    margin-block: var(--space-1) var(--space-3);
+    font-size: var(--text-h4);
+  }
+
+  .product-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-end: var(--space-4);
+  }
+
+  .product-card__tags span {
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--color-green-100);
+    color: var(--color-primary-hover);
+    font-size: var(--text-micro);
+  }
+
+  .produkte a {
+    margin-block-start: auto;
+    font-weight: var(--weight-label);
+  }
+
+  .declaration-guide {
+    padding: clamp(1.5rem, 4vw, 4rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-orange-100);
+  }
+
+  .declaration-guide h2 {
+    max-inline-size: 18ch;
+    margin-block: var(--space-2) var(--space-6);
+  }
+
+  .declaration-guide__grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .declaration-guide article {
+    padding: var(--space-5);
+    border: 1px solid rgb(255 255 255 / 85%);
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 72%);
+  }
+
+  .declaration-guide article > span {
+    color: var(--color-orange-600);
+    font-weight: var(--weight-h2);
+  }
+
+  .declaration-guide h3 {
+    margin-block: var(--space-2);
+  }
+  .declaration-guide article p {
+    margin: 0;
+  }
+
+  .text-link {
+    display: inline-block;
+    margin-block-start: var(--space-6);
+    font-weight: var(--weight-label);
+  }
+
   .food-comparison {
     overflow-x: auto;
-    margin-block: var(--space-6);
+    max-inline-size: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .food-comparison table {
+    inline-size: 100%;
+    min-inline-size: 56rem;
+    border-collapse: collapse;
+  }
+
+  .food-comparison th,
+  .food-comparison td {
+    padding: var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+    text-align: start;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+
+  .food-comparison thead th {
+    background: var(--color-brand-900);
+    color: var(--color-on-dark);
+  }
+
+  .food-comparison tbody tr:nth-child(even) {
+    background: var(--color-surface-subtle);
+  }
+
+  .food-comparison tbody tr:last-child th,
+  .food-comparison tbody tr:last-child td {
+    border-block-end: 0;
+  }
+
+  .food-comparison th strong,
+  .food-comparison th small,
+  .food-comparison td small {
+    display: block;
+  }
+
+  .food-comparison th small,
+  .food-comparison td small {
+    margin-block-start: var(--space-1);
+    color: var(--color-text-muted);
+    font-weight: var(--weight-body);
+  }
+
+  .limits {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(1.5rem, 4vw, 4rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-blue-100);
+  }
+
+  .limits h2 {
+    margin-block: var(--space-2) 0;
+  }
+  .limits ul {
+    margin: 0;
+  }
+
+  .limits li {
+    max-inline-size: 75ch;
+    margin-block: var(--space-3);
+  }
+
+  .food-commerce {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-subtle);
+  }
+
+  .food-commerce :global(.feed-catalog),
+  .food-commerce :global(.retail-partner) {
+    margin-block: var(--space-8) 0;
+  }
+
+  .excluded-topics {
+    padding: var(--space-5);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     background: var(--color-surface);
   }
-  .food-comparison table {
-    min-width: 660px;
+
+  .excluded-topics summary {
+    color: var(--color-ink);
+    font-weight: var(--weight-label);
+    cursor: pointer;
   }
-  .food-comparison td {
-    white-space: nowrap;
+
+  .ausschluesse {
+    padding-inline-start: var(--space-5);
+  }
+  .ausschluesse li {
+    margin-block: var(--space-2);
+  }
+
+  @media (min-width: 700px) {
+    .food-steps ol,
+    .declaration-guide__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .finder-fields {
+      grid-template-columns: minmax(12rem, 0.35fr) minmax(0, 1fr);
+    }
+
+    .product-groups,
+    .limits {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .produkte {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 760px) {
+    .food-hero {
+      grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
+      min-block-size: 34rem;
+    }
+  }
+
+  @media (max-width: 759px) {
+    .food-page {
+      gap: var(--space-16);
+    }
+
+    .food-hero__visual {
+      order: -1;
+      min-block-size: 11rem;
+    }
+
+    .food-hero__copy {
+      padding: var(--space-5);
+    }
+    .food-hero h1 {
+      font-size: clamp(2rem, 10vw, 2.8rem);
+    }
+
+    .food-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .food-nav a {
+      text-align: center;
+    }
+
+    .food-hero,
+    .food-steps,
+    .food-finder,
+    .product-groups > section,
+    .declaration-guide,
+    .limits,
+    .food-commerce {
+      border-radius: var(--radius-lg);
+    }
   }
 </style>

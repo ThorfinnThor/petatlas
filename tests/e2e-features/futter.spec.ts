@@ -12,6 +12,11 @@ test('finds a real brand and does not invent barcode matches', async ({ page }) 
   await page.fill('#futter-begriff', 'Royal Canin');
   await page.click('#futter-suchen');
   await expect(page.locator('.treffer__liste > li')).toHaveCount(6);
+  await page.selectOption('#futter-tierart', 'cat');
+  await page.click('#futter-suchen');
+  await expect(page.locator('.treffer__liste > li')).toHaveCount(3);
+  await expect(page.locator('.treffer__liste')).toContainText('Indoor');
+  await expect(page.locator('.treffer__liste')).not.toContainText('Mini Adult');
   await page.fill('#futter-begriff', '4006381333931');
   await page.click('#futter-suchen');
   await expect(page.locator('.treffer__kopf')).toContainText('nicht erfasst');

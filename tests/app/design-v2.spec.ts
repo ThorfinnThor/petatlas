@@ -299,3 +299,45 @@ for (const width of [320, 390, 768, 1440]) {
     expect(results.violations.map((item) => ({ id: item.id, nodes: item.nodes }))).toEqual([]);
   });
 }
+
+for (const width of [320, 390, 768, 1440]) {
+  test(`food page keeps editorial comparison ahead of commerce at ${width}px`, async ({ page }) => {
+    const height = width < 600 ? 844 : 900;
+    await page.setViewportSize({ width, height });
+    await page.goto('/de-de/futter/');
+
+    await expect(page.locator('.food-hero')).toBeVisible();
+    await expect(page.locator('.food-steps li')).toHaveCount(3);
+    await expect(page.locator('.produkte > li')).toHaveCount(7);
+    await expect(page.locator('.food-comparison tbody tr')).toHaveCount(3);
+    await expect(page.locator('.food-commerce')).toBeVisible();
+
+    const layout = await page.evaluate(() => {
+      const comparison = document.querySelector('.comparison-section');
+      const commerce = document.querySelector('.food-commerce');
+      return {
+        commerceAfterComparison: Boolean(
+          comparison &&
+          commerce &&
+          Boolean(comparison.compareDocumentPosition(commerce) & Node.DOCUMENT_POSITION_FOLLOWING),
+        ),
+        overflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+        heroHeight: document.querySelector('.food-hero')?.getBoundingClientRect().height ?? 0,
+      };
+    });
+    expect(layout.commerceAfterComparison).toBe(true);
+    expect(layout.overflow).toBe(false);
+    expect(layout.heroHeight).toBeLessThanOrEqual(height * (width < 600 ? 1.3 : 0.95));
+
+    await page.fill('#futter-begriff', 'Royal Canin');
+    await page.selectOption('#futter-tierart', 'cat');
+    await page.click('#futter-suchen');
+    await expect(page.locator('.treffer__liste > li')).toHaveCount(3);
+    await expect(page.locator('.treffer__liste')).not.toContainText('Mini Adult');
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+      .analyze();
+    expect(results.violations.map((item) => ({ id: item.id, nodes: item.nodes }))).toEqual([]);
+  });
+}
