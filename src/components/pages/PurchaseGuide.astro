@@ -1,7 +1,10 @@
 ---
-import AmazonLink from '../AmazonLink.astro';
-import Notice from '../Notice.astro';
-import { AMAZON_DISCLOSURE, amazonEnabled } from '../../features/commerce/amazon.ts';
+import {
+  AMAZON_DISCLOSURE,
+  amazonEnabled,
+  amazonSearchUrl,
+} from '../../features/commerce/amazon.ts';
+import { PARTNER_LINK_ATTRIBUTE } from '../../features/commerce/links.ts';
 import type { PurchaseGuide } from '../../features/commerce/purchase-guides.ts';
 
 interface Props {
@@ -10,29 +13,91 @@ interface Props {
 
 const { guide } = Astro.props;
 const showAmazon = amazonEnabled(process.env);
+const isCat = /katze|catit/i.test(`${guide.eyebrow} ${guide.title}`);
+const hero = isCat
+  ? {
+      avif: '/images/brand/play-cat-home-1536.avif',
+      webp: '/images/brand/play-cat-home-1536.webp',
+      alt: 'Katze in einer hellen Wohnumgebung',
+      note: 'In Ruhe vergleichen',
+    }
+  : {
+      avif: '/images/brand/play-dog-alpine-lake-1536.avif',
+      webp: '/images/brand/play-dog-alpine-lake-1536.webp',
+      alt: 'Hund draußen am See',
+      note: 'Passend zum Alltag wählen',
+    };
+
+const amazonOffers = showAmazon
+  ? guide.products.flatMap((product) => {
+      const href = amazonSearchUrl(product.amazonSelection);
+      return href === null ? [] : [{ product, href }];
+    })
+  : [];
 ---
 
 <article class="purchase-guide">
-  <header class="purchase-guide__header">
-    <p class="eyebrow">{guide.eyebrow}</p>
-    <h1>{guide.title}</h1>
-    {guide.intro.map((paragraph) => <p>{paragraph}</p>)}
+  <header class="guide-hero">
+    <div class="guide-hero__copy">
+      <p class="eyebrow">{guide.eyebrow}</p>
+      <h1>{guide.title}</h1>
+      <p class="guide-hero__lead">{guide.intro[0]}</p>
+      {guide.intro.slice(1).map((paragraph) => <p class="guide-hero__context">{paragraph}</p>)}
+      <nav class="guide-nav" aria-label="Inhalt dieser Kaufhilfe">
+        <a href="#direktvergleich">Direktvergleich</a>
+        <a href="#produktdetails">Modelle</a>
+        <a href="#kaufkriterien">Kaufkriterien</a>
+        <a href="#haeufige-fragen">Fragen</a>
+      </nav>
+    </div>
+    <figure class="guide-hero__visual">
+      <picture>
+        <source srcset={hero.avif} type="image/avif" />
+        <img src={hero.webp} alt={hero.alt} width="1536" height="1024" decoding="async" />
+      </picture>
+      <figcaption>{hero.note}</figcaption>
+    </figure>
   </header>
 
-  {
-    showAmazon && (
-      <Notice variante="hinweis" titel="Werbung und Händlerlinks">
-        <p>{AMAZON_DISCLOSURE}</p>
-        <p>
-          Die Amazon-Verweise sind gekennzeichnete Suchlinks. Dein Haustierportal speichert hier
-          keine Amazon-Preise, Bewertungen, Bestände oder Produktbilder.
-        </p>
-      </Notice>
-    )
-  }
+  <section class="quick-choice" aria-labelledby="schnellvergleich-titel">
+    {
+      guide.intro.length > 1 && (
+        <div class="mobile-intro">
+          {guide.intro.slice(1).map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      )
+    }
+    <div class="section-heading">
+      <p class="eyebrow">Die wichtigsten Unterschiede</p>
+      <h2 id="schnellvergleich-titel">Drei Modelle auf einen Blick</h2>
+      <p>Keine Rangliste: Die Karten zeigen, wodurch sich die Bauformen sachlich unterscheiden.</p>
+    </div>
+    <div class="quick-choice__grid">
+      {
+        guide.products.map((product, index) => (
+          <a class="quick-choice__card" href={`#modell-${index + 1}`}>
+            <span class="quick-choice__number" aria-hidden="true">
+              0{index + 1}
+            </span>
+            <span class="quick-choice__name">{product.name}</span>
+            <span class="quick-choice__difference">
+              {product.comparison.at(-1) ?? product.model}
+            </span>
+            <span class="quick-choice__more">Details ansehen ↓</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
 
-  <section aria-labelledby="vergleich-titel">
-    <h2 id="vergleich-titel">Produkte im direkten Vergleich</h2>
+  <section class="comparison" id="direktvergleich" aria-labelledby="vergleich-titel">
+    <div class="section-heading">
+      <p class="eyebrow">Direktvergleich</p>
+      <h2 id="vergleich-titel">Eigenschaften nebeneinander</h2>
+      <p>Vergleiche die dokumentierten Unterschiede und öffne danach das passende Produktprofil.</p>
+    </div>
     <div class="table-scroll" tabindex="0" aria-label="Vergleichstabelle horizontal scrollbar">
       <table>
         <thead>
@@ -55,45 +120,68 @@ const showAmazon = amazonEnabled(process.env);
     </div>
   </section>
 
-  <section class="product-sections" aria-label="Produktdetails">
-    {
-      guide.products.map((product) => (
-        <article class="product-detail">
-          <p class="product-detail__brand">{product.brand}</p>
-          <h2>{product.name}</h2>
-          <p class="product-detail__model">{product.model}</p>
-          {product.summary.map((paragraph) => (
-            <p>{paragraph}</p>
-          ))}
-          <ul>
-            {product.facts.map((fact) => (
-              <li>{fact}</li>
-            ))}
-          </ul>
-          {product.note && <p class="product-detail__note">{product.note}</p>}
-          <p class="product-detail__source">
-            <a href={product.sourceUrl} rel="noopener">
-              Herstellerangaben ansehen ↗
-            </a>
-            <small>
-              {product.sourceLabel} · geprüft am {product.checkedAt}
-            </small>
-          </p>
-          <AmazonLink
-            selection={product.amazonSelection}
-            label={`${product.name} bei Amazon suchen (Werbung)`}
-          />
-        </article>
-      ))
-    }
+  <section class="product-section" id="produktdetails" aria-labelledby="produktdetails-titel">
+    <div class="section-heading">
+      <p class="eyebrow">Dokumentierte Produktprofile</p>
+      <h2 id="produktdetails-titel">Was die Modelle konkret unterscheidet</h2>
+      <p>
+        Die Angaben stammen aus den verlinkten Herstellerquellen. Preise und Verfügbarkeit gehören
+        nicht in die redaktionelle Einordnung.
+      </p>
+    </div>
+    <div class="product-grid">
+      {
+        guide.products.map((product, index) => (
+          <article class="product-detail" id={`modell-${index + 1}`}>
+            <header class="product-detail__header">
+              <span class="product-detail__index" aria-hidden="true">
+                0{index + 1}
+              </span>
+              <div>
+                <p class="product-detail__brand">{product.brand}</p>
+                <h3>{product.name}</h3>
+                <p class="product-detail__model">{product.model}</p>
+              </div>
+            </header>
+            <p>{product.summary[0]}</p>
+            <ul class="fact-list">
+              {product.facts.map((fact) => (
+                <li>{fact}</li>
+              ))}
+            </ul>
+            {product.summary.length > 1 && (
+              <details class="product-detail__more">
+                <summary>Einordnung lesen</summary>
+                {product.summary.slice(1).map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </details>
+            )}
+            {product.note && <p class="product-detail__note">{product.note}</p>}
+            <p class="product-detail__source">
+              <a href={product.sourceUrl} rel="noopener">
+                Herstellerangaben ansehen ↗
+              </a>
+              <small>
+                {product.sourceLabel} · geprüft am {product.checkedAt}
+              </small>
+            </p>
+          </article>
+        ))
+      }
+    </div>
   </section>
 
-  <section aria-labelledby="kriterien-titel">
-    <h2 id="kriterien-titel">{guide.criteriaTitle}</h2>
+  <section class="criteria-section" id="kaufkriterien" aria-labelledby="kriterien-titel">
+    <div class="section-heading">
+      <p class="eyebrow">Vor dem Kauf</p>
+      <h2 id="kriterien-titel">{guide.criteriaTitle}</h2>
+    </div>
     <div class="criteria-grid">
       {
-        guide.criteria.map((criterion) => (
+        guide.criteria.map((criterion, index) => (
           <article>
+            <span aria-hidden="true">{index + 1}</span>
             <h3>{criterion.title}</h3>
             <p>{criterion.text}</p>
           </article>
@@ -102,29 +190,61 @@ const showAmazon = amazonEnabled(process.env);
     </div>
   </section>
 
-  <section aria-labelledby="kurzentscheidung-titel">
-    <h2 id="kurzentscheidung-titel">Kurz eingeordnet</h2>
+  <section class="decision" aria-labelledby="kurzentscheidung-titel">
+    <div>
+      <p class="eyebrow">Entscheidungshilfe</p>
+      <h2 id="kurzentscheidung-titel">Kurz eingeordnet</h2>
+    </div>
     <ul>
       {guide.conclusion.map((item) => <li>{item}</li>)}
     </ul>
   </section>
 
-  <section aria-labelledby="faq-titel">
-    <h2 id="faq-titel">Häufige Fragen</h2>
+  {
+    amazonOffers.length > 0 && (
+      <section class="commerce" aria-labelledby="haendler-titel">
+        <div class="section-heading">
+          <p class="eyebrow">Werbung · Einkaufsmöglichkeiten</p>
+          <h2 id="haendler-titel">Produkte bei Amazon suchen</h2>
+          <p>{AMAZON_DISCLOSURE} Preise und Verfügbarkeit prüfst du direkt beim Händler.</p>
+        </div>
+        <div class="commerce__grid">
+          {amazonOffers.map(({ product, href }) => (
+            <article>
+              <p>{product.brand}</p>
+              <h3>{product.name}</h3>
+              <a class="commerce__link" href={href} {...PARTNER_LINK_ATTRIBUTE}>
+                Bei Amazon suchen ↗ <span class="sr-only">(Werbung)</span>
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="faq-section" id="haeufige-fragen" aria-labelledby="faq-titel">
+    <div class="section-heading">
+      <p class="eyebrow">Gut zu wissen</p>
+      <h2 id="faq-titel">Häufige Fragen</h2>
+    </div>
     <div class="faq-list">
       {
         guide.faqs.map((faq) => (
-          <article>
-            <h3>{faq.question}</h3>
+          <details>
+            <summary>{faq.question}</summary>
             <p>{faq.answer}</p>
-          </article>
+          </details>
         ))
       }
     </div>
   </section>
 
   <aside class="related" aria-labelledby="weiterlesen-titel">
-    <h2 id="weiterlesen-titel">Weiterlesen bei Dein Haustierportal</h2>
+    <div>
+      <p class="eyebrow">Passend zum Thema</p>
+      <h2 id="weiterlesen-titel">Weiterlesen</h2>
+    </div>
     <ul>
       {
         guide.relatedLinks.map((link) => (
@@ -139,46 +259,222 @@ const showAmazon = amazonEnabled(process.env);
 
 <style>
   .purchase-guide {
-    padding-block: var(--space-8) var(--space-12);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(3.5rem, 7vw, 7rem);
+    min-inline-size: 0;
+    padding-block: var(--space-3) var(--space-10);
   }
 
-  .purchase-guide__header {
-    margin-bottom: var(--space-6);
+  .purchase-guide > * {
+    min-inline-size: 0;
+  }
+
+  .guide-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    overflow: hidden;
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-primary-soft);
+  }
+
+  .guide-hero__copy {
+    padding: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .guide-hero h1 {
+    max-inline-size: 18ch;
+    margin-block: var(--space-3) var(--space-5);
+    font-size: clamp(2.35rem, 5vw, 4.75rem);
+  }
+
+  .guide-hero__lead {
+    color: var(--color-ink);
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    max-inline-size: 55ch;
+  }
+
+  .guide-hero__copy > p:not(.eyebrow) {
+    max-inline-size: 64ch;
+  }
+
+  .guide-hero__visual {
+    position: relative;
+    min-block-size: 18rem;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .guide-hero__visual picture,
+  .guide-hero__visual img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .guide-hero__visual img {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+  }
+
+  .guide-hero__visual figcaption {
+    position: absolute;
+    inset-inline-end: var(--space-5);
+    inset-block-end: var(--space-5);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 90%);
+    color: var(--color-primary);
+    font-family: var(--font-hand);
+    font-size: 1.15rem;
+  }
+
+  .guide-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-start: var(--space-6);
+  }
+
+  .guide-nav a {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 70%);
+    color: var(--color-primary-hover);
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+    text-decoration: none;
   }
 
   .eyebrow,
   .product-detail__brand {
+    margin: 0;
     color: var(--color-primary);
     font-size: var(--text-micro);
     font-weight: var(--weight-label);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
+  }
+
+  .section-heading {
+    max-inline-size: 72ch;
+    margin-block-end: var(--space-6);
+  }
+
+  .section-heading h2 {
+    margin-block: var(--space-2) var(--space-3);
+  }
+
+  .section-heading p:last-child {
+    margin-block-end: 0;
+    color: var(--color-text-muted);
+  }
+
+  .quick-choice,
+  .product-section,
+  .faq-section {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mobile-intro {
+    display: none;
+  }
+
+  .quick-choice__grid,
+  .product-grid,
+  .commerce__grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .quick-choice__card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-1) var(--space-3);
+    min-inline-size: 0;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-ink);
+    text-decoration: none;
+    transition:
+      transform var(--transition-normal),
+      border-color var(--transition-normal);
+  }
+
+  .quick-choice__card:hover {
+    border-color: var(--color-primary-border);
+    transform: translateY(-2px);
+  }
+
+  .quick-choice__number {
+    grid-row: 1 / span 3;
+    color: var(--color-orange-600);
+    font-size: 1.8rem;
+    font-weight: var(--weight-h2);
+  }
+
+  .quick-choice__name {
+    font-size: var(--text-h4);
+    font-weight: var(--weight-h3);
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  .quick-choice__difference {
+    color: var(--color-text-muted);
+  }
+
+  .quick-choice__more {
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+  }
+
+  .comparison {
+    scroll-margin-top: 6rem;
   }
 
   .table-scroll {
     overflow-x: auto;
-    margin-block: var(--space-4) var(--space-8);
+    max-inline-size: 100%;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
   }
 
   table {
     width: 100%;
-    min-width: 44rem;
+    min-width: 48rem;
     border-collapse: collapse;
-    background: var(--color-surface);
   }
 
   th,
   td {
-    padding: var(--space-3);
+    padding: var(--space-4);
     text-align: left;
     vertical-align: top;
     border-bottom: 1px solid var(--color-border);
   }
 
   thead th {
-    background: var(--color-primary-soft);
+    background: var(--color-brand-900);
+    color: var(--color-on-dark);
+  }
+
+  tbody th {
+    color: var(--color-ink);
+  }
+
+  tbody tr:nth-child(even) {
+    background: var(--color-surface-subtle);
   }
 
   tbody tr:last-child th,
@@ -186,37 +482,113 @@ const showAmazon = amazonEnabled(process.env);
     border-bottom: 0;
   }
 
-  .product-sections {
-    display: grid;
-    gap: var(--space-5);
-    margin-block: var(--space-8);
+  .product-section,
+  .criteria-section,
+  .faq-section,
+  .commerce {
+    scroll-margin-top: 6rem;
   }
 
   .product-detail {
-    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
     min-width: 0;
-    max-width: 100%;
+    padding: var(--space-5);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-block-start: 5px solid var(--color-orange-500);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-warm);
+  }
+
+  .product-detail:nth-child(2) {
+    border-block-start-color: var(--color-green-500);
+  }
+
+  .product-detail:nth-child(3) {
+    border-block-start-color: var(--color-purple-500);
+  }
+
+  .product-detail:nth-child(4) {
+    border-block-start-color: var(--color-blue-500);
+  }
+
+  .product-detail__header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+    align-items: start;
+  }
+
+  .product-detail__index {
+    display: grid;
+    place-items: center;
+    inline-size: 2.7rem;
+    block-size: 2.7rem;
+    border-radius: 50%;
     background: var(--color-surface);
-    overflow-wrap: anywhere;
+    color: var(--color-primary);
+    font-weight: var(--weight-h3);
   }
 
-  .product-detail h2 {
-    margin-top: 0;
-  }
-
-  .product-detail__brand,
-  .product-detail__model,
-  .product-detail__source {
-    margin-block: 0 var(--space-2);
+  .product-detail h3 {
+    margin: 0;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
   }
 
   .product-detail__model,
-  .product-detail__source small,
+  .product-detail__source,
   .product-detail__note {
     color: var(--color-text-muted);
     font-size: var(--text-small);
+  }
+
+  .product-detail__model {
+    margin-block: var(--space-1) 0;
+  }
+
+  .fact-list {
+    display: grid;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .fact-list li {
+    position: relative;
+    margin: 0;
+    padding-inline-start: var(--space-5);
+  }
+
+  .fact-list li::before {
+    content: '✓';
+    position: absolute;
+    inset-inline-start: 0;
+    color: var(--color-green-600);
+    font-weight: 800;
+  }
+
+  .product-detail__more {
+    margin-block: var(--space-2) var(--space-3);
+    border-block: 1px solid var(--color-border);
+    padding-block: var(--space-3);
+  }
+
+  .product-detail__more summary,
+  .faq-list summary {
+    color: var(--color-ink);
+    font-weight: var(--weight-label);
+    cursor: pointer;
+  }
+
+  .product-detail__note {
+    padding: var(--space-3);
+    border-inline-start: 3px solid var(--color-orange-500);
+    background: var(--color-orange-100);
+  }
+
+  .product-detail__source {
+    margin-block: auto 0;
+    padding-block-start: var(--space-4);
   }
 
   .product-detail__source small {
@@ -224,45 +596,242 @@ const showAmazon = amazonEnabled(process.env);
     margin-top: var(--space-1);
   }
 
-  .product-detail__note {
-    padding: var(--space-3);
-    border-inline-start: 3px solid var(--color-primary);
-    background: var(--color-primary-soft);
+  .criteria-section {
+    padding: clamp(1.5rem, 4vw, 4rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-blue-100);
   }
 
-  .criteria-grid,
-  .faq-list {
+  .criteria-grid {
     display: grid;
     gap: var(--space-4);
   }
 
-  .criteria-grid article,
-  .faq-list article {
-    padding: var(--space-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+  .criteria-grid article {
+    padding: var(--space-5);
+    border: 1px solid rgb(255 255 255 / 80%);
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 68%);
   }
 
-  .criteria-grid h3,
-  .faq-list h3 {
-    margin-top: 0;
+  .criteria-grid article > span {
+    color: var(--color-blue-600);
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+  }
+
+  .criteria-grid h3 {
+    margin-block: var(--space-2);
+  }
+
+  .criteria-grid p {
+    margin: 0;
+  }
+
+  .decision {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(1.5rem, 4vw, 4rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-brand-900);
+    color: var(--color-on-dark-muted);
+  }
+
+  .decision h2,
+  .decision .eyebrow {
+    color: var(--color-on-dark);
+  }
+
+  .decision h2 {
+    margin-block: var(--space-2) 0;
+  }
+
+  .decision ul {
+    margin: 0;
+  }
+
+  .decision li {
+    max-inline-size: 75ch;
+    margin-block: var(--space-3);
+  }
+
+  .commerce {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface-subtle);
+  }
+
+  .commerce__grid article {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .commerce__grid article > p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .commerce__grid h3 {
+    margin-block: var(--space-1) var(--space-4);
+    font-size: var(--text-h4);
+  }
+
+  .commerce__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 44px;
+    margin-block-start: auto;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-weight: var(--weight-button);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .commerce__link:hover {
+    background: var(--color-primary-hover);
+    color: var(--color-primary-contrast);
+  }
+
+  .faq-list {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .faq-list details {
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-warm);
+  }
+
+  .faq-list p {
+    margin: var(--space-3) 0 0;
   }
 
   .related {
-    margin-top: var(--space-10);
-    padding: var(--space-5);
-    border-radius: var(--radius-md);
-    background: var(--color-primary-soft);
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-orange-100);
   }
 
   .related h2 {
-    margin-top: 0;
+    margin-block: var(--space-2) 0;
   }
 
-  @media (min-width: 800px) {
-    .criteria-grid,
-    .faq-list {
+  .related ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .related li {
+    margin-block: var(--space-2);
+  }
+
+  @media (min-width: 760px) {
+    .guide-hero {
+      grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
+      min-block-size: 34rem;
+    }
+
+    .quick-choice__grid,
+    .product-grid,
+    .commerce__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .criteria-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .decision {
+      grid-template-columns: minmax(14rem, 0.7fr) minmax(0, 1.3fr);
+    }
+
+    .related {
+      grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 1.2fr);
+    }
+  }
+
+  @media (min-width: 760px) and (max-width: 1299px) {
+    .guide-hero h1 {
+      font-size: clamp(2.35rem, 4.5vw, 3.6rem);
+    }
+  }
+
+  @media (max-width: 759px) {
+    .purchase-guide {
+      gap: var(--space-16);
+    }
+
+    .guide-hero__visual {
+      order: -1;
+      min-block-size: 10rem;
+    }
+
+    .guide-hero__copy {
+      padding: var(--space-5);
+    }
+
+    .guide-hero h1 {
+      font-size: clamp(1.9rem, 9.5vw, 2.75rem);
+    }
+
+    .guide-hero__context {
+      display: none;
+    }
+
+    .mobile-intro {
+      display: grid;
+      gap: var(--space-3);
+      margin-block-end: var(--space-6);
+      padding-inline-start: var(--space-4);
+      border-inline-start: 3px solid var(--color-orange-500);
+      color: var(--color-text-muted);
+    }
+
+    .mobile-intro p {
+      margin: 0;
+    }
+
+    .guide-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .guide-nav a {
+      text-align: center;
+    }
+
+    .quick-choice,
+    .product-section,
+    .faq-section,
+    .criteria-section,
+    .decision,
+    .commerce,
+    .related {
+      border-radius: var(--radius-lg);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .quick-choice__grid,
+    .product-grid,
+    .commerce__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 </style>

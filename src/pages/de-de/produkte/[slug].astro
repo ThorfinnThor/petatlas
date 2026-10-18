@@ -24,7 +24,12 @@ const canonicalPfad = `/de-de/produkte/${guide.slug}/`;
 const market = defaultMarket();
 ---
 
-<BaseLayout title={guide.metaTitle} description={guide.description} canonicalPfad={canonicalPfad}>
+<BaseLayout
+  title={guide.metaTitle}
+  description={guide.description}
+  canonicalPfad={canonicalPfad}
+  weit
+>
   <Breadcrumbs market={market} stufen={[{ label: guide.title }]} />
   <PurchaseGuide guide={guide} />
 </BaseLayout>

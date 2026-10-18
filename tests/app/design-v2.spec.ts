@@ -260,3 +260,42 @@ for (const width of [390, 1440]) {
     );
   });
 }
+
+for (const width of [320, 390, 768, 1440]) {
+  test(`purchase guide uses a clear decision flow at ${width}px`, async ({ page }) => {
+    const height = width === 320 ? 720 : width === 390 ? 844 : width === 768 ? 1024 : 900;
+    await page.setViewportSize({ width, height });
+    await page.goto('/de-de/produkte/katzentoilette-vergleich/');
+
+    await expect(page.locator('.guide-hero')).toBeVisible();
+    await expect(page.locator('.guide-hero img')).toBeVisible();
+    await expect(page.locator('.quick-choice__card')).toHaveCount(3);
+    await expect(page.locator('.product-detail')).toHaveCount(3);
+    await expect(page.locator('.commerce')).toBeVisible();
+
+    const order = await page.evaluate(() => {
+      const products = document.querySelector('.product-section');
+      const commerce = document.querySelector('.commerce');
+      return Boolean(
+        products &&
+        commerce &&
+        products.compareDocumentPosition(commerce) & Node.DOCUMENT_POSITION_FOLLOWING,
+      );
+    });
+    expect(order).toBe(true);
+
+    const layout = await page.evaluate(() => ({
+      overflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+      mainWidth: document.querySelector('main')?.getBoundingClientRect().width ?? 0,
+      heroHeight: document.querySelector('.guide-hero')?.getBoundingClientRect().height ?? 0,
+    }));
+    expect(layout.overflow).toBe(false);
+    expect(layout.heroHeight).toBeLessThanOrEqual(height * (width < 600 ? 1.25 : 0.95));
+    if (width === 1440) expect(layout.mainWidth).toBeGreaterThan(1300);
+
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+      .analyze();
+    expect(results.violations.map((item) => ({ id: item.id, nodes: item.nodes }))).toEqual([]);
+  });
+}

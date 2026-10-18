@@ -32,13 +32,13 @@ body {
 /* ---------- Abschnitt 6: Container ---------- */
 
 .page-container {
-  inline-size: min(100% - 2rem, var(--content-max));
+  inline-size: min(100% - 2rem, var(--content-canvas));
   margin-inline: auto;
 }
 
 @media (min-width: 768px) {
   .page-container {
-    inline-size: min(100% - 4rem, var(--content-max));
+    inline-size: min(100% - 4rem, var(--content-canvas));
   }
 }
 
