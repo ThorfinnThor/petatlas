@@ -42,7 +42,7 @@ const amazonOffers = showAmazon
       <p class="eyebrow">{guide.eyebrow}</p>
       <h1>{guide.title}</h1>
       <p class="guide-hero__lead">{guide.intro[0]}</p>
-      {guide.intro.slice(1).map((paragraph) => <p>{paragraph}</p>)}
+      {guide.intro.slice(1).map((paragraph) => <p class="guide-hero__context">{paragraph}</p>)}
       <nav class="guide-nav" aria-label="Inhalt dieser Kaufhilfe">
         <a href="#direktvergleich">Direktvergleich</a>
         <a href="#produktdetails">Modelle</a>
@@ -60,6 +60,15 @@ const amazonOffers = showAmazon
   </header>
 
   <section class="quick-choice" aria-labelledby="schnellvergleich-titel">
+    {
+      guide.intro.length > 1 && (
+        <div class="mobile-intro">
+          {guide.intro.slice(1).map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      )
+    }
     <div class="section-heading">
       <p class="eyebrow">Die wichtigsten Unterschiede</p>
       <h2 id="schnellvergleich-titel">Drei Modelle auf einen Blick</h2>
@@ -373,6 +382,10 @@ const amazonOffers = showAmazon
     box-shadow: var(--shadow-sm);
   }
 
+  .mobile-intro {
+    display: none;
+  }
+
   .quick-choice__grid,
   .product-grid,
   .commerce__grid {
@@ -410,6 +423,8 @@ const amazonOffers = showAmazon
   .quick-choice__name {
     font-size: var(--text-h4);
     font-weight: var(--weight-h3);
+    hyphens: auto;
+    overflow-wrap: break-word;
   }
 
   .quick-choice__difference {
@@ -735,7 +750,7 @@ const amazonOffers = showAmazon
     .quick-choice__grid,
     .product-grid,
     .commerce__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .criteria-grid {
@@ -758,7 +773,7 @@ const amazonOffers = showAmazon
 
     .guide-hero__visual {
       order: -1;
-      min-block-size: 14rem;
+      min-block-size: 10rem;
     }
 
     .guide-hero__copy {
@@ -766,7 +781,24 @@ const amazonOffers = showAmazon
     }
 
     .guide-hero h1 {
-      font-size: clamp(2.2rem, 11vw, 3.2rem);
+      font-size: clamp(1.9rem, 9.5vw, 2.75rem);
+    }
+
+    .guide-hero__context {
+      display: none;
+    }
+
+    .mobile-intro {
+      display: grid;
+      gap: var(--space-3);
+      margin-block-end: var(--space-6);
+      padding-inline-start: var(--space-4);
+      border-inline-start: 3px solid var(--color-orange-500);
+      color: var(--color-text-muted);
+    }
+
+    .mobile-intro p {
+      margin: 0;
     }
 
     .guide-nav {
@@ -786,6 +818,14 @@ const amazonOffers = showAmazon
     .commerce,
     .related {
       border-radius: var(--radius-lg);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .quick-choice__grid,
+    .product-grid,
+    .commerce__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 </style>
