@@ -5,18 +5,6 @@
   "merchantName": "Fressnapf",
   "products": [
     {
-      "productId": "14757:37916609566",
-      "productName": "ACANA Bountiful Catch mit Lachs, Hering und Seehecht 1,8 kg",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "cat",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "merchantProductId": "37916609566",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F7%2F3%2F4%2F2%2F734254f71d33f3f7b0281443be7f8f972f7dad5a_1384279_0.jpg&feedId=44979&k=f021623d9f4c65fd74bd2fff7d8f516388932409",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=37916609566&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/acana-bountiful-catch-mit-lachs-hering-und-seehecht-18-kg-1384279/"
-    },
-    {
       "productId": "14757:41974521258",
       "productName": "ACANA Bountiful Catch mit Lachs, Hering und Seehecht 2x4,5 kg",
       "brand": "Herstellerangabe nicht angegeben",
@@ -293,28 +281,16 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/almo-nature-almo-hfc-6x70g-huehnerbrust-1479701/"
     },
     {
-      "productId": "14757:45509164910",
-      "productName": "4 Animals Käseknochen für Hunde – Kausnack aus 99,9 % Kuhmilch Kauspaß proteinreich 120 g",
+      "productId": "14757:35754670601",
+      "productName": "Almo nature Almo HFC 6x70g Hühnerschenkel",
       "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
+      "species": "cat",
       "category": "food",
       "categoryLabel": "Futter",
-      "merchantProductId": "45509164910",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fe%2F4%2Fe%2F1%2Fe4e1c472cc152a6d5c888f46a1d39d4d32cb5c0a_4152727_0_de_b8e41ba286ff4a3589b75326aa6b26fc.png&feedId=44979&k=5ce7d104096e7cecd64c51769f5080efeeaf0bb9",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45509164910&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/4-animals-kaeseknochen-fuer-hunde--kausnack-aus-999--kuhmilch-kauspass-proteinreich-120-g-4152727/"
-    },
-    {
-      "productId": "14757:45509168873",
-      "productName": "4 Animals Käseknochen für Hunde – Kausnack aus 99,9 % Kuhmilch Kauspaß proteinreich 132 g",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "merchantProductId": "45509168873",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F1%2Fa%2F4%2Fb%2F1a4ba27105d7a2c27c784158b5e828908793640c_4152728_0_de_14aff66f1bcc4314bcabb3bc7403db44.png&feedId=44979&k=d444474f831a0b2278c52a910c22245b1004b8b8",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45509168873&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/4-animals-kaeseknochen-fuer-hunde--kausnack-aus-999--kuhmilch-kauspass-proteinreich-132-g-4152728/"
+      "merchantProductId": "35754670601",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F9%2F4%2F4%2F0%2F9440857ba59248bbb772b2e9172c254f47f87b85_1479700_0.png&feedId=44979&k=e6a98ce9bad77642282d9f1d0c7d821e8461e07c",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=35754670601&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/almo-nature-almo-hfc-6x70g-huehnerschenkel-1479700/"
     },
     {
       "productId": "14757:45509168872",
@@ -341,16 +317,16 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/4-animals-kaeseknochen-fuer-hunde--kausnack-aus-999--kuhmilch-kauspass-proteinreich-250-g-4152729/"
     },
     {
-      "productId": "14757:45509161496",
-      "productName": "4 Animals Käseknochen für Hunde – Kausnack aus 99,9 % Kuhmilch Kauspaß proteinreich 60 g",
+      "productId": "14757:45509164910",
+      "productName": "4 Animals Käseknochen für Hunde – Kausnack aus 99,9 % Kuhmilch Kauspaß proteinreich 2x60 g",
       "brand": "Herstellerangabe nicht angegeben",
       "species": "dog",
       "category": "food",
       "categoryLabel": "Futter",
-      "merchantProductId": "45509161496",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F1%2Fe%2F9%2Fb%2F1e9bec2103ac04eb02c6699af42412d3227b44d8_4152726_0_de_42c65def6b45400d92d3f42ba6489366.png&feedId=44979&k=b021bd2075da1bdaf482000c0525af99197ecca9",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45509161496&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/4-animals-kaeseknochen-fuer-hunde--kausnack-aus-999--kuhmilch-kauspass-proteinreich-60-g-4152726/"
+      "merchantProductId": "45509164910",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fe%2F4%2Fe%2F1%2Fe4e1c472cc152a6d5c888f46a1d39d4d32cb5c0a_4152727_0_de_b8e41ba286ff4a3589b75326aa6b26fc.png&feedId=44979&k=5ce7d104096e7cecd64c51769f5080efeeaf0bb9",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45509164910&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/4-animals-kaeseknochen-fuer-hunde--kausnack-aus-999--kuhmilch-kauspass-proteinreich-2x60-g-4152727/"
     },
     {
       "productId": "14757:46039418073",
@@ -399,18 +375,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F7%2Fd%2F5%2F0%2F7d50b5a50f3bdff8d40e5aad73776c5653ddd542_2205676__1_.png&feedId=44979&k=428829495a69c9b58b707f02ab912b619bbc7005",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=44774082740&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-chicken-with-carrot-sticks-80-g-2205676/"
-    },
-    {
-      "productId": "14757:44774082737",
-      "productName": "8in1 Chicken with Rice Sticks 80g",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "dog",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "merchantProductId": "44774082737",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F1%2Fe%2Fd%2F8%2F1ed84efb6816c0af77cba3787baba412ff95ff28_2205675__4_.png&feedId=44979&k=90c48f0619cbdff50d3b5821977618f3c786b8ed",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44774082737&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-chicken-with-rice-sticks-80g-2205675/"
     },
     {
       "productId": "14757:40888826156",
@@ -471,6 +435,30 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fe%2Fb%2F1%2F2%2Feb12d5a2fd9e3a3b0d377f821d3cc216526d7e72_1002106_0.png&feedId=44979&k=83dc1727e1e581bf3a8288f3d0dc1ff71dbae0cf",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=40690063487&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-kausticks-1x3-stueck-rind-1002106/"
+    },
+    {
+      "productId": "14757:44377887341",
+      "productName": "8in1 Delights Pro Dental Sticks 3Stk. 75g",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "dog",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "merchantProductId": "44377887341",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fa%2F0%2F6%2F8%2Fa068892cbcfb67507c984d00b382b18e291cf068_1082889_0.png&feedId=44979&k=35a5f38d4b28145130995bf878137d65fd9bc674",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44377887341&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-pro-dental-sticks-3stk-75g-1082889/"
+    },
+    {
+      "productId": "14757:44774082719",
+      "productName": "8in1 Delights Pro Dental Twisted Sticks 10 Stück",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "dog",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "merchantProductId": "44774082719",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F6%2Ff%2F7%2Ff%2F6f7fe8f5a07b8d5305e48dd8bffb209856e75597_1196002003_0.png&feedId=44979&k=732edbe1a8cc23804cdaa6e6d45826c18a5ce5e0",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44774082719&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-delights-pro-dental-twisted-sticks-10-stueck-1196002003/"
     },
     {
       "productId": "14757:40888826154",
@@ -579,6 +567,18 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Ff%2F6%2Fc%2Ff%2Ff6cf72bd47bf2b7bdeef54cef60c3b9663ea76de_1941675__2_.png&feedId=44979&k=ca628a53fbd88c8694847787be33c95729612d80",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=42833755941&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-triple-flavour-mega-ribs-140g-1941675/"
+    },
+    {
+      "productId": "14757:42833755942",
+      "productName": "8in1 Triple Flavour Mega Skewers 160g",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "dog",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "merchantProductId": "42833755942",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fa%2F3%2Fe%2F0%2Fa3e07f39c605f504f91e21059f5e42515a1d26a8_1941676__2_.png&feedId=44979&k=35c9934bd471b7559968286fd5984abe749a7d2f",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=42833755942&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/8in1-triple-flavour-mega-skewers-160g-1941676/"
     },
     {
       "productId": "14757:43933611448",
@@ -737,6 +737,18 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/all-for-paws-nachfuellpack-schmetterlinge-6er-pack-1249561/"
     },
     {
+      "productId": "14757:46299989401",
+      "productName": "AniOne  Intelligenzspielzeug Katze Yang",
+      "brand": "Herstellerangabe nicht angegeben",
+      "species": "cat",
+      "category": "toy",
+      "categoryLabel": "Spielzeug",
+      "merchantProductId": "46299989401",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2Fb%2F5%2Fd%2F1%2Fb5d116cc8374f0597223407453014e35aaaf9244_1929110__2_.png&feedId=44979&k=96f2464f548b1107a7719cd70b7d16db348e988c",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=46299989401&a=3037577&m=14757",
+      "merchantUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-katze-yang-1929110/"
+    },
+    {
       "productId": "14757:45181108823",
       "productName": "AniOne  Intelligenzspielzeug Katze Yin",
       "brand": "Herstellerangabe nicht angegeben",
@@ -855,18 +867,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F3%2Fb%2Ff%2F2%2F3bf278a48c2e9ba7fdeb308188777d7f6506cc1e_7d5b1d079482bc7f3f33de24d2dd50f99bc90909.jpg&feedId=44979&k=67db9a863b421cbbb4e01afe3858833fc427e607",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=32674467245&a=3037577&m=14757",
       "merchantUrl": "https://www.fressnapf.de/ul/p/anione-katzenangel-qualle-1336935/"
-    },
-    {
-      "productId": "14757:38939850978",
-      "productName": "AniOne Katzenangel Tiger",
-      "brand": "Herstellerangabe nicht angegeben",
-      "species": "cat",
-      "category": "toy",
-      "categoryLabel": "Spielzeug",
-      "merchantProductId": "38939850978",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F7%2Fd%2Fe%2Fb%2F7debd8b4d0506ea105738a4f24d60d2360cef01d_1414251_1_AO_K.png&feedId=44979&k=fe1c2c109ec0ae8d52579da466c3bc5ec389c9f9",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=38939850978&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/anione-katzenangel-tiger-1414251/"
     },
     {
       "productId": "14757:46009508415",
@@ -1157,5 +1157,5 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/anione-hundespielzeug-schwimmfaehiger-spielspass-2692439/"
     }
   ],
-  "generatedAt": "2026-10-12T08:54:29.846Z"
+  "generatedAt": "2026-10-18T08:11:16.253Z"
 }
