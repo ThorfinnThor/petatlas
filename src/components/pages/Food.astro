@@ -861,8 +861,7 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
   }
 
   @media (min-width: 700px) {
-    .food-steps ol,
-    .declaration-guide__grid {
+    .food-steps ol {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
@@ -870,7 +869,6 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
       grid-template-columns: minmax(12rem, 0.35fr) minmax(0, 1fr);
     }
 
-    .product-groups,
     .limits {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -884,6 +882,14 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
     .food-hero {
       grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr);
       min-block-size: 34rem;
+    }
+
+    .product-groups {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .declaration-guide__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
