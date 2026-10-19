@@ -30,6 +30,7 @@ import snapshot from '../../../../data-snapshots/places/places-de.json' with { t
 import { oeffentlicheProjektion } from '../../../../scripts/publish/places.ts';
 import type { Place } from '../../../domain/schemas/places.ts';
 import { applyDirectoryControls } from '../../../features/map/directory-controls.ts';
+import { istIndexierbareStadtseite } from '../../../features/seo/index-quality.ts';
 
 const MAX_TREFFER = 100;
 
@@ -81,6 +82,7 @@ const KOMMUNAL_MAX = 30;
 ---
 
 <BaseLayout
+  neverIndex={!istIndexierbareStadtseite(seite.slug)}
   title={`Tierärzte und Tierbedarf in ${seite.stadt.name}`}
   description={`Tierärzte, Tierbedarf, Tierheime und Hundewiesen in ${seite.stadt.name} und Umgebung – mit Filtern, Karte, Datenstand und Quellen.`}
   route="map"

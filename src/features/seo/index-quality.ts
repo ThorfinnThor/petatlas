@@ -8,14 +8,38 @@
  * 500 indexierbaren URLs.
  */
 import { gruppen, positionen, type Gebuehrenposition, type Gruppe } from '../costs/detail.ts';
+import { stadtAllowlist } from '../map/city-allowlist.ts';
 
+/**
+ * Indexkonzentration vom 19.10.2026: Die neue Domain bekam ab dem 10.10.2026
+ * keine Impressionen mehr, obwohl die Seiten indexiert blieben (keine manuelle
+ * Maßnahme). Fast alle Impressionen kamen von GOT-Einzelseiten, also von
+ * Hunderten gleich gebauter Seiten aus einer amtlichen Tabelle. Statt 453
+ * werden nur noch rund 115 Seiten zur Indexierung angeboten; alle übrigen
+ * bleiben erreichbar, aber `noindex`. Begründung und Rückweg:
+ * docs/reviews/seo-index-concentration-2026-10-19.md
+ */
 export const SEO_INDEX_BUDGET = {
-  minimum: 400,
-  target: 450,
-  maximum: 500,
-  gotPositions: 298,
-  minimumGotGroupSize: 5,
+  minimum: 100,
+  target: 115,
+  maximum: 160,
+  /** GOT-Einzelseiten ab diesem Qualitätswert: Haustierbezug und mindestens zwei Alltagsmerkmale. */
+  minimumGotScore: 750,
+  minimumGotGroupSize: 15,
+  /** Stadtseiten nur mit genügend gemessenen lokalen Orten. */
+  minimumCityPlaces: 60,
 } as const;
+
+/**
+ * GOT-Positionen mit messbarer Nachfrage in der Search Console
+ * (22.09.–17.10.2026, mindestens 12 Impressionen) und Bezug zu Hund, Katze
+ * oder Heimtier. Nutztier- und Pferdepositionen sind bewusst nicht dabei,
+ * ebenso Seiten, die seit dem 24.09.2026 ohnehin `noindex` waren: In einer
+ * Abwertung kommen keine Seiten zurück in den Index.
+ */
+export const GOT_NACHFRAGE = [
+  '16', '143', '166', '180', '208', '221', '234', '235', '240', '310', '345', '394', '604', '627', '754', '854', '951', '955',
+] as const;
 
 const HAUSTIER_SIGNAL = ['hund', 'katze', 'frettchen', 'heimsäugetier', 'heimtier'] as const;
 
@@ -123,8 +147,14 @@ const POSITIONEN_NACH_QUALITAET = [...positionen()].sort((a, b) => {
   return a.slug.localeCompare(b.slug, 'de');
 });
 
+const NACHFRAGE = new Set<string>(GOT_NACHFRAGE);
+
 const INDEXIERBARE_POSITIONEN = new Set(
-  POSITIONEN_NACH_QUALITAET.slice(0, SEO_INDEX_BUDGET.gotPositions).map(({ slug }) => slug),
+  POSITIONEN_NACH_QUALITAET.filter(
+    (position) =>
+      gotPositionsQualitaet(position).score >= SEO_INDEX_BUDGET.minimumGotScore ||
+      NACHFRAGE.has(position.item.officialItemId),
+  ).map(({ slug }) => slug),
 );
 
 export function indexierbareGotPositionen(): readonly Gebuehrenposition[] {
@@ -153,3 +183,20 @@ export function istIndexierbareGotGruppe(gruppe: Gruppe): boolean {
 export function indexierbareGotGruppen(): readonly Gruppe[] {
   return gruppen().filter(istIndexierbareGotGruppe);
 }
+
+/** Stadtseiten: gebaut werden alle geeigneten, indexiert nur die mit dichtem Bestand. */
+const INDEXIERBARE_STAEDTE = new Set(
+  stadtAllowlist()
+    .cities.filter((stadt) => (stadt.measured?.total ?? 0) >= SEO_INDEX_BUDGET.minimumCityPlaces)
+    .map((stadt) => stadt.slug),
+);
+
+export function istIndexierbareStadtseite(slug: string): boolean {
+  return INDEXIERBARE_STAEDTE.has(slug);
+}
+
+/**
+ * Einzelne Futterpackungen (rund 270 Wörter, je Sorte mehrere fast gleiche
+ * Packungsgrößen) werden nicht mehr indexiert; die Futterübersicht bleibt.
+ */
+export const FUTTERPRODUKTE_INDEXIERBAR = false;

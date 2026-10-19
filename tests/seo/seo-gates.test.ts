@@ -366,15 +366,15 @@ describe('Sitemap', () => {
 });
 
 describe('Indexierungsbudget', () => {
-  it('akzeptiert den Zielkorridor von 400 bis 500 Seiten', () => {
-    expect(pruefeIndexBudget(400)).toBeNull();
-    expect(pruefeIndexBudget(450)).toBeNull();
-    expect(pruefeIndexBudget(500)).toBeNull();
+  it('akzeptiert den Zielkorridor von 100 bis 160 Seiten', () => {
+    expect(pruefeIndexBudget(100)).toBeNull();
+    expect(pruefeIndexBudget(130)).toBeNull();
+    expect(pruefeIndexBudget(160)).toBeNull();
   });
 
   it('stoppt zu kleine und zu große öffentliche URL-Bestände', () => {
-    expect(pruefeIndexBudget(399)).toContain('Nur 399');
-    expect(pruefeIndexBudget(501)).toContain('höchstens 500');
+    expect(pruefeIndexBudget(99)).toContain('Nur 99');
+    expect(pruefeIndexBudget(161)).toContain('höchstens 160');
   });
 });
 
