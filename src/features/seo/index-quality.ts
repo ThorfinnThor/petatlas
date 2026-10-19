@@ -38,7 +38,24 @@ export const SEO_INDEX_BUDGET = {
  * Abwertung kommen keine Seiten zurück in den Index.
  */
 export const GOT_NACHFRAGE = [
-  '16', '143', '166', '180', '208', '221', '234', '235', '240', '310', '345', '394', '604', '627', '754', '854', '951', '955',
+  '16',
+  '143',
+  '166',
+  '180',
+  '208',
+  '221',
+  '234',
+  '235',
+  '240',
+  '310',
+  '345',
+  '394',
+  '604',
+  '627',
+  '754',
+  '854',
+  '951',
+  '955',
 ] as const;
 
 const HAUSTIER_SIGNAL = ['hund', 'katze', 'frettchen', 'heimsäugetier', 'heimtier'] as const;
