@@ -19,7 +19,7 @@
     <p>Die Suche benötigt JavaScript. Die Inhalte sind über die Navigation erreichbar.</p>
   </noscript>
   <form id="suche-form" role="search" aria-labelledby="suche-titel" hidden>
-    <label for="suche-feld" class="sr-only">Suchbegriff</label>
+    <label for="suche-feld" class="suche__label">Suchbegriff</label>
     <input
       id="suche-feld"
       type="search"
@@ -65,6 +65,16 @@
   .suche form {
     max-inline-size: 36rem;
     margin-inline: auto;
+    text-align: start;
+  }
+
+  .suche__label {
+    display: block;
+    margin-block-end: var(--space-2);
+    padding-inline-start: var(--space-4);
+    color: var(--color-text);
+    font-size: var(--text-small);
+    font-weight: 600;
   }
 
   .suche input {
