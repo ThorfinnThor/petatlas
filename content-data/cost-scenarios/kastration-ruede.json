@@ -1,0 +1,34 @@
+{
+  "scenarioId": "kastration-ruede",
+  "title": "Kastration beim Rüden",
+  "species": "dog",
+  "lines": [
+    {
+      "officialItemId": "16",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "330",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "377",
+      "quantity": 1,
+      "factor": 1
+    }
+  ],
+  "exclusions": [
+    "Arzneimittel und Verbrauchsmaterial",
+    "Fremdlabor",
+    "Wegegeld",
+    "Nachkontrollen und Fädenziehen an einem späteren Termin",
+    "Voruntersuchung des Blutes",
+    "Inhalationsnarkose, Intubation und Monitoring, falls die Praxis sie einsetzt",
+    "Halskragen oder Body"
+  ],
+  "clinicalReview": "unreviewed",
+  "reviewedAt": null,
+  "reviewedBy": null
+}

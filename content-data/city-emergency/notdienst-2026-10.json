@@ -1,0 +1,334 @@
+{
+  "datasetId": "notdienst-2026-10",
+  "checkedAt": "2026-10-20",
+  "cities": {
+    "berlin": {
+      "kammer": {
+        "name": "Tierärztekammer Berlin",
+        "url": "https://tieraerztekammer-berlin.de/notdienst/",
+        "verbatim": "In Berlin finden Sie zu allen Tageszeiten dienstbereite Tierarztpraxen."
+      },
+      "dienste": [
+        {
+          "kind": "notdienstplan",
+          "name": "Notdienst-Übersicht der Tierärztekammer Berlin",
+          "url": "https://tieraerztekammer-berlin.de/notdienst/",
+          "phone": null,
+          "coverage": "Berlin (plus Teltow)",
+          "verbatim": "Tierkliniken oder Praxen mit 24 Stunden-Notdienst für Klein- und Heimtiere",
+          "note": "Keine Dienstrotation, sondern statische Liste: 5 Einrichtungen mit 24-h-Notdienst (Klinik für Klein- und Heimtiere Biesdorf, Valera Zehlendorf, Tierarztpraxis Bärenwiese, Tierarztpraxis Rödiger, VetZentrum Berlin Marzahn) und weitere Praxen mit Wochenend-/Feiertagszeiten. Kammer weist auf Kapazitätsengpässe in allen Tierkliniken hin; Tierkliniken nur bei lebensbedrohlichen Zuständen aufsuchen."
+        },
+        {
+          "kind": "klinik-24h",
+          "name": "Tierarztpraxis Bärenwiese",
+          "url": "https://tierarzt-baerenwiese.de/",
+          "phone": "0174 160 160 6",
+          "coverage": "Berlin-Wilmersdorf (Uhlandstr. 151)",
+          "verbatim": "Wenn Ihr Tier plötzlich erkrankt, sind wir für Sie da! Und das an 365 Tagen im Jahr – 24 Stunden.",
+          "note": "Praxis (keine Tierklinik), auf der Kammerliste unter 24-h-Notdienst geführt. Telefon ist die auf der Website genannte „24h Notrufnummer“; die Kammerseite nennt 030 23 36 26 27."
+        },
+        {
+          "kind": "notdienstnummer",
+          "name": "Tierärzte im Notdienst – Berlin & Brandenburg (mobil)",
+          "url": "https://tieraerztekammer-berlin.de/notdienst/",
+          "phone": "0157 859 49 631",
+          "coverage": "Berlin & Brandenburg (Hausbesuche)",
+          "verbatim": "Tierärzte im Notdienst – Berlin & Brandenburg – Notruf: 0157 859 49 631 täglich 24 Stunden Hausbesuche",
+          "note": "Mobiler Hausbesuchsdienst, auf der Kammerseite gelistet (eigene Website tierarzt-notdienst-berlin.de nicht geprüft). Kein organisierter Kammer-Notdienst."
+        }
+      ],
+      "notes": "Berlin hat keinen zentralen Notdienstring/keine zentrale Nummer; die Kammer verweist auf eine Liste und auf Internetsuche. Eigene Websites von Biesdorf, Valera, Rödiger und VetZentrum Marzahn nicht verifiziert (Domains nicht gefunden/erreichbar) – nur über Kammerliste belegt."
+    },
+    "bochum": {
+      "kammer": {
+        "name": "Tierärztekammer Westfalen-Lippe",
+        "url": "https://www.tieraerztekammer-wl.de/fuer-tierhalter/notdienst-finder",
+        "verbatim": "In den meisten Städten und Kreisen gibt es einen organisierten Notfalldienst, den Sie telefonisch erreichen können."
+      },
+      "dienste": [],
+      "notes": "Der Notdienst-Finder der Tierärztekammer Westfalen-Lippe listet keine Kreisstelle Bochum und keinen Bochumer Notdienstring (nur u. a. Dortmund, Ennepe-Ruhr/Witten, Hagen, Recklinghausen, Unna/Hamm). Kein eigener Notdienstring und keine Bochumer Tierklinik mit eigener 24-h-Aussage gefunden (Treffer nur in Verzeichnissen wie dasoertliche, die ausgeschlossen sind). Nächstgelegene verifizierte 24-h-Klinik: Tierärztliche Klinik Dr. Apelt in Essen-Altenessen (https://tieraerztliche-klinik.de/, 0201/342604) – Nachbarstadt, nicht in Bochum; daher nicht als Dienst eingetragen. Witten-Ring deckt laut eigener Seite nur Witten, Hattingen, Sprockhövel und Schwelm ab."
+    },
+    "dresden": {
+      "kammer": {
+        "name": "Sächsische Landestierärztekammer",
+        "url": "https://www.tieraerztekammer-sachsen.de/seite/487985/notfalldienst.html",
+        "verbatim": "Diese Hinweise der Sächsischen Landestierärztekammer sollen dem Tierhalter helfen, Notfallsituationen mit dem Tier mit möglichst klarem Kopf zu meistern"
+      },
+      "dienste": [
+        {
+          "kind": "notdienstnummer",
+          "name": "Tierärztlicher Notfalldienst Sachsen (Kleintiere) – zentrale Notrufnummer",
+          "url": "https://daten2.verwaltungsportal.de/dateien/seitengenerator/8f44d27778485ce0e900106b5435217b214529/Notfalldienst-Flyer_Stand_2025.pdf",
+          "phone": "01805 84 37 36",
+          "coverage": "Freistaat Sachsen (Kleintiere); Weiterleitung an die nächstgelegene diensthabende Praxis",
+          "verbatim": "In Nachtstunden (von 18:00 Uhr bis 8:00 Uhr), an Wochenenden (von freitags 18:00 Uhr bis montags 8:00 Uhr) und an Feiertagen (ganztägig) halten sich die eingeteilten Tierarztpraxen […] dienstbereit.",
+          "note": "Quelle ist der Flyer der Sächsischen Landestierärztekammer (Stand 2025), verlinkt auf der Kammerseite. 0,14 €/min. Übersicht der diensthabenden Praxen laut Flyer auf www.vetnotdienst.de (Seite lädt dynamisch, Inhalt nicht prüfbar). Laut Flyer keine Hausbesuche."
+        }
+      ],
+      "notes": "Sachsenweite zentrale Nummer (13 Notfalldienstringe laut Sekundärquellen, nicht auf Kammerseite verifiziert). Keine Dresdner Klinik mit eigener 24-h-Aussage geprüft."
+    },
+    "duesseldorf": {
+      "kammer": {
+        "name": "Tierärztekammer Nordrhein",
+        "url": "https://www.tieraerztekammer-nordrhein.de/informationen-zum-tieraerztlichen-notdienst/",
+        "verbatim": "Kreisstelle Düsseldorf: Keine aktuellen Veröffentlichungen/Daten. Keine zentrale Rufnummer."
+      },
+      "dienste": [
+        {
+          "kind": "klinik-24h",
+          "name": "Tierklinik Düsseldorf (AniCura), Münsterstr. 359",
+          "url": "https://tierklinikduesseldorf.de/",
+          "phone": "0211 - 62 68 68",
+          "coverage": "Düsseldorf",
+          "verbatim": "Als einzige Notfalltierklinik in Düsseldorf kümmert sich die Tierklinik Düsseldorf 24/7 um die Bedürfnisse der Tiere.",
+          "note": "Seit Dezember 2024 Teil von AniCura. Seite: „Kommen Sie bei einem Notfall direkt in die Klinik.“ Hinweis auf Wartezeiten und Mehrkosten im Notdienst."
+        }
+      ],
+      "notes": "Laut Tierärztekammer Nordrhein gibt es für Düsseldorf keine veröffentlichten Notdienstdaten und keine zentrale Rufnummer. Seit 01.01.2025 gilt in NRW eine Notdienstpflicht (Notfalldienstordnung). Einzige verifizierte Anlaufstelle ist die Tierklinik Düsseldorf (24/7)."
+    },
+    "essen": {
+      "kammer": {
+        "name": "Tierärztekammer Nordrhein",
+        "url": "https://www.tieraerztekammer-nordrhein.de/informationen-zum-tieraerztlichen-notdienst/",
+        "verbatim": "Kreisstelle Essen: Zentrale Rufnummer: 01806-451300 (kostenpflichtig, abhängig vom Netzbetreiber)."
+      },
+      "dienste": [
+        {
+          "kind": "notdienstnummer",
+          "name": "Tierärztlicher Notfalldienst Kreisstelle Essen – zentrale Rufnummer",
+          "url": "https://www.tieraerztekammer-nordrhein.de/informationen-zum-tieraerztlichen-notdienst/",
+          "phone": "01806-451300",
+          "coverage": "Kreisstelle Essen",
+          "verbatim": "Kreisstelle Essen: Zentrale Rufnummer: 01806-451300 (kostenpflichtig, abhängig vom Netzbetreiber).",
+          "note": "Nur über die Kammerübersicht belegt; keine eigene Website des Rings gefunden. Kammer übernimmt laut Seite keine Gewähr für die Aktualität. Zeiten nicht angegeben (NRW-Notdienstzeiten laut Kammer allgemein)."
+        },
+        {
+          "kind": "klinik-24h",
+          "name": "Tierärztliche Klinik für Kleintiere Dr. med. vet. Jan Apelt",
+          "url": "https://tieraerztliche-klinik.de/",
+          "phone": "0201/342604",
+          "coverage": "Essen (Stankeitstr. 11, 45326 Essen-Altenessen)",
+          "verbatim": "24h Notdienst (telefonische Anmeldung erbeten): Tel.: 0201/342604",
+          "note": "Telefonische Anmeldung erbeten. Die Seite nennt keinen Wochentag-/Uhrzeit-Text über die Überschrift „24h Notdienst“ hinaus."
+        }
+      ],
+      "notes": "Klinik Apelt liegt in Essen-Altenessen."
+    },
+    "frankfurt-am-main": {
+      "kammer": {
+        "name": "Landestierärztekammer Hessen",
+        "url": "https://www.ltk-hessen.de/notdienst",
+        "verbatim": "Bei einem Notfall, der keinen Aufschub bis zur nächsten regulären Sprechstunde erlaubt , kontaktieren Sie als Tierhalterin oder Tierhalter bitte zunächst Ihre Haustierarztpraxis."
+      },
+      "dienste": [
+        {
+          "kind": "klinik-24h",
+          "name": "Tierklinik Kalbach – Fachklinik für Kleintiere",
+          "url": "https://www.tierklinik-kalbach.de/",
+          "phone": "069 / 300 651 550",
+          "coverage": "Frankfurt am Main (Kalbach)",
+          "verbatim": "Für lebensbedrohliche Notfälle stehen wir rund um die Uhr an 365 Tagen im Jahr zur Verfügung. Sie erreichen uns unter 069 / 300 651 550.",
+          "note": "Ausdrücklich für lebensbedrohliche Notfälle."
+        }
+      ],
+      "notes": "Die Landestierärztekammer Hessen veröffentlicht keinen Notdienstplan, sondern verweist auf die Haustierarztpraxis; Praxen müssen den diensthabenden Tierarzt per Aushang/Telefon/Homepage bekanntgeben. Kein organisierter Frankfurter Notdienstring mit eigener Website gefunden. Umland: Tierklinik Hofheim (06192-290 290) nimmt außerhalb der Öffnungszeiten derzeit nur lebensbedrohliche Notfälle bzw. Patienten mit Überweisung; Tierklinik Neu-Isenburg nur Sa 8 – So 8 Uhr und verweist sonst auf tierarzt-notdienst-offenbach.de (Offenbach, nicht Frankfurt) – beide daher nicht eingetragen."
+    },
+    "gelsenkirchen": {
+      "kammer": {
+        "name": "Tierärztekammer Westfalen-Lippe",
+        "url": "https://www.tieraerztekammer-wl.de/fuer-tierhalter/notdienst-finder",
+        "verbatim": "In den meisten Städten und Kreisen gibt es einen organisierten Notfalldienst, den Sie telefonisch erreichen können."
+      },
+      "dienste": [
+        {
+          "kind": "klinik-24h",
+          "name": "Tierärztliche Klinik für Kleintiere Dr. med. vet. Jan Apelt",
+          "url": "https://tieraerztliche-klinik.de/",
+          "phone": "0201/342604",
+          "coverage": "Essen-Altenessen (Stankeitstr. 11, 45326 Essen), Nachbarstadt von Gelsenkirchen",
+          "verbatim": "24h Notdienst (telefonische Anmeldung erbeten): Tel.: 0201/342604",
+          "note": "Liegt in der Nachbarstadt Essen (Altenessen, nahe der Stadtgrenze zu Gelsenkirchen), nicht in Gelsenkirchen. Telefonische Anmeldung erbeten."
+        }
+      ],
+      "notes": "Der Notdienst-Finder der Tierärztekammer Westfalen-Lippe listet keine Kreisstelle Gelsenkirchen und keinen Gelsenkirchener Notdienstring. Keine Gelsenkirchener Klinik mit eigener 24-h-Aussage gefunden. Einziger Eintrag ist eine 24-h-Klinik in der Nachbarstadt Essen – ggf. als 'in der Nähe' kennzeichnen oder weglassen."
+    },
+    "hamburg": {
+      "kammer": {
+        "name": "Tierärztekammer Hamburg",
+        "url": "https://tieraerztekammer-hamburg.de/aktueller-notdienstplan",
+        "verbatim": "Der Notdienst geht von Montag bis Freitag von 20:00 Uhr bis 08:00 Uhr früh des Folgetages, an Wochenenden und Feiertagen von 08:00 Uhr morgens bis 08:00 früh des Folgetages."
+      },
+      "dienste": [
+        {
+          "kind": "notdienstplan",
+          "name": "Aktueller Notdienstplan der Tierärztekammer Hamburg",
+          "url": "https://tieraerztekammer-hamburg.de/aktueller-notdienstplan",
+          "phone": "040 / 434379",
+          "coverage": "Hamburg",
+          "verbatim": "Hier finden Sie den Notdienstplan für 2 Wochen. Ebenso erfahren sie den Notdienst unter 040 / 434379",
+          "note": "Mo–Fr 20:00–08:00 Uhr, Wochenende/Feiertage 08:00–08:00 Uhr. Vorher in Praxis/Klinik anrufen. Notfallgebühr 50,00 € zzgl. MwSt. plus GOT. Die Plantabelle wird dynamisch geladen und war im Abruf leer."
+        }
+      ],
+      "notes": "Seite sagt nicht ausdrücklich, dass der Plan nur Kleintiere betrifft. Keine 24-h-Kliniken zusätzlich geprüft."
+    },
+    "hannover": {
+      "kammer": {
+        "name": "Tierärztekammer Niedersachsen",
+        "url": "https://www.tknds.de/",
+        "verbatim": null
+      },
+      "dienste": [
+        {
+          "kind": "notdienstplan",
+          "name": "Tierärztlicher Notdienst Hannover (TNH)",
+          "url": "https://tierarzt-notdienst-hannover.de/",
+          "phone": null,
+          "coverage": "Hannover",
+          "verbatim": "Der tierärztliche Notdienst findet durch wechselnde Praxen im Zeitaum von Samstag 07:00 Uhr bis Montag 07:00 Uhr und an Feiertagen von 07:00 Uhr bis 07:00 Uhr des folgenden Tages statt.",
+          "note": "Nur Wochenende und Feiertage, nicht werktags nachts. Plan als PDF (notdienstplan_2026-stand-03_09_26.pdf). Von der TiHo-Kleintierklinik als Ringnotdienst für Hannover verlinkt."
+        },
+        {
+          "kind": "klinik-24h",
+          "name": "Klinik für Kleintiere der Stiftung Tierärztliche Hochschule Hannover (TiHo)",
+          "url": "https://www.tiho-hannover.de/notdienst",
+          "phone": "+49 511 953-6200",
+          "coverage": "Hannover (Bünteweg 9, 30559 Hannover)",
+          "verbatim": "Die Kliniken der Stiftung Tierärztliche Hochschule Hannover bieten für die entsprechenden Tierarten an sieben Tagen in der Woche einen 24-stündigen Notdienst an.",
+          "note": "Laut Notdienst-Infoseite der Kleintierklinik werden kritische/lebensbedrohliche Notfälle rund um die Uhr versorgt; nicht zeitkritische Fälle können an den Ringnotdienst oder andere Kliniken verwiesen werden. Heimtiere/Reptilien/Vögel: separate Klinik, Tel. +49 511 953-6800."
+        }
+      ],
+      "notes": "Website der Tierärztekammer Niedersachsen (tknds.de) blockiert automatisierte Abrufe (HTTP 403) – Kammer-Notdienstseite nicht prüfbar, daher kammer.verbatim = null. Werktags nachts ist laut gefundenen Quellen nur die TiHo-Kleintierklinik belegt."
+    },
+    "koeln": {
+      "kammer": {
+        "name": "Tierärztekammer Nordrhein",
+        "url": "https://www.tieraerztekammer-nordrhein.de/informationen-zum-tieraerztlichen-notdienst/",
+        "verbatim": "Köln: Zur Informationsseite. Zentrale Rufnummer: 02203-962339 (kostenpflichtig, abhängig vom Netzbetreiber)."
+      },
+      "dienste": [
+        {
+          "kind": "notdienstplan",
+          "name": "Kölner Tierärztenotdienst",
+          "url": "https://koelner-tieraerztenotdienst.de/",
+          "phone": "02203 962339",
+          "coverage": "Stadtgebiet Köln",
+          "verbatim": "[…] ein Zusammenschluss von Kleintierärzten aus Köln […] dass Sie für Ihr krankes Tier nachts sowie an Wochenenden und Feiertagen immer tierärztliche Hilfe bekommen können.",
+          "note": "Zeiten laut Seite: werktags 18.00–22.00 Uhr, Wochenende/Feiertage 8.00–22.00 Uhr. „Ab 23 Uhr“ Verweis auf Kliniken Dr. Kellerwessel (0221 – 47 45 43 0) oder VetZentrum (0221 – 54 57 64) – die Lücke 22–23 Uhr steht so auf der Seite. Immer vorher anrufen. Notdienstkalender unter /notdienste/."
+        },
+        {
+          "kind": "klinik-24h",
+          "name": "VetZentrum Köln – Tierärztliche Klinik für Kleintiere",
+          "url": "https://www.vetzentrum-koeln.de/",
+          "phone": "0221 – 545764",
+          "coverage": "Köln (Scheidtweilerstr. 19)",
+          "verbatim": "Der Notdienst unserer Klinik steht Ihnen und Ihrem Tier das ganze Jahr über 24 Stunden täglich zur Verfügung.",
+          "note": "Klinik warnt vor teils erheblichen Wartezeiten (4–6 Stunden) bei nicht lebensbedrohlich erkrankten Patienten."
+        }
+      ],
+      "notes": "Tierklinik Dr. Kellerwessel (laut Kölner Notdienstseite ab 23 Uhr erreichbar) – eigene Website nicht gefunden/geprüft, daher nicht eingetragen."
+    },
+    "leipzig": {
+      "kammer": {
+        "name": "Sächsische Landestierärztekammer",
+        "url": "https://www.tieraerztekammer-sachsen.de/seite/487985/notfalldienst.html",
+        "verbatim": "Diese Hinweise der Sächsischen Landestierärztekammer sollen dem Tierhalter helfen, Notfallsituationen mit dem Tier mit möglichst klarem Kopf zu meistern"
+      },
+      "dienste": [
+        {
+          "kind": "notdienstnummer",
+          "name": "Tierärztlicher Notfalldienst Sachsen (Kleintiere) – zentrale Notrufnummer",
+          "url": "https://daten2.verwaltungsportal.de/dateien/seitengenerator/8f44d27778485ce0e900106b5435217b214529/Notfalldienst-Flyer_Stand_2025.pdf",
+          "phone": "01805 84 37 36",
+          "coverage": "Freistaat Sachsen (Kleintiere); Weiterleitung an die nächstgelegene diensthabende Praxis",
+          "verbatim": "In Nachtstunden (von 18:00 Uhr bis 8:00 Uhr), an Wochenenden (von freitags 18:00 Uhr bis montags 8:00 Uhr) und an Feiertagen (ganztägig) halten sich die eingeteilten Tierarztpraxen […] dienstbereit.",
+          "note": "Quelle ist der Flyer der Sächsischen Landestierärztekammer (Stand 2025), verlinkt auf der Kammerseite. 0,14 €/min. Übersicht der diensthabenden Praxen laut Flyer auf www.vetnotdienst.de (Seite lädt dynamisch, Inhalt nicht prüfbar). Laut Flyer keine Hausbesuche."
+        }
+      ],
+      "notes": "Sachsenweite zentrale Nummer. Klinik für Kleintiere der Universität Leipzig: 24/7 nur aus Stellenausschreibungen bekannt, eigene Klinikseite nicht geprüft (Domain leitete auf Fakultätsstartseite um) – nicht eingetragen."
+    },
+    "mannheim": {
+      "kammer": {
+        "name": "Landestierärztekammer Baden-Württemberg",
+        "url": "https://www.ltk-bw.de/",
+        "verbatim": null
+      },
+      "dienste": [],
+      "notes": "Notdienstring Mannheim (0621-13571) nicht übernommen: nur auf der undatierten Seite einer Praxis in Schriesheim belegt, die die Liste selbst nur als Anhaltspunkt nennt. Website der Landestierärztekammer Baden-Württemberg hat keine Notdienstinformationen für Tierhalter (nur 'Anfragen'), daher verbatim = null. Keine Mannheimer Tierklinik mit eigener 24-h-Aussage gefunden. Kleintierklinik Frankenthal laut Schriesheimer Praxisseite nur Mo–Fr 8–22, Sa/So/Feiertag 10–18 Uhr (nicht 24 h). Nicht eingetragen: 'Tierarztpraxis Dr. med. vet. E.S. Rosca' (https://tierarztpraxis-notdienst.de/, G3 18-19, Tel. 0174 276 7735) wirbt auf eigener Website mit „24/7 Notdienst“, ist aber eine Einzelpraxis, „Bestandspatienten unserer Praxis haben im Notdienst Priorität“, Notfall vorab telefonisch anzukündigen – als zu schwach eingestuft; ggf. manuell prüfen."
+    },
+    "muelheim-an-der-ruhr": {
+      "kammer": {
+        "name": "Tierärztekammer Nordrhein",
+        "url": "https://www.tieraerztekammer-nordrhein.de/informationen-zum-tieraerztlichen-notdienst/",
+        "verbatim": "Die Städte Duisburg und Mülheim an der Ruhr organisieren einen gemeinsamen tierärztlichen Notfalldienst: Zur Informationsseite. Keine zentrale Rufnummer."
+      },
+      "dienste": [
+        {
+          "kind": "klinik-24h",
+          "name": "Tierärztliche Klinik für Kleintiere am Kaiserberg",
+          "url": "https://tierklinik-kaiserberg.de/",
+          "phone": "0203 – 30537-0",
+          "coverage": "Duisburg (Wintgensstraße 81-83, 47058 Duisburg), Nachbarstadt von Mülheim",
+          "verbatim": "Als eine der letzten \"echten\" Tierkliniken mit durchgehender Notdienstbereitschaft in NRW geben unsere Mitarbeiter rund um die Uhr alles für ihren Schützling.",
+          "note": "Liegt in Duisburg (Duissern), nicht in Mülheim. „Mit einem Notfall kommen sie direkt zu uns in die Klinik.“ Höhere Wartezeiten im Notdienst."
+        }
+      ],
+      "notes": "Laut Tierärztekammer Nordrhein gemeinsamer Notfalldienst Duisburg/Mülheim, aber der verlinkte Informationsseiten-Link (tierärzte-duisburg-mülheim.de/de/notdienst) ist defekt (HTTPS: selbstsigniertes Zertifikat, HTTP: 404) – Plan nicht abrufbar, daher nicht eingetragen. Keine zentrale Rufnummer. Keine Mülheimer Klinik mit 24-h-Aussage gefunden."
+    },
+    "muenchen": {
+      "kammer": {
+        "name": "Bayerische Landestierärztekammer",
+        "url": "https://www.bltk.de/",
+        "verbatim": null
+      },
+      "dienste": [
+        {
+          "kind": "klinik-24h",
+          "name": "LMU Klinik für Kleintiere (Kleintierklinik der LMU München)",
+          "url": "https://www.vetmed.lmu.de/kleintierklinik/de/fuer-tierhalterinnen-und-tierhalter/notfaelle/",
+          "phone": null,
+          "coverage": "München (Veterinärstr. 13)",
+          "verbatim": "Unser Notdienstteam steht Ihnen 24 Stunden am Tag, 7 Tage die Woche zur Verfügung.",
+          "note": "Laut Seite im Notdienst telefonisch für Tierbesitzer nicht erreichbar (eingeschränkte Personalkapazität); Auslastung über „Notdienst-Ampel“. Hunde und Katzen."
+        },
+        {
+          "kind": "klinik-24h",
+          "name": "AniCura Tierklinik Haar",
+          "url": "https://www.anicura.de/tierklinik-haar/",
+          "phone": "+49 89 461 48 51 0",
+          "coverage": "Haar bei München (Keferloher Str. 25, 85540 Haar)",
+          "verbatim": "Ob Überweisungstermin oder Notfall – wir sind für Sie und Ihr Tier da. Rund um die Uhr. An jedem Tag.",
+          "note": "Liegt in Haar, unmittelbar östlich der Stadtgrenze München. Seite außerdem: „Bei Notfällen sind wir 24 Stunden für Sie und Ihr Tier da!“"
+        }
+      ],
+      "notes": "Die Bayerische Landestierärztekammer hat keine öffentliche Notdienstseite für Tierhalter (nur Tierarztsuche), daher verbatim = null. Kein organisierter Münchner Notdienstring mit eigener Website gefunden."
+    },
+    "neuss": {
+      "kammer": {
+        "name": "Tierärztekammer Nordrhein",
+        "url": "https://www.tieraerztekammer-nordrhein.de/informationen-zum-tieraerztlichen-notdienst/",
+        "verbatim": "Kreis Mönchengladbach/Rhein-Kreis-Neuss: Zentrale Rufnummer: 03221-3222016 (kostenpflichtig, abhängig vom Netzbetreiber)."
+      },
+      "dienste": [
+        {
+          "kind": "notdienstnummer",
+          "name": "Tierärztlicher Notfalldienst Mönchengladbach/Rhein-Kreis Neuss – zentrale Rufnummer",
+          "url": "https://www.tieraerztekammer-nordrhein.de/informationen-zum-tieraerztlichen-notdienst/",
+          "phone": "03221-3222016",
+          "coverage": "Mönchengladbach und Rhein-Kreis Neuss",
+          "verbatim": "Kreis Mönchengladbach/Rhein-Kreis-Neuss: Zentrale Rufnummer: 03221-3222016 (kostenpflichtig, abhängig vom Netzbetreiber).",
+          "note": "Nur über die Kammerübersicht belegt; keine eigene Website des Rings gefunden. 03221 ist eine ortsungebundene Vorwahl. Kammer übernimmt keine Gewähr."
+        },
+        {
+          "kind": "klinik-24h",
+          "name": "Tierklinik Düsseldorf (AniCura), Münsterstr. 359",
+          "url": "https://tierklinikduesseldorf.de/",
+          "phone": "0211 - 62 68 68",
+          "coverage": "Düsseldorf (Münsterstr. 359), Nachbarstadt von Neuss",
+          "verbatim": "Als einzige Notfalltierklinik in Düsseldorf kümmert sich die Tierklinik Düsseldorf 24/7 um die Bedürfnisse der Tiere.",
+          "note": "Liegt in Düsseldorf (gegenüber Neuss am Rhein), nicht in Neuss. Seit Dezember 2024 Teil von AniCura."
+        }
+      ],
+      "notes": "Keine Neusser Tierklinik mit eigener 24-h-Aussage gefunden."
+    }
+  }
+}
