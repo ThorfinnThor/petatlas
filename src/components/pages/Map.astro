@@ -8,6 +8,7 @@
  *
  * Die Karte selbst kommt in M11-02 und lädt erst auf Klick.
  */
+import PageIntro from '../ui/PageIntro.astro';
 import Notice from '../Notice.astro';
 import DataStatus from '../DataStatus.astro';
 import { darstellung } from '../../features/map/website.ts';
@@ -96,13 +97,17 @@ const abdeckung = {
 };
 ---
 
-<h1>Tierärzte und Orte in der Nähe</h1>
-
-<p>
-  Erfasste Tierarztpraxen, Tierheime, Zoofachhandel und Hundewiesen in Deutschland. Die Daten
-  stammen aus OpenStreetMap. Sie sind <strong>nicht vollständig</strong>: was hier fehlt, ist nicht
-  erfasst — es ist deshalb nicht unbedingt nicht vorhanden.
-</p>
+<PageIntro
+  titel="Tierärzte und Orte in der Nähe"
+  eyebrow="Karte · ganz Deutschland"
+  bild="play-dog-alpine-lake"
+>
+  <p>
+    Erfasste Tierarztpraxen, Tierheime, Zoofachhandel und Hundewiesen in Deutschland. Die Daten
+    stammen aus OpenStreetMap. Sie sind <strong>nicht vollständig</strong>: was hier fehlt, ist
+    nicht erfasst — es ist deshalb nicht unbedingt nicht vorhanden.
+  </p>
+</PageIntro>
 
 <DataStatus
   stand={snapshot.source.retrievalDate}
@@ -155,11 +160,14 @@ const abdeckung = {
           Object.entries(KATEGORIE_LABEL).map(([schluessel, label]) => (
             <label class="wahl">
               <input type="checkbox" name="kategorie" value={schluessel} />
-              {label} (
-              <span data-category-count={schluessel}>
-                {(standardZaehler[schluessel] ?? 0).toLocaleString('de-DE')}
+              {/* Ein Textelement: im Flex-Layout würde der Name sonst „( 41 )“ lauten. */}
+              <span>
+                {label} (
+                <span data-category-count={schluessel}>
+                  {(standardZaehler[schluessel] ?? 0).toLocaleString('de-DE')}
+                </span>
+                )
               </span>
-              )
             </label>
           ))
         }
@@ -358,7 +366,9 @@ const abdeckung = {
   }
 
   .wahl {
-    display: block;
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
     font-weight: 400;
     margin-block: var(--space-1);
   }

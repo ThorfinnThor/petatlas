@@ -1,0 +1,106 @@
+---
+/**
+ * Einheitlicher Seitenkopf für Werkzeug- und Übersichtsseiten: weiche Karte
+ * mit Überschrift und Einleitung links, Stimmungsbild rechts (ab Tablet).
+ * Gleiche Bildsprache wie Futter- und Blogseite; ohne Bild bleibt die Karte
+ * einspaltig.
+ *
+ * Bilder sind dekorativ (leerer Alt-Text); die Aussage steht im Text.
+ */
+interface Props {
+  titel: string;
+  eyebrow?: string;
+  /** Markenbild aus `public/images/brand/` (Stamm ohne Größe). */
+  bild?: string;
+  /** Alternativ ein beliebiger Bildstamm, z. B. `/images/care/fellpflege`. */
+  bildStamm?: string;
+}
+
+const { titel, eyebrow, bild, bildStamm } = Astro.props;
+const stamm = bildStamm ?? (bild ? `/images/brand/${bild}` : null);
+const breiten = bildStamm ? [800, 1200] : [480, 800, 1200];
+const srcset = (format: string) =>
+  stamm ? breiten.map((w) => `${stamm}-${w}.${format} ${w}w`).join(', ') : '';
+---
+
+<header class={`page-intro${stamm ? ' page-intro--bild' : ''}`}>
+  <div class="page-intro__text">
+    {eyebrow && <p class="page-intro__eyebrow">{eyebrow}</p>}
+    <h1>{titel}</h1>
+    <div class="page-intro__lead"><slot /></div>
+  </div>
+  {
+    stamm && (
+      <picture class="page-intro__bild">
+        <source type="image/avif" srcset={srcset('avif')} sizes="(max-width: 767px) 100vw, 40vw" />
+        <img
+          src={`${stamm}-800.webp`}
+          srcset={srcset('webp')}
+          sizes="(max-width: 767px) 100vw, 40vw"
+          width="1200"
+          height="800"
+          alt=""
+          decoding="async"
+          fetchpriority="high"
+        />
+      </picture>
+    )
+  }
+</header>
+
+<style>
+  .page-intro {
+    display: grid;
+    overflow: hidden;
+    margin-block: var(--space-2) var(--space-8);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 0% 0%, rgb(255 255 255 / 65%), transparent 40%),
+      var(--color-primary-soft);
+  }
+  .page-intro__text {
+    padding: clamp(var(--space-6), 4vw, var(--space-12));
+    min-inline-size: 0;
+  }
+  .page-intro__eyebrow {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .page-intro h1 {
+    max-inline-size: 18ch;
+    margin: 0 0 var(--space-4);
+  }
+  .page-intro__lead {
+    max-inline-size: 60ch;
+    color: var(--color-text);
+    font-size: var(--text-lead);
+  }
+  .page-intro__lead :global(p) {
+    margin-block: 0 var(--space-3);
+  }
+  .page-intro__lead :global(p:last-child) {
+    margin-block-end: 0;
+  }
+  .page-intro__bild {
+    display: none;
+  }
+  .page-intro__bild img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  @media (min-width: 768px) {
+    .page-intro--bild {
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    }
+    .page-intro__bild {
+      display: block;
+      min-block-size: 16rem;
+    }
+  }
+</style>

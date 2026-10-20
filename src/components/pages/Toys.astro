@@ -1,4 +1,5 @@
 ---
+import PageIntro from '../ui/PageIntro.astro';
 import { amazonEnabled, amazonSearchUrl, AMAZON_SEARCHES } from '../../features/commerce/amazon.ts';
 import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
@@ -35,15 +36,17 @@ const zooroyalProducts = Object.fromEntries(
 );
 ---
 
-<header class="page-intro">
-  <p class="eyebrow">Spielzeugfinder für Hunde und Katzen</p>
-  <h1>Spielzeug finden, das zu Ihrem Alltag passt</h1>
+<PageIntro
+  titel="Spielzeug finden, das zu Ihrem Alltag passt"
+  eyebrow="Spielzeugfinder für Hunde und Katzen"
+  bild="play-dog-alpine-lake"
+>
   <p>
     Wählen Sie Tierart, Spielweise und belegbare Eigenschaften. Der Finder zeigt nur Produkte, deren
     hinterlegte Angaben zu den gewählten Filtern passen. Er vergibt keine erfundenen Sicherheits-
     oder Haltbarkeitsnoten.
   </p>
-</header>
+</PageIntro>
 
 {
   synthetisch && (
@@ -234,16 +237,6 @@ const zooroyalProducts = Object.fromEntries(
 </script>
 
 <style>
-  .page-intro {
-    max-inline-size: 54rem;
-    margin-block-end: var(--space-6);
-  }
-
-  .page-intro h1 {
-    max-inline-size: 17ch;
-    margin-block: var(--space-2) var(--space-3);
-  }
-
   .finder-shell {
     padding: clamp(var(--space-4), 4vw, var(--space-7));
     border: 1px solid var(--color-border);
@@ -318,6 +311,9 @@ const zooroyalProducts = Object.fromEntries(
     padding: var(--space-5) 0;
     border: 0;
     border-block-start: 1px solid var(--color-border);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .filter-group__hint {
@@ -445,15 +441,21 @@ const zooroyalProducts = Object.fromEntries(
 
   .finder-results :global(.finder__bild) {
     position: relative;
+    display: grid;
+    place-items: center;
     margin: 0;
+    padding: var(--space-4);
     background: var(--color-surface-subtle);
   }
 
+  /* Produktbilder ruhig und gleich groß: begrenzte Höhe, ganzes Produkt sichtbar. */
   .finder-results :global(.finder__bild img) {
     display: block;
     inline-size: 100%;
-    aspect-ratio: 4 / 3;
+    block-size: 11rem;
     object-fit: contain;
+    border-radius: var(--radius-sm);
+    mix-blend-mode: multiply;
   }
 
   .finder-results :global(.finder__bild figcaption) {
@@ -497,11 +499,17 @@ const zooroyalProducts = Object.fromEntries(
     font-size: var(--text-small);
   }
 
+  /* Begründung als ruhige Zeile statt als Kasten: sie lautet auf vielen Karten ähnlich. */
   .finder-results :global(.finder__match) {
     margin-block: var(--space-3);
-    padding: var(--space-3);
-    border-radius: var(--radius-md);
-    background: var(--color-primary-soft);
+    padding: 0 0 0 var(--space-3);
+    border-inline-start: 3px solid var(--color-primary-border);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__match h4),
+  .finder-results :global(.finder__match strong:first-child) {
+    font-size: var(--text-small);
   }
 
   .finder-results :global(.finder__gruende) {

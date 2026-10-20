@@ -133,15 +133,19 @@ const selectionIsLimited = products.length < allProducts.length;
   }
 
   .feed-catalog__image-link {
-    display: block;
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
     background: var(--color-surface-subtle);
   }
 
+  /* Gleich hohe, ruhige Produktbilder statt quadratischer Riesenflächen. */
   .feed-catalog__image-link img {
     display: block;
     inline-size: 100%;
-    aspect-ratio: 1;
+    block-size: 9.5rem;
     object-fit: contain;
+    mix-blend-mode: multiply;
   }
 
   .feed-catalog__body {
