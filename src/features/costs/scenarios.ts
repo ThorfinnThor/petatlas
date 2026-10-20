@@ -8,6 +8,14 @@
  */
 import beratung from '../../../content-data/cost-scenarios/beratung-ohne-untersuchung.json' with { type: 'json' };
 import untersuchung from '../../../content-data/cost-scenarios/allgemeine-untersuchung-hund.json' with { type: 'json' };
+import impfungHund from '../../../content-data/cost-scenarios/impfung-hund.json' with { type: 'json' };
+import impfungKatze from '../../../content-data/cost-scenarios/impfung-katze.json' with { type: 'json' };
+import kastrationKater from '../../../content-data/cost-scenarios/kastration-kater.json' with { type: 'json' };
+import kastrationKatze from '../../../content-data/cost-scenarios/kastration-katze.json' with { type: 'json' };
+import kastrationRuede from '../../../content-data/cost-scenarios/kastration-ruede.json' with { type: 'json' };
+import kastrationHuendin from '../../../content-data/cost-scenarios/kastration-huendin.json' with { type: 'json' };
+import zahnsteinentfernungHund from '../../../content-data/cost-scenarios/zahnsteinentfernung-hund.json' with { type: 'json' };
+import blutbildKatze from '../../../content-data/cost-scenarios/blutbild-katze.json' with { type: 'json' };
 import { CostScenarioSchema, type CostScenario, type FeeItem } from '../../domain/schemas/index.ts';
 import { CostError, calculateCosts, type CostResult, type TreatmentContext } from './engine.ts';
 
@@ -21,7 +29,18 @@ function lade(roh: unknown): CostScenario {
   return ergebnis.data;
 }
 
-const SZENARIEN: readonly CostScenario[] = [beratung, untersuchung].map(lade);
+const SZENARIEN: readonly CostScenario[] = [
+  beratung,
+  untersuchung,
+  impfungHund,
+  impfungKatze,
+  kastrationKater,
+  kastrationKatze,
+  kastrationRuede,
+  kastrationHuendin,
+  zahnsteinentfernungHund,
+  blutbildKatze,
+].map(lade);
 
 export function allScenarios(): readonly CostScenario[] {
   return SZENARIEN;
