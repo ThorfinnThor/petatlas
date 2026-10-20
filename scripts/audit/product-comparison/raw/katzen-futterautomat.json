@@ -1,0 +1,580 @@
+{
+  "category": "katzen-futterautomat",
+  "checkedAt": "2026-10-20",
+  "products": [
+    {
+      "id": "catit-pixi-smart-futterautomat",
+      "brand": "Catit",
+      "model": "PIXI Smart Futterautomat",
+      "variant": "Art.-Nr. 43752 (1,2 kg)",
+      "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/",
+      "specs": {
+        "foodType": {
+          "value": "Trocken",
+          "verbatim": "Geeignet für Trockenfutter mit einem Durchmesser von bis zu 9 mm",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "capacity": {
+          "value": "± 2,9 l / 1,2 kg",
+          "verbatim": "Fassungsvermögen des Futterbehälters: ± 2,9 l / 1,2 kg",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "capacityL": {
+          "value": 2.9,
+          "verbatim": "Fassungsvermögen des Futterbehälters: ± 2,9 l / 1,2 kg",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "mealsPerDay": {
+          "value": 12,
+          "verbatim": "Individuell anpassbare Mahlzeitengrößen, max 12 Mahlzeiten/Tag",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "control": {
+          "value": "App",
+          "verbatim": "App-gestützt mit Echtzeit-Übersicht",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "wifi": {
+          "value": "2,4 GHz",
+          "verbatim": "Integriertes WiFi (nur für 2,4 GHz geeignet)",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "batteryBackup": {
+          "value": true,
+          "verbatim": "Notstrombatteriefach (benötigt vier C/LR14 Batterien",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "cooling": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "bowlMaterial": {
+          "value": "Edelstahl",
+          "verbatim": "Futterschale aus Edelstahl mit Futterschalenhalterung",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "dishwasherSafe": {
+          "value": "Futterschale",
+          "verbatim": "für eine regelmäßige und gründliche Reinigung in der Geschirrspülmaschine perfekt geeignet",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        },
+        "voiceRecording": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "camera": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "maxKibbleMm": {
+          "value": 9,
+          "verbatim": "Geeignet für Trockenfutter mit einem Durchmesser von bis zu 9 mm",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat/"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 87.49,
+        "label": "Catit PIXI Smart Futterautomat, Fassungsvermögen 1,2 kg",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/1095052",
+        "verbatim": "Fassungsvermögen: 1,2 kg UVP 125,00 € 87,49 €"
+      },
+      "notes": "Herstellerseite nennt 'Smart-Futternapf'/Futterautomat #43752. Reine Trockenfutter-Variante. cooling/camera/voiceRecording nicht erwähnt -> null. Preis von zooplus-Seite 1095052."
+    },
+    {
+      "id": "catit-pixi-smart-6-mahlzeiten",
+      "brand": "Catit",
+      "model": "PIXI Smart Futterautomat mit 6 Mahlzeiten",
+      "variant": "Art.-Nr. 43754",
+      "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/",
+      "specs": {
+        "foodType": {
+          "value": "Trocken und Nass",
+          "verbatim": "Geeignet für Trockenfutter, Nassfutter und Leckerlis",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/"
+        },
+        "capacity": {
+          "value": "6 x 170 ml",
+          "verbatim": "Fassungsvermögen pro Portion : 170 ml",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/1363414"
+        },
+        "capacityL": {
+          "value": 1.02,
+          "verbatim": "Anzahl der Portionen : 6",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/1363414"
+        },
+        "mealsPerDay": {
+          "value": 6,
+          "verbatim": "Füttert bis zu 6 Mahlzeiten am Tag (programmiert oder manuell)",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/"
+        },
+        "control": {
+          "value": "App + Display",
+          "verbatim": "LCD-Touch-Control-Display",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/"
+        },
+        "wifi": {
+          "value": "2,4 GHz",
+          "verbatim": "(nur für 2,4 GHz geeignet)",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/"
+        },
+        "batteryBackup": {
+          "value": true,
+          "verbatim": "Notstrombatteriefach (benötigt vier C/LR14-Batterien, nicht mitgeliefert)",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/"
+        },
+        "cooling": {
+          "value": true,
+          "verbatim": "Enthält 2 Kühlakkus",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/"
+        },
+        "bowlMaterial": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": "Futterschale",
+          "verbatim": "Herausnehmbare Futterschale (spülmaschinengeeignet)",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-smart-futterautomat-mit-6-mahlzeiten/"
+        },
+        "voiceRecording": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "camera": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "maxKibbleMm": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 104.99,
+        "label": "6 x 170 ml",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/1363414",
+        "verbatim": "6 x 170 ml UVP 125,00 € 104,99 €"
+      },
+      "notes": "capacityL = 6 x 170 ml = 1,02 l (berechnet; die Herstellerseite nennt 'Fassungsvermögen der Futterschale: 170 ml'). Futterschalen-Material nicht genannt (Gehäuse Kunststoff laut zooplus) -> null. Ersatz-Kühlakkus 2 Stück 11,99 EUR (zooplus)."
+    },
+    {
+      "id": "trixie-tx2-futterautomat",
+      "brand": "TRIXIE",
+      "model": "Futterautomat TX2",
+      "variant": "2 x 300 ml, weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626",
+      "specs": {
+        "foodType": {
+          "value": "Trocken und Nass",
+          "verbatim": "Für Trocken- und Nassfutter geeignet",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626"
+        },
+        "capacity": {
+          "value": "2 x 300 ml",
+          "verbatim": "Für 2 Mahlzeiten à 300 ml",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626"
+        },
+        "capacityL": {
+          "value": 0.6,
+          "verbatim": "Für 2 Mahlzeiten à 300 ml",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626"
+        },
+        "mealsPerDay": {
+          "value": 2,
+          "verbatim": "Für 2 Mahlzeiten à 300 ml",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626"
+        },
+        "control": {
+          "value": "Drehregler/Timer",
+          "verbatim": "Praktischer Futterautomat mit Zeitschaltuhr",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626"
+        },
+        "wifi": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "batteryBackup": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "cooling": {
+          "value": true,
+          "verbatim": "Inklusive 2 Coolpacks - einfach unter den Napf zu platzieren",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626"
+        },
+        "bowlMaterial": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "voiceRecording": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "camera": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "maxKibbleMm": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 23.99,
+        "label": "TX2 2 x 300 ml",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626",
+        "verbatim": "2 x 300 ml UVP 34,99 € 23,99 €"
+      },
+      "notes": "Günstiges, nicht smartes Modell (2 Mahlzeiten, 48-h-Timer, Batterien 2x AA nicht enthalten). Bedienung als 'Zeitschaltuhr' beschrieben; ob Drehregler oder Tasten, steht nicht auf der Seite -> control-Wert ist eine Einordnung. capacityL = 2 x 0,3 l berechnet. Napf-Material nicht genannt. Kein Herstellerseiten-Abruf (zooplus-Herstellertext)."
+    },
+    {
+      "id": "cat-mate-c500-5-mahlzeiten",
+      "brand": "Cat Mate",
+      "model": "Futterautomat C500 (5 Mahlzeiten)",
+      "variant": "weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670",
+      "specs": {
+        "foodType": {
+          "value": "Trocken und Nass",
+          "verbatim": "Geeignet für Feucht- oder Trockenfutter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670"
+        },
+        "capacity": {
+          "value": "5 x 330 g Futter",
+          "verbatim": "5 x 330 g Futter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670"
+        },
+        "capacityL": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "mealsPerDay": {
+          "value": 5,
+          "verbatim": "Einsetzbar für 5 Mahlzeiten",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670"
+        },
+        "control": {
+          "value": "Display/Tasten",
+          "verbatim": "Digital Timer: mit LCD Uhr",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670"
+        },
+        "wifi": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "batteryBackup": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "cooling": {
+          "value": true,
+          "verbatim": "Inklusive 2 integrierten Kühlakkus: halten das Futter frisch",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670"
+        },
+        "bowlMaterial": {
+          "value": "Kunststoff",
+          "verbatim": "Material: Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670"
+        },
+        "dishwasherSafe": {
+          "value": "Deckel und Napf",
+          "verbatim": "Deckel und Napf des Futterautomaten spülmaschinengeeignet",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670"
+        },
+        "voiceRecording": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "camera": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "maxKibbleMm": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 47.49,
+        "label": "Futterautomat (weiß)",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670",
+        "verbatim": "Futterautomat (weiß) 47,49 €"
+      },
+      "notes": "Nicht smart; reiner Batteriebetrieb (3 x AA, ca. 1 Jahr) - kein Netz-/Backup-Konzept, daher batteryBackup null. Fächer 5 x 330 g (Gewichtsangabe, kein Volumen) -> capacityL null. Digital-Timer mit LCD; Tasten nicht ausdrücklich genannt. Edelstahleinsätze separat erhältlich (35,99 EUR)."
+    },
+    {
+      "id": "petlibro-granary-wifi-doppelnapf",
+      "brand": "PETLIBRO",
+      "model": "Granary WiFi Futterautomat mit Doppelnapf",
+      "variant": "5 l, schwarz",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866",
+      "specs": {
+        "foodType": {
+          "value": "Trocken",
+          "verbatim": "Für Trockenfutter mit einer Kibblegröße von 2 bis 15 mm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "capacity": {
+          "value": "5 l",
+          "verbatim": "Fassungsvermögen : 5 l",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "capacityL": {
+          "value": 5,
+          "verbatim": "Fassungsvermögen : 5 l",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "mealsPerDay": {
+          "value": 10,
+          "verbatim": "Bis zu 10 Mahlzeiten pro Tag planen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "control": {
+          "value": "App",
+          "verbatim": "Volle Kontrolle via Smartphone",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "wifi": {
+          "value": "2,4 GHz + 5 GHz",
+          "verbatim": "kompatibel mit 2,4GHz und 5GHz Wi-Fi Netzwerken",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "batteryBackup": {
+          "value": true,
+          "verbatim": "Doppelte Stromversorgung: Netzteil und wahlweise Batterien für kontinuierliche Stromversorgung",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "cooling": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "bowlMaterial": {
+          "value": "Edelstahl",
+          "verbatim": "Inkl. Näpfen aus rostfreiem Stahl",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "voiceRecording": {
+          "value": true,
+          "verbatim": "ermöglicht bis zu 10 persönliche Audio-Aufnahmen für die Futterausgabe",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        },
+        "camera": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "maxKibbleMm": {
+          "value": 15,
+          "verbatim": "Für Trockenfutter mit einer Kibblegröße von 2 bis 15 mm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 129.99,
+        "label": "bis 5 l Trockenfutter",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2111866",
+        "verbatim": "bis 5 l Trockenfutter UVP 139,00 € 129,99 €"
+      },
+      "notes": "Doppelnapf-System (zwei Näpfe); Wi-Fi-Bänder stehen in einem Bild-Titel der zooplus-Seite. Hersteller (de.petlibro.com) nennt ab 109,99 EUR, dort nicht verifiziert (Shopify-Seite nicht lesbar). Kamera/Kühlung nicht erwähnt -> null."
+    },
+    {
+      "id": "petlibro-granary-camera",
+      "brand": "PETLIBRO",
+      "model": "Granary Camera Monitoring Feeder",
+      "variant": "5 l, weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366",
+      "specs": {
+        "foodType": {
+          "value": "Trocken",
+          "verbatim": "Futterart: trocken",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "capacity": {
+          "value": "bis 5 l Trockenfutter",
+          "verbatim": "bis 5 l Trockenfutter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "capacityL": {
+          "value": 5,
+          "verbatim": "bis 5 l Trockenfutter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "mealsPerDay": {
+          "value": 10,
+          "verbatim": "Anzahl Mahlzeiten: 1 - 10 pro Tag",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "control": {
+          "value": "App",
+          "verbatim": "Echtzeit-Überwachung: 1080px HD-Kamera mit Nachtsichtfunktion",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "wifi": {
+          "value": "2,4 GHz + 5 GHz",
+          "verbatim": "Unterstützung für 2.4GHz und 5GHz WLAN",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "batteryBackup": {
+          "value": true,
+          "verbatim": "Duale Stromversorgung: mit Netzteil & optionalem Batteriebetrieb bei Stromausfall",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "cooling": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "bowlMaterial": {
+          "value": "Edelstahl",
+          "verbatim": "Granary Edelstahl-Futterschale",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "voiceRecording": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "camera": {
+          "value": true,
+          "verbatim": "integrierte HD-Kamera",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        },
+        "maxKibbleMm": {
+          "value": 15,
+          "verbatim": "2 - 15 mm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 169.99,
+        "label": "bis 5 l Trockenfutter",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2097366",
+        "verbatim": "bis 5 l Trockenfutter 2097366.0 169,99 €"
+      },
+      "notes": "control='App' ist eine Einordnung (Fütterungsplan über App, Kamera-Livebild); Mikrofon/Lautsprecher zum Zureden, aber keine Aufnahme von Futterruf-Tönen erwähnt -> voiceRecording null. Mahlzeiten/Tag aus 'Anzahl Mahlzeiten: 1 - 10 pro Tag'."
+    },
+    {
+      "id": "petkit-fresh-element-solo",
+      "brand": "PETKIT",
+      "model": "Fresh Element SOLO",
+      "variant": "3 kg, weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530",
+      "specs": {
+        "foodType": {
+          "value": "Trocken",
+          "verbatim": "Futterart : Trockenfutter, gefriergetrocknetes Futter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530"
+        },
+        "capacity": {
+          "value": "3 kg",
+          "verbatim": "Fassungsvermögen : 3 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530"
+        },
+        "capacityL": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "mealsPerDay": {
+          "value": 10,
+          "verbatim": "Planbare Fütterungen : maximal 10 Mahlzeiten/Tag, bis zu 50 g Futterausgabe/Zeit",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530"
+        },
+        "control": {
+          "value": "App",
+          "verbatim": "Bedienung via App : WiFi oder Bluetooth, ermöglicht die Überwachung des Futter- und Gerätestatus",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530"
+        },
+        "wifi": {
+          "value": "WLAN (Band nicht angegeben)",
+          "verbatim": "Bedienung via App : WiFi oder Bluetooth",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530"
+        },
+        "batteryBackup": {
+          "value": true,
+          "verbatim": "Mit Netzanschluss und Batterie-Backup-Funktion",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530"
+        },
+        "cooling": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "bowlMaterial": {
+          "value": "Edelstahl",
+          "verbatim": "Hochwertiges Material: mit Innenschüssel aus rostfreiem Edelstahl",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530"
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "voiceRecording": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "camera": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "maxKibbleMm": {
+          "value": 12,
+          "verbatim": "Geeignet für Trocken- und Gefriergetrocknetes Futter (mit Kibbeln < 12 mm)",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 99.99,
+        "label": "3 kg, weiß",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/2054530",
+        "verbatim": "3 kg, weiß 2054530.1 99,99 €"
+      },
+      "notes": "Kapazität nur in kg (3 kg) -> capacityL null. maxKibbleMm: Seite sagt 'Kibbeln < 12 mm'. Wi-Fi-Band nicht genannt. Manuelle Fütterungstaste vorhanden (control trotzdem 'App')."
+    }
+  ]
+}

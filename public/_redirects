@@ -4,3 +4,9 @@
 
 # Legacy wording retained only as a permanent redirect to the current route.
 /de-de/nahrungsergaenzung/ /de-de/ergaenzungsfuttermittel/ 308
+
+# Produktvergleiche vom 20.10.2026: markenneutrale Seiten ersetzen die
+# Marken-Kaufhilfen (docs/CONTENT_STANDARD.md, ADR-021).
+/de-de/produkte/catit-senses-2-vergleich/ /de-de/produkte/katzenspielzeug-kugelbahn-vergleich/ 308
+/de-de/produkte/kong-hundespielzeug-vergleich/ /de-de/produkte/kauspielzeug-hund-vergleich/ 308
+/de-de/produkte/flexi-rollleine-vergleich/ /de-de/produkte/rollleine-vergleich/ 308

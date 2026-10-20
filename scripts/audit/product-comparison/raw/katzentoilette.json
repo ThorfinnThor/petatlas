@@ -1,0 +1,635 @@
+{
+  "category": "katzentoilette",
+  "checkedAt": "2026-10-20",
+  "products": [
+    {
+      "id": "catit-airsift-standard-50702",
+      "brand": "Catit",
+      "model": "Katzentoilette mit Airsift Filtersystem – Standard",
+      "variant": "Art.-Nr. 50702",
+      "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/katzentoiletten-mit-airsift-filtersystem/",
+      "specs": {
+        "entry": {
+          "value": "Haube vorne",
+          "verbatim": "Geräumige Katzentoiletten mit Abdeckung und pfotensicherer Eingangstür",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/katzentoiletten-mit-airsift-filtersystem/"
+        },
+        "lengthCm": {
+          "value": 57,
+          "verbatim": "Gesamt: 42 x 46,5 x 57 cm (BxHxT)",
+          "sourceUrl": "https://www.fressnapf.de/p/catit-katzentoilette-mit-abdeckung-und-airsift-filtersystem---standard-1046518/"
+        },
+        "widthCm": {
+          "value": 42,
+          "verbatim": "Gesamt: 42 x 46,5 x 57 cm (BxHxT)",
+          "sourceUrl": "https://www.fressnapf.de/p/catit-katzentoilette-mit-abdeckung-und-airsift-filtersystem---standard-1046518/"
+        },
+        "heightCm": {
+          "value": 46.5,
+          "verbatim": "Gesamt: 42 x 46,5 x 57 cm (BxHxT)",
+          "sourceUrl": "https://www.fressnapf.de/p/catit-katzentoilette-mit-abdeckung-und-airsift-filtersystem---standard-1046518/"
+        },
+        "openingCm": {
+          "value": "24,4 x 26,4 cm (BxH)",
+          "verbatim": "Türöffnung: 24,4 x 26,4 cm (BxH)",
+          "sourceUrl": "https://www.fressnapf.de/p/catit-katzentoilette-mit-abdeckung-und-airsift-filtersystem---standard-1046518/"
+        },
+        "hood": {
+          "value": true,
+          "verbatim": "Geräumige Katzentoiletten mit Abdeckung und pfotensicherer Eingangstür",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/katzentoiletten-mit-airsift-filtersystem/"
+        },
+        "flap": {
+          "value": true,
+          "verbatim": "Komplett mit Airsift Filterpad und Schwingtür",
+          "sourceUrl": "https://www.fressnapf.de/p/catit-katzentoilette-mit-abdeckung-und-airsift-filtersystem---standard-1046518/"
+        },
+        "filter": {
+          "value": true,
+          "verbatim": "Mit Airsift zweifach wirksamem Geruchsreduzierungsfilterpad",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/katzentoiletten-mit-airsift-filtersystem/"
+        }
+      },
+      "price": {
+        "retailer": "fressnapf.de",
+        "priceEur": 29.99,
+        "label": "Standard (Art.-Nr. 50702)",
+        "url": "https://www.fressnapf.de/p/catit-katzentoilette-mit-abdeckung-und-airsift-filtersystem---standard-1046518/",
+        "verbatim": "29,99 €"
+      },
+      "notes": "Catit's own page lists no dimensions; size is from fressnapf.de (BxHxT 42 x 46,5 x 57 -> L=57, W=42, H=46.5). Other retailers list differing values (not used). handle/material/weight/rim/sieve not stated -> null. Sibling 'Jumbo' is 50695."
+    },
+    {
+      "id": "catit-pixi-44081",
+      "brand": "Catit",
+      "model": "PIXI Katzentoilette",
+      "variant": "Art.-Nr. 44081",
+      "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/",
+      "specs": {
+        "entry": {
+          "value": "oben",
+          "verbatim": "Von oben zugängliche Katzentoilette",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/"
+        },
+        "lengthCm": {
+          "value": 52,
+          "verbatim": "Größe: 41 x 52 x 47,5 cm BxTxH (Öffnung: ⌀ 23 cm)",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/"
+        },
+        "widthCm": {
+          "value": 41,
+          "verbatim": "Größe: 41 x 52 x 47,5 cm BxTxH (Öffnung: ⌀ 23 cm)",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/"
+        },
+        "heightCm": {
+          "value": 47.5,
+          "verbatim": "Größe: 41 x 52 x 47,5 cm BxTxH (Öffnung: ⌀ 23 cm)",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/"
+        },
+        "openingCm": {
+          "value": "Ø 23 cm",
+          "verbatim": "Größe: 41 x 52 x 47,5 cm BxTxH (Öffnung: ⌀ 23 cm)",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/"
+        },
+        "hood": {
+          "value": true,
+          "verbatim": "Abdeckung mit strukturierter Oberfläche",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/"
+        },
+        "flap": {
+          "value": false,
+          "verbatim": "Schwingtür : nein",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/2669314"
+        },
+        "filter": {
+          "value": false,
+          "verbatim": "Filter : nein",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/2669314"
+        },
+        "rimOrLitterGuard": {
+          "value": true,
+          "verbatim": "Abdeckung mit strukturierter Oberfläche",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/"
+        },
+        "handle": {
+          "value": false,
+          "verbatim": "Tragegriff : nein",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/2669314"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Material : Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/2669314"
+        },
+        "weightKg": {
+          "value": 2.3,
+          "verbatim": "Gewicht: 2,3 kg",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/pixi-katzentoilette/"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 39.99,
+        "label": "PIXI Katzentoilette weiß/grau",
+        "url": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/2669314",
+        "verbatim": "39,99 €"
+      },
+      "notes": "Top-entry with swivel lid (not a flap). Dimensions manufacturer order BxTxH, converted to L=52 (depth), W=41. sievingSystem not stated -> null."
+    },
+    {
+      "id": "catit-smartsift-50685",
+      "brand": "Catit",
+      "model": "Smartsift Katzentoilette",
+      "variant": "Art.-Nr. 50685",
+      "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/",
+      "specs": {
+        "entry": {
+          "value": "Haube vorne",
+          "verbatim": "Die Abdeckung sorgt für die optimale Privatsphäre und der breite Eingang ist mit einer pfotenfreundlichen Schwingtür ausgestattet",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        },
+        "lengthCm": {
+          "value": 66,
+          "verbatim": "Größe (LxBxH) : 66 x 48 x 64 cm",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        },
+        "widthCm": {
+          "value": 48,
+          "verbatim": "Größe (LxBxH) : 66 x 48 x 64 cm",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        },
+        "heightCm": {
+          "value": 64,
+          "verbatim": "Größe (LxBxH) : 66 x 48 x 64 cm",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        },
+        "hood": {
+          "value": true,
+          "verbatim": "Die Abdeckung sorgt für die optimale Privatsphäre",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        },
+        "flap": {
+          "value": true,
+          "verbatim": "Große Öffnung mit abnehmbarer Schwingtür und für alle Katzengrößen geeignet",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        },
+        "filter": {
+          "value": true,
+          "verbatim": "Enthält ein zweifach wirksames, geruchsreduzierendes Airsift Filterpad",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        },
+        "weightKg": {
+          "value": 8.5,
+          "verbatim": "Gewicht: 8,5 kg",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        },
+        "sievingSystem": {
+          "value": true,
+          "verbatim": "Hebel zur Entfernung von Verschmutzungen und zum Auffrischen der Katzenstreu (nicht motorisiert)",
+          "sourceUrl": "https://www.catit.com/de/produkte/katzentoiletten-zubehoer/smartsift-katzentoilette/"
+        }
+      },
+      "price": null,
+      "notes": "Manual lever-sieve litter box (not a robot). No German retailer price verified (not on zooplus.de/fressnapf.de in search) -> price null. opening/handle/material/rim not stated."
+    },
+    {
+      "id": "trixie-berto-top",
+      "brand": "TRIXIE",
+      "model": "Katzentoilette Berto Top",
+      "variant": "taupe/helltaupe",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005",
+      "specs": {
+        "entry": {
+          "value": "Haube vorne",
+          "verbatim": "Über die Schwingtüre gelangt Ihre Katze ins Innere",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "lengthCm": {
+          "value": 59,
+          "verbatim": "Maße: L 59 x B 39 x H 42 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "widthCm": {
+          "value": 39,
+          "verbatim": "Maße: L 59 x B 39 x H 42 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "heightCm": {
+          "value": 42,
+          "verbatim": "Maße: L 59 x B 39 x H 42 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "openingCm": {
+          "value": "B 21 x H 21,5 cm",
+          "verbatim": "Eingang: B 21 x H 21,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "innerCm": {
+          "value": "ca. L 48 x B 30 x H 36 cm",
+          "verbatim": "Innen: ca. L 48 x B 30 x H 36 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "hood": {
+          "value": true,
+          "verbatim": "Art der Toilette: Haubentoilette",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "flap": {
+          "value": true,
+          "verbatim": "Mit Schwingtür:",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "filter": {
+          "value": true,
+          "verbatim": "Mit Aktivkohlefilter: neutralisiert unangenehme Gerüche",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "handle": {
+          "value": true,
+          "verbatim": "Haube mit Tragegriff: erleichtert das Abnehmen und den Transport",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        },
+        "sievingSystem": {
+          "value": true,
+          "verbatim": "Hygienisches Trennsystem: mit zwei Schalen und einem Sieb",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 33.99,
+        "label": "Berto Top taupe/helltaupe (UVP 34,99 €)",
+        "url": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/617005",
+        "verbatim": "33,99 €"
+      },
+      "notes": "Source is zooplus.de (manufacturer page not used). Einstiegshöhe 15 cm. material/weight not stated."
+    },
+    {
+      "id": "trixie-vico-haube",
+      "brand": "TRIXIE",
+      "model": "Katzentoilette Vico mit Haube",
+      "variant": "grau/weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964",
+      "specs": {
+        "entry": {
+          "value": "Haube vorne",
+          "verbatim": "Katzentoilette mit Abdeckhaube",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964"
+        },
+        "lengthCm": {
+          "value": 56,
+          "verbatim": "Maße: L 56 cm x B 40 cm x H 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964"
+        },
+        "widthCm": {
+          "value": 40,
+          "verbatim": "Maße: L 56 cm x B 40 cm x H 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964"
+        },
+        "heightCm": {
+          "value": 40,
+          "verbatim": "Maße: L 56 cm x B 40 cm x H 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964"
+        },
+        "hood": {
+          "value": true,
+          "verbatim": "Katzentoilette mit Abdeckhaube",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964"
+        },
+        "flap": {
+          "value": true,
+          "verbatim": "Mit milchig transparenter Schwingtür",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964"
+        },
+        "handle": {
+          "value": true,
+          "verbatim": "Integrierter Tragegriff im Deckel",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Aus Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 15.69,
+        "label": "Vico mit Haube grau/weiß (UVP 16,99 €)",
+        "url": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_klassisch/1201964",
+        "verbatim": "15,69 €"
+      },
+      "notes": "Source zooplus.de. No carbon filter, opening size or weight stated -> null (filter null, not false). Budget model."
+    },
+    {
+      "id": "trixie-berto-schale",
+      "brand": "TRIXIE",
+      "model": "Katzentoilette Berto (Schalentoilette mit Sieb)",
+      "variant": "dunkelgrau/pastellblau/granit",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085",
+      "specs": {
+        "entry": {
+          "value": "offen",
+          "verbatim": "Art der Toilette: Schalentoilette mit Sieb",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        },
+        "lengthCm": {
+          "value": 59,
+          "verbatim": "Maße: L 59 x B 39 x H 22 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        },
+        "widthCm": {
+          "value": 39,
+          "verbatim": "Maße: L 59 x B 39 x H 22 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        },
+        "heightCm": {
+          "value": 22,
+          "verbatim": "Maße: L 59 x B 39 x H 22 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        },
+        "innerCm": {
+          "value": "ca. L 57 x B 37 cm",
+          "verbatim": "Innen: ca. L 57 x B 37 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        },
+        "hood": {
+          "value": false,
+          "verbatim": "Art der Toilette: Schalentoilette mit Sieb",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        },
+        "flap": {
+          "value": false,
+          "verbatim": "Art der Toilette: Schalentoilette mit Sieb",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Material: Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        },
+        "sievingSystem": {
+          "value": true,
+          "verbatim": "Hygienisches Trennsystem: mit zwei Schalen und einem Sieb",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 16.49,
+        "label": "Berto Schalentoilette (UVP 22,99 €)",
+        "url": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/617085",
+        "verbatim": "16,49 €"
+      },
+      "notes": "Open tray with 2 shells + sieve insert and removable frame. Einstiegshöhe vorn/hinten ca. 16/23 cm. rimOrLitterGuard null (frame present, not described as litter guard). hood/flap false derived from 'Schalentoilette'."
+    },
+    {
+      "id": "savic-hop-in",
+      "brand": "Savic",
+      "model": "Katzentoilette Hop In",
+      "variant": "sand-beige/anthrazit/botanisch grün",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589",
+      "specs": {
+        "entry": {
+          "value": "oben",
+          "verbatim": "Innovative Katzentoilette von Savic mit Einstieg von oben",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        },
+        "lengthCm": {
+          "value": 58,
+          "verbatim": "Maße: L 58 x B 38,5 x H 39,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        },
+        "widthCm": {
+          "value": 38.5,
+          "verbatim": "Maße: L 58 x B 38,5 x H 39,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        },
+        "heightCm": {
+          "value": 39.5,
+          "verbatim": "Maße: L 58 x B 38,5 x H 39,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        },
+        "openingCm": {
+          "value": "L 24 x B 22 cm",
+          "verbatim": "Eingang: L 24 x B 22 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        },
+        "hood": {
+          "value": true,
+          "verbatim": "Perforierter Deckel: speziell eingearbeitete Löcher zum Abstreifen der Streu",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        },
+        "rimOrLitterGuard": {
+          "value": true,
+          "verbatim": "Hoher Rand: geeignet für Stehpinkler",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        },
+        "handle": {
+          "value": true,
+          "verbatim": "Griffmulden an Unterseite zum Anheben und Entleeren",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Material: Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 23.99,
+        "label": "Hop In (Katzentoilette allein)",
+        "url": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/592589",
+        "verbatim": "23,99 €"
+      },
+      "notes": "Top-entry with perforated removable lid, high rim. No flap/filter/sieve/weight stated -> null. Another zooplus listing shows 58,5 x 39 x 39,5 (not used)."
+    },
+    {
+      "id": "savic-nestor-jumbo",
+      "brand": "Savic",
+      "model": "Katzentoilette Nestor Jumbo",
+      "variant": "hellgrau/weiß (Einzelartikel)",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107",
+      "specs": {
+        "entry": {
+          "value": "Haube vorne",
+          "verbatim": "Jumbo-Haubentoilette mit aufklappbarer Front",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        },
+        "lengthCm": {
+          "value": 66.5,
+          "verbatim": "Maße: L 66,5 x B 48,5 x H 46,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        },
+        "widthCm": {
+          "value": 48.5,
+          "verbatim": "Maße: L 66,5 x B 48,5 x H 46,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        },
+        "heightCm": {
+          "value": 46.5,
+          "verbatim": "Maße: L 66,5 x B 48,5 x H 46,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        },
+        "openingCm": {
+          "value": "ca. B 25 cm x H 26,5 cm",
+          "verbatim": "Türöffnung mit Schwingtür: ca. B 25 cm x H 26,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        },
+        "hood": {
+          "value": true,
+          "verbatim": "Jumbo-Haubentoilette mit aufklappbarer Front",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        },
+        "flap": {
+          "value": true,
+          "verbatim": "Mit großer, herausnehmbarer Schwingtür",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        },
+        "filter": {
+          "value": true,
+          "verbatim": "1 Aktivkohlefilter im Lieferumfang enthalten",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        },
+        "handle": {
+          "value": true,
+          "verbatim": "Integrierter Griff im Deckel",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 35.49,
+        "label": "Nestor Jumbo, Einzelartikel",
+        "url": "https://www.zooplus.de/shop/katzen/katzentoilette/haubentoiletten/haubentoiletten_aufklappbar/391107",
+        "verbatim": "35,49 €"
+      },
+      "notes": "XXL model for large cats. Einstiegshöhe ca. 16 cm. material/weight not stated."
+    },
+    {
+      "id": "savic-aseo-jumbo",
+      "brand": "Savic",
+      "model": "Katzentoilette Aseo Jumbo (Katzenklo mit hohem Rand)",
+      "variant": "hellgrau/weiß, mocca/weiß oder botanisch grün/weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327",
+      "specs": {
+        "entry": {
+          "value": "offen",
+          "verbatim": "Jumbo-Katzenstreuschale mit hohem Rückenteil",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327"
+        },
+        "lengthCm": {
+          "value": 67.5,
+          "verbatim": "Gesamtmaße: L 67,5 x B 48,5 x H 28 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327"
+        },
+        "widthCm": {
+          "value": 48.5,
+          "verbatim": "Gesamtmaße: L 67,5 x B 48,5 x H 28 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327"
+        },
+        "heightCm": {
+          "value": 28,
+          "verbatim": "Gesamtmaße: L 67,5 x B 48,5 x H 28 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327"
+        },
+        "innerCm": {
+          "value": "ca. L 56 x B 39 x H 27,5 cm",
+          "verbatim": "Innenmaße: ca. L 56 x B 39 x H 27,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327"
+        },
+        "hood": {
+          "value": false,
+          "verbatim": "Jumbo-Katzenstreuschale mit hohem Rückenteil",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327"
+        },
+        "flap": {
+          "value": false,
+          "verbatim": "Jumbo-Katzenstreuschale mit hohem Rückenteil",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327"
+        },
+        "rimOrLitterGuard": {
+          "value": true,
+          "verbatim": "Erhöhte Rückwand und speziell geformter Schutzrand",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 19.99,
+        "label": "Aseo Jumbo, erster Preis der Seite (Farbvarianten haben abweichende Preise, z.B. 17,49 €)",
+        "url": "https://www.zooplus.de/shop/katzen/katzentoilette/schalentoiletten/schalentoiletten_klassisch/515327",
+        "verbatim": "19,99 €"
+      },
+      "notes": "Open XXL tray, removable rim. Einstiegshöhe vorn ca. 17,5 cm (ohne Schutzrand ca. 14 cm). Price differs by colour variant on zooplus; 19,99 € is the first/standard price shown."
+    },
+    {
+      "id": "rotho-mypet-biala",
+      "brand": "Rotho MyPet",
+      "model": "Katzentoilette BIALA",
+      "variant": "anthrazit",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682",
+      "specs": {
+        "entry": {
+          "value": "Haube vorne",
+          "verbatim": "Art der Toilette : Haubentoilette",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "lengthCm": {
+          "value": 51,
+          "verbatim": "Gesamtmaße: L 51 x B 39,5 x H 44,3 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "widthCm": {
+          "value": 39.5,
+          "verbatim": "Gesamtmaße: L 51 x B 39,5 x H 44,3 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "heightCm": {
+          "value": 44.3,
+          "verbatim": "Gesamtmaße: L 51 x B 39,5 x H 44,3 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "openingCm": {
+          "value": "B 20,5 x H 21 cm",
+          "verbatim": "Eingang: B 20,5 x H 21 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "innerCm": {
+          "value": "L 40 x B 28 x H 40 cm",
+          "verbatim": "Innenmaße: L 40 x B 28 x H 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "hood": {
+          "value": true,
+          "verbatim": "Art der Toilette : Haubentoilette",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "flap": {
+          "value": true,
+          "verbatim": "Magnetische Schwingtür: hält Gerüche besser im Inneren",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "filter": {
+          "value": true,
+          "verbatim": "Mit Aktivkohlefilter : geruchshemmend",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        },
+        "material": {
+          "value": "recycelter Kunststoff",
+          "verbatim": "Nachhaltig : hergestellt aus recyceltem Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 39.99,
+        "label": "BIALA Katzentoilette (UVP 44,99 €)",
+        "url": "https://www.zooplus.de/shop/katzen/katzentoilette/exklusive_katzentoilette/1401682",
+        "verbatim": "39,99 €"
+      },
+      "notes": "Premium-priced hooded box with scoop holder. handle: Haube has an ergonomic grip (not recorded as true handle). weight not stated."
+    }
+  ]
+}
