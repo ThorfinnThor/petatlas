@@ -55,8 +55,9 @@ const andere = FUTTER_VERGLEICHE.filter((s) => s.slug !== seite.slug);
 <article class="food-compare">
   <header class="fc-hero">
     <div class="fc-hero__copy">
-      <p class="eyebrow">
-        Futtervergleich · {bewertungen.length} Produkte · Stand {
+      <p class="eyebrow">Futtervergleich</p>
+      <p class="fc-hero__meta">
+        {bewertungen.length} Produkte nachgerechnet · Stand {
           formatCalendarDate(DATENSTAND, 'de-DE')
         }
       </p>
@@ -436,6 +437,12 @@ const andere = FUTTER_VERGLEICHE.filter((s) => s.slug !== seite.slug);
   .fc-hero__copy > p:not(.eyebrow) {
     max-inline-size: 64ch;
   }
+  .fc-hero__meta {
+    margin-block: var(--space-2) 0;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
   .fc-hero__lead {
     color: var(--color-ink);
     font-size: clamp(1.1rem, 1.7vw, 1.3rem);
@@ -750,7 +757,38 @@ const andere = FUTTER_VERGLEICHE.filter((s) => s.slug !== seite.slug);
       grid-column: 1 / -1;
     }
   }
+  .fc-product {
+    overflow-wrap: break-word;
+  }
+
   @media (max-width: 40rem) {
+    .fc-weights,
+    .fc-weights tbody,
+    .fc-weights tr,
+    .fc-weights th,
+    .fc-weights td {
+      display: block;
+    }
+
+    .fc-weights thead {
+      display: none;
+    }
+
+    .fc-weights tr {
+      padding-block: var(--space-3);
+      border-block-end: 1px solid var(--color-border);
+    }
+
+    .fc-weights th,
+    .fc-weights td {
+      padding: 0;
+      border: 0;
+    }
+
+    .fc-weights td:nth-of-type(1)::before {
+      content: 'Punkte: ';
+    }
+
     .fc-bars li {
       grid-template-columns: 1fr 3.5rem;
     }
