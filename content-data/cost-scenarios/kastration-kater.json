@@ -1,0 +1,33 @@
+{
+  "scenarioId": "kastration-kater",
+  "title": "Kastration beim Kater",
+  "species": "cat",
+  "lines": [
+    {
+      "officialItemId": "16",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "310",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "378",
+      "quantity": 1,
+      "factor": 1
+    }
+  ],
+  "exclusions": [
+    "Arzneimittel und Verbrauchsmaterial",
+    "Fremdlabor",
+    "Wegegeld",
+    "Nachkontrollen und Fädenziehen an einem späteren Termin",
+    "Voruntersuchung des Blutes",
+    "Halskragen oder Body"
+  ],
+  "clinicalReview": "unreviewed",
+  "reviewedAt": null,
+  "reviewedBy": null
+}

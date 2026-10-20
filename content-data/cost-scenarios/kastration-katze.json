@@ -1,0 +1,34 @@
+{
+  "scenarioId": "kastration-katze",
+  "title": "Kastration bei der Katze (Ovarektomie)",
+  "species": "cat",
+  "lines": [
+    {
+      "officialItemId": "16",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "310",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "601",
+      "quantity": 1,
+      "factor": 1
+    }
+  ],
+  "exclusions": [
+    "Arzneimittel und Verbrauchsmaterial",
+    "Fremdlabor",
+    "Wegegeld",
+    "Nachkontrollen und Fädenziehen an einem späteren Termin",
+    "Voruntersuchung des Blutes",
+    "Halskragen oder Body",
+    "Ovariohysterektomie (Nr. 605) statt Ovarektomie"
+  ],
+  "clinicalReview": "unreviewed",
+  "reviewedAt": null,
+  "reviewedBy": null
+}

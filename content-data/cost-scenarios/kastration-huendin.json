@@ -1,0 +1,46 @@
+{
+  "scenarioId": "kastration-huendin",
+  "title": "Kastration bei der Hündin (Ovarektomie)",
+  "species": "dog",
+  "lines": [
+    {
+      "officialItemId": "16",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "337",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "345",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "350",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "600",
+      "quantity": 1,
+      "factor": 1
+    }
+  ],
+  "exclusions": [
+    "Venenkatheter und Infusion (Nr. 225, 234), falls die Praxis sie einsetzt",
+    "Arzneimittel und Verbrauchsmaterial",
+    "Fremdlabor",
+    "Wegegeld",
+    "Nachkontrollen und Fädenziehen an einem späteren Termin",
+    "Voruntersuchung des Blutes",
+    "Ovariohysterektomie (Nr. 604) statt Ovarektomie",
+    "endoskopischer Zuschlag (Nr. 607)",
+    "Halskragen oder Body"
+  ],
+  "clinicalReview": "unreviewed",
+  "reviewedAt": null,
+  "reviewedBy": null
+}
