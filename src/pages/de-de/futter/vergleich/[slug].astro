@@ -1,0 +1,66 @@
+---
+import Breadcrumbs from '../../../../components/ui/Breadcrumbs.astro';
+import FoodComparison from '../../../../components/pages/FoodComparison.astro';
+import { devFeatureOverrides, resolveBuildConfig } from '../../../../../config/build.ts';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import {
+  FUTTER_VERGLEICHE,
+  auswertung,
+  type FutterVergleichsSeite,
+} from '../../../../features/food/comparison-pages.ts';
+
+export function getStaticPaths() {
+  const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  if (!isFeatureEnabled(markt, 'food')) return [];
+  return FUTTER_VERGLEICHE.map((seite) => ({ params: { slug: seite.slug }, props: { seite } }));
+}
+
+interface Props {
+  seite: FutterVergleichsSeite;
+}
+
+const { seite } = Astro.props;
+const { bewertungen, empfehlungen } = auswertung(seite);
+const canonicalPfad = `/de-de/futter/vergleich/${seite.slug}/`;
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const build = resolveBuildConfig();
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: seite.titel,
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: bewertungen.length,
+    itemListElement: bewertungen.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: `${b.produkt.brand} ${b.produkt.productName}`,
+      url: new URL(`${canonicalPfad}#produkt-${b.produkt.id}`, build.baseUrl).toString(),
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: seite.fragen.map((f) => ({
+      '@type': 'Question',
+      name: f.frage,
+      acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={seite.metaTitel}
+  description={seite.beschreibung}
+  canonicalPfad={canonicalPfad}
+  structuredData={structuredData}
+  weit
+>
+  <Breadcrumbs
+    market={market}
+    stufen={[{ label: 'Futter', route: 'food' }, { label: seite.titel }]}
+  />
+  <FoodComparison seite={seite} bewertungen={bewertungen} empfehlungen={empfehlungen} />
+</BaseLayout>
