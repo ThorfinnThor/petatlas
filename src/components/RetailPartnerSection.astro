@@ -136,33 +136,45 @@ const hasLinks =
   hasLinks && (
     <section class="retail-partner" aria-labelledby={'retail-' + page}>
       <div class="retail-partner__heading">
-        <div>
-          <p class="eyebrow">Weitere Einkaufsmöglichkeit</p>
-          <h2 id={'retail-' + page}>
-            {amazonLinksAktiv
-              ? 'Bei Fressnapf, ZooRoyal und Amazon ansehen'
-              : 'Bei Fressnapf und ZooRoyal ansehen'}
-          </h2>
-        </div>
+        <p class="retail-partner__badge">Werbung · Partnerlinks</p>
+        <h2 id={'retail-' + page}>
+          {amazonLinksAktiv
+            ? 'Bei Fressnapf, ZooRoyal und Amazon stöbern'
+            : 'Bei Fressnapf und ZooRoyal stöbern'}
+        </h2>
+        <p>
+          Die Links führen zu passenden Kategorien beim Händler
+          {amazonLinksAktiv ? ' oder zu einer Amazon-Suche' : ''}. Preise und Verfügbarkeit siehst
+          du dort.
+        </p>
       </div>
-      <p>
-        Die Links führen über Awin zu passenden Kategorien; Amazon-Links öffnen eine Produktsuche.
-        Preise und Verfügbarkeit prüfen Sie direkt beim jeweiligen Händler.
-      </p>
       <div class="retail-partner__grid">
         {retailerLinks.map((entry) => (
-          <article>
-            <p class="retail-partner__species">Für {entry.tier}</p>
-            <h3>{entry.titel}</h3>
-            <p>{entry.beschreibung}</p>
-            <div class="retail-partner__actions">
+          <article class={`retail-card retail-card--${entry.species}`}>
+            <span class="retail-card__icon" aria-hidden="true">
+              {entry.species === 'dog' ? (
+                <svg viewBox="0 0 24 24">
+                  <path d="M10 5.2C10 6.8 9 8 7.8 8S5.5 6.8 5.5 5.2 6.5 2.5 7.8 2.5 10 3.6 10 5.2Zm8.5 0c0 1.6-1 2.8-2.3 2.8S14 6.8 14 5.2s1-2.7 2.2-2.7 2.3 1.1 2.3 2.7ZM6 11.3c0 1.4-.9 2.5-2 2.5s-2-1.1-2-2.5.9-2.5 2-2.5 2 1.1 2 2.5Zm16 0c0 1.4-.9 2.5-2 2.5s-2-1.1-2-2.5.9-2.5 2-2.5 2 1.1 2 2.5ZM12 11c2.6 0 6 4.1 6 7.1 0 1.9-1.4 3.4-3.2 3.4-1.1 0-1.8-.6-2.8-.6s-1.7.6-2.8.6C7.4 21.5 6 20 6 18.1 6 15.1 9.4 11 12 11Z" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 3.5 8.2 7a10 10 0 0 1 7.6 0L20 3.5v7.2c.7 1.2 1 2.5 1 3.8C21 19 17 22 12 22s-9-3-9-7.5c0-1.3.3-2.6 1-3.8V3.5Zm4.5 10a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Zm7 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4ZM12 17l-1.3 1h2.6L12 17Z" />
+                </svg>
+              )}
+            </span>
+            <div class="retail-card__text">
+              <p class="retail-card__species">Für {entry.tier === 'Hund' ? 'Hunde' : 'Katzen'}</p>
+              <h3>{entry.titel}</h3>
+              <p>{entry.beschreibung}</p>
+            </div>
+            <div class="retail-card__actions">
               {entry.fressnapf && (
                 <a
-                  class="retail-link retail-link--fressnapf"
+                  class="retail-link retail-link--primary retail-link--fressnapf"
                   href={entry.fressnapf}
                   {...PARTNER_LINK_ATTRIBUTE}
                 >
-                  Bei Fressnapf öffnen ↗ <span class="sr-only">(Werbung)</span>
+                  Fressnapf ↗ <span class="sr-only">(Werbung)</span>
                 </a>
               )}
               {entry.zooroyal && (
@@ -171,7 +183,7 @@ const hasLinks =
                   href={entry.zooroyal}
                   {...PARTNER_LINK_ATTRIBUTE}
                 >
-                  Bei ZooRoyal öffnen ↗ <span class="sr-only">(Werbung)</span>
+                  ZooRoyal ↗ <span class="sr-only">(Werbung)</span>
                 </a>
               )}
               {amazonLinksAktiv && amazonZiele.get(entry.id) && (
@@ -180,7 +192,7 @@ const hasLinks =
                   href={amazonZiele.get(entry.id)}
                   {...PARTNER_LINK_ATTRIBUTE}
                 >
-                  Bei Amazon suchen ↗ <span class="sr-only">(Werbung)</span>
+                  Amazon ↗ <span class="sr-only">(Werbung)</span>
                 </a>
               )}
             </div>
@@ -193,50 +205,115 @@ const hasLinks =
 
 <style>
   .retail-partner {
-    margin-block: var(--space-8);
-    padding: var(--space-5);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface-subtle);
+    margin-block: var(--space-10);
   }
   .retail-partner__heading {
-    display: grid;
-    gap: var(--space-3);
+    max-inline-size: 62ch;
+    margin-block-end: var(--space-5);
   }
-  .retail-partner__heading h2,
+  .retail-partner__heading h2 {
+    margin-block: var(--space-2);
+    font-size: var(--text-h3);
+  }
   .retail-partner__heading p {
-    margin-block: 0;
+    margin: 0;
+    color: var(--color-text-muted);
   }
-  .retail-partner__heading > div,
-  .retail-partner__grid article {
-    min-inline-size: 0;
+  .retail-partner__heading .retail-partner__badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: var(--text-micro);
+    font-weight: 600;
   }
   .retail-partner__grid {
     display: grid;
     gap: var(--space-4);
-    margin-block-start: var(--space-4);
   }
-  .retail-partner__grid article {
-    padding: var(--space-4);
+  .retail-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2) var(--space-4);
+    align-items: start;
+    padding: var(--space-5);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
   }
-  .retail-partner__grid h3 {
-    margin-block: var(--space-1) var(--space-2);
+  .retail-card--dog {
+    background: linear-gradient(135deg, var(--color-orange-100), var(--color-surface) 60%);
+  }
+  .retail-card--cat {
+    background: linear-gradient(135deg, var(--color-blue-100), var(--color-surface) 60%);
+  }
+  .retail-card__icon {
+    display: grid;
+    place-items: center;
+    inline-size: 3rem;
+    block-size: 3rem;
+    border-radius: 50%;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .retail-card__icon svg {
+    inline-size: 1.6rem;
+    block-size: 1.6rem;
+  }
+  .retail-card--dog .retail-card__icon svg {
+    fill: var(--color-orange-600);
+  }
+  .retail-card--cat .retail-card__icon svg {
+    fill: var(--color-blue-600);
+  }
+  .retail-card__text h3 {
+    margin-block: 0 var(--space-1);
+    font-size: var(--text-h4);
     hyphens: auto;
   }
-  .retail-partner__species {
+  .retail-card__text p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+  .retail-card__text .retail-card__species {
     color: var(--color-primary-hover);
     font-size: var(--text-small);
     font-weight: 700;
-    margin: 0;
   }
-  .retail-partner__actions {
+  .retail-card__actions {
+    grid-column: 1 / -1;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    gap: var(--space-2);
     margin-block-start: var(--space-3);
+  }
+  .retail-link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.5rem;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: var(--weight-button);
+    text-decoration: none;
+    transition: background var(--transition-fast);
+  }
+  .retail-link:hover {
+    background: var(--color-primary-soft);
+  }
+  .retail-link--primary {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+  .retail-link--primary:hover {
+    background: var(--color-primary-hover);
   }
   @media (min-width: 700px) {
     .retail-partner__grid {

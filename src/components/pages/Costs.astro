@@ -23,6 +23,8 @@ import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { subroutePath } from '../../lib/routes.ts';
 import snapshot from '../../../data-snapshots/got/got-2022.json' with { type: 'json' };
+import BrandImage from '../BrandImage.astro';
+import { BEHANDLUNGEN } from '../../features/costs/treatments.ts';
 
 const market = defaultMarket();
 const quelle = snapshot.source as {
@@ -37,16 +39,55 @@ const quelle = snapshot.source as {
 
 const katalogMarkt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
+const beispiele = BEHANDLUNGEN.slice(0, 4);
+/** „Was kostet eine Impfung beim Hund?“ → „Impfung beim Hund“ */
+const kurztitel = (titel: string) => {
+  const kern = titel.replace(/^Was kostet (eine?|die|der|das) /, '').replace(/\?$/, '');
+  return kern.charAt(0).toUpperCase() + kern.slice(1);
+};
 ---
 
-<h1>Tierarztkosten berechnen</h1>
-
-<p>
-  Der Rechner setzt Positionen der Gebührenordnung für Tierärztinnen und Tierärzte zusammen und
-  zeigt, wie sich ein Betrag ergibt. Er ist <strong>kein amtlicher Rechner</strong>. Die
-  Berechnungsübersicht ist keine Rechnung einer Tierarztpraxis und kein verbindlicher
-  Kostenvoranschlag: Eine echte Rechnung kann Positionen enthalten, die hier niemand ausgewählt hat.
-</p>
+<header class="costs-hero">
+  <div class="costs-hero__copy">
+    <p class="costs-hero__eyebrow">Gebührenordnung für Tierärzte · GOT 2022</p>
+    <h1>Tierarztkosten berechnen</h1>
+    <p class="costs-hero__lead">
+      Setz die Leistungen deiner Behandlung zusammen und sieh, wie sich der Betrag aus Grundbetrag,
+      Faktor und Menge ergibt – mit Fundstelle für jede Position.
+    </p>
+    <ol class="costs-hero__steps">
+      <li><span>1</span> Regulär oder Notdienst wählen</li>
+      <li><span>2</span> Leistung suchen und hinzufügen</li>
+      <li><span>3</span> Faktor und Menge anpassen</li>
+    </ol>
+    <p class="costs-hero__note">
+      Der Rechner ist <strong>kein amtlicher Rechner</strong> und kein Kostenvoranschlag: Eine echte Rechnung
+      kann Positionen enthalten, die hier niemand ausgewählt hat.
+    </p>
+  </div>
+  <aside class="costs-hero__aside" aria-labelledby="beispiele-titel">
+    <BrandImage
+      name="health-dog-home"
+      class="costs-hero__image"
+      sizes="(max-width: 899px) 100vw, 40vw"
+      priority
+    />
+    <div class="costs-hero__examples">
+      <p id="beispiele-titel" class="costs-hero__examples-title">Häufige Behandlungen</p>
+      <ul>
+        {
+          beispiele.map((b) => (
+            <li>
+              <a href={subroutePath(katalogMarkt, 'costs', 'behandlung', b.slug)}>
+                {kurztitel(b.titel)} →
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </aside>
+</header>
 
 <ReviewStatus
   status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
@@ -318,17 +359,129 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 </p>
 
 <style>
+  .costs-hero {
+    display: grid;
+    gap: var(--space-6);
+    margin-block: var(--space-4) var(--space-8);
+  }
+  .costs-hero__eyebrow {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .costs-hero h1 {
+    margin-block: 0 var(--space-4);
+  }
+  .costs-hero__lead {
+    max-inline-size: 58ch;
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+  }
+  .costs-hero__steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-5) 0;
+    padding: 0;
+    list-style: none;
+  }
+  .costs-hero__steps li {
+    display: inline-flex;
+    gap: var(--space-2);
+    align-items: center;
+    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-2);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    color: var(--color-primary-hover);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+  .costs-hero__steps span {
+    display: grid;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-size: var(--text-micro);
+  }
+  .costs-hero__note {
+    max-inline-size: 62ch;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .costs-hero__aside {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .costs-hero__aside :global(.costs-hero__image img) {
+    inline-size: 100%;
+    block-size: 13rem;
+    object-fit: cover;
+  }
+  .costs-hero__examples {
+    padding: var(--space-4) var(--space-5) var(--space-5);
+  }
+  .costs-hero__examples-title {
+    margin: 0 0 var(--space-2);
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+  .costs-hero__examples ul {
+    display: grid;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .costs-hero__examples a {
+    display: block;
+    padding: var(--space-2) 0;
+    border-block-end: 1px solid var(--color-border);
+    color: var(--color-primary-hover);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .costs-hero__examples li:last-child a {
+    border-block-end: 0;
+  }
+  @media (min-width: 900px) {
+    .costs-hero {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      align-items: center;
+    }
+  }
+
   fieldset {
     min-inline-size: 0;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
     margin-block: var(--space-4);
+    box-shadow: var(--shadow-xs);
   }
 
+  /* Legende als Überschrift in der Karte statt auf dem Rahmen. */
   legend {
-    font-weight: 600;
-    padding-inline: var(--space-2);
+    float: inline-start;
+    inline-size: 100%;
+    margin-block-end: var(--space-2);
+    padding: 0;
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+    font-weight: 700;
+  }
+
+  legend + * {
+    clear: both;
   }
 
   .hilfe {

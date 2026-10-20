@@ -12,13 +12,21 @@
 ---
 
 <section class="suche" data-pagefind-ignore="all">
-  <h2 id="suche-titel">Suche</h2>
+  <p class="suche__eyebrow">Suche</p>
+  <h2 id="suche-titel">Was suchst du?</h2>
+  <p class="suche__hilfe">Tierarztkosten, Orte, Futter, Ratgeber – alles auf dieser Website.</p>
   <noscript>
     <p>Die Suche benötigt JavaScript. Die Inhalte sind über die Navigation erreichbar.</p>
   </noscript>
   <form id="suche-form" role="search" aria-labelledby="suche-titel" hidden>
-    <label for="suche-feld">Suchbegriff</label>
-    <input id="suche-feld" type="search" autocomplete="off" enterkeyhint="search" />
+    <label for="suche-feld" class="sr-only">Suchbegriff</label>
+    <input
+      id="suche-feld"
+      type="search"
+      autocomplete="off"
+      enterkeyhint="search"
+      placeholder="z. B. Kastration Katze, Hundewiese Köln, Trinkbrunnen"
+    />
   </form>
   <p id="suche-status" role="status" aria-live="polite"></p>
   <ul id="suche-treffer" class="suche__treffer"></ul>
@@ -27,31 +35,67 @@
 <style>
   .suche {
     margin-block-start: var(--space-16);
-    padding: var(--space-6);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface-subtle);
-    /* Ein Suchfeld über die volle Rasterbreite liest sich schlecht. */
-    max-inline-size: var(--content-reading);
+    padding: clamp(var(--space-6), 4vw, var(--space-10));
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 100% 0%, rgb(255 255 255 / 70%), transparent 45%),
+      var(--color-primary-soft);
+    text-align: center;
   }
 
   .suche :global(h2) {
-    margin-block-start: 0;
+    margin-block: var(--space-1) var(--space-2);
   }
 
-  .suche label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: var(--space-1);
+  .suche__eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .suche__hilfe {
+    margin: 0 auto var(--space-5);
+    color: var(--color-text-muted);
+  }
+
+  .suche form {
+    max-inline-size: 36rem;
+    margin-inline: auto;
   }
 
   .suche input {
-    width: 100%;
-    max-width: 26rem;
-    padding: var(--space-3);
+    inline-size: 100%;
+    min-block-size: 3.25rem;
+    padding: 0 var(--space-5) 0 3rem;
     border: 1px solid var(--color-border-strong);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
+    border-radius: var(--radius-pill);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23073637' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E")
+        no-repeat 1.1rem center / 1.2rem,
+      var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    font-size: var(--text-body);
+  }
+
+  .suche input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  .suche [role='status'] {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .suche__treffer {
+    max-inline-size: 40rem;
+    margin-inline: auto;
+    text-align: start;
   }
 
   .suche__treffer {

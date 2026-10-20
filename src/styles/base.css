@@ -263,9 +263,18 @@ fieldset {
   }
 }
 
+/* Legende als Überschrift innerhalb der Karte, nicht als Text auf dem Rahmen. */
 legend {
-  padding-inline: var(--space-2);
-  font-weight: var(--weight-label);
+  float: inline-start;
+  inline-size: 100%;
+  margin-block-end: var(--space-3);
+  padding: 0;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+legend + * {
+  clear: both;
 }
 
 /* ---------- Tabellen (Abschnitt 44.1) ---------- */

@@ -34,6 +34,14 @@ svg {
   max-inline-size: 100%;
 }
 
+/* Ohne diese Regel bleibt ein Bild so hoch wie sein height-Attribut (etwa 720 px),
+   auch wenn es schmaler dargestellt wird. Komponenten, die eine feste Höhe wollen,
+   setzen sie mit eigener Klasse und überschreiben das. */
+img,
+video {
+  block-size: auto;
+}
+
 input,
 button,
 textarea,
