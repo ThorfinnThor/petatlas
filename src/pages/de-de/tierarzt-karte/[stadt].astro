@@ -10,7 +10,7 @@ import DataStatus from '../../../components/DataStatus.astro';
 import { darstellung } from '../../../features/map/website.ts';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides, resolveBuildConfig } from '../../../../config/build.ts';
-import { routePath, subroutePath } from '../../../lib/routes.ts';
+import { routeExists, routePath, subroutePath } from '../../../lib/routes.ts';
 import { PFLICHT_KATEGORIEN, STADT_KRITERIEN } from '../../../features/map/city.ts';
 import { baubareStadtseiten, type Stadtseite } from '../../../features/map/city-allowlist.ts';
 import {
@@ -31,6 +31,10 @@ import { oeffentlicheProjektion } from '../../../../scripts/publish/places.ts';
 import type { Place } from '../../../domain/schemas/places.ts';
 import { applyDirectoryControls } from '../../../features/map/directory-controls.ts';
 import { istIndexierbareStadtseite } from '../../../features/seo/index-quality.ts';
+import { stadtUebersicht } from '../../../features/map/city-summary.ts';
+import CityHours from '../../../components/city/CityHours.astro';
+import CityEmergency from '../../../components/city/CityEmergency.astro';
+import { notdienstFuer } from '../../../features/map/emergency.ts';
 
 const MAX_TREFFER = 100;
 
@@ -79,12 +83,19 @@ const bestand = `${mengen.slice(0, -1).join(', ')} und ${mengen[mengen.length - 
 const initialTreffer = seite.treffer.slice(0, MAX_TREFFER);
 const kommunal = kommunaleFlaechen(seite.slug);
 const KOMMUNAL_MAX = 30;
+const uebersicht = stadtUebersicht(seite);
+const notdienst = notdienstFuer(seite.slug);
+const kostenPfad = routeExists(kartenMarkt, 'costs')
+  ? routePath(kartenMarkt, 'costs')
+  : routePath(kartenMarkt, 'home');
 ---
 
 <BaseLayout
   neverIndex={!istIndexierbareStadtseite(seite.slug)}
-  title={`Tierärzte und Tierbedarf in ${seite.stadt.name}`}
-  description={`Tierärzte, Tierbedarf, Tierheime und Hundewiesen in ${seite.stadt.name} und Umgebung – mit Filtern, Karte, Datenstand und Quellen.`}
+  title={(notdienst?.dienste.length ?? 0) > 0
+    ? `Tierarzt in ${seite.stadt.name}: abends, am Wochenende und im Notdienst`
+    : `Tierarzt in ${seite.stadt.name}: abends und am Wochenende`}
+  description={`${uebersicht.samstag.anzahl + uebersicht.rundUmDieUhr.anzahl} Tierarztpraxen mit Samstagssprechstunde, ${uebersicht.abends.anzahl + uebersicht.rundUmDieUhr.anzahl} mit Abendsprechstunde${(notdienst?.dienste.length ?? 0) > 0 ? ', Notdienst mit Quelle' : ''} und ${uebersicht.hundewiesen.anzahl} Hundewiesen in ${seite.stadt.name} und Umgebung.`}
   route="map"
   canonicalPfad={eigenerPfad}
   weit
@@ -102,6 +113,25 @@ const KOMMUNAL_MAX = 30;
         Rund um {seite.stadt.name} sind {seite.befund.gesamt} Orte erfasst: {bestand}. Filtern Sie
         die Liste nach Kategorie und Umkreis oder öffnen Sie die Karte direkt auf dieser Seite.
       </p>
+      <p class="kurz">
+        <strong>Kurz gesagt:</strong>
+        {uebersicht.samstag.anzahl + uebersicht.rundUmDieUhr.anzahl} Praxen haben laut Öffnungszeiten
+        samstags geöffnet, {uebersicht.abends.anzahl + uebersicht.rundUmDieUhr.anzahl} werktags bis mindestens
+        19 Uhr{
+          uebersicht.rundUmDieUhr.anzahl > 0
+            ? `, ${uebersicht.rundUmDieUhr.anzahl} rund um die Uhr`
+            : ''
+        }. Dazu {uebersicht.hundewiesen.anzahl} Hundewiesen im Umkreis.
+        <a href="#sprechzeiten">Zu den Sprechzeiten</a>
+        {
+          notdienst !== null && (
+            <>
+              {' '}
+              · <a href="#notdienst">Notdienst</a>
+            </>
+          )
+        }
+      </p>
       <DataStatus
         stand={quelle.retrievalDate}
         quelle={`${quelle.name} · ${quelle.licenseId}`}
@@ -118,13 +148,25 @@ const KOMMUNAL_MAX = 30;
         Entfernung, nicht nach Bewertung oder Bezahlung.
       </p>
     </Notice>
-    <Notice variante="warnung" titel="Kein Notdienstverzeichnis">
-      <p>
-        Im Notfall gilt der Notdienstplan der zuständigen Tierärztekammer oder die telefonische
-        Auskunft einer Praxis.
-      </p>
-    </Notice>
+    {
+      notdienst === null && (
+        <Notice variante="warnung" titel="Kein Notdienstverzeichnis">
+          <p>
+            Im Notfall gilt der Notdienstplan der zuständigen Tierärztekammer oder die telefonische
+            Auskunft einer Praxis.
+          </p>
+        </Notice>
+      )
+    }
   </div>
+
+  {
+    notdienst !== null && (
+      <CityEmergency stadt={seite.stadt.name} notdienst={notdienst} kostenPfad={kostenPfad} />
+    )
+  }
+
+  <CityHours stadt={seite.stadt.name} uebersicht={uebersicht} />
 
   <section class="city-directory" aria-labelledby="verzeichnis-titel">
     <div class="section-heading">
@@ -362,6 +404,13 @@ const KOMMUNAL_MAX = 30;
       max-width: 19ch;
     }
 
+    .kurz {
+      padding: var(--space-3) var(--space-4);
+      border-inline-start: 4px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      background: var(--color-primary-soft);
+    }
+
     .city-hero > div > p:not(.eyebrow) {
       max-width: 68ch;
     }
@@ -542,7 +591,8 @@ const KOMMUNAL_MAX = 30;
     }
 
     @media (min-width: 900px) {
-      .city-notices {
+      /* Zwei Hinweise nebeneinander; steht nur einer da, nimmt er die ganze Breite. */
+      .city-notices:has(> :nth-child(2)) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
