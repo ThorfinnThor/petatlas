@@ -1,0 +1,401 @@
+{
+  "category": "katzenspielzeug-kugelbahn",
+  "checkedAt": "2026-10-20",
+  "products": [
+    {
+      "id": "catit-senses-2-play-circuit-43154",
+      "brand": "Catit",
+      "model": "Senses 2.0 Spielschiene Play (Play Circuit)",
+      "variant": "Art.-Nr. 43154",
+      "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/",
+      "specs": {
+        "balls": {
+          "value": 1,
+          "verbatim": "1 Spielschienenball",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "expandable": {
+          "value": true,
+          "verbatim": "Erweiterbare Schienen mit Easy-Click-System für schnellen Zusammenbau",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "lightOrSoundBall": {
+          "value": true,
+          "verbatim": "enthält der Spielschienenball ein kleines Glöckchen, das verlockend klingelt",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "assembly": {
+          "value": "Easy-Click-System, ohne Werkzeug",
+          "verbatim": "Easy-Click-System zur Erweiterung des „Parcours“ deiner Katze",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "levels": {
+          "value": 1,
+          "verbatim": "Die Spielschiene Play liegt eben auf dem Boden",
+          "sourceUrl": "https://www.fressnapf.de/p/catit-senses-20-spielschiene-play-1223385/"
+        },
+        "trackPieces": {
+          "value": 5,
+          "verbatim": "Die Catit Spielschiene „Play“ enthält 1 gerades Element, 2 flache gebogene Elemente, 2 Endstücke und 1 Spielschienenball.",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "dimensionsCm": {
+          "value": "ca. 27x26,5x8cm",
+          "verbatim": "Maße: ca. 27x26,5x8cm",
+          "sourceUrl": "https://www.fressnapf.de/p/catit-senses-20-spielschiene-play-1223385/"
+        }
+      },
+      "price": {
+        "retailer": "fressnapf.de",
+        "priceEur": 23.99,
+        "label": "Senses 2.0 Spielschiene PLAY",
+        "url": "https://www.fressnapf.de/p/catit-senses-20-spielschiene-play-1223385/",
+        "verbatim": "23,99 €"
+      },
+      "notes": "No individual product page on catit.com: one combined page 'Senses Spielschienen' covers Play/Wave/Super. Ball has a removable bell (sound), not lit. 'levels' = null (flat/raised rail segments, no storeys stated). Material only 'BPA-freie Materialien' -> null. Piece counts derived from the 'Was ist enthalten' sentence (rail pieces incl. end pieces, excl. ball). Dimensions from fressnapf.de (order not stated; may be packaged/assembled size) -> height/diameter left null. 5 pieces = 1+2+2."
+    },
+    {
+      "id": "catit-senses-2-wave-circuit-43155",
+      "brand": "Catit",
+      "model": "Senses 2.0 Spielschiene Wave (Wave Circuit)",
+      "variant": "Art.-Nr. 43155",
+      "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/",
+      "specs": {
+        "balls": {
+          "value": 1,
+          "verbatim": "1 Spielschienenball",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "expandable": {
+          "value": true,
+          "verbatim": "Erweiterbare Schienen mit Easy-Click-System für schnellen Zusammenbau",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "lightOrSoundBall": {
+          "value": true,
+          "verbatim": "enthält der Spielschienenball ein kleines Glöckchen, das verlockend klingelt",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "assembly": {
+          "value": "Easy-Click-System, ohne Werkzeug",
+          "verbatim": "Easy-Click-System zur Erweiterung des „Parcours“ deiner Katze",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "trackPieces": {
+          "value": 7,
+          "verbatim": "Die Catit Spielschiene „Wave“ enthält 1 gerades Element, 2 erhöhte, geschwungene Elemente, 2 flache, geschwungene Elemente, 2 Endstücke und 1 Spielschienenball.",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        }
+      },
+      "price": null,
+      "notes": "No individual product page on catit.com: one combined page 'Senses Spielschienen' covers Play/Wave/Super. Ball has a removable bell (sound), not lit. 'levels' = null (flat/raised rail segments, no storeys stated). Material only 'BPA-freie Materialien' -> null. Piece counts derived from the 'Was ist enthalten' sentence (rail pieces incl. end pieces, excl. ball). No German retailer page with dimensions or price found for Wave -> dimensionsCm/price null. 7 pieces = 1+2+2+2 (some foreign retailers say 8-piece)."
+    },
+    {
+      "id": "catit-senses-2-super-circuit-43156",
+      "brand": "Catit",
+      "model": "Senses 2.0 Spielschiene Super (Super Circuit)",
+      "variant": "Art.-Nr. 43156",
+      "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/",
+      "specs": {
+        "balls": {
+          "value": 1,
+          "verbatim": "1 Spielschienenball",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "expandable": {
+          "value": true,
+          "verbatim": "Erweiterbare Schienen mit Easy-Click-System für schnellen Zusammenbau",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "lightOrSoundBall": {
+          "value": true,
+          "verbatim": "enthält der Spielschienenball ein kleines Glöckchen, das verlockend klingelt",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "assembly": {
+          "value": "Easy-Click-System, ohne Werkzeug",
+          "verbatim": "Easy-Click-System zur Erweiterung des „Parcours“ deiner Katze",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        },
+        "trackPieces": {
+          "value": 12,
+          "verbatim": "Mit nicht weniger als 12 Elementen macht die Catit Senses Spielschiene „Super“ ihrem Namen wirklich alle Ehre.",
+          "sourceUrl": "https://www.catit.com/de/produkte/spielzeuge/senses-spielschienen/"
+        }
+      },
+      "price": {
+        "retailer": "fressnapf.de",
+        "priceEur": 28.59,
+        "label": "Senses 2.0 Spielschiene SUPER",
+        "url": "https://www.fressnapf.de/p/catit-senses-20-spielschiene-super-1223387/",
+        "verbatim": "28,59 €"
+      },
+      "notes": "No individual product page on catit.com: one combined page 'Senses Spielschienen' covers Play/Wave/Super. Ball has a removable bell (sound), not lit. 'levels' = null (flat/raised rail segments, no storeys stated). Material only 'BPA-freie Materialien' -> null. Piece counts derived from the 'Was ist enthalten' sentence (rail pieces incl. end pieces, excl. ball). No dimensions found for Super in German sources -> dimensionsCm null. 12 pieces stated; composition 2+2+6+2."
+    },
+    {
+      "id": "trixie-spielturm-kunststoff",
+      "brand": "TRIXIE",
+      "model": "Spielturm Kunststoff (Ball-Turm)",
+      "variant": "grau/salbei/altrosa",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811",
+      "specs": {
+        "levels": {
+          "value": 3,
+          "verbatim": "Turm mit drei Ebenen und herausnehmbaren Kugeln",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811"
+        },
+        "balls": {
+          "value": null,
+          "verbatim": "Herausnehmbare Bälle: Kugeln können von Ihnen wahlweise auf einer oder mehreren Ebenen entfernt werden",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811"
+        },
+        "diameterCm": {
+          "value": 25,
+          "verbatim": "Gesamtmaße: Ø 25 x H 13 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811"
+        },
+        "heightCm": {
+          "value": 13,
+          "verbatim": "Gesamtmaße: Ø 25 x H 13 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811"
+        },
+        "dimensionsCm": {
+          "value": "Ø 25 x H 13 cm",
+          "verbatim": "Gesamtmaße: Ø 25 x H 13 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811"
+        },
+        "expandable": {
+          "value": false,
+          "verbatim": "Turm mit drei Ebenen und herausnehmbaren Kugeln",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Material: Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811"
+        },
+        "extras": {
+          "value": "Bälle Ø 4 cm, herausnehmbar",
+          "verbatim": "Bälle: Ø 4 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 9.99,
+        "label": "Spielturm Kunststoff, 1 Stück (UVP 11,99 €)",
+        "url": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/623811",
+        "verbatim": "9,99 €"
+      },
+      "notes": "Budget circular ball tower (not a rail). Number of balls not stated -> null. expandable=false derived (fixed tower), weak verbatim. Source zooplus.de."
+    },
+    {
+      "id": "designed-by-lotte-holz-spielturm-mia",
+      "brand": "Designed by Lotte",
+      "model": "Holz-Spielturm Mia",
+      "variant": "natur / gelb / schwarz / rosa",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415",
+      "specs": {
+        "levels": {
+          "value": 3,
+          "verbatim": "mit drei Ebenen & faszinierenden Spielbällen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415"
+        },
+        "balls": {
+          "value": null,
+          "verbatim": "mit farbigen Spielbällen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415"
+        },
+        "diameterCm": {
+          "value": 26,
+          "verbatim": "Maße: L 26 x B 26 x H 14,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415"
+        },
+        "heightCm": {
+          "value": 14.5,
+          "verbatim": "Maße: L 26 x B 26 x H 14,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415"
+        },
+        "dimensionsCm": {
+          "value": "L 26 x B 26 x H 14,5 cm",
+          "verbatim": "Maße: L 26 x B 26 x H 14,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415"
+        },
+        "lightOrSoundBall": {
+          "value": true,
+          "verbatim": "machen beim Kullern und Zusammenprallen spannende Geräusche",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415"
+        },
+        "material": {
+          "value": "Holz (Rubberwood)",
+          "verbatim": "Material: Holz",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 23.99,
+        "label": "Holz-Spielturm Mia (UVP 29,99 €)",
+        "url": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielzeugkarussell/1892415",
+        "verbatim": "23,99 €"
+      },
+      "notes": "Wooden 3-level ball tower. Ball count not stated by the shop text (reviewers mention 2 balls per level, not used) -> null. Sound = balls clatter, no electronic sound."
+    },
+    {
+      "id": "ferplast-spielschiene-flashlight",
+      "brand": "Ferplast",
+      "model": "Spielschiene Flashlight",
+      "variant": "Schienen grau/weiß, Ball blau",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071",
+      "specs": {
+        "balls": {
+          "value": 1,
+          "verbatim": "Blinkende Kugel: blauer Ball fängt an rot zu blinken, sobald er angestoßen wird",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        },
+        "trackPieces": {
+          "value": 9,
+          "verbatim": "setzt sich aus 9 Schienen-Elementen zusammen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        },
+        "heightCm": {
+          "value": 10,
+          "verbatim": "Gesamtmaße bei Aufbau wie auf Abbildung: L 85 x B 40 x H 10 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        },
+        "dimensionsCm": {
+          "value": "L 85 x B 40 x H 10 cm (Aufbau wie auf Abbildung); max. Länge bis zu 215 cm",
+          "verbatim": "Gesamtmaße bei Aufbau wie auf Abbildung: L 85 x B 40 x H 10 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        },
+        "expandable": {
+          "value": true,
+          "verbatim": "Click-System: einfach aufzubauen und erweiterbar",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        },
+        "lightOrSoundBall": {
+          "value": true,
+          "verbatim": "Blinkende Kugel: blauer Ball fängt an rot zu blinken, sobald er angestoßen wird",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Material: Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        },
+        "extras": {
+          "value": "Anti-Rutsch-Füße; Knopfbatterien für den Ball im Lieferumfang",
+          "verbatim": "Knopf-Batterien im Lieferumfang enthalten",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        },
+        "assembly": {
+          "value": "Click-System",
+          "verbatim": "Click-System: einfach aufzubauen und erweiterbar",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 24.99,
+        "label": "Spielschiene Flashlight (Einzelartikel)",
+        "url": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/491071",
+        "verbatim": "24,99 €"
+      },
+      "notes": "Zooplus page title says '10-teilig' but text says 9 rail elements (6 curved, 1 straight, 2 bridge) + 1 ball. Combinable with Ferplast Karussell Flashlight. Footprint given for the shown layout only, so diameterCm null."
+    },
+    {
+      "id": "tiaki-kugelbahn-katzen",
+      "brand": "TIAKI",
+      "model": "Kugelbahn für Katzen",
+      "variant": "bunt",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087",
+      "specs": {
+        "balls": {
+          "value": 2,
+          "verbatim": "inkl. 2 Spielbälle",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087"
+        },
+        "trackPieces": {
+          "value": 4,
+          "verbatim": "kommt in 4 Teilen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087"
+        },
+        "diameterCm": {
+          "value": 36,
+          "verbatim": "Größe: Ø 36 x H 5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087"
+        },
+        "heightCm": {
+          "value": 5,
+          "verbatim": "Größe: Ø 36 x H 5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087"
+        },
+        "dimensionsCm": {
+          "value": "Ø 36 x H 5 cm",
+          "verbatim": "Größe: Ø 36 x H 5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087"
+        },
+        "lightOrSoundBall": {
+          "value": true,
+          "verbatim": "die klackernde Geräusche verursachen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087"
+        },
+        "assembly": {
+          "value": "4 Teile, leichter Auf- und Abbau",
+          "verbatim": "leichter Auf- und Abbau für flexible Nutzung",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 4.99,
+        "label": "TIAKI Kugelbahn für Katzen, 1 Stück",
+        "url": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2126087",
+        "verbatim": "4,99 €"
+      },
+      "notes": "Zooplus house brand, circular 4-piece track, ball clatter = sound. expandable/material not stated -> null. Cheapest model."
+    },
+    {
+      "id": "tiaki-kugelbahn-mit-maeusen",
+      "brand": "TIAKI",
+      "model": "Katzenspielzeug Kugelbahn mit Mäusen",
+      "variant": "grün/weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2002807",
+      "specs": {
+        "balls": {
+          "value": 2,
+          "verbatim": "inkl. 2 Spielbälle & 2 Spielmäuse am Gummiband",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2002807"
+        },
+        "dimensionsCm": {
+          "value": "L 50 x B 23,5 x H 5 cm",
+          "verbatim": "Maße : L 50 x B 23,5 x H 5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2002807"
+        },
+        "heightCm": {
+          "value": 5,
+          "verbatim": "Maße : L 50 x B 23,5 x H 5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2002807"
+        },
+        "material": {
+          "value": "Kunststoff (PP), Polyester",
+          "verbatim": "Material : Kunststoff (PP, Polypropylen), Polyester",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2002807"
+        },
+        "extras": {
+          "value": "2 Spielmäuse am Gummiband; Infinity-Loop-Form",
+          "verbatim": "inkl. 2 Spielbälle & 2 Spielmäuse am Gummiband",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2002807"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 7.19,
+        "label": "TIAKI Kugelbahn mit Mäusen, 1 Stück",
+        "url": "https://www.zooplus.de/shop/katzen/katzenspielzeug/katzenspielzeug_beschaeftigung/spielschienen/2002807",
+        "verbatim": "7,19 €"
+      },
+      "notes": "Single infinity-loop track (not modular). Piece count/expandable/sound not stated -> null."
+    }
+  ]
+}

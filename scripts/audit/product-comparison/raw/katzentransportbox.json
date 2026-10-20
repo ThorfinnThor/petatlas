@@ -1,0 +1,576 @@
+{
+  "category": "katzentransportbox",
+  "checkedAt": "2026-10-20",
+  "products": [
+    {
+      "id": "trixie-capri-1-39811",
+      "brand": "TRIXIE",
+      "model": "Capri 1 Transportbox",
+      "variant": "Größe XS · Art.-Nr. 39811 (dunkelgrau/hellgrau)",
+      "sourceUrl": "https://www.trixie.de/cat/transport-travel/transport-boxes/transport-box-capri-1-2-1001435865-1001442997",
+      "specs": {
+        "lengthCm": {
+          "value": 48,
+          "verbatim": "XS: L 48 x B 32 x H 31 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/2134420"
+        },
+        "widthCm": {
+          "value": 32,
+          "verbatim": "XS: L 48 x B 32 x H 31 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/2134420"
+        },
+        "heightCm": {
+          "value": 31,
+          "verbatim": "XS: L 48 x B 32 x H 31 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/2134420"
+        },
+        "maxPetKg": {
+          "value": 6,
+          "verbatim": "bis zu 6 kg",
+          "sourceUrl": "https://www.trixie.de/cat/transport-travel/transport-boxes/transport-box-capri-1-2-1001435865-1001442997"
+        },
+        "emptyWeightKg": {
+          "value": 1.2,
+          "verbatim": "Artikelgewicht 1,2 kg",
+          "sourceUrl": "https://www.trixie.de/cat/transport-travel/transport-boxes/transport-box-capri-1-2-1001435865-1001442997"
+        },
+        "topOpening": {
+          "value": false,
+          "verbatim": "Die Gittertür lässt sich leicht öffnen und sorgt für Sicherheit gleichzeitig mit guter Sicht nach draußen.",
+          "sourceUrl": "https://www.trixie.de/cat/transport-travel/transport-boxes/transport-box-capri-1-2-1001435865-1001442997"
+        },
+        "frontDoorMaterial": {
+          "value": "Metall",
+          "verbatim": "Gittermaterial : Metall",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/2134420"
+        },
+        "type": {
+          "value": "Hartschale",
+          "verbatim": "Die Box ist aus Kunststoff gefertigt",
+          "sourceUrl": "https://www.trixie.de/cat/transport-travel/transport-boxes/transport-box-capri-1-2-1001435865-1001442997"
+        },
+        "carSeatbelt": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.trixie.de/cat/transport-travel/transport-boxes/transport-box-capri-1-2-1001435865-1001442997"
+        },
+        "iata": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.trixie.de/cat/transport-travel/transport-boxes/transport-box-capri-1-2-1001435865-1001442997"
+        },
+        "splitsInHalves": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.trixie.de/cat/transport-travel/transport-boxes/transport-box-capri-1-2-1001435865-1001442997"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 16.69,
+        "label": "Capri 1, XS: L 48 x B 32 x H 31 cm (Farbe dunkelgrau/blush)",
+        "url": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/2134420",
+        "verbatim": "16,69 €"
+      },
+      "notes": "Trixie page lists '32 × 31 × 48 cm' (B×H×L); zooplus gives L 48 x B 32 x H 31, used for the length/width/height mapping. Only top opening not mentioned anywhere -> false (inferred: only a front grid door is described). Price is for the blush colourway (zooplus), same size. Seatbelt/IATA/split not stated -> null (zooplus: 'Fixierung Schalen: Clipverschluss', two clipped shells, but no statement that the top is meant to be removed)."
+    },
+    {
+      "id": "trixie-capri-3-open-top-39861",
+      "brand": "TRIXIE",
+      "model": "Capri 3 Open Top Transportbox",
+      "variant": "Größe S · Art.-Nr. 39861 (dunkelgrau/hellgrau)",
+      "sourceUrl": "https://www.trixie.de/katze/transport-reisen/transportboxen/transportbox-capri-3-open-top-1001435865-1001443009",
+      "specs": {
+        "lengthCm": {
+          "value": 61,
+          "verbatim": "Gesamt: B 40 x T 61 x H 38 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/45535"
+        },
+        "widthCm": {
+          "value": 40,
+          "verbatim": "Gesamt: B 40 x T 61 x H 38 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/45535"
+        },
+        "heightCm": {
+          "value": 38,
+          "verbatim": "Gesamt: B 40 x T 61 x H 38 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/45535"
+        },
+        "maxPetKg": {
+          "value": 12,
+          "verbatim": "bis zu 12 kg",
+          "sourceUrl": "https://www.trixie.de/katze/transport-reisen/transportboxen/transportbox-capri-3-open-top-1001435865-1001443009"
+        },
+        "emptyWeightKg": {
+          "value": 2.5,
+          "verbatim": "Artikelgewicht 2,5 kg",
+          "sourceUrl": "https://www.trixie.de/katze/transport-reisen/transportboxen/transportbox-capri-3-open-top-1001435865-1001443009"
+        },
+        "topOpening": {
+          "value": true,
+          "verbatim": "von oben und vorne zu öffnen",
+          "sourceUrl": "https://www.trixie.de/katze/transport-reisen/transportboxen/transportbox-capri-3-open-top-1001435865-1001443009"
+        },
+        "frontDoorMaterial": {
+          "value": "Metall",
+          "verbatim": "mit Metalltür und Tragegriff",
+          "sourceUrl": "https://www.trixie.de/katze/transport-reisen/transportboxen/transportbox-capri-3-open-top-1001435865-1001443009"
+        },
+        "type": {
+          "value": "Hartschale",
+          "verbatim": "Kunststoff",
+          "sourceUrl": "https://www.trixie.de/katze/transport-reisen/transportboxen/transportbox-capri-3-open-top-1001435865-1001443009"
+        },
+        "carSeatbelt": {
+          "value": true,
+          "verbatim": "Befestigungsvorrichtung für Autosicherheitsgurt",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/45535"
+        },
+        "iata": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.trixie.de/katze/transport-reisen/transportboxen/transportbox-capri-3-open-top-1001435865-1001443009"
+        },
+        "splitsInHalves": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.trixie.de/katze/transport-reisen/transportboxen/transportbox-capri-3-open-top-1001435865-1001443009"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 39.99,
+        "label": "Capri 3 Open Top, dunkelgrau/hellgrau",
+        "url": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/45535",
+        "verbatim": "39,99 €"
+      },
+      "notes": "Trixie lists '40 × 38 × 61 cm'; zooplus: B 40 x T 61 x H 38. Seatbelt claim from the zooplus feature list (manufacturer page has none). Shells fixed with 'Clipverschluss' but removable-top-for-vet not stated -> null."
+    },
+    {
+      "id": "catit-cabrio-41372",
+      "brand": "Catit",
+      "model": "Cabrio Transportbox",
+      "variant": "Blaugrau · Art.-Nr. 41372",
+      "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/",
+      "specs": {
+        "lengthCm": {
+          "value": 51,
+          "verbatim": "51 x 33 x 35 cm (LxBxH)",
+          "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/"
+        },
+        "widthCm": {
+          "value": 33,
+          "verbatim": "51 x 33 x 35 cm (LxBxH)",
+          "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/"
+        },
+        "heightCm": {
+          "value": 35,
+          "verbatim": "51 x 33 x 35 cm (LxBxH)",
+          "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/"
+        },
+        "maxPetKg": {
+          "value": 11.3,
+          "verbatim": "einem MAX. Gewicht von 11,3 kg",
+          "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/"
+        },
+        "emptyWeightKg": {
+          "value": 4.2,
+          "verbatim": "Gewicht: ca. 4,2 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698955"
+        },
+        "topOpening": {
+          "value": true,
+          "verbatim": "Der obere Teil lässt sich zu beiden Seiten öffnen, so dass du deine Katze von oben in die Catit Cabrio Transportbox setzen kannst",
+          "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/"
+        },
+        "frontDoorMaterial": {
+          "value": null,
+          "verbatim": "Transparente Vordertür mit integrierter Lasche für Vorhängeschloss",
+          "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/"
+        },
+        "type": {
+          "value": "Hartschale",
+          "verbatim": "Material: Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698955"
+        },
+        "carSeatbelt": {
+          "value": true,
+          "verbatim": "Kann im Auto mit einem Sicherheitsgurt gesichert werden",
+          "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/"
+        },
+        "iata": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.catit.com/de/produkte/transportboxen/cabrio-transportbox/"
+        },
+        "splitsInHalves": {
+          "value": true,
+          "verbatim": "Komplett abnehmbares Top: weniger Stress für Mensch und Tier",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698955"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 76.49,
+        "label": "Catit Cabrio Transportbox (grau/blau)",
+        "url": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698955",
+        "verbatim": "76,49 €"
+      },
+      "notes": "Door material not named (transparent door) -> null. zooplus says 'für die Mitnahme von Tieren im Flugzeug geeignet, bitte erfragen Sie ...' - no explicit IATA claim -> null. Weight from zooplus only."
+    },
+    {
+      "id": "savic-zephos-2-open",
+      "brand": "Savic",
+      "model": "Zephos 2 Open Transportbox",
+      "variant": "weiß / kaltgrau",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953",
+      "specs": {
+        "lengthCm": {
+          "value": 55.5,
+          "verbatim": "Gesamt: L 38 x T 55,5 x H 34 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "widthCm": {
+          "value": 38,
+          "verbatim": "Gesamt: L 38 x T 55,5 x H 34 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "heightCm": {
+          "value": 34,
+          "verbatim": "Gesamt: L 38 x T 55,5 x H 34 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "maxPetKg": {
+          "value": 7,
+          "verbatim": "Belastbarkeit: max. 7 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "emptyWeightKg": {
+          "value": 1.5,
+          "verbatim": "Artikelgewicht: ca. 1,5 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "topOpening": {
+          "value": true,
+          "verbatim": "Dachöffnung: L 36 x B 19 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "frontDoorMaterial": {
+          "value": "Metall",
+          "verbatim": "Gitter: Metall, lackiert",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "type": {
+          "value": "Hartschale",
+          "verbatim": "Transportbox: Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "carSeatbelt": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "iata": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        },
+        "splitsInHalves": {
+          "value": true,
+          "verbatim": "Abnehmbares Oberteil : für eine einfache Reinigung, via Clips einfach abzunehmen und wieder aufzusetzen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 37.99,
+        "label": "Zephos 2 Open, weiß/kaltgrau",
+        "url": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/698953",
+        "verbatim": "37,99 €"
+      },
+      "notes": "Only zooplus page used (Savic manufacturer page not retrievable). zooplus lists 'für Reisen mit dem Flugzeug, Zug, Auto oder Schiff geeignet' - no explicit IATA wording -> null. Dimension label 'L 38 x T 55,5' is zooplus' own wording (38 = width)."
+    },
+    {
+      "id": "savic-trotter-1-happy-planet",
+      "brand": "Savic",
+      "model": "Trotter 1 Happy Planet Transportbox",
+      "variant": "warmes Grau / granite mocca",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708",
+      "specs": {
+        "lengthCm": {
+          "value": 49,
+          "verbatim": "Gesamt: B 49 x T 33 x H 30 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "widthCm": {
+          "value": 33,
+          "verbatim": "Gesamt: B 49 x T 33 x H 30 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "heightCm": {
+          "value": 30,
+          "verbatim": "Gesamt: B 49 x T 33 x H 30 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "maxPetKg": {
+          "value": 5,
+          "verbatim": "Belastbarkeit: max. 5 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "emptyWeightKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "topOpening": {
+          "value": false,
+          "verbatim": "Der Einstieg Ihres Tieres erfolgt über die beidseitig zu öffnende Fronttüre",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "frontDoorMaterial": {
+          "value": "Metall",
+          "verbatim": "Gitter: Metall, lackiert",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "type": {
+          "value": "Hartschale",
+          "verbatim": "Transportbox: Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "carSeatbelt": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "iata": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        },
+        "splitsInHalves": {
+          "value": true,
+          "verbatim": "Abnehmbare Oberschale: für eine einfache Reinigung, via 4 Clips an den Seiten zu öffnen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 19.69,
+        "label": "Trotter 1 Happy Planet",
+        "url": "https://www.zooplus.de/shop/katzen/transport/transportboxen/kunststoff_transportboxen/1242708",
+        "verbatim": "19,69 €"
+      },
+      "notes": "zooplus labels the 49 cm side 'B' (width); it is the long side, mapped to length. Weight not given -> null. topOpening=false inferred from 'Einstieg über Fronttüre' (no top opening described)."
+    },
+    {
+      "id": "kerbl-gulliver-1-84651",
+      "brand": "Kerbl",
+      "model": "Transportbox Gulliver 1 (Stefanplast-Bauart)",
+      "variant": "hellgrau/dunkelgrau · Art.-Nr. 84651",
+      "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056",
+      "specs": {
+        "lengthCm": {
+          "value": 48,
+          "verbatim": "84651 light grey/dark grey 48 cm 32 cm 31 cm 1 6 kg",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "widthCm": {
+          "value": 32,
+          "verbatim": "84651 light grey/dark grey 48 cm 32 cm 31 cm 1 6 kg",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "heightCm": {
+          "value": 31,
+          "verbatim": "84651 light grey/dark grey 48 cm 32 cm 31 cm 1 6 kg",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "maxPetKg": {
+          "value": 6,
+          "verbatim": "84651 light grey/dark grey 48 cm 32 cm 31 cm 1 6 kg",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "emptyWeightKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "topOpening": {
+          "value": false,
+          "verbatim": "with metal mesh doors for rapid opening and secure closing",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "frontDoorMaterial": {
+          "value": "Metall",
+          "verbatim": "with metal mesh doors for rapid opening and secure closing",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "type": {
+          "value": "Hartschale",
+          "verbatim": "made from durable and long-lasting polypropylene",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "carSeatbelt": {
+          "value": true,
+          "verbatim": "with attachment option for the car seatbelt",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "iata": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        },
+        "splitsInHalves": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.kerbl.com/en/product/transport-box-gulliver/987450/10056"
+        }
+      },
+      "price": null,
+      "notes": "Kerbl English product page (German page is JS-only, empty for the fetcher). Kerbl states 'The prices shown are the manufacturer's recommended retail prices' but gives no unit price for 84651 in retrievable text; no zooplus.de/fressnapf.de listing found -> price null. Box 'can be dismantled' but upper-shell/vet use not stated -> splits null. topOpening false inferred (only doors described)."
+    },
+    {
+      "id": "trixie-friends-on-tour-ryan",
+      "brand": "TRIXIE",
+      "model": "Friends on Tour Tragetasche Ryan",
+      "variant": "schwarz · L 54 x B 30 x H 30 cm",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314",
+      "specs": {
+        "lengthCm": {
+          "value": 54,
+          "verbatim": "Maße: L 54 x B 30 x H 30 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "widthCm": {
+          "value": 30,
+          "verbatim": "Maße: L 54 x B 30 x H 30 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "heightCm": {
+          "value": 30,
+          "verbatim": "Maße: L 54 x B 30 x H 30 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "maxPetKg": {
+          "value": 10,
+          "verbatim": "für Katzen & kleine Hunde bis zu einem Gewicht von ca. 10 kg geeignet",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "emptyWeightKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "topOpening": {
+          "value": true,
+          "verbatim": "kann von oben und von der Seite geöffnet werden",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "frontDoorMaterial": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "type": {
+          "value": "Tasche",
+          "verbatim": "Material: 100% Polyester",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "carSeatbelt": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "iata": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        },
+        "splitsInHalves": {
+          "value": false,
+          "verbatim": "flach zusammenlegbar",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 19.49,
+        "label": "Trixie Friends on Tour Ryan, L 54 x B 30 x H 30 cm",
+        "url": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/9314",
+        "verbatim": "19,49 €"
+      },
+      "notes": "Source is the zooplus.de page (no trixie.de page located). Soft bag: no door material, weight not given. splitsInHalves false = not applicable for a fabric bag (foldable)."
+    },
+    {
+      "id": "sherpa-original-deluxe-m",
+      "brand": "Sherpa",
+      "model": "Original Deluxe Tragetasche",
+      "variant": "Größe M · schwarz",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172",
+      "specs": {
+        "lengthCm": {
+          "value": 43,
+          "verbatim": "Größe M: ca. L 43 x B 28 x H 26 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "widthCm": {
+          "value": 28,
+          "verbatim": "Größe M: ca. L 43 x B 28 x H 26 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "heightCm": {
+          "value": 26,
+          "verbatim": "Größe M: ca. L 43 x B 28 x H 26 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "maxPetKg": {
+          "value": 7,
+          "verbatim": "Gr. M bis zu 7 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "emptyWeightKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "topOpening": {
+          "value": true,
+          "verbatim": "kann seitlich und von oben geöffnet werden",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "frontDoorMaterial": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "type": {
+          "value": "Tasche",
+          "verbatim": "Außenhülle: 100% Polyester",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "carSeatbelt": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "iata": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        },
+        "splitsInHalves": {
+          "value": false,
+          "verbatim": "Faltbar: für eine platzsparende Aufbewahrung",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 89.99,
+        "label": "Größe M: ca. L 43 x B 28 x H 26 cm",
+        "url": "https://www.zooplus.de/shop/hunde/hundetransportbox/tragetaschen/andere_tragetaschen/617172",
+        "verbatim": "89,99 €"
+      },
+      "notes": "Size L (48x30x29, up to 10 kg) costs 99,99 EUR. Airline wording: 'Geeignet für etliche Fluggesellschaften: bitte prüfe ... Bestimmungen' - not an IATA claim -> null. Premium price level."
+    }
+  ]
+}

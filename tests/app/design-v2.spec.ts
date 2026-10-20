@@ -262,20 +262,23 @@ for (const width of [390, 1440]) {
 }
 
 for (const width of [320, 390, 768, 1440]) {
-  test(`purchase guide uses a clear decision flow at ${width}px`, async ({ page }) => {
+  test(`product comparison uses a clear decision flow at ${width}px`, async ({ page }) => {
     const height = width === 320 ? 720 : width === 390 ? 844 : width === 768 ? 1024 : 900;
     await page.setViewportSize({ width, height });
     await page.goto('/de-de/produkte/katzentoilette-vergleich/');
 
-    await expect(page.locator('.guide-hero')).toBeVisible();
-    await expect(page.locator('.guide-hero img')).toBeVisible();
-    await expect(page.locator('.quick-choice__card')).toHaveCount(3);
-    await expect(page.locator('.product-detail')).toHaveCount(3);
-    await expect(page.locator('.commerce')).toBeVisible();
+    await expect(page.locator('.pc-hero')).toBeVisible();
+    // Das Stimmungsbild steht nur auf breiten Bildschirmen; mobil zuerst die Antwort.
+    if (width >= 1024) await expect(page.locator('.pc-hero img')).toBeVisible();
+    else await expect(page.locator('.pc-hero img')).toBeHidden();
+    expect(await page.locator('.pc-pick').count()).toBeGreaterThanOrEqual(2);
+    expect(await page.locator('.pc-product').count()).toBeGreaterThanOrEqual(6);
+    await expect(page.locator('.pc-commerce')).toBeVisible();
 
+    // Erst die redaktionelle Bewertung, dann die Werbung.
     const order = await page.evaluate(() => {
-      const products = document.querySelector('.product-section');
-      const commerce = document.querySelector('.commerce');
+      const products = document.querySelector('.pc-products');
+      const commerce = document.querySelector('.pc-commerce');
       return Boolean(
         products &&
         commerce &&
@@ -287,7 +290,7 @@ for (const width of [320, 390, 768, 1440]) {
     const layout = await page.evaluate(() => ({
       overflow: document.documentElement.scrollWidth > window.innerWidth + 1,
       mainWidth: document.querySelector('main')?.getBoundingClientRect().width ?? 0,
-      heroHeight: document.querySelector('.guide-hero')?.getBoundingClientRect().height ?? 0,
+      heroHeight: document.querySelector('.pc-hero')?.getBoundingClientRect().height ?? 0,
     }));
     expect(layout.overflow).toBe(false);
     expect(layout.heroHeight).toBeLessThanOrEqual(height * (width < 600 ? 1.25 : 0.95));
