@@ -68,7 +68,7 @@ Der Umkreis von 10 km bedeutet, dass in Ballungsräumen Nachbarstädte mitzähle
 
 - Keine Bewertungen, keine Rangfolge, keine bezahlten Platzierungen. Sortiert wird ausschließlich nach Entfernung zum Stadtmittelpunkt.
 - Keine leere Rubrik. Fehlt eine Kategorie, entsteht die Seite gar nicht.
-- Keine Notdienstauskunft. Die Seite sagt ausdrücklich, dass sie keine ist.
+- Keine eigene Notdienstauskunft aus OpenStreetMap. Für die indexierbaren Städte steht seit 20.10.2026 ein eigens erhobener Notdienst-Abschnitt mit Quelle auf der Seite (`docs/reviews/city-pages-2026-10-20.md`); für alle anderen bleibt der Hinweis, dass die Seite kein Notdienstverzeichnis ist.
 - Kein Vollständigkeitsanspruch: was in OpenStreetMap fehlt, fehlt hier — nicht in der Wirklichkeit.
 
 ## Erneuern
@@ -84,3 +84,7 @@ Das Skript misst neu und schreibt die Datei. Der Build prüft anschließend jede
 ## Nachtrag M20-02 (2026-09-08)
 
 Die Obergrenze war die bindende Beschränkung, nicht die Qualität: von 188 Kandidaten erfüllen **42** die unveränderten Kriterien; bisher hingen 17 davon an der Grenze von 25. `maxStaedte` steht jetzt auf 150 und wirkt nur noch als Sicherheitsventil gegen einen fehlerhaften Datenstand.
+
+## Nachtrag Inhaltsoffensive (2026-10-20)
+
+Neu auf jeder Stadtseite: Auswertung der Öffnungszeiten (samstags, sonntags, werktags bis 19 Uhr, rund um die Uhr), Hundewiesen im Umkreis und – für die 15 indexierbaren Städte – der tierärztliche Notdienst mit Quelle. Einzelheiten und Grenzen: `docs/reviews/city-pages-2026-10-20.md`.
