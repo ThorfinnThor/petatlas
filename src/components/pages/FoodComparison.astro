@@ -317,8 +317,9 @@ const andere = FUTTER_VERGLEICHE.filter((s) => s.slug !== seite.slug);
         <tr>
           <th scope="row">Zusammensetzung</th><td>{GEWICHTE.zusammensetzung}</td>
           <td
-            >Tierische Zutat an erster Stelle (10), Anteile in Prozent angegeben (15), je
-            Sammelbegriff wie „tierische Nebenerzeugnisse“ oder „Getreide“ 5 Punkte Abzug.</td
+            >Tierische Zutat an erster Stelle (10), Hauptzutat mit Prozentangabe und ohne den
+            Sammelbegriff „tierische Nebenerzeugnisse“ (15), je Sammelbegriff wie „tierische
+            Nebenerzeugnisse“ oder „Getreide“ 5 Punkte Abzug.</td
           >
         </tr>
         <tr>
@@ -703,6 +704,7 @@ const andere = FUTTER_VERGLEICHE.filter((s) => s.slug !== seite.slug);
     box-shadow: var(--shadow-sm);
   }
   .fc-weights {
+    max-inline-size: 60rem;
     margin-block-end: var(--space-6);
   }
   .fc-method__notes {
