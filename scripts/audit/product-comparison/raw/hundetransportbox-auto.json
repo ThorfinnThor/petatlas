@@ -1,0 +1,510 @@
+{
+  "category": "hundetransportbox-auto",
+  "checkedAt": "2026-10-20",
+  "products": [
+    {
+      "id": "trixie-journey-39413",
+      "brand": "TRIXIE",
+      "model": "Transportbox Journey",
+      "variant": "Art.-Nr. 39413 · Größe M · 88 × 58 × 51 cm · schwarz/grau",
+      "sourceUrl": "https://trixie.shop/products/transportbox-journey",
+      "specs": {
+        "lengthCm": {
+          "value": 88,
+          "verbatim": "Art.-Nr.: 39413, Größe: M, Maße: 88 × 58 × 51 cm",
+          "sourceUrl": "https://trixie.shop/products/transportbox-journey"
+        },
+        "widthCm": {
+          "value": 58,
+          "verbatim": "Art.-Nr.: 39413, Größe: M, Maße: 88 × 58 × 51 cm",
+          "sourceUrl": "https://trixie.shop/products/transportbox-journey"
+        },
+        "heightCm": {
+          "value": 51,
+          "verbatim": "Art.-Nr.: 39413, Größe: M, Maße: 88 × 58 × 51 cm",
+          "sourceUrl": "https://trixie.shop/products/transportbox-journey"
+        },
+        "weightKg": {
+          "value": 5.733,
+          "verbatim": "\"weight\":5733",
+          "sourceUrl": "https://trixie.shop/products/transportbox-journey"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Kunststoff",
+          "sourceUrl": "https://trixie.shop/products/transportbox-journey"
+        },
+        "crashTested": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "crashTestDetail": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "emergencyExit": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "maxDogKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "sizesAvailable": {
+          "value": 3,
+          "verbatim": "Art.-Nr.: 39415, Größe: M–L, Maße: 100 × 65 × 60 cm",
+          "sourceUrl": "https://trixie.shop/products/transportbox-journey"
+        },
+        "doors": {
+          "value": "Metalltür, aufklappbar",
+          "verbatim": "mit Metalltür, aufklappbar",
+          "sourceUrl": "https://trixie.shop/products/transportbox-journey"
+        }
+      },
+      "price": {
+        "retailer": "fressnapf.de",
+        "priceEur": 79.99,
+        "label": "TRIXIE Transportbox Journey schwarz, Größe M (88×58×51 cm)",
+        "url": "https://www.fressnapf.de/p/trixie-transportbox-journey-schwarz-m-1119680/",
+        "verbatim": "79,99 €"
+      },
+      "notes": "Maße-Reihenfolge laut TRIXIE: 88 × 58 × 51 cm (vermutlich L × B × H; Reihenfolge auf der Seite nicht benannt). Gewicht aus dem Shop-Datenfeld (5733 g). Keine Crashtest-Angabe auf der Seite -> null. Auf trixie.shop ist Variante 39413 aktuell 'nicht verfügbar' (UVP-Shop-Preis 89,99 €); Preis daher von fressnapf.de. maxDogKg nicht angegeben."
+    },
+    {
+      "id": "trixie-vario-39722",
+      "brand": "TRIXIE",
+      "model": "Hundebox Vario",
+      "variant": "Art.-Nr. 39722 · Größe S–M · 76 × 48 × 51 cm · schwarz/grau",
+      "sourceUrl": "https://trixie.shop/products/hundebox-vario",
+      "specs": {
+        "lengthCm": {
+          "value": 76,
+          "verbatim": "Art.-Nr.: 39722, Größe: S–M, Maße: 76 × 48 × 51 cm",
+          "sourceUrl": "https://trixie.shop/products/hundebox-vario"
+        },
+        "widthCm": {
+          "value": 48,
+          "verbatim": "Art.-Nr.: 39722, Größe: S–M, Maße: 76 × 48 × 51 cm",
+          "sourceUrl": "https://trixie.shop/products/hundebox-vario"
+        },
+        "heightCm": {
+          "value": 51,
+          "verbatim": "Art.-Nr.: 39722, Größe: S–M, Maße: 76 × 48 × 51 cm",
+          "sourceUrl": "https://trixie.shop/products/hundebox-vario"
+        },
+        "weightKg": {
+          "value": 4.405,
+          "verbatim": "4.405 kg",
+          "sourceUrl": "https://trixie.shop/products/hundebox-vario"
+        },
+        "material": {
+          "value": "Metallrahmen mit Polyester-Bezug (Stoffbox)",
+          "verbatim": "stabiler Metallrahmen mit Schnellarretierung",
+          "sourceUrl": "https://trixie.shop/products/hundebox-vario"
+        },
+        "crashTested": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "crashTestDetail": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "emergencyExit": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "maxDogKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "sizesAvailable": {
+          "value": 4,
+          "verbatim": "Art.-Nr.: 39724, Größe: L, Maße: 99 × 65 × 71/61 cm",
+          "sourceUrl": "https://trixie.shop/products/hundebox-vario"
+        },
+        "doors": {
+          "value": "an 3 Seiten zu öffnen",
+          "verbatim": "an 3 Seiten zu öffnen",
+          "sourceUrl": "https://trixie.shop/products/hundebox-vario"
+        }
+      },
+      "price": {
+        "retailer": "trixie.shop",
+        "priceEur": 99.99,
+        "label": "Hundebox Vario, Art.-Nr. 39722 (S–M)",
+        "url": "https://trixie.shop/products/hundebox-vario",
+        "verbatim": "99,99 €"
+      },
+      "notes": "Faltbare Stoffbox mit Metallrahmen (Polyester-Bezug laut Beschreibung: 'aus strapazierfähigem Polyester'), kein Crashtest angegeben -> null. Maße-Reihenfolge 76 × 48 × 51 cm nicht benannt. Preis vom Hersteller-Shop (trixie.shop, Datum 2026-10-20); die zuerst angezeigte Variante auf der Seite war 'Nicht verfügbar'."
+    },
+    {
+      "id": "trixie-aluminium-39342",
+      "brand": "TRIXIE",
+      "model": "Transportbox Aluminium",
+      "variant": "Art.-Nr. 39342 · Größe M–L · 60 × 65 × 86 cm · hellgrau/silber",
+      "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1",
+      "specs": {
+        "lengthCm": {
+          "value": 60,
+          "verbatim": "Art.-Nr.: 39342, Größe: M–L, Maße: 60 × 65 × 86 cm, bis zu: 30 kg",
+          "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1"
+        },
+        "widthCm": {
+          "value": 65,
+          "verbatim": "Art.-Nr.: 39342, Größe: M–L, Maße: 60 × 65 × 86 cm, bis zu: 30 kg",
+          "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1"
+        },
+        "heightCm": {
+          "value": 86,
+          "verbatim": "Art.-Nr.: 39342, Größe: M–L, Maße: 60 × 65 × 86 cm, bis zu: 30 kg",
+          "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1"
+        },
+        "weightKg": {
+          "value": 18.43,
+          "verbatim": "18.43 kg",
+          "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1"
+        },
+        "material": {
+          "value": "Aluminium/Hartfaserplatten/Kunststoff",
+          "verbatim": "Aluminium/Hartfaserplatten/Kunststoff",
+          "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1"
+        },
+        "crashTested": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "crashTestDetail": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "emergencyExit": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "maxDogKg": {
+          "value": 30,
+          "verbatim": "Art.-Nr.: 39342, Größe: M–L, Maße: 60 × 65 × 86 cm, bis zu: 30 kg",
+          "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1"
+        },
+        "sizesAvailable": {
+          "value": 6,
+          "verbatim": "Art.-Nr.: 39346, Größe: XL, Maße: 91 × 85 × 89 cm, bis zu: 60 kg",
+          "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1"
+        },
+        "doors": {
+          "value": "Tür mit Sicherheitsverschluss (eine Fronttür)",
+          "verbatim": "Tür mit Sicherheitsverschluss",
+          "sourceUrl": "https://trixie.shop/products/transportbox-aluminium-1"
+        }
+      },
+      "price": {
+        "retailer": "trixie.shop",
+        "priceEur": 249.0,
+        "label": "Transportbox Aluminium, Art.-Nr. 39342 (M–L)",
+        "url": "https://trixie.shop/products/transportbox-aluminium-1",
+        "verbatim": "249,00 €"
+      },
+      "notes": "Seite nennt 'geprüft durch unabhängige Fachstelle für tiergerechte Tierhaltung und Tierschutz' (Tierschutz, KEIN Crashtest) und 'extra stabil, sicher und geräuscharm' -> crashTested null. Maße-Reihenfolge 60 × 65 × 86 cm nicht benannt (Öffnung 58 × 52 cm). Anzahl Größen = 6 Varianten (39340-39346)."
+    },
+    {
+      "id": "kleinmetall-variocage-sl",
+      "brand": "Kleinmetall",
+      "model": "VarioCage Einzelbox",
+      "variant": "Größe SL · Art.-Nr. 40000031 · B 55,5 x T 76-103 x H 65 cm",
+      "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031",
+      "specs": {
+        "lengthCm": {
+          "value": 76,
+          "verbatim": "Einzelbox Gr. SL B 55,5 x T 76-103 x H 65 cm Gewicht 19 kg",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        },
+        "widthCm": {
+          "value": 55.5,
+          "verbatim": "Einzelbox Gr. SL B 55,5 x T 76-103 x H 65 cm Gewicht 19 kg",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        },
+        "heightCm": {
+          "value": 65,
+          "verbatim": "Einzelbox Gr. SL B 55,5 x T 76-103 x H 65 cm Gewicht 19 kg",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        },
+        "weightKg": {
+          "value": 19,
+          "verbatim": "Einzelbox Gr. SL B 55,5 x T 76-103 x H 65 cm Gewicht 19 kg",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        },
+        "material": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "crashTested": {
+          "value": true,
+          "verbatim": "Crash-getestete Box mit Deformationszone",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        },
+        "crashTestDetail": {
+          "value": "Crash-getestete Box mit Deformationszone",
+          "verbatim": "Unsere Variocage-Boxen sind crash-getestet und weltweit einzigartig mit Deformationszone.",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        },
+        "emergencyExit": {
+          "value": true,
+          "verbatim": "Notausstieg",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        },
+        "maxDogKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "sizesAvailable": {
+          "value": 4,
+          "verbatim": "Einzelbox Gr. SXL B 70 x T 81-103 x H 71,5 cm Gewicht 22 kg",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        },
+        "doors": {
+          "value": "Einhand-Schnellentriegelung, abschließbares Sicherheitsschloß, automatischer Türstopper",
+          "verbatim": "Abschließbares Sicherheitsschloß",
+          "sourceUrl": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031"
+        }
+      },
+      "price": {
+        "retailer": "kleinmetall.de",
+        "priceEur": 494.0,
+        "label": "VarioCage Einzelbox Größe SL (Artikel 40000031)",
+        "url": "https://www.kleinmetall.de/variocage-einzelbox-groesse-sl-40000031",
+        "verbatim": "494,00 €"
+      },
+      "notes": "lengthCm ist die TIEFE T, verstellbar 76-103 cm (Minimum eingetragen); Breite 55,5; Höhe 65. Ob Crashtest-Norm/Prüfstelle: auf der Seite NICHT genannt (nur 'crash-getestet'); Material nicht genannt -> null. Hersteller-Shop preist auch: 'VarioCage Einzelbox' ab 478,00 € (SXS)."
+    },
+    {
+      "id": "4pets-caree",
+      "brand": "4pets",
+      "model": "Transportbox Caree",
+      "variant": "schwarz · ca. 47,2x57x46,5 cm (BxTxH)",
+      "sourceUrl": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/",
+      "specs": {
+        "lengthCm": {
+          "value": 57,
+          "verbatim": "Die Maße der Transportbox Caree von 4pets (BxTxH): ca. 47,2x57x46,5cm",
+          "sourceUrl": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/"
+        },
+        "widthCm": {
+          "value": 47.2,
+          "verbatim": "Die Maße der Transportbox Caree von 4pets (BxTxH): ca. 47,2x57x46,5cm",
+          "sourceUrl": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/"
+        },
+        "heightCm": {
+          "value": 46.5,
+          "verbatim": "Die Maße der Transportbox Caree von 4pets (BxTxH): ca. 47,2x57x46,5cm",
+          "sourceUrl": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/"
+        },
+        "weightKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "material": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "crashTested": {
+          "value": true,
+          "verbatim": "Crash getestet",
+          "sourceUrl": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/"
+        },
+        "crashTestDetail": {
+          "value": "TÜV SÜD Deutschland zertifiziert bis 15 kg; Crash getestet; 'Die Boxen erfüllen die Crash Anforderungen für Hunde und Katzen bis 15kg in Fahrzeugen.'",
+          "verbatim": "Die Boxen erfüllen die Crash Anforderungen für Hunde und Katzen bis 15kg in Fahrzeugen.",
+          "sourceUrl": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/"
+        },
+        "emergencyExit": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "maxDogKg": {
+          "value": 15,
+          "verbatim": "Die Transportbox eignet sich für Hunde und Katzen bis 15kg.",
+          "sourceUrl": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/"
+        },
+        "sizesAvailable": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "doors": {
+          "value": "«Pull & Klick» Türverschluss für beidseitiges Öffnen und Schliessen",
+          "verbatim": "beidseitiges Öffnen und Schliessen",
+          "sourceUrl": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/"
+        }
+      },
+      "price": {
+        "retailer": "fressnapf.de",
+        "priceEur": 298.99,
+        "label": "4pets Transportbox Caree schwarz",
+        "url": "https://www.fressnapf.de/p/4pets-transportbox-caree-schwarz-1342977/",
+        "verbatim": "298,99 €"
+      },
+      "notes": "Gepolsterte Fahrgastraum-Box (Rücksitz, Gurt/ISOFIX) nur für Kleinhunde/Katzen bis 15 kg, nicht Kofferraum-Box; Seite nennt die Prüfnorm nicht, nur 'TÜV SÜD'. Maße laut Seite in Reihenfolge BxTxH (hier length = T). Fressnapf-Seite (Herstellerseite nicht erreichbar). Material und Gewicht nicht genannt."
+    },
+    {
+      "id": "ferplast-atlas-car",
+      "brand": "Ferplast",
+      "model": "Autotransportbox Atlas Car",
+      "variant": "B 72 x T 41 x H 51 cm (Artikel 158220)",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox/grosse_transportboxen/158220",
+      "specs": {
+        "lengthCm": {
+          "value": 41,
+          "verbatim": "B 72 x T 41 x H 51 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox/grosse_transportboxen/158220"
+        },
+        "widthCm": {
+          "value": 72,
+          "verbatim": "B 72 x T 41 x H 51 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox/grosse_transportboxen/158220"
+        },
+        "heightCm": {
+          "value": 51,
+          "verbatim": "B 72 x T 41 x H 51 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox/grosse_transportboxen/158220"
+        },
+        "weightKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "material": {
+          "value": "Kunststoff mit Metall-Gittertüren",
+          "verbatim": "aus Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox/grosse_transportboxen/158220"
+        },
+        "crashTested": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "crashTestDetail": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "emergencyExit": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "maxDogKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "sizesAvailable": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "doors": {
+          "value": "Zwei-Wege-Schiebetür (abnehmbare Metall-Gittertüren)",
+          "verbatim": "Zwei-Wege-Schiebetüre",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox/grosse_transportboxen/158220"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 73.99,
+        "label": "Ferplast Autotransportbox Atlas Car, B 72 x T 41 x H 51 cm",
+        "url": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox/grosse_transportboxen/158220",
+        "verbatim": "73,99 €"
+      },
+      "notes": "Kunststoffbox (Ferplast.de Seite nicht abrufbar; Werte von zooplus.de). Auf der Seite sind nur eine Größe, kein Gewicht, keine Hundegewichtsangabe und keine Crashtest-Angabe -> null. 'Länge' (Box lang) ist hier B 72; ich habe lengthCm=41 (T) gesetzt entsprechend der verbatim-Benennung B/T/H; zum Anzeigen B als längste Seite verwenden."
+    },
+    {
+      "id": "kerbl-vacation-alu",
+      "brand": "Kerbl Pet",
+      "model": "Transportbox Vacation aus Alu",
+      "variant": "graphite · B 55 x T 77 / 50 x H 50 cm (kleinste Größe, Artikel 2377714)",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox_alu/2377714",
+      "specs": {
+        "lengthCm": {
+          "value": 77,
+          "verbatim": "B 55 x T 77 / 50 x H 50 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox_alu/2377714"
+        },
+        "widthCm": {
+          "value": 55,
+          "verbatim": "B 55 x T 77 / 50 x H 50 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox_alu/2377714"
+        },
+        "heightCm": {
+          "value": 50,
+          "verbatim": "B 55 x T 77 / 50 x H 50 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox_alu/2377714"
+        },
+        "weightKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "material": {
+          "value": "Aluminium (Aluminium-Kunststoff-Verbundmaterial)",
+          "verbatim": "Material : Aluminium",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox_alu/2377714"
+        },
+        "crashTested": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "crashTestDetail": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "emergencyExit": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "maxDogKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "sizesAvailable": {
+          "value": 2,
+          "verbatim": "B 65 x T 92 / 60 x H 65,5 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox_alu/2377714"
+        },
+        "doors": {
+          "value": "Tür mit Schnellverriegelungssystem",
+          "verbatim": "Schnellverriegelungssystem: sorgt für sicheres Verschließen der Tür während der Fahrt",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox_alu/2377714"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 219.99,
+        "label": "Kerbl Pet Transportbox Vacation aus Alu, graphite, B 55 x T 77 x H 50 cm",
+        "url": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundetransportbox_alu/2377714",
+        "verbatim": "219,99 €"
+      },
+      "notes": "Werte von zooplus.de (Hersteller-Seite nicht geprüft). T 77 / 50 = hinten/vorne (Schrägseiten). Zweite Größe 65 x 92 x 65,5 -> 2 Größen laut zooplus-Tabelle; Gewicht, Hundegewicht, Crashtest nicht angegeben -> null. Preis ohne Aktion (UVP 229,00 €)."
+    }
+  ]
+}

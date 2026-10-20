@@ -1,0 +1,40 @@
+{
+  "catit-pixi-2l": {
+    "filterChangeWeeks": {
+      "value": 3,
+      "verbatim": "Ersetzen Sie den Filter alle drei bis vier Wochen",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/1095112"
+    }
+  },
+  "petsafe-drinkwell-platinum-5l": {
+    "filterChangeWeeks": {
+      "value": 2,
+      "verbatim": "ca. alle 2 bis 4 Wochen austauschen",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136298"
+    }
+  },
+  "trixie-tx2-futterautomat": {
+    "batteryOnly": {
+      "value": true,
+      "verbatim": "Die für den Betrieb benötigten AA Mignon-Batterien (2 Stück) sind nicht im Lieferumfang enthalten.",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/97626"
+    }
+  },
+  "cat-mate-c500-5-mahlzeiten": {
+    "batteryOnly": {
+      "value": true,
+      "verbatim": "Der Futterautomat ist batteriebetrieben (3 x AA Batterie, nicht im Lieferumfang enthalten).",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/futterautomaten/599670"
+    }
+  },
+  "trixie-petwalk-kunststoff-3942": {
+    "construction": {
+      "value": "fest",
+      "verbatim": "Maße : L 100 x B 38 cm",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2389068"
+    }
+  },
+  "trixie-teleskop-petwalk-3940": {
+    "#variant": "L 100–183 × B 43 cm · grau/schwarz"
+  }
+}

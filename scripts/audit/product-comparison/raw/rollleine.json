@@ -1,0 +1,434 @@
+{
+  "category": "rollleine",
+  "checkedAt": "2026-10-20",
+  "products": [
+    {
+      "id": "flexi-classic-l-gurt-5m",
+      "brand": "flexi",
+      "model": "Classic L Gurt 5 m",
+      "variant": "L · Gurtleine 5 m · Classic (New Classic Schwarz/Rot/Blau, Oliv)",
+      "sourceUrl": "https://flexi.de/de/produkte/classic-l-gurt-5-m/",
+      "specs": {
+        "lengthM": {
+          "value": 5,
+          "verbatim": "Gurtleine 5 m",
+          "sourceUrl": "https://flexi.de/de/produkte/classic-l-gurt-5-m/"
+        },
+        "maxDogKg": {
+          "value": 50,
+          "verbatim": "Für Hunde bis max. 50 kg",
+          "sourceUrl": "https://flexi.de/de/produkte/classic-l-gurt-5-m/"
+        },
+        "lineType": {
+          "value": "Gurt",
+          "verbatim": "Gurtleine 5 m",
+          "sourceUrl": "https://flexi.de/de/produkte/classic-l-gurt-5-m/"
+        },
+        "weightG": {
+          "value": 340,
+          "verbatim": "Produktgewicht: ca. 340 g",
+          "sourceUrl": "https://flexi.de/de/produkte/classic-l-gurt-5-m/"
+        },
+        "brakeButton": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "lockFunction": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "reflective": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "ergonomicGrip": {
+          "value": "Moderne ergonomische Form",
+          "verbatim": "Moderne ergonomische Form",
+          "sourceUrl": "https://flexi.de/de/produkte/classic-l-gurt-5-m/"
+        },
+        "warrantyYears": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 16.29,
+        "label": "flexi Classic Gurt-Leine schwarz, 5 m, Größe L (bis 50 kg)",
+        "url": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/flexi_classic_special/2322715",
+        "verbatim": "16,29 €"
+      },
+      "notes": "Hersteller nennt 'Komfortables Bremssystem' (Bremsknopf nicht explizit als Taste benannt) -> brakeButton/lockFunction null; Garantie/Reflexion nicht genannt -> null. Preis: zooplus-Variante L der Classic-Gurtleine 5 m schwarz."
+    },
+    {
+      "id": "flexi-comfort-plus-l-gurt-5m",
+      "brand": "flexi",
+      "model": "Comfort Plus L Gurt 5 m",
+      "variant": "L · Gurtleine 5 m · anthrazit/blau/grün/rot",
+      "sourceUrl": "https://flexi.de/de/produkte/comfort-plus-l-5m-gurt-hundeleine/",
+      "specs": {
+        "lengthM": {
+          "value": 5,
+          "verbatim": "Gurtleine 5 m",
+          "sourceUrl": "https://flexi.de/de/produkte/comfort-plus-l-5m-gurt-hundeleine/"
+        },
+        "maxDogKg": {
+          "value": 60,
+          "verbatim": "Für Hunde bis max. 60 kg",
+          "sourceUrl": "https://flexi.de/de/produkte/comfort-plus-l-5m-gurt-hundeleine/"
+        },
+        "lineType": {
+          "value": "Gurt",
+          "verbatim": "Gurtleine 5 m",
+          "sourceUrl": "https://flexi.de/de/produkte/comfort-plus-l-5m-gurt-hundeleine/"
+        },
+        "weightG": {
+          "value": 485,
+          "verbatim": "Produktgewicht: ca. 485 g",
+          "sourceUrl": "https://flexi.de/de/produkte/comfort-plus-l-5m-gurt-hundeleine/"
+        },
+        "brakeButton": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "lockFunction": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "reflective": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "ergonomicGrip": {
+          "value": "Einstellbarer Soft-Griff",
+          "verbatim": "Einstellbarer Soft-Griff",
+          "sourceUrl": "https://flexi.de/de/produkte/comfort-plus-l-5m-gurt-hundeleine/"
+        },
+        "warrantyYears": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        }
+      },
+      "price": null,
+      "notes": "Kein Händlerpreis gefunden (auf zooplus/fressnapf Suche nicht auffindbar) -> price null. Bremssystem wird als 'Komfortables Bremssystem' beschrieben, ohne Taste/Feststellfunktion explizit -> null. Vorgänger heißt 'New Comfort'."
+    },
+    {
+      "id": "flexi-xtreme-l-gurt-5m",
+      "brand": "flexi",
+      "model": "Xtreme L Gurt 5 m",
+      "variant": "L · Gurtleine 5 m · X11-Tape",
+      "sourceUrl": "https://flexi.de/de/produkte/xtreme-l-gurt-5-m/",
+      "specs": {
+        "lengthM": {
+          "value": 5,
+          "verbatim": "Gurtleine 5 m",
+          "sourceUrl": "https://flexi.de/de/produkte/xtreme-l-gurt-5-m/"
+        },
+        "maxDogKg": {
+          "value": 65,
+          "verbatim": "Für Hunde bis max. 65 kg",
+          "sourceUrl": "https://flexi.de/de/produkte/xtreme-l-gurt-5-m/"
+        },
+        "lineType": {
+          "value": "Gurt",
+          "verbatim": "Gurtleine 5 m",
+          "sourceUrl": "https://flexi.de/de/produkte/xtreme-l-gurt-5-m/"
+        },
+        "weightG": {
+          "value": 485,
+          "verbatim": "Produktgewicht: ca. 485 g",
+          "sourceUrl": "https://flexi.de/de/produkte/xtreme-l-gurt-5-m/"
+        },
+        "brakeButton": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "lockFunction": {
+          "value": "Bremssystem mit Feststellfunktion",
+          "verbatim": "Bremssystem mit Feststellfunktion",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/roll_leinen/5m/1334099"
+        },
+        "reflective": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "ergonomicGrip": {
+          "value": "Einstellbarer Soft-Griff",
+          "verbatim": "Einstellbarer Soft-Griff",
+          "sourceUrl": "https://flexi.de/de/produkte/xtreme-l-gurt-5-m/"
+        },
+        "warrantyYears": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 31.99,
+        "label": "flexi Xtreme Gurt-Leine orange, 5 m, Größe L (bis 65 kg)",
+        "url": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/roll_leinen/5m/1334099",
+        "verbatim": "31,99 €"
+      },
+      "notes": "lockFunction aus der zooplus-Beschreibung (Herstellerseite nennt nur 'Komfortables Bremssystem'). brakeButton nicht explizit -> null."
+    },
+    {
+      "id": "flexi-giant-l-gurt-8m",
+      "brand": "flexi",
+      "model": "Giant L Gurt 8 m",
+      "variant": "L · Gurtleine 8 m · schwarz/neongelb",
+      "sourceUrl": "https://flexi.de/de/produkte/giant-l-8m-gurt-hundeleine/",
+      "specs": {
+        "lengthM": {
+          "value": 8,
+          "verbatim": "Gurtleine 8 m",
+          "sourceUrl": "https://flexi.de/de/produkte/giant-l-8m-gurt-hundeleine/"
+        },
+        "maxDogKg": {
+          "value": 50,
+          "verbatim": "Für Hunde bis max. 50 kg",
+          "sourceUrl": "https://flexi.de/de/produkte/giant-l-8m-gurt-hundeleine/"
+        },
+        "lineType": {
+          "value": "Gurt",
+          "verbatim": "Gurtleine 8 m",
+          "sourceUrl": "https://flexi.de/de/produkte/giant-l-8m-gurt-hundeleine/"
+        },
+        "weightG": {
+          "value": 630,
+          "verbatim": "Produktgewicht: ca. 630 g",
+          "sourceUrl": "https://flexi.de/de/produkte/giant-l-8m-gurt-hundeleine/"
+        },
+        "brakeButton": {
+          "value": true,
+          "verbatim": "auf Knopfdruck, mit Feststellfunktion",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/roll_leinen/8m/372670"
+        },
+        "lockFunction": {
+          "value": "Knopfdruck, Feststellfunktion",
+          "verbatim": "Robustes Bremssystem: auf Knopfdruck, mit Feststellfunktion",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/roll_leinen/8m/372670"
+        },
+        "reflective": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "ergonomicGrip": {
+          "value": "Stabiler Soft-Griff",
+          "verbatim": "Stabiler Soft-Griff",
+          "sourceUrl": "https://flexi.de/de/produkte/giant-l-8m-gurt-hundeleine/"
+        },
+        "warrantyYears": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 31.49,
+        "label": "flexi Leine Giant L 8 m, schwarz/neongelb",
+        "url": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/roll_leinen/8m/372670",
+        "verbatim": "31,49 €"
+      },
+      "notes": "brakeButton/lockFunction aus der zooplus-Beschreibung ('auf Knopfdruck, mit Feststellfunktion'); Herstellerseite: 'stoppt ... mit einem Tastendruck'. 'Neonfarbener Aufdruck' ist keine Reflexionsangabe -> reflective null."
+    },
+    {
+      "id": "kong-reflect-m-5m",
+      "brand": "KONG",
+      "model": "Reflect Einziehbare Leine",
+      "variant": "Größe M · schwarz/gelb · Gurt 5 m · Art. 978396",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396",
+      "specs": {
+        "lengthM": {
+          "value": 5,
+          "verbatim": "5 m / 1,1 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        },
+        "maxDogKg": {
+          "value": 30,
+          "verbatim": "Hunde bis 30 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        },
+        "lineType": {
+          "value": "Gurt",
+          "verbatim": "Art der Leine: Gurt-Roll-Leine",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        },
+        "weightG": {
+          "value": 332,
+          "verbatim": "Hunde bis 30 kg 332 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        },
+        "brakeButton": {
+          "value": true,
+          "verbatim": "Intuitive Bremsfunktionen: einfach per Knopfdruck",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        },
+        "lockFunction": {
+          "value": "Stopp, Dauerstopp",
+          "verbatim": "Feststellfunktion: Stopp, Dauerstopp",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        },
+        "reflective": {
+          "value": true,
+          "verbatim": "Hochreflektierende, gelbe Applikationen: auf beiden Seiten des Gehäuses",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        },
+        "ergonomicGrip": {
+          "value": "Gummierter, ergonomisch-geformter Griff",
+          "verbatim": "Gummierter, ergonomisch-geformter Griff",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        },
+        "warrantyYears": {
+          "value": 2,
+          "verbatim": "Garantie: 2 Jahre",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 19.79,
+        "label": "KONG Reflect Einziehbare Leine Schwarz, Größe M (bis 30 kg, 5 m)",
+        "url": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/978396",
+        "verbatim": "19,79 €"
+      },
+      "notes": "Werte von zooplus.de (Herstellerseite kongcompany.com nicht geprüft). Größe L (bis 50 kg) ebenfalls 5 m, 403 g. Größe M hier gewählt (Preis auf der Seite sichtbar)."
+    },
+    {
+      "id": "kong-terrain-m-5m",
+      "brand": "KONG",
+      "model": "Terrain Einziehbare Leine",
+      "variant": "Größe M · schwarz · Gurt 5 m · Art. 2122744",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744",
+      "specs": {
+        "lengthM": {
+          "value": 5,
+          "verbatim": "5 m / 1,15 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744"
+        },
+        "maxDogKg": {
+          "value": 30,
+          "verbatim": "Hunde bis 30 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744"
+        },
+        "lineType": {
+          "value": "Gurt",
+          "verbatim": "Art der Leine: Gurt-Roll-Leine",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744"
+        },
+        "weightG": {
+          "value": 332,
+          "verbatim": "Hunde bis 30 kg 332 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744"
+        },
+        "brakeButton": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "lockFunction": {
+          "value": "Stopp, Dauerstopp",
+          "verbatim": "Feststellfunktionen: Stopp, Dauerstopp",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744"
+        },
+        "reflective": {
+          "value": true,
+          "verbatim": "Reflektierende Elemente: erhöhen die Sichtbarkeit bei Dunkelheit",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744"
+        },
+        "ergonomicGrip": {
+          "value": "Ergonomischer Griff",
+          "verbatim": "Ergonomischer Griff: für komfortables Halten und einfache Handhabung",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744"
+        },
+        "warrantyYears": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 16.69,
+        "label": "KONG Terrain Einziehbare Leine Schwarz, Größe M (bis 30 kg, 5 m)",
+        "url": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/kong_roll_leine/2122744",
+        "verbatim": "16,69 €"
+      },
+      "notes": "Werte von zooplus.de. Bremse als 'Sofort-Stopp' beschrieben, keine explizite Taste -> brakeButton null; Garantie nicht genannt."
+    },
+    {
+      "id": "nomadtales-bloom-l",
+      "brand": "Nomad Tales",
+      "model": "Bloom Einziehbare Leine Liberty",
+      "variant": "Größe L · Gurt 4,8 m · max. 50 kg",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153",
+      "specs": {
+        "lengthM": {
+          "value": 4.8,
+          "verbatim": "L 440 g 4,8 m 50 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153"
+        },
+        "maxDogKg": {
+          "value": 50,
+          "verbatim": "L 440 g 4,8 m 50 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153"
+        },
+        "lineType": {
+          "value": "Gurt",
+          "verbatim": "Gurtband: Polyester",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153"
+        },
+        "weightG": {
+          "value": 440,
+          "verbatim": "L 440 g 4,8 m 50 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153"
+        },
+        "brakeButton": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        },
+        "lockFunction": {
+          "value": "Kurzstopp- und Feststellfunktion",
+          "verbatim": "mit Kurzstopp- und Feststellfunktion",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153"
+        },
+        "reflective": {
+          "value": true,
+          "verbatim": "mit reflektierenden Nähten",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153"
+        },
+        "ergonomicGrip": {
+          "value": "Soft-Griff",
+          "verbatim": "Soft-Griff: besonders komfortabel, liegt angenehm und sicher in der Hand",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153"
+        },
+        "warrantyYears": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": ""
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 20.99,
+        "label": "Nomad Tales Bloom Einziehbare Leine Liberty, Größe L (bis 50 kg)",
+        "url": "https://www.zooplus.de/shop/hunde/hundeleine_hundehalsband/hundeleine/weitere_materialien/1874153",
+        "verbatim": "20,99 €"
+      },
+      "notes": "Werte von zooplus.de; die Preisliste der Seite zeigt zusätzlich '-20% Extra-Rabatt' (Aktion), hier der gelistete Variantenpreis 20,99 €. Gurtlänge L = 4,8 m laut Tabelle (nicht 5 m)."
+    }
+  ]
+}

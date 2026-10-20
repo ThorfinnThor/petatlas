@@ -1,0 +1,736 @@
+---
+import {
+  AMAZON_DISCLOSURE,
+  amazonEnabled,
+  amazonSearchQueryUrl,
+} from '../../features/commerce/amazon.ts';
+import { PARTNER_LINK_ATTRIBUTE } from '../../features/commerce/links.ts';
+import { euro, type Bewertung, type Empfehlung } from '../../features/products/comparison.ts';
+import {
+  DATENSTAND,
+  PRODUKT_VERGLEICHE,
+  produktName,
+  zeigeWert,
+  type ProduktVergleichsSeite,
+} from '../../features/products/comparison-pages.ts';
+import { formatCalendarDate } from '../../domain/dates.ts';
+
+interface Props {
+  seite: ProduktVergleichsSeite;
+  bewertungen: readonly Bewertung[];
+  empfehlungen: readonly Empfehlung[];
+}
+
+const { seite, bewertungen, empfehlungen } = Astro.props;
+const katze = seite.tier === 'cat';
+const hero = katze
+  ? {
+      avif: '/images/brand/play-cat-home-1536.avif',
+      webp: '/images/brand/play-cat-home-1536.webp',
+      alt: 'Katze in einer hellen Wohnung',
+    }
+  : {
+      avif: '/images/brand/play-dog-alpine-lake-1536.avif',
+      webp: '/images/brand/play-dog-alpine-lake-1536.webp',
+      alt: 'Hund draußen am See',
+    };
+const marken = new Set(bewertungen.map((b) => b.produkt.brand)).size;
+const anker = (b: Bewertung) => `modell-${b.produkt.id}`;
+const host = (url: string) => new URL(url).hostname.replace(/^www\./, '');
+const datum = (iso: string) => formatCalendarDate(iso, 'de-DE');
+const spalten = seite.tabelle.flatMap((key) => seite.merkmale.filter((m) => m.key === key));
+const gewichte = [...seite.kriterien].sort((a, b) => b.gewicht - a.gewicht);
+const zeigeAmazon = amazonEnabled(process.env);
+const amazonSuche = (b: Bewertung) =>
+  amazonSearchQueryUrl(`${produktName(b.produkt)} ${b.produkt.variant ?? ''}`.trim());
+const andere = PRODUKT_VERGLEICHE.filter((s) => s.slug !== seite.slug);
+const top = empfehlungen[0];
+---
+
+<article class="product-compare">
+  <header class="pc-hero">
+    <div class="pc-hero__copy">
+      <p class="eyebrow">{seite.eyebrow}</p>
+      <p class="pc-hero__meta">
+        {bewertungen.length} Modelle aus {marken} Marken · Stand {datum(DATENSTAND)}
+      </p>
+      <h1>{seite.titel}</h1>
+      <p class="pc-hero__lead">{seite.einleitung[0]}</p>
+      {
+        top && (
+          <p class="pc-hero__answer">
+            <strong>Kurz gesagt – {top.titel}:</strong>{' '}
+            <a href={`#${anker(top.bewertung)}`}>{produktName(top.bewertung.produkt)}</a> (
+            {top.bewertung.gesamt} von 100 Punkten). Die Empfehlungen für andere Einsätze stehen
+            direkt darunter.
+          </p>
+        )
+      }
+      <nav class="pc-nav" aria-label="Inhalt dieses Vergleichs">
+        <a href="#empfehlungen">Empfehlungen</a>
+        <a href="#tabelle">Alle {bewertungen.length} im Vergleich</a>
+        <a href="#modelle">Modelle im Detail</a>
+        <a href="#methode">So bewerten wir</a>
+        <a href="#fragen">Fragen</a>
+      </nav>
+    </div>
+    <figure class="pc-hero__visual">
+      <picture>
+        <source srcset={hero.avif} type="image/avif" />
+        <img src={hero.webp} alt={hero.alt} width="1536" height="1024" decoding="async" />
+      </picture>
+    </figure>
+  </header>
+
+  <section class="pc-picks" id="empfehlungen" aria-labelledby="empfehlungen-titel">
+    <div class="pc-heading">
+      <p class="eyebrow">Kurzantwort</p>
+      <h2 id="empfehlungen-titel">Unsere Empfehlung je Einsatz</h2>
+      <p>
+        {seite.frage} Nach unseren Kriterien, die unten mit Gewichten offengelegt sind. Grundlage sind
+        Herstellerangaben und Händlerpreise vom {datum(DATENSTAND)}; empfohlen werden nur Modelle
+        mit belegtem Preis.
+      </p>
+    </div>
+    <div class="pc-picks__grid">
+      {
+        empfehlungen.map((e, i) => (
+          <a class={`pc-pick${i === 0 ? ' pc-pick--top' : ''}`} href={`#${anker(e.bewertung)}`}>
+            <span class="pc-pick__label">{e.titel}</span>
+            <span class="pc-pick__name">{produktName(e.bewertung.produkt)}</span>
+            <span class="pc-pick__score">
+              <strong>{e.bewertung.gesamt}</strong>/100
+              {e.bewertung.produkt.price && <> · {euro(e.bewertung.produkt.price.priceEur)}</>}
+            </span>
+            <span class="pc-pick__why">{e.warum}</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="pc-table" id="tabelle" aria-labelledby="tabelle-titel">
+    <div class="pc-heading">
+      <p class="eyebrow">Direktvergleich</p>
+      <h2 id="tabelle-titel">Alle {bewertungen.length} Modelle nebeneinander</h2>
+      <p>Sortiert nach Gesamtnote. Alle Werte laut Hersteller, Preise mit Händler und Datum.</p>
+    </div>
+    <div class="table-scroll" tabindex="0" aria-label="Vergleichstabelle, horizontal scrollbar">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Modell</th>
+            <th scope="col">Note</th>
+            {spalten.map((m) => <th scope="col">{m.label}</th>)}
+            <th scope="col">Preis</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            bewertungen.map((b, i) => (
+              <tr>
+                <td>{i + 1}</td>
+                <th scope="row">
+                  <a href={`#${anker(b)}`}>{produktName(b.produkt)}</a>
+                </th>
+                <td>
+                  <span class="pc-score">{b.gesamt}</span>
+                </td>
+                {spalten.map((m) => (
+                  <td>{zeigeWert(m, b.produkt)}</td>
+                ))}
+                <td>{b.produkt.price ? euro(b.produkt.price.priceEur) : '–'}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="pc-products" id="modelle" aria-labelledby="modelle-titel">
+    <div class="pc-heading">
+      <p class="eyebrow">Im Detail</p>
+      <h2 id="modelle-titel">Jedes Modell mit Begründung</h2>
+      <p>Jede Teilnote folgt aus den darunter genannten Angaben; die Quelle steht beim Modell.</p>
+    </div>
+    {
+      bewertungen.map((b, i) => (
+        <article class="pc-product" id={anker(b)}>
+          <header class="pc-product__head">
+            <span class="pc-product__rank">{i + 1}</span>
+            <div>
+              <p class="eyebrow">{b.produkt.brand}</p>
+              <h3>{b.produkt.model}</h3>
+              {b.produkt.variant && <p class="pc-product__variant">{b.produkt.variant}</p>}
+            </div>
+            <span class="pc-product__total">
+              <strong>{b.gesamt}</strong>
+              <span>von 100</span>
+            </span>
+          </header>
+          <ul class="pc-bars">
+            {b.teilnoten.map((n) => (
+              <li>
+                <span class="pc-bars__label">{n.kriterium}</span>
+                <span class="pc-bars__track" aria-hidden="true">
+                  <span
+                    class="pc-bars__fill"
+                    style={`inline-size:${(n.punkte / n.maximum) * 100}%`}
+                  />
+                </span>
+                <span class="pc-bars__value">
+                  {n.punkte}/{n.maximum}
+                </span>
+                <span class="pc-bars__why">{n.begruendung}</span>
+              </li>
+            ))}
+          </ul>
+          <dl class="pc-facts">
+            {seite.merkmale.map((m) => (
+              <div>
+                <dt>{m.label}</dt>
+                <dd>{zeigeWert(m, b.produkt)}</dd>
+              </div>
+            ))}
+            {b.produkt.price && (
+              <div>
+                <dt>Preis</dt>
+                <dd>
+                  {euro(b.produkt.price.priceEur)} bei {b.produkt.price.retailer}
+                </dd>
+              </div>
+            )}
+          </dl>
+          <p class="pc-sources">
+            Herstellerangaben:{' '}
+            <a href={b.produkt.sourceUrl} rel="nofollow noopener" target="_blank">
+              {host(b.produkt.sourceUrl)}
+            </a>
+            {b.produkt.price && (
+              <>
+                {' '}
+                · Preis:{' '}
+                <a href={b.produkt.price.url} rel="nofollow noopener" target="_blank">
+                  {b.produkt.price.retailer}
+                </a>{' '}
+                ({b.produkt.price.label})
+              </>
+            )}{' '}
+            · geprüft am {datum(b.produkt.checkedAt)}
+          </p>
+        </article>
+      ))
+    }
+  </section>
+
+  {
+    zeigeAmazon && (
+      <section class="pc-commerce" aria-labelledby="haendler-titel">
+        <div class="pc-heading">
+          <p class="eyebrow">Werbung · Einkaufsmöglichkeiten</p>
+          <h2 id="haendler-titel">Modelle bei Amazon suchen</h2>
+          <p>
+            {AMAZON_DISCLOSURE} Die Empfehlungen oben hängen nicht davon ab, ob es einen Link gibt.
+          </p>
+        </div>
+        <ul class="pc-commerce__list">
+          {bewertungen.map((b) => (
+            <li>
+              <a href={amazonSuche(b)} {...PARTNER_LINK_ATTRIBUTE}>
+                {produktName(b.produkt)} bei Amazon suchen ↗ <span class="sr-only">(Werbung)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section class="pc-method" id="methode" aria-labelledby="methode-titel">
+    <div class="pc-heading">
+      <p class="eyebrow">Offengelegt</p>
+      <h2 id="methode-titel">So bewerten wir</h2>
+      <p>
+        Bis zu 100 Punkte, verteilt auf {seite.kriterien.length} Kriterien. Bewertet wird nur, was der
+        Hersteller angibt oder ein Händler mit Datum zeigt. Fehlt eine Angabe, gibt es dafür keine Punkte.
+      </p>
+    </div>
+    <table class="pc-weights">
+      <thead>
+        <tr>
+          <th scope="col">Kriterium</th>
+          <th scope="col">Punkte</th>
+          <th scope="col">Regel</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          gewichte.map((k) => (
+            <tr>
+              <th scope="row">{k.name}</th>
+              <td>{k.gewicht}</td>
+              <td>{k.regel}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+    <ul class="pc-method__notes">
+      {seite.hinweise.map((h) => <li>{h}</li>)}
+      <li>
+        Das ist eine redaktionelle Abwägung nach unseren Kriterien auf Basis der Herstellerangaben,
+        kein Praxistest. Kein Hersteller hat für die Aufnahme bezahlt.
+      </li>
+    </ul>
+  </section>
+
+  <section class="pc-faq" id="fragen" aria-labelledby="fragen-titel">
+    <div class="pc-heading">
+      <p class="eyebrow">Häufige Fragen</p>
+      <h2 id="fragen-titel">Was oft gefragt wird</h2>
+    </div>
+    {
+      seite.fragen.map((f) => (
+        <details>
+          <summary>{f.frage}</summary>
+          <p>{f.antwort}</p>
+        </details>
+      ))
+    }
+  </section>
+
+  <nav class="pc-more" aria-label="Weitere Produktvergleiche">
+    <p class="eyebrow">Weitere Vergleiche</p>
+    <ul>
+      {
+        [
+          ...seite.verwandt,
+          ...andere.map((s) => ({ href: `/de-de/produkte/${s.slug}/`, label: s.metaTitel })),
+        ].map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</article>
+
+<style>
+  .product-compare {
+    display: grid;
+    gap: clamp(3rem, 6vw, 5.5rem);
+    min-inline-size: 0;
+    padding-block: var(--space-3) var(--space-10);
+  }
+  .product-compare > * {
+    min-inline-size: 0;
+  }
+  .eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .pc-hero {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-primary-soft);
+  }
+  .pc-hero__copy {
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+  }
+  .pc-hero h1 {
+    max-inline-size: 22ch;
+    margin-block: var(--space-3) var(--space-5);
+    font-size: clamp(2.1rem, 4.4vw, 4rem);
+  }
+  .pc-hero__copy > p:not(.eyebrow) {
+    max-inline-size: 64ch;
+  }
+  .pc-hero__meta {
+    margin-block: var(--space-2) 0;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+  .pc-hero__lead {
+    color: var(--color-ink);
+    font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+  }
+  .pc-hero__answer {
+    padding: var(--space-3) var(--space-4);
+    border-inline-start: 4px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    background: rgb(255 255 255 / 70%);
+  }
+  .pc-hero__visual {
+    position: relative;
+    min-block-size: 16rem;
+    margin: 0;
+  }
+  .pc-hero__visual img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .pc-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-start: var(--space-6);
+  }
+  .pc-nav a {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 70%);
+    color: var(--color-primary-hover);
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+    text-decoration: none;
+  }
+  .pc-heading {
+    max-inline-size: 72ch;
+    margin-block-end: var(--space-6);
+  }
+  .pc-heading h2 {
+    margin-block: var(--space-2) var(--space-3);
+  }
+  .pc-heading p:last-child {
+    margin-block-end: 0;
+    color: var(--color-text-muted);
+  }
+
+  .pc-picks__grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .pc-pick {
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .pc-pick--top {
+    border: 2px solid var(--color-primary);
+    background: var(--color-primary-soft);
+  }
+  .pc-pick__label {
+    justify-self: start;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+  }
+  .pc-pick__name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .pc-pick__score {
+    color: var(--color-text-muted);
+  }
+  .pc-pick__score strong {
+    color: var(--color-primary);
+    font-size: 1.75rem;
+  }
+  .pc-pick__why {
+    color: var(--color-text);
+    font-size: var(--text-small);
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+  .pc-table table,
+  .pc-weights {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-small);
+  }
+  .pc-table th,
+  .pc-table td,
+  .pc-weights th,
+  .pc-weights td {
+    padding: var(--space-3) var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+    text-align: start;
+    vertical-align: top;
+  }
+  .pc-table thead th,
+  .pc-weights thead th {
+    background: var(--color-surface-subtle);
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .pc-table tbody th a {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .pc-score {
+    display: inline-block;
+    min-inline-size: 2.5rem;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .pc-products {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .pc-product {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    overflow-wrap: break-word;
+    scroll-margin-block-start: 6rem;
+  }
+  .pc-product__head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .pc-product__head h3 {
+    margin: var(--space-1) 0;
+  }
+  .pc-product__rank {
+    display: grid;
+    place-items: center;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-weight: 700;
+  }
+  .pc-product__variant {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .pc-product__total {
+    display: grid;
+    justify-items: end;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .pc-product__total strong {
+    color: var(--color-primary);
+    font-size: 2.25rem;
+    line-height: 1;
+  }
+  .pc-bars {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-5) 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pc-bars li {
+    display: grid;
+    grid-template-columns: 11rem 1fr 3.5rem;
+    gap: var(--space-1) var(--space-3);
+    align-items: center;
+  }
+  .pc-bars__label {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .pc-bars__track {
+    overflow: hidden;
+    block-size: 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-subtle);
+  }
+  .pc-bars__fill {
+    display: block;
+    block-size: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--color-brand-600);
+  }
+  .pc-bars__value {
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+  .pc-bars__why {
+    grid-column: 1 / -1;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .pc-facts {
+    display: grid;
+    gap: var(--space-3) var(--space-6);
+    margin: 0;
+  }
+  .pc-facts dt {
+    color: var(--color-ink);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+  .pc-facts dd {
+    max-inline-size: 72ch;
+    margin: 0;
+  }
+  .pc-sources {
+    max-inline-size: 72ch;
+    margin-block: var(--space-4) 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .pc-commerce__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .pc-commerce__list a {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-size: var(--text-small);
+    text-decoration: none;
+  }
+
+  .pc-method,
+  .pc-faq {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .pc-weights {
+    max-inline-size: 56rem;
+    margin-block-end: var(--space-6);
+  }
+  .pc-weights td:last-child {
+    max-inline-size: 40rem;
+  }
+  .pc-method__notes {
+    display: grid;
+    gap: var(--space-2);
+    max-inline-size: 80ch;
+    color: var(--color-text);
+  }
+  .pc-faq details {
+    max-inline-size: 72ch;
+    padding-block: var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+  }
+  .pc-faq summary {
+    color: var(--color-ink);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .pc-faq details p {
+    margin-block: var(--space-3) 0;
+  }
+  .pc-more ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+  .pc-more a {
+    display: inline-block;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    color: var(--color-primary-hover);
+    font-weight: var(--weight-label);
+    text-decoration: none;
+  }
+
+  @media (min-width: 48rem) {
+    .pc-picks__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .pc-hero {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    }
+    .pc-picks__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .pc-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .pc-bars {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-8);
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .pc-weights,
+    .pc-weights tbody,
+    .pc-weights tr,
+    .pc-weights th,
+    .pc-weights td {
+      display: block;
+    }
+    .pc-weights thead {
+      display: none;
+    }
+    .pc-weights tr {
+      padding-block: var(--space-3);
+      border-block-end: 1px solid var(--color-border);
+    }
+    .pc-weights th,
+    .pc-weights td {
+      padding: 0;
+      border: 0;
+    }
+    .pc-weights td:nth-of-type(1)::before {
+      content: 'Punkte: ';
+    }
+    .pc-bars li {
+      grid-template-columns: 1fr 3.5rem;
+    }
+    .pc-bars__track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .pc-product__head {
+      grid-template-columns: auto 1fr;
+    }
+    .pc-product__total {
+      grid-column: 1 / -1;
+      justify-items: start;
+    }
+  }
+</style>
