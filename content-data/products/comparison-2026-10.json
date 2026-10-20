@@ -3346,6 +3346,413 @@
       "notes": "Kerbl English product page (German page is JS-only). Product weight not given -> null. Folded length = longest side of 'dimensions when folded: 80 x 40.5 x 19 cm'. No unit price in retrievable manufacturer text (page only says prices shown are RRP for Germany); no zooplus.de/fressnapf.de listing found -> price null."
     },
     {
+      "id": "kong-classic-l",
+      "category": "kauspielzeug-hund",
+      "brand": "KONG",
+      "model": "Classic",
+      "variant": "L (ca. 10 cm) · rot",
+      "sourceUrl": "https://www.kongcompany.com/kong-classic/",
+      "specs": {
+        "material": {
+          "value": "Naturkautschuk",
+          "verbatim": "Material : Naturkautschuk",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135948"
+        },
+        "chewStrength": {
+          "value": "for average chewers (für durchschnittliche Kauer)",
+          "verbatim": "KONG classic red rubber formula for average chewers",
+          "sourceUrl": "https://www.kongcompany.com/kong-classic/"
+        },
+        "dogWeightKg": {
+          "value": "13–30 kg",
+          "verbatim": "L ca. H 10 x B 7 x T 7 cm 13 – 30 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135948"
+        },
+        "fillable": {
+          "value": true,
+          "verbatim": "Great for stuffing with KONG Easy Treat; Snacks or Ziggies",
+          "sourceUrl": "https://www.kongcompany.com/kong-classic/"
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "floats": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "guarantee": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "diameterOrLengthCm": {
+          "value": 10,
+          "verbatim": "KONG Classic L (10 cm)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135948"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 9.19,
+        "label": "KONG Classic, Größe L (10 cm), Einzelartikel",
+        "url": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135948",
+        "verbatim": "L (10 cm) UVP 14,65 € 9,19 €"
+      },
+      "checkedAt": "2026-10-20",
+      "notes": "Größe L gewählt, weil KONG 'M' nur 7–16 kg abdeckt; L (13–30 kg) passt am besten zu 15–30 kg. Hersteller-Seite (US) nennt Large 'Between 30-65 lbs'; kg-Angabe von zooplus. chewStrength-Verbatim englisch (Hersteller), Wert übersetzt. Maß 10 cm = Höhe. Spülmaschine/Schwimmfähigkeit/Garantie auf der Herstellerseite nicht genannt -> null. Preis: zooplus-Preis 9,19 € (UVP 14,65 € daneben angezeigt)."
+    },
+    {
+      "id": "kong-extreme-l",
+      "category": "kauspielzeug-hund",
+      "brand": "KONG",
+      "model": "Extreme",
+      "variant": "L (ca. 10 cm) · schwarz",
+      "sourceUrl": "https://www.kongcompany.com/kong-extreme/",
+      "specs": {
+        "material": {
+          "value": "Naturkautschuk",
+          "verbatim": "Extrem robust, aus Naturkautschuk",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135969"
+        },
+        "chewStrength": {
+          "value": "for power chewers (für sehr kräftige Kauer)",
+          "verbatim": "KONG black rubber formula is specifically designed for power chewers",
+          "sourceUrl": "https://www.kongcompany.com/kong-extreme/"
+        },
+        "dogWeightKg": {
+          "value": "13–30 kg",
+          "verbatim": "L ca. H 10 x B 7 x T 7 cm 13 - 30 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135969"
+        },
+        "fillable": {
+          "value": true,
+          "verbatim": "Mit Leckerlies befüllbar stillt den natürlichen Kaudrang",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135969"
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "floats": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "guarantee": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "diameterOrLengthCm": {
+          "value": 10,
+          "verbatim": "KONG Extreme L (10 cm)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135969"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 12.99,
+        "label": "KONG Extreme, Größe L (10 cm), Einzelartikel",
+        "url": "https://www.zooplus.de/shop/hunde/hundespielzeug/kong/kong/135969",
+        "verbatim": "L (10 cm) UVP 15,79 € 12,99 €"
+      },
+      "checkedAt": "2026-10-20",
+      "notes": "Größe L (13–30 kg) gewählt (M = 7–16 kg). Hersteller-Seite (US) nennt Large 'Between 30-65 lbs'; kg-Angabe von zooplus. chewStrength-Verbatim englisch, Wert übersetzt. Maß 10 cm = Höhe. Spülmaschine/Schwimmfähigkeit/Garantie nicht genannt -> null. Preis: zooplus 12,99 € (UVP 15,79 € daneben)."
+    },
+    {
+      "id": "west-paw-hurley-l",
+      "category": "kauspielzeug-hund",
+      "brand": "West Paw",
+      "model": "Hurley",
+      "variant": "Large (21 cm)",
+      "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone",
+      "specs": {
+        "material": {
+          "value": "Zogoflex",
+          "verbatim": "Made with zero-waste and recyclable Zogoflex® material in Bozeman, Montana",
+          "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone"
+        },
+        "chewStrength": {
+          "value": "Designed for super chewers (für sehr kräftige Kauer)",
+          "verbatim": "Designed for super chewers",
+          "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone"
+        },
+        "dogWeightKg": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "fillable": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": true,
+          "verbatim": "Robustes Kauspielzeug für Hunde, schwimmfähig & spülmaschinenfest",
+          "sourceUrl": "https://www.woofshack.com/products/west-paw-zogoflex-hurley-hundespielzeug"
+        },
+        "floats": {
+          "value": true,
+          "verbatim": "Floats in water",
+          "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone"
+        },
+        "guarantee": {
+          "value": true,
+          "verbatim": "Backed by our Love it Guarantee",
+          "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone"
+        },
+        "diameterOrLengthCm": {
+          "value": 21,
+          "verbatim": "Large: 8.25\"/21 cm",
+          "sourceUrl": "https://www.westpaw.com/products/hurley-dog-bone"
+        }
+      },
+      "price": null,
+      "checkedAt": "2026-10-20",
+      "notes": "Größe Large (21 cm) gewählt (Größen: XS 11, S 15, L 21 cm); West Paw nennt keine Gewichtsbereiche -> dogWeightKg null. Nicht befüllbar laut Seite nicht explizit -> fillable null. Spülmaschinenfest nur vom Händler woofshack.com (Produkttitel), nicht auf der Herstellerseite. Garantie: Love It Guarantee – laut Garantieseite Ersatz binnen 6 Monaten, einmal pro Design; außerhalb der USA über den Händler. Preis null: woofshack.com listet L für 19,00 €, aber alle Farben/Größen derzeit ausverkauft; zooplus/fressnapf führen West Paw nicht."
+    },
+    {
+      "id": "west-paw-tux-l",
+      "category": "kauspielzeug-hund",
+      "brand": "West Paw",
+      "model": "Tux",
+      "variant": "Large (13 cm)",
+      "sourceUrl": "https://www.westpaw.com/products/tux-treat-toy",
+      "specs": {
+        "material": {
+          "value": "Zogoflex",
+          "verbatim": "Made with zero-waste and recyclable Zogoflex® material in Bozeman, Montana",
+          "sourceUrl": "https://www.westpaw.com/products/tux-treat-toy"
+        },
+        "chewStrength": {
+          "value": "Built for tough chewers (für kräftige Kauer)",
+          "verbatim": "Built For Tough Chewers",
+          "sourceUrl": "https://www.westpaw.com/products/tux-treat-toy"
+        },
+        "dogWeightKg": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "fillable": {
+          "value": true,
+          "verbatim": "Fill and freeze for rowdy enrichment",
+          "sourceUrl": "https://www.westpaw.com/products/tux-treat-toy"
+        },
+        "dishwasherSafe": {
+          "value": true,
+          "verbatim": "Top-rack dishwasher safe",
+          "sourceUrl": "https://www.westpaw.com/products/tux-treat-toy"
+        },
+        "floats": {
+          "value": true,
+          "verbatim": "Tux floats, bounces, and hangs tough",
+          "sourceUrl": "https://www.westpaw.com/products/tux-treat-toy"
+        },
+        "guarantee": {
+          "value": true,
+          "verbatim": "Backed by our Love it Guarantee",
+          "sourceUrl": "https://www.westpaw.com/products/tux-treat-toy"
+        },
+        "diameterOrLengthCm": {
+          "value": 13,
+          "verbatim": "Large: 5\"/13 cm",
+          "sourceUrl": "https://www.westpaw.com/products/tux-treat-toy"
+        }
+      },
+      "price": {
+        "retailer": "woofshack.com",
+        "priceEur": 23.0,
+        "label": "West Paw Zogoflex Tux, Größe L (13 cm), Aqua Blue",
+        "url": "https://www.woofshack.com/products/west-paw-zogoflex-tux-hundespielzeug?variant=48240762028378",
+        "verbatim": "Regulärer Preis €23,00"
+      },
+      "checkedAt": "2026-10-20",
+      "notes": "Größe Large (13 cm) gewählt (S 10 cm / L 13 cm); keine Gewichtsbereiche vom Hersteller -> dogWeightKg null. Spülmaschine: Hersteller sagt 'Top-rack' (oberer Korb). Garantie: Love It Guarantee (Ersatz binnen 6 Monaten, einmal pro Design; außerhalb USA über Händler). Preis von woofshack.com (deutscher Online-Händler, nicht zooplus/fressnapf – dort nicht gelistet)."
+    },
+    {
+      "id": "planet-dog-double-tuff-large",
+      "category": "kauspielzeug-hund",
+      "brand": "Planet Dog (Outward Hound)",
+      "model": "Double-Tuff",
+      "variant": "large · grün · Fressnapf-Art.-Nr. 1998091",
+      "sourceUrl": "https://www.fressnapf.de/p/planet-dog-double-tuff-outward-hound-hundespielzeug-1998091/",
+      "specs": {
+        "material": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "chewStrength": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dogWeightKg": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "fillable": {
+          "value": true,
+          "verbatim": "Langlebiges Kauspielzeug für Hunde und interaktive Hundeleckerli-Stuffer",
+          "sourceUrl": "https://www.fressnapf.de/p/planet-dog-double-tuff-outward-hound-hundespielzeug-1998091/"
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "floats": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "guarantee": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "diameterOrLengthCm": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        }
+      },
+      "price": {
+        "retailer": "fressnapf.de",
+        "priceEur": 13.99,
+        "label": "Planet Dog Double-Tuff, large, grün (Versand durch Fressnapf-Partner)",
+        "url": "https://www.fressnapf.de/p/planet-dog-double-tuff-outward-hound-hundespielzeug-1998091/",
+        "verbatim": "weitere Produktdetails 13,99 €"
+      },
+      "checkedAt": "2026-10-20",
+      "notes": "Nur Händlerquelle (fressnapf.de, Partner-Angebot); keine erreichbare Herstellerseite für das Double-Tuff gefunden (outwardhound.com führt dazu keine Seite). Material nur 'strapazierfähiges Material' (kein Werkstoff genannt) -> null. Keine Größen-/Gewichtsangabe, keine Angaben zu Spülmaschine, Schwimmfähigkeit, Garantie -> null. Ein Produktbild-Alt-Text spricht von 'gelb', Titel von 'Grün'."
+    },
+    {
+      "id": "nylabone-power-chew-l",
+      "category": "kauspielzeug-hund",
+      "brand": "Nylabone",
+      "model": "Power Chew Kauknochen (Speck)",
+      "variant": "L (bis ca. 23 kg)",
+      "sourceUrl": "https://www.brekz.de/snack-baelle-und-spiele/nylabone-power-chew-nylon-kauknochen-hund-speck-geschmack.html",
+      "specs": {
+        "material": {
+          "value": "Nylon",
+          "verbatim": "Nylabone Power Chew Nylon Kauknochen Hund (Speck-Geschmack)",
+          "sourceUrl": "https://www.brekz.de/snack-baelle-und-spiele/nylabone-power-chew-nylon-kauknochen-hund-speck-geschmack.html"
+        },
+        "chewStrength": {
+          "value": "für erwachsene Hunde mit ausgeprägtem Kaubedürfnis",
+          "verbatim": "Geeignet für erwachsene Hunde mit ausgeprägtem Kaubedürfnis",
+          "sourceUrl": "https://www.brekz.de/snack-baelle-und-spiele/nylabone-power-chew-nylon-kauknochen-hund-speck-geschmack.html"
+        },
+        "dogWeightKg": {
+          "value": "bis ca. 23 kg",
+          "verbatim": "L (bis ±23 kg)",
+          "sourceUrl": "https://www.brekz.de/snack-baelle-und-spiele/nylabone-power-chew-nylon-kauknochen-hund-speck-geschmack.html"
+        },
+        "fillable": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "floats": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "guarantee": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "diameterOrLengthCm": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        }
+      },
+      "price": {
+        "retailer": "brekz.de",
+        "priceEur": 15.99,
+        "label": "Nylabone Power Chew Kauknochen Speck, Größe L",
+        "url": "https://www.brekz.de/snack-baelle-und-spiele/nylabone-power-chew-nylon-kauknochen-hund-speck-geschmack.html",
+        "verbatim": "\"attribute_name\":\"L\",\"price\":13.436975,\"bundle_original_price\":null,\"bundle_discount\":null,\"bundle_discount_formatted\":null,\"price_for_display\":\"15,99 €\""
+      },
+      "checkedAt": "2026-10-20",
+      "notes": "Alle Werte von brekz.de (Händler; nylabone.com rendert per JS, keine verwertbare Herstellerseite). chewStrength ist Händlerformulierung, nicht Herstellerwortlaut. Größe L (bis ±23 kg) ist die größte bei brekz; Maße nicht angegeben. Nicht bei zooplus.de/fressnapf.de gelistet. Preis-Verbatim stammt aus den Varianten-Daten der Seite (L = 15,99 €). Zahnpflege-Aussagen der Seite bewusst nicht übernommen."
+    },
+    {
+      "id": "trixie-denta-fun-knochen-32944",
+      "category": "kauspielzeug-hund",
+      "brand": "TRIXIE",
+      "model": "Denta Fun Knochen",
+      "variant": "15 cm · Art.-Nr. 32944",
+      "sourceUrl": "https://trixie.shop/products/denta-fun-knochen",
+      "specs": {
+        "material": {
+          "value": "Naturgummi",
+          "verbatim": "Naturgummi mit Minzgeschmack",
+          "sourceUrl": "https://trixie.shop/products/denta-fun-knochen"
+        },
+        "chewStrength": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dogWeightKg": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "fillable": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "floats": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "guarantee": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "diameterOrLengthCm": {
+          "value": 15,
+          "verbatim": "Art.-Nr.: 32944, Maße: 15 cm",
+          "sourceUrl": "https://trixie.shop/products/denta-fun-knochen"
+        }
+      },
+      "price": {
+        "retailer": "trixie.shop",
+        "priceEur": 9.99,
+        "label": "TRIXIE Denta Fun Knochen 15 cm, Art.-Nr. 32944",
+        "url": "https://trixie.shop/products/denta-fun-knochen",
+        "verbatim": "Art.-Nr.: 32944, Maße: 15 cm - 9,99 €"
+      },
+      "checkedAt": "2026-10-20",
+      "notes": "Herstellershop (trixie.shop; trixie.de leitet dorthin). Größere von zwei Größen (11/15 cm) gewählt. TRIXIE nennt keine Kaustärke, keine Gewichtsbereiche, keine Befüllbarkeit, Spülmaschine, Schwimmfähigkeit oder Garantie -> null. Seite enthält Zahnfleisch-Aussage – bewusst nicht übernommen. Budget-Modell, eher leichtes Kauspielzeug."
+    },
+    {
       "id": "flexi-classic-l-gurt-5m",
       "category": "rollleine",
       "brand": "flexi",

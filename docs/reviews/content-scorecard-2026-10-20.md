@@ -21,12 +21,12 @@ Hauptinhalt (`<main>`), bewertet gegen `docs/CONTENT_STANDARD.md`.
 
 ## Reihenfolge der Überarbeitung
 
-1. **Futter** (Pilot, läuft): 4 Vergleiche mit je ~12 Produkten aus vielen
+1. **Futter** (erledigt, PR #91): 4 Vergleiche mit je ~12 Produkten aus vielen
    Marken, Nährwerte auf Trockenmasse, Preis pro Tag, Empfehlungen je Bedarf.
-2. **Produktvergleiche**: je ≥ 6 Modelle aus ≥ 3 Marken, Empfehlung je Einsatz.
+2. **Produktvergleiche** (erledigt 20.10.2026, neun Seiten, `docs/HANDOFF_PRODUKTVERGLEICHE.md`): je ≥ 6 Modelle aus ≥ 3 Marken, Empfehlung je Einsatz.
    Die vier Catit-Seiten zu einer markenübergreifenden Seite je Produktart
    zusammenführen (Trinkbrunnen, Futterautomat, Katzentoilette, Spielzeug).
-3. **GOT**: pro häufiger Behandlung (Impfung, Kastration Kater/Kätzin/Rüde/
+3. **GOT** (acht Seiten als Entwurf, PR #92; wartet auf fachliche Prüfung): pro häufiger Behandlung (Impfung, Kastration Kater/Kätzin/Rüde/
    Hündin, Zahnsteinentfernung, Röntgen, Blutbild, Euthanasie) eine
    Kostenseite mit realistischer Gesamtrechnung. Die Einzelpositionen bleiben
    Nachschlagewerk und gehen langfristig aus dem Index.

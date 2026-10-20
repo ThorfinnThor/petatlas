@@ -1,5 +1,23 @@
 # Handoff
 
+## Stand 20.10.2026 · Inhaltsoffensive
+
+Das Aufgabenmanifest ist abgeschlossen (138 von 138); es gibt keine ausführbare Aufgabe im Manifest. Die laufende Arbeit ist die Inhaltsoffensive nach dem Indexeinbruch vom 11.10.2026. Maßgeblich sind `docs/CONTENT_STANDARD.md` und die Reihenfolge in `docs/reviews/content-scorecard-2026-10-20.md`.
+
+| Schritt | Stand | Nachweis |
+| --- | --- | --- |
+| Index auf 114 Seiten konzentriert | gemergt (PR #90) | `docs/reviews/seo-index-concentration-2026-10-19.md` |
+| Inhaltsstandard + Futter-Pilot (4 Vergleiche) | gemergt (PR #91) | `docs/reviews/content-scorecard-2026-10-20.md` |
+| Tierarztkosten: 8 Behandlungsseiten | gemergt als Entwurf, `noindex` bis zur fachlichen Prüfung (PR #92) | `docs/reviews/behandlungsvorlagen-pruefbogen-2026-10-20.md` |
+| Neun Produktvergleiche mit Bewertungsschema | als PR eingereicht (Branch `content/product-comparisons`) | `docs/HANDOFF_PRODUKTVERGLEICHE.md` |
+
+**Nächster Schritt der Inhaltsoffensive:** Stadtseiten (Notdienst, Freilaufflächen, Einordnung je Stadtteil), danach Reisecheck mit Fristenplan je Land. Freigabe in den Index nur in kleinen Gruppen.
+
+**Offen beim Betreiber:** Bildrechte für Herstellerfotos (Vergleiche zeigen keine Produktbilder), fachliche Prüfung der Behandlungsseiten, monatliche Preisprüfung der Vergleiche mit `scripts/audit/product-comparison/crosscheck.py`.
+
+**Lokale Eigenheiten:** `npm ci` braucht `NODE_EXTRA_CA_CERTS` (siehe `problems.md`, P-002). Auf diesem Rechner laufen zeitweise Vorschauserver aus einem anderen Checkout (`~/Documents/Codex/…/petatlas`) auf den Ports 4330–4335; Playwright mit `reuseExistingServer` und `design:audit` prüfen dann stillschweigend den falschen Stand. Vorher mit `lsof -iTCP -sTCP:LISTEN` prüfen und einen freien Port nehmen.
+
+
 ## Tatsächlicher Zustand
 
 Arbeitsstand (138 von 138 Aufgaben, 0 blockiert).

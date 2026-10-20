@@ -1055,7 +1055,7 @@ const hundebox: ProduktVergleichsSeite = {
     {
       frage: 'Wie groß muss die Hundebox sein?',
       antwort:
-        'Der Hund misst man stehend vom Boden bis zum Scheitel und von der Nase bis zum Schwanzansatz. Die Box sollte in Höhe und Länge jeweils etwa 10 cm mehr bieten.',
+        'Den Hund misst man stehend vom Boden bis zum Scheitel und von der Nase bis zum Schwanzansatz. Die Box sollte in Höhe und Länge jeweils etwa 10 cm mehr bieten.',
     },
   ],
   verwandt: [
@@ -1191,6 +1191,156 @@ const rollleine: ProduktVergleichsSeite = {
   verwandt: [{ href: '/de-de/tierarzt-karte/', label: 'Hunde-Orte auf der Karte finden' }],
 };
 
+// ---------------------------------------------------------------------------
+// Kauspielzeug Hund
+
+/** Stufe der Robustheit aus der Herstellerangabe; ohne Angabe `null`. */
+export function kaustaerke(p: Produkt): { anteil: number; text: string } | null {
+  const angabe = text(p, 'chewStrength');
+  if (angabe === null) return null;
+  if (/power|super|sehr kräftig/i.test(angabe))
+    return { anteil: 1, text: 'für sehr kräftige Kauer' };
+  if (/tough|kräftig/i.test(angabe)) return { anteil: 0.7, text: 'für kräftige Kauer' };
+  return { anteil: 0.4, text: 'für normale Kauer' };
+}
+
+const kauspielzeug: ProduktVergleichsSeite = {
+  slug: 'kauspielzeug-hund-vergleich',
+  kategorie: 'kauspielzeug-hund',
+  tier: 'dog',
+  eyebrow: 'Produktvergleich · Hund',
+  titel: 'Kauspielzeug für Hunde im Vergleich: was hält, was lässt sich befüllen?',
+  metaTitel: 'Kauspielzeug Hund Vergleich 2026: 7 Modelle mit Empfehlung',
+  beschreibung:
+    'Sieben Kauspielzeuge von KONG, West Paw, Nylabone, TRIXIE und Planet Dog nach Robustheit laut Hersteller, Befüllbarkeit, Reinigung, Größenangabe und Preis bewertet – mit Empfehlung für kräftige Kauer.',
+  frage: 'Welches Kauspielzeug hält bei deinem Hund?',
+  einleitung: [
+    'Ein Kauspielzeug muss zur Kaukraft und Größe deines Hundes passen. Wir haben sieben Modelle danach bewertet, wofür der Hersteller sie selbst einstuft, ob sie sich mit Futter befüllen lassen, wie leicht sie sauber werden und was sie kosten. Verglichen wird jeweils die Größe für Hunde um 15 bis 30 kg.',
+  ],
+  kriterien: [
+    {
+      name: 'Robustheit laut Hersteller',
+      gewicht: 30,
+      regel:
+        'Einstufung des Herstellers: für sehr kräftige Kauer 30 Punkte, für kräftige Kauer 21, für normale Kauer 12. Ohne Einstufung 0.',
+      bewerte: (p) => {
+        const s = kaustaerke(p);
+        return s === null
+          ? { anteil: 0, begruendung: 'keine Einstufung der Kaukraft' }
+          : { anteil: s.anteil, begruendung: s.text };
+      },
+    },
+    {
+      name: 'Befüllbar',
+      gewicht: 20,
+      regel:
+        'Lässt sich laut Hersteller mit Futter oder Leckerli befüllen: 20 Punkte. Ein befülltes Spielzeug beschäftigt deutlich länger.',
+      bewerte: (p) =>
+        merkmalPunkte(p, [
+          { key: 'fillable', anteil: 1, ja: 'befüllbar', fehlt: 'nicht als befüllbar angegeben' },
+        ]),
+    },
+    {
+      name: 'Größenangabe',
+      gewicht: 10,
+      regel:
+        'Der Hersteller nennt, für welches Hundegewicht die Größe gedacht ist: 10 Punkte. Ein zu kleines Spielzeug kann verschluckt werden.',
+      bewerte: (p) => {
+        const kg = text(p, 'dogWeightKg');
+        return kg === null
+          ? { anteil: 0, begruendung: 'kein Hundegewicht angegeben' }
+          : { anteil: 1, begruendung: `für Hunde ${kg}` };
+      },
+    },
+    {
+      name: 'Reinigung',
+      gewicht: 10,
+      regel: 'Spülmaschinenfest laut Hersteller oder Händler: 10 Punkte.',
+      bewerte: (p) =>
+        merkmalPunkte(p, [
+          {
+            key: 'dishwasherSafe',
+            anteil: 1,
+            ja: 'spülmaschinenfest',
+            fehlt: 'Spülmaschine nicht angegeben',
+          },
+        ]),
+    },
+    {
+      name: 'Garantie',
+      gewicht: 5,
+      regel: 'Ersatz bei Beschädigung durch den Hersteller: 5 Punkte.',
+      bewerte: (p) =>
+        merkmalPunkte(p, [
+          {
+            key: 'guarantee',
+            anteil: 1,
+            ja: 'Herstellergarantie',
+            fehlt: 'keine Garantie angegeben',
+          },
+        ]),
+    },
+    preisKriterium(25),
+  ],
+  einsaetze: [
+    {
+      titel: 'Für die meisten Hunde',
+      warum: (b) =>
+        `Höchste Gesamtnote (${note(b)}): ${kaustaerke(b.produkt)?.text ?? 'ohne Einstufung'}, ${ja(b.produkt, 'fillable') ? 'befüllbar' : 'nicht befüllbar'}, ${preis(b.produkt)}.`,
+    },
+    {
+      titel: 'Mit Garantie und spülmaschinenfest',
+      passt: (p) => ja(p, 'guarantee') === true && ja(p, 'dishwasherSafe') === true,
+      warum: (b) =>
+        `Ersatz bei Beschädigung durch den Hersteller und spülmaschinenfest; beste Note in dieser Gruppe (${note(b)}).`,
+    },
+    {
+      titel: 'Beim kleinen Budget',
+      vergleiche: nachPreis,
+      warum: (b) => `Günstigstes Modell mit belegtem Preis: ${preis(b.produkt)} (${note(b)}).`,
+    },
+  ],
+  merkmale: [
+    { key: 'chewStrength', label: 'Einstufung', zeige: (p) => kaustaerke(p)?.text ?? null },
+    { key: 'material', label: 'Material' },
+    { key: 'dogWeightKg', label: 'Hund' },
+    { key: 'diameterOrLengthCm', label: 'Größe', einheit: 'cm' },
+    { key: 'fillable', label: 'Befüllbar' },
+    { key: 'dishwasherSafe', label: 'Spülmaschinenfest' },
+    { key: 'floats', label: 'Schwimmt' },
+    { key: 'guarantee', label: 'Garantie' },
+  ],
+  tabelle: ['chewStrength', 'material', 'fillable', 'dogWeightKg'],
+  hinweise: [
+    'Kein Spielzeug ist unzerstörbar. Lass deinen Hund mit einem neuen Kauspielzeug anfangs nicht allein und tausche es aus, sobald Stücke abbrechen.',
+    'Die Einstufung „für kräftige Kauer“ ist die Angabe des Herstellers, kein eigener Belastungstest. KONG und West Paw nennen sie auf Englisch; wir geben sie sinngemäß wieder.',
+    '„keine Angabe“ heißt: Hersteller und Händler nennen das Merkmal nicht; dafür gibt es keine Punkte.',
+  ],
+  fragen: [
+    {
+      frage: 'Welche Größe ist die richtige?',
+      antwort:
+        'Lieber eine Nummer größer: Das Spielzeug darf nicht ganz ins Maul passen. Die meisten Hersteller nennen dafür ein Hundegewicht je Größe.',
+    },
+    {
+      frage: 'Womit kann ich ein Kauspielzeug befüllen?',
+      antwort:
+        'Mit einem Teil des normalen Futters, eingeweichtem Trockenfutter oder Nassfutter. Eingefroren hält die Füllung länger. Rechne die Menge vom Tagesfutter ab.',
+    },
+    {
+      frage: 'Ist Nylon oder Naturkautschuk besser?',
+      antwort:
+        'Naturkautschuk gibt nach und federt, Nylon ist hart. Bei harten Kauknochen sollte sich die Oberfläche mit dem Fingernagel eindrücken lassen; zu harte Gegenstände können Zähne beschädigen. Bei abgebrochenen Zähnen oder Zahnschmerzen gehört der Hund zur Tierarztpraxis.',
+    },
+  ],
+  verwandt: [
+    {
+      href: '/de-de/futter/vergleich/hund-trockenfutter/',
+      label: 'Trockenfutter für Hunde im Vergleich',
+    },
+  ],
+};
+
 export const SEITEN: readonly ProduktVergleichsSeite[] = [
   trinkbrunnen,
   futterautomat,
@@ -1198,6 +1348,7 @@ export const SEITEN: readonly ProduktVergleichsSeite[] = [
   kugelbahn,
   transportbox,
   hunderampe,
+  kauspielzeug,
   rollleine,
   hundebox,
 ];

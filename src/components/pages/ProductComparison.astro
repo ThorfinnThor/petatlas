@@ -348,8 +348,8 @@ const top = empfehlungen[0];
   }
   .pc-hero h1 {
     max-inline-size: 22ch;
-    margin-block: var(--space-3) var(--space-5);
-    font-size: clamp(2.1rem, 4.4vw, 4rem);
+    margin-block: var(--space-3) var(--space-4);
+    font-size: clamp(1.75rem, 4.2vw, 3.5rem);
   }
   .pc-hero__copy > p:not(.eyebrow) {
     max-inline-size: 64ch;
@@ -499,6 +499,7 @@ const top = empfehlungen[0];
 
   .pc-products {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-5);
   }
   .pc-product {
@@ -507,7 +508,8 @@ const top = empfehlungen[0];
     border-radius: var(--radius-xl);
     background: var(--color-surface);
     box-shadow: var(--shadow-sm);
-    overflow-wrap: break-word;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
     scroll-margin-block-start: 6rem;
   }
   .pc-product__head {
@@ -695,7 +697,19 @@ const top = empfehlungen[0];
     }
   }
 
+  @media (max-width: 63.99rem) {
+    /* Auf schmalen Bildschirmen zuerst die Antwort, nicht das Stimmungsbild. */
+    .pc-hero__visual {
+      display: none;
+    }
+  }
+
   @media (max-width: 40rem) {
+    /* Auf dem Telefon führt die Kurzantwort direkt zu den Empfehlungen darunter. */
+    .pc-nav {
+      display: none;
+    }
+
     .pc-weights,
     .pc-weights tbody,
     .pc-weights tr,
