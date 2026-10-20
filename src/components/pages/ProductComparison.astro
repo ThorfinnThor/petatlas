@@ -512,11 +512,12 @@ const top = empfehlungen[0];
     overflow-wrap: anywhere;
     scroll-margin-block-start: 6rem;
   }
-  /* Lange Modellnamen wie „Kunststoff/Sandpapier“ dürfen umbrechen, statt die Karte zu sprengen. */
+  /* Überschriften brechen nur im Notfall mitten im Wort (break-word statt anywhere);
+     die Spalte darf dank minmax(0, 1fr) schmaler werden als das längste Wort. */
   .pc-product__head h3,
   .pc-product__variant,
   .pc-pick__name {
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
   .pc-product__head {
     display: grid;
