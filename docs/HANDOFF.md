@@ -9,9 +9,9 @@ Das Aufgabenmanifest ist abgeschlossen (138 von 138); es gibt keine ausführbare
 | Index auf 114 Seiten konzentriert | gemergt (PR #90) | `docs/reviews/seo-index-concentration-2026-10-19.md` |
 | Inhaltsstandard + Futter-Pilot (4 Vergleiche) | gemergt (PR #91) | `docs/reviews/content-scorecard-2026-10-20.md` |
 | Tierarztkosten: 8 Behandlungsseiten | gemergt als Entwurf, `noindex` bis zur fachlichen Prüfung (PR #92) | `docs/reviews/behandlungsvorlagen-pruefbogen-2026-10-20.md` |
-| Neun Produktvergleiche mit Bewertungsschema | PR #93 | `docs/HANDOFF_PRODUKTVERGLEICHE.md` |
+| Neun Produktvergleiche mit Bewertungsschema | gemergt (PR #93) | `docs/HANDOFF_PRODUKTVERGLEICHE.md` |
 | Stadtseiten: Sprechzeiten, Hundewiesen, Notdienst mit Quelle | gemergt (PR #94) | `docs/reviews/city-pages-2026-10-20.md` |
-| Reisecheck: Fristenplan je Zielland | PR #95 | `docs/reviews/travel-deadlines-2026-10-20.md` |
+| Reisecheck: Fristenplan je Zielland | gemergt (PR #95) | `docs/reviews/travel-deadlines-2026-10-20.md` |
 
 **Nächster Schritt der Inhaltsoffensive:** Alle fünf Seitentypen der Scorecard sind überarbeitet. Als Nächstes die Wirkung in der Search Console beobachten und neue Seiten nur in kleinen Gruppen (≤ 10 pro Woche) in den Index geben. Offene Prüfungen: Notdienstnummern stichprobenweise anrufen, Formulierungen des Fristenplans durch die prüfende Person durchsehen lassen.
 

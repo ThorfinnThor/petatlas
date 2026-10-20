@@ -1,6 +1,7 @@
 // M12-01 — Die Seite sagt zuerst, was sie nicht prüft.
 import { readFileSync } from 'node:fs';
 
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 const REISE = '/de-de/reisecheck/';
@@ -324,5 +325,37 @@ test.describe('Packliste abhaken', () => {
     await kasten.check();
     await expect(kasten).toBeChecked();
     await kontext.close();
+  });
+});
+
+// Inhaltsoffensive 2026-10: Zielseiten beantworten „Was brauche ich, bis wann?“.
+test.describe('Fristenplan auf der Zielseite', () => {
+  test('rechnet mit Abreise und Rückreise die Kalendertage aus', async ({ page }) => {
+    await page.goto(`${REISE}frankreich/`);
+    await expect(page.locator('#fristenplan h2')).toHaveText(
+      'Fristenplan für die Reise nach Frankreich',
+    );
+    await expect(page.locator('#fristenplan .schritt')).toHaveCount(5);
+    await expect(page.locator('[data-tage-vor]').first()).toBeHidden();
+
+    await page.locator('#abreise').fill('2026-12-20');
+    await page.locator('#rueckreise').fill('2027-01-04');
+    await expect(page.locator('[data-tage-vor="21"]')).toHaveText(/29\.11\.2026/);
+    await expect(page.locator('#rueckreise-hinweis')).toContainText('04.01.2027');
+
+    const structured = await page.locator('script[type="application/ld+json"]').allTextContents();
+    expect(structured.some((t) => t.includes('"FAQPage"'))).toBe(true);
+
+    const results = await new AxeBuilder({ page })
+      .include('#fristenplan')
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+
+  test('zeigt ohne Datum die relativen Fristen', async ({ page }) => {
+    await page.goto(`${REISE}niederlande/`);
+    await expect(page.locator('#fristenplan')).toContainText('Spätestens 21 Tage vor der Abreise');
+    await expect(page.locator('#fristenplan')).toContainText('Auslaufregeln am Zielort prüfen');
   });
 });

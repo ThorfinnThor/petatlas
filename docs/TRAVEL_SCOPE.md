@@ -47,3 +47,7 @@ Der Unterschied, auf den es ankommt: **nicht geprüft heißt nicht unzulässig.*
 ## Was noch fehlt
 
 Die eigentlichen Regeln. Solange sie fehlen, steht auf der Seite keine Beispielprüfung: eine Checkliste aus erfundenen Regeln wäre schlimmer als gar keine. Reihenfolge der nächsten Schritte: Regelmaschine (M12-02), belegte Regeln mit Fundstelle und Geltung (M12-03), Oberfläche (M12-04), Packliste und Zielseiten (M12-05), fachliche Freigabe (M12-06, externer Freigabepunkt).
+
+## Nachtrag Inhaltsoffensive (2026-10-20)
+
+Jede Zielseite hat jetzt einen Fristenplan mit Datumsrechner. Die Fristen liest er aus dem Regelsatz; die Landesschritte fassen `national.ts` zusammen. Einzelheiten: `docs/reviews/travel-deadlines-2026-10-20.md`.
