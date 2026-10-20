@@ -1,0 +1,233 @@
+---
+/**
+ * Fristenplan je Zielland mit optionalem Datumsrechner. Ohne JavaScript
+ * steht der Plan mit relativen Fristen da; mit Abreise- und Rückreisedatum
+ * rechnet die Seite die Kalendertage aus. Eingaben verlassen den Browser
+ * nicht und werden nicht gespeichert.
+ */
+import type { Fristen, Schritt } from '../../features/travel/fristen.ts';
+
+interface Props {
+  land: string;
+  schritte: readonly Schritt[];
+  fristen: Fristen;
+}
+
+const { land, schritte, fristen } = Astro.props;
+const ART_LABEL: Record<Schritt['art'], string> = {
+  recht: 'EU-Recht',
+  empfehlung: 'Empfehlung',
+  land: land,
+};
+---
+
+<section class="reiseplan" id="fristenplan" aria-labelledby="fristenplan-titel">
+  <p class="eyebrow">Was brauche ich, bis wann?</p>
+  <h2 id="fristenplan-titel">Fristenplan für die Reise nach {land}</h2>
+  <p class="kurz">
+    <strong>Kurz gesagt:</strong> Ein erwachsener Hund oder eine erwachsene Katze braucht einen Mikrochip,
+    eine gültige Tollwutimpfung und den EU-Heimtierausweis. Wird neu geimpft, liegen zwischen Impfung
+    und Abreise mindestens {fristen.wartezeitTage} Tage. Der Impfschutz muss bis zur Rückreise gelten.
+  </p>
+
+  <form class="rechner" id="reiserechner" aria-describedby="rechner-hinweis">
+    <div>
+      <label for="abreise">Abreise</label>
+      <input id="abreise" type="date" name="abreise" />
+    </div>
+    <div>
+      <label for="rueckreise">Rückreise</label>
+      <input id="rueckreise" type="date" name="rueckreise" />
+    </div>
+    <p id="rechner-hinweis" class="hilfe">
+      Mit Datum rechnet der Plan die Tage aus. Die Angaben bleiben in deinem Browser.
+    </p>
+  </form>
+
+  <ol class="schritte">
+    {
+      schritte.map((s) => (
+        <li class={`schritt schritt--${s.art}`}>
+          <p class="wann">
+            <span>{s.wann}</span>
+            {s.tageVorAbreise !== null && (
+              <span class="datum" data-tage-vor={s.tageVorAbreise} hidden />
+            )}
+            <span class="art">{ART_LABEL[s.art]}</span>
+          </p>
+          <h3>
+            {s.titel}
+            {s.nurHund && <span class="nur-hund"> (nur Hunde)</span>}
+          </h3>
+          <p>{s.text}</p>
+          {s.quelle && (
+            <p class="hilfe">
+              Quelle:{' '}
+              <a href={s.quelle.url} rel="nofollow noopener">
+                {s.quelle.label}
+              </a>
+            </p>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+  <p class="hilfe" id="rueckreise-hinweis" hidden></p>
+</section>
+
+<script>
+  import { tageVor } from '../../features/travel/fristen.ts';
+
+  const abreise = document.querySelector<HTMLInputElement>('#abreise');
+  const rueckreise = document.querySelector<HTMLInputElement>('#rueckreise');
+  const hinweis = document.querySelector<HTMLElement>('#rueckreise-hinweis');
+  const datum = (iso: string) =>
+    new Date(`${iso}T00:00:00Z`).toLocaleDateString('de-DE', {
+      timeZone: 'UTC',
+      weekday: 'short',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+
+  function aktualisieren() {
+    const ab = abreise?.value ?? '';
+    for (const feld of document.querySelectorAll<HTMLElement>('[data-tage-vor]')) {
+      if (ab === '') {
+        feld.hidden = true;
+        continue;
+      }
+      feld.textContent = `bis ${datum(tageVor(ab, Number(feld.dataset.tageVor)))}`;
+      feld.hidden = false;
+    }
+    const zurueck = rueckreise?.value ?? '';
+    if (hinweis !== null) {
+      hinweis.hidden = zurueck === '';
+      if (zurueck !== '')
+        hinweis.textContent = `Die Tollwutimpfung muss laut Ausweis mindestens bis ${datum(zurueck)} gültig sein.`;
+    }
+  }
+
+  abreise?.addEventListener('input', aktualisieren);
+  rueckreise?.addEventListener('input', aktualisieren);
+</script>
+
+<style>
+  .reiseplan {
+    margin-block: var(--space-6) var(--space-8);
+  }
+  .eyebrow {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  h2 {
+    margin-block: 0 var(--space-3);
+  }
+  .kurz {
+    max-width: 72ch;
+    padding: var(--space-3) var(--space-4);
+    border-inline-start: 4px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    background: var(--color-primary-soft);
+  }
+  .rechner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+    align-items: end;
+    margin-block: var(--space-5);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+  .rechner div {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .rechner label {
+    font-weight: 600;
+  }
+  .rechner input {
+    min-height: 2.75rem;
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font: inherit;
+  }
+  .rechner p {
+    flex-basis: 100%;
+    margin: 0;
+  }
+  .schritte {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: schritt;
+  }
+  .schritt {
+    position: relative;
+    min-width: 0;
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-10);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    counter-increment: schritt;
+    overflow-wrap: anywhere;
+  }
+  .schritt::before {
+    content: counter(schritt);
+    position: absolute;
+    inset-block-start: var(--space-4);
+    inset-inline-start: var(--space-4);
+    display: grid;
+    place-items: center;
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-size: var(--text-small);
+    font-weight: 700;
+  }
+  .schritt--land {
+    border-color: var(--color-primary-border);
+  }
+  .wann {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    margin: 0 0 var(--space-1);
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+  .datum {
+    color: var(--color-ink);
+  }
+  .art {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+  .schritt h3 {
+    margin: 0 0 var(--space-2);
+    font-size: 1.05rem;
+  }
+  .schritt p {
+    max-width: 72ch;
+  }
+  .nur-hund {
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+  .hilfe {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+</style>

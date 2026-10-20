@@ -24,6 +24,8 @@ import type { TravelRuleSet } from '../../../domain/schemas/travel.ts';
 import { nationalGuidance } from '../../../features/travel/national.ts';
 import { ZIELLAENDER } from '../../../features/travel/laender.ts';
 import { freigabeFuer } from '../../../features/travel/freigabe.ts';
+import { fristenAus, fristenplan } from '../../../features/travel/fristen.ts';
+import TravelPlan from '../../../components/travel/TravelPlan.astro';
 
 export function getStaticPaths() {
   const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -50,11 +52,50 @@ const letzteQuellenpruefung = satz.sources
   .at(-1)!;
 const umfang = reiseUmfang();
 const national = nationalGuidance(code);
+const fristen = fristenAus(satz);
+const schritte = fristenplan(satz, code);
+const fragen = [
+  {
+    frage: `Wie lange vor der Reise nach ${name} muss die Tollwutimpfung sein?`,
+    antwort: `Bei einer Erstimpfung oder einer neuen Impfung nach abgelaufenem Schutz mindestens ${fristen.wartezeitTage} Tage vor der Einreise. Eine Auffrischung, die vor Ablauf der bisherigen Impfung gegeben wurde, löst keine neue Wartezeit aus. Die Impfung muss auch am Tag der Rückreise noch gültig sein.`,
+  },
+  {
+    frage: `Braucht mein Hund für ${name} eine Bandwurmbehandlung?`,
+    antwort:
+      'Nein. Eine Behandlung gegen den Fuchsbandwurm ist nur für die Einreise nach Finnland, Irland, Malta, Nordirland und Norwegen vorgeschrieben.',
+  },
+  {
+    frage: 'Gilt mein alter EU-Heimtierausweis noch?',
+    antwort:
+      'Ältere Ausweismodelle können nach Übergangsregeln weitergelten; ein alter Ausweis muss nicht pauschal ersetzt werden. Er muss vollständig ausgefüllt sein und Chip und gültige Tollwutimpfung zeigen. Im Zweifel bestätigt die ausstellende Praxis die Gültigkeit.',
+  },
+  ...(code === 'FR'
+    ? [
+        {
+          frage: 'Darf ich mit einem Listenhund nach Frankreich?',
+          antwort:
+            'Hunde der französischen Kategorie 1 dürfen weder einreisen noch durchreisen. Für Kategorie 2 gelten zusätzliche Voraussetzungen. Die französische Einstufung lässt sich nicht aus einer deutschen Liste übernehmen; kläre sie vor der Buchung.',
+        },
+      ]
+    : []),
+];
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: fragen.map((f) => ({
+      '@type': 'Question',
+      name: f.frage,
+      acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+    })),
+  },
+];
 ---
 
 <BaseLayout
-  title={`Mit Hund oder Katze nach ${name}`}
-  description={`Reisehinweise für Hund und Katze nach ${name}: Anforderungen, Fristen, Quellen und Packliste für die Vorbereitung.`}
+  title={`Mit Hund oder Katze nach ${name}: Fristenplan, Impfung, Ausweis`}
+  description={`Was du für die Reise mit Hund oder Katze nach ${name} brauchst und bis wann: Fristenplan mit Datumsrechner, Tollwutimpfung (${fristen.wartezeitTage} Tage Wartezeit), Heimtierausweis, Landesregeln und Packliste.`}
+  structuredData={structuredData}
   route="travel"
   canonicalPfad={eigenerPfad}
 >
@@ -70,6 +111,8 @@ const national = nationalGuidance(code);
     zu jedem Punkt und einer Packliste zum Ausdrucken. Für den Abgleich mit Ihren eigenen Daten gibt es
     den <a href={checkPfad}>Reisecheck</a>.
   </p>
+
+  <TravelPlan land={name} schritte={schritte} fristen={fristen} />
 
   <ReviewStatus
     status={freigabe.freigegeben ? 'approved' : 'pending'}
@@ -191,6 +234,18 @@ const national = nationalGuidance(code);
     Ihr Tier schriftlich geben, nicht nur telefonisch.
   </p>
 
+  <h2>Häufige Fragen</h2>
+  <div class="fragen">
+    {
+      fragen.map((f) => (
+        <details>
+          <summary>{f.frage}</summary>
+          <p>{f.antwort}</p>
+        </details>
+      ))
+    }
+  </div>
+
   <h2>Andere Ziele</h2>
   <p>
     Eigene Seiten gibt es nur für {umfang.destinations.length} Ziele:
@@ -271,6 +326,16 @@ const national = nationalGuidance(code);
       width: 1em;
       height: 1em;
       margin: 0;
+    }
+
+    .fragen details {
+      padding-block: var(--space-3);
+      border-block-end: 1px solid var(--color-border);
+    }
+
+    .fragen summary {
+      cursor: pointer;
+      font-weight: 600;
     }
 
     .ziele {
