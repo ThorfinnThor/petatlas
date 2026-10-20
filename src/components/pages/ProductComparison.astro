@@ -512,9 +512,15 @@ const top = empfehlungen[0];
     overflow-wrap: anywhere;
     scroll-margin-block-start: 6rem;
   }
+  /* Lange Modellnamen wie „Kunststoff/Sandpapier“ dürfen umbrechen, statt die Karte zu sprengen. */
+  .pc-product__head h3,
+  .pc-product__variant,
+  .pc-pick__name {
+    overflow-wrap: anywhere;
+  }
   .pc-product__head {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     gap: var(--space-4);
     align-items: start;
   }
@@ -740,7 +746,7 @@ const top = empfehlungen[0];
       grid-row: 2;
     }
     .pc-product__head {
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto minmax(0, 1fr);
     }
     .pc-product__total {
       grid-column: 1 / -1;
