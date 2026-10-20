@@ -1,0 +1,2442 @@
+{
+  "datasetId": "food-comparison-2026-10",
+  "checkedAt": "2026-10-20",
+  "dataKind": "real",
+  "products": [
+    {
+      "id": "royal-canin-indoor-27",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Royal Canin",
+      "productName": "Indoor 27",
+      "declaredKind": "Alleinfuttermittel für Katzen - speziell für ausgewachsene Katzen (vom 1. bis zum 7. Lebensjahr), die im Haus leben",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Geflügelprotein getrocknet, Reis, Weizen, Mais, Weizenkleber*, Tierfett, Weizenmehl, hydrolysierte Tierproteine, pflanzliche Fasern, Mineralstoffe, Rübenschnitzel, Hefenerzeugnisse, Sojaöl, Fructo-Oligosaccharide, Fischöl, Psyllium (Schalen und Samen; 0,5%)",
+      "analytical": {
+        "protein": 27.0,
+        "fat": 13.0,
+        "fiber": 4.0,
+        "ash": 7.7,
+        "moisture": null,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 56,
+          "verbatim": "4 kg | Idealgewicht: 56 g trocken oder (36 g + 1 Frischebeutel) | Übergewichtig: 44 g trocken oder (25 g + 1 Frischebeutel)",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/indoor-27-2529"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "4 kg",
+        "netGrams": 4000,
+        "priceEur": 34.99,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/royal_canin/royal_canin_indoor/7191",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "speziell zur Förderung der Harnwegsgesundheit bei ausgewachsenen Katzen entwickelt (paraphrased)",
+        "hochverdauliche Proteine (L.I.P.) zur Verringerung von Kotvolumen und -geruch (paraphrased)",
+        "Psyllium/Fasern gegen Haarballen (paraphrased)"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer page (royalcanin.com/de) declares only protein/fat/fiber/ash; no energy, moisture, Ca or P. zooplus page lists Rohasche 7.0 % (manufacturer 7.7 %), Kalzium 1.01 %, Phosphor 0.84 %, Feuchtigkeit 5.5 % and 'metabolisierbare Energie: 3.76 kcal' with no per-g/per-kg unit, so energy left null and Ca/P/moisture not mixed in from the retailer. Manufacturer feeding table does not say 'pro Tag'; 'Idealgewicht' column used. zooplus feeding table gives 4 kg normal activity 55 g. The '*' after Weizenkleber is a footnote whose text was not captured. royalcanin.com blocks scripted fetching (403) but WebFetch worked. Pack sizes 400 g/2/4/10 kg; 4 kg chosen."
+    },
+    {
+      "id": "purina-one-indoor-formula-truthahn",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Purina ONE",
+      "productName": "Indoor Formula Truthahn",
+      "declaredKind": "Alleinfuttermittel für Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Truthahn (17%, einschließlich Knochen, Fleisch, Haut), Weizen (16%), getrocknetes Geflügelprotein, Mais, Sojamehl, Weizengluten, Maisproteinmehl, tierische Fette, getrocknete Rübenschnitzel, getrocknete Pflanzenfasern, getrocknete Zichorienwurzel (2%), Mineralstoffe, Proteinhydrolysat (mit Zusatz von wärmebehandeltem Lactobacillus Delbrueckii und Fermentum-Pulver 0,025%), Hefen.",
+      "analytical": {
+        "protein": 36.0,
+        "fat": 13.0,
+        "fiber": 5.5,
+        "ash": 8.0,
+        "moisture": null,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/purina_one/purina_one_adult/194106",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 55,
+          "verbatim": "2–4 kg: 25–55 g/Tag; 4–6 kg: 55–80 g/Tag",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/purina_one/purina_one_adult/194106"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "2,8 kg",
+        "netGrams": 2800,
+        "priceEur": 13.99,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/purina_one/purina_one_adult/194106",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "reich an Protein und fördert eine schlanke Muskelmasse",
+        "speziell für ausgewachsene Katzen konzipiert, die vorrangig im Haus oder in der Wohnung leben"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "purina.de returns 403 to fetching; all data from zooplus.de. No moisture, Ca, P or energy declared there. 4 kg is the boundary of two table rows (2–4 kg: 25–55 g; 4–6 kg: 55–80 g); both rows give 55 g at 4 kg, so 55 used rather than a range midpoint. Search snippets for a related Purina ONE variant mention Truthahn 18 %; this page says 17 %."
+    },
+    {
+      "id": "whiskas-1-plus-huhn-trocken",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Whiskas",
+      "productName": "1+ mit Huhn",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Getreide, Fleisch und tierische Nebenerzeugnisse (u.a. Huhn 4% in den braunen Stückchen*), Öle und Fette, pflanzliche Nebenerzeugnisse (u.a. getrocknete Rübenschnitzel 2%), pflanzliche Eiweissextrakte, Mineralstoffe, Hefe, Fisch und Fischnebenerzeugnisse, Gemüse (u.a. getrocknete Karotten 0.5%, entspricht Karotten 4% in den orangefarbigen Stückchen und getrocknete Erbsen 1%, entspricht Erbsen 4% in den grünen Stückchen*), Zucker. *Die braunen Stückchen machen 70% des Produkts aus, die orangen und grünen Stückchen machen jeweils 8% des Produkts aus.",
+      "analytical": {
+        "protein": 30,
+        "fat": 11.5,
+        "fiber": 2,
+        "ash": 9.1,
+        "moisture": null,
+        "calcium": 1.4,
+        "phosphorus": 0.96
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.whiskas.de/katzenfutter/trockenfutter/classic/whiskas-1-huhn-trockenfutter-800g-1-9-3-8-7kg",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 60,
+          "verbatim": "4 kg | Menge pro Tag: 55 - 65 g",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/whiskas/whiskas_trockenfutter_adult/173449"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "3,8 kg",
+        "netGrams": 3800,
+        "priceEur": 14.19,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/whiskas/whiskas_trockenfutter_adult/173449",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "Mit Zink: Essenziell für eine gesunde Haut und ein gesundes Fell",
+        "ohne künstliche Farb- oder Aromastoffe (paraphrased)",
+        "ausgewogene Mineralstoffe zur Unterstützung der unteren Harnwege (paraphrased)"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer page (whiskas.de) has composition and analysis but no 'Alleinfuttermittel' statement and no feeding table (only '20 g Trockennahrung lässt sich durch 1 Portionsbeutel 85 g WHISKAS® Feuchtnahrung ersetzen'). declaredKind and feeding table taken from zooplus.de. zooplus lists slightly different analysis (Rohfaser 1.9 %, Kalzium 1.5 %, Phosphor 0.97 %); manufacturer values kept. Contains added sugar ('Zucker'); zooplus lists sensory additive 'Farbstoffe' despite the manufacturer's no-artificial-colours claim — worth checking on pack. Feeding range midpoint 60 g."
+    },
+    {
+      "id": "josera-catelux",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Josera",
+      "productName": "Catelux Ente & Geflügel",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "getrocknetes Geflügelprotein (Geflügel 25,0 %, Ente 4,0 %); Vollkornmais; Geflügelfett; getrocknete Kartoffel; Rübenfaser; getrocknete Grieben; Pflanzenfaser; hydrolysiertes tierisches Protein; hydrolysierte Geflügelleber; Mineralstoffe; Flohsamenschalen (Psyllium)",
+      "analytical": {
+        "protein": 32.0,
+        "fat": 20.0,
+        "fiber": 5.3,
+        "ash": 6.8,
+        "moisture": null,
+        "calcium": 1.3,
+        "phosphorus": 0.95
+      },
+      "energy": {
+        "value": 16.4,
+        "unit": "MJ/kg",
+        "verbatim": "metabolisierbare Energie pro kg (16.4 MJ) / (3912 kcal)"
+      },
+      "declarationSourceUrl": "https://www.josera.de/josera-catelux.html",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 57.5,
+          "verbatim": "3–4 kg: 40–65 g; 4–5 kg: 50–75 g (pro 24 h)",
+          "sourceUrl": "https://www.josera.de/josera-catelux.html"
+        }
+      ],
+      "price": {
+        "retailer": "josera.de (manufacturer shop)",
+        "packLabel": "4,25 kg",
+        "netGrams": 4250,
+        "priceEur": 27.99,
+        "url": "https://www.josera.de/josera-catelux.html",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "Ohne Zusatz von Weizen, Soja, Zucker und Milchprodukten",
+        "ohne künstliche Farb-, Aroma- und Konservierungsstoffe (paraphrased)",
+        "Fasern reduzieren Haarballenbildung (paraphrased)",
+        "Harn-pH 6,0–6,5 (paraphrased)"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "4 kg is the boundary between the 3–4 kg row (40–65 g) and the 4–5 kg row (50–75 g); the rows disagree at 4 kg (65 vs 50). gramsPerDay 57.5 = midpoint of 50–65 (values the two rows give for exactly 4 kg) — a derived figure, not printed. Moisture not declared. Price from Josera's own shop (no German retailer checked)."
+    },
+    {
+      "id": "happy-cat-indoor-adult-voralpen-rind",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Happy Cat",
+      "productName": "Indoor Adult Voralpen-Rind",
+      "declaredKind": "Alleinfuttermittel für Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Grieben (gesamt 20 %, davon 75 % Rindergrieben), tierisches Protein* (vom Geflügel), Mais, Maismehl, Reis, Kartoffel*, Öle und Fette, Cellulose (4%), tierisches Protein (u.a.Rind 2 %), hydrolisiertes Protein*, Hämoglobin*, Rübentrockenschnitzel, Kaliumchlorid, Trockenvollei, Apfeltrester* (0,3 %), Hefe*, Natriumchlorid, Meeresalgen*, Leinsamen (0,16 %), Chicoréepulver (0,15 % = 0, 1 % Inulin), Yucca schidigera* (0,1 %), Mariendistel (0,024 %), Hefe* (extrahiert, 0,02 % = 0,0032 % MOS), Artischocke, Löwenzahn, Ingwer, Birkenblätter, Brennnessel, Kamille, Koriander (0,008 %), Rosmarin, Salbei, Süßholzwurzel, Thymian (Trockenkräuter gesamt: 0,16 %) *) getrocknet",
+      "analytical": {
+        "protein": 34.0,
+        "fat": 12.0,
+        "fiber": 4.0,
+        "ash": 7.0,
+        "moisture": null,
+        "calcium": 1.05,
+        "phosphorus": 0.9
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://happycat.de/katzenfutter/trockenfutter/happy-cat-indoor-adult-voralpen-rind-70591",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 50,
+          "verbatim": "Idealgewicht 4 kg | 50 g/Tag",
+          "sourceUrl": "https://happycat.de/katzenfutter/trockenfutter/happy-cat-indoor-adult-voralpen-rind-70591"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "4 kg",
+        "netGrams": 4000,
+        "priceEur": 22.99,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/happy_cat/adult_indoor/1031526",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "fettreduzierte Rezeptur zur Gewichtskontrolle (paraphrased)",
+        "ohne Soja, ohne Zuckerzusatz (paraphrased, zooplus)",
+        "Yucca gegen Kotgeruch (paraphrased)"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer page is happycat.de (happy-cat.de redirects to a domain-sale page). Manufacturer page has no 'Alleinfuttermittel' sentence; declaredKind taken from zooplus ('Happy Cat Indoor Voralpen-Rind ist ein Alleinfuttermittel für Katzen.'). zooplus shows an older/different recipe (Lignocellulose 2,0 %, entzuckerte Rübenmelasseschnitzel, Apfeltrester 0,4 %, Rohfaser 3 %) — manufacturer version used; the zooplus-sold bag may still carry the old declaration. No moisture or energy declared. Price is zooplus 4 kg (manufacturer shop shows only 0,3 kg price 3,89 €)."
+    },
+    {
+      "id": "purizon-original-huhn-mit-fisch",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Purizon",
+      "productName": "Adult Huhn mit Fisch, getreidefrei",
+      "declaredKind": "Alleinfutter für ausgewachsene Katzen aller Rassen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "30 % Hühnerfleisch, 28 % Hühnerprotein (getrocknet), Süßkartoffel, 7 % Hühnerfett, 1 % Ei (getrocknet), 1 % grätenfreier Hering, 1 % Heringprotein (getrocknet), 1 % Heringsöl, 1 % hydrolysierte tierische Proteine, Erbsenfasern, Möhren (getrocknet), Luzerne (getrocknet), Inulin, Fructo-Oligosaccharide (FOS), Hefezellwände (Quelle von Mannan-Oligosaccharidien), Granatapfel (getrocknet), Apfel (getrocknet), Spinat (getrocknet), 0,3 % Psyllium, Heidelbeere (getrocknet), Natriumchlorid, Bierhefe (getrocknet), 0,2 % Kurkuma, 0,12 % Glucosamin, 0,09 % Chondroitinsulfat, Ringelblumenextrakt, Aloe vera (getrocknet), Grüner Tee (getrocknet), Rosmarin (getrocknet).",
+      "analytical": {
+        "protein": 44.0,
+        "fat": 20.0,
+        "fiber": 1.8,
+        "ash": 8.5,
+        "moisture": null,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 4132.0,
+        "unit": "kcal/kg",
+        "verbatim": "4132,0 kcal/kg; 17,29 MJ/kg (ME nach FEDIAF 2020)"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/purizon/purizon_adult/325368",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 37.5,
+          "verbatim": "4 kg | Tagesration kastrierte Katzen: 30–45 g | Tagesration aktive Katzen: 60 g",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/purizon/purizon_adult/325368"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "2,5 kg",
+        "netGrams": 2500,
+        "priceEur": 21.99,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/purizon/purizon_adult/325368",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "getreidefrei",
+        "0 % Getreide",
+        "70 % tierische Zutaten, 30 % Obst und Gemüse",
+        "ohne künstliche Farb- und Konservierungsstoffe, ohne zugesetzten Zucker (paraphrased)"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "zooplus own brand; zooplus page is the manufacturer page. Text says 'Alleinfutter' (not 'Alleinfuttermittel'). Calcium/phosphorus are inconsistent between pack variants on the page (1,1/0,9 % for 400 g and 2,5 kg; 1,5/1,3 % for 100 g and 6,5 kg; 1,5/0,9 % for the Sparpaket) → set null. Moisture not declared. Feeding table has no 'normal' column: gramsPerDay = midpoint of the neutered-cat range (30–45 g); active cats 60 g. Search snippets mentioned a 'Purizon Adult Huhn & Fisch'; the current non-sterilised adult product is named 'Original Huhn mit Fisch'."
+    },
+    {
+      "id": "hills-science-plan-adult-1-6-huhn",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Hill's",
+      "productName": "Science Plan Adult 1-6 Huhn",
+      "declaredKind": "Alleinfuttermittel für erwachsene Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Hühner- und Truthahnmehl (Huhn 16%; Geflügel gesamt 26%), Weizen, Mais, tierische Fette, Maisproteinmehl, Bruchreis, Proteinhydrolysat, Mineralstoffe, Rübentrockenschnitzel, Fischöl, Pflanzenöl, Haferkleie, Fructooligosaccharide. ActivBiome+ Multi Benefit Präbiotikamischung (0,6%): Haferkleie, Fructooligosaccharide.",
+      "analytical": {
+        "protein": 31.9,
+        "fat": 19.7,
+        "fiber": 1.4,
+        "ash": 5.5,
+        "moisture": null,
+        "calcium": 0.75,
+        "phosphorus": 0.74
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/hills/hills_adult/4956",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 60,
+          "verbatim": "4 kg | Trockenfutter: 60 g | Nassfutter (85 g Dose) + Trockenfutter: 1 + 35 g | Nassfutter (85 g Beutel) + Trockenfutter: 1 + 40 g",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/hills/hills_adult/4956"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "3 kg",
+        "netGrams": 3000,
+        "priceEur": 28.49,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/hills/hills_adult/4956",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [],
+      "checkedAt": "2026-10-20",
+      "notes": "hillspet.de product URLs returned 404 to the fetcher (even URLs listed by search), so all data from zooplus.de. No energy or moisture declared there. Feeding table does not state 'pro Tag'. Claims on zooplus are retailer copy (protein quality, antioxidants, omega fatty acids, taurine) — not recorded as verbatim manufacturer claims."
+    },
+    {
+      "id": "perfect-fit-indoor-1-plus-huhn",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Perfect Fit",
+      "productName": "Indoor 1+ Huhn",
+      "declaredKind": "Alleinfutter für ausgewachsene Katzen (ab dem vollendeten ersten Lebensjahr)",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "getrocknetes Geflügelprotein (u.a. Huhn 23%), Weizen, Mais, Sojaprotein, Öle und Fette, Griebenproteine, Sojamehl, Mineralstoffe, Zellulose (3%), Leberhydrolysat, Hefe (u.a. natürliche Bierhefe 0.2%), Erbsenstärke, hydrolysierte Stärke, Yucca schidigera (0.01%), Maisstärke.",
+      "analytical": {
+        "protein": 37,
+        "fat": 12,
+        "fiber": 3.7,
+        "ash": 8.9,
+        "moisture": null,
+        "calcium": 1.1,
+        "phosphorus": 0.95
+      },
+      "energy": {
+        "value": 370,
+        "unit": "kcal/100g",
+        "verbatim": "Brennwert: 370 kcal/100 g"
+      },
+      "declarationSourceUrl": "https://www.perfect-fit.de/products/trockenfutter/indoor-adult-1-huhn-trockenfutter",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 47.5,
+          "verbatim": "4 kg | Trockenfutter: 45 - 50 g",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/perfect_fit/adult/19516"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "1,4 kg",
+        "netGrams": 1400,
+        "priceEur": 6.69,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/perfect_fit/adult/19516",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "15 % weniger Fett im Vergleich zu PERFECT FIT Adult (paraphrased)",
+        "Total-5-Formel (paraphrased)",
+        "Yucca schidigera gegen Geruch der Katzentoilette (paraphrased)"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer text says 'Alleinfutter' (not 'Alleinfuttermittel'). Manufacturer page has no feeding table (only '15 g Trockennahrung lässt sich durch 85 g Perfect Fit Feuchtnahrung ersetzen'); feeding table from zooplus, which does not state 'pro Tag'. zooplus analysis varies by variant (Rohasche 8.2–8.9 %, Kalzium 1.1–1.5 %, Phosphor 0.95–1.1 %, energy 372 kcal or 3700 kcal/kg); manufacturer values kept. Older retailer listings (Rewe) show a previous recipe ('Fleisch und tierische Nebenerzeugnisse (u.a. Huhn 14%)'). Additives include 'Farbstoffe'. Pack sizes 750 g/1,4 kg/7 kg; 1,4 kg chosen."
+    },
+    {
+      "id": "real-nature-wilderness-adult-pure-chicken-dry",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Real Nature",
+      "productName": "Wilderness Adult Pure Chicken",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen ab einem Alter von 13 Monaten.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Hühnerprotein (30%), frisches Hühnerfleisch (26%), Erbsen (14%), Kartoffelflocken (11,6%), Hühnerfett (5,7%), Hühnerproteinhydrolysat (4%), Apfeltrester (2,5%), Leinsamen (2%), Sonnenblumenöl (0,6%), Lignocellulose (0,5%), Natriumchlorid (0,5%), Kaliumchlorid (0,4%), Calciumcarbonat (0,2%), Zichorien-Inulin (0,2%), Hefezellwände (0,2%, entspricht 0,04% Mannan-Oligosacchariden), Rosmarin (0,02%), Katzenminze (0,02%), Petersilie (0,02%), Yucca schidigera (0,02%).",
+      "analytical": {
+        "protein": 36,
+        "fat": 17,
+        "fiber": 3,
+        "ash": 8.5,
+        "moisture": null,
+        "calcium": 1.55,
+        "phosphorus": 1.2
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-trockenfutter-katze-adult-pure-chicken-300-g-1173937007/",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 50,
+          "verbatim": "4 kg | Futtermenge pro Tag: 50 g",
+          "sourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-trockenfutter-katze-adult-pure-chicken-300-g-1173937007/"
+        }
+      ],
+      "price": {
+        "retailer": "fressnapf.de",
+        "packLabel": "2,5 kg",
+        "netGrams": 2500,
+        "priceEur": 26.99,
+        "url": "https://www.fressnapf.de/p/real-nature-wilderness-trockenfutter-katze-adult-pure-chicken-300-g-1173937007/",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "Nur eine tierische Proteinquelle",
+        "Getreidefreie Rezeptur",
+        "Ohne Zusatz von Zucker und Getreide",
+        "Ohne Zusatz von Farbstoffen, Antioxidations- und Konservierungsmitteln",
+        "Mit einem hohen Fleischanteil"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Fressnapf own brand; fressnapf.de page is the manufacturer page. There is no plain 'Real Nature Adult' dry line any more; the adult dry range is WILDERNESS — Pure Chicken chosen. Price/URL: the 300 g product page also lists the 2,5 kg variant (26,99 €). No moisture or energy declared."
+    },
+    {
+      "id": "concept-for-life-indoor-cats",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Concept for Life",
+      "productName": "Indoor Cats",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "33,4 % Hühnerprotein (z. T. getrocknet u. hydrolysiert), 33,0 % Reis, 14,0 % frisches Hühnerfleisch, 5,3 % Lignocellulose, 3,5 % Rübentrockenschnitzel, Geflügelfett, Leinsaat, Kaliumchlorid, Bierhefe (getrocknet), Natriumchlorid, 0,35 % Lachsöl, Sonnenblumenöl, 0,2 % Zichorien-Inulin, Calciumsulfat-Dihydrat, 0,1 % Flohsamenschalen (getrocknet), 0,02 % Yucca schidigera (getrocknet).",
+      "analytical": {
+        "protein": 30.0,
+        "fat": 12.5,
+        "fiber": 5.5,
+        "ash": 7.2,
+        "moisture": null,
+        "calcium": 1.2,
+        "phosphorus": 1.0
+      },
+      "energy": {
+        "value": 3859,
+        "unit": "kcal/kg",
+        "verbatim": "16,16 MJ / 3859 kcal pro kg (ME, FEDIAF 2020)"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/concept_for_life_cat/concept_for_life_indoor/1218612",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 50,
+          "verbatim": "4 kg | Tagesration*: 45-55 g",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/concept_for_life_cat/concept_for_life_indoor/1218612"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "3 kg",
+        "netGrams": 3000,
+        "priceEur": 19.99,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_trockenfutter/concept_for_life_cat/concept_for_life_indoor/1218612",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "frei von Weizen, Mais und Soja (paraphrased)",
+        "mit frischem Fleisch (paraphrased)",
+        "reduzierter Fettgehalt im Vergleich zu All Cats, L-Carnitin (paraphrased)"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "zooplus own brand; zooplus page is the manufacturer page ('Verbesserte Rezeptur!'). Footnote * says the table also applies to neutered cats. Moisture not declared."
+    },
+    {
+      "id": "acana-indoor-entree",
+      "species": "cat",
+      "format": "dry",
+      "brand": "Acana",
+      "productName": "Indoor Entrée Huhn, Truthahn & Hering",
+      "declaredKind": "Alleintrockenfutter für Katzen zur Haarballenreduzierung",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Frisches Hühnerfleisch (16%), getrocknetes Hühnerfleisch (16%), getrockneter Hering (16%), ganzer Hafer, ganze Erbsen, Hühnerfett (5%), gemahlenes Miscanthus Gras, ganze grüne Linsen, frisches Truthahnfleisch (4%), roher ganzer Hering (4%), ganze Kichererbsen, ganze rote Linsen, Linsenfasern, roher ganzer Hase (1%), frische Hühner-Innereien (Leber, Herz) (1%), frische Truthahn-Innereien (Leber, Herz) (1%), Hühnerknorpel (1%), getrockneter Seetang, frischer ganzer Butternusskürbis, frischer ganzer Gartenkürbis, frische ganze Cranberries, frische ganze Heidelbeeren.",
+      "analytical": {
+        "protein": 37,
+        "fat": 14,
+        "fiber": 6,
+        "ash": 9,
+        "moisture": 10,
+        "calcium": 1.4,
+        "phosphorus": 1
+      },
+      "energy": {
+        "value": 3630,
+        "unit": "kcal/kg",
+        "verbatim": "METABOLIZABLE ENERGY: 3630 kcal/kg (414 kcal per 250ml/114g cup)"
+      },
+      "declarationSourceUrl": "https://www.fressnapf.de/p/acana-indoor-entre-mit-huhn-truthahn-und-hering-45-kg-1379907/",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 73.5,
+          "verbatim": "3,6–4,5 kg | Gewicht halten: 71–76 g | Gewicht halten (kastrierte Katzen): 43–57 g (Fütterungsempfehlung pro Tag)",
+          "sourceUrl": "https://www.zooroyal.de/acana-cat-indoor-entree"
+        }
+      ],
+      "price": {
+        "retailer": "fressnapf.de",
+        "packLabel": "4,5 kg",
+        "netGrams": 4500,
+        "priceEur": 46.99,
+        "url": "https://www.fressnapf.de/p/acana-indoor-entre-mit-huhn-truthahn-und-hering-45-kg-1379907/",
+        "note": "regular single-purchase price as listed; no strike-through price shown"
+      },
+      "claims": [
+        "Zur Reduzierung von Haarballen",
+        "Für gesunde Haut & ein glänzendes Fell",
+        "Kein Hinzufügen von künstlichen Konservierungsstoffen, Farbstoffen oder Aromen",
+        "65% kleine Beute"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "No German manufacturer page found; the EMEA manufacturer page (acana.com, English) matches the German Fressnapf composition and gives moisture 10 % and energy 3630 kcal/kg (energy taken from there). declaredKind is retailer description text on Fressnapf ('Alleintrockenfutter'); the EN manufacturer page says 'Adult Maintenance'. Manufacturer feeding calculator returned no result; table from zooroyal.de, row 3,6–4,5 kg, 'Gewicht halten' column (intact) midpoint 73.5 g; the neutered column (43–57 g, midpoint 50) may fit indoor cats better. Contains whole oats — ZooRoyal's 'getreidefrei' label is wrong and was not recorded as a claim."
+    },
+    {
+      "id": "animonda-carny-adult-huhn-rind-trocken",
+      "species": "cat",
+      "format": "dry",
+      "brand": "animonda",
+      "productName": "Carny Adult Huhn & Rind",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "35 % frisches Hühnerfleisch, 20 % Geflügelprotein (getrocknet), Kartoffeln (getrocknet), Erbsenstärke, 8 % Erbsen, Rübenschnitzel, 4 % Rinderprotein (getrocknet), 3 % Geflügelproteinhydrolysat, 3 % Geflügelfett, 1 % Geflügelleber, 1 % Lachsöl, Erbsenfasern, Mineralstoffe, 0,1 % Chicoree (getrocknet).",
+      "analytical": {
+        "protein": 33,
+        "fat": 16,
+        "fiber": 2.5,
+        "ash": 7.9,
+        "moisture": null,
+        "calcium": 1.35,
+        "phosphorus": 1.15
+      },
+      "energy": {
+        "value": 16.2,
+        "unit": "MJ/kg",
+        "verbatim": "Umsetzbare Energie pro 100g in MJ: 1.62"
+      },
+      "declarationSourceUrl": "https://animonda.de/product/carny-adult-huhn-rind/83873-0",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 57.5,
+          "verbatim": "4 kg | g pro Tag: 50 - 65 g",
+          "sourceUrl": "https://animonda.de/product/carny-adult-huhn-rind/83873-0"
+        }
+      ],
+      "price": {
+        "retailer": "animonda.de (manufacturer shop)",
+        "packLabel": "1,75 kg",
+        "netGrams": 1750,
+        "priceEur": 15.99,
+        "url": "https://animonda.de/product/carny-adult-huhn-rind/83873-0",
+        "note": "regular (struck-through) price 15,99 €; page currently shows a sale price of 13,99 € ('13% gespart')"
+      },
+      "claims": [
+        "65 % Fleisch und tierische Zutaten",
+        "mit 35 % frischem Hühnerfleisch",
+        "0 % Getreide in der Rezeptur",
+        "mit wertvollen Omega-3-Fettsäuren",
+        "ohne Farbstoffe, ohne Zucker, ohne Soja"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Item 12: animonda 'vom Feinsten' exists only as wet food, so Carny dry (Adult Huhn + Rind) was used. Energy declared as 1.62 MJ per 100 g; recorded as 16.2 MJ/kg (unit conversion only). Moisture not declared. Price from animonda's own shop (no German retailer checked)."
+    },
+    {
+      "id": "animonda-carny-adult-rind-huhn",
+      "species": "cat",
+      "format": "wet",
+      "brand": "animonda",
+      "productName": "Carny Adult Rind & Huhn",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "35 % Rind (Lunge, Herz, Niere, Fleisch, Euter), 30 % Huhn (Leber, Fleisch, Magen, Hals), Mineralstoffe.",
+      "analytical": {
+        "protein": 10.5,
+        "fat": 7.5,
+        "fiber": 0.5,
+        "ash": 2.1,
+        "moisture": 78,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 4.4,
+        "unit": "MJ/kg",
+        "verbatim": "Umsetzbare Energie pro 100g in MJ: 0.44"
+      },
+      "declarationSourceUrl": "https://animonda.de/product/carny-adult-rind-huhn/83719-0",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 197.5,
+          "verbatim": "4 kg | 170-225 g (g pro Tag)",
+          "sourceUrl": "https://animonda.de/product/carny-adult-rind-huhn/83719-0"
+        }
+      ],
+      "price": {
+        "retailer": "animonda.de (Herstellershop)",
+        "packLabel": "6 x 400 g",
+        "netGrams": 2400,
+        "priceEur": 14.94,
+        "url": "https://animonda.de/product/carny-adult-rind-huhn/83719-0",
+        "note": "regular price shown struck through (14,94 €); a temporary sale price of 12,99 € ('13% gespart') was displayed on 2026-10-20 and not used"
+      },
+      "claims": [
+        "100% frische Zutaten",
+        "Hoher Gehalt an tierischen Proteinen",
+        "Ohne Zusatz von Getreide & Zucker"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Rind pur variant not listed on animonda.de's Carny brand page; Rind + Huhn chosen instead (same line). Energy declared as 0.44 MJ per 100 g; converted to 4.4 MJ/kg by unit scaling only. Calcium/phosphorus not declared. Feeding row is a range; gramsPerDay is the midpoint."
+    },
+    {
+      "id": "felix-so-gut-wie-es-aussieht-rind-gelee",
+      "species": "cat",
+      "format": "wet",
+      "brand": "Felix",
+      "productName": "So gut wie es aussieht, Rind in Gelee",
+      "declaredKind": "Felix \"So gut wie es aussieht\" ist ein Alleinfuttermittel für Katzen.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Fleisch und tierische Nebenerzeugnisse* (14%, davon 4% Rind), Pflanzliche Eiweißextrakte, Fisch und Fischnebenerzeugnisse, Mineralstoffe, Zucker. *Stückchen: 44% Fleisch und tierische Nebenerzeugnisse.",
+      "analytical": {
+        "protein": 11.0,
+        "fat": 2.3,
+        "fiber": 0.05,
+        "ash": 2.5,
+        "moisture": 82.0,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.purina.de/katze/katzenfutter/produkt-felix-so-gut-wie-es-aussieht-rind",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 297.5,
+          "verbatim": "Füttere deiner ausgewachsenen Katze (4 kg) 3-4 Portionsbeutel pro Tag, die auf mind. 2 Mahlzeiten verteilt werden sollten",
+          "sourceUrl": "https://www.purina.de/katze/katzenfutter/produkt-felix-so-gut-wie-es-aussieht-rind"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "44 x 85 g (Mixpaket Huhn, Rind, Thunfisch, Lachs)",
+        "netGrams": 3740,
+        "priceEur": 14.29,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/felix/felix_so_gut/397041",
+        "note": "regular single-delivery price, not the -15% first-order/subscription price; no single-flavour Rind pack found, mixed pack includes the Rind flavour"
+      },
+      "claims": [
+        "100% komplett und ausgewogen.",
+        "Vitamine A & E.",
+        "Quelle von Omega-6-Fettsäuren.",
+        "Ohne Farbstoffe.",
+        "Ohne Zusatz von künstlichen Aromastoffen.",
+        "Ohne Zusatz von künstlichen Konservierungsstoffen."
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "purina.de blocks plain fetching (403); read in a browser. Manufacturer page lists ingredients without commas (joined here with ', '). purina.de does not print an Alleinfuttermittel sentence; declaredKind is from the zooplus.de line page (not flavour-specific). lifeStage from 'ausgewachsene Katze' in the feeding text and zooplus 'für ausgewachsene Katzen'. Feeding: 3-4 pouches x 85 g = 255-340 g, midpoint 297.5. No energy value on page; Ca/P not declared. Analytical values differ from the REWE listing (11.5 % protein / 2.5 % fat) - manufacturer values used."
+    },
+    {
+      "id": "whiskas-1plus-gefluegel-in-sauce",
+      "species": "cat",
+      "format": "wet",
+      "brand": "Whiskas",
+      "productName": "1+ Geflügel in Sauce",
+      "declaredKind": "Whiskas 1+ Adult Frischebeutel ist ein Alleinfuttermittel für Katzen.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Fleisch und tierische Nebenerzeugnisse (90% im Häppchen*, u.a. Geflügel 4% im Häppchen*), Getreide, pflanzliche Nebenerzeugnisse (u.a. Rübenschnitzel 0.25%), Mineralstoffe, Zucker. *Häppchen machen 40% des Produkts aus.",
+      "analytical": {
+        "protein": 7.5,
+        "fat": 4,
+        "fiber": 0.35,
+        "ash": 1.6,
+        "moisture": 84.8,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 71,
+        "unit": "kcal/100g",
+        "verbatim": "Brennwert: 71 kcal/100 g."
+      },
+      "declarationSourceUrl": "https://www.whiskas.de/katzenfutter/nassfutter/classic/whiskas-1-geflugel-sauce-85g",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 318.75,
+          "verbatim": "eine 4 kg Katze benötigt 3½ - 4 Portionsbeutel täglich",
+          "sourceUrl": "https://www.whiskas.de/katzenfutter/nassfutter/classic/whiskas-1-geflugel-sauce-85g"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "24 x 85 g (Geflügelauswahl in Sauce)",
+        "netGrams": 2040,
+        "priceEur": 9.99,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/whiskas_katzenfutter/adult/96717",
+        "note": "regular single-delivery price; not the -15%/-20% extra discount"
+      },
+      "claims": [
+        "Enthält alle Nährstoffe, Vitamine und Mineralstoffe, die benötigt werden, um deine Katze glücklich und gesund zu halten",
+        "Deckt 100% des täglichen Bedarfs deiner Katze"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "whiskas.de page has no Alleinfuttermittel sentence; declaredKind from zooplus.de line page. 'anorganischer Stoff: 1.6' recorded as ash. Feeding: 3.5-4 pouches x 85 g = 297.5-340 g, midpoint 318.75. whiskas.de description text mentions four mixed recipes (Lamm, Rind, Ente, Huhn) - may be generic copy; price is for a mixed poultry multipack, which may not be identical to the single 'Geflügel in Sauce' recipe. Ca/P not declared."
+    },
+    {
+      "id": "sheba-selection-huhn-in-sauce",
+      "species": "cat",
+      "format": "wet",
+      "brand": "Sheba",
+      "productName": "Selection Huhn in Sauce",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Fleisch und tierische Nebenerzeugnisse* (u.a. Huhn 4% im Häppchen**), pflanzliche Nebenerzeugnisse, Getreide, Mineralstoffe, Zucker. *93% natürlich. **Häppchen machen 43% des Produkts aus.",
+      "analytical": {
+        "protein": 7.8,
+        "fat": 5,
+        "fiber": 0.2,
+        "ash": 1.7,
+        "moisture": 83,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 82.4,
+        "unit": "kcal/100g",
+        "verbatim": "Brennwert: 70 kcal/85 g."
+      },
+      "declarationSourceUrl": "https://www.sheba.de/nassfutter-katzen/katzenfutter-in-sosse/selection/sheba-selection-huhn-in-sauce-portionsbeutel-85g",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 276.25,
+          "verbatim": "eine 4 kg Katze benötigt 3 - 3½ Portionsbeutel täglich",
+          "sourceUrl": "https://www.sheba.de/nassfutter-katzen/katzenfutter-in-sosse/selection/sheba-selection-huhn-in-sauce-portionsbeutel-85g"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "28 x 85 g (Selection in Sauce mit Huhn)",
+        "netGrams": 2380,
+        "priceEur": 20.49,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/sheba/1982650",
+        "note": "regular single-delivery price; ignores the -30% extra discount and -15% offer"
+      },
+      "claims": [
+        "Alleinfuttermittel für ausgewachsene Katzen",
+        "Hergestellt mit natürlichen und hochwertigen Inhaltsstoffen für eine ausgewogene Ernährung"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Energy declared per 85 g pouch (70 kcal/85 g); value converted to kcal/100g (70/0.85 = 82.4). 'anorganischer Stoff: 1.7' recorded as ash. Another sheba.de URL for the same product reportedly shows different figures (protein 8.5, fat 4.5, moisture 82.0); the page actually read is the one cited. Feeding: 3-3.5 pouches x 85 g = 255-297.5 g, midpoint 276.25. Ca/P not declared."
+    },
+    {
+      "id": "gourmet-gold-feine-pastete-rind",
+      "species": "cat",
+      "format": "wet",
+      "brand": "Gourmet",
+      "productName": "Gold Feine Pastete Rind",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Fleisch und tierische Nebenerzeugnisse (davon 4% Rind), Mineralstoffe, Pflanzliche Nebenerzeugnisse, Zucker",
+      "analytical": {
+        "protein": 10.5,
+        "fat": 7,
+        "fiber": 0.05,
+        "ash": 3.2,
+        "moisture": 77.5,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.purina.de/katze/katzenfutter/produkt-gourmet-gold-feine-pastete-rind",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 255,
+          "verbatim": "Füttere deiner ausgewachsenen Katze (4kg) 3 Dosen pro Tag, die auf mindestens 2 Mahlzeiten verteilt werden sollten.",
+          "sourceUrl": "https://www.purina.de/katze/katzenfutter/produkt-gourmet-gold-feine-pastete-rind"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "12 x 85 g (Rind)",
+        "netGrams": 1020,
+        "priceEur": 7.69,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/gourmet/gourmet_gold/277000",
+        "note": "regular single-delivery price; not the -15% offer"
+      },
+      "claims": [
+        "Katzennassfutter ohne Zusatz künstlicher Farbstoffe, Konservierungsstoffe und Aromen."
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Pastete chosen (no Gold Mousse found on purina.de). purina.de read in a browser (plain fetch blocked). Ingredients listed without commas on page, joined with ', '. Additive list on the page ends with 'Konservierungsstoffe' although the claim says no added artificial preservatives - flag for review. Feeding: 3 cans x 85 g = 255 g. No energy on page; Ca/P not declared. zooplus states 57% meat in composition; manufacturer page gives no total %."
+    },
+    {
+      "id": "mjamjam-delikates-huhn-kuerbis",
+      "species": "cat",
+      "format": "wet",
+      "brand": "MjAMjAM",
+      "productName": "Delikates Huhn an Kürbis",
+      "declaredKind": "Alleinfuttermittel",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "72% Hühnerfleisch, -leber, -herz, -muskelmagen, 22,4% Fleischbrühe, 4% Kürbis, 1% Mineralstoffe, 0,5% Eierschalen (getrocknet), 0,1% Katzenminze (getrocknet)",
+      "analytical": {
+        "protein": 12,
+        "fat": 6,
+        "fiber": 0.4,
+        "ash": 2,
+        "moisture": 78,
+        "calcium": 0.3,
+        "phosphorus": 0.25
+      },
+      "energy": {
+        "value": 105.54,
+        "unit": "kcal/100g",
+        "verbatim": "Brennwert je 100g: 105,54 kcal, 480,24 kJ"
+      },
+      "declarationSourceUrl": "https://www.mjamjam-petfood.de/Delikates-Huhn-an-gedaempftem-Kuerbis-200g/11226",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 300,
+          "verbatim": "200-400 g täglich für eine ausgewachsene Katze mit ca. 3-5 kg Gewicht.",
+          "sourceUrl": "https://www.mjamjam-petfood.de/Delikates-Huhn-an-gedaempftem-Kuerbis-200g/11226"
+        }
+      ],
+      "price": {
+        "retailer": "mjamjam-petfood.de (Herstellershop)",
+        "packLabel": "200 g",
+        "netGrams": 200,
+        "priceEur": 1.79,
+        "url": "https://www.mjamjam-petfood.de/Delikates-Huhn-an-gedaempftem-Kuerbis-200g/11226",
+        "note": "regular one-off price ('Einmalig kaufen'), not the 10% Spar-Abo price; multipack variant prices could not be read"
+      },
+      "claims": [
+        "Hoher Fleischanteil",
+        "Naturbelassen",
+        "Alleinfuttermittel",
+        "Ohne Getreide und Gluten"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Composition is assembled from the page's ingredient list (shown as separate % items, no 'Zusammensetzung' heading). declaredKind is a product badge ('Alleinfuttermittel'), not a full sentence. lifeStage from feeding text 'ausgewachsene Katze'. Feeding row covers 3-5 kg, not 4 kg specifically; gramsPerDay = midpoint 300 of 200-400 g."
+    },
+    {
+      "id": "catz-finefood-classic-gefluegel",
+      "species": "cat",
+      "format": "wet",
+      "brand": "catz finefood",
+      "productName": "Classic N° 3 Geflügel",
+      "declaredKind": "Alleinfutter",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Geflügel 69 % (bestehend aus Muskelfleisch 15 %, Herz, Magen, Leber, Hals und Fett), Geflügelsud 26,85 %, Preiselbeeren 2 %, Kokos 1 %, Mineralstoffe 1 %, Nachtkerzenöl 0,15 %.",
+      "analytical": {
+        "protein": 10.2,
+        "fat": 5.2,
+        "fiber": 0.4,
+        "ash": 2.5,
+        "moisture": null,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 92,
+        "unit": "kcal/100g",
+        "verbatim": "Umsetzbare Energie: 92 kcal / 100g"
+      },
+      "declarationSourceUrl": "https://www.petsnature.de/katzen/catz-finefood/catz-finefood-classic-adult-gefluegel-400g/008906",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 214,
+          "verbatim": "Fütterungsempfehlung: 3,7-7 % des Körpergewichtes der Katze pro Tag. (für 4 kg: 148–280 g, Mitte 214 g)",
+          "sourceUrl": "https://www.petsnature.de/katzen/catz-finefood/catz-finefood-classic-adult-gefluegel-400g/008906"
+        }
+      ],
+      "price": {
+        "retailer": "petsnature.de (Herstellershop von catz finefood)",
+        "packLabel": "6 x 400 g",
+        "netGrams": 2400,
+        "priceEur": 23.34,
+        "url": "https://www.petsnature.de/katzen/catz-finefood/catz-finefood-classic-adult-gefluegel-400g/008906",
+        "note": "regular price"
+      },
+      "claims": [
+        "Getreidefrei",
+        "Ohne Zuckerzusatz",
+        "Ohne Getreide, Zuckerzusatz & künstliche Zusatzstoffe.",
+        "Ohne Getreide, Farb-, Aroma- oder Konservierungsstoffe sowie Zuckerzusätze."
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "catz-finefood.de redirects to petsnature.de (manufacturer's shop). declaredKind is only a product tag ('Alleinfutter'), no full declaration sentence. Moisture, Ca, P not declared. Feeding is given as % of body weight, not grams or packs: for 4 kg this would be 148-280 g/day (midpoint 214 g) - left null because the brief only allows pack x net-weight conversion; caller may decide. The page tag list also shows 'Garnelen oder Shrimps' and 'Fisch' which do not match this composition (likely shop filter tags)."
+    },
+    {
+      "id": "real-nature-wilderness-adult-pure-chicken-wet",
+      "species": "cat",
+      "format": "wet",
+      "brand": "Real Nature",
+      "productName": "Wilderness Adult Pure Chicken",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen ab dem 13. Lebensmonat.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "70% Huhn (aus Herzen, Mägen, Lebern, 5% Fleisch, Hälsen), 28,8% Hühnerbrühe, 1% Mineralstoffe, 0,1% Brennesseln, 0,1% Leinöl.",
+      "analytical": {
+        "protein": 10.5,
+        "fat": 5.1,
+        "fiber": 0.3,
+        "ash": 2.4,
+        "moisture": 80,
+        "calcium": 0.28,
+        "phosphorus": 0.25
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-nassfutter-katze-adult-pure-chicken-huhn-6x200-g-1235606/",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 240,
+          "verbatim": "4 - 5 kg | 220 - 260 g |",
+          "sourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-nassfutter-katze-adult-pure-chicken-huhn-6x200-g-1235606/"
+        }
+      ],
+      "price": {
+        "retailer": "fressnapf.de",
+        "packLabel": "6 x 200 g",
+        "netGrams": 1200,
+        "priceEur": 13.14,
+        "url": "https://www.fressnapf.de/p/real-nature-wilderness-nassfutter-katze-adult-pure-chicken-huhn-6x200-g-1235606/",
+        "note": "regular price"
+      },
+      "claims": [
+        "Mit Hohem Fleischanteil: Mindestens 94% (Inkl. Brühe)",
+        "Getreidefreie Rezeptur",
+        "Ohne Zusatz von Farbstoffen, Antioxidations- und Konservierungsmitteln",
+        "100% natürlich"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Fressnapf is the brand owner (Inverkehrbringer MultiFit Tiernahrungs GmbH), so fressnapf.de counts as manufacturer page. Moisture declared as 'Feuchtegehalt 80%'. Feeding row is for 4-5 kg (no separate 4 kg row); gramsPerDay = midpoint 240. No energy value on page."
+    },
+    {
+      "id": "almo-nature-hfc-complete-huhn-karotte",
+      "species": "cat",
+      "format": "wet",
+      "brand": "Almo Nature",
+      "productName": "HFC Complete Huhn mit Karotte",
+      "declaredKind": "Almo Nature HFC Complete ist ein Alleinfuttermittel für Katzen.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Huhn (55%), Hühnerbrühe (33%), Tapiokastärke, Möhren (4%), Sonnenblumenöl, Mineralien, Vitamine.",
+      "analytical": {
+        "protein": 14.5,
+        "fat": 2.0,
+        "fiber": 0.5,
+        "ash": 1.5,
+        "moisture": 81.5,
+        "calcium": 0.3,
+        "phosphorus": 0.2
+      },
+      "energy": {
+        "value": 774.0,
+        "unit": "kcal/kg",
+        "verbatim": "metabolisierbare Energie | 774.0 kcal/kg"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/almo_nature/complete/1491042",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": null,
+          "verbatim": "Erwachsene Katzen (4 kg): 110 g Nassfutter + 35 g Trockenfutter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/almo_nature/complete/1491042"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 70 g",
+        "netGrams": 420,
+        "priceEur": 6.79,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/almo_nature/complete/1491042",
+        "note": "regular single-delivery price; not the -15% offer"
+      },
+      "claims": [
+        "Schmackhaftes Nassfutter für adulte Katzen",
+        "Kein Getreide enthalten: glutenfrei und gut bekömmlich",
+        "Erlesene Zutaten: in Lebensmittelqualität"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Confirmed declared as complete food (Alleinfuttermittel) on zooplus.de; manufacturer page (almonature.com/en, 5430h) only says 'Complete', '1+ year'; German manufacturer URL returned an empty page. Declaration from zooplus.de (German); composition matches the English manufacturer page. zooplus analytic table is shared across 5 variants in one column - values match the manufacturer's Chicken with Carrots figures (14.5 % protein, 2 % fat, 81.5 % moisture, 774 kcal/kg) cited in search results, but treat as likely, not certain. Feeding is MIXED feeding (wet + dry) only; no wet-only row, so gramsPerDay null. Claims are retailer wording."
+    },
+    {
+      "id": "macs-cat-gefluegel-cranberry",
+      "species": "cat",
+      "format": "wet",
+      "brand": "MAC's",
+      "productName": "Cat Geflügel & Cranberry",
+      "declaredKind": "MAC's Cat ist ein Alleinfuttermittel für Katzen.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Geflügel (95,8%, bestehend aus Geflügelfleisch, Geflügelherz, Geflügelmagen, Geflügelleber, Geflügelfleischbrühe), Cranberrys (3%), Mineralstoffe (1%), Distelöl [raffiniert] (0,2%).",
+      "analytical": {
+        "protein": 11.6,
+        "fat": 5.1,
+        "fiber": 0.3,
+        "ash": 2.2,
+        "moisture": 80.0,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/mac_s/mac_s_dosen/439800",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 155.5,
+          "verbatim": "Adult: Indoor Katze | 4 kg | 140 - 171 g",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/mac_s/mac_s_dosen/439800"
+        },
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 244.5,
+          "verbatim": "Adult: Aktive Katze | 4 kg | 221 - 268 g",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/mac_s/mac_s_dosen/439800"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 400 g",
+        "netGrams": 2400,
+        "priceEur": 12.49,
+        "url": "https://www.zooplus.de/shop/katzen/katzenfutter_dose/mac_s/mac_s_dosen/439800",
+        "note": "regular zooplus price (UVP 14,70 €)"
+      },
+      "claims": [
+        "Frei von Konservierungsmitteln",
+        "Keine künstlichen Farb- und Aromastoffe",
+        "Getreide- & glutenfrei",
+        "Ohne Soja"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "No manufacturer website could be reached (mac-s.de / macs.de did not resolve); data from retailers. zooplus analytic table is shared across 13 variants; values cross-checked against toom.de's single-variant Geflügel & Cranberry page (https://toom.de/p/katzennassfutter-superfood-for-cats-gefluegel-cranberry-adult-400-g/2512738), which gives identical numbers and 'Futtermittelart: Alleinfuttermittel'. Two feeding rows (indoor vs active), midpoints given. Claims are zooplus wording for the whole MAC's Cat line. No energy value; Ca/P not declared."
+    },
+    {
+      "id": "granatapet-delicatessen-ente-gefluegel",
+      "species": "cat",
+      "format": "wet",
+      "brand": "GranataPet",
+      "productName": "DeliCATessen Ente & Geflügel",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Enten- und Geflügelfleisch 72% (Ente 36% bestehend aus Muskelfleisch, Herz, Magen und Geflügel 36% bestehend aus Muskelfleisch, Herz, Magen, Leber), Enten- und Geflügelbrühe 24,9%, Granatapfelkerne 1%, Lachsöl 1%, Mineralstoffe 1%, Grünlippmuschel 0,1%",
+      "analytical": {
+        "protein": 10.2,
+        "fat": 5.2,
+        "fiber": 0.5,
+        "ash": 2.4,
+        "moisture": 80.0,
+        "calcium": 0.32,
+        "phosphorus": 0.28
+      },
+      "energy": {
+        "value": 91,
+        "unit": "kcal/100g",
+        "verbatim": "Energiegehalt (metabolische Energie): 91 kcal (pro 100g)"
+      },
+      "declarationSourceUrl": "https://www.granatapet.de/ente-gefluegel-85-g-197649",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 210,
+          "verbatim": "4 kg | Hauskatze | 210 g / Tag",
+          "sourceUrl": "https://www.granatapet.de/ente-gefluegel-85-g-197649"
+        },
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 280,
+          "verbatim": "4 kg | Freigänger | 280 g / Tag",
+          "sourceUrl": "https://www.granatapet.de/ente-gefluegel-85-g-197649"
+        }
+      ],
+      "price": {
+        "retailer": "granatapet.de (Herstellershop)",
+        "packLabel": "6 x 400 g",
+        "netGrams": 2400,
+        "priceEur": 17.34,
+        "url": "https://www.granatapet.de/ente-gefluegel-400-g-198240",
+        "note": "regular one-off price ('Einmalige Lieferung'), not the 7% Spar-Abo price"
+      },
+      "claims": [
+        "Getreidefrei",
+        "Ohne Zuckerzusatz",
+        "Kein Zucker, keine künstlichen Zusätze",
+        "Hergestellt in Deutschland"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Declaration read on the 85 g variant page of the same recipe; price from the 400 g variant page. Feeding table is loaded by script (read in a browser) and has two rows for 4 kg: Hauskatze 210 g and Freigänger 280 g. Page note: 'Rezepturänderungen vorbehalten. Es gilt die Zusammensetzung, die auf dem Etikett angeführt ist.'"
+    },
+    {
+      "id": "royal-canin-instinctive-gelee",
+      "species": "cat",
+      "format": "wet",
+      "brand": "Royal Canin",
+      "productName": "Instinctive in Gelee",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Katzen ab dem 12. Monat (feine Stückchen in Gelee)",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Fleisch und tierische Nebenerzeugnisse, pflanzliche Eiweißextrakte, Mineralstoffe, pflanzliche Nebenerzeugnisse, Öle und Fette, Hefen",
+      "analytical": {
+        "protein": 11.9,
+        "fat": 4.5,
+        "fiber": 0.6,
+        "ash": 1.6,
+        "moisture": 80.0,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/instinctive-jelly-4074",
+      "feeding": [
+        {
+          "referenceAnimal": "cat 4 kg adult",
+          "gramsPerDay": 212.5,
+          "verbatim": "4 kg | 2 + 1/2 Frischebeutel (Feuchtnahrung)",
+          "sourceUrl": "https://www.royalcanin.com/de/cats/products/retail-products/instinctive-jelly-4074"
+        }
+      ],
+      "price": {
+        "retailer": "royalcanin.com/de (Herstellershop)",
+        "packLabel": "12 x 85 g",
+        "netGrams": 1020,
+        "priceEur": 17.96,
+        "url": "https://www.royalcanin.com/de/cats/products/retail-products/instinctive-jelly-4074",
+        "note": "'Einzelkauf' price, not the 'Regelmäßige Lieferung' subscription price (16,16 €)"
+      },
+      "claims": [],
+      "checkedAt": "2026-10-20",
+      "notes": "The German 'INSTINCTIVE in Soße' (gravy-4059) URL redirected to the Gelee product on royalcanin.com/de, so Jelly was used. Feeding: 2.5 pouches x 85 g = 212.5 g (wet-only column). No energy value displayed; the page's embedded data contains a 981 kcal/kg figure that is not shown to users and could not be tied to this product with certainty - not used. Ca/P not declared. No explicit short claims captured from the page."
+    },
+    {
+      "id": "royal-canin-medium-adult",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Royal Canin",
+      "productName": "Medium Adult",
+      "declaredKind": "Royal Canin Medium Adult Geflügel, Rind und Schwein ist ein Alleinfuttermittel für Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Getrocknetes Geflügelprotein, Weizen, Maismehl, Weizenmehl, Mais, hydrolysierte Tierproteine, Tierfett, getrocknete Rinder- & Schweineproteine, Gerste, Maiskleber, Rübenschnitzel, Mineralstoffe, Sojaöl, Hefeerzeugnisse, Fischöl, Hefen (Quelle für Mannan-Oligosaccharide), Algenöl Schizochytum sp.",
+      "analytical": {
+        "protein": 25.0,
+        "fat": 14.0,
+        "fiber": 1.6,
+        "ash": 6.2,
+        "moisture": null,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/royal_canin_size/medium/1983704",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": null,
+          "verbatim": "(no 10 kg row; table starts at) 11 kg | wenige Aktivität 150 g | normale Aktivität 174 g | erhöhte Aktivität 198 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/royal_canin_size/medium/1983704"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 322,
+          "verbatim": "25 kg | wenige Aktivität 278 g | normale Aktivität 322 g | erhöhte Aktivität 366 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/royal_canin_size/medium/1983704"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "15 kg",
+        "netGrams": 15000,
+        "priceEur": 61.49,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/royal_canin_size/medium/1983704",
+        "note": "regular single-purchase price shown on the page (not the subscription/Abo -15% price, not a Sparpaket); page also shows UVP 82,90 €"
+      },
+      "claims": [
+        "Ausgewogenes Trockenfutter für erwachsene Hunde mittelgroßer Rassen",
+        "liefert hochwertige Proteine",
+        "hochverdauliche Zutaten",
+        "Quelle für Antioxidantien",
+        "angepasste Krokettengröße"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer page royalcanin.com/de returned HTTP 403 to fetching; all data from zooplus.de. Product is declared for medium breeds 11–25 kg from 12 months, and the feeding table starts at 11 kg, so the 10 kg reference animal is outside the product's range: gramsPerDay null (not extrapolated); the 11 kg row is kept verbatim for reference. 'normale Aktivität' column used. No energy, moisture, calcium or phosphorus declared on the page. Claims are from the retailer's product description (manufacturer copy as reproduced by zooplus)."
+    },
+    {
+      "id": "josera-optiness-adult",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Josera",
+      "productName": "Optiness (Lamm)",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "getrocknetes Geflügelprotein; Reis; Gerste; getrocknete Kartoffel; Rübenfaser; Geflügelfett; getrocknetes Lammprotein (4%); hydrolysiertes Geflügelprotein; Mineralstoffe; gemahlene Chicorée-Wurzel (natürliche Quelle von Inulin); getrocknetes Protein der neuseeländischen Grünlippmuschel (Perna canaliculus)",
+      "analytical": {
+        "protein": 22.0,
+        "fat": 12.0,
+        "fiber": 3.0,
+        "ash": 6.6,
+        "moisture": null,
+        "calcium": 1.4,
+        "phosphorus": 0.9
+      },
+      "energy": {
+        "value": 3619,
+        "unit": "kcal/kg",
+        "verbatim": "metabolisierbare Energie pro kg (15,1 MJ); metabolisierbare Energie pro kg (3.619 kcal)"
+      },
+      "declarationSourceUrl": "https://www.josera.de/josera-optiness.html",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 170,
+          "verbatim": "10 kg | Aktivität / Tag bis 1 Std. 150 g | Aktivität / Tag bis 3 Std. 170 g",
+          "sourceUrl": "https://www.josera.de/josera-optiness.html"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 340,
+          "verbatim": "interpolated between: 20 kg | bis 1 Std. 250 g | bis 3 Std. 290 g ; 30 kg | bis 1 Std. 340 g | bis 3 Std. 390 g",
+          "sourceUrl": "https://www.josera.de/josera-optiness.html"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "12,5 kg",
+        "netGrams": 12500,
+        "priceEur": 42.99,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/josera/adult/2317713",
+        "note": "regular single-purchase price shown on the page (not the subscription/Abo -15% price, not a Sparpaket); UVP 49,99 €. Manufacturer shop josera.de lists 12,5 kg at 54,99 €"
+      },
+      "claims": [
+        "Hundefutter für ausgewachsene, normal aktive Hunde mittlerer und großer Rassen",
+        "Besonders große, knusprige Kroketten",
+        "Hilft Schlingen zu reduzieren",
+        "Mit 77 % tierischem Protein am Gesamtprotein",
+        "Reduzierter Proteingehalt zur Entlastung der Organe",
+        "Taurin und L-Carnitin unterstützen die Herzfunktion",
+        "Bewährte proteinarme Rezeptur ohne Mais"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Declaration and feeding table from the manufacturer page (josera.de). Feeding table has only two columns ('bis 1 Std.' and 'bis 3 Std.' activity per day) and no 'normal' label; the 'bis 3 Std.' column was taken as normal activity (≤1 h/day treated as low). If the ≤1 h column is preferred: 10 kg = 150 g, 25 kg = 295 g (interpolated). No 25 kg row: linearly interpolated between the 20 kg and 30 kg rows. Additive levels on josera.de differ slightly from those on zooplus (e.g. Eisen 110 vs 200 mg/kg) — the manufacturer page was used. Moisture not declared."
+    },
+    {
+      "id": "wolfsblut-wide-plain-adult",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Wolfsblut",
+      "productName": "Wide Plain Adult, Pferd & Süßkartoffel",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Pferd 40 % (frisches Pferd 31 %, getrocknetes Pferd 9 %), Süßkartoffeln 18 %, Erbsen, Pferdefett 8 %, Erbsenprotein, Kürbis, Kichererbsen, Pastinaken, Gemüsebrühe, Erbsenfaser, Fenchel, Mineralstoffe, Topinambur, Leinsamen, Thymian, Majoran, Oregano, Petersilie 0,1 %, Salbei, Tomaten, Brennnessel, Weißdorn, Löwenzahn, Ginseng, Mannan-Oligosaccharide (prebiotisch MOS), Fructo-Oligosaccharide (prebiotisch FOS), Hagebutten, Schwarze Johannisbeeren, Brombeeren, Holunderbeeren, Yucca Schidigera Extrakt, Himbeeren, Heidelbeeren 0,01 %, Aroniabeeren 0,01 %.",
+      "analytical": {
+        "protein": 26,
+        "fat": 17,
+        "fiber": 3.5,
+        "ash": 9.5,
+        "moisture": null,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.wolfsblut.com/wolfsblut-adult-wolfsblut-wide-plain-pferdefleisch-und-susskartoffel-trockenfutter-12-5-kg.html",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 135,
+          "verbatim": "interpolated within band: 5 - 15 kg | 80 - 190 g",
+          "sourceUrl": "https://www.wolfsblut.com/wolfsblut-adult-wolfsblut-wide-plain-pferdefleisch-und-susskartoffel-trockenfutter-12-5-kg.html"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 280,
+          "verbatim": "band boundary: 15 - 25 kg | 190 - 280 g ; 25 - 35 kg | 280 - 360 g",
+          "sourceUrl": "https://www.wolfsblut.com/wolfsblut-adult-wolfsblut-wide-plain-pferdefleisch-und-susskartoffel-trockenfutter-12-5-kg.html"
+        }
+      ],
+      "price": {
+        "retailer": "wolfsblut.com (manufacturer shop)",
+        "packLabel": "12,5 kg",
+        "netGrams": 12500,
+        "priceEur": 84.99,
+        "url": "https://www.wolfsblut.com/wolfsblut-adult-wolfsblut-wide-plain-pferdefleisch-und-susskartoffel-trockenfutter-12-5-kg.html",
+        "note": "regulärer Preis; zum Prüfzeitpunkt 20 % reduziert (67,99 €)"
+      },
+      "claims": [
+        "Getreidefrei",
+        "Glutenfrei",
+        "Allergiker geeignet",
+        "Hoher Fleischanteil",
+        "Ohne Mais, Gluten, Soja, Geschmacksverstärkern & künstlichen Zusätzen (ausgenommen Vitamine & Mineralstoffe)",
+        "Mit Tierärzten entwickelt",
+        "Mit Prebiotika aus Topinambur"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "All from the manufacturer page (declaration/feeding read from the page's embedded product data). Feeding table is given in weight BANDS with gram ranges, not single rows; the 10 kg value is linear interpolation inside the 5–15 kg band (80→190 g), the 25 kg value is the shared boundary of the 15–25 and 25–35 kg bands. Single activity level. No calcium, phosphorus, moisture or energy declared. Price is a temporary 20% promotion (regular 84,99 €). Caution: zooplus.de (marketplace seller ePet World) lists a DIFFERENT, newer 'Limited Ingredients' Wide Plain Adult recipe (Pferd 30 %, Süßkartoffeln 29 %, 9 ingredients, feeding 5–15 kg 90–200 g) without analytical constituents — not used."
+    },
+    {
+      "id": "bosch-adult-lamm-reis",
+      "species": "dog",
+      "format": "dry",
+      "brand": "bosch",
+      "productName": "Adult Lamm & Reis",
+      "declaredKind": "bosch Adult Lamm und Reis ist ein Alleinfutter für Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Frisches Geflügel (20%), Reis (16%), Gerste, Hirse (Milo), Mais, Geflügelfett, Lammprotein (getrocknet, 4%), Rübentrockenschnitzel (entzuckert), Proteinhydrolysat, Hirse (gelb), Fischmehl, Erbsen (getrocknet), Fischöl, Hefe (getrocknet, 0,1% Mannanoligosaccharide, 0,06% Beta-Glucane), Natriumchlorid, Kaliumchlorid, Grünlippmuschelextrakt (0,1%), Chicorée (getrocknet).",
+      "analytical": {
+        "protein": 21.5,
+        "fat": 10.5,
+        "fiber": 2.5,
+        "ash": 6.2,
+        "moisture": null,
+        "calcium": 1.1,
+        "phosphorus": 0.9
+      },
+      "energy": {
+        "value": 15.21,
+        "unit": "MJ/kg",
+        "verbatim": "metabolisierbare Energie | 15.21 MJ/kg"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/bosch/bosch_adult/13957",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 155,
+          "verbatim": "10 kg | 155 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/bosch/bosch_adult/13957"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 305,
+          "verbatim": "25 kg | 305 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/bosch/bosch_adult/13957"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "15 kg",
+        "netGrams": 15000,
+        "priceEur": 31.49,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/bosch/bosch_adult/13957",
+        "note": "regular single-purchase price shown on the page (not the subscription/Abo -15% price, not a Sparpaket); UVP 48,99 €"
+      },
+      "claims": [
+        "Weizenfrei: Komplett frei von Weizen und weizenhaltigen Nebenprodukten",
+        "Enthält einen hohen Anteil an leicht verdaulichem Reis (mindestens 16%)",
+        "Immun-Komplex aus Mannanen und Glucanen",
+        "mit Grünlippmuschelextrakt",
+        "Frei von Weizen, Soja, Zucker und künstlichen Zusätzen"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer page (bosch-tiernahrung.de) could not be fetched (404 at the URL tried); data from zooplus.de. Single-column feeding table (no activity levels). Other retailer listings seen in search snippets show slightly different mid-table values (e.g. 15 kg: 205 g vs 210 g here) — the 10 kg row (155 g) matches; 25 kg not cross-checked. Moisture not declared. Lamb is a minor ingredient (4 %); main animal protein is poultry."
+    },
+    {
+      "id": "pedigree-adult-rind-gemuese",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Pedigree",
+      "productName": "Adult mit Rind & Gemüse",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Getreide*, Fleisch und tierische Nebenerzeugnisse (u.a. Rind 4%), Öle und Fette, pflanzliche Nebenerzeugnisse (u.a. getrocknete Rübenschnitzel* 3%), Mineralstoffe, Gemüse* (u.a. Kombination aus getrockneten Erbsen und Karotten 0,7 %, entspricht einer Kombination aus Erbsen und Karotten 4%), Hefe (u.a. Bierhefe 0,4 %). *Natürliche Zutaten.",
+      "analytical": {
+        "protein": 20.0,
+        "fat": 9.0,
+        "fiber": 2.5,
+        "ash": 7.0,
+        "moisture": null,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 3530,
+        "unit": "kcal/kg",
+        "verbatim": "metabolisierbare Energie | 3530.0 kcal/kg"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/pedigree/pedigree_adult/591449",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 157.5,
+          "verbatim": "10 kg | 150 - 165 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/pedigree/pedigree_adult/591449"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 315,
+          "verbatim": "interpolated between: 20 kg | 255 - 280 g ; 30 kg | 345 - 380 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/pedigree/pedigree_adult/591449"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "12 kg",
+        "netGrams": 12000,
+        "priceEur": 33.49,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/pedigree/pedigree_adult/591449",
+        "note": "regular single-purchase price shown on the page (not the subscription/Abo -15% price, not a Sparpaket)"
+      },
+      "claims": [
+        "Frei von künstlichen Aromastoffen",
+        "Ohne Palmöl",
+        "Knusprige Kroketten für die Zahnhygiene",
+        "Omega-6-Fettsäuren für glänzendes Fell & normale Haut"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Data from zooplus.de (manufacturer page not fetched). Feeding table gives ranges and a single activity level; gramsPerDay = midpoint of the range. No 25 kg row: midpoints of the 20 kg (267.5 g) and 30 kg (362.5 g) rows linearly interpolated → 315 g. Composition uses category declaration (Getreide, Fleisch und tierische Nebenerzeugnisse). Moisture, calcium, phosphorus not declared."
+    },
+    {
+      "id": "purina-pro-plan-medium-adult-huhn",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Purina Pro Plan",
+      "productName": "Medium Adult Huhn",
+      "declaredKind": "PURINA PRO PLAN Medium Adult Everyday Nutrition ist ein Alleinfuttermittel für Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Hochwertiges Huhn (20%, einschließlich Rücken und Brust), Weizen, getrocknetes Geflügelprotein, Mais, Reis (9%), tierische Fette, Rübentrockenschnitzel, Digest, Sojamehl, Maisproteinmehl, Weizengluten, Mineralstoffe, Trockenei, Fischöl.",
+      "analytical": {
+        "protein": 26.0,
+        "fat": 16.0,
+        "fiber": 2.0,
+        "ash": 7.5,
+        "moisture": null,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/pro_plan/erchwasen/506905",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 190,
+          "verbatim": "10 kg | weniger als 1 Std Aktivität / Tag 165 g | 1 - 3 Std Aktivität / Tag 190 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/pro_plan/erchwasen/506905"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 355,
+          "verbatim": "25 kg | weniger als 1 Std Aktivität / Tag 310 g | 1 - 3 Std Aktivität / Tag 355 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/pro_plan/erchwasen/506905"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "16 kg",
+        "netGrams": 16000,
+        "priceEur": 68.49,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/pro_plan/erchwasen/506905",
+        "note": "regular single-purchase price shown on the page (not the subscription/Abo -15% price, not a Sparpaket); UVP 69,99 €"
+      },
+      "claims": [
+        "Ohne künstliche Farbstoffe",
+        "Reich an Protein",
+        "Mit Omega-3-Fettsäuren",
+        "Von Tierärzten und Ernährungsexperten entwickelt",
+        "Größenoptimierte Kroketten"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Formerly 'OPTIBALANCE'; for dogs 1–7 years, 10–25 kg. Data from zooplus.de (manufacturer page not fetched). Feeding table has two columns, '<1 Std' and '1–3 Std' activity per day, no 'normal' label; '1 - 3 Std' taken as normal activity (alternative <1 h: 165 g / 310 g). No energy, moisture, calcium or phosphorus declared on the page."
+    },
+    {
+      "id": "hills-science-plan-adult-medium-huhn",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Hill's",
+      "productName": "Science Plan Adult Medium Huhn",
+      "declaredKind": "Hill's Science Plan Medium mit Huhn ist ein Alleinfuttermittel für Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Weizen, Mais, Hühner- und Truthahnmehl (Huhn 9%, Geflügel gesamt 14%), Bruchreis, tierische Fette, Proteinhydrolysat, Maisproteinmehl, Pflanzenöl, Mineralstoffe, Rübentrockenschnitzel, Leinsamen, Haferkleie, Fructooligosaccharide. ActivBiome+ Multi Benefit Präbiotikamischung (0,6 %): Haferkleie, Fructooligosaccharide.",
+      "analytical": {
+        "protein": 21.5,
+        "fat": 14.9,
+        "fiber": 1.5,
+        "ash": 4.6,
+        "moisture": null,
+        "calcium": 0.69,
+        "phosphorus": 0.61
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/hills/adult/4947",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 170,
+          "verbatim": "10 kg | 170 g | 1 Dose (370 g) + 80 g Trockenfutter",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/hills/adult/4947"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 335,
+          "verbatim": "25 kg | 335 g | 1 Dose (370 g) + 245 g Trockenfutter",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/hills/adult/4947"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "14 kg",
+        "netGrams": 14000,
+        "priceEur": 66.49,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/hills/adult/4947",
+        "note": "regular single-purchase price shown on the page (not the subscription/Abo -15% price, not a Sparpaket); UVP 74,99 €; a '-15% Extra-Rabatt' coupon offered on this size was NOT applied"
+      },
+      "claims": [
+        "Ohne künstliche Aromen, Farb- und Konservierungsstoffe",
+        "Von Tierärzten empfohlen",
+        "Natürliche Fasern zur Unterstützung der Verdauung",
+        "Mit Vitaminen und Omega-6-Fettsäuren für Haut & Fell"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Data from zooplus.de (manufacturer page not fetched). Single dry-only column (second column is mixed feeding with wet food, ignored). Moisture and energy not declared on the page."
+    },
+    {
+      "id": "belcando-adult-dinner",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Belcando",
+      "productName": "Adult Dinner",
+      "declaredKind": "Belcando Adult Dinner ist Alleinfuttermittel für ausgewachsene Hunde aller Rassen.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Frisches Geflügelfleisch (30%), Mais, Geflügelprotein aschearm getrocknet (16%), Reis, Kartoffelstärke (14%), Fischmehl aus Meeresfischen (3%), Rübentrockenschnitzel entzuckert, Johannisbrotschrot getrocknet, Traubenkernexpeller (2,5%), Bierhefe getrocknet, Chiasaat, Geflügelleber hydrolysiert, Geflügelfett, Pflanzenöl (Palm, Kokos), Dicalciumphosphat, Natriumchlorid, Kaliumchlorid, Kräuter getrocknet (gesamt: 0,2%, Brennnesselblätter, Enzianwurzel, Tausendgüldenkraut, Kamille, Fenchel, Kümmel, Mistelkraut, Schafgarbenkraut, Brombeerblätter), Yucca schidigera.",
+      "analytical": {
+        "protein": 23.0,
+        "fat": 10.5,
+        "fiber": 3.4,
+        "ash": 7.0,
+        "moisture": 10.0,
+        "calcium": 1.3,
+        "phosphorus": 0.9
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/belcando/belcando_adult/386839",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 150,
+          "verbatim": "10 kg | Normal 150 g | Aktiv 170 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/belcando/belcando_adult/386839"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 300,
+          "verbatim": "25 kg | Normal 300 g | Aktiv 350 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/belcando/belcando_adult/386839"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "12,5 kg",
+        "netGrams": 12500,
+        "priceEur": 43.99,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/belcando/belcando_adult/386839",
+        "note": "regular single-purchase price shown on the page (not the subscription/Abo -15% price, not a Sparpaket); UVP 49,49 €"
+      },
+      "claims": [
+        "Weizenfreie Zusammensetzung",
+        "Ohne Soja und Milchprodukte",
+        "Keine künstlichen Farb-, Geschmacks- und Konservierungsstoffe",
+        "Ohne Tierversuche",
+        "Begrenzter Gehalt an Protein & Fett für normal aktive Hunde",
+        "Yucca schidigera: kann schlechten Kotgeruch mindern"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Data from zooplus.de (manufacturer page not fetched). 'Normal' activity column used. Energy not declared on the page. Retailer copy calls it 'weizenfrei' (it contains maize and rice, so not grain-free)."
+    },
+    {
+      "id": "real-nature-wilderness-adult-true-country",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Real Nature",
+      "productName": "Wilderness Adult True Country",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde ab dem 11.–24. Lebensmonat (je nach Hundegröße)",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "frisches Hühnerfleisch (30%), Hühnerprotein (18%), Kartoffelflocken (12,5%), Erbsen (12,5%), Lachsprotein (10%), Hühnerfett (5%), Hühnerbrühe (4%), Lachsöl (3%), Äpfel (2%), Calciumcarbonat (0,5%), Karotten (0,5%), Chicorée (0,3%, natürliche Quelle für FOS und Inulin), Hefezellwände (0,3%, natürliche Quelle für MOS und Beta-Glucane), Spinat (0,1%), Glucosaminhydrochlorid (aus Fermentation, 0,026%), , Chondroitinsulfat (0,016%), Yucca schidigera (0,01%), Cranberrys (0,01%), Rosmarin (0,01%), Flohsamenschalen (0,01%), Algen (Ascophyllum nodosum, 0,01%), Thymian (0,01%), Pfefferminze (0,01%), Löwenzahn (0,01%), Petersilie (0,01%).",
+      "analytical": {
+        "protein": 37,
+        "fat": 20,
+        "fiber": 3,
+        "ash": 8,
+        "moisture": null,
+        "calcium": 1.8,
+        "phosphorus": 1.1
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-trockenfutter-hund-adult-true-country-huhn-mit-fisch-12-kg-1083998001/",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 135,
+          "verbatim": "10 kg | 135 g",
+          "sourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-trockenfutter-hund-adult-true-country-huhn-mit-fisch-12-kg-1083998001/"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 265,
+          "verbatim": "interpolated between: 20 kg | 225 g ; 30 kg | 305 g",
+          "sourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-trockenfutter-hund-adult-true-country-huhn-mit-fisch-12-kg-1083998001/"
+        }
+      ],
+      "price": {
+        "retailer": "fressnapf.de",
+        "packLabel": "12 kg",
+        "netGrams": 12000,
+        "priceEur": 64.99,
+        "url": "https://www.fressnapf.de/p/real-nature-wilderness-trockenfutter-hund-adult-true-country-huhn-mit-fisch-12-kg-1083998001/",
+        "note": "regular single-purchase price on fressnapf.de (not the 2x12 kg bundle)"
+      },
+      "claims": [
+        "70 % hochwertiges Huhn mit Lachs als tierische Proteinquelle",
+        "Getreidefreie Rezeptur",
+        "Ohne Zusatz von Zucker und Getreide",
+        "Ohne Zusatz von Farbstoffen, Antioxidations- und Konservierungsmitteln"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Fressnapf own brand (Inverkehrbringer MultiFit Tiernahrungs GmbH), so the fressnapf.de page is the brand's own page. Single activity level. No 25 kg row: linearly interpolated between 20 kg and 30 kg rows. Energy and moisture not declared. Composition copied verbatim including the stray ', ,' on the page. The page notes the product description text was AI-generated by Fressnapf; claims taken from the bullet points."
+    },
+    {
+      "id": "wolf-of-wilderness-adult-wild-hills",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Wolf of Wilderness",
+      "productName": "Adult Wild Hills (Ente)",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Hühnerfrischfleisch (25%), Kartoffelflocken, Hühnerprotein (15,4%), Erbsenprotein, Geflügelfett, Entenprotein (4%), Rübenschnitzel (getrocknet), Leinsaat, Apfeltrester (1,8%), Natriumchlorid, Monocalciumphosphat, Waldbeeren (0,3%, getrocknet, gesamt: Cranberries, schwarze Johannisbeeren, Holunderbeeren, Himbeeren), Hefezellwände (0,2%, eine Quelle von Beta-Glucanen und Mannan-Oligosacchariden), Lachsöl, Sonnenblumenöl, Chicorée-Inulin, Wildkräuter (getrocknet; Schafgarbe 0,03%, Löwenzahnkraut 0,03%, Löwenzahnwurzel 0,03%, Kamille 0,03%, Brennnessel 0,03%, Wegerichblätter 0,03%, Johanniskraut 0,03%).",
+      "analytical": {
+        "protein": 26.0,
+        "fat": 16.0,
+        "fiber": 2.5,
+        "ash": 7.5,
+        "moisture": null,
+        "calcium": 1.3,
+        "phosphorus": 0.9
+      },
+      "energy": {
+        "value": 3635,
+        "unit": "kcal/kg",
+        "verbatim": "Energie je kg NEU: ME (FEDIAF) 15,21 MJ / 3.635 kcal."
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/hundefutter_wolf_of_wilderness/wolf_of_wilderness_trockenfutter/464831",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 170,
+          "verbatim": "Neue Rezeptur: 10 kg | geringe Aktivität 145 g | mittlere Aktivität 170 g | hohe Aktivität 200 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/hundefutter_wolf_of_wilderness/wolf_of_wilderness_trockenfutter/464831"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 337.5,
+          "verbatim": "interpolated between: 20 kg | 245 g | 285 g | 340 g ; 30 kg | 335 g | 390 g | 460 g (mittlere Aktivität column)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/hundefutter_wolf_of_wilderness/wolf_of_wilderness_trockenfutter/464831"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "12 kg (NEU)",
+        "netGrams": 12000,
+        "priceEur": 49.99,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_trockenfutter/hundefutter_wolf_of_wilderness/wolf_of_wilderness_trockenfutter/464831",
+        "note": "regular single-purchase price shown on the page (not the subscription/Abo -15% price, not a Sparpaket); a '-20% Extra-Rabatt' coupon offered on this size was NOT applied"
+      },
+      "claims": [
+        "100 % getreidefreie Rezeptur",
+        "ohne künstliche Konservierungsmittel, Farb- und Geschmacksstoffe",
+        "Frischfleisch ergänzt um wertvolle Proteine",
+        "veredelt mit Waldbeeren, Wurzeln und Wildkräutern"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "zooplus own brand; zooplus.de is the brand's own shop. The page is mid recipe change and lists several declarations (Mini, 'Adult (Neu)', Ente Sensitiv 'Rough Storms'); the 'Zusammensetzung Adult (Neu)' block and the 'Neue Rezeptur' feeding table were used, matching the 12 kg NEU pack priced. The analytical table is shown once for all variants on the page (incl. 12 kg NEU) — assumed to apply to the new recipe; treat as moderately certain. Despite the 'Ente' name, chicken is the main meat (duck protein 4 %). 'mittlere Aktivität' column used; no 25 kg row → linear interpolation between 20 and 30 kg. Moisture not declared."
+    },
+    {
+      "id": "platinum-adult-chicken",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Platinum",
+      "productName": "Adult Chicken",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Frisches Hähnchenfleisch 70 %, Bruchreis, Mais (gentechnikfrei), Bierhefe*, Apfelpulpe*, Lachsöl** (Omega-3), Yucca-Extrakt, Leinsamenöl** (Omega-3), Olivenöl**, Grünlippmuschel-Extrakt, Karotten*, Tomaten*, Aufrechte Studentenblume*, Löwenzahn*, Brokkoli*, grüner Tee*, Kamille*, Oregano*, Mariendistelsamen*, Cranberrysamen*, Algen*, Kaliumchlorid. (*getrocknet, **kaltgepresst, nativ)",
+      "analytical": {
+        "protein": 26.0,
+        "fat": 16.0,
+        "fiber": 2.0,
+        "ash": 7.9,
+        "moisture": 19.0,
+        "calcium": 1.5,
+        "phosphorus": 1.0
+      },
+      "energy": {
+        "value": 364.4,
+        "unit": "kcal/100g",
+        "verbatim": "Kalorien pro 100 g 364,4 kcal"
+      },
+      "declarationSourceUrl": "https://www.platinum.com/Hund/Produkte-Hundefutter/Trockenfutter/Adult-Chicken.html",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 150,
+          "verbatim": "band boundary: 7,5 - 10,0 | 115 - 150 ; 10,0 - 12,5 | 150 - 165",
+          "sourceUrl": "https://www.platinum.com/Hund/Produkte-Hundefutter/Trockenfutter/Adult-Chicken.html"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 300,
+          "verbatim": "band boundary: 20,0 - 25,0 | 250 - 300 ; 25,0 - 30,0 | 300 - 325",
+          "sourceUrl": "https://www.platinum.com/Hund/Produkte-Hundefutter/Trockenfutter/Adult-Chicken.html"
+        }
+      ],
+      "price": {
+        "retailer": "platinum.com (manufacturer shop)",
+        "packLabel": "5 kg",
+        "netGrams": 5000,
+        "priceEur": 33.96,
+        "url": "https://www.platinum.com/Hund/Produkte-Hundefutter/Trockenfutter/Adult-Chicken.html",
+        "note": "regular single-purchase price on the manufacturer shop (not the 2x/3x multi-pack prices)"
+      },
+      "claims": ["Fleischsaftgarung", "Frisches Hähnchenfleisch 70 %"],
+      "checkedAt": "2026-10-20",
+      "notes": "Platinum is sold mainly direct; all data from the manufacturer page. Feeding table uses weight bands with gram ranges; 10 kg and 25 kg fall exactly on band boundaries where adjacent bands agree (150 g, 300 g). Single activity level; page says to start with the lower value. NOTE: semi-moist kibble with declared moisture 19 % ('Feuchtigkeit (natürlicher Gehalt) 19,0 %') vs ~8–10 % for typical dry food — protein/fat % as-fed are not directly comparable with other products without dry-matter conversion (not done here, per brief)."
+    },
+    {
+      "id": "happy-dog-supreme-sensible-toscana",
+      "species": "dog",
+      "format": "dry",
+      "brand": "Happy Dog",
+      "productName": "Supreme Sensible Toscana",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde ab 11 kg.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Entenprotein* (23 %), Maismehl, Mais, Reis, Lachsmehl (5%), Öle und Fette, hydrolisiertes Protein, Rübenmelasseschnitzel* (entzuckert), Apfeltrester* (0,8%), Kaliumchlorid, Hefe*, Natriumchlorid, Meeresalgen* (0,18%), Leinsamen (0,15%), Trockenvollei, Muschelfleisch* (0,05%), Holunderfrüchte, Mariendistel, Hefe* (extrahiert), Artischocke (0,015 %), Löwenzahn, Ingwer (0,015 %), Birkenblätter, Brennnessel, Kamille, Rosmarin, Salbei, Thymian, Bohnenkraut, Majoran, Koriander, Süßholzwurzel, Anisfrüchte, Basilikum, Fenchelfrüchte, Holunderblüten, Lavendelblüten (Trockenkräuter gesamt: 0,26 %); *) getrocknet.",
+      "analytical": {
+        "protein": 24.0,
+        "fat": 7.5,
+        "fiber": 2.5,
+        "ash": 7.0,
+        "moisture": 9,
+        "calcium": 1.5,
+        "phosphorus": 0.95
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.fressnapf.de/p/happy-dog-sensible-trockenfutter-hund-adult-toscana-4-kg-1001736002/",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": null,
+          "verbatim": "(no 10 kg row; 'Tagesbedarf an Futter' table starts at) 11 kg | 170 g",
+          "sourceUrl": "https://www.fressnapf.de/p/happy-dog-sensible-trockenfutter-hund-adult-toscana-4-kg-1001736002/"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 315,
+          "verbatim": "Tagesbedarf an Futter: 25 kg | 315 g",
+          "sourceUrl": "https://www.fressnapf.de/p/happy-dog-sensible-trockenfutter-hund-adult-toscana-4-kg-1001736002/"
+        }
+      ],
+      "price": {
+        "retailer": "fressnapf.de",
+        "packLabel": "12,5 kg",
+        "netGrams": 12500,
+        "priceEur": 43.49,
+        "url": "https://www.fressnapf.de/p/happy-dog-sensible-trockenfutter-hund-adult-toscana-4-kg-1001736002/",
+        "note": "regular single-purchase price on fressnapf.de (not the 2x12,5 kg bundle)"
+      },
+      "claims": [
+        "Weizenfreie Rezeptur",
+        "Mit dem Natural Life Concept",
+        "Nur 7,5% Fett: Ideal für kastrierte Hunde",
+        "Made in Germany"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer page not found via search; data from fressnapf.de. Declared for dogs from 11 kg, table starts at 11 kg → 10 kg reference animal outside the product's range, gramsPerDay null (11 kg row kept verbatim). The page shows a second table titled 'Erhöhter Tagesbedarf' whose amounts are LOWER than the first (25 kg: 280 g) — contradictory label, so the first table 'Tagesbedarf an Futter' was used as normal activity. Moisture from 'Feuchtegehalt 9%'. Not grain-free (maize, rice). Energy not declared."
+    },
+    {
+      "id": "rinti-kennerfleisch-rind",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Rinti",
+      "productName": "Kennerfleisch Rind",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "70% Fleisch und tierische Nebenerzeugnisse* (u.a. 35% Rind), Mineralstoffe, Flachsöl (0,2%), Rübenfaser (0,2%), Rote Bete (getrocknet). *Die Bezeichnung „Tierische Nebenerzeugnisse“ ist eine EU-Vorgabe. RINTI verwendet dazu Innereien wie Leber, Lunge, Herz, Euter, Nieren, Pansen, Magen und anderes mehr, die nicht für den menschlichen Verzehr benötigt werden oder bestimmt sind. Diese Innereien stammen von Tieren, die von Veterinären untersucht und freigegeben worden sind.",
+      "analytical": {
+        "protein": 11,
+        "fat": 8,
+        "fiber": 0.6,
+        "ash": 2.5,
+        "moisture": 77,
+        "calcium": 0.3,
+        "phosphorus": 0.25
+      },
+      "energy": {
+        "value": 115,
+        "unit": "kcal/100g",
+        "verbatim": "Kaloriengehalt / 100g: 115 kcal"
+      },
+      "declarationSourceUrl": "https://www.rinti.de/produkt/kennerfleisch-dose-rind-800g",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 466.7,
+          "verbatim": "Gewicht des Hundes: 8 kg: ca. 400g / Tag; 20 kg: ca. 800g / Tag (no 10 kg row; linearly interpolated between the 8 kg and 20 kg rows)",
+          "sourceUrl": "https://www.rinti.de/produkt/kennerfleisch-dose-rind-800g"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 925,
+          "verbatim": "Gewicht des Hundes: 20 kg: ca. 800g / Tag; 52 kg: ca. 1600g / Tag (no 25 kg row; linearly interpolated between the 20 kg and 52 kg rows)",
+          "sourceUrl": "https://www.rinti.de/produkt/kennerfleisch-dose-rind-800g"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 800 g",
+        "netGrams": 4800,
+        "priceEur": 16.69,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/rinti/rinti_dose/7442",
+        "note": "regular price (UVP 16,74 € shown), not a subscription/first-order discount; variant Rind"
+      },
+      "claims": [
+        "Getreidefrei",
+        "Hoher Fleischanteil: mit 70% Fleisch und Innereien",
+        "ohne Kohlenhydrate",
+        "ohne Soja, ohne Farb- und Konservierungsstoffe"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Rinti Kennerfleisch used instead of Rinti Gold (allowed alternative; Gold is sold mainly as small 100/185 g trays). Declaration and feeding from the manufacturer page. The manufacturer table rows are '8 kg / 20 kg / 52 kg'; zooplus prints the same rows as 'bis 8 kg / bis 20 kg / bis 52 kg', so they may be upper bounds of weight bands rather than points; 10/25 kg values are linear interpolations and therefore approximate. zooplus shows an older composition for Rind ('Rind (35%), Lunge, Muskelfleisch, Schwarten, Niere, Mineralstoffe, Flachsöl (0,2%), Rübenfaser (0,2%)') and no energy value; the manufacturer version is used."
+    },
+    {
+      "id": "pedigree-adult-classic-rind",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Pedigree",
+      "productName": "Adult Classic mit Rind",
+      "declaredKind": "Pedigree Adult Classic ist ein Alleinfuttermittel für Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Fleisch und tierische Nebenerzeugnisse* (darunter 4% Rindfleisch und 4% Leber), Getreide, pflanzliche Eiweißextrakte, Mineralstoffe, pflanzliche Nebenerzeugnisse (darunter 0,5% getrocknete Rübenschnitzel). *95% natürlich",
+      "analytical": {
+        "protein": 7.2,
+        "fat": 3.8,
+        "fiber": 0.3,
+        "ash": 2,
+        "moisture": 82.5,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 77,
+        "unit": "kcal/100g",
+        "verbatim": "metabolisierbare Energie 77 kcal/100 g (zooplus variant 'mit Rind')"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/pedigree/pedigree_nassfutter_dose/607794",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 750,
+          "verbatim": "mit Rind: Gewicht des Hundes 10 kg | Tagesmenge in g 700 - 800 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/pedigree/pedigree_nassfutter_dose/607794"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 1450,
+          "verbatim": "mit Rind: 20 kg | 1200 - 1300 g; 30 kg | 1600 - 1700 g (no 25 kg row; linearly interpolated -> 1400 - 1500 g)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/pedigree/pedigree_nassfutter_dose/607794"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "24 x 400 g",
+        "netGrams": 9600,
+        "priceEur": 27.99,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/pedigree/pedigree_nassfutter_dose/607794",
+        "note": "regular single-delivery price (Einzellieferung), not the -15% subscription price; variant mit Rind"
+      },
+      "claims": [
+        "Enthält keine künstlichen Farb- und Aromastoffe oder Geschmacksverstärker",
+        "Mit natürlichen Ballaststoffen"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "pedigree.de no longer lists this can (its wet range shows Cuisine/3 Sorten/1,2 kg lines), so zooplus is the source. The 'mit Rind' analytical values (no Ca/P declared) come from zooplus's per-variant data on the same page; the default visible table shows the 'mit Huhn' variant (8.0/5.5/0.3/2.0/81.8, Ca 0.3, P 0.25, 88 kcal/100 g). CONFLICT: the same page also prints a generic can table for Adult Classic: '10 kg | 1 1/2 [Dosen à 400 g]' (= 600 g) and '20 kg | 2 1/2' (1000 g), '30 kg | 3 1/2' (1400 g) -> 25 kg interpolated 1200 g. The flavour-specific 'mit Rind' gram table was used; it gives ~25% more food than the generic can table."
+    },
+    {
+      "id": "animonda-grancarno-adult-rind",
+      "species": "dog",
+      "format": "wet",
+      "brand": "animonda",
+      "productName": "GranCarno Adult Rind",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "68 % Rind (Herz, Fleisch, Lunge, Leber, Euter, Niere), Mineralstoffe, Distelöl.",
+      "analytical": {
+        "protein": 10,
+        "fat": 9,
+        "fiber": 0.5,
+        "ash": 2,
+        "moisture": 76,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 5.0,
+        "unit": "MJ/kg",
+        "verbatim": "Umsetzbare Energie pro 100g in MJ: 0,50"
+      },
+      "declarationSourceUrl": "https://animonda.de/product/grancarno-adult-rind/82735-0",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 460,
+          "verbatim": "10 kg | 425 - 495 g",
+          "sourceUrl": "https://animonda.de/product/grancarno-adult-rind/82735-0"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 912.5,
+          "verbatim": "20 kg | 720 - 830 g; 30 kg | 975 - 1125 g (no 25 kg row; linearly interpolated -> 847.5 - 977.5 g)",
+          "sourceUrl": "https://animonda.de/product/grancarno-adult-rind/82735-0"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 800 g",
+        "netGrams": 4800,
+        "priceEur": 13.19,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/animonda/grancarno/10344",
+        "note": "regular price, not a subscription/first-order discount; variant Rind"
+      },
+      "claims": [
+        "100 % frische Zutaten",
+        "Hoher Gehalt an tierischen Proteinen",
+        "Ohne Zusatz von Getreide & Zucker"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer declares energy per 100 g in MJ (0,50); stored as 5.0 MJ/kg (unit rescale only). Manufacturer page describes it for dogs 'von 1-6 Jahren'. Manufacturer shop sells 6 x 400 g at 10,50 € (9,49 € on 10% promotion); the zooplus 6 x 800 g price is used as the common pack."
+    },
+    {
+      "id": "rocco-classic-rind-pur",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Rocco",
+      "productName": "Classic Rind pur",
+      "declaredKind": "Rocco Classic ist ein Alleinfuttermittel für ausgewachsene Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "70 % bestehend aus Rinderherzen, Rinderleber, Rindfleisch, Rinderlunge, Rinderpansen, 28,8 % Brühe, 1 % Mineralstoffe, 0,2 % Leinöl.",
+      "analytical": {
+        "protein": 10.8,
+        "fat": 9.5,
+        "fiber": 0.4,
+        "ash": 2.4,
+        "moisture": 75.0,
+        "calcium": 0.23,
+        "phosphorus": null
+      },
+      "energy": {
+        "value": 131,
+        "unit": "kcal/100g",
+        "verbatim": "Energie je 100 g: ME (FEDIAF, 2021) 549 kJ / 131 kcal"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/hundefutter_rocco/rocco_classic/442994",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 480,
+          "verbatim": "Rind pur, Rind mit Wild, Rind mit Rentier, Rind mit Kalbsherzen, Rind mit Lamm: 10 kg | 405 - 555 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/hundefutter_rocco/rocco_classic/442994"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 955,
+          "verbatim": "20 kg | 685 - 935 g; 30 kg | 930 - 1270 g (no 25 kg row; linearly interpolated -> 807.5 - 1102.5 g)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/hundefutter_rocco/rocco_classic/442994"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "12 x 400 g",
+        "netGrams": 4800,
+        "priceEur": 15.99,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/hundefutter_rocco/rocco_classic/442994",
+        "note": "regular single-delivery price (Einzellieferung), not the -15% subscription price; variant Rind pur"
+      },
+      "claims": [
+        "70% Fleisch und Innereien aus frischen Zutaten",
+        "Getreidefreie Rezeptur mit Rind",
+        "Ohne künstliche Zusätze und Füllstoffe"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "zooplus own brand, so the zooplus page is the brand page. Energy conflict on the same page: the composition text says 131 kcal/100 g (ME FEDIAF 2021) for Rind pur, while the analytical table says 'metabolisierbare Energie 119.0 kcal'; the composition-text value is used. Phosphorus not declared."
+    },
+    {
+      "id": "real-nature-wilderness-adult-pure-beef",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Real Nature",
+      "productName": "Wilderness Adult Pure Beef",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde ab dem 11.–24. Lebensmonat.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "68% Rind (aus Herzen, Lungen, Lebern, 6% Fleisch), 27% Rinderbrühe, 3% Cranberries, 1% Mineralstoffe, 0,3% Leinöl, 0,2% Luzerne, 0,09% Bockshornklee, 0,08% Fenchelsaat, 0,05% Thymian, 0,04% Yucca-schidigera-Wurzel, 0,04% Anis, 0,04% Petersilie, 0,04% Oregano, 0,03% Liebstöckel, 0,03% Sellerie, 0,02% Löwenzahn, 0,02% Pfefferminze, 0,02% Weißdorn.",
+      "analytical": {
+        "protein": 9.5,
+        "fat": 6.5,
+        "fiber": 0.6,
+        "ash": 2,
+        "moisture": 77.5,
+        "calcium": 0.3,
+        "phosphorus": 0.21
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-nassfutter-hund-adult-pure-beef-rind-6x400-g-1223665/",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 530,
+          "verbatim": "10 kg | 530 g",
+          "sourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-nassfutter-hund-adult-pure-beef-rind-6x400-g-1223665/"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": null,
+          "verbatim": "table ends at '20 kg | 890 g' (rows: 2, 5, 7,5, 10, 15, 20 kg)",
+          "sourceUrl": "https://www.fressnapf.de/p/real-nature-wilderness-nassfutter-hund-adult-pure-beef-rind-6x400-g-1223665/"
+        }
+      ],
+      "price": {
+        "retailer": "fressnapf.de",
+        "packLabel": "6 x 400 g",
+        "netGrams": 2400,
+        "priceEur": 17.94,
+        "url": "https://www.fressnapf.de/p/real-nature-wilderness-nassfutter-hund-adult-pure-beef-rind-6x400-g-1223665/",
+        "note": "regular price, not a subscription/first-order discount"
+      },
+      "claims": [
+        "Getreidefreie Rezeptur",
+        "Ohne den Zusatz von Zucker",
+        "Ohne den Zusatz von Konservierungsmitteln",
+        "Ohne den Zusatz von künstlichen Farb- und Aromastoffen"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Fressnapf own brand, so the Fressnapf page is the brand page. 25 kg: the feeding table stops at 20 kg, no neighbouring row above -> null (no extrapolation). Page text is inconsistent: the description speaks of 'Lachs, Rentierbrühe, Rentier und Ente' and '95%' meat (copy from another flavour), while the declaration is beef (68% Rind + 27% Rinderbrühe); the 95% claim was not recorded. Declared kind wording 'ab dem 11.–24. Lebensmonat' is copied verbatim; read as adult. No energy value declared."
+    },
+    {
+      "id": "wolfsblut-dark-forest-adult-wet",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Wolfsblut",
+      "productName": "Dark Forest, Wild & Süßkartoffel",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Wild 59 %, Brühe, Lamm 6 %, Süßkartoffeln 3 %, Kichererbsen, Mineralstoffe, Tomaten, Topinambur, Fruchtmischung (Himbeeren, Holunderbeeren, Schwarze Johannisbeeren, Heidelbeeren, Cranberries, Aroniabeeren), Yucca-Extrakt, Kräutermischung (Anissamen, Bockshornklee, Pfefferminze, Petersilie, Oregano, Thymian, Brennnessel, Löwenzahn, Weißdorn, Ginseng).",
+      "analytical": {
+        "protein": 10.2,
+        "fat": 6.5,
+        "fiber": 0.8,
+        "ash": 2.5,
+        "moisture": 78,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.wolfsblut.com/wolfsblut-adult-dark-forest-wild-mit-susskartoffeln-nassfutter-6-x-395-g.html",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": null,
+          "verbatim": "5 - 10 kg | 310 - 710 g; 10 - 20 kg | 520 - 1190 g",
+          "sourceUrl": "https://www.wolfsblut.com/wolfsblut-adult-dark-forest-wild-mit-susskartoffeln-nassfutter-6-x-395-g.html"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 1240,
+          "verbatim": "20 - 30 kg | 870 - 1610 g",
+          "sourceUrl": "https://www.wolfsblut.com/wolfsblut-adult-dark-forest-wild-mit-susskartoffeln-nassfutter-6-x-395-g.html"
+        }
+      ],
+      "price": {
+        "retailer": "wolfsblut.com",
+        "packLabel": "6 x 395 g",
+        "netGrams": 2370,
+        "priceEur": 17.89,
+        "url": "https://www.wolfsblut.com/wolfsblut-adult-dark-forest-wild-mit-susskartoffeln-nassfutter-6-x-395-g.html",
+        "note": "regular price 17,89 €; the page also shows 14,31 € ('20 % sparen'), which is the Futterabo/promotional price and was not used"
+      },
+      "claims": [
+        "Getreidefrei",
+        "Glutenfrei",
+        "Hoher Fleischanteil",
+        "Made in Germany",
+        "Ohne künstliche Zusatzstoffe"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Declaration and table read from the page's embedded product data (tabs load via script). The feeding table uses overlapping weight BANDS with wide gram ranges (they mix weight and activity), so a 10 kg value is ambiguous (boundary of two rows: 710 g vs 520 g) -> null. 25 kg is the centre of the '20 - 30 kg' row; the midpoint of that row's range (1240 g) is given, but it is coarse. No energy value declared. Ca/P not declared."
+    },
+    {
+      "id": "terra-canis-classic-rind",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Terra Canis",
+      "productName": "Classic Rind mit Karotte, Apfel & Naturreis",
+      "declaredKind": "Terra Canis Classic ist ein Alleinfuttermittel für Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Rind (46%, bestehend aus Rinderherz 27%, Rinderleber 6%, Rinderlunge 9%, Muskelfleisch vom Rind 4%), Fond (15%), Karotte (11%), Zucchini (11%), Apfel (8%), Naturreis (5%), Aprikose (3%), Mineralstoffe (1%)*, Rapsöl, Petersilie*, Basilikum*, Fenchelsamen*, Hagebuttenschale*, Mineralerde*, Bierhefe*, Austernschale*, Spirulina*. * = getrocknet.",
+      "analytical": {
+        "protein": 9.0,
+        "fat": 5.7,
+        "fiber": 0.6,
+        "ash": 1.2,
+        "moisture": 76.5,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/terra_canis/terracanis_menue/13054",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 450,
+          "verbatim": "10 kg | 400 - 500 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/terra_canis/terracanis_menue/13054"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 975,
+          "verbatim": "20 kg | 700 - 900 g; 30 kg | 1000 - 1300 g (no 25 kg row; linearly interpolated -> 850 - 1100 g)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/terra_canis/terracanis_menue/13054"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 400 g",
+        "netGrams": 2400,
+        "priceEur": 19.99,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/terra_canis/terracanis_menue/13054",
+        "note": "regular price, not a subscription/first-order discount; variant Rind mit Karotte, Apfel & Naturreis"
+      },
+      "claims": [
+        "Glutenfrei & getreidearm",
+        "100% Lebensmittelqualität",
+        "Garantiert ohne: Tier- und Knochenmehl, minderwertige Nebenerzeugnisse, Füllstoffe, Schlachtabfälle, Farb-, Konservierungs-, Lock-, Aromastoffe, künstliche Antioxidantien sowie jegliche synthetische Zusätze und Zucker"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer site terra-canis.de returned 403 (Access Denied) to fetching, so all data is from zooplus. lifeStage 'adult' from the zooplus overview line 'Premium-Nassfutter für ausgewachsene Hunde aller Rassen'; the declared-kind sentence itself says only 'für Hunde'. Claims are as printed on the zooplus page. No energy, Ca or P declared."
+    },
+    {
+      "id": "belcando-rind-kartoffel-erbsen",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Belcando",
+      "productName": "Rind mit Kartoffel & Erbsen",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Rindfleisch, -herz, -lunge, -pansen, -leber, -niere, -euter (63 %); Fleischbrühe vom Rind (26,5 %); Kartoffeln (4 %); Erbsen (4 %); Chiasaat (1 %); Eierschalen*¹ (0,5 %); Mineralstoffe (0,5 %); Distelöl (0,5 %) *¹getrocknet",
+      "analytical": {
+        "protein": 11,
+        "fat": 6,
+        "fiber": 0.4,
+        "ash": 2,
+        "moisture": 79,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://www.belcando.de/belcando-rind-mit-kartoffel-erbsen-6-x-400-g",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 400,
+          "verbatim": "Optimales Gewicht (kg) | Nassfutter g/Tag: 5-10 | 200-400; 10-20 | 400-800 (10 kg is the shared row boundary = 400 g)",
+          "sourceUrl": "https://www.belcando.de/belcando-rind-mit-kartoffel-erbsen-6-x-400-g"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 933.3,
+          "verbatim": "20-35 | 800-1200 (weight band mapped linearly onto gram band: 800 + (25-20)/15 x 400)",
+          "sourceUrl": "https://www.belcando.de/belcando-rind-mit-kartoffel-erbsen-6-x-400-g"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 800 g",
+        "netGrams": 4800,
+        "priceEur": 19.79,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/belcando/super_premium/387628",
+        "note": "regular price, not a subscription/first-order discount; variant Rind mit Kartoffel & Erbsen"
+      },
+      "claims": [
+        "Rezeptur ohne Getreide",
+        "Stückige Qualität, kein Formfleisch",
+        "Enthält wertvolle Chiasaat",
+        "Distelöl für Haut und Fell"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Manufacturer table gives weight bands with gram bands for 'ausgewachsene, normal aktive Hunde'; values derived by mapping the band linearly (approximate). zooplus shows an older composition (no Eierschalen, Mineralstoffe 1 %); the manufacturer version is used. Manufacturer shop: 6 x 400 g 15,54 €. No energy, Ca or P declared."
+    },
+    {
+      "id": "happy-dog-sensible-pure-germany-rind",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Happy Dog",
+      "productName": "Sensible Pure Germany Rind",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Fleisch und tierische Nebenerzeugnisse (70 % - Rinderherzen, Rinderleber, Rindfleisch, Rinderlunge, Rinderpansen)**, Mineralstoffe. **) Herstellungsbedingt können Spuren anderer Proteine enthalten sein. (Rezeptur enthält 29,8 % Trinkwasser)",
+      "analytical": {
+        "protein": 12.0,
+        "fat": 7.0,
+        "fiber": 0.5,
+        "ash": 2.0,
+        "moisture": 76,
+        "calcium": null,
+        "phosphorus": null
+      },
+      "energy": null,
+      "declarationSourceUrl": "https://happydog.de/hundefutter/nassfutter/happy-dog-sensible-pure-germany-61068b6",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 455,
+          "verbatim": "Idealgewicht Hund in kg | Bedarf bei Alleinfütterung in g/24h: 10 | 455",
+          "sourceUrl": "https://happydog.de/hundefutter/nassfutter/happy-dog-sensible-pure-germany-61068b6"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 900,
+          "verbatim": "20 | 770; 30 | 1030 (no 25 kg row; linearly interpolated)",
+          "sourceUrl": "https://happydog.de/hundefutter/nassfutter/happy-dog-sensible-pure-germany-61068b6"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 800 g",
+        "netGrams": 4800,
+        "priceEur": 24.99,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/happy_dog/fleisch_pur/299525",
+        "note": "regular price, not a subscription/first-order discount; variant Germany (Rind Pur)"
+      },
+      "claims": [
+        "Getreidefreie Rezeptur",
+        "Hoher Proteingehalt",
+        "100% tierisches Protein vom Rind"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "'Happy Dog Pur' line = Sensible Pure (Fleisch pur) on zooplus. Manufacturer and zooplus agree on declaration and table. Manufacturer shop sells 6 x 200 g at 12,81 €. No energy, Ca or P declared."
+    },
+    {
+      "id": "lukullus-naturkost-adult-kaninchen-wild",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Lukullus",
+      "productName": "Naturkost Adult Kaninchen & Wild",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde jeder Rasse.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "33 % bestehend aus Kaninchenherzen, Kaninchenleber, 33 % bestehend aus Wildherzen, Wildfleisch, Wildleber, Wildlunge, Wildpansen, 26,5 % Fleischbrühe, 3 % Äpfel, 3 % Reis, 1 % Mineralstoffe, 0,5 % Leinöl.",
+      "analytical": {
+        "protein": 10.1,
+        "fat": 6.8,
+        "fiber": 0.6,
+        "ash": 2.4,
+        "moisture": 76.0,
+        "calcium": 0.23,
+        "phosphorus": 0.18
+      },
+      "energy": {
+        "value": 113,
+        "unit": "kcal/100g",
+        "verbatim": "Energie je 100 g: ME (FEDIAF, 2016) 472 kJ / 113 kcal"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/lukullus_hundefutter/lukullus_classic_adult/744004",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 590,
+          "verbatim": "Kaninchen & Wild: 10 kg | 500 g - 680 g",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/lukullus_hundefutter/lukullus_classic_adult/744004"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 1165,
+          "verbatim": "20 kg | 835 g - 1145 g; 30 kg | 1130 g - 1550 g (no 25 kg row; linearly interpolated -> 982.5 - 1347.5 g)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/lukullus_hundefutter/lukullus_classic_adult/744004"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 800 g",
+        "netGrams": 4800,
+        "priceEur": 17.49,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/lukullus_hundefutter/lukullus_classic_adult/744004",
+        "note": "regular price, not a subscription/first-order discount; variant Kaninchen & Wild"
+      },
+      "claims": [
+        "Natürlich ohne chemische Zusätze und Konservierungsstoffe zubereitet",
+        "Mit viel Liebe in Deutschland hergestellt"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "zooplus own brand, so the zooplus page is the brand page. The claims are from the Lukullus Sparpaket page (same brand range): https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/lukullus_hundefutter/sparpakete/87633. 'Rind' is not a flavour on the Classic Adult page; Kaninchen & Wild was chosen."
+    },
+    {
+      "id": "cesar-klassiker-rind-leber",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Cesar",
+      "productName": "Klassiker Rind & Leber",
+      "declaredKind": "Megapack Cesar Schale 14 x 150 ist ein Alleinfuttermittel für Hunde.",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Fleisch und tierische Nebenerzeugnisse (63%, natürlich* 96%, u.a. Rind 14%, Hühnerleber 4%), Getreide, pflanzliche Nebenerzeugnisse, Mineralstoffe. *Natürliche Zutaten.",
+      "analytical": {
+        "protein": 10.0,
+        "fat": 5.0,
+        "fiber": 0.4,
+        "ash": 2.0,
+        "moisture": 80.0,
+        "calcium": null,
+        "phosphorus": 0.23
+      },
+      "energy": {
+        "value": 920,
+        "unit": "kcal/kg",
+        "verbatim": "metabolisierbare Energie | 920.0 kcal/kg"
+      },
+      "declarationSourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/cesar/schalen/221606",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 600,
+          "verbatim": "Hundegewicht 10 kg | Empfohlene Tagesration (in Schalen pro Tag) 3¾ - 4¼ (x 150 g = 562.5 - 637.5 g)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/cesar/schalen/221606"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": null,
+          "verbatim": "table ends at '20 kg | 6½ - 7¼' Schalen (rows 5, 10, 15, 20 kg)",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/cesar/schalen/221606"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "14 x 150 g",
+        "netGrams": 2100,
+        "priceEur": 13.99,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/cesar/schalen/221606",
+        "note": "regular price, not a subscription/first-order discount; variant Klassiker mit saftigem Rind und Leber"
+      },
+      "claims": ["Ohne Zuckerzusatz und künstliche Aromastoffe"],
+      "checkedAt": "2026-10-20",
+      "notes": "cesar.de is script-rendered and showed no product data to fetching, so zooplus is the source. Small-dog product: feeding table stops at 20 kg -> 25 kg null (no extrapolation). lifeStage 'adult' from the zooplus overview 'Köstliches Nassfutter für erwachsene Hunde'. Calcium not declared."
+    },
+    {
+      "id": "josera-meatlovers-menu-beef-potato",
+      "species": "dog",
+      "format": "wet",
+      "brand": "Josera",
+      "productName": "Meat Lovers Menu Rind & Kartoffel",
+      "declaredKind": "Alleinfuttermittel für ausgewachsene Hunde",
+      "kind": "complete",
+      "lifeStage": "adult",
+      "composition": "Rind (Fleisch, Pansen, Niere, Leber, Lunge) (29%); Brühe (26%); Huhn (Leber, Fleisch) (18%); Schweinefleisch (18%); Kartoffeln (4%); Karotte (2%); Erbsen (2%); Mineralstoffe (1%)",
+      "analytical": {
+        "protein": 11.6,
+        "fat": 7.9,
+        "fiber": 0.5,
+        "ash": 1.6,
+        "moisture": 77.0,
+        "calcium": 0.24,
+        "phosphorus": 0.17
+      },
+      "energy": {
+        "value": 1185,
+        "unit": "kcal/kg",
+        "verbatim": "metabolisierbare Energie pro kg (5,0 MJ); metabolisierbare Energie pro kg (1.185 kcal)"
+      },
+      "declarationSourceUrl": "https://www.josera.de/meat-lovers-menu-beef-with-potato.html",
+      "feeding": [
+        {
+          "referenceAnimal": "dog 10 kg adult",
+          "gramsPerDay": 485,
+          "verbatim": "Gewicht 10kg | Futtermenge/24h 450 -520g",
+          "sourceUrl": "https://www.josera.de/meat-lovers-menu-beef-with-potato.html"
+        },
+        {
+          "referenceAnimal": "dog 25 kg adult",
+          "gramsPerDay": 965,
+          "verbatim": "20kg | 760 - 880g; 30kg | 1.030 - 1.190g (no 25 kg row; linearly interpolated -> 895 - 1035 g)",
+          "sourceUrl": "https://www.josera.de/meat-lovers-menu-beef-with-potato.html"
+        }
+      ],
+      "price": {
+        "retailer": "zooplus.de",
+        "packLabel": "6 x 800 g",
+        "netGrams": 4800,
+        "priceEur": 25.49,
+        "url": "https://www.zooplus.de/shop/hunde/hundefutter_nassfutter/josera/1224249",
+        "note": "regular price, not a subscription/first-order discount; variant Rind & Kartoffel (neues Design)"
+      },
+      "claims": [
+        "Adult-Nassfutter ohne Zusatz von Getreide und Zucker",
+        "Ohne Zusatz von künstlichen Farb-, Aroma- und Konservierungsstoffen",
+        "100 % Transparenz: Alle tierischen Rohwarenkomponenten aufgeführt"
+      ],
+      "checkedAt": "2026-10-20",
+      "notes": "Slot 12: Josera chosen (manufacturer page readable); MERA Pure Sensitive wet not checked. zooplus prints a different (older?) feeding table for Rind & Kartoffel (10 kg 460 - 630 g; 20 kg 770 - 1.050 g; 30 kg 1.040 - 1.420 g); the manufacturer table is used. Manufacturer shop price 6 x 800 g 25,79 €."
+    }
+  ]
+}

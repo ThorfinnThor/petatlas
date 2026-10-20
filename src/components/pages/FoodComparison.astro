@@ -1,0 +1,769 @@
+---
+import {
+  ANGENOMMENE_FEUCHTE,
+  GEWICHTE,
+  type Bewertung,
+  type Empfehlung,
+  type Referenztier,
+} from '../../features/food/comparison.ts';
+import {
+  DATENSTAND,
+  FUTTER_VERGLEICHE,
+  type FutterVergleichsSeite,
+} from '../../features/food/comparison-pages.ts';
+import { formatCalendarDate } from '../../domain/dates.ts';
+
+interface Props {
+  seite: FutterVergleichsSeite;
+  bewertungen: readonly Bewertung[];
+  empfehlungen: readonly Empfehlung[];
+}
+
+const { seite, bewertungen, empfehlungen } = Astro.props;
+const katze = seite.species === 'cat';
+const nass = seite.format === 'wet';
+const hero = katze
+  ? {
+      avif: '/images/brand/play-cat-home-1536.avif',
+      webp: '/images/brand/play-cat-home-1536.webp',
+      alt: 'Katze in einer hellen Wohnung',
+    }
+  : {
+      avif: '/images/brand/health-dog-home-1536.avif',
+      webp: '/images/brand/health-dog-home-1536.webp',
+      alt: 'Hund zu Hause',
+    };
+
+const euro = (wert: number | undefined) =>
+  wert === undefined ? '–' : `${wert.toFixed(2).replace('.', ',')} €`;
+const zahl = (wert: number | null) => (wert === null ? '–' : `${String(wert).replace('.', ',')} %`);
+const tag = (b: Bewertung, r: Referenztier | undefined) =>
+  r ? b.kennzahlen.euroProTag[r] : undefined;
+const name = (b: Bewertung) => `${b.produkt.brand} ${b.produkt.productName}`;
+const anker = (b: Bewertung) => `produkt-${b.produkt.id}`;
+const zweiteSpalte = katze ? 'Kohlenhydrate (TS)' : 'Fett (TS)';
+const zweiterWert = (b: Bewertung) =>
+  katze ? zahl(b.kennzahlen.kohlenhydrateTs) : zahl(b.kennzahlen.fettTs);
+const referenzKurz: Record<Referenztier, string> = {
+  'cat 4 kg adult': '4-kg-Katze',
+  'dog 10 kg adult': '10-kg-Hund',
+  'dog 25 kg adult': '25-kg-Hund',
+};
+const andere = FUTTER_VERGLEICHE.filter((s) => s.slug !== seite.slug);
+---
+
+<article class="food-compare">
+  <header class="fc-hero">
+    <div class="fc-hero__copy">
+      <p class="eyebrow">
+        Futtervergleich · {bewertungen.length} Produkte · Stand {
+          formatCalendarDate(DATENSTAND, 'de-DE')
+        }
+      </p>
+      <h1>{seite.titel}</h1>
+      {
+        seite.einleitung.map((absatz, i) => (
+          <p class={i === 0 ? 'fc-hero__lead' : undefined}>{absatz}</p>
+        ))
+      }
+      <nav class="fc-nav" aria-label="Inhalt dieses Vergleichs">
+        <a href="#empfehlungen">Empfehlungen</a>
+        <a href="#tabelle">Alle {bewertungen.length} im Vergleich</a>
+        <a href="#produkte">Produkte im Detail</a>
+        <a href="#methode">So bewerten wir</a>
+        <a href="#fragen">Fragen</a>
+      </nav>
+    </div>
+    <figure class="fc-hero__visual">
+      <picture>
+        <source srcset={hero.avif} type="image/avif" />
+        <img src={hero.webp} alt={hero.alt} width="1536" height="1024" decoding="async" />
+      </picture>
+    </figure>
+  </header>
+
+  <section class="fc-picks" id="empfehlungen" aria-labelledby="empfehlungen-titel">
+    <div class="fc-heading">
+      <p class="eyebrow">Kurzantwort</p>
+      <h2 id="empfehlungen-titel">Unsere Empfehlungen</h2>
+      <p>
+        Nach unseren Kriterien (unten offengelegt) für {seite.referenzLabel}. Empfohlen werden nur
+        Alleinfuttermittel mit vollständiger Deklaration und belegtem Preis.
+      </p>
+    </div>
+    <div class="fc-picks__grid">
+      {
+        empfehlungen.map((e, i) => (
+          <a class={`fc-pick${i === 0 ? ' fc-pick--top' : ''}`} href={`#${anker(e.bewertung)}`}>
+            <span class="fc-pick__label">{e.titel}</span>
+            <span class="fc-pick__name">{name(e.bewertung)}</span>
+            <span class="fc-pick__score">
+              <strong>{e.bewertung.gesamt}</strong>/100
+            </span>
+            <ul class="fc-pick__facts">
+              <li>{zahl(e.bewertung.kennzahlen.proteinTs)} Protein in der Trockenmasse</li>
+              <li>
+                {katze
+                  ? `${zahl(e.bewertung.kennzahlen.kohlenhydrateTs)} Kohlenhydrate (TS)`
+                  : `${zahl(e.bewertung.kennzahlen.fettTs)} Fett (TS)`}
+              </li>
+              <li>
+                {euro(tag(e.bewertung, seite.referenz))} pro Tag ({referenzKurz[seite.referenz]})
+              </li>
+            </ul>
+            <span class="fc-pick__why">Warum: {e.warum}.</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="fc-table" id="tabelle" aria-labelledby="tabelle-titel">
+    <div class="fc-heading">
+      <p class="eyebrow">Direktvergleich</p>
+      <h2 id="tabelle-titel">Alle {bewertungen.length} Produkte nebeneinander</h2>
+      <p>
+        Nährwerte auf Trockenmasse (TS) umgerechnet, damit {
+          nass
+            ? 'Nassfutter mit unterschiedlicher Feuchte'
+            : 'Produkte mit unterschiedlicher Restfeuchte'
+        } vergleichbar werden. Kosten pro Tag nach der Fütterungsempfehlung des Herstellers.
+      </p>
+    </div>
+    <div class="table-scroll" tabindex="0" aria-label="Vergleichstabelle, horizontal scrollbar">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Produkt</th>
+            <th scope="col">Note</th>
+            <th scope="col">Protein (TS)</th>
+            <th scope="col">{zweiteSpalte}</th>
+            <th scope="col">Zucker</th>
+            <th scope="col">€/Tag {referenzKurz[seite.referenz]}</th>
+            {
+              seite.zweiteReferenz && (
+                <th scope="col">€/Tag {referenzKurz[seite.zweiteReferenz]}</th>
+              )
+            }
+            <th scope="col">Futterart</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            bewertungen.map((b, i) => (
+              <tr>
+                <td>{i + 1}</td>
+                <th scope="row">
+                  <a href={`#${anker(b)}`}>{name(b)}</a>
+                </th>
+                <td>
+                  <span class="fc-score">{b.gesamt}</span>
+                </td>
+                <td>{zahl(b.kennzahlen.proteinTs)}</td>
+                <td>{zweiterWert(b)}</td>
+                <td>{b.kennzahlen.zuckerZugesetzt ? 'ja' : 'nein'}</td>
+                <td>{euro(tag(b, seite.referenz))}</td>
+                {seite.zweiteReferenz && <td>{euro(tag(b, seite.zweiteReferenz))}</td>}
+                <td>
+                  {b.produkt.kind === 'complete'
+                    ? 'Allein'
+                    : b.produkt.kind === 'complementary'
+                      ? 'Ergänzung'
+                      : '–'}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="fc-products" id="produkte" aria-labelledby="produkte-titel">
+    <div class="fc-heading">
+      <p class="eyebrow">Im Detail</p>
+      <h2 id="produkte-titel">Jedes Produkt mit Begründung</h2>
+      <p>
+        Alle Angaben aus der Deklaration und Fütterungstabelle; die Quelle steht jeweils darunter.
+      </p>
+    </div>
+    {
+      bewertungen.map((b, i) => (
+        <article class="fc-product" id={anker(b)}>
+          <header class="fc-product__head">
+            <span class="fc-product__rank">{i + 1}</span>
+            <div>
+              <p class="eyebrow">{b.produkt.brand}</p>
+              <h3>{b.produkt.productName}</h3>
+              <p class="fc-product__kind">
+                {b.produkt.declaredKind ?? 'Futterart nicht deklariert'}
+              </p>
+            </div>
+            <span class="fc-product__total">
+              <strong>{b.gesamt}</strong>
+              <span>von 100</span>
+            </span>
+          </header>
+          {!b.empfehlbar && (
+            <p class="fc-product__flag">
+              {b.produkt.kind === 'complementary'
+                ? 'Ergänzungsfuttermittel: nicht als alleiniges Futter geeignet, deshalb nicht empfohlen.'
+                : 'Nicht empfehlbar, weil Kerndaten fehlen (Deklaration, Fütterungsmenge oder Preis).'}
+            </p>
+          )}
+          <ul class="fc-bars">
+            {b.teilnoten.map((n) => (
+              <li>
+                <span class="fc-bars__label">{n.kriterium}</span>
+                <span class="fc-bars__track" aria-hidden="true">
+                  <span
+                    class="fc-bars__fill"
+                    style={`inline-size:${(n.punkte / n.maximum) * 100}%`}
+                  />
+                </span>
+                <span class="fc-bars__value">
+                  {n.punkte}/{n.maximum}
+                </span>
+                <span class="fc-bars__why">{n.begruendung}</span>
+              </li>
+            ))}
+          </ul>
+          <dl class="fc-facts">
+            <div>
+              <dt>Deklariert (Frischmasse)</dt>
+              <dd>
+                Protein {zahl(b.produkt.analytical.protein)} · Fett {zahl(b.produkt.analytical.fat)}{' '}
+                · Rohfaser {zahl(b.produkt.analytical.fiber)} · Rohasche{' '}
+                {zahl(b.produkt.analytical.ash)} · Feuchte{' '}
+                {b.kennzahlen.feuchteGeschaetzt
+                  ? `nicht deklariert (gerechnet mit ${b.kennzahlen.feuchte} %)`
+                  : zahl(b.produkt.analytical.moisture)}
+              </dd>
+            </div>
+            {b.produkt.energy && (
+              <div>
+                <dt>Energie</dt>
+                <dd>{b.produkt.energy.verbatim}</dd>
+              </div>
+            )}
+            {b.produkt.feeding.map((f) => (
+              <div>
+                <dt>Fütterung {referenzKurz[f.referenceAnimal]}</dt>
+                <dd>
+                  {f.gramsPerDay === null
+                    ? 'keine Angabe'
+                    : `${Math.round(f.gramsPerDay)} g pro Tag`}
+                  <span class="fc-muted"> · laut Tabelle: „{f.verbatim}“</span>
+                </dd>
+              </div>
+            ))}
+            {b.produkt.price && (
+              <div>
+                <dt>Preis</dt>
+                <dd>
+                  {euro(b.produkt.price.priceEur)} für {b.produkt.price.packLabel} bei{' '}
+                  {b.produkt.price.retailer}
+                  <span class="fc-muted">
+                    {' '}
+                    · geprüft am {formatCalendarDate(b.produkt.checkedAt, 'de-DE')}
+                  </span>
+                </dd>
+              </div>
+            )}
+            {b.produkt.composition && (
+              <div class="fc-facts__wide">
+                <dt>Zusammensetzung</dt>
+                <dd>{b.produkt.composition}</dd>
+              </div>
+            )}
+          </dl>
+          <p class="fc-sources">
+            Quelle Deklaration:{' '}
+            <a href={b.produkt.declarationSourceUrl} rel="nofollow noopener" target="_blank">
+              {new URL(b.produkt.declarationSourceUrl).hostname.replace(/^www\./, '')}
+            </a>
+            {b.produkt.price && (
+              <>
+                {' '}
+                · Preis:{' '}
+                <a href={b.produkt.price.url} rel="nofollow noopener" target="_blank">
+                  {b.produkt.price.retailer}
+                </a>
+              </>
+            )}
+          </p>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="fc-method" id="methode" aria-labelledby="methode-titel">
+    <div class="fc-heading">
+      <p class="eyebrow">Offengelegt</p>
+      <h2 id="methode-titel">So bewerten wir</h2>
+      <p>{seite.kriterienHinweis}</p>
+    </div>
+    <table class="fc-weights">
+      <thead>
+        <tr
+          ><th scope="col">Kriterium</th><th scope="col">Punkte</th><th scope="col"
+            >Worauf es ankommt</th
+          ></tr
+        >
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Zusammensetzung</th><td>{GEWICHTE.zusammensetzung}</td>
+          <td
+            >Tierische Zutat an erster Stelle (10), Anteile in Prozent angegeben (15), je
+            Sammelbegriff wie „tierische Nebenerzeugnisse“ oder „Getreide“ 5 Punkte Abzug.</td
+          >
+        </tr>
+        <tr>
+          <th scope="row">Nährstoffprofil</th><td>{GEWICHTE.naehrstoffe}</td>
+          <td>
+            {
+              katze
+                ? 'Protein in der Trockenmasse (bis 20) und möglichst wenig rechnerische Kohlenhydrate (bis 15). Katzen decken ihren Energiebedarf vor allem aus Protein und Fett.'
+                : 'Protein in der Trockenmasse deutlich über dem FEDIAF-Mindestwert (bis 20) und Fett in einem üblichen Bereich von 10 bis 30 % der Trockenmasse (bis 15).'
+            }
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Kein Zuckerzusatz</th><td>{GEWICHTE.zucker}</td>
+          <td>Zucker, Karamell oder Melasse in der Zusammensetzung ergeben 0 Punkte.</td>
+        </tr>
+        <tr>
+          <th scope="row">Preis pro Tag</th><td>{GEWICHTE.preis}</td>
+          <td
+            >Futtermenge laut Hersteller × Preis pro Gramm für {seite.referenzLabel}. Das günstigste
+            Produkt bekommt 20, das teuerste 4 Punkte, dazwischen logarithmisch.</td
+          >
+        </tr>
+        <tr>
+          <th scope="row">Transparenz</th><td>{GEWICHTE.transparenz}</td>
+          <td
+            >Energiegehalt angegeben (4), Fütterungstabelle vorhanden (3), Calcium und Phosphor
+            angegeben (3).</td
+          >
+        </tr>
+      </tbody>
+    </table>
+    <ul class="fc-method__notes">
+      <li>
+        Trockenmasse = 100 % minus Feuchte. Deklariert ein Hersteller keine Feuchte, rechnen wir mit
+        {' '}{ANGENOMMENE_FEUCHTE[seite.format]} % und weisen das am Produkt aus.
+      </li>
+      <li>
+        Kohlenhydrate sind auf dem Etikett nicht angegeben; wir rechnen sie als Rest aus 100 % minus
+        Protein, Fett, Rohfaser, Rohasche und Feuchte (übliche NfE-Schätzung).
+      </li>
+      <li>
+        Das ist eine redaktionelle Abwägung auf Basis der Herstellerangaben, kein Labortest und
+        keine Fütterungsstudie. Bei Krankheit, Übergewicht oder Diätfutter entscheidet die
+        Tierarztpraxis.
+      </li>
+      <li>
+        Kein Hersteller hat für die Aufnahme bezahlt. Die Empfehlung hängt nicht davon ab, ob es
+        einen Partnerlink gibt; die Preislinks oben sind normale Links.
+      </li>
+    </ul>
+  </section>
+
+  <section class="fc-faq" id="fragen" aria-labelledby="fragen-titel">
+    <div class="fc-heading">
+      <p class="eyebrow">Häufige Fragen</p>
+      <h2 id="fragen-titel">Was oft gefragt wird</h2>
+    </div>
+    {
+      seite.fragen.map((f) => (
+        <details>
+          <summary>{f.frage}</summary>
+          <p>{f.antwort}</p>
+        </details>
+      ))
+    }
+  </section>
+
+  <nav class="fc-more" aria-label="Weitere Futtervergleiche">
+    <p class="eyebrow">Weitere Vergleiche</p>
+    <ul>
+      {
+        andere.map((s) => (
+          <li>
+            <a href={`/de-de/futter/vergleich/${s.slug}/`}>{s.titel}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</article>
+
+<style>
+  .food-compare {
+    display: grid;
+    gap: clamp(3rem, 6vw, 5.5rem);
+    min-inline-size: 0;
+    padding-block: var(--space-3) var(--space-10);
+  }
+  .food-compare > * {
+    min-inline-size: 0;
+  }
+  .eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: var(--text-micro);
+    font-weight: var(--weight-label);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .fc-hero {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-primary-soft);
+  }
+  .fc-hero__copy {
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+  }
+  .fc-hero h1 {
+    max-inline-size: 20ch;
+    margin-block: var(--space-3) var(--space-5);
+    font-size: clamp(2.2rem, 4.6vw, 4.25rem);
+  }
+  .fc-hero__copy > p:not(.eyebrow) {
+    max-inline-size: 64ch;
+  }
+  .fc-hero__lead {
+    color: var(--color-ink);
+    font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+  }
+  .fc-hero__visual {
+    position: relative;
+    min-block-size: 16rem;
+    margin: 0;
+  }
+  .fc-hero__visual img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .fc-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-start: var(--space-6);
+  }
+  .fc-nav a {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 70%);
+    color: var(--color-primary-hover);
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+    text-decoration: none;
+  }
+  .fc-heading {
+    max-inline-size: 72ch;
+    margin-block-end: var(--space-6);
+  }
+  .fc-heading h2 {
+    margin-block: var(--space-2) var(--space-3);
+  }
+  .fc-heading p:last-child {
+    margin-block-end: 0;
+    color: var(--color-text-muted);
+  }
+
+  .fc-picks__grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+  .fc-pick {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .fc-pick--top {
+    border: 2px solid var(--color-primary);
+    background: var(--color-primary-soft);
+  }
+  .fc-pick__label {
+    justify-self: start;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-size: var(--text-small);
+    font-weight: var(--weight-label);
+  }
+  .fc-pick__name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .fc-pick__score {
+    color: var(--color-text-muted);
+  }
+  .fc-pick__score strong {
+    color: var(--color-primary);
+    font-size: 2rem;
+  }
+  .fc-pick__facts {
+    margin: 0;
+    padding-inline-start: 1.1rem;
+    color: var(--color-text);
+  }
+  .fc-pick__why {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+  .fc-table table,
+  .fc-weights {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-small);
+  }
+  .fc-table th,
+  .fc-table td,
+  .fc-weights th,
+  .fc-weights td {
+    padding: var(--space-3) var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+    text-align: start;
+    vertical-align: top;
+  }
+  .fc-table thead th,
+  .fc-weights thead th {
+    background: var(--color-surface-subtle);
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .fc-table tbody th a {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .fc-score {
+    display: inline-block;
+    min-inline-size: 2.5rem;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .fc-products {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .fc-product {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    scroll-margin-block-start: 6rem;
+  }
+  .fc-product__head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .fc-product__head h3 {
+    margin: var(--space-1) 0;
+  }
+  .fc-product__rank {
+    display: grid;
+    place-items: center;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-weight: 700;
+  }
+  .fc-product__kind {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .fc-product__total {
+    display: grid;
+    justify-items: end;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .fc-product__total strong {
+    color: var(--color-primary);
+    font-size: 2.25rem;
+    line-height: 1;
+  }
+  .fc-product__flag {
+    margin-block: var(--space-4) 0;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-warning-border);
+    border-radius: var(--radius-md);
+    background: var(--color-warning-soft);
+    color: var(--color-warning);
+  }
+  .fc-bars {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-5) 0;
+    padding: 0;
+    list-style: none;
+  }
+  .fc-bars li {
+    display: grid;
+    grid-template-columns: 11rem 1fr 3.5rem;
+    gap: var(--space-1) var(--space-3);
+    align-items: center;
+  }
+  .fc-bars__label {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .fc-bars__track {
+    block-size: 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-subtle);
+    overflow: hidden;
+  }
+  .fc-bars__fill {
+    display: block;
+    block-size: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--color-brand-600);
+  }
+  .fc-bars__value {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+  .fc-bars__why {
+    grid-column: 1 / -1;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .fc-facts {
+    display: grid;
+    gap: var(--space-3) var(--space-6);
+    margin: 0;
+  }
+  .fc-facts dt {
+    color: var(--color-ink);
+    font-weight: 600;
+    font-size: var(--text-small);
+  }
+  .fc-facts dd {
+    margin: 0;
+  }
+  .fc-muted {
+    color: var(--color-text-muted);
+  }
+  .fc-sources {
+    margin-block: var(--space-4) 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .fc-method,
+  .fc-faq {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .fc-weights {
+    margin-block-end: var(--space-6);
+  }
+  .fc-method__notes {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--color-text);
+  }
+  .fc-faq details {
+    padding-block: var(--space-4);
+    border-block-end: 1px solid var(--color-border);
+  }
+  .fc-faq summary {
+    cursor: pointer;
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .fc-faq details p {
+    margin-block: var(--space-3) 0;
+  }
+  .fc-more ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+  .fc-more a {
+    display: inline-block;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    color: var(--color-primary-hover);
+    font-weight: var(--weight-label);
+    text-decoration: none;
+  }
+
+  @media (min-width: 64rem) {
+    .fc-hero {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    }
+    .fc-picks__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .fc-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .fc-bars {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-8);
+    }
+    .fc-facts__wide {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 40rem) {
+    .fc-bars li {
+      grid-template-columns: 1fr 3.5rem;
+    }
+    .fc-bars__track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .fc-product__head {
+      grid-template-columns: auto 1fr;
+    }
+    .fc-product__total {
+      grid-column: 1 / -1;
+      justify-items: start;
+    }
+  }
+</style>
