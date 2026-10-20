@@ -9,19 +9,20 @@
  * Alle Werkzeuge funktionieren ohne Profil. Das steht auf der Seite, damit
  * niemand glaubt, er müsse erst etwas eintragen.
  */
+import PageIntro from '../ui/PageIntro.astro';
 import Notice from '../Notice.astro';
 import { INTERESSEN } from '../../features/profile/state.ts';
 ---
 
-<h1>Mein Tier</h1>
-
-<p>
-  Ein paar Angaben für Kostenrechner, Reisecheck und Spielzeugfinder. Dort kannst du ein
-  gespeichertes Profil auf Knopfdruck übernehmen. <strong>Freiwillig</strong>
-  — alle Werkzeuge funktionieren auch ohne. Du brauchst dafür kein Nutzerkonto. Die Profilfunktion ist
-  für eine lokale Verarbeitung im Browser ausgelegt. Informationen zur Verarbeitung beim Laden der Website
-  findest du in unserer <a href="/de-de/datenschutz/">Datenschutzerklärung</a>.
-</p>
+<PageIntro titel="Mein Tier" eyebrow="Freiwillig · nur in deinem Browser" bild="hero-dog-cat-home">
+  <p>
+    Ein paar Angaben für Kostenrechner, Reisecheck und Spielzeugfinder. Dort kannst du ein
+    gespeichertes Profil auf Knopfdruck übernehmen. <strong>Freiwillig</strong>
+    — alle Werkzeuge funktionieren auch ohne. Du brauchst dafür kein Nutzerkonto. Die Profilfunktion ist
+    für eine lokale Verarbeitung im Browser ausgelegt. Informationen zur Verarbeitung beim Laden der Website
+    findest du in unserer <a href="/de-de/datenschutz/">Datenschutzerklärung</a>.
+  </p>
+</PageIntro>
 
 <Notice variante="hinweis" titel="Was mit diesen Angaben passiert">
   <p>
@@ -186,7 +187,9 @@ import { INTERESSEN } from '../../features/profile/state.ts';
   }
 
   .wahl {
-    display: block;
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
     font-weight: 400;
     margin-block: var(--space-1);
   }

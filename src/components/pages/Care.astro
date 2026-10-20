@@ -7,6 +7,7 @@
  * warum. Ohne diesen zweiten Teil sähe die Liste aus, als deckte sie den
  * Gesundheitsbedarf eines Tieres ab.
  */
+import PageIntro from '../ui/PageIntro.astro';
 import Notice from '../Notice.astro';
 import { merkmalLabel } from '../../features/care/attributes.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
@@ -19,13 +20,17 @@ const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const taxonomie = pflegeTaxonomie();
 ---
 
-<h1>Pflege</h1>
-
-<p class="intro">
-  Fünf ausführliche Auswahlhilfen für den Pflegealltag mit Hund und Katze. Vergleiche Werkzeuge nach
-  Aufgabe und Passform, miss vor dem Kauf die entscheidenden Größen und erkenne Situationen, in
-  denen Zubehör nicht die nächste Handlung ist.
-</p>
+<PageIntro
+  titel="Pflege"
+  eyebrow="Pflegealltag · Hund und Katze"
+  bildStamm="/images/care/fellpflege"
+>
+  <p>
+    Fünf ausführliche Auswahlhilfen für den Pflegealltag mit Hund und Katze. Vergleiche Werkzeuge
+    nach Aufgabe und Passform, miss vor dem Kauf die entscheidenden Größen und erkenne Situationen,
+    in denen Zubehör nicht die nächste Handlung ist.
+  </p>
+</PageIntro>
 
 <Notice variante="warnung" titel="Kein Gesundheitsbereich">
   <p>

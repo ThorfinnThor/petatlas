@@ -249,6 +249,21 @@ input[type='radio'] {
   accent-color: var(--color-primary);
 }
 
+/* Kästchen und Beschriftung auf einer Linie. :where hält die Spezifität bei
+   null, damit Komponenten mit eigenem Layout (Karten, Raster) gewinnen. */
+:where(label:has(> input[type='checkbox'], > input[type='radio'])) {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  min-block-size: 2.25rem;
+  cursor: pointer;
+}
+
+:where(label:has(> input[type='checkbox'], > input[type='radio'])) > input {
+  flex: none;
+  margin: 0;
+}
+
 fieldset {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);

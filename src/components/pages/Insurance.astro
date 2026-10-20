@@ -1,4 +1,5 @@
 ---
+import PageIntro from '../ui/PageIntro.astro';
 import type { MarketConfig } from '../../domain/market.ts';
 import InsuranceDisclosure from '../InsuranceDisclosure.astro';
 import PartnerCta from '../PartnerCta.astro';
@@ -19,13 +20,17 @@ const entscheidung = partnerHinweisErlaubt({
 });
 ---
 
-<p class="eyebrow">Finanzielle Vorsorge · Hund und Katze</p>
-<h1>Tierversicherung prüfen</h1>
-<p class="lead">
-  Eine Tierkrankenversicherung kann hohe Tierarztkosten abfedern. Ob ein Vertrag zu Ihnen passt,
-  hängt von Ihrem Tier, Ihren Rücklagen und den konkreten Bedingungen ab. Diese Seite hilft beim
-  Lesen der Bedingungen; sie vergleicht keine Tarife und gibt keine persönliche Empfehlung.
-</p>
+<PageIntro
+  titel="Tierversicherung prüfen"
+  eyebrow="Finanzielle Vorsorge · Hund und Katze"
+  bild="health-dog-home"
+>
+  <p>
+    Eine Tierkrankenversicherung kann hohe Tierarztkosten abfedern. Ob ein Vertrag zu Ihnen passt,
+    hängt von Ihrem Tier, Ihren Rücklagen und den konkreten Bedingungen ab. Diese Seite hilft beim
+    Lesen der Bedingungen; sie vergleicht keine Tarife und gibt keine persönliche Empfehlung.
+  </p>
+</PageIntro>
 
 <PartnerCta
   market={market}

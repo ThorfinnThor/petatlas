@@ -10,6 +10,7 @@
  * Regeln. Bis dahin steht hier der Umfang und sonst nichts: eine
  * Beispielprüfung mit erfundenen Regeln wäre schlimmer als keine.
  */
+import PageIntro from '../ui/PageIntro.astro';
 import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
 import ReviewStatus from '../ReviewStatus.astro';
@@ -50,9 +51,13 @@ const ziele = umfang.destinations.map(name);
 const transit = umfang.transitCountries.map(name);
 ---
 
-<h1>Reisecheck</h1>
-
-<p>{umfangsSatz()}</p>
+<PageIntro
+  titel="Reisecheck"
+  eyebrow="Mit Hund oder Katze verreisen"
+  bild="travel-human-dog-sunset"
+>
+  <p>{umfangsSatz()}</p>
+</PageIntro>
 
 <Notice variante="warnung" titel="Keine weltweite Auskunft, keine Garantie">
   <p>
@@ -458,7 +463,9 @@ const transit = umfang.transitCountries.map(name);
   }
 
   .wahl {
-    display: block;
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
     font-weight: 400;
     margin-block: var(--space-1);
   }

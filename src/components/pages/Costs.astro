@@ -55,13 +55,9 @@ const kurztitel = (titel: string) => {
       Setz die Leistungen deiner Behandlung zusammen und sieh, wie sich der Betrag aus Grundbetrag,
       Faktor und Menge ergibt – mit Fundstelle für jede Position.
     </p>
-    <ol class="costs-hero__steps">
-      <li><span>1</span> Regulär oder Notdienst wählen</li>
-      <li><span>2</span> Leistung suchen und hinzufügen</li>
-      <li><span>3</span> Faktor und Menge anpassen</li>
-    </ol>
     <p class="costs-hero__note">
-      Der Rechner ist <strong>kein amtlicher Rechner</strong> und kein Kostenvoranschlag: Eine echte Rechnung
+      Der Rechner ist <strong>kein amtlicher Rechner</strong>. Die Berechnungsübersicht ist keine
+      Rechnung einer Tierarztpraxis und kein verbindlicher Kostenvoranschlag: Eine echte Rechnung
       kann Positionen enthalten, die hier niemand ausgewählt hat.
     </p>
   </div>
@@ -69,17 +65,17 @@ const kurztitel = (titel: string) => {
     <BrandImage
       name="health-dog-home"
       class="costs-hero__image"
-      sizes="(max-width: 899px) 100vw, 40vw"
+      sizes="(max-width: 899px) 100vw, 30vw"
       priority
     />
     <div class="costs-hero__examples">
-      <p id="beispiele-titel" class="costs-hero__examples-title">Häufige Behandlungen</p>
+      <p id="beispiele-titel" class="costs-hero__examples-title">Kostenbeispiele</p>
       <ul>
         {
           beispiele.map((b) => (
             <li>
               <a href={subroutePath(katalogMarkt, 'costs', 'behandlung', b.slug)}>
-                {kurztitel(b.titel)} →
+                {kurztitel(b.titel)}
               </a>
             </li>
           ))
@@ -361,8 +357,9 @@ const kurztitel = (titel: string) => {
 <style>
   .costs-hero {
     display: grid;
-    gap: var(--space-6);
-    margin-block: var(--space-4) var(--space-8);
+    gap: var(--space-5);
+    align-items: start;
+    margin-block: var(--space-2) var(--space-5);
   }
   .costs-hero__eyebrow {
     margin: 0 0 var(--space-2);
@@ -373,90 +370,59 @@ const kurztitel = (titel: string) => {
     text-transform: uppercase;
   }
   .costs-hero h1 {
-    margin-block: 0 var(--space-4);
+    margin-block: 0 var(--space-3);
   }
   .costs-hero__lead {
     max-inline-size: 58ch;
+    margin-block: 0 var(--space-3);
     color: var(--color-ink);
     font-size: var(--text-lead);
   }
-  .costs-hero__steps {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: var(--space-5) 0;
-    padding: 0;
-    list-style: none;
-  }
-  .costs-hero__steps li {
-    display: inline-flex;
-    gap: var(--space-2);
-    align-items: center;
-    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-2);
-    border: 1px solid var(--color-primary-border);
-    border-radius: var(--radius-pill);
-    background: var(--color-primary-soft);
-    color: var(--color-primary-hover);
-    font-size: var(--text-small);
-    font-weight: 600;
-  }
-  .costs-hero__steps span {
-    display: grid;
-    place-items: center;
-    inline-size: 1.5rem;
-    block-size: 1.5rem;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: var(--color-primary-contrast);
-    font-size: var(--text-micro);
-  }
   .costs-hero__note {
-    max-inline-size: 62ch;
+    max-inline-size: 64ch;
+    margin: 0;
     color: var(--color-text-muted);
     font-size: var(--text-small);
   }
   .costs-hero__aside {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
     overflow: hidden;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     background: var(--color-surface);
     box-shadow: var(--shadow-sm);
   }
+  .costs-hero__aside :global(.costs-hero__image),
   .costs-hero__aside :global(.costs-hero__image img) {
     inline-size: 100%;
-    block-size: 13rem;
+    block-size: 100%;
     object-fit: cover;
   }
   .costs-hero__examples {
-    padding: var(--space-4) var(--space-5) var(--space-5);
+    padding: var(--space-3) var(--space-4);
   }
   .costs-hero__examples-title {
-    margin: 0 0 var(--space-2);
+    margin: 0 0 var(--space-1);
     color: var(--color-ink);
+    font-size: var(--text-small);
     font-weight: 700;
   }
   .costs-hero__examples ul {
     display: grid;
-    gap: var(--space-1);
+    gap: 0.15rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
   .costs-hero__examples a {
-    display: block;
-    padding: var(--space-2) 0;
-    border-block-end: 1px solid var(--color-border);
     color: var(--color-primary-hover);
+    font-size: var(--text-small);
     font-weight: 600;
-    text-decoration: none;
-  }
-  .costs-hero__examples li:last-child a {
-    border-block-end: 0;
   }
   @media (min-width: 900px) {
     .costs-hero {
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      align-items: center;
+      grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr);
     }
   }
 
