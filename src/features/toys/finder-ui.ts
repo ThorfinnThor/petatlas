@@ -294,7 +294,11 @@ export function finderStarten(): void {
     const kopf =
       treffer.length === 0
         ? '<div class="finder__leer"><h3>Keine belegte Kombination gefunden</h3><p>Entferne einen Zusatzfilter oder wähl „Alle Spielarten“. Es werden nur Produkte gezeigt, deren Angaben den Filtern nachweisbar entsprechen.</p><button type="button" data-finder-reset>Filter zurücksetzen</button></div>'
-        : `<div class="finder__result-head"><div><p class="eyebrow">Ergebnis</p><h2>${treffer.length} passende ${treffer.length === 1 ? 'Option' : 'Optionen'}</h2></div><p>${escape(filter.join(' · '))}</p></div>`;
+        : `<div class="finder__result-head"><div><p class="eyebrow">Ergebnis</p><h2>${treffer.length} geprüfte ${treffer.length === 1 ? 'Option' : 'Optionen'}</h2>${
+            katalogTreffer.length > 0
+              ? `<p class="finder__katalog-verweis">Dazu <a href="#finder-katalog-titel">${katalogTreffer.length} weitere Spielzeuge bei Händlern</a>, ohne geprüfte Merkmale.</p>`
+              : ''
+          }</div><p>${escape(filter.join(' · '))}</p></div>`;
     ausgabe.innerHTML = `${kopf}<ul class="finder__liste">${treffer
       .map((eintrag) => trefferMarkup(eintrag, fressnapfOffers, zooRoyalOffers))
       .join('')}</ul>`;
