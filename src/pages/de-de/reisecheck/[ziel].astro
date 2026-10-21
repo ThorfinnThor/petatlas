@@ -26,6 +26,7 @@ import { ZIELLAENDER } from '../../../features/travel/laender.ts';
 import { freigabeFuer } from '../../../features/travel/freigabe.ts';
 import { fristenAus, fristenplan } from '../../../features/travel/fristen.ts';
 import TravelPlan from '../../../components/travel/TravelPlan.astro';
+import PageIntro from '../../../components/ui/PageIntro.astro';
 
 export function getStaticPaths() {
   const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -53,6 +54,20 @@ const letzteQuellenpruefung = satz.sources
 const umfang = reiseUmfang();
 const national = nationalGuidance(code);
 const fristen = fristenAus(satz);
+/** Verständliche Überschrift je Anforderung; die Fundstelle steht darunter. */
+const TITEL: Record<string, string> = {
+  microchip: 'Mikrochip',
+  'rabies-vaccination': 'Gültige Tollwutimpfung',
+  'identification-document': 'EU-Heimtierausweis',
+  'owner-accompanied': 'Reise mit dem Halter',
+  'max-five-animals': 'Höchstens fünf Tiere',
+};
+const BILD: Record<string, string> = {
+  AT: 'hero-dog-alpine-lake',
+  FR: 'travel-human-dog-sunset',
+  IT: 'play-dog-alpine-lake',
+  NL: 'travel-human-dog-sunset',
+};
 const schritte = fristenplan(satz, code);
 const fragen = [
   {
@@ -98,174 +113,194 @@ const structuredData = [
   structuredData={structuredData}
   route="travel"
   canonicalPfad={eigenerPfad}
+  weit
 >
   <Breadcrumbs
     market={market}
     stufen={[{ label: 'Reisecheck', route: 'travel' }, { label: name }]}
   />
 
-  <h1>Mit Hund oder Katze nach {name}</h1>
-
-  <p>
-    Was für die private, begleitete Reise aus Deutschland nach {name} zu erledigen ist — mit Fundstelle
-    zu jedem Punkt und einer Packliste zum Ausdrucken. Für den Abgleich mit Ihren eigenen Daten gibt es
-    den <a href={checkPfad}>Reisecheck</a>.
-  </p>
-
-  <TravelPlan land={name} schritte={schritte} fristen={fristen} />
-
-  <ReviewStatus
-    status={freigabe.freigegeben ? 'approved' : 'pending'}
-    reviewedAt={freigabe.reviewedAt}
-    reviewedBy={freigabe.reviewedBy}
-    lastVerifiedAt={letzteQuellenpruefung}
-    responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
-    sources={satz.sources.map((quelle) => ({ label: quelle.title, url: quelle.url }))}
+  <PageIntro
+    titel={`Mit Hund oder Katze nach ${name}`}
+    eyebrow="Reisecheck · Zielland"
+    bild={BILD[code] ?? 'travel-human-dog-sunset'}
   >
+    <p>
+      Was für die private, begleitete Reise aus Deutschland nach {name} zu erledigen ist – mit Fundstelle
+      zu jedem Punkt und einer Packliste zum Ausdrucken. Für den Abgleich mit Ihren eigenen Daten gibt
+      es den <a href={checkPfad}>Reisecheck</a>.
+    </p>
+  </PageIntro>
+
+  <div class="ziel">
+    <TravelPlan land={name} schritte={schritte} fristen={fristen} />
+
+    <section class="ziel__abschnitt" aria-labelledby="gilt-titel">
+      <p class="eyebrow">Einreiseregeln der EU</p>
+      <h2 id="gilt-titel">Was gilt</h2>
+      <p class="grundlage">Rechtsgrundlage: {satz.legalBasis}.</p>
+      <ul class="anforderungen">
+        {
+          satz.requirements.map((anforderung) => (
+            <li data-anforderung={anforderung.requirementId}>
+              <h3>{TITEL[anforderung.requirementId] ?? anforderung.citation}</h3>
+              <p class="zitat">{anforderung.citation}</p>
+              <p>{anforderung.guidance}</p>
+              <p class="fundstelle">
+                <a href={anforderung.officialSourceUrl} rel="nofollow noopener">
+                  Amtliche Fundstelle
+                </a>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+      <ReviewStatus
+        status={freigabe.freigegeben ? 'approved' : 'pending'}
+        reviewedAt={freigabe.reviewedAt}
+        reviewedBy={freigabe.reviewedBy}
+        lastVerifiedAt={letzteQuellenpruefung}
+        responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+        sources={satz.sources.map((quelle) => ({ label: quelle.title, url: quelle.url }))}
+      >
+        {
+          freigabe.freigegeben ? (
+            <p>Der Regelsatz wurde fachlich freigegeben. Jede Anforderung nennt ihre Fundstelle.</p>
+          ) : (
+            <p>
+              Die Anforderungen stammen aus der Rechtsgrundlage und sind mit Fundstelle belegt, aber
+              <strong>fachlich noch nicht abgenommen</strong>. Verbindlich ist die Auskunft der
+              zuständigen Behörde. Diese Seite ist eine Vorbereitung, keine Genehmigung.
+            </p>
+          )
+        }
+      </ReviewStatus>
+    </section>
+
     {
-      freigabe.freigegeben ? (
-        <p>Der Regelsatz wurde fachlich freigegeben. Jede Anforderung nennt ihre Fundstelle.</p>
-      ) : (
-        <p>
-          Die Anforderungen stammen aus der Rechtsgrundlage und sind mit Fundstelle belegt, aber
-          <strong>fachlich noch nicht abgenommen</strong>. Verbindlich ist die Auskunft der
-          zuständigen Behörde. Diese Seite ist eine Vorbereitung, keine Genehmigung.
-        </p>
+      national && (
+        <section class="ziel__abschnitt ziel__land" aria-labelledby="land-titel">
+          <p class="eyebrow">Zusätzlich in {name}</p>
+          <h2 id="land-titel">{national.title}</h2>
+          <p>{national.text}</p>
+          <p class="fundstelle">
+            Quellenprüfung: 09.09.2026 · <a href={national.url}>Offizielle Landesquelle</a>
+            {code === 'FR' && (
+              <>
+                {' '}
+                ·{' '}
+                <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1839">
+                  Zusätzliche Voraussetzungen für Kategoriehunde
+                </a>
+              </>
+            )}
+            {code === 'NL' && (
+              <>
+                {' '}
+                ·{' '}
+                <a href="https://www.amsterdam.nl/leefomgeving/dieren/honden-riem-hondenpoep-opruimen/">
+                  Beispiel Amsterdam: amtliche Auslaufregeln
+                </a>
+              </>
+            )}
+          </p>
+        </section>
       )
     }
-  </ReviewStatus>
 
-  <h2>Was gilt</h2>
-  <p class="grundlage">Rechtsgrundlage: {satz.legalBasis}.</p>
-  <ul class="anforderungen">
-    {
-      satz.requirements.map((anforderung) => (
-        <li data-anforderung={anforderung.requirementId}>
-          <h3>{anforderung.citation}</h3>
-          <p>{anforderung.guidance}</p>
-          <p class="fundstelle">
-            <a href={anforderung.officialSourceUrl} rel="nofollow noopener">
-              Amtliche Fundstelle
-            </a>
-          </p>
-        </li>
-      ))
-    }
-  </ul>
+    <section class="ziel__abschnitt" aria-labelledby="packliste-titel">
+      <p class="eyebrow">Zum Abhaken</p>
+      <h2 id="packliste-titel">Packliste</h2>
+      <p class="hilfe">
+        Zum Abhaken und Ausdrucken gedacht – die Häkchen bleiben auf diesem Gerät und werden
+        nirgends abgeglichen. <button type="button" id="drucken" hidden>Seite drucken</button>
+        <span id="druckhinweis">Im Browser über „Drucken“ (Strg+P beziehungsweise Cmd+P).</span>
+      </p>
+      <p id="packliste-stand" role="status" aria-live="polite" class="hilfe"></p>
+      <p>
+        <button type="button" id="packliste-zuruecksetzen" hidden>Häkchen zurücksetzen</button>
+      </p>
+      <div class="packliste-raster" data-packliste={ZIELLAENDER[code]!.slug}>
+        {
+          (['rule_task', 'documents', 'equipment'] as const).map((kategorie) => (
+            <section class="packliste-gruppe" aria-labelledby={`packliste-${kategorie}`}>
+              <h3 id={`packliste-${kategorie}`}>{KATEGORIE_TITEL[kategorie]}</h3>
+              <ul class="packliste" data-kategorie={kategorie}>
+                {packlisteNach(kategorie).map((eintrag) => (
+                  <li data-eintrag={eintrag.itemId}>
+                    <label class="packliste__zeile">
+                      <input type="checkbox" data-eintrag={eintrag.itemId} />
+                      <span>
+                        <strong>{eintrag.label}.</strong> {eintrag.note}
+                      </span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+      <Notice variante="hinweis" titel="Keine Reiseapotheke">
+        <p>
+          Auf dieser Liste stehen keine Medikamente, keine Wirkstoffe und keine Dosierungen. Was Ihr
+          Tier auf einer Reise braucht — gegen Reiseübelkeit, gegen Zecken, bei bestehenden
+          Erkrankungen —, entscheidet die Tierarztpraxis, die es kennt.
+        </p>
+      </Notice>
+    </section>
 
-  {
-    national && (
-      <section>
-        <>
-          <h2>{national.title}</h2>
-          <p>{national.text}</p>
-          <p>
-            Quellenprüfung: 09.09.2026 · <a href={national.url}>Offizielle Landesquelle</a>
-          </p>
-        </>
-        {code === 'FR' && (
-          <p>
-            <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F1839">
-              Zusätzliche Voraussetzungen für Kategoriehunde
-            </a>
-          </p>
-        )}
-        {code === 'NL' && (
-          <p>
-            <a href="https://www.amsterdam.nl/leefomgeving/dieren/honden-riem-hondenpoep-opruimen/">
-              Beispiel Amsterdam: amtliche Auslaufregeln
-            </a>
-          </p>
-        )}
-      </section>
-    )
-  }
-  <h2>Packliste</h2>
-  <p class="hilfe">
-    Zum Abhaken und Ausdrucken gedacht — die Häkchen bleiben auf diesem Gerät und werden nirgends
-    abgeglichen. <button type="button" id="drucken" hidden>Seite drucken</button>
-    <span id="druckhinweis">Im Browser über „Drucken“ (Strg+P beziehungsweise Cmd+P).</span>
-  </p>
+    <section class="ziel__abschnitt ziel__transport" aria-labelledby="transport-titel">
+      <h2 id="transport-titel">Fluggesellschaft, Bahn und Fähre</h2>
+      <p>
+        Die Beförderungsbedingungen des Unternehmens sind <strong>etwas anderes</strong> als die staatlichen
+        Einreiseregeln: Größe und Art der Transportbox, Gewichtsgrenzen, Anzahl der Tiere an Bord, Anmeldefristen
+        und Aufpreise legt jedes Unternehmen selbst fest, und sie ändern sich häufig. Sie werden hier
+        weder geprüft noch wiedergegeben.
+      </p>
+      <p>
+        Fragen Sie vor der Buchung beim konkreten Unternehmen nach — und lassen Sie sich die Zusage
+        für Ihr Tier schriftlich geben, nicht nur telefonisch.
+      </p>
+    </section>
 
-  <p id="packliste-stand" role="status" aria-live="polite" class="hilfe"></p>
-  <p>
-    <button type="button" id="packliste-zuruecksetzen" hidden>Häkchen zurücksetzen</button>
-  </p>
+    <section class="ziel__abschnitt" aria-labelledby="fragen-titel">
+      <h2 id="fragen-titel">Häufige Fragen</h2>
+      <div class="fragen">
+        {
+          fragen.map((f) => (
+            <details>
+              <summary>{f.frage}</summary>
+              <p>{f.antwort}</p>
+            </details>
+          ))
+        }
+      </div>
+    </section>
 
-  <div data-packliste={ZIELLAENDER[code]!.slug}>
-    {
-      (['rule_task', 'documents', 'equipment'] as const).map((kategorie) => (
-        <section aria-labelledby={`packliste-${kategorie}`}>
-          <h3 id={`packliste-${kategorie}`}>{KATEGORIE_TITEL[kategorie]}</h3>
-          <ul class="packliste" data-kategorie={kategorie}>
-            {packlisteNach(kategorie).map((eintrag) => (
-              <li data-eintrag={eintrag.itemId}>
-                <label class="packliste__zeile">
-                  <input type="checkbox" data-eintrag={eintrag.itemId} />
-                  <span>
-                    <strong>{eintrag.label}.</strong> {eintrag.note}
-                  </span>
-                </label>
+    <section class="ziel__abschnitt" aria-labelledby="ziele-titel">
+      <h2 id="ziele-titel">Andere Ziele</h2>
+      <p>
+        Eigene Seiten gibt es nur für {umfang.destinations.length} Ziele:
+        {' '}{umfang.destinations.map((c) => ZIELLAENDER[c]?.name ?? c).join(', ')}. Fehlt Ihr Ziel,
+        heißt das nicht, dass die Reise unzulässig wäre — nur, dass hier niemand die Regeln dafür
+        geprüft hat.
+      </p>
+      <ul class="ziele">
+        {
+          umfang.destinations
+            .filter((c) => c !== code && ZIELLAENDER[c] !== undefined)
+            .map((c) => (
+              <li>
+                <a href={subroutePath(market, 'travel', ZIELLAENDER[c]!.slug)}>
+                  {ZIELLAENDER[c]!.name} →
+                </a>
               </li>
-            ))}
-          </ul>
-        </section>
-      ))
-    }
+            ))
+        }
+      </ul>
+    </section>
   </div>
-
-  <Notice variante="hinweis" titel="Keine Reiseapotheke">
-    <p>
-      Auf dieser Liste stehen keine Medikamente, keine Wirkstoffe und keine Dosierungen. Was Ihr
-      Tier auf einer Reise braucht — gegen Reiseübelkeit, gegen Zecken, bei bestehenden Erkrankungen
-      —, entscheidet die Tierarztpraxis, die es kennt.
-    </p>
-  </Notice>
-
-  <h2>Fluggesellschaft, Bahn und Fähre</h2>
-  <p>
-    Die Beförderungsbedingungen des Unternehmens sind <strong>etwas anderes</strong> als die staatlichen
-    Einreiseregeln: Größe und Art der Transportbox, Gewichtsgrenzen, Anzahl der Tiere an Bord, Anmeldefristen
-    und Aufpreise legt jedes Unternehmen selbst fest, und sie ändern sich häufig. Sie werden hier weder
-    geprüft noch wiedergegeben.
-  </p>
-  <p>
-    Fragen Sie vor der Buchung beim konkreten Unternehmen nach — und lassen Sie sich die Zusage für
-    Ihr Tier schriftlich geben, nicht nur telefonisch.
-  </p>
-
-  <h2>Häufige Fragen</h2>
-  <div class="fragen">
-    {
-      fragen.map((f) => (
-        <details>
-          <summary>{f.frage}</summary>
-          <p>{f.antwort}</p>
-        </details>
-      ))
-    }
-  </div>
-
-  <h2>Andere Ziele</h2>
-  <p>
-    Eigene Seiten gibt es nur für {umfang.destinations.length} Ziele:
-    {' '}{umfang.destinations.map((c) => ZIELLAENDER[c]?.name ?? c).join(', ')}. Fehlt Ihr Ziel,
-    heißt das nicht, dass die Reise unzulässig wäre — nur, dass hier niemand die Regeln dafür
-    geprüft hat.
-  </p>
-  <ul class="ziele">
-    {
-      umfang.destinations
-        .filter((c) => c !== code && ZIELLAENDER[c] !== undefined)
-        .map((c) => (
-          <li>
-            <a href={subroutePath(market, 'travel', ZIELLAENDER[c]!.slug)}>
-              {ZIELLAENDER[c]!.name}
-            </a>
-          </li>
-        ))
-    }
-  </ul>
 
   <script>
     import { packlisteStarten } from '../../../features/profile/packing-ui.ts';
@@ -284,64 +319,139 @@ const structuredData = [
   </script>
 
   <style>
+    .ziel {
+      display: grid;
+      gap: var(--space-4);
+    }
+    .ziel__abschnitt {
+      margin-block: var(--space-8) 0;
+    }
+    .ziel__abschnitt h2 {
+      margin-block: 0 var(--space-3);
+    }
+    .eyebrow {
+      margin: 0 0 var(--space-2);
+      color: var(--color-primary);
+      font-size: var(--text-small);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
     .grundlage,
     .fundstelle,
-    .hilfe {
+    .hilfe,
+    .zitat {
       color: var(--color-text-muted);
       font-size: var(--text-small);
     }
-
+    .zitat {
+      margin: 0 0 var(--space-2);
+    }
     .anforderungen,
     .packliste,
     .ziele {
       list-style: none;
       padding: 0;
     }
-
-    .anforderungen > li {
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: var(--space-3) var(--space-4);
-      margin-block: var(--space-3);
+    .anforderungen {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-block: var(--space-4);
     }
-
+    .anforderungen > li {
+      flex: 1 1 22rem;
+      min-inline-size: 0;
+      padding: var(--space-4) var(--space-5);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      overflow-wrap: break-word;
+    }
     .anforderungen h3 {
       margin: 0 0 var(--space-1);
+      font-size: var(--text-lead);
+    }
+    .anforderungen p {
+      margin-block: var(--space-1);
+    }
+    .ziel__land {
+      padding: var(--space-6);
+      border: 1px solid var(--color-primary-border);
+      border-radius: var(--radius-xl);
+      background: var(--color-primary-soft);
+    }
+    .ziel__land > p {
+      max-inline-size: 70ch;
+    }
+    .packliste-raster {
+      display: grid;
+      gap: var(--space-4);
+      margin-block: var(--space-4);
+    }
+    .packliste-gruppe {
+      min-inline-size: 0;
+      padding: var(--space-4) var(--space-5);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+    }
+    .packliste-gruppe h3 {
+      margin: 0 0 var(--space-2);
       font-size: var(--text-body);
     }
-
     .packliste > li {
       margin-block: var(--space-2);
     }
-
     .packliste__zeile {
       display: flex;
       gap: var(--space-2);
       align-items: baseline;
       cursor: pointer;
     }
-
     .packliste__zeile input {
       flex: 0 0 auto;
       width: 1em;
       height: 1em;
       margin: 0;
     }
-
+    .ziel__transport {
+      padding: var(--space-5) var(--space-6);
+      border-inline-start: 4px solid var(--color-warning-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+    }
+    .ziel__transport p {
+      max-inline-size: 72ch;
+    }
     .fragen details {
       padding-block: var(--space-3);
       border-block-end: 1px solid var(--color-border);
     }
-
     .fragen summary {
       cursor: pointer;
       font-weight: 600;
     }
-
     .ziele {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--space-2) var(--space-4);
+      gap: var(--space-2);
+    }
+    .ziele a {
+      display: inline-block;
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--color-primary-border);
+      border-radius: var(--radius-pill);
+      background: var(--color-primary-soft);
+      color: var(--color-primary-hover);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    @media (min-width: 760px) {
+      .packliste-raster {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
   </style>
 </BaseLayout>
