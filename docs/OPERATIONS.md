@@ -151,6 +151,10 @@ Zwei Wirkungen werden unterschieden. `warnt` gilt für Karte, Gebührenkatalog u
 
 GitHub-Smoke-Workflow prüft Status, definierte Seiten, Ablauf wichtiger Quellen und Schema-Konsistenz. Umgesetzt in `.github/workflows/smoke.yml` und `scripts/monitor/smoke.ts` (M17-05); was er erkennt und wo er **nicht** hinreicht, steht vollständig in `docs/MONITORING.md`. Öffentliche Issues enthalten nur bereinigte Fehlerberichte. GitHub-Zeitpläne sind keine Alarm-SLA und können bei Inaktivität deaktiviert werden; denselben Scheduler sich selbst überwachen zu lassen deckt diesen Ausfall nicht ab. Betreiber prüft Actions-/Build-Benachrichtigungen und `/datenstand/` regelmäßig. Ein unabhängiger Monitoringdienst oder späterer kleiner Cloudflare-Zeitgeber ist eine separat freizugebende Betriebsverbesserung. [S11]
 
+### Auslieferung nach dem Merge
+
+Workers Builds startet einen Build für main mal nach einer, mal erst nach über zwanzig Minuten; am 21.10.2026 fiel einer ganz aus (#107, erst mit #108 ausgeliefert). `.github/workflows/live-check.yml` läuft deshalb bei jedem Push auf main, fragt jede Minute `/build-info.json` ab und wird grün, sobald der Commit oder ein neuerer, der ihn enthält, live ist. Nach 45 Minuten wird der Lauf rot; GitHub meldet das per E-Mail. Der Lauf stößt keinen Build an. Einen fehlenden Build holt der Betreiber im Cloudflare-Dashboard nach (Workers Builds → `petatlas-de` → Retry build) oder mit dem nächsten Merge.
+
 ## 12. Budgets und Eskalation
 
 Am Quellenprüftag nennt Cloudflare im Free-Tarif 3.000 Build-Minuten monatlich, 20 Minuten pro Build, 20.000 Static Assets und 25 MiB je Asset. Maßgeblich sind die Bedingungen bei Einrichtung. Reine Static-Asset-Auslieferung und Build-Ressourcen sind getrennt zu betrachten. [S03, S06–S07]
