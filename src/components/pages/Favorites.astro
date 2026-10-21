@@ -1,4 +1,5 @@
 ---
+import PageIntro from '../ui/PageIntro.astro';
 /**
  * M16-03 — Merkliste.
  *
@@ -17,15 +18,17 @@ const futterPfad = isFeatureEnabled(markt, 'food') ? routePath(markt, 'food') : 
 const kartenPfad = isFeatureEnabled(markt, 'map')
   ? routePath(markt, 'map')
   : '/de-de/tierarzt-karte/';
+// Die Merkliste gehört zum Profil-Feature; ist sie da, gibt es auch „Mein Tier“.
+const profilPfad = routePath(markt, 'profile');
 ---
 
-<h1>Merkliste</h1>
-
-<p>
-  Gemerkte Produkte und Orte — <strong>nur auf diesem Gerät</strong>. Es gibt kein Konto, keinen
-  automatischen Abgleich zwischen Geräten. Über „Mein Hund“ kannst du deine lokalen Daten als
-  Sicherungsdatei exportieren.
-</p>
+<PageIntro titel="Merkliste" eyebrow="Nur auf diesem Gerät" bild="hero-dog-cat-home">
+  <p>
+    Gemerkte Produkte und Orte — <strong>nur auf diesem Gerät</strong>. Es gibt kein Konto, keinen
+    automatischen Abgleich zwischen Geräten. Über <a href={profilPfad}>„Mein Tier“</a> kannst du deine
+    lokalen Daten als Sicherungsdatei exportieren.
+  </p>
+</PageIntro>
 
 <Notice variante="hinweis" titel="Warum hier nie ein alter Preis steht">
   <p>
@@ -56,6 +59,39 @@ const kartenPfad = isFeatureEnabled(markt, 'map')
 </script>
 
 <style>
+  #merkliste :global(.merk__leer) {
+    margin-block: var(--space-6);
+    padding: var(--space-8) var(--space-6);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    text-align: center;
+  }
+
+  #merkliste :global(.merk__leer .merk__kopf) {
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+    font-weight: 700;
+  }
+
+  #merkliste :global(.merk__wege) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-block-end: 0;
+  }
+
+  #merkliste :global(.merk__wege a) {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    color: var(--color-primary-hover);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
   .hilfe {
     color: var(--color-text-muted);
     font-size: var(--text-small);

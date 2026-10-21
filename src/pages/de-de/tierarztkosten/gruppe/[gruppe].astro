@@ -57,21 +57,24 @@ const titelIstSehrLang = gruppe.name.length > 95;
     ]}
   />
 
-  <TechnicalHeading text={titelIstSehrLang ? 'GOT-Gebührengruppe' : gruppe.name} />
-  {
-    titelIstSehrLang && (
-      <p class="amtliche-bezeichnung">
-        <strong>Amtliche Bezeichnung:</strong> {gruppe.name}
-      </p>
-    )
-  }
-  <p>
-    {gruppe.positionen.length}{' '}
-    {gruppe.positionen.length === 1 ? 'Position' : 'Positionen'} aus {gruppe.teil} der Fassung {
-      quelle.sourceVersion
-    }. Angegeben ist der Grundbetrag ohne Umsatzsteuer; die Gebührensätze stehen auf der jeweiligen
-    Seite.
-  </p>
+  <header class="gruppen-kopf">
+    <p class="gruppen-kopf__eyebrow">GOT 2022 · {gruppe.teil}</p>
+    <TechnicalHeading text={titelIstSehrLang ? 'GOT-Gebührengruppe' : gruppe.name} />
+    {
+      titelIstSehrLang && (
+        <p class="amtliche-bezeichnung">
+          <strong>Amtliche Bezeichnung:</strong> {gruppe.name}
+        </p>
+      )
+    }
+    <p>
+      {gruppe.positionen.length}{' '}
+      {gruppe.positionen.length === 1 ? 'Position' : 'Positionen'} aus {gruppe.teil} der Fassung {
+        quelle.sourceVersion
+      }. Angegeben ist der Grundbetrag ohne Umsatzsteuer; die Gebührensätze stehen auf der
+      jeweiligen Seite.
+    </p>
+  </header>
 
   <ul class="positionen">
     {
@@ -117,10 +120,45 @@ const titelIstSehrLang = gruppe.name.length > 95;
     overflow-wrap: anywhere;
   }
 
+  .gruppen-kopf {
+    margin-block: var(--space-2) var(--space-8);
+    padding: clamp(var(--space-6), 4vw, var(--space-10));
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 0% 0%, rgb(255 255 255 / 65%), transparent 40%),
+      var(--color-primary-soft);
+  }
+
+  .gruppen-kopf > :global(h1) {
+    margin-block: 0 var(--space-3);
+  }
+
+  .gruppen-kopf > p:last-child {
+    margin-block-end: 0;
+  }
+
+  .gruppen-kopf__eyebrow {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
   .positionen {
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 0 var(--space-8);
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .positionen li:last-child {
+    border-block-end: 0;
   }
 
   .positionen li {

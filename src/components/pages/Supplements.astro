@@ -461,17 +461,22 @@ const zooroyalCatalog = zooroyalKatalog();
     flex-direction: column;
     min-width: 0;
   }
+  /* Ruhige, gleich hohe Bildfläche; das ganze Produkt bleibt sichtbar. */
   .supplement-products figure {
     position: relative;
+    display: grid;
+    place-items: center;
     margin: -1.3rem -1.3rem 1rem;
+    padding: var(--space-4);
+    border-radius: 1rem 1rem 0 0;
+    background: var(--color-surface-subtle);
   }
   .supplement-products img {
     display: block;
     inline-size: 100%;
-    block-size: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 1rem 1rem 0 0;
+    block-size: 11rem;
+    object-fit: contain;
+    mix-blend-mode: multiply;
   }
   .supplement-products figcaption {
     position: absolute;
@@ -485,7 +490,7 @@ const zooroyalCatalog = zooroyalKatalog();
   }
   .supplement-products h3 {
     margin: 0;
-    font-size: var(--text-h3);
+    font-size: var(--text-h4);
   }
   .species-label {
     align-self: flex-start;
