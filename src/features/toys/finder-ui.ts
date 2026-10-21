@@ -212,7 +212,7 @@ export function finderStarten(): void {
     const filter = aktuelleFilter(bedarf);
     const kopf =
       treffer.length === 0
-        ? '<div class="finder__leer"><h3>Keine belegte Kombination gefunden</h3><p>Entfernen Sie einen Zusatzfilter oder wählen Sie „Alle Spielarten“. Es werden nur Produkte gezeigt, deren Angaben den Filtern nachweisbar entsprechen.</p><button type="button" data-finder-reset>Filter zurücksetzen</button></div>'
+        ? '<div class="finder__leer"><h3>Keine belegte Kombination gefunden</h3><p>Entferne einen Zusatzfilter oder wähl „Alle Spielarten“. Es werden nur Produkte gezeigt, deren Angaben den Filtern nachweisbar entsprechen.</p><button type="button" data-finder-reset>Filter zurücksetzen</button></div>'
         : `<div class="finder__result-head"><div><p class="eyebrow">Ergebnis</p><h2>${treffer.length} passende ${treffer.length === 1 ? 'Option' : 'Optionen'}</h2></div><p>${escape(filter.join(' · '))}</p></div>`;
     ausgabe.innerHTML = `${kopf}<ul class="finder__liste">${treffer
       .map((eintrag) => trefferMarkup(eintrag, fressnapfOffers, zooRoyalOffers))

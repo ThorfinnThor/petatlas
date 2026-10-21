@@ -7,6 +7,6 @@
   "minZoom": 5,
   "policyUrl": "https://operations.osmfoundation.org/policies/tiles/",
   "$comment_policy": "Die Nutzungspolitik verlangt sichtbare Attribution, verbietet Vorabladen und Offlinearchive und sagt ausdrücklich, dass es keinen SLA gibt und der Zugang jederzeit entzogen werden kann. Für einen kommerziellen Start ist deshalb ein eigener oder bezahlter Kacheldienst vorzusehen; siehe TODO.md.",
-  "noticeText": "Kartendarstellung von OpenStreetMap. Beim Anzeigen der Karte werden Kacheln von tile.openstreetmap.org geladen; dabei sieht dieser Dienst Ihre IP-Adresse.",
+  "noticeText": "Kartendarstellung von OpenStreetMap. Beim Anzeigen der Karte werden Kacheln von tile.openstreetmap.org geladen; dabei sieht dieser Dienst deine IP-Adresse.",
   "hosts": ["https://tile.openstreetmap.org"]
 }

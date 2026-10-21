@@ -348,16 +348,16 @@ export function calculateCosts(
     warnings: [
       ...(special
         ? [
-            'Abweichende Berechnung nach den von Ihnen bestätigten Praxisangaben; keine automatische Prüfung der rechtlichen Voraussetzungen.',
+            'Abweichende Berechnung nach den von dir bestätigten Praxisangaben; keine automatische Prüfung der rechtlichen Voraussetzungen.',
           ]
         : []),
       ...(special?.waiveEmergencyFee
-        ? ['Notdienstgebühr auf Ihre Angabe hin nicht berechnet.']
+        ? ['Notdienstgebühr auf deine Angabe hin nicht berechnet.']
         : []),
       ...(lines.some((line) => line.officialItemId === '1') &&
       lines.some((line) => line.label.includes('mit Beratung'))
         ? [
-            'Mögliche Doppelbewertung: Beratung ist in einer ausgewählten Leistung enthalten. Für dieselbe Leistung darf sie nach § 6 GOT nicht zusätzlich berechnet werden. Prüfen Sie, ob die Beratung eine eigenständige andere Leistung betrifft.',
+            'Mögliche Doppelbewertung: Beratung ist in einer ausgewählten Leistung enthalten. Für dieselbe Leistung darf sie nach § 6 GOT nicht zusätzlich berechnet werden. Prüf, ob die Beratung eine eigenständige andere Leistung betrifft.',
           ]
         : []),
     ],

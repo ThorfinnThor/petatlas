@@ -151,6 +151,6 @@ export function pruefeImport(text: string, maxBytes = MAX_IMPORT_BYTES): ImportE
  * gespeichert ist. Wer sie verschickt, verschickt genau das.
  */
 export const EXPORT_WARNUNG =
-  'Die Datei ist unverschlüsselt und enthält Ihre lokal gespeicherten Angaben: Profil, ' +
-  'Merkliste und abgehakte Packlisten. Sie wird nirgends hochgeladen — was Sie damit tun, ' +
-  'entscheiden Sie. Wer sie weitergibt, gibt diese Angaben weiter.';
+  'Die Datei ist unverschlüsselt und enthält deine lokal gespeicherten Angaben: Profil, ' +
+  'Merkliste und abgehakte Packlisten. Sie wird nirgends hochgeladen — was du damit tust, ' +
+  'entscheidest du. Wer sie weitergibt, gibt diese Angaben weiter.';

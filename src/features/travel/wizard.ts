@@ -119,8 +119,8 @@ export interface WizardErgebnis {
 }
 
 export const ZUSTAND_LABEL: Readonly<Record<RequirementState, string>> = {
-  fulfilled: 'nach Ihren Angaben erfüllt',
-  not_fulfilled: 'nach Ihren Angaben nicht erfüllt',
+  fulfilled: 'nach deinen Angaben erfüllt',
+  not_fulfilled: 'nach deinen Angaben nicht erfüllt',
   unknown: 'offen — Angabe fehlt',
   not_applicable: 'für diese Reise nicht einschlägig',
 };
@@ -151,7 +151,7 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
       hinweise: [
         'Diese Reise liegt außerhalb des geprüften Umfangs. Es wird deshalb keine Checkliste ' +
           'erzeugt: eine Auskunft, die niemand geprüft hat, wäre schlechter als keine. Was das ' +
-          'für Ihren Fall bedeutet, sagt Ihnen die zuständige Behörde oder Ihre Tierarztpraxis.',
+          'für deinen Fall bedeutet, sagt dir die zuständige Behörde oder deine Tierarztpraxis.',
       ],
     };
   }
@@ -195,7 +195,7 @@ export function pruefeWizard(eingabe: WizardEingabe): WizardErgebnis {
           ]
         : pruefung.hinweise),
       ...national.map((entry) => entry.text),
-      'Nationale und örtliche Zusatzvorgaben sind keine pauschal bestandene Einreiseprüfung. Beachten Sie die Länderhinweise und deren Quellen.',
+      'Nationale und örtliche Zusatzvorgaben sind keine pauschal bestandene Einreiseprüfung. Beachte die Länderhinweise und deren Quellen.',
     ],
   };
 }

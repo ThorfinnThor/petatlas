@@ -28,13 +28,13 @@ export type StandortErgebnis =
 
 export const STANDORT_TEXTE = {
   abgelehnt:
-    'Der Standort wurde nicht freigegeben. Das ist in Ordnung — geben Sie einen Ort ein, das Ergebnis ist dasselbe.',
+    'Der Standort wurde nicht freigegeben. Das ist in Ordnung — gib einen Ort ein, das Ergebnis ist dasselbe.',
   nichtVerfuegbar:
-    'Dieser Browser gibt keinen Standort her. Geben Sie einen Ort ein, das Ergebnis ist dasselbe.',
+    'Dieser Browser gibt keinen Standort her. Gib einen Ort ein, das Ergebnis ist dasselbe.',
   zeitueberschreitung:
-    'Die Standortbestimmung hat zu lange gedauert. Geben Sie einen Ort ein, das Ergebnis ist dasselbe.',
+    'Die Standortbestimmung hat zu lange gedauert. Gib einen Ort ein, das Ergebnis ist dasselbe.',
   hinweisVorher:
-    'Die genauen Standortkoordinaten werden von uns nicht gespeichert und nicht übertragen. Eine zusätzlich angezeigte Karte lädt jedoch Kartenausschnitte beim externen Kacheldienst; daraus kann Ihr ungefährer Standort erkennbar sein.',
+    'Die genauen Standortkoordinaten werden von uns nicht gespeichert und nicht übertragen. Eine zusätzlich angezeigte Karte lädt jedoch Kartenausschnitte beim externen Kacheldienst; daraus kann dein ungefährer Standort erkennbar sein.',
 } as const;
 
 export interface StandortOptionen {
@@ -94,6 +94,6 @@ export function frageStandort(optionen: StandortOptionen = {}): Promise<Standort
  * Verwaltungszugehörigkeit, und ein Reverse-Geocoding gibt es hier nicht.
  */
 export function standortLabel(genauigkeitMeter: number | null): string {
-  if (genauigkeitMeter === null) return 'Ihr ungefährer Standort';
-  return `Ihr ungefährer Standort (±${genauigkeitMeter} m)`;
+  if (genauigkeitMeter === null) return 'deinen ungefähren Standort';
+  return `deinen ungefähren Standort (±${genauigkeitMeter} m)`;
 }

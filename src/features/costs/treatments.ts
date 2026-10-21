@@ -34,7 +34,7 @@ const FAKTOR = {
 const KOSTENVORANSCHLAG = {
   frage: 'Kann ich vorher nach den Kosten fragen?',
   antwort:
-    'Ja. Fragen Sie vor einem geplanten Eingriff nach einem Kostenvoranschlag mit den GOT-Positionen und dem vorgesehenen Faktor. So lassen sich Angebote vergleichen und spätere Rechnungen nachvollziehen.',
+    'Ja. Frag vor einem geplanten Eingriff nach einem Kostenvoranschlag mit den GOT-Positionen und dem vorgesehenen Faktor. So lassen sich Angebote vergleichen und spätere Rechnungen nachvollziehen.',
 };
 
 export const BEHANDLUNGEN: readonly Behandlungsseite[] = [

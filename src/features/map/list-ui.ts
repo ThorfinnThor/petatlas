@@ -345,7 +345,7 @@ export function listeStarten(): void {
         } catch {
           if (sucheId === namensSuche)
             ortsHinweis.textContent =
-              'Die Ortsnamen konnten nicht geladen werden. Bitte versuchen Sie die Suche erneut.';
+              'Die Ortsnamen konnten nicht geladen werden. Bitte versuch die Suche erneut.';
           return;
         }
         if (sucheId !== namensSuche) return;
@@ -417,7 +417,7 @@ export function listeStarten(): void {
       .catch(() => {
         if (suchLauf === 0)
           ortsHinweis.textContent =
-            'Der gemerkte Ort konnte gerade nicht geladen werden. Bitte laden Sie die Seite erneut oder suchen Sie einen Ort.';
+            'Der gemerkte Ort konnte gerade nicht geladen werden. Bitte lade die Seite erneut oder such einen Ort.';
       });
   }
   if (requestedPlace && requestedPlace.length <= 100) {

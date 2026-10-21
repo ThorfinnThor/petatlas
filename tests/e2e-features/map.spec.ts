@@ -24,9 +24,9 @@ test('lädt beim Seitenaufruf keine einzige Kachel', async ({ page }) => {
 test('sagt vorher, was beim Anzeigen passiert', async ({ page }) => {
   await page.goto(KARTE);
   await mapView(page);
-  await expect(page.getByText(/Die Karte lädt erst, wenn Sie sie anfordern/)).toBeVisible();
+  await expect(page.getByText(/Die Karte lädt erst, wenn du sie anforderst/)).toBeVisible();
   // Der Hinweis steht bewusst zweimal: als Ankündigung und als Datenschutzsatz.
-  await expect(page.getByText(/Ihre IP-Adresse/).first()).toBeVisible();
+  await expect(page.getByText(/deine IP-Adresse/).first()).toBeVisible();
   await expect(page.locator('.kartenhinweis')).toContainText('tile.openstreetmap.org');
   await expect(page.locator('#karte')).toBeHidden();
 });
