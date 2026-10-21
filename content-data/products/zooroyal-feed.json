@@ -2,6 +2,15 @@
   "schemaVersion": 1,
   "advertiserId": "14979",
   "publisherId": "3037577",
-  "products": [],
-  "generatedAt": null
+  "products": [
+    {
+      "productId": "kong-classic",
+      "productName": "KONG Classic",
+      "merchantProductId": "1000012360",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F1vp8k0-90bA5A7t.jpg%3Fhost%3Dct&feedId=33481&k=51528f77387e660e869999d5aba344fac26edd7c",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=36165718150&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/kong-classic-md/1000012360/"
+    }
+  ],
+  "generatedAt": "2026-10-21T09:10:44.765Z"
 }
