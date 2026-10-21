@@ -114,7 +114,7 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
           ))}
         </div>
       )}
-      <ul class="feed-catalog__grid">
+      <ul class={`feed-catalog__grid${products.length < 4 ? ' feed-catalog__grid--wenige' : ''}`}>
         {products.map((product) => (
           <li
             class="feed-catalog__card"
@@ -318,6 +318,17 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
 
   .feed-catalog__card[hidden] {
     display: none;
+  }
+
+  /* Bei ein bis drei Produkten keine leeren Rasterspalten: Karten in fester Breite. */
+  .feed-catalog__grid.feed-catalog__grid--wenige {
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-columns: none;
+  }
+
+  .feed-catalog__grid--wenige .feed-catalog__card {
+    flex: 0 1 18rem;
   }
 
   @media (min-width: 600px) {

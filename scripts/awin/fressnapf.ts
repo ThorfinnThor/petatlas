@@ -211,6 +211,50 @@ function sichereUrl(raw: string | undefined): URL | null {
   }
 }
 
+/**
+ * Manche Händler liefern im Feld für den Händlerlink eine Weiterleitung über
+ * ein fremdes Trackingnetz (ZooRoyal: a.nonstoppartner.net). Die eigentliche
+ * Produktadresse steht dann als Parameter darin. Übernommen wird sie nur, wenn
+ * sie sicher ist und auf einen erlaubten Händlerhost zeigt; die Weiterleitung
+ * selbst wird nie veröffentlicht.
+ */
+export function haendlerZiel(url: URL, merchantHosts: ReadonlySet<string>): URL | null {
+  if (merchantHosts.has(url.host)) return url;
+  for (const wert of url.searchParams.values()) {
+    for (const kandidat of [wert, safeDecode(wert)]) {
+      const ziel = sichereUrl(kandidat);
+      if (ziel && merchantHosts.has(ziel.host)) return ziel;
+    }
+  }
+  return null;
+}
+
+/**
+ * Produktbild: bevorzugt über den Awin-Bildserver, weil CSP und Audit jeden
+ * Bildhost einzeln erlauben müssen; sonst das erste sichere Händlerbild.
+ */
+const AWIN_BILDHOST = 'images2.productserve.com';
+function produktbild(row: Record<string, string>): URL | null {
+  const kandidaten = [
+    'aw_image_url',
+    'large_image',
+    'large_image_url',
+    'merchant_image_url',
+    'image_url',
+  ]
+    .map((field) => sichereUrl(feld(row, field)))
+    .filter((url): url is URL => url !== null);
+  return kandidaten.find((url) => url.host === AWIN_BILDHOST) ?? kandidaten[0] ?? null;
+}
+
+function safeDecode(wert: string): string {
+  try {
+    return decodeURIComponent(wert);
+  } catch {
+    return wert;
+  }
+}
+
 const KATALOG_KATEGORIE_FELDER = [
   'merchant_category',
   'merchant category',
@@ -380,19 +424,18 @@ export function katalogPruefung(
   if (!category) return 'Kategorie unklar';
   const species = katalogTierart(row);
   if (!species) return 'Tierart unklar';
-  const image = sichereUrl(
-    feld(row, 'large_image', 'large_image_url', 'merchant_image_url', 'aw_image_url', 'image_url'),
-  );
+  const image = produktbild(row);
   if (!image) return 'ohne Bild';
   const merchant = sichereUrl(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
   if (!merchant) return 'ohne Händlerlink';
+  const ziel = haendlerZiel(merchant, merchantHosts);
   const affiliate = sichereUrl(feld(row, 'aw_deep_link', 'affiliate_url', 'tracking_url'));
   if (!affiliate) return 'ohne Partnerlink';
   if (category.category === 'care' && pflegeKategorieFuerProduktname(name) === null)
     return 'kein konkretes Pflegeprodukt';
-  if (!merchantHosts.has(merchant.host)) return 'fremder Händlerhost';
+  if (!ziel) return 'fremder Händlerhost';
   if (!AWIN_TRACKING_HOSTS.has(affiliate.host)) return 'fremder Trackinghost';
   const advertiser = affiliate.searchParams.get('m') ?? affiliate.searchParams.get('awinmid');
   const publisher = affiliate.searchParams.get('a') ?? affiliate.searchParams.get('awinaffid');
@@ -410,7 +453,7 @@ export function katalogPruefung(
     merchantProductId,
     imageUrl: image.toString(),
     affiliateUrl: affiliate.toString(),
-    merchantUrl: merchant.toString(),
+    merchantUrl: ziel.toString(),
   };
 }
 
@@ -515,12 +558,13 @@ export function produktAusZeileFuerPartner(
   if (target.required?.some((term) => !haystack.includes(normalisiere(term)))) return null;
   if (target.exclude?.some((term) => haystack.includes(normalisiere(term)))) return null;
 
-  const image = sichereUrl(feld(row, 'large_image', 'merchant_image_url', 'aw_image_url'));
+  const image = produktbild(row);
   const merchant = sichereUrl(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
   const affiliate = sichereUrl(feld(row, 'aw_deep_link', 'affiliate_url', 'tracking_url'));
-  if (!image || !merchant || !affiliate || !merchantHosts.has(merchant.host)) return null;
+  const ziel = merchant ? haendlerZiel(merchant, merchantHosts) : null;
+  if (!image || !ziel || !affiliate) return null;
   if (!AWIN_TRACKING_HOSTS.has(affiliate.host)) return null;
   const advertiser = affiliate.searchParams.get('m') ?? affiliate.searchParams.get('awinmid');
   const publisher = affiliate.searchParams.get('a') ?? affiliate.searchParams.get('awinaffid');
@@ -533,7 +577,7 @@ export function produktAusZeileFuerPartner(
       feld(row, 'merchant_product_id', 'merchant product id', 'aw_product_id') ?? null,
     imageUrl: image.toString(),
     affiliateUrl: affiliate.toString(),
-    merchantUrl: merchant.toString(),
+    merchantUrl: ziel.toString(),
   };
 }
 
