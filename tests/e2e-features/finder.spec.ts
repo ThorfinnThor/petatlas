@@ -22,7 +22,8 @@ test('filters only on evidenced toy attributes and can be reset', async ({ page 
   await page.goto(SPIELZEUG);
   await page.getByLabel('Werfen & apportieren').check();
   await expect(page.locator('.finder__card')).toHaveCount(4);
-  await page.getByLabel('Schwimmfähig').check();
+  // Im Filterformular suchen: Produktnamen im Händlerkatalog enthalten das Wort ebenfalls.
+  await page.locator('.finder-shell').getByLabel('Schwimmfähig').check();
   await expect(page.locator('.finder__card')).toHaveCount(3);
   await expect(page.locator('.finder__card')).toContainText([
     'Floating Stick M',
