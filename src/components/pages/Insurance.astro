@@ -1,10 +1,12 @@
 ---
+import PageIntro from '../ui/PageIntro.astro';
 import type { MarketConfig } from '../../domain/market.ts';
 import InsuranceDisclosure from '../InsuranceDisclosure.astro';
 import PartnerCta from '../PartnerCta.astro';
 import Notice from '../Notice.astro';
 import InsuranceProductGrid from '../InsuranceProductGrid.astro';
 import { insuranceProgramme, partnerHinweisErlaubt } from '../../features/commerce/partner.ts';
+import snapshot from '../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 
 interface Props {
   market: MarketConfig;
@@ -17,71 +19,222 @@ const entscheidung = partnerHinweisErlaubt({
   stichtag: new Date().toISOString().slice(0, 10),
   programme: insuranceProgramme(),
 });
+
+/**
+ * Kostenbeispiele aus der amtlichen GOT: einfacher und dreifacher Satz einer
+ * einzelnen Position, netto. Keine Gesamtrechnung, keine Steuer- oder
+ * Rundungsannahme – damit hängt nichts an den noch nicht abgenommenen
+ * Rechenannahmen des Kostenrechners.
+ */
+const position = (id: string) => {
+  const item = (
+    snapshot.items as { officialItemId: string; baseAmountMinor: number; originalLabel: string }[]
+  ).find((i) => i.officialItemId === id);
+  if (!item) throw new Error(`GOT-Position ${id} fehlt im Snapshot.`);
+  return item;
+};
+const euro = (minor: number) =>
+  (minor / 100).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+const beispiele = [
+  {
+    id: '16',
+    titel: 'Allgemeine Untersuchung',
+    text: 'Der Standard bei fast jedem Besuch. Dazu kommen je nach Anlass weitere Leistungen.',
+    notdienst: false,
+  },
+  {
+    id: '337',
+    titel: 'Inhalationsnarkose',
+    text: 'Gehört zu vielen Operationen – zusätzlich zur Operation selbst.',
+    notdienst: false,
+  },
+  {
+    id: '470',
+    titel: 'Magendrehung, Operation beim Hund',
+    text: 'Ein typischer Notfall. Im Notdienst gilt der zwei- bis vierfache Satz plus Notdienstgebühr.',
+    notdienst: true,
+  },
+].map((b) => {
+  const item = position(b.id);
+  return {
+    ...b,
+    einfach: euro(item.baseAmountMinor),
+    dreifach: euro(item.baseAmountMinor * 3),
+    vierfach: euro(item.baseAmountMinor * 4),
+  };
+});
+const opDreifach = position('470').baseAmountMinor * 3;
 ---
 
-<p class="eyebrow">Finanzielle Vorsorge · Hund und Katze</p>
-<h1>Tierversicherung prüfen</h1>
-<p class="lead">
-  Eine Tierkrankenversicherung kann hohe Tierarztkosten abfedern. Ob ein Vertrag zu Ihnen passt,
-  hängt von Ihrem Tier, Ihren Rücklagen und den konkreten Bedingungen ab. Diese Seite hilft beim
-  Lesen der Bedingungen; sie vergleicht keine Tarife und gibt keine persönliche Empfehlung.
+<PageIntro
+  titel="Tierversicherung prüfen"
+  eyebrow="Finanzielle Vorsorge · Hund und Katze"
+  bild="health-dog-home"
+>
+  <p>
+    Eine Tierkrankenversicherung kann hohe Tierarztkosten abfedern. Ob ein Vertrag zu dir passt,
+    hängt von deinem Tier, deinen Rücklagen und den konkreten Bedingungen ab. Diese Seite hilft beim
+    Lesen der Bedingungen; sie vergleicht keine Tarife und gibt keine persönliche Empfehlung.
+  </p>
+</PageIntro>
+
+<p class="kurz">
+  <strong>Kurz gesagt:</strong> Eine OP-Versicherung zahlt bei Operationen, eine Krankenversicherung zusätzlich
+  bei ambulanten Behandlungen. Entscheidend ist eine Frage: Könntest du eine Rechnung von mehreren hundert
+  Euro kurzfristig aus eigenen Rücklagen bezahlen? Wenn nicht, lohnt der Blick in die Bedingungen.
 </p>
 
-<PartnerCta
-  market={market}
-  placement="information_page"
-  programme={insuranceProgramme()}
-  description="HanseMerkur bietet Kranken- und OP-Versicherungen für Hunde und Katzen an. Beiträge, Ausschlüsse und der genaue Leistungsumfang stehen beim Anbieter."
-  linkLabel="Tierversicherung bei HanseMerkur ansehen"
-  linkContext={{
-    verticalRef: 'insurance',
-    placementRef: 'information-page',
-    contentRef: 'tierkrankenversicherung',
-    pageSlug: 'tierversicherung',
-  }}
-/>
+<section class="ins-section" aria-labelledby="kosten-titel">
+  <p class="eyebrow">Was auf eine Rechnung kommen kann</p>
+  <h2 id="kosten-titel">Drei Beispiele aus der Gebührenordnung</h2>
+  <p class="ins-section__lead">
+    Einzelne Positionen der GOT, netto, im einfachen und dreifachen Satz. Eine echte Rechnung
+    enthält meist mehrere Positionen sowie Medikamente, Material und Umsatzsteuer.
+  </p>
+  <ul class="ins-costs">
+    {
+      beispiele.map((b) => (
+        <li class={b.notdienst ? 'ins-cost ins-cost--notfall' : 'ins-cost'}>
+          <p class="ins-cost__nr">GOT-Nr. {b.id}</p>
+          <h3>{b.titel}</h3>
+          <p class="ins-cost__betrag">
+            <span>{b.einfach}</span>
+            <span class="ins-cost__bis">bis</span>
+            <span>{b.notdienst ? b.vierfach : b.dreifach}</span>
+          </p>
+          <p class="ins-cost__satz">
+            {b.notdienst ? 'einfacher bis vierfacher Satz' : 'einfacher bis dreifacher Satz'}
+          </p>
+          <p>{b.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="ins-hinweis">
+    Quelle: Gebührenordnung für Tierärzte (GOT 2022), amtlicher Grundbetrag × Faktor.
+    <a href="/de-de/tierarztkosten/">Eigene Rechnung zusammenstellen →</a>
+  </p>
+</section>
 
-<InsuranceProductGrid />
+<section class="ins-section" aria-labelledby="arten-titel">
+  <p class="eyebrow">Zwei Grundformen</p>
+  <h2 id="arten-titel">OP-Versicherung oder Krankenversicherung?</h2>
+  <div class="ins-compare">
+    <article class="ins-type">
+      <p class="ins-type__label">OP-Versicherung</p>
+      <h3>Schutz für den großen Eingriff</h3>
+      <ul>
+        <li>Operationen unter Narkose</li>
+        <li>je nach Tarif Voruntersuchung und Nachbehandlung rund um die Operation</li>
+        <li>ambulante Behandlungen ohne Operation in der Regel nicht</li>
+      </ul>
+      <p>Geringerer Beitrag, engerer Schutz.</p>
+    </article>
+    <article class="ins-type ins-type--voll">
+      <p class="ins-type__label">Krankenversicherung</p>
+      <h3>Schutz auch für den Alltag</h3>
+      <ul>
+        <li>Operationen wie bei der OP-Versicherung</li>
+        <li>zusätzlich ambulante Behandlungen, Diagnostik und Medikamente</li>
+        <li>je nach Tarif ein Budget für Vorsorge wie Impfungen</li>
+      </ul>
+      <p>Höherer Beitrag, breiterer Schutz.</p>
+    </article>
+  </div>
+  <p class="ins-hinweis">
+    Was tatsächlich versichert ist, steht nur in den Versicherungsbedingungen des jeweiligen Tarifs.
+  </p>
+</section>
 
-<h2>Vor dem Abschluss vergleichen</h2>
-<div class="insurance-grid">
-  <article>
-    <h3>OP-Schutz oder Krankenvollschutz?</h3>
+<section class="ins-section" aria-labelledby="check-titel">
+  <p class="eyebrow">Vor dem Abschluss</p>
+  <h2 id="check-titel">Sechs Punkte, die du in den Bedingungen prüfen solltest</h2>
+  <ol class="ins-check">
+    <li>
+      <h3>Bis zu welchem GOT-Satz wird erstattet?</h3>
+      <p>
+        Praxen rechnen bis zum dreifachen, im Notdienst bis zum vierfachen Satz ab. Erstattet der
+        Tarif weniger, zahlst du die Differenz.
+      </p>
+    </li>
+    <li>
+      <h3>Selbstbeteiligung</h3>
+      <p>Ein fester Betrag oder ein Prozentsatz je Rechnung oder je Jahr senkt die Erstattung.</p>
+    </li>
+    <li>
+      <h3>Jahreshöchstleistung</h3>
+      <p>Viele Tarife begrenzen die Erstattung pro Jahr, manche in den ersten Jahren zusätzlich.</p>
+    </li>
+    <li>
+      <h3>Wartezeit</h3>
+      <p>Bis der Schutz beginnt, vergehen oft Wochen; Unfälle sind manchmal sofort versichert.</p>
+    </li>
+    <li>
+      <h3>Vorerkrankungen und Ausschlüsse</h3>
+      <p>
+        Bekannte Erkrankungen und bestimmte Rassenrisiken können ausgeschlossen sein. Antragsfragen
+        vollständig und wörtlich beantworten.
+      </p>
+    </li>
+    <li>
+      <h3>Alter, Beitragsanpassung, Kündigung</h3>
+      <p>Höchstalter beim Abschluss, steigende Beiträge im Alter und deine Kündigungsrechte.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="ins-section ins-reserve" aria-labelledby="ruecklage-titel">
+  <div>
+    <p class="eyebrow">Die Alternative</p>
+    <h2 id="ruecklage-titel">Was eine eigene Rücklage bringt</h2>
     <p>
-      OP-Tarife decken einen engeren Bereich ab. Ein Krankenvollschutz kann auch allgemeine
-      Behandlungen erfassen. Prüfen Sie die Definitionen im Vertrag und bilden Sie daneben eine
-      eigene Rücklage für nicht versicherte Kosten.
+      Statt eines Beitrags kannst du jeden Monat einen festen Betrag zurücklegen. Das Geld bleibt
+      deins, wenn nichts passiert – reicht aber in den ersten Jahren nicht für einen großen
+      Eingriff.
     </p>
-  </article>
-  <article>
-    <h3>Erstattung und Eigenanteil</h3>
-    <p>
-      Achten Sie auf den erstatteten GOT-Satz, Selbstbeteiligungen, Jahreshöchstleistungen und
-      Begrenzungen in den ersten Versicherungsjahren. Eine Kostenübernahme ist nie allein aus dem
-      Produktnamen abzulesen.
+  </div>
+  <form class="ins-reserve__rechner" id="ruecklage" data-op-dreifach={opDreifach}>
+    <label for="ruecklage-betrag">Monatlich zurücklegen</label>
+    <div class="ins-reserve__eingabe">
+      <input id="ruecklage-betrag" type="range" min="10" max="100" step="5" value="30" />
+      <output for="ruecklage-betrag" id="ruecklage-wert">30 €</output>
+    </div>
+    <dl class="ins-reserve__ergebnis">
+      <div><dt>nach 1 Jahr</dt><dd data-monate="12">360 €</dd></div>
+      <div><dt>nach 3 Jahren</dt><dd data-monate="36">1.080 €</dd></div>
+      <div><dt>nach 5 Jahren</dt><dd data-monate="60">1.800 €</dd></div>
+    </dl>
+    <p class="ins-hinweis">
+      Zum Vergleich: Allein die Operation einer Magendrehung kostet im dreifachen Satz {
+        euro(opDreifach)
+      } netto – ohne Narkose, Klinikaufenthalt und Medikamente.
     </p>
-  </article>
-  <article>
-    <h3>Wartezeiten und Vorerkrankungen</h3>
-    <p>
-      Lesen Sie, ab wann Schutz besteht, welche Erkrankungen ausgeschlossen sind und welche Angaben
-      zum Gesundheitszustand verlangt werden. Beantworten Sie Antragsfragen vollständig und direkt
-      nach dem Wortlaut.
-    </p>
-  </article>
-  <article>
-    <h3>Laufzeit und Reisen</h3>
-    <p>
-      Prüfen Sie Kündigungsrechte, Beitragsanpassungen, Altersgrenzen und den Schutz bei Reisen.
-      Entscheidend sind die aktuellen Versicherungsbedingungen, nicht eine Kurzbeschreibung.
-    </p>
-  </article>
-</div>
+  </form>
+</section>
+
+<section class="ins-section" aria-labelledby="anbieter-titel">
+  <p class="eyebrow">Anbieter</p>
+  <h2 id="anbieter-titel">Tarife ansehen</h2>
+  <PartnerCta
+    market={market}
+    placement="information_page"
+    programme={insuranceProgramme()}
+    description="HanseMerkur bietet Kranken- und OP-Versicherungen für Hunde und Katzen an. Beiträge, Ausschlüsse und der genaue Leistungsumfang stehen beim Anbieter."
+    linkLabel="Tierversicherung bei HanseMerkur ansehen"
+    linkContext={{
+      verticalRef: 'insurance',
+      placementRef: 'information-page',
+      contentRef: 'tierkrankenversicherung',
+      pageSlug: 'tierversicherung',
+    }}
+  />
+  <InsuranceProductGrid />
+</section>
 
 <Notice variante="hinweis" titel="Unabhängige Orientierung">
   <p>
     Die Verbraucherzentrale empfiehlt, Ausschlüsse und Leistungsgrenzen genau zu vergleichen und
-    nennt eine eigene Rücklage als mögliche Alternative. Lesen Sie die{' '}
+    nennt eine eigene Rücklage als mögliche Alternative. Lies die{' '}
     <a
       href="https://www.verbraucherzentrale.de/wissen/geld-versicherungen/weitere-versicherungen/krankenversicherungen-fuer-haustiere-sinnvoll-oder-ueberfluessig-10781"
     >
@@ -93,29 +246,258 @@ const entscheidung = partnerHinweisErlaubt({
 
 <InsuranceDisclosure programm={entscheidung.erlaubt ? entscheidung.programm : null} />
 
+<script>
+  const form = document.querySelector<HTMLFormElement>('#ruecklage');
+  const regler = document.querySelector<HTMLInputElement>('#ruecklage-betrag');
+  const wert = document.querySelector<HTMLOutputElement>('#ruecklage-wert');
+  const euro = (betrag: number) =>
+    betrag.toLocaleString('de-DE', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0,
+    });
+  function rechnen() {
+    if (!form || !regler || !wert) return;
+    const monatlich = Number(regler.value);
+    wert.textContent = euro(monatlich);
+    for (const feld of form.querySelectorAll<HTMLElement>('[data-monate]')) {
+      feld.textContent = euro(monatlich * Number(feld.dataset.monate));
+    }
+  }
+  regler?.addEventListener('input', rechnen);
+  rechnen();
+</script>
+
 <style>
-  .insurance-grid {
+  .eyebrow {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .kurz {
+    max-inline-size: 72ch;
+    margin-block: 0 var(--space-10);
+    padding: var(--space-4) var(--space-5);
+    border-inline-start: 4px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    font-size: var(--text-lead);
+  }
+  .ins-section {
+    margin-block: var(--space-12);
+  }
+  .ins-section h2 {
+    margin-block: 0 var(--space-3);
+  }
+  .ins-section__lead,
+  .ins-hinweis {
+    max-inline-size: 70ch;
+    color: var(--color-text-muted);
+  }
+  .ins-hinweis {
+    font-size: var(--text-small);
+  }
+  .ins-costs {
     display: grid;
     gap: var(--space-4);
-    margin-block: var(--space-5) var(--space-8);
+    margin: var(--space-5) 0 var(--space-3);
+    padding: 0;
+    list-style: none;
   }
-
-  .insurance-grid article {
-    padding: var(--space-4);
+  .ins-cost {
+    padding: var(--space-5);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     background: var(--color-surface);
-    min-inline-size: 0;
-    overflow-wrap: anywhere;
+    box-shadow: var(--shadow-sm);
   }
-
-  .insurance-grid h3 {
-    margin-block-start: 0;
+  .ins-cost--notfall {
+    border-color: var(--color-warning-border);
+    background: linear-gradient(160deg, var(--color-warning-soft), var(--color-surface) 55%);
   }
-
+  .ins-cost__nr {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-micro);
+    font-weight: 600;
+  }
+  .ins-cost h3 {
+    margin-block: var(--space-1) var(--space-3);
+    font-size: var(--text-h4);
+  }
+  .ins-cost__betrag {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: baseline;
+    margin: 0;
+    color: var(--color-ink);
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .ins-cost__bis {
+    color: var(--color-text-muted);
+    font-size: var(--text-body);
+    font-weight: 400;
+  }
+  .ins-cost__satz {
+    margin-block: var(--space-1) var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .ins-compare {
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-5) var(--space-3);
+  }
+  .ins-type {
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .ins-type--voll {
+    border-color: var(--color-primary-border);
+    background: var(--color-primary-soft);
+  }
+  .ins-type__label {
+    display: inline-block;
+    margin: 0 0 var(--space-3);
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-size: var(--text-small);
+    font-weight: 700;
+  }
+  .ins-type h3 {
+    margin-block: 0 var(--space-3);
+  }
+  .ins-type ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-4);
+    padding-inline-start: 1.2rem;
+  }
+  .ins-type > p:last-child {
+    margin: 0;
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .ins-check {
+    display: grid;
+    gap: var(--space-3);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: punkt;
+  }
+  .ins-check li {
+    position: relative;
+    padding: var(--space-4) var(--space-5) var(--space-4) 3.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    counter-increment: punkt;
+  }
+  .ins-check li::before {
+    content: counter(punkt);
+    position: absolute;
+    inset-block-start: var(--space-4);
+    inset-inline-start: var(--space-4);
+    display: grid;
+    place-items: center;
+    inline-size: 1.9rem;
+    block-size: 1.9rem;
+    border-radius: 50%;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+  .ins-check h3 {
+    margin: 0 0 var(--space-1);
+    font-size: var(--text-body);
+  }
+  .ins-check p {
+    margin: 0;
+    color: var(--color-text);
+  }
+  .ins-reserve {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(var(--space-6), 4vw, var(--space-10));
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-primary-soft);
+  }
+  .ins-reserve__rechner {
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .ins-reserve__rechner label {
+    display: block;
+    font-weight: 700;
+  }
+  .ins-reserve__eingabe {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    margin-block: var(--space-2) var(--space-4);
+  }
+  .ins-reserve__eingabe input {
+    flex: 1;
+    accent-color: var(--color-primary);
+  }
+  .ins-reserve__eingabe output {
+    min-inline-size: 4.5rem;
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: end;
+  }
+  .ins-reserve__ergebnis {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+    margin: 0 0 var(--space-3);
+  }
+  .ins-reserve__ergebnis div {
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-subtle);
+    text-align: center;
+  }
+  .ins-reserve__ergebnis dt {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .ins-reserve__ergebnis dd {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
   @media (min-width: 760px) {
-    .insurance-grid {
+    .ins-costs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .ins-compare {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .ins-check {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .ins-reserve {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      align-items: center;
     }
   }
 </style>

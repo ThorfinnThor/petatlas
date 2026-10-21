@@ -1,0 +1,105 @@
+---
+/**
+ * Verbindet die drei Transparenzseiten (Methodik, Quellen, Datenstand), die
+ * dieselbe Frage aus drei Richtungen beantworten. Die aktuelle Seite ist
+ * markiert, nicht verlinkt.
+ */
+import { defaultMarket } from '../../domain/market.ts';
+import { routePath, type RouteKey } from '../../lib/routes.ts';
+
+interface Props {
+  aktuell: 'method' | 'sources' | 'dataStatus';
+}
+
+const { aktuell } = Astro.props;
+const markt = defaultMarket();
+const seiten: readonly { key: RouteKey; titel: string; frage: string }[] = [
+  { key: 'method', titel: 'Methodik', frage: 'Wie entstehen die Angaben?' },
+  { key: 'sources', titel: 'Quellen', frage: 'Woher stammen sie?' },
+  { key: 'dataStatus', titel: 'Datenstand', frage: 'Wie aktuell sind sie?' },
+];
+---
+
+<nav class="transparenz" aria-label="Transparenz">
+  <ul>
+    {
+      seiten.map((seite) => (
+        <li>
+          {seite.key === aktuell ? (
+            <span class="transparenz__eintrag transparenz__eintrag--aktuell" aria-current="page">
+              <strong>{seite.titel}</strong>
+              <span>{seite.frage}</span>
+            </span>
+          ) : (
+            <a class="transparenz__eintrag" href={routePath(markt, seite.key)}>
+              <strong>{seite.titel}</strong>
+              <span>{seite.frage}</span>
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .transparenz ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-2);
+    margin: 0 0 var(--space-10);
+    padding: 0;
+    list-style: none;
+  }
+
+  .transparenz li {
+    margin: 0;
+  }
+
+  .transparenz__eintrag {
+    display: grid;
+    gap: var(--space-1);
+    block-size: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  a.transparenz__eintrag:hover {
+    border-color: var(--color-primary);
+  }
+
+  .transparenz__eintrag span {
+    display: none;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  @media (max-width: 39.99rem) {
+    .transparenz__eintrag {
+      padding: var(--space-2);
+      font-size: var(--text-small);
+      text-align: center;
+      overflow-wrap: break-word;
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .transparenz ul {
+      gap: var(--space-3);
+    }
+
+    .transparenz__eintrag span {
+      display: block;
+    }
+  }
+
+  .transparenz__eintrag--aktuell {
+    border-color: var(--color-primary);
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+</style>

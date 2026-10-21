@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 
 import {
   fressnapfFeeds,
+  haendlerZiel,
+  katalogDiagnose,
   katalogProdukteAusZeilen,
   katalogProduktAusZeile,
   ordneProdukteZu,
@@ -158,5 +160,84 @@ describe('Awin-Fressnapf-Feed', () => {
     expect(
       katalogProdukteAusZeilen(rows, '14757', new Set(['fressnapf.de', 'www.fressnapf.de']), 1),
     ).toHaveLength(2);
+  });
+});
+
+describe('Katalogausbau 2026-10', () => {
+  const hosts = new Set(['fressnapf.de', 'www.fressnapf.de']);
+  const katalog = (name: string, id: string, brand: Record<string, string>) => ({
+    ...row(name),
+    merchant_product_id: id,
+    merchant_product_brand: '',
+    ...brand,
+    merchant_category: 'Hund > Spielzeug > Kauspielzeug',
+    species: 'Hund',
+  });
+
+  it('liest die Marke auch aus brand_name und nimmt die Unterkategorie mit', () => {
+    const produkt = katalogProduktAusZeile(
+      katalog('Kauknochen M', '2001', { brand_name: 'TRIXIE' }),
+      '14757',
+      hosts,
+    );
+    expect(produkt).toMatchObject({ brand: 'TRIXIE', subcategoryLabel: 'Kauspielzeug' });
+  });
+
+  it('wechselt die Marken ab, statt alphabetisch die ersten Treffer zu nehmen', () => {
+    const rows = [
+      katalog('A Ball', '3001', { brand_name: 'All for paws' }),
+      katalog('A Seil', '3002', { brand_name: 'All for paws' }),
+      katalog('A Ring', '3003', { brand_name: 'All for paws' }),
+      katalog('Z Ball', '3004', { brand_name: 'TRIXIE' }),
+      katalog('Z Kong', '3005', { brand_name: 'KONG' }),
+    ];
+    const auswahl = katalogProdukteAusZeilen(rows, '14757', hosts, 3);
+    expect(new Set(auswahl.map((p) => p.brand))).toEqual(
+      new Set(['All for paws', 'KONG', 'TRIXIE']),
+    );
+  });
+
+  it('nennt für jede verworfene Zeile einen Grund', () => {
+    const diagnose = katalogDiagnose(
+      [
+        katalog('Kauknochen M', '4001', { brand_name: 'TRIXIE' }),
+        { ...katalog('Ohne Kategorie', '4002', {}), merchant_category: 'Garten' },
+        {
+          ...katalog('Beides', '4003', {}),
+          species: '',
+          merchant_category: 'Hunde und Katzen > Spielzeug',
+        },
+      ],
+      '14757',
+      hosts,
+    );
+    expect(diagnose).toEqual({
+      'übernommen (toy)': 1,
+      'Kategorie unklar': 1,
+      'Tierart unklar': 1,
+    });
+  });
+});
+
+describe('Händlerlink über fremde Weiterleitung', () => {
+  const zooroyal = new Set(['zooroyal.de', 'www.zooroyal.de']);
+
+  it('liest die Produktadresse aus dem Weiterleitungsparameter', () => {
+    const umweg = new URL(
+      'https://a.nonstoppartner.net/a/?i=click&client=zooroyal&l=de&nw=5&url=https%3A%2F%2Fwww.zooroyal.de%2Fkatze%2Fspielzeug%2Fball-123',
+    );
+    expect(haendlerZiel(umweg, zooroyal)?.toString()).toBe(
+      'https://www.zooroyal.de/katze/spielzeug/ball-123',
+    );
+  });
+
+  it('übernimmt nichts, wenn der Parameter woandershin zeigt', () => {
+    const umweg = new URL('https://a.nonstoppartner.net/a/?url=https%3A%2F%2Fevil.example%2Fx');
+    expect(haendlerZiel(umweg, zooroyal)).toBeNull();
+  });
+
+  it('lässt eine direkte Händleradresse unverändert', () => {
+    const direkt = new URL('https://www.zooroyal.de/hund/x');
+    expect(haendlerZiel(direkt, zooroyal)).toBe(direkt);
   });
 });

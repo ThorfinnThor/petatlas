@@ -78,8 +78,8 @@ function eingabeLesen(): WizardEingabe {
 }
 
 const GESAMT_TEXT: Readonly<Record<string, string>> = {
-  fulfilled: 'Alle geprüften Punkte sind nach Ihren Angaben erfüllt.',
-  not_fulfilled: 'Mindestens ein Punkt ist nach Ihren Angaben nicht erfüllt.',
+  fulfilled: 'Alle geprüften Punkte sind nach deinen Angaben erfüllt.',
+  not_fulfilled: 'Mindestens ein Punkt ist nach deinen Angaben nicht erfüllt.',
   unknown: 'Kein Gesamtergebnis.',
   not_applicable: 'Diese Reise wird hier nicht geprüft.',
 };
@@ -100,7 +100,7 @@ export function reisecheckStarten(): void {
     hatErgebnis = false;
     ausgabe.innerHTML =
       '<p class="ergebnis__kopf" data-zustand="unknown" data-veraltet="true">' +
-      'Angaben geändert. Bitte prüfen Sie die Reise erneut.</p>';
+      'Angaben geändert. Bitte prüf die Reise erneut.</p>';
   };
   form.addEventListener('input', invalidiere);
   form.addEventListener('change', invalidiere);
@@ -111,7 +111,7 @@ export function reisecheckStarten(): void {
 
     if (!/^\d{4}-\d{2}-\d{2}$/.test(eingabe.travelDate)) {
       ausgabe.innerHTML =
-        '<p class="ergebnis__kopf" data-zustand="unknown">Bitte tragen Sie das Reisedatum ein. ' +
+        '<p class="ergebnis__kopf" data-zustand="unknown">Bitte trag das Reisedatum ein. ' +
         'Ohne den Tag der Reise lassen sich Fristen nicht prüfen.</p>';
       hatErgebnis = true;
       return;

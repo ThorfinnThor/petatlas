@@ -1,5 +1,25 @@
 # Handoff
 
+## Stand 20.10.2026 · Inhaltsoffensive
+
+Das Aufgabenmanifest ist abgeschlossen (138 von 138); es gibt keine ausführbare Aufgabe im Manifest. Die laufende Arbeit ist die Inhaltsoffensive nach dem Indexeinbruch vom 11.10.2026. Maßgeblich sind `docs/CONTENT_STANDARD.md` und die Reihenfolge in `docs/reviews/content-scorecard-2026-10-20.md`.
+
+| Schritt | Stand | Nachweis |
+| --- | --- | --- |
+| Index auf 114 Seiten konzentriert | gemergt (PR #90) | `docs/reviews/seo-index-concentration-2026-10-19.md` |
+| Inhaltsstandard + Futter-Pilot (4 Vergleiche) | gemergt (PR #91) | `docs/reviews/content-scorecard-2026-10-20.md` |
+| Tierarztkosten: 8 Behandlungsseiten | gemergt als Entwurf, `noindex` bis zur fachlichen Prüfung (PR #92) | `docs/reviews/behandlungsvorlagen-pruefbogen-2026-10-20.md` |
+| Neun Produktvergleiche mit Bewertungsschema | gemergt (PR #93) | `docs/HANDOFF_PRODUKTVERGLEICHE.md` |
+| Stadtseiten: Sprechzeiten, Hundewiesen, Notdienst mit Quelle | gemergt (PR #94) | `docs/reviews/city-pages-2026-10-20.md` |
+| Reisecheck: Fristenplan je Zielland | gemergt (PR #95) | `docs/reviews/travel-deadlines-2026-10-20.md` |
+
+**Nächster Schritt der Inhaltsoffensive:** Alle fünf Seitentypen der Scorecard sind überarbeitet. Als Nächstes die Wirkung in der Search Console beobachten und neue Seiten nur in kleinen Gruppen (≤ 10 pro Woche) in den Index geben. Offene Prüfungen: Notdienstnummern stichprobenweise anrufen, Formulierungen des Fristenplans durch die prüfende Person durchsehen lassen.
+
+**Offen beim Betreiber:** Bildrechte für Herstellerfotos (Vergleiche zeigen keine Produktbilder), fachliche Prüfung der Behandlungsseiten, monatliche Preisprüfung der Vergleiche mit `scripts/audit/product-comparison/crosscheck.py`.
+
+**Lokale Eigenheiten:** `npm ci` braucht `NODE_EXTRA_CA_CERTS` (siehe `problems.md`, P-002). Auf diesem Rechner laufen zeitweise Vorschauserver aus einem anderen Checkout (`~/Documents/Codex/…/petatlas`) auf den Ports 4330–4335; Playwright mit `reuseExistingServer` und `design:audit` prüfen dann stillschweigend den falschen Stand. Vorher mit `lsof -iTCP -sTCP:LISTEN` prüfen und einen freien Port nehmen.
+
+
 ## Tatsächlicher Zustand
 
 Arbeitsstand (138 von 138 Aufgaben, 0 blockiert).

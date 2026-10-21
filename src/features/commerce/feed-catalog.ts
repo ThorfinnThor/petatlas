@@ -1,4 +1,6 @@
 import fressnapf from '../../../content-data/products/fressnapf-catalog.json' with { type: 'json' };
+import { fressnapfBildUrspruenge } from './fressnapf-feed.ts';
+import { zooroyalAngebote } from './zooroyal-feed.ts';
 import zooroyal from '../../../content-data/products/zooroyal-catalog.json' with { type: 'json' };
 import type { CatalogCategory, CatalogSpecies } from '../../../scripts/awin/fressnapf.ts';
 
@@ -9,6 +11,7 @@ export interface CatalogProductOffer {
   readonly species: CatalogSpecies;
   readonly category: CatalogCategory;
   readonly categoryLabel: string;
+  readonly subcategoryLabel?: string;
   readonly merchantProductId: string;
   readonly imageUrl: string;
   readonly affiliateUrl: string;
@@ -48,6 +51,10 @@ function validiere(
     ? (value.category as CatalogCategory)
     : null;
   const categoryLabel = typeof value.categoryLabel === 'string' ? value.categoryLabel : '';
+  const subcategoryLabel =
+    typeof value.subcategoryLabel === 'string' && value.subcategoryLabel.length <= 60
+      ? value.subcategoryLabel
+      : undefined;
   const image = httpsUrl(value.imageUrl);
   const affiliate = httpsUrl(value.affiliateUrl);
   const merchant = httpsUrl(value.merchantUrl);
@@ -76,6 +83,7 @@ function validiere(
     species,
     category,
     categoryLabel,
+    ...(subcategoryLabel ? { subcategoryLabel } : {}),
     merchantProductId,
     imageUrl: image.toString(),
     affiliateUrl: affiliate.toString(),
@@ -124,4 +132,19 @@ export function partnerKatalogProdukte(
   return (partner === 'fressnapf' ? FRESSNAPF : ZOOROYAL).filter(
     (product) => product.category === category,
   );
+}
+
+/**
+ * Herkünfte aller Partner-Produktbilder (Feeds und Kataloge). CSP und
+ * Output-Audit erlauben genau diese Hosts – nicht mehr, und keinen Host,
+ * nur weil er in einem Feed vorkommen könnte.
+ */
+export function partnerBildUrspruenge(): readonly string[] {
+  return [
+    ...new Set([
+      ...fressnapfBildUrspruenge(),
+      ...zooroyalAngebote().map((angebot) => new URL(angebot.imageUrl).origin),
+      ...[...FRESSNAPF, ...ZOOROYAL].map((produkt) => new URL(produkt.imageUrl).origin),
+    ]),
+  ].sort();
 }

@@ -1,0 +1,31 @@
+{
+  "scenarioId": "blutbild-katze",
+  "title": "Blutuntersuchung bei der Katze (großes Blutbild)",
+  "species": "cat",
+  "lines": [
+    {
+      "officialItemId": "16",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "627",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "618",
+      "quantity": 1,
+      "factor": 1
+    }
+  ],
+  "exclusions": [
+    "Organwerte (Blutchemie, Nr. 610/611)",
+    "Fremdlabor",
+    "Arzneimittel und Verbrauchsmaterial",
+    "Wegegeld"
+  ],
+  "clinicalReview": "unreviewed",
+  "reviewedAt": null,
+  "reviewedBy": null
+}

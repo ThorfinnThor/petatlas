@@ -15,6 +15,7 @@ import { futterTaxonomie } from '../../features/food/taxonomy.ts';
 import RetailPartnerSection from '../RetailPartnerSection.astro';
 import { fressnapfKatalog, zooroyalKatalog } from '../../features/commerce/feed-catalog.ts';
 import FeedProductGrid from '../commerce/FeedProductGrid.astro';
+import { FUTTER_VERGLEICHE, auswertung } from '../../features/food/comparison-pages.ts';
 
 const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const basisPfad = routePath(markt, 'food');
@@ -63,22 +64,23 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
         anderes.species === produkt.species,
     )
     .map((variante) => mengenText(variante) ?? 'Menge nicht angegeben');
+const vergleiche = FUTTER_VERGLEICHE.map((seite) => {
+  const { bewertungen, empfehlungen } = auswertung(seite);
+  return { seite, anzahl: bewertungen.length, spitze: empfehlungen[0] };
+});
 ---
 
 <article class="food-page">
   <header class="food-hero">
     <div class="food-hero__copy">
       <p class="eyebrow">Futter · Hund und Katze</p>
-      <h1>Futteretiketten verständlich vergleichen</h1>
+      <h1>Welches Futter für Hund und Katze?</h1>
       <p class="food-hero__lead">
-        Finde eine erfasste Produktlinie, prüfe Packungsgröße und Deklaration und vergleiche
-        Herstellerwerte auf derselben Bezugsbasis.
-      </p>
-      <p>
-        Die Daten zeigen, was auf dem Etikett steht. Sie vergeben keine Punkte und beantworten
-        nicht, welches Futter für ein einzelnes Tier medizinisch geeignet ist.
+        48 verbreitete Futter nachgerechnet: Protein und Kohlenhydrate ohne Wasser, Zusammensetzung
+        und Kosten pro Tag. Mit klarer, begründeter Empfehlung je Futterart.
       </p>
       <nav class="food-nav" aria-label="Inhalt der Futterseite">
+        <a href="#futtervergleiche">Futtervergleiche</a>
         <a href="#futter-finden">Futter finden</a>
         <a href="#produktlinien">Produktlinien</a>
         <a href="#deklarationen">Werte vergleichen</a>
@@ -104,6 +106,30 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
       <figcaption>Erst einordnen, dann vergleichen</figcaption>
     </figure>
   </header>
+
+  <section class="food-comparisons" id="futtervergleiche" aria-labelledby="futtervergleiche-titel">
+    <p class="eyebrow">Futtervergleiche</p>
+    <h2 id="futtervergleiche-titel">Vier Vergleiche mit Empfehlung</h2>
+    <div class="food-comparisons__grid">
+      {
+        vergleiche.map(({ seite, anzahl, spitze }) => (
+          <a class="food-comparisons__card" href={`/de-de/futter/vergleich/${seite.slug}/`}>
+            <span class="food-comparisons__title">{seite.titel}</span>
+            <span class="food-comparisons__meta">{anzahl} Produkte nachgerechnet</span>
+            {spitze && (
+              <span class="food-comparisons__pick">
+                Unsere Empfehlung:{' '}
+                <strong>
+                  {spitze.bewertung.produkt.brand} {spitze.bewertung.produkt.productName}
+                </strong>
+              </span>
+            )}
+            <span class="food-comparisons__more">Zum Vergleich →</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
 
   <section class="food-steps" aria-labelledby="ablauf-titel">
     <div class="section-heading">
@@ -347,8 +373,8 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
       <p class="eyebrow">Danach einkaufen</p>
       <h2 id="haendler-titel">Produkte im Händlersortiment ansehen</h2>
       <p>
-        Die folgenden Karten stammen aus freigegebenen Händlerfeeds. Sie gehören nicht zum
-        redaktionellen Deklarationsvergleich und sind keine Empfehlung oder Rangfolge.
+        Die folgenden Karten stammen aus den Produktfeeds der Händler über Awin. Sie gehören nicht
+        zum redaktionellen Deklarationsvergleich und sind keine Empfehlung oder Rangfolge.
       </p>
     </div>
     <FeedProductGrid
@@ -504,6 +530,61 @@ const uniquePackSizes = (produkt: FutterEintrag): string[] =>
   .food-finder__intro p:last-child {
     margin-block-end: 0;
     color: var(--color-text-muted);
+  }
+
+  .food-comparisons {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border: 1px solid var(--color-primary-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-primary-soft);
+  }
+
+  .food-comparisons h2 {
+    margin-block: var(--space-2) var(--space-5);
+  }
+
+  .food-comparisons__grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .food-comparisons__card {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .food-comparisons__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .food-comparisons__meta,
+  .food-comparisons__pick {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .food-comparisons__more {
+    color: var(--color-primary);
+    font-weight: var(--weight-label);
+  }
+
+  @media (min-width: 48rem) {
+    .food-comparisons__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 72rem) {
+    .food-comparisons__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   .food-steps {

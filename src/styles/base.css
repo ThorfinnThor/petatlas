@@ -249,6 +249,21 @@ input[type='radio'] {
   accent-color: var(--color-primary);
 }
 
+/* Kästchen und Beschriftung auf einer Linie. :where hält die Spezifität bei
+   null, damit Komponenten mit eigenem Layout (Karten, Raster) gewinnen. */
+:where(label:has(> input[type='checkbox'], > input[type='radio'])) {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  min-block-size: 2.25rem;
+  cursor: pointer;
+}
+
+:where(label:has(> input[type='checkbox'], > input[type='radio'])) > input {
+  flex: none;
+  margin: 0;
+}
+
 fieldset {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -263,9 +278,18 @@ fieldset {
   }
 }
 
+/* Legende als Überschrift innerhalb der Karte, nicht als Text auf dem Rahmen. */
 legend {
-  padding-inline: var(--space-2);
-  font-weight: var(--weight-label);
+  float: inline-start;
+  inline-size: 100%;
+  margin-block-end: var(--space-3);
+  padding: 0;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+legend + * {
+  clear: both;
 }
 
 /* ---------- Tabellen (Abschnitt 44.1) ---------- */

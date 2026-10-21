@@ -181,7 +181,11 @@ describe('Keine FEDIAF-Tabellen, keine fremden Bilder', () => {
 
   it('kopiert keine Bedarfstabelle in den Datenbestand', () => {
     for (const datei of dateien('content-data', ['.json'])) {
-      const inhalt = readFileSync(datei, 'utf8').toLowerCase();
+      // Herstellerangaben nennen die Methode ihrer Energieangabe wörtlich
+      // („ME nach FEDIAF 2020“); das ist keine kopierte Bedarfstabelle.
+      const inhalt = readFileSync(datei, 'utf8')
+        .toLowerCase()
+        .replace(/\bme\b[^"\n]{0,12}fediaf|nach fediaf/g, '');
       expect(inhalt.includes('fediaf'), datei).toBe(false);
       expect(inhalt.includes('nrc requirement'), datei).toBe(false);
     }

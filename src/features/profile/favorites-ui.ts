@@ -108,7 +108,7 @@ export function merkknoepfeBinden(bereich: ParentNode = document): void {
         const meldung = document.createElement('p');
         meldung.setAttribute('role', 'alert');
         meldung.textContent =
-          'Die Änderung konnte nicht gespeichert werden. Bitte prüfen Sie den verfügbaren Browser-Speicher.';
+          'Die Änderung konnte nicht gespeichert werden. Bitte prüf den verfügbaren Browser-Speicher.';
         knopf.after(meldung);
         return;
       }
@@ -163,9 +163,16 @@ export async function merklisteStarten(): Promise<void> {
   const zeichne = async (): Promise<void> => {
     const liste = merklisteLesen();
     if (liste.entries.length === 0) {
+      // Leerer Zustand mit Wegweisern: Gemerkt werden Orte auf der Karte und Futter.
       bereich.innerHTML =
-        '<p class="merk__kopf" data-leer="true">Ihre Merkliste ist leer. Sie liegt nur auf ' +
-        'diesem Gerät und wird nirgends abgeglichen.</p>';
+        '<div class="merk__leer">' +
+        '<p class="merk__kopf" data-leer="true">Deine Merkliste ist leer. Sie liegt nur auf ' +
+        'diesem Gerät und wird nirgends abgeglichen.</p>' +
+        '<p>Mit „Merken“ legst du hier Tierarztpraxen, Hundewiesen und Futter ab, die du ' +
+        'wiederfinden willst.</p>' +
+        `<p class="merk__wege"><a href="${kartenPfad}">Orte auf der Karte finden →</a>` +
+        `<a href="${futterBasis}">Futter vergleichen →</a></p>` +
+        '</div>';
       return;
     }
 
@@ -215,7 +222,7 @@ export async function merklisteStarten(): Promise<void> {
           const meldung = document.createElement('p');
           meldung.setAttribute('role', 'alert');
           meldung.textContent =
-            'Der Eintrag konnte nicht entfernt werden. Bitte prüfen Sie den Browser-Speicher.';
+            'Der Eintrag konnte nicht entfernt werden. Bitte prüf den Browser-Speicher.';
           knopf.after(meldung);
           return;
         }

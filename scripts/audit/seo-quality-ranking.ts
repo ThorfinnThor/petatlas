@@ -255,7 +255,7 @@ function main(): number {
     '## Auswahlregel',
     '',
     '- Redaktionelle Seiten, Tools, geprüfte Reiseziele, Ortsseiten und kuratierte Produktseiten bleiben indexierbar.',
-    `- Von 1.006 GOT-Einzelseiten werden ${SEO_INDEX_BUDGET.gotPositions} mit dem stärksten Bezug zu Hund, Katze und typischen Tierarztleistungen indexiert.`,
+    `- Von 1.006 GOT-Einzelseiten werden nur die mit dem stärksten Bezug zu Hund, Katze und typischen Tierarztleistungen (Qualitätswert ab ${SEO_INDEX_BUDGET.minimumGotScore}) oder mit gemessener Nachfrage indexiert.`,
     `- GOT-Gruppenseiten brauchen mindestens ${SEO_INDEX_BUDGET.minimumGotGroupSize} Positionen für einen eigenständigen Katalognutzen.`,
     '- Alle übrigen Seiten bleiben erreichbar, tragen aber `noindex, nofollow`, fehlen in der Sitemap und werden von Pagefind ausgeschlossen.',
     '- Die Rangfolge ist eine redaktionelle Qualitätspriorisierung. Sie behauptet kein Suchvolumen und keine medizinische Bewertung.',

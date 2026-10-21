@@ -102,6 +102,17 @@ describe('Die echten Datensätze', () => {
     expect(regeln?.hinweis).toBeNull();
   });
 
+  it('führen beide Händlerfeeds mit Stand und ohne Preise', () => {
+    for (const id of ['haendlerfeed-fressnapf', 'haendlerfeed-zooroyal']) {
+      const feed = echte.find((eintrag) => eintrag.id === id);
+      expect(feed?.ausgeliefert).toBe(true);
+      expect(feed?.wirkung).toBe('warnt');
+      expect(feed?.stand).not.toBeNull();
+      expect(feed?.umfang).toMatch(/^\d+ Händlerprodukte/);
+      expect(feed?.hinweis).toContain('Preise und Verfügbarkeiten nicht');
+    }
+  });
+
   it('melden die Angebote als nicht ausgeliefert statt als Ausfall', () => {
     const angebote = echte.find((eintrag) => eintrag.id === 'angebote');
     expect(angebote?.ausgeliefert).toBe(false);

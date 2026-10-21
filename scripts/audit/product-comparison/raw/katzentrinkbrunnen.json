@@ -1,0 +1,620 @@
+{
+  "category": "katzentrinkbrunnen",
+  "checkedAt": "2026-10-20",
+  "products": [
+    {
+      "id": "catit-pixi-2l",
+      "brand": "Catit",
+      "model": "PIXI Trinkbrunnen",
+      "variant": "Weiß · Art.-Nr. 43715",
+      "sourceUrl": "https://www.catit.com/de/produkte/trinkbrunnen/pixi-trinkbrunnen/",
+      "specs": {
+        "capacityL": {
+          "value": 2,
+          "verbatim": "Kapazität des Wasserreservoirs: 2 l",
+          "sourceUrl": "https://www.catit.com/de/produkte/trinkbrunnen/pixi-trinkbrunnen/"
+        },
+        "bowlMaterial": {
+          "value": "Kunststoff",
+          "verbatim": "mitgelieferten Standard-Einsatz aus Kunststoff",
+          "sourceUrl": "https://www.catit.com/de/produkte/trinkbrunnen/pixi-trinkbrunnen/"
+        },
+        "power": {
+          "value": "USB 5 V",
+          "verbatim": "USB-Anschluss mit DC 5V 1A-Adapter",
+          "sourceUrl": "https://www.catit.com/de/produkte/trinkbrunnen/pixi-trinkbrunnen/"
+        },
+        "cordlessPump": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dryRunProtection": {
+          "value": true,
+          "verbatim": "Sensor in der Pumpe: löst eine Abschaltautomatik aus, wenn der Wasserstand zu niedrig ist",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/1095112"
+        },
+        "waterLevelVisible": {
+          "value": true,
+          "verbatim": "LED-Anzeige für einen niedrigen Wasserstand bzw. ein leeres Reservoir",
+          "sourceUrl": "https://www.catit.com/de/produkte/trinkbrunnen/pixi-trinkbrunnen/"
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "noiseDb": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "filterChangeWeeks": {
+          "value": 4,
+          "verbatim": "Ersetzen Sie den Filter alle drei bis vier Wochen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/1095112"
+        },
+        "app": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dimensionsCm": {
+          "value": "20,5 x 20,5 x 17 cm",
+          "verbatim": "Größe: 20,5 x 20,5 x 17 cm",
+          "sourceUrl": "https://www.catit.com/de/produkte/trinkbrunnen/pixi-trinkbrunnen/"
+        }
+      },
+      "filterPack": {
+        "value": 11.99,
+        "verbatim": "Zubehör: Ersatzfilter, 6 Stück (OHNE Trinkbrunnen) 11,99 €",
+        "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/1095112"
+      },
+      "filterPackCount": 6,
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 34.99,
+        "label": "Catit PIXI Trinkbrunnen, weiß (zooplus-Variante 2,5 l; Hersteller nennt 2 l)",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/1095112",
+        "verbatim": "Trinkbrunnen 2,5 l UVP 46,99 € 34,99 €"
+      },
+      "notes": "Hersteller: 2 l, zooplus nennt 2,5 l (Reservoir bis Rand?); Hersteller-Wert verwendet. Filterwechsel-Intervall (3-4 Wochen, Obergrenze) und Abschaltautomatik stammen von zooplus, nicht von der Catit-Seite. Spülmaschine: Catit nennt nur den optionalen Edelstahleinsatz als spülmaschinengeeignet -> null. cordlessPump/app/noiseDb nicht angegeben -> null (app=null heißt: keine App erwähnt)."
+    },
+    {
+      "id": "catit-pixi-uvc-5l",
+      "brand": "Catit",
+      "model": "PIXI UV-C Edelstahl-Trinkbrunnen",
+      "variant": "Art.-Nr. 43761",
+      "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/",
+      "specs": {
+        "capacityL": {
+          "value": 5,
+          "verbatim": "Kapazität: 5 l",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/"
+        },
+        "bowlMaterial": {
+          "value": "Edelstahl",
+          "verbatim": "Das nahtlose, einteilige Wasserreservoir aus Edelstahl",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/"
+        },
+        "power": {
+          "value": "Akku",
+          "verbatim": "Stromversorgung: Wiederaufladbarer Akku (USB-Kabel enthalten)",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/"
+        },
+        "cordlessPump": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dryRunProtection": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "waterLevelVisible": {
+          "value": true,
+          "verbatim": "Es zeigt den Wasserstand in Echtzeit",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/"
+        },
+        "dishwasherSafe": {
+          "value": "Edelstahlteile",
+          "verbatim": "Nur die Edelstahlteile sind spülmaschinengeeignet",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/"
+        },
+        "noiseDb": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "filterChangeWeeks": {
+          "value": 4,
+          "verbatim": "empfehlen wir, den Filter alle 30 Tage auszutauschen",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/"
+        },
+        "app": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dimensionsCm": {
+          "value": "H: 19 cm x B: 25,5 cm",
+          "verbatim": "Größe: H: 19 cm x B: 25,5 cm",
+          "sourceUrl": "https://www.catit.com/de/produkte/catit-pixi-uv-c-edelstahl-trinkbrunnen/"
+        }
+      },
+      "filterPack": null,
+      "filterPackCount": null,
+      "price": null,
+      "notes": "Kein Händler mit Preis/Artikelnummer 43761 gefunden (zooplus/Fressnapf listen das Modell nicht); Preis und Filterpackung daher null. 30 Tage = ca. 4 Wochen. Akku bis 45 Tage im Timer-Modus, Dauerbetrieb nur mit Netzanschluss. 'Kabelloses Design' bezieht sich auf die Stromversorgung, nicht explizit auf die Pumpe -> cordlessPump null."
+    },
+    {
+      "id": "petsafe-drinkwell-platinum-5l",
+      "brand": "PetSafe",
+      "model": "Drinkwell Platinum Trinkbrunnen",
+      "variant": "5 Liter, hellgrau",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136298",
+      "specs": {
+        "capacityL": {
+          "value": 5,
+          "verbatim": "Integriertes Reservoir, Fassungsvermögen ca. 5 Liter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136298"
+        },
+        "bowlMaterial": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "power": {
+          "value": "Netzteil",
+          "verbatim": "Low-voltage 12V system",
+          "sourceUrl": "https://store.intl.petsafe.net/en-ie/drinkwell-platinum-fountain"
+        },
+        "cordlessPump": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dryRunProtection": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "waterLevelVisible": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": "Spülmaschinenfest",
+          "verbatim": "Spülmaschinenfest",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136298"
+        },
+        "noiseDb": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "filterChangeWeeks": {
+          "value": 4,
+          "verbatim": "ca. alle 2 bis 4 Wochen austauschen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136298"
+        },
+        "app": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dimensionsCm": {
+          "value": "L 40 x B 27 x H 26 cm",
+          "verbatim": "Maße: ca. L 40 x B 27 x H 26 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136298"
+        }
+      },
+      "filterPack": {
+        "value": 7.49,
+        "verbatim": "Zubehör: Premium Ersatzfilter (3 Stück) 7,49 €",
+        "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136298"
+      },
+      "filterPackCount": 3,
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 62.49,
+        "label": "Trinkbrunnen 5 Liter",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136298",
+        "verbatim": "Trinkbrunnen 5 Liter UVP 80,99 € 62,49 €"
+      },
+      "notes": "Keine deutsche Herstellerseite gefunden; Werte von zooplus (Herstellertext). Power-Wert (12-V-Niederspannung -> Netzteil) von der englischen PetSafe-Irland-Seite. Material nicht auf der Seite genannt -> null. zooplus: Pumpe darf nicht trockenlaufen (kein Trockenlaufschutz erwähnt -> null). Wöchentliche Reinigung mit heißem Seifenwasser empfohlen. Filterpackung (3 St.) gehört zum Drinkwell Premium-Hochkapazitätsfilter; im Set Brunnen+3 Filter 69,98 €."
+    },
+    {
+      "id": "petkit-eversweet-3-pro",
+      "brand": "PETKIT",
+      "model": "Eversweet 3 PRO",
+      "variant": "1,8 l, weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907",
+      "specs": {
+        "capacityL": {
+          "value": 1.8,
+          "verbatim": "Fassungsvermögen : 1,8 l",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907"
+        },
+        "bowlMaterial": {
+          "value": "Edelstahl/Kunststoff",
+          "verbatim": "Hochwertiges Material: aus lebensmittelechtem, rostbeständigem 304-Edelstahl",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907"
+        },
+        "power": {
+          "value": "USB 5 V",
+          "verbatim": "Stromversorgung: USB-Kabel (Stecker nicht enthalten)",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907"
+        },
+        "cordlessPump": {
+          "value": true,
+          "verbatim": "Innovative kabellose Pumpe",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907"
+        },
+        "dryRunProtection": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "waterLevelVisible": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "noiseDb": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "filterChangeWeeks": {
+          "value": 4,
+          "verbatim": "im Normal-Modus alle 30 Tage aus",
+          "sourceUrl": "https://zooplus.de/shop/katzen/fressnapf/katzentraenke/2092993"
+        },
+        "app": {
+          "value": true,
+          "verbatim": "steuerbar via App",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907"
+        },
+        "dimensionsCm": {
+          "value": "L 19,9 x B 19,5 x H 15,6 cm",
+          "verbatim": "Maße : L 19,9 x B 19,5 x H 15,6 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907"
+        }
+      },
+      "filterPack": {
+        "value": 19.99,
+        "verbatim": "Ersatzfilter (5 Stück) 19,99 €",
+        "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907"
+      },
+      "filterPackCount": 5,
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 78.99,
+        "label": "Trinkbrunnen 1,8 Liter (Variante 2051907.0)",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2051907",
+        "verbatim": "Trinkbrunnen 1,8 Liter UVP 79,00 € 78,99 €"
+      },
+      "notes": "Widersprüche auf der zooplus-Seite: Material 'Kunststoff (ABS)' (Datenblatt) vs. 'lebensmittelechter 304-Edelstahl' (Merkmale) -> 'Edelstahl/Kunststoff'; Lautstärke 35 dB (Merkmale) vs. 30 dB (Datenblatt) -> noiseDb null. Filterwechsel: Normal-Modus 30 Tage, Smart-Modus 60 Tage (Filterseite). Wasserstand wird per App gemeldet, eine Anzeige am Gerät ist nicht belegt -> waterLevelVisible null. Kein Herstellerseiten-Abruf."
+    },
+    {
+      "id": "petkit-eversweet-solo-se",
+      "brand": "PETKIT",
+      "model": "Eversweet Solo SE",
+      "variant": "1,8 l, schwarz/weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2114413",
+      "specs": {
+        "capacityL": {
+          "value": 1.8,
+          "verbatim": "Fassungsvermögen : 1,8 l",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2114413"
+        },
+        "bowlMaterial": {
+          "value": "Kunststoff",
+          "verbatim": "Material : Kunststoff (ABS), Silicagel",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2114413"
+        },
+        "power": {
+          "value": "USB 5 V",
+          "verbatim": "1 USB-Netzkabel",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2114413"
+        },
+        "cordlessPump": {
+          "value": true,
+          "verbatim": "kabellose Pumpe verhindert elektrische Unfälle",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2114413"
+        },
+        "dryRunProtection": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "waterLevelVisible": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "noiseDb": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "filterChangeWeeks": {
+          "value": 4,
+          "verbatim": "im Normal-Modus alle 30 Tage aus",
+          "sourceUrl": "https://zooplus.de/shop/katzen/fressnapf/katzentraenke/2092993"
+        },
+        "app": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dimensionsCm": {
+          "value": "L 160 x B 160 x H 154 mm",
+          "verbatim": "Maße : L 160 x B 160 x H 154 mm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2114413"
+        }
+      },
+      "filterPack": {
+        "value": 19.99,
+        "verbatim": "Ersatzfilter für die Petkit Trinkbrunnen Eversweet 3 pro, Eversweet 2s, Eversweet Solo und Solo SE",
+        "sourceUrl": "https://zooplus.de/shop/katzen/fressnapf/katzentraenke/2092993"
+      },
+      "filterPackCount": 5,
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 39.99,
+        "label": "Trinkbrunnen 1,8 Liter, schwarz (weiß gleicher Preis)",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2114413",
+        "verbatim": "Trinkbrunnen 1,8 Liter, schwarz 39,99 €"
+      },
+      "notes": "filterPack: Preis 19,99 EUR (5 Stück) auf zooplus-Filterseite (Filter 3.0, passend für Solo SE); Preis-Verbatim dort 'Inhalt: 5 Stück'/19,99. Maße: Kopfzeile nennt H 158 mm, Datenblatt H 154 mm. Filterintervall von der Filterseite (Normal-Modus 30 Tage; kein Smart-Modus beim Solo SE belegt). Keine dB-Angabe ('ultra-leise')."
+    },
+    {
+      "id": "trixie-vital-flow-1-5l",
+      "brand": "TRIXIE",
+      "model": "Keramik-Trinkbrunnen Vital Flow",
+      "variant": "1,5 l, grau/weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/623699",
+      "specs": {
+        "capacityL": {
+          "value": 1.5,
+          "verbatim": "Vital Flow: 1,5 l",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/623699"
+        },
+        "bowlMaterial": {
+          "value": "Keramik",
+          "verbatim": "Material: Keramik",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/623699"
+        },
+        "power": {
+          "value": "Netzteil",
+          "verbatim": "AC-Adapter: Input 230-240V – 50Hz, Output 12V AC 300mA",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/623699"
+        },
+        "cordlessPump": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dryRunProtection": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "waterLevelVisible": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": "Schale und Kuppel",
+          "verbatim": "Reinigung: Schale und Kuppel spülmaschinengeeignet",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/623699"
+        },
+        "noiseDb": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "filterChangeWeeks": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "app": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dimensionsCm": {
+          "value": "Ø 28 x H 13 cm",
+          "verbatim": "Vital Flow: Ø 28 x H 13 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/623699"
+        }
+      },
+      "filterPack": {
+        "value": 5.49,
+        "verbatim": "6 Stück 1402601.0 UVP 6,99 € 5,49 €",
+        "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/1402601"
+      },
+      "filterPackCount": 6,
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 39.99,
+        "label": "Trinkbrunnen Vital Flow 1,5 l, grau/weiß",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/623699",
+        "verbatim": "Trinkbrunnen Vital Flow 1,5 l, grau/weiß UVP 47,99 € 39,99 €"
+      },
+      "notes": "Kein Herstellerseiten-Abruf; zooplus-Herstellertext. Filter ist ein mechanischer Schwamm; es gibt nur 'Filter und Pumpe wöchentlich reinigen', kein Austauschintervall -> filterChangeWeeks null (Kostenrechnung nur mit Annahme möglich). Auch als Mini 0,8 l erhältlich (28,99 EUR). Pumpenwatt 2 W."
+    },
+    {
+      "id": "petlibro-dockstream-2-5l",
+      "brand": "PETLIBRO",
+      "model": "Dockstream Akkubetriebener Trinkbrunnen",
+      "variant": "2,5 l, weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907",
+      "specs": {
+        "capacityL": {
+          "value": 2.5,
+          "verbatim": "Fassungsvermögen : 2,5 l",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+        },
+        "bowlMaterial": {
+          "value": "Edelstahl/Kunststoff",
+          "verbatim": "Material : Kunststoff (ABS, BPA-frei), rostfreier Edelstahl",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+        },
+        "power": {
+          "value": "Akku",
+          "verbatim": "Stromversorgung : externe Stromversorgung, Akkubetrieb",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+        },
+        "cordlessPump": {
+          "value": true,
+          "verbatim": "1 Kabellose Wasserpumpe",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+        },
+        "dryRunProtection": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "waterLevelVisible": {
+          "value": true,
+          "verbatim": "Mit LED-Anzeige : zeigt niedrigen Akku- und Wasserstand an",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+        },
+        "dishwasherSafe": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "noiseDb": {
+          "value": 23,
+          "verbatim": "läuft mit niedrigen 23 db",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+        },
+        "filterChangeWeeks": {
+          "value": 2,
+          "verbatim": "Der Filter und der Schaumstofffilter müssen alle 2 Wochen ausgetauscht werden",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+        },
+        "app": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dimensionsCm": {
+          "value": "L 22,6 x B 18,7 x H 16,1 cm",
+          "verbatim": "Maße : L 22,6 x B 18,7 x H 16,1 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+        }
+      },
+      "filterPack": {
+        "value": 25.49,
+        "verbatim": "Zubehör: Ersatzfilter 8 Stück, weiß UVP 29,00 € 25,49 €",
+        "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907"
+      },
+      "filterPackCount": 8,
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 78.99,
+        "label": "Trinkbrunnen 2,5 l",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/2113907",
+        "verbatim": "Trinkbrunnen 2,5 l UVP 79,00 € 78,99 €"
+      },
+      "notes": "zooplus-Herstellertext; Akku 30 Tage laufzeit (Radar-Modus). Filterpackung enthält laut zooplus 8 Stück, ob Schaumstofffilter mitgezählt, unklar. 2-Wochen-Intervall gilt für Filter + Schaumstofffilter."
+    },
+    {
+      "id": "cat-mate-trinkbrunnen-2l",
+      "brand": "Cat Mate",
+      "model": "Trinkbrunnen",
+      "variant": "2 Liter, weiß",
+      "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622",
+      "specs": {
+        "capacityL": {
+          "value": 2,
+          "verbatim": "Fassungsvermögen : 2 Liter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622"
+        },
+        "bowlMaterial": {
+          "value": "Kunststoff",
+          "verbatim": "Material : Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622"
+        },
+        "power": {
+          "value": "Netzteil",
+          "verbatim": "1 AC/AC Adapter",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622"
+        },
+        "cordlessPump": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dryRunProtection": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "waterLevelVisible": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dishwasherSafe": {
+          "value": "Näpfe",
+          "verbatim": "Näpfe spülmaschinenfest",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622"
+        },
+        "noiseDb": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "filterChangeWeeks": {
+          "value": 4,
+          "verbatim": "Filter 1x/Monat tauschen",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622"
+        },
+        "app": {
+          "value": null,
+          "verbatim": null,
+          "sourceUrl": null
+        },
+        "dimensionsCm": {
+          "value": "L 25 x B 21 x H 17",
+          "verbatim": "Gesamtmaße: L 25 x B 21 x H 17",
+          "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622"
+        }
+      },
+      "filterPack": {
+        "value": 12.99,
+        "verbatim": "Zubehör: Ersatzfilter (6 Stück, für weiches Wasser) 12,99 €",
+        "sourceUrl": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622"
+      },
+      "filterPackCount": 6,
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 28.99,
+        "label": "Trinkbrunnen 2 Liter",
+        "url": "https://www.zooplus.de/shop/katzen/fressnapf/katzentraenke/brunnen/136622",
+        "verbatim": "Trinkbrunnen 2 Liter UVP 29,00 € 28,99 €"
+      },
+      "notes": "Günstiges Einstiegsmodell; zooplus-Herstellertext. Filterpackung für weiches Wasser (6 St.), für hartes Wasser gibt es einen 3-Stufen-Filter. Mehrere Tiere -> häufigerer Filterwechsel. Dimensionen ohne Einheit auf Seite (cm laut Kopfzeile)."
+    }
+  ]
+}

@@ -119,7 +119,7 @@ const canonical = canonicalPfad
     <SiteHeader market={market} brandName={site.brandName} aktuellerPfad={Astro.url.pathname} />
     {
       build.mode === 'preview' && (
-        <div class="preview-bar">Vorschau · Kosten- und Reiseregeln noch ohne Fachfreigabe.</div>
+        <div class="preview-bar">Vorschau-Build · Kostenrechner noch ohne Fachfreigabe.</div>
       )
     }
     {
@@ -134,8 +134,8 @@ const canonical = canonicalPfad
             )}
             {bestand.ungeprueft.length > 0 && (
               <p>
-                <strong>Echt, aber ungeprüft:</strong> {aufzaehlung(bestand.ungeprueft)}. Verlassen
-                Sie sich nicht auf die Ergebnisse.
+                <strong>Echt, aber ungeprüft:</strong> {aufzaehlung(bestand.ungeprueft)}. Verlass
+                dich nicht auf die Ergebnisse.
               </p>
             )}
             {bestand.synthetisch.length > 0 && (

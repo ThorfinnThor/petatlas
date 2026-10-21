@@ -72,7 +72,7 @@ test('Reise: von der Angabe zur Checkliste', async ({ page }) => {
 
   await expect(page.locator('#reiseergebnis')).toBeVisible();
   await expect(page.locator('#reiseergebnis')).toContainText(
-    'Alle geprüften Punkte sind nach Ihren Angaben erfüllt.',
+    'Alle geprüften Punkte sind nach deinen Angaben erfüllt.',
   );
 
   await page.goto('/de-de/reisecheck/oesterreich/');

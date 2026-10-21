@@ -23,6 +23,8 @@ import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { subroutePath } from '../../lib/routes.ts';
 import snapshot from '../../../data-snapshots/got/got-2022.json' with { type: 'json' };
+import BrandImage from '../BrandImage.astro';
+import { BEHANDLUNGEN } from '../../features/costs/treatments.ts';
 
 const market = defaultMarket();
 const quelle = snapshot.source as {
@@ -37,59 +39,96 @@ const quelle = snapshot.source as {
 
 const katalogMarkt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
+const beispiele = BEHANDLUNGEN.slice(0, 4);
+/** „Was kostet eine Impfung beim Hund?“ → „Impfung beim Hund“ */
+const kurztitel = (titel: string) => {
+  const kern = titel.replace(/^Was kostet (eine?|die|der|das) /, '').replace(/\?$/, '');
+  return kern.charAt(0).toUpperCase() + kern.slice(1);
+};
 ---
 
-<h1>Tierarztkosten berechnen</h1>
+<header class="costs-hero">
+  <div class="costs-hero__copy">
+    <p class="costs-hero__eyebrow">Gebührenordnung für Tierärzte · GOT 2022</p>
+    <h1>Tierarztkosten berechnen</h1>
+    <p class="costs-hero__lead">
+      Setz die Leistungen deiner Behandlung zusammen und sieh, wie sich der Betrag aus Grundbetrag,
+      Faktor und Menge ergibt – mit Fundstelle für jede Position.
+    </p>
+    <p class="costs-hero__note">
+      Der Rechner ist <strong>kein amtlicher Rechner</strong>. Die Berechnungsübersicht ist keine
+      Rechnung einer Tierarztpraxis und kein verbindlicher Kostenvoranschlag: Eine echte Rechnung
+      kann Positionen enthalten, die hier niemand ausgewählt hat.
+    </p>
+  </div>
+  <aside class="costs-hero__aside" aria-labelledby="beispiele-titel">
+    <BrandImage
+      name="health-dog-home"
+      class="costs-hero__image"
+      sizes="(max-width: 899px) 100vw, 30vw"
+      priority
+    />
+    <div class="costs-hero__examples">
+      <p id="beispiele-titel" class="costs-hero__examples-title">Kostenbeispiele</p>
+      <ul>
+        {
+          beispiele.map((b) => (
+            <li>
+              <a href={subroutePath(katalogMarkt, 'costs', 'behandlung', b.slug)}>
+                {kurztitel(b.titel)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </aside>
+</header>
 
-<p>
-  Der Rechner setzt Positionen der Gebührenordnung für Tierärztinnen und Tierärzte zusammen und
-  zeigt, wie sich ein Betrag ergibt. Er ist <strong>kein amtlicher Rechner</strong>. Die
-  Berechnungsübersicht ist keine Rechnung einer Tierarztpraxis und kein verbindlicher
-  Kostenvoranschlag: Eine echte Rechnung kann Positionen enthalten, die hier niemand ausgewählt hat.
-</p>
+<div class="costs-meta">
+  <ReviewStatus
+    status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
+    reviewedAt={COST_CONFIG.reviewedAt}
+    reviewedBy={COST_CONFIG.reviewedBy}
+    lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
+    responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+    sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+    compact
+  >
+    {
+      COST_CONFIG.clinicalReview === 'approved' ? (
+        <p>Die Rechenannahmen dieses Rechners wurden fachlich geprüft.</p>
+      ) : (
+        <p data-testid="ungeprueft">
+          Die Rechenannahmen dieses Rechners — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und
+          Rundung — sind <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Der
+          Rechner ist zum Ausprobieren freigeschaltet, nicht als Auskunft. Verlass dich nicht auf
+          die Beträge.
+        </p>
+      )
+    }
+  </ReviewStatus>
 
-<ReviewStatus
-  status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
-  reviewedAt={COST_CONFIG.reviewedAt}
-  reviewedBy={COST_CONFIG.reviewedBy}
-  lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
-  responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
-  sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
-  compact
->
-  {
-    COST_CONFIG.clinicalReview === 'approved' ? (
-      <p>Die Rechenannahmen dieses Rechners wurden fachlich geprüft.</p>
-    ) : (
-      <p data-testid="ungeprueft">
-        Die Rechenannahmen dieses Rechners — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und
-        Rundung — sind <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Der
-        Rechner ist zum Ausprobieren freigeschaltet, nicht als Auskunft. Verlassen Sie sich nicht
-        auf die Beträge.
-      </p>
-    )
-  }
-</ReviewStatus>
+  <DataStatus
+    stand={quelle.effectiveFrom}
+    quelle={`${quelle.sourceVersion} · ${quelle.legalBasis}`}
+    locale={market.locale}
+  />
 
-<DataStatus
-  stand={quelle.effectiveFrom}
-  quelle={`${quelle.sourceVersion} · ${quelle.legalBasis}`}
-  locale={market.locale}
-/>
-
-<details class="rechner-grenzen">
-  <summary>Grenzen der Berechnung: Sonderfälle und enthaltene Leistungen</summary>
-  <p>
-    Standardmäßig werden ausgewählte Gebühren mit 19 % Umsatzsteuer berechnet. Für mit der Praxis
-    geklärte Sonderfälle können Sie abweichende Faktoren, Steuer und den Erlass der Notdienstgebühr
-    eingeben. Eine reguläre Sprechstunde am Abend oder Wochenende ist nicht automatisch Notdienst.
-  </p>
-  <p>
-    Der Rechner prüft nicht, ob eine Leistung bereits in einer anderen enthalten ist (§ 6 GOT). Die
-    Menge richtet sich nach der Einheit der gewählten Gebührenposition, etwa je Behandlung oder
-    Zeitabschnitt. Die Praxis muss die Auswahl und Kombination der Leistungen bestätigen.
-  </p>
-</details>
+  <details class="rechner-grenzen">
+    <summary>Grenzen der Berechnung: Sonderfälle und enthaltene Leistungen</summary>
+    <p>
+      Standardmäßig werden ausgewählte Gebühren mit 19 % Umsatzsteuer berechnet. Für mit der Praxis
+      geklärte Sonderfälle kannst du abweichende Faktoren, Steuer und den Erlass der Notdienstgebühr
+      eingeben. Eine reguläre Sprechstunde am Abend oder Wochenende ist nicht automatisch Notdienst.
+    </p>
+    <p>
+      Der Rechner prüft nicht, ob eine Leistung bereits in einer anderen enthalten ist (§ 6 GOT).
+      Die Menge richtet sich nach der Einheit der gewählten Gebührenposition, etwa je Behandlung
+      oder Zeitabschnitt. Die Praxis muss die Auswahl und Kombination der Leistungen bestätigen.
+    </p>
+  </details>
+</div>
 
 <SavedProfileButton />
 <ToolShell
@@ -105,8 +144,8 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
       <fieldset>
         <legend>Behandlungskontext</legend>
         <p class="hilfe">
-          Der Kontext wird nicht aus der Uhrzeit abgeleitet. Wählen Sie, was tatsächlich zutrifft;
-          im Zweifel fragen Sie in der Praxis nach.
+          Der Kontext wird nicht aus der Uhrzeit abgeleitet. Wähl, was tatsächlich zutrifft; im
+          Zweifel frag in der Praxis nach.
         </p>
         <div class="karten">
           <RadioCard
@@ -208,7 +247,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
         <legend>Position hinzufügen oder ändern</legend>
         <p class="hilfe">
           Ein Suchtreffer fügt die Leistung mit der eingetragenen Menge und dem Faktor hinzu.
-          Bereits ausgewählte Positionen können Sie darunter ändern.
+          Bereits ausgewählte Positionen kannst du darunter ändern.
         </p>
         <label for="suche">Leistung suchen</label>
         <div class="search-combobox">
@@ -268,7 +307,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     <div class="preis-hinweis">
       <h3>Warum ein Einzelbetrag niedrig wirken kann</h3>
       <p>
-        Angezeigt werden nur die Positionen, die Sie selbst hinzufügen. Eine allgemeine Untersuchung
+        Angezeigt werden nur die Positionen, die du selbst hinzufügst. Eine allgemeine Untersuchung
         oder Beratung kann als eigene GOT-Position dazukommen. Zeitaufwand und Schwierigkeit
         beeinflussen den Faktor; Medikamente, Material, Labor, Auslagen oder Wegegeld können
         zusätzlich berechnet werden. Eine pauschale weitere „Arbeitszeitgebühr“ setzt der Rechner
@@ -298,8 +337,8 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
     {NICHT_ENTHALTEN.map((eintrag) => <li>{eintrag}</li>)}
   </ul>
   <p>
-    Die Zusammenstellung der Positionen ist Ihre Auswahl. Ob sie zu einer Behandlung passt, kann nur
-    die behandelnde Praxis beurteilen.
+    Die Zusammenstellung der Positionen ist deine Auswahl. Ob sie zu einer Behandlung passt, kann
+    nur die behandelnde Praxis beurteilen.
   </p>
 </Notice>
 
@@ -318,17 +357,114 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 </p>
 
 <style>
+  .costs-hero {
+    display: grid;
+    gap: var(--space-5);
+    align-items: start;
+    margin-block: var(--space-2) var(--space-5);
+  }
+  .costs-hero__eyebrow {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .costs-hero h1 {
+    margin-block: 0 var(--space-3);
+  }
+  .costs-hero__lead {
+    max-inline-size: 58ch;
+    margin-block: 0 var(--space-3);
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+  }
+  .costs-hero__note {
+    max-inline-size: 64ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .costs-hero__aside {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    align-self: center;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .costs-hero__aside :global(.costs-hero__image),
+  .costs-hero__aside :global(.costs-hero__image img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  .costs-hero__examples {
+    padding: var(--space-3) var(--space-4);
+  }
+  .costs-hero__examples-title {
+    margin: 0 0 var(--space-1);
+    color: var(--color-ink);
+    font-size: var(--text-small);
+    font-weight: 700;
+  }
+  .costs-hero__examples ul {
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .costs-hero__examples a {
+    color: var(--color-primary-hover);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+  /* Quelle, Prüfstatus und Grenzen als ruhige Infozeile unter dem Kopf. */
+  .costs-meta {
+    display: grid;
+    gap: var(--space-2);
+    margin-block: 0 var(--space-6);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+  .costs-meta :global(p),
+  .costs-meta :global(details) {
+    margin-block: 0;
+  }
+  @media (min-width: 900px) {
+    .costs-hero {
+      grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr);
+    }
+  }
+
   fieldset {
     min-inline-size: 0;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
     margin-block: var(--space-4);
+    box-shadow: var(--shadow-xs);
   }
 
+  /* Legende als Überschrift in der Karte statt auf dem Rahmen. */
   legend {
-    font-weight: 600;
-    padding-inline: var(--space-2);
+    float: inline-start;
+    inline-size: 100%;
+    margin-block-end: var(--space-2);
+    padding: 0;
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+    font-weight: 700;
+  }
+
+  legend + * {
+    clear: both;
   }
 
   .hilfe {
@@ -523,7 +659,7 @@ const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 <script is:inline src="/formular.js" defer></script>
 <noscript
   ><p>
-    Suche und Berechnung benötigen JavaScript. Alle Gebührenpositionen können Sie im <a
+    Suche und Berechnung benötigen JavaScript. Alle Gebührenpositionen kannst du im <a
       href="/de-de/tierarztkosten/katalog/">Gebührenkatalog</a
     > nachlesen.
   </p></noscript

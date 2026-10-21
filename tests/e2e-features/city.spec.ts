@@ -1,6 +1,7 @@
 // M11-04 — Stadtseiten haben echten lokalen Inhalt und keine leere Rubrik.
 import { readFileSync } from 'node:fs';
 
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 
 const allowlist = JSON.parse(readFileSync('content-data/city-allowlist.json', 'utf8')) as {
@@ -88,4 +89,47 @@ test('bleibt ohne JavaScript vollständig lesbar', async ({ browser }) => {
   await seite.goto(`${KARTE}${ERSTE.slug}/`);
   await expect(seite.locator('.treffer > li').first()).toBeVisible();
   await kontext.close();
+});
+
+// Inhaltsoffensive 2026-10: Stadtseiten beantworten „Wo finde ich hier was?“
+// mit Sprechzeiten am Abend und Wochenende, Hundewiesen und Notdienst.
+test.describe('Stadtseite mit eigener Auswertung', () => {
+  test('Köln zeigt Notdienst mit Quelle, Sprechzeiten und Hundewiesen', async ({ page }) => {
+    await page.goto(`${KARTE}koeln/`);
+    await expect(page).toHaveTitle(/Notdienst/);
+    await expect(page.locator('.kurz')).toContainText('samstags geöffnet');
+
+    const notdienst = page.locator('#notdienst');
+    await expect(notdienst.locator('h2')).toHaveText('Tierärztlicher Notdienst in Köln');
+    expect(await notdienst.locator('.dienste > li').count()).toBeGreaterThanOrEqual(1);
+    await expect(notdienst.locator('a[href^="tel:"]').first()).toBeVisible();
+    await expect(notdienst.locator('.dienste a[rel~="nofollow"]').first()).toHaveAttribute(
+      'href',
+      /^https:\/\//,
+    );
+
+    await expect(page.locator('#sprechzeiten .zeitliste')).toHaveCount(3);
+    await expect(page.locator('#hundewiesen h2')).toContainText('Köln');
+
+    const results = await new AxeBuilder({ page })
+      .include('#notdienst')
+      .include('#sprechzeiten')
+      .include('#hundewiesen')
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+
+  test('ohne belegten Notdienst sagt die Seite das, statt einen zu erfinden', async ({ page }) => {
+    await page.goto(`${KARTE}bochum/`);
+    await expect(page).not.toHaveTitle(/Notdienst/);
+    await expect(page.locator('#notdienst')).toContainText('keinen zentralen Notdienst');
+    await expect(page.locator('#notdienst .dienste')).toHaveCount(0);
+  });
+
+  test('nicht erhobene Städte behalten den Hinweis auf die Kammer', async ({ page }) => {
+    await page.goto(`${KARTE}${ERSTE.slug}/`);
+    await expect(page.locator('#notdienst')).toHaveCount(0);
+    await expect(page.getByText('Kein Notdienstverzeichnis')).toBeVisible();
+  });
 });

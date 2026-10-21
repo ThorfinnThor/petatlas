@@ -75,3 +75,22 @@ Die ADRs ADR-001 bis ADR-016 sind gelesen und als verbindlich übernommen. Der d
 ## ADR-020 — Vom Betreiber gelieferte Amazon-Textlinks (10.09.2026)
 
 Der Betreiber beauftragt nach Übergabe seiner Partner-ID ausdrücklich Amazon-Verlinkungen für Spielzeug und Ergänzungsfuttermittel. Diese begrenzte Umsetzung verwendet statische, transparent gekennzeichnete Suchlinks im Real-Data-Profil, einschließlich der bestehenden öffentlich erreichbaren noindex-Vorschau. Sie ist eine explizit beauftragte Ausnahme zu ADR-008 für diese Textlinks. Synthetische Builds bleiben ohne Werbung. Keine neuen Feed-, Bild-, Preis-, Tracking- oder Versicherungsrechte werden daraus abgeleitet; bestehende Freigabeprüfungen bleiben bestehen. Die Amazon-Kontozulassung wird nicht behauptet. Nachweis und verbleibende Betreiberfragen: docs/reviews/legal-amazon-2026-09-10.md.
+
+## ADR-021 — Begründete Empfehlungen statt neutraler Auflistung (20.10.2026)
+
+**Entscheidung des Betreibers:** Vergleichsseiten dürfen und sollen klare
+Empfehlungen geben („für Wohnungskatzen empfehlen wir A, beim kleinen Budget B“).
+
+**Bedingungen:**
+- Die Empfehlung folgt aus einem veröffentlichten Bewertungsschema mit Gewichten
+  und aus belegten Daten (Deklaration, Fütterungsempfehlung, Preis mit Datum).
+  Das Schema steht auf der Seite.
+- Keine erfundenen Tests oder Bewertungen (ADR-015): Wir schreiben „nach unseren
+  Kriterien“, nicht „im Test“. Es gibt keine Testsieger-Siegel.
+- Die Empfehlung hängt nicht von Partnerprogrammen ab. Ein Produkt ohne
+  Affiliate-Link kann gewinnen; Affiliate-Links bleiben gekennzeichnet.
+- Keine Heilversprechen und keine Diagnose (ADR-012). Bei Krankheit oder
+  Diätfutter verweist die Seite an die Tierarztpraxis.
+
+**Folge:** Die bisherige Linie „keine Rangliste“ gilt nicht mehr für
+Vergleichsseiten. Inhaltsstandard: `docs/CONTENT_STANDARD.md`.

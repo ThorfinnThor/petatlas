@@ -1,35 +1,62 @@
 ---
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
-import PurchaseGuide from '../../../components/pages/PurchaseGuide.astro';
+import ProductComparison from '../../../components/pages/ProductComparison.astro';
+import { resolveBuildConfig } from '../../../../config/build.ts';
 import { defaultMarket } from '../../../domain/market.ts';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import {
-  PURCHASE_GUIDES,
-  type PurchaseGuide as PurchaseGuideData,
-} from '../../../features/commerce/purchase-guides.ts';
+  PRODUKT_VERGLEICHE,
+  auswertung,
+  produktName,
+  type ProduktVergleichsSeite,
+} from '../../../features/products/comparison-pages.ts';
 
 export function getStaticPaths() {
-  return PURCHASE_GUIDES.map((guide) => ({
-    params: { slug: guide.slug },
-    props: { guide },
-  }));
+  return PRODUKT_VERGLEICHE.map((seite) => ({ params: { slug: seite.slug }, props: { seite } }));
 }
 
 interface Props {
-  guide: PurchaseGuideData;
+  seite: ProduktVergleichsSeite;
 }
 
-const { guide } = Astro.props;
-const canonicalPfad = `/de-de/produkte/${guide.slug}/`;
+const { seite } = Astro.props;
+const { bewertungen, empfehlungen } = auswertung(seite);
+const canonicalPfad = `/de-de/produkte/${seite.slug}/`;
 const market = defaultMarket();
+const build = resolveBuildConfig();
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: seite.titel,
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: bewertungen.length,
+    itemListElement: bewertungen.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: produktName(b.produkt),
+      url: new URL(`${canonicalPfad}#modell-${b.produkt.id}`, build.baseUrl).toString(),
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: seite.fragen.map((f) => ({
+      '@type': 'Question',
+      name: f.frage,
+      acceptedAnswer: { '@type': 'Answer', text: f.antwort },
+    })),
+  },
+];
 ---
 
 <BaseLayout
-  title={guide.metaTitle}
-  description={guide.description}
+  title={seite.metaTitel}
+  description={seite.beschreibung}
   canonicalPfad={canonicalPfad}
+  structuredData={structuredData}
   weit
 >
-  <Breadcrumbs market={market} stufen={[{ label: guide.title }]} />
-  <PurchaseGuide guide={guide} />
+  <Breadcrumbs market={market} stufen={[{ label: seite.titel }]} />
+  <ProductComparison seite={seite} bewertungen={bewertungen} empfehlungen={empfehlungen} />
 </BaseLayout>

@@ -82,6 +82,11 @@ export function datensaetze(wurzel = '.'): readonly Datensatz[] {
     `${wurzel}/data-snapshots/municipal/hamburg-hundeauslaufzonen.json`,
   );
   const freigaben = leseJson(`${wurzel}/content-data/travel/approvals.json`);
+  const haendler = (['fressnapf', 'zooroyal'] as const).map((schluessel) => ({
+    schluessel,
+    katalog: leseJson(`${wurzel}/content-data/products/${schluessel}-catalog.json`),
+    zuordnung: leseJson(`${wurzel}/content-data/products/${schluessel}-feed.json`),
+  }));
 
   const ersteFreigabe = Array.isArray(feld(freigaben, ['approvals']))
     ? ((feld(freigaben, ['approvals']) as Record<string, unknown>[])[0] ?? null)
@@ -173,9 +178,43 @@ export function datensaetze(wurzel = '.'): readonly Datensatz[] {
           : null,
       ausgeliefert: true,
     },
+    ...haendler.map(({ schluessel, katalog, zuordnung }): Datensatz => {
+      const name = alsText(feld(katalog, ['merchantName'])) ?? schluessel;
+      const katalogAnzahl = Array.isArray(feld(katalog, ['products']))
+        ? (feld(katalog, ['products']) as unknown[]).length
+        : 0;
+      const zuordnungAnzahl = Array.isArray(feld(zuordnung, ['products']))
+        ? (feld(zuordnung, ['products']) as unknown[]).length
+        : 0;
+      // Der Sync schreibt einen neuen Stand nur, wenn sich etwas geändert
+      // hat. Der jüngere der beiden Stände ist deshalb der letzte belegte
+      // Abruf; älter kann der tatsächliche Feed nicht sein.
+      const staende = [feld(katalog, ['generatedAt']), feld(zuordnung, ['generatedAt'])]
+        .map(alsText)
+        .filter((wert): wert is string => wert !== null)
+        .sort();
+      return {
+        id: `haendlerfeed-${schluessel}`,
+        titel: `Händlerprodukte ${name}`,
+        quelle: `${name}-Produktfeed über Awin`,
+        lizenz: 'Awin-Publisher-AGB, Advertiser-Materialien',
+        // Abgerufen wird wöchentlich, übernommen per Pull Request. Nach drei
+        // Wochen fehlt mindestens ein Lauf; nach 90 Tagen führen Links und
+        // Bilder ausgelaufener Artikel zu oft ins Leere.
+        politik: { warnAbTagen: 21, sperreAbTagen: 90 },
+        begruendungPolitik:
+          'Der Feed wird wöchentlich abgerufen und per Pull Request übernommen. Gewarnt wird nach 21 Tagen, als veraltet gilt der Stand nach 90 Tagen, weil Links und Bilder ausgelaufener Artikel dann zu oft ins Leere führen.',
+        wirkung: 'warnt',
+        stand: staende.at(-1) ?? null,
+        umfang: `${katalogAnzahl} Händlerprodukte, ${zuordnungAnzahl} redaktionell ${zuordnungAnzahl === 1 ? 'zugeordnetes Produkt' : 'zugeordnete Produkte'}`,
+        hinweis:
+          'Übernommen werden Produktname, Marke, Tierart, Händlerkategorie, Produktbild und Link. Preise und Verfügbarkeiten nicht. Als Stand zählt der letzte Abruf, der den Bestand verändert hat.',
+        ausgeliefert: katalogAnzahl + zuordnungAnzahl > 0,
+      };
+    }),
     {
       id: 'angebote',
-      titel: 'Produktangebote',
+      titel: 'Preise und Verfügbarkeiten',
       quelle: 'Partnernetzwerk',
       lizenz: null,
       // Ein Feedpreis altert schnell. Die Schwellen sind hier eng, weil eine
@@ -185,9 +224,9 @@ export function datensaetze(wurzel = '.'): readonly Datensatz[] {
         'Ein Preis altert schnell. Nach einem Tag ein Hinweis, nach sieben Tagen wird er nicht mehr angezeigt.',
       wirkung: 'sperrt',
       stand: null,
-      umfang: 'keine Angebote ausgeliefert',
+      umfang: 'keine Preise oder Verfügbarkeiten ausgeliefert',
       hinweis:
-        'Ein automatischer Angebotsfeed ist nicht aktiviert. Statische, als Werbung gekennzeichnete Amazon- und Awin-Links werden getrennt verwaltet; ohne Feed entstehen keine Preise, Verfügbarkeiten oder Angebotsdateien. Das ist der Normalzustand, kein Ausfall.',
+        'Preise und Verfügbarkeiten werden bewusst nicht übernommen, auch nicht aus den Händlerfeeds oben. Als Werbung gekennzeichnete Amazon- und Awin-Links werden getrennt verwaltet; es entstehen keine Preisangaben oder Angebotsdateien. Das ist der Normalzustand, kein Ausfall.',
       ausgeliefert: false,
     },
   ];

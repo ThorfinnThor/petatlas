@@ -3,19 +3,21 @@ import { resolveBuildConfig, devFeatureOverrides } from '../../../config/build.t
 import { createSiteConfig } from '../../../config/site.ts';
 import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { amazonEnabled } from '../../features/commerce/amazon.ts';
-import { fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
+import { partnerBildUrspruenge } from '../../features/commerce/feed-catalog.ts';
 import Notice from '../Notice.astro';
+import PageIntro from '../ui/PageIntro.astro';
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
 const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
-const fressnapfFeedActive = fressnapfAngebote().length > 0;
+const bildServer = partnerBildUrspruenge().map((ursprung) => new URL(ursprung).host);
 ---
 
-<h1>Datenschutz</h1>
-<p>
-  Diese Datenschutzerklärung beschreibt die Verarbeitung personenbezogener Daten auf Dein
-  Haustierportal. Stand: 27. September 2026.
-</p>
+<PageIntro titel="Datenschutz" eyebrow="Rechtliches">
+  <p>
+    Diese Datenschutzerklärung beschreibt die Verarbeitung personenbezogener Daten auf Dein
+    Haustierportal. Stand: 21. Oktober 2026.
+  </p>
+</PageIntro>
 <h2>Verantwortlicher und Kontakt</h2>
 {
   site.operator.legalName ? (
@@ -65,7 +67,7 @@ const fressnapfFeedActive = fressnapfAngebote().length > 0;
   Core Web Vitals. Suchparameter einer URL werden nach Angaben von Cloudflare nicht protokolliert.
 </p>
 <p>
-  Dafür lädt der Browser ein JavaScript-Beacon von
+  Dafür lädt der Browser ein JavaScript-Beacon von{' '}
   <code>static.cloudflareinsights.com</code> und sendet Messwerte an <code>/cdn-cgi/rum</code> auf unserer
   Domain. Cloudflare Web Analytics verwendet dafür nach Angaben von Cloudflare keine Cookies, verfolgt
   Personen nicht über verschiedene Websites und sammelt oder nutzt keine personenbezogenen Besucherdaten.
@@ -217,17 +219,18 @@ const fressnapfFeedActive = fressnapfAngebote().length > 0;
     <>
       <h2>Awin-Partnerlinks</h2>
       <p>
-        Auf den Seiten zu Spielzeug, Ergänzungsfuttermitteln und Tierversicherungen verwenden wir
-        als „Werbung“ oder „Anzeige“ gekennzeichnete Links über das Affiliate-Netzwerk Awin. Die
-        Links enthalten unsere feste Publisher-ID, die jeweilige Advertiser-ID und vier statische
-        Angaben zur Seite und Linkposition. Profilangaben, Rechenergebnisse und individuelle
-        Besucherkennungen hängen wir nicht an. Auf Dein Haustierportal laden wir dafür keine
-        Awin-Skripte oder Pixel und setzen keine Awin-Cookies.{' '}
-        {fressnapfFeedActive && (
+        Auf den Seiten zu Futter, Pflege, Spielzeug, Ergänzungsfuttermitteln und Tierversicherungen
+        verwenden wir als „Werbung“ oder „Anzeige“ gekennzeichnete Links über das Affiliate-Netzwerk
+        Awin. Die Links enthalten unsere feste Publisher-ID, die jeweilige Advertiser-ID und vier
+        statische Angaben zur Seite und Linkposition. Profilangaben, Rechenergebnisse und
+        individuelle Besucherkennungen hängen wir nicht an. Auf Dein Haustierportal laden wir dafür
+        keine Awin-Skripte oder Pixel und setzen keine Awin-Cookies.{' '}
+        {bildServer.length > 0 && (
           <>
-            Auf einzelnen Produktkarten laden wir ein Bild von der im Fressnapf-Awin-Feed
-            angegebenen Bildadresse. Dabei erhält der Bildserver technisch deine IP-Adresse und
-            Browserdaten; der Referrer wird für diese Bilder nicht übertragen.
+            Auf Produktkarten mit Händlerbild lädt dein Browser das Bild direkt von der in den
+            Awin-Feeds von Fressnapf und ZooRoyal angegebenen Bildadresse ({bildServer.join(', ')}).
+            Dabei erhält der Bildserver technisch deine IP-Adresse und Browserdaten; der Referrer
+            wird für diese Bilder nicht übertragen.
           </>
         )}
       </p>
@@ -240,7 +243,8 @@ const fressnapfFeedActive = fressnapfAngebote().length > 0;
         <a href="https://www.awin.com/de/datenschutzerklarung" rel="noopener">
           Datenschutzerklärung von Awin
         </a>
-        . Du kannst Fressnapf und HanseMerkur auch unabhängig von unseren Partnerlinks besuchen.
+        . Du kannst Fressnapf, ZooRoyal und HanseMerkur auch unabhängig von unseren Partnerlinks
+        besuchen.
       </p>
     </>
   )
@@ -273,3 +277,11 @@ const fressnapfFeedActive = fressnapfAngebote().length > 0;
     rel="noopener">Berliner Beauftragte für Datenschutz und Informationsfreiheit</a
   > zuständig.
 </p>
+
+<style>
+  /* Rechtstexte gliedern, ohne zu rufen: Abschnittstitel eine Stufe kleiner. */
+  h2 {
+    margin-block-start: var(--space-10);
+    font-size: var(--text-h3);
+  }
+</style>

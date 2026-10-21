@@ -14,6 +14,8 @@ import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../doma
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { amazonEnabled, AMAZON_DISCLOSURE } from '../../features/commerce/amazon.ts';
 import Notice from '../Notice.astro';
+import PageIntro from '../ui/PageIntro.astro';
+import TransparencyNav from '../ui/TransparencyNav.astro';
 import { commerceStatus } from '../../features/commerce/status.ts';
 import { commerceProgramme, insuranceProgramme } from '../../features/commerce/partner.ts';
 
@@ -29,11 +31,15 @@ const awinAktiv =
     insuranceProgramme().some((programm) => programm.status === 'approved'));
 ---
 
-<h1>Methodik</h1>
-<p>
-  Diese Seite beschreibt, wie die Angaben auf dieser Website zustande kommen — und was ausdrücklich
-  <strong>nicht</strong> getan wird.
-</p>
+<PageIntro titel="Methodik" eyebrow="Transparenz">
+  <p>
+    Diese Seite beschreibt, wie die Angaben auf dieser Website zustande kommen — und was
+    ausdrücklich{' '}
+    <strong>nicht</strong> getan wird.
+  </p>
+</PageIntro>
+
+<TransparencyNav aktuell="method" />
 
 <h2>Woher die Daten stammen</h2>
 <p>
@@ -52,7 +58,7 @@ const awinAktiv =
 </p>
 
 <h2>Was hier nicht passiert</h2>
-<ul>
+<ul class="grundsaetze">
   <li>
     <strong>Keine erfundenen Zahlen.</strong> Es gibt keine geschätzten Tierarztpreise, keine ausgedachten
     Bewertungen und keine Tests, die niemand durchgeführt hat.
@@ -75,7 +81,9 @@ const awinAktiv =
 <p>
   Regeln mit rechtlichem Gewicht — Gebühren und Reisebestimmungen — werden erst ausgewertet, wenn
   eine fachlich prüfende Person sie freigegeben hat. Ist keine Freigabe eingetragen oder hat sich
-  der geprüfte Inhalt geändert, läuft die betroffene Funktion in einer Vorschau, die ausdrücklich
+  der geprüfte Inhalt geändert, läuft die betroffene Funktion in einer Vorschau, die ausdrücklich{
+    ' '
+  }
   <strong>kein</strong> positives Gesamtergebnis liefert. Eine Freigabe altert außerdem: nach einem Jahr
   trägt sie kein Ergebnis mehr.
 </p>
@@ -83,10 +91,10 @@ const awinAktiv =
 <h2>Wie alt die Daten sind</h2>
 <p>
   Jeder Datensatz nennt seinen Stand und ab wann er als veraltet gilt. Der Gesamtstand dieses Builds
-  lautet: <strong>{bericht.gesamt.frische}</strong>. {bericht.gesamt.begruendung}
+  lautet: <strong class="frische">{bericht.gesamt.frische}</strong>. {bericht.gesamt.begruendung}
 </p>
 
-<h2>Bezahlte Verweise</h2>
+<h2 id="bezahlte-verweise">Bezahlte Verweise</h2>
 {
   amazonEnabled(process.env) ? (
     <>
@@ -103,10 +111,13 @@ const awinAktiv =
       </p>
       <p>
         Partnerlinks und Angebotsdaten werden getrennt verwaltet. Die vom Betreiber beauftragten
-        Amazon-Textlinks sind aktiv ({partnerstatus.affiliateLinkStatus.siteTag}). Der freigegebene
-        Fressnapf-Feed liefert ausschließlich Bilder und Deep Links für eindeutig zugeordnete
-        redaktionelle Produkte. Preise, Verfügbarkeiten, Bewertungen und Händlerbeschreibungen
-        werden daraus nicht veröffentlicht.
+        Amazon-Textlinks sind aktiv ({partnerstatus.affiliateLinkStatus.siteTag}). Aus den
+        Awin-Produktfeeds von Fressnapf und ZooRoyal übernehmen wir Produktname, Marke, Tierart,
+        Händlerkategorie, Bildadresse und Deep Link — für eindeutig zugeordnete redaktionelle
+        Produkte und für weitere Händlerprodukte, die getrennt als solche gekennzeichnet sind. Für
+        Händlerprodukte gibt es keine geprüften Merkmale; sie erscheinen im Finder nur, solange kein
+        Merkmalsfilter gewählt ist. Preise, Verfügbarkeiten, Bewertungen und Händlerbeschreibungen
+        werden aus den Feeds nicht veröffentlicht.
       </p>
     </>
   ) : (
@@ -119,11 +130,11 @@ const awinAktiv =
 {
   awinAktiv && (
     <p>
-      Fressnapf und HanseMerkur sind als Awin-Partner eingebunden. Jeder Link trägt vier statische
-      ClickRefs für Themenbereich, Platzierung, Inhalt und Seite oder stammt als geprüfter Deep Link
-      aus dem Fressnapf-Feed. Die Links enthalten keine Profilangaben, Rechenergebnisse oder
-      Sitzungskennung. Die Händler- und Versicherungslinks stehen in getrennten Werbeblöcken; ihre
-      Position hängt nicht von einer Provision ab.
+      Fressnapf, ZooRoyal und HanseMerkur sind als Awin-Partner eingebunden. Jeder Link trägt vier
+      statische ClickRefs für Themenbereich, Platzierung, Inhalt und Seite oder stammt als geprüfter
+      Deep Link aus dem Feed des jeweiligen Händlers. Die Links enthalten keine Profilangaben,
+      Rechenergebnisse oder Sitzungskennung. Die Händler- und Versicherungslinks stehen in
+      getrennten Werbeblöcken; ihre Position hängt nicht von einer Provision ab.
     </p>
   )
 }
@@ -134,3 +145,36 @@ const awinAktiv =
     nachträglich.
   </p>
 </Notice>
+
+<style>
+  .grundsaetze {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-3);
+    margin-block: var(--space-4) var(--space-10);
+    padding: 0;
+    list-style: none;
+  }
+
+  .grundsaetze li {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-block-start: 3px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .grundsaetze strong {
+    display: block;
+    margin-block-end: var(--space-1);
+    color: var(--color-ink);
+  }
+
+  .frische {
+    padding: 0.1em 0.55em;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+  }
+</style>

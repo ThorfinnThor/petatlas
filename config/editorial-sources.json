@@ -233,6 +233,32 @@
       "rightsBasis": "Anzeige nach OSMF Tile Usage Policy mit sichtbarer Attribution",
       "allowedOutputs": "Interaktive Einzelabrufe im Browser; kein Vorabladen, Offlinearchiv oder Weiterverteilen",
       "evidence": "config/tiles.json und tests/e2e-features/map-abnahme.spec.ts"
+    },
+    {
+      "id": "awin-feed-fressnapf",
+      "category": "Händlerfeed",
+      "title": "Fressnapf-Produktfeed über Awin (Advertiser 14757)",
+      "publisher": "Fressnapf über Awin",
+      "url": "https://www.fressnapf.de/",
+      "usage": "Produktname, Marke, Tierart, Händlerkategorie, Produktbild und Deep Link der Händlerprodukte auf Futter-, Pflege-, Spielzeug- und Ergänzungsfutterseiten",
+      "version": "Feedabruf 21.10.2026",
+      "checkedAt": "2026-10-21",
+      "rightsBasis": "Awin-Publisher-AGB Ziffer 4.4 und 10.1: widerrufliche Unterlizenz zur unveränderten Veröffentlichung der vom Advertiser bereitgestellten Materialien für die Dauer der Programmteilnahme",
+      "allowedOutputs": "Unveränderte Produktbilder mit Bildnachweis und als Werbung gekennzeichnete Händlerlinks; keine Preise, Verfügbarkeiten, Bewertungen oder Händlerbeschreibungen",
+      "evidence": "content-data/products/fressnapf-catalog.json und docs/reviews/awin-feedbilder-2026-10-21.md"
+    },
+    {
+      "id": "awin-feed-zooroyal",
+      "category": "Händlerfeed",
+      "title": "ZooRoyal-Produktfeed über Awin (Advertiser 14979)",
+      "publisher": "ZooRoyal über Awin",
+      "url": "https://www.zooroyal.de/",
+      "usage": "Produktname, Marke, Tierart, Händlerkategorie, Produktbild und Deep Link der Händlerprodukte auf Futter-, Pflege-, Spielzeug- und Ergänzungsfutterseiten",
+      "version": "Feedabruf 21.10.2026",
+      "checkedAt": "2026-10-21",
+      "rightsBasis": "Awin-Publisher-AGB Ziffer 4.4 und 10.1: widerrufliche Unterlizenz zur unveränderten Veröffentlichung der vom Advertiser bereitgestellten Materialien für die Dauer der Programmteilnahme",
+      "allowedOutputs": "Unveränderte Produktbilder mit Bildnachweis und als Werbung gekennzeichnete Händlerlinks; keine Preise, Verfügbarkeiten, Bewertungen oder Händlerbeschreibungen",
+      "evidence": "content-data/products/zooroyal-catalog.json und docs/reviews/awin-feedbilder-2026-10-21.md"
     }
   ]
 }

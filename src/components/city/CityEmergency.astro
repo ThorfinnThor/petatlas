@@ -1,0 +1,139 @@
+---
+/**
+ * Notdienst auf der Stadtseite: erhobene Dienste mit Quelle, sonst der
+ * Verweis auf die zuständige Kammer. Daten: `features/map/emergency.ts`.
+ */
+import { ART_LABEL, NOTDIENST_STAND, type StadtNotdienst } from '../../features/map/emergency.ts';
+import { formatCalendarDate } from '../../domain/dates.ts';
+
+interface Props {
+  stadt: string;
+  notdienst: StadtNotdienst;
+  kostenPfad: string;
+}
+
+const { stadt, notdienst, kostenPfad } = Astro.props;
+const host = (url: string) => new URL(url).hostname.replace(/^www\./, '');
+---
+
+<section class="city-emergency" id="notdienst" aria-labelledby="notdienst-titel">
+  <p class="eyebrow">Außerhalb der Sprechzeiten</p>
+  <h2 id="notdienst-titel">Tierärztlicher Notdienst in {stadt}</h2>
+  {
+    notdienst.dienste.length > 0 ? (
+      <p>
+        Diese Notdienste haben wir mit ihrer eigenen Website oder der Seite der Tierärztekammer
+        belegt. Ruf vorher an: Kliniken sind oft ausgelastet und sagen am Telefon, ob und wann du
+        kommen kannst.
+      </p>
+    ) : (
+      <p>
+        Für {stadt} haben wir keinen zentralen Notdienst und keine Klinik gefunden, die auf ihrer
+        eigenen Website einen 24-Stunden-Notdienst angibt. Frag deine Praxis, wen sie außerhalb der
+        Sprechzeiten empfiehlt, oder wende dich an die zuständige Tierärztekammer.
+      </p>
+    )
+  }
+  {
+    notdienst.dienste.length > 0 && (
+      <ul class="dienste">
+        {notdienst.dienste.map((d) => (
+          <li>
+            <p class="art">{ART_LABEL[d.kind]}</p>
+            <h3>{d.name}</h3>
+            <p class="meta">{d.coverage}</p>
+            {d.phone !== null && (
+              <p class="telefon">
+                <a href={`tel:${d.phone.replace(/[^\d+]/g, '')}`}>{d.phone}</a>
+              </p>
+            )}
+            <blockquote>„{d.verbatim}“</blockquote>
+            <p class="meta">
+              Quelle:{' '}
+              <a href={d.url} rel="nofollow noopener">
+                {host(d.url)}
+              </a>
+            </p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <p class="kammer">
+    Zuständige Kammer:{' '}
+    <a href={notdienst.kammer.url} rel="nofollow noopener">{notdienst.kammer.name}</a>
+  </p>
+  <p class="meta">
+    Geprüft am {formatCalendarDate(NOTDIENST_STAND, 'de-DE')}. Notdienste ändern Zeiten und Nummern;
+    maßgeblich ist die verlinkte Quelle. Im Notdienst fällt nach der Gebührenordnung eine
+    Notdienstgebühr an, und es gilt mindestens der doppelte Satz –
+    <a href={kostenPfad}>was das kostet</a>.
+  </p>
+</section>
+
+<style>
+  .city-emergency {
+    margin-block: var(--space-8);
+    padding: var(--space-5);
+    border: 1px solid var(--color-warning-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-warning-soft);
+  }
+  .city-emergency > p {
+    max-width: 72ch;
+  }
+  h2 {
+    margin-block: 0 var(--space-3);
+  }
+  .eyebrow,
+  .art {
+    margin: 0 0 var(--space-2);
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  /* Flex statt Raster: Bei nur einem Dienst bleibt keine leere Spalte stehen. */
+  .dienste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin: var(--space-5) 0;
+    padding: 0;
+    list-style: none;
+  }
+  .dienste li {
+    flex: 1 1 20rem;
+    max-width: 44rem;
+    min-width: 0;
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    overflow-wrap: anywhere;
+  }
+  h3 {
+    margin: 0 0 var(--space-1);
+    font-size: 1.05rem;
+  }
+  .telefon {
+    margin-block: var(--space-2);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  blockquote {
+    margin: var(--space-2) 0;
+    padding-inline-start: var(--space-3);
+    border-inline-start: 3px solid var(--color-border);
+    color: var(--color-text);
+    font-size: var(--text-small);
+  }
+  .meta {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .kammer {
+    font-weight: 600;
+  }
+</style>

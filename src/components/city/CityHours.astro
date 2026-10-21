@@ -1,0 +1,231 @@
+---
+/**
+ * „Tierarzt abends und am Wochenende“ und „Hundewiesen“ auf der Stadtseite.
+ * Die Zahlen kommen aus `features/map/city-summary.ts`; hier steht nur die
+ * Darstellung.
+ */
+import type { StadtUebersicht, Zeitliste } from '../../features/map/city-summary.ts';
+import { formatiereEntfernung } from '../../features/map/list.ts';
+
+interface Props {
+  stadt: string;
+  uebersicht: StadtUebersicht;
+}
+
+const { stadt, uebersicht: u } = Astro.props;
+const quote = Math.round((u.mitLesbarenZeiten / Math.max(u.tieraerzte, 1)) * 100);
+const gruppen: readonly { id: string; titel: string; leer: string; liste: Zeitliste }[] = [
+  {
+    id: 'samstag',
+    titel: 'Samstags geöffnet',
+    leer: 'Keine Praxis mit erfasster Samstagssprechstunde.',
+    liste: u.samstag,
+  },
+  {
+    id: 'abends',
+    titel: 'Werktags bis mindestens 19 Uhr',
+    leer: 'Keine Praxis mit erfasster Abendsprechstunde.',
+    liste: u.abends,
+  },
+  {
+    id: 'sonntag',
+    titel: 'Sonntags geöffnet',
+    leer: 'Keine Praxis mit erfasster Sonntagssprechstunde.',
+    liste: u.sonntag,
+  },
+];
+---
+
+<section class="city-hours" id="sprechzeiten" aria-labelledby="sprechzeiten-titel">
+  <p class="eyebrow">Ausgewertet</p>
+  <h2 id="sprechzeiten-titel">Tierarzt abends und am Wochenende in {stadt}</h2>
+  <p>
+    Von {u.tieraerzte} erfassten Tierarztpraxen im Umkreis haben {u.mitLesbarenZeiten} ({quote} %) Öffnungszeiten,
+    die wir sicher auswerten können. Davon haben <strong
+      >{u.samstag.anzahl + u.rundUmDieUhr.anzahl} samstags</strong
+    >, <strong>{u.sonntag.anzahl + u.rundUmDieUhr.anzahl} sonntags</strong> und <strong
+      >{u.abends.anzahl + u.rundUmDieUhr.anzahl} werktags bis mindestens 19 Uhr</strong
+    > geöffnet.
+  </p>
+  {
+    u.rundUmDieUhr.anzahl > 0 && (
+      <div class="rund">
+        <h3>Laut Öffnungszeiten rund um die Uhr</h3>
+        <ul>
+          {u.rundUmDieUhr.naechste.map(({ treffer }) => (
+            <li>
+              <strong>{treffer.ort.name}</strong>
+              <span class="meta">
+                {formatiereEntfernung(treffer.entfernungMeter)} · {treffer.ortsLabel}
+              </span>
+              {treffer.ort.phone !== null && (
+                <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+  <div class="zeiten">
+    {
+      gruppen.map((g) => (
+        <div class="zeitliste" id={`sprechzeiten-${g.id}`}>
+          <h3>
+            {g.titel} <span class="anzahl">{g.liste.anzahl}</span>
+          </h3>
+          {g.liste.anzahl === 0 ? (
+            <p class="meta">{g.leer}</p>
+          ) : (
+            <ol>
+              {g.liste.naechste.map(({ treffer, zeiten }) => (
+                <li>
+                  <strong>{treffer.ort.name}</strong>
+                  <span class="zeit">{zeiten}</span>
+                  <span class="meta">
+                    {formatiereEntfernung(treffer.entfernungMeter)} · {treffer.ortsLabel}
+                  </span>
+                  {treffer.ort.phone !== null && (
+                    <a href={`tel:${treffer.ort.phone.replace(/\s/g, '')}`}>{treffer.ort.phone}</a>
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+          {g.liste.anzahl > g.liste.naechste.length && (
+            <p class="meta">
+              Die {g.liste.naechste.length} nächstgelegenen von {g.liste.anzahl}; alle stehen in der
+              Liste unten.
+            </p>
+          )}
+        </div>
+      ))
+    }
+  </div>
+  <p class="meta">
+    Öffnungszeiten aus OpenStreetMap; sie können veraltet sein. Ob eine Praxis ohne Termin
+    behandelt, steht dort nicht. Vorher anrufen.
+  </p>
+</section>
+
+<section class="city-parks" id="hundewiesen" aria-labelledby="hundewiesen-titel">
+  <p class="eyebrow">Auslauf</p>
+  <h2 id="hundewiesen-titel">Hundewiesen und Freilaufflächen rund um {stadt}</h2>
+  <p>
+    In OpenStreetMap sind im Umkreis {u.hundewiesen.anzahl} Hundewiesen erfasst{
+      u.hundewiesen.eingezaeunt > 0
+        ? `, davon ${u.hundewiesen.eingezaeunt} ausdrücklich als eingezäunt`
+        : ''
+    }. Bei den übrigen ist nicht erfasst, ob ein Zaun vorhanden ist. Darunter können auch
+    Übungsplätze von Hundevereinen sein, die nur Mitgliedern offenstehen.
+  </p>
+  <ol class="wiesen">
+    {
+      u.hundewiesen.naechste.map((treffer) => (
+        <li>
+          <strong>{treffer.ort.name}</strong>
+          <span class="meta">
+            {formatiereEntfernung(treffer.entfernungMeter)} ·{' '}
+            {treffer.ort.postalCode ? `PLZ ${treffer.ort.postalCode}` : treffer.ortsLabel}
+            {treffer.ort.fenced === true && ' · eingezäunt'}
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+  {
+    u.hundewiesen.anzahl > u.hundewiesen.naechste.length && (
+      <p class="meta">
+        Die {u.hundewiesen.naechste.length} nächstgelegenen von {u.hundewiesen.anzahl}; alle stehen
+        mit der Kategorie „Hundewiese“ in der Liste unten.
+      </p>
+    )
+  }
+</section>
+
+<style>
+  .city-hours,
+  .city-parks {
+    margin-block: var(--space-8);
+  }
+  .city-hours > p,
+  .city-parks > p {
+    max-width: 72ch;
+  }
+  .city-hours h2,
+  .city-parks h2 {
+    margin-block: 0 var(--space-3);
+  }
+  .eyebrow {
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: 0 0 var(--space-2);
+    text-transform: uppercase;
+  }
+  .zeiten {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    margin-block: var(--space-5);
+  }
+  .zeitliste,
+  .rund {
+    min-width: 0;
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+  .rund {
+    margin-block-start: var(--space-5);
+    border-color: var(--color-primary-border);
+    background: var(--color-primary-soft);
+  }
+  .zeitliste h3,
+  .rund h3 {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-3);
+    font-size: 1.05rem;
+  }
+  .anzahl {
+    color: var(--color-primary);
+    font-variant-numeric: tabular-nums;
+  }
+  ol,
+  ul {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: grid;
+    gap: 0.15rem;
+    overflow-wrap: anywhere;
+  }
+  .zeit {
+    font-variant-numeric: tabular-nums;
+  }
+  .meta {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+  .wiesen {
+    display: flex;
+    flex-wrap: wrap;
+    margin-block: var(--space-4);
+  }
+  .wiesen li {
+    flex: 1 1 16rem;
+    max-width: 30rem;
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+</style>

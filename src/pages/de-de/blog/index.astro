@@ -121,7 +121,6 @@ const topicClass = (topic: string) =>
                   <time datetime={article.data.publishedAt}>
                     {dateFormatter.format(new Date(`${article.data.publishedAt}T00:00:00Z`))}
                   </time>
-                  <span>Mit Quellen</span>
                 </p>
                 <span class="blog-card__arrow" aria-hidden="true">
                   →
@@ -303,7 +302,8 @@ const topicClass = (topic: string) =>
 
   .blog-card__visual {
     display: grid;
-    min-block-size: 10rem;
+    /* Feste Höhe: alle Karten einer Reihe beginnen ihren Text auf gleicher Linie. */
+    block-size: 11rem;
     place-items: center;
     background: var(--color-info-soft);
   }
@@ -318,6 +318,7 @@ const topicClass = (topic: string) =>
 
   .blog-card__visual svg {
     inline-size: min(62%, 12rem);
+    max-block-size: 7.5rem;
     filter: drop-shadow(0 9px 13px rgb(7 54 55 / 10%));
   }
 
@@ -409,11 +410,6 @@ const topicClass = (topic: string) =>
     margin: 0;
     color: var(--color-text-muted);
     font-size: var(--text-small);
-  }
-
-  .blog-card__meta span::before {
-    margin-inline-end: var(--space-3);
-    content: '•';
   }
 
   .blog-card__arrow {
@@ -516,14 +512,6 @@ const topicClass = (topic: string) =>
 
     .blog-hero h1 {
       font-size: clamp(2.1rem, 12vw, 3rem);
-    }
-
-    .blog-card__meta {
-      display: grid;
-    }
-
-    .blog-card__meta span::before {
-      display: none;
     }
   }
 

@@ -2,8 +2,12 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import editorial from '../../content-data/products/editorial.json' with { type: 'json' };
 import fressnapfFeed from '../../content-data/products/fressnapf-feed.json' with { type: 'json' };
+import zooroyalFeed from '../../content-data/products/zooroyal-feed.json' with { type: 'json' };
 
 const fressnapfIds = new Set(fressnapfFeed.products.map((product) => product.productId));
+const zooroyalIds = new Set(
+  (zooroyalFeed.products as { productId: string }[]).map((product) => product.productId),
+);
 const transparentPng = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
   'base64',
@@ -41,7 +45,12 @@ for (const width of [390, 900, 1440]) {
         cards.locator('figcaption', { hasText: 'Produktbild · Fressnapf-Feed' }),
       ).toHaveCount(feedCount);
       await expect(cards.locator('img[data-feed-image]')).toHaveCount(feedCount);
-      await expect(cards.locator('.finder__aktionen a[href*="awin1.com"]')).toHaveCount(feedCount);
+      // Je Händler mit eindeutiger Zuordnung ein gekennzeichneter Partnerlink.
+      const partnerLinks =
+        feedCount + expected.filter((product) => zooroyalIds.has(product.id)).length;
+      await expect(cards.locator('.finder__aktionen a[href*="awin1.com"]')).toHaveCount(
+        partnerLinks,
+      );
       for (const card of await cards.all()) {
         const productId = await card.getAttribute('data-produkt');
         const image = card.locator('img');

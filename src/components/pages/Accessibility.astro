@@ -4,6 +4,7 @@ import { createSiteConfig } from '../../../config/site.ts';
 import { resolveBuildConfig } from '../../../config/build.ts';
 import { PFLICHTANGABEN } from '../../../config/legal.ts';
 import Notice from '../Notice.astro';
+import PageIntro from '../ui/PageIntro.astro';
 
 const build = resolveBuildConfig();
 const site = createSiteConfig(build.mode, process.env);
@@ -11,7 +12,9 @@ const kontakt = site.operator.contactEmail;
 const eintrag = PFLICHTANGABEN.find((pflicht) => pflicht.id === 'barrierefreiheitserklaerung');
 ---
 
-<h1>Barrierefreiheit</h1>
+<PageIntro titel="Barrierefreiheit" eyebrow="Rechtliches">
+  <p>Was geprüft wurde, welche Einschränkungen bekannt sind und wie du Barrieren meldest.</p>
+</PageIntro>
 
 <Notice variante="hinweis" titel="Erklärung zur Barrierefreiheit">
   <p>
@@ -82,6 +85,12 @@ const eintrag = PFLICHTANGABEN.find((pflicht) => pflicht.id === 'barrierefreihei
 }
 
 <style>
+  /* Rechtstexte gliedern, ohne zu rufen: Abschnittstitel eine Stufe kleiner. */
+  h2 {
+    margin-block-start: var(--space-10);
+    font-size: var(--text-h3);
+  }
+
   .fussnote {
     color: var(--color-text-muted);
     font-size: var(--text-small);

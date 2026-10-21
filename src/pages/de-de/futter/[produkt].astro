@@ -18,6 +18,7 @@ import { routePath, subroutePath } from '../../../lib/routes.ts';
 import { alleFutter, futterDatenArt, gleicheVariante } from '../../../features/food/catalog.ts';
 import { mengenText } from '../../../features/food/unit-price.ts';
 import type { FutterEintrag } from '../../../features/food/catalog.ts';
+import { FUTTERPRODUKTE_INDEXIERBAR } from '../../../features/seo/index-quality.ts';
 
 export function getStaticPaths() {
   const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -80,6 +81,7 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
 ---
 
 <BaseLayout
+  neverIndex={!FUTTERPRODUKTE_INDEXIERBAR}
   title={seitentitel}
   description={`${seitentitel}: deklarierte Inhaltswerte, Packungsgröße und Herstellerquelle für den Vergleich von Hunde- und Katzenfutter.`}
   route="food"

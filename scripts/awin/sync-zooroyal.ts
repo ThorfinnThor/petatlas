@@ -5,6 +5,7 @@ import editorial from '../../content-data/products/editorial.json' with { type: 
 import supplements from '../../content-data/products/supplements.json' with { type: 'json' };
 import {
   ladeCsv,
+  katalogDiagnose,
   katalogProdukteAusZeilen,
   ordneProdukteZuPartner,
   partnerFeeds,
@@ -53,6 +54,33 @@ async function main(): Promise<void> {
     names,
     ADVERTISER_ID,
     ZOOROYAL_HOSTS,
+  );
+  const hosts = new Set(['zooroyal.de', 'www.zooroyal.de']);
+  const diagnose = Object.entries(katalogDiagnose(rows, ADVERTISER_ID, hosts))
+    .sort(([, a], [, b]) => b - a)
+    .map(([grund, anzahl]) => `${grund}: ${anzahl}`)
+    .join(' · ');
+  console.log(`Katalogprüfung je Grund: ${diagnose}`);
+  // Händleradressen sind öffentlich (sie stehen in jedem Produktlink); nur die Hosts werden gezählt.
+  const fremdeHosts = new Map<string, number>();
+  for (const row of rows) {
+    const link =
+      row['merchant_deep_link'] || row['merchant_product_url'] || row['product_url'] || '';
+    try {
+      const host = new URL(link).host;
+      if (!hosts.has(host)) fremdeHosts.set(host, (fremdeHosts.get(host) ?? 0) + 1);
+    } catch {
+      fremdeHosts.set('(kein gültiger Link)', (fremdeHosts.get('(kein gültiger Link)') ?? 0) + 1);
+    }
+  }
+  console.log(
+    `Abgelehnte Händlerhosts: ${
+      [...fremdeHosts]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 8)
+        .map(([h, n]) => `${h}: ${n}`)
+        .join(' · ') || 'keine'
+    }`,
   );
   const catalog = katalogProdukteAusZeilen(rows, ADVERTISER_ID, ZOOROYAL_HOSTS);
   const path = 'content-data/products/zooroyal-feed.json';

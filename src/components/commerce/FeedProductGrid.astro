@@ -10,6 +10,12 @@ interface Props {
   retailerLabel: string;
   perSpeciesLimit?: number;
   deduplicateVariants?: boolean;
+  /** Filter nach Tierart und Händlerrubrik sowie „Mehr anzeigen“; für große Kataloge. */
+  filterbar?: boolean;
+  /** Mit `filterbar`: so viele Karten sind zunächst sichtbar. */
+  startAnzahl?: number;
+  /** Der Spielzeugfinder übernimmt diese Karten in seine Ergebnisse (mit JavaScript). */
+  finderQuelle?: boolean;
 }
 
 const {
@@ -19,6 +25,9 @@ const {
   retailerLabel,
   perSpeciesLimit,
   deduplicateVariants = false,
+  filterbar = false,
+  startAnzahl = 12,
+  finderQuelle = false,
 } = Astro.props;
 const allProducts = offers.filter((offer) => offer.category === category);
 
@@ -44,27 +53,79 @@ const products =
         distinctProducts.filter((product) => product.species === species).slice(0, perSpeciesLimit),
       );
 const selectionIsLimited = products.length < allProducts.length;
+const sectionId = `feed-${category}-${retailerLabel.toLowerCase()}`;
+const OHNE_MARKE = 'Herstellerangabe nicht angegeben';
+const meta = (product: CatalogProductOffer) =>
+  [
+    product.brand === OHNE_MARKE ? null : product.brand,
+    product.subcategoryLabel ?? product.categoryLabel,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+const rubriken = filterbar
+  ? [
+      ...products.reduce((zaehler, product) => {
+        if (product.subcategoryLabel)
+          zaehler.set(product.subcategoryLabel, (zaehler.get(product.subcategoryLabel) ?? 0) + 1);
+        return zaehler;
+      }, new Map<string, number>()),
+    ]
+      .filter(([, anzahl]) => anzahl >= 2)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([rubrik]) => rubrik)
+  : [];
+const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
 ---
 
 {
   products.length > 0 && (
     <section
       class="feed-catalog"
-      aria-labelledby={`feed-${category}-${retailerLabel.toLowerCase()}`}
+      aria-labelledby={sectionId}
+      data-feed-catalog={filterbar ? String(startAnzahl) : undefined}
+      data-finder-katalog={finderQuelle ? retailerLabel : undefined}
     >
       <div class="feed-catalog__heading">
         <p class="eyebrow">{retailerLabel} · Sortiment</p>
-        <h2 id={`feed-${category}-${retailerLabel.toLowerCase()}`}>{title}</h2>
+        <h2 id={sectionId}>{title}</h2>
         <p>
-          Eine Auswahl realer Artikel aus dem freigegebenen Händlerfeed. Wir zeigen Produktname,
-          Tierart und Herstellerbild; Preise und Verfügbarkeit prüfst du direkt beim Händler.
+          Eine Auswahl realer Artikel aus dem {retailerLabel}-Produktfeed über Awin. Wir zeigen
+          Produktname, Tierart und das Produktbild aus dem Feed; Preise und Verfügbarkeit prüfst du
+          direkt beim Händler.
           {selectionIsLimited &&
             ` Sichtbar sind ${products.length} von ${allProducts.length} Feedartikeln.`}
         </p>
       </div>
-      <ul class="feed-catalog__grid">
+      {filterbar && (hatBeideArten || rubriken.length > 0) && (
+        <div class="feed-catalog__filter" role="group" aria-label={`${title} filtern`} hidden>
+          <button type="button" aria-pressed="true" data-filter="alle">
+            Alle
+          </button>
+          {hatBeideArten && (
+            <>
+              <button type="button" aria-pressed="false" data-filter="art:dog">
+                Hunde
+              </button>
+              <button type="button" aria-pressed="false" data-filter="art:cat">
+                Katzen
+              </button>
+            </>
+          )}
+          {rubriken.map((rubrik) => (
+            <button type="button" aria-pressed="false" data-filter={`rubrik:${rubrik}`}>
+              {rubrik}
+            </button>
+          ))}
+        </div>
+      )}
+      <ul class={`feed-catalog__grid${products.length < 4 ? ' feed-catalog__grid--wenige' : ''}`}>
         {products.map((product) => (
-          <li class="feed-catalog__card">
+          <li
+            class="feed-catalog__card"
+            data-art={product.species}
+            data-rubrik={product.subcategoryLabel ?? ''}
+          >
             <a
               class="feed-catalog__image-link"
               href={product.affiliateUrl}
@@ -80,15 +141,16 @@ const selectionIsLimited = products.length < allProducts.length;
                 decoding="async"
                 referrerpolicy="no-referrer"
               />
+              <span class="feed-catalog__bildquelle" aria-hidden="true">
+                Produktbild · {retailerLabel}-Feed
+              </span>
             </a>
             <div class="feed-catalog__body">
               <p class="feed-catalog__species">
                 {product.species === 'dog' ? 'Für Hunde' : 'Für Katzen'}
               </p>
               <h3>{product.productName}</h3>
-              <p class="feed-catalog__meta">
-                {product.brand} · {product.categoryLabel}
-              </p>
+              <p class="feed-catalog__meta">{meta(product)}</p>
               <a class="feed-catalog__link" href={product.affiliateUrl} {...PARTNER_LINK_ATTRIBUTE}>
                 Bei {retailerLabel} ansehen ↗ <span class="sr-only">(Werbung)</span>
               </a>
@@ -96,9 +158,56 @@ const selectionIsLimited = products.length < allProducts.length;
           </li>
         ))}
       </ul>
+      {filterbar && (
+        <p class="feed-catalog__mehr" hidden>
+          <button type="button" data-mehr>
+            Mehr anzeigen
+          </button>
+        </p>
+      )}
     </section>
   )
 }
+
+<script>
+  // Ohne JavaScript bleiben alle Karten sichtbar; Filter und „Mehr“ erscheinen erst hier.
+  for (const sektion of document.querySelectorAll<HTMLElement>('[data-feed-catalog]')) {
+    const start = Number(sektion.dataset.feedCatalog) || 12;
+    const karten = [...sektion.querySelectorAll<HTMLElement>('.feed-catalog__card')];
+    const filterLeiste = sektion.querySelector<HTMLElement>('.feed-catalog__filter');
+    const mehrZeile = sektion.querySelector<HTMLElement>('.feed-catalog__mehr');
+    const mehr = sektion.querySelector<HTMLButtonElement>('[data-mehr]');
+    let filter = 'alle';
+    let sichtbar = start;
+    const passt = (karte: HTMLElement) =>
+      filter === 'alle' ||
+      (filter.startsWith('art:') && karte.dataset.art === filter.slice(4)) ||
+      (filter.startsWith('rubrik:') && karte.dataset.rubrik === filter.slice(7));
+    const zeigen = () => {
+      const treffer = karten.filter(passt);
+      for (const karte of karten) karte.hidden = true;
+      treffer.slice(0, sichtbar).forEach((karte) => (karte.hidden = false));
+      if (mehrZeile) mehrZeile.hidden = treffer.length <= sichtbar;
+    };
+    if (filterLeiste) {
+      filterLeiste.hidden = false;
+      filterLeiste.addEventListener('click', (event) => {
+        const knopf = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
+        if (!knopf) return;
+        filter = knopf.dataset.filter ?? 'alle';
+        sichtbar = start;
+        for (const anderer of filterLeiste.querySelectorAll('[data-filter]'))
+          anderer.setAttribute('aria-pressed', String(anderer === knopf));
+        zeigen();
+      });
+    }
+    mehr?.addEventListener('click', () => {
+      sichtbar += start;
+      zeigen();
+    });
+    zeigen();
+  }
+</script>
 
 <style>
   .feed-catalog {
@@ -133,15 +242,33 @@ const selectionIsLimited = products.length < allProducts.length;
   }
 
   .feed-catalog__image-link {
-    display: block;
-    background: var(--color-surface-subtle);
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: var(--space-4) var(--space-4) var(--space-6);
+    border-block-end: 1px solid var(--color-border);
+    background: var(--color-surface);
   }
 
+  /* Gleich hohe, ruhige Produktbilder statt quadratischer Riesenflächen. */
   .feed-catalog__image-link img {
     display: block;
     inline-size: 100%;
-    aspect-ratio: 1;
+    block-size: 9.5rem;
     object-fit: contain;
+  }
+
+  /* Bildnachweis wie bei den redaktionellen Karten: wer das Bild liefert. */
+  .feed-catalog__bildquelle {
+    position: absolute;
+    inset-inline-end: var(--space-2);
+    inset-block-end: var(--space-2);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 92%);
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    line-height: 1.2;
   }
 
   .feed-catalog__body {
@@ -178,6 +305,52 @@ const selectionIsLimited = products.length < allProducts.length;
     padding-block-start: var(--space-3);
     font-weight: 650;
     overflow-wrap: anywhere;
+  }
+
+  .feed-catalog__filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block: 0 var(--space-4);
+  }
+
+  .feed-catalog__filter button,
+  .feed-catalog__mehr button {
+    min-block-size: 2.5rem;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-size: var(--text-small);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .feed-catalog__filter button[aria-pressed='true'] {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+
+  .feed-catalog__mehr {
+    margin-block: var(--space-5) 0;
+    text-align: center;
+  }
+
+  .feed-catalog__card[hidden] {
+    display: none;
+  }
+
+  /* Bei ein bis drei Produkten keine leeren Rasterspalten: Karten in fester Breite. */
+  .feed-catalog__grid.feed-catalog__grid--wenige {
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-columns: none;
+  }
+
+  .feed-catalog__grid--wenige .feed-catalog__card {
+    flex: 0 1 18rem;
   }
 
   @media (min-width: 600px) {

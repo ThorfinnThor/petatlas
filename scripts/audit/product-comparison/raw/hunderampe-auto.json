@@ -1,0 +1,434 @@
+{
+  "category": "hunderampe-auto",
+  "checkedAt": "2026-10-20",
+  "products": [
+    {
+      "id": "trixie-petwalk-kunststoff-3942",
+      "brand": "TRIXIE",
+      "model": "Petwalk Rampe Kunststoff / Sandpapier",
+      "variant": "Art.-Nr. 3942 · schwarz",
+      "sourceUrl": "https://www.trixie.de/hund/transport-reisen/hunderampen-treppen/kunststoff-rampe-1001435625-1001443444",
+      "specs": {
+        "lengthCm": {
+          "value": 100,
+          "verbatim": "Maße 38 × 100 cm bis zu 50 kg",
+          "sourceUrl": "https://www.trixie.de/hund/transport-reisen/hunderampen-treppen/kunststoff-rampe-1001435625-1001443444"
+        },
+        "lengthMinCm": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.trixie.de/hund/transport-reisen/hunderampen-treppen/kunststoff-rampe-1001435625-1001443444"
+        },
+        "widthCm": {
+          "value": 38,
+          "verbatim": "Maße 38 × 100 cm bis zu 50 kg",
+          "sourceUrl": "https://www.trixie.de/hund/transport-reisen/hunderampen-treppen/kunststoff-rampe-1001435625-1001443444"
+        },
+        "maxLoadKg": {
+          "value": 50,
+          "verbatim": "Maße 38 × 100 cm bis zu 50 kg",
+          "sourceUrl": "https://www.trixie.de/hund/transport-reisen/hunderampen-treppen/kunststoff-rampe-1001435625-1001443444"
+        },
+        "weightKg": {
+          "value": 2.8,
+          "verbatim": "Gewicht 2,8 kg",
+          "sourceUrl": "https://www.trixie.de/hund/transport-reisen/hunderampen-treppen/kunststoff-rampe-1001435625-1001443444"
+        },
+        "construction": {
+          "value": "fest",
+          "verbatim": "Maße : L 100 x B 38 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2389068"
+        },
+        "surface": {
+          "value": "Sandpapier-Lauffläche, rutschfest",
+          "verbatim": "rutschfeste Lauffläche",
+          "sourceUrl": "https://www.trixie.de/hund/transport-reisen/hunderampen-treppen/kunststoff-rampe-1001435625-1001443444"
+        },
+        "sideRails": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.trixie.de/hund/transport-reisen/hunderampen-treppen/kunststoff-rampe-1001435625-1001443444"
+        },
+        "material": {
+          "value": "Kunststoff, Sandpapier",
+          "verbatim": "Material : Kunststoff, Sandpapier",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2389068"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 41.49,
+        "label": "Trixie Kunststoff-Rampe Petwalk L 100 x B 38 cm",
+        "url": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2389068",
+        "verbatim": "41,49 €"
+      },
+      "notes": "construction 'fest' inferred (no folding/telescoping feature is listed; weight 2.8 kg, single 100 cm length). Side rails not mentioned -> null. Possible stock status 'nicht lieferbar' on zooplus at check time (not verified in page text). Trixie page title 'Rampe, Kunststoff/Sandpapier'; zooplus names it 'Kunststoff-Rampe Petwalk'. Intended for restricted dogs/cats, sofa/bed/boot, not specifically a car ramp."
+    },
+    {
+      "id": "trixie-teleskop-petwalk-3940",
+      "brand": "TRIXIE",
+      "model": "Teleskop-Hunderampe Petwalk",
+      "variant": "vermutlich Art.-Nr. 3940 (grau/schwarz)",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371",
+      "specs": {
+        "lengthCm": {
+          "value": 183,
+          "verbatim": "Maße: L 100 - 183 cm x B 43 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        },
+        "lengthMinCm": {
+          "value": 100,
+          "verbatim": "Maße: L 100 - 183 cm x B 43 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        },
+        "widthCm": {
+          "value": 43,
+          "verbatim": "Maße: L 100 - 183 cm x B 43 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        },
+        "maxLoadKg": {
+          "value": 120,
+          "verbatim": "Max. Belastbarkeit: ca. 120 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        },
+        "weightKg": {
+          "value": 5.8,
+          "verbatim": "Gewicht: 5,8 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        },
+        "construction": {
+          "value": "teleskop",
+          "verbatim": "Zusammenschiebbar: erleichtert das Verstauen und Tragen",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        },
+        "surface": {
+          "value": "Sandpapier-beschichtet, rutschfest",
+          "verbatim": "Rutschfest: mit Sandpapier beschichtete Oberfläche, bietet sicheren Halt beim Gehen",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        },
+        "sideRails": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        },
+        "material": {
+          "value": "Aluminium / Kunststoff / Sandpapier",
+          "verbatim": "Material: Aluminium / Kunststoff / Sandpapier",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 129.99,
+        "label": "Trixie Teleskop-Hunderampe Petwalk, L 100 - 183 x B 43 cm",
+        "url": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/hunderampe/231371",
+        "verbatim": "129,99 €"
+      },
+      "notes": "The Trixie manufacturer URL for item 3940 renders only item 3942 for the fetcher (JS/SSR default), so all values come from zooplus.de; the mapping to Art.-Nr. 3940 is not stated on that page (eBay lists 3940 as 43 x 100-180 cm, 5.8 kg, matching). Max length 183 here vs ~180 on eBay. lengthMinCm 100 = shortest setting of 'L 100 - 183' (collapsed). Side rails not mentioned."
+    },
+    {
+      "id": "trixie-klapp-hunderampe",
+      "brand": "TRIXIE",
+      "model": "Klapp-Hunderampe",
+      "variant": "schwarz · L 156 x B 40 cm",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221",
+      "specs": {
+        "lengthCm": {
+          "value": 156,
+          "verbatim": "Maße : L 156 x B 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        },
+        "lengthMinCm": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        },
+        "widthCm": {
+          "value": 40,
+          "verbatim": "Maße : L 156 x B 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        },
+        "maxLoadKg": {
+          "value": 90,
+          "verbatim": "Max. Belastbarkeit : 90 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        },
+        "weightKg": {
+          "value": 4.5,
+          "verbatim": "Eigengewicht : 4,5 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        },
+        "construction": {
+          "value": "klappbar",
+          "verbatim": "Klappbar : platzsparend zu verstauen, ideal für unterwegs",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        },
+        "surface": {
+          "value": "rutschfest",
+          "verbatim": "Rutschfeste Oberfläche : sorgt für sicheren Halt beim Auf- und Absteigen",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        },
+        "sideRails": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Material : Kunststoff",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 50.99,
+        "label": "Trixie Klapp-Hunderampe, schwarz",
+        "url": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2396221",
+        "verbatim": "50,99 €"
+      },
+      "notes": "Folded length not stated -> null. Side rails not mentioned -> null. Source = zooplus.de (no trixie.de page located). Article number not shown."
+    },
+    {
+      "id": "trixie-3-fach-teleskop-rampe",
+      "brand": "TRIXIE",
+      "model": "3-fach Teleskop-Rampe",
+      "variant": "schwarz/grau · L 78–175 x B 40 cm",
+      "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054",
+      "specs": {
+        "lengthCm": {
+          "value": 175,
+          "verbatim": "Maße : L 78–175 x B 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        },
+        "lengthMinCm": {
+          "value": 78,
+          "verbatim": "Maße : L 78–175 x B 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        },
+        "widthCm": {
+          "value": 40,
+          "verbatim": "Maße : L 78–175 x B 40 cm",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        },
+        "maxLoadKg": {
+          "value": 90,
+          "verbatim": "Max. Belastbarkeit : 90 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        },
+        "weightKg": {
+          "value": 6.8,
+          "verbatim": "Eigengewicht : 6,8 kg",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        },
+        "construction": {
+          "value": "teleskop",
+          "verbatim": "Stufenlos verstellbare Länge : flexibel anpassbar an verschiedene Fahrzeughöhen",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        },
+        "surface": {
+          "value": "rutschfest",
+          "verbatim": "Rutschfeste Oberfläche : sorgt auch bei Nässe für sicheren Halt",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        },
+        "sideRails": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        },
+        "material": {
+          "value": "Aluminium",
+          "verbatim": "Material : Aluminium",
+          "sourceUrl": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054"
+        }
+      },
+      "price": {
+        "retailer": "zooplus.de",
+        "priceEur": 169.99,
+        "label": "Trixie 3-fach Teleskop-Rampe",
+        "url": "https://www.zooplus.de/shop/hunde/hundetransportbox/hundezubehoer_auto/2398054",
+        "verbatim": "169,99 €"
+      },
+      "notes": "Source = zooplus.de only; article number not shown. lengthMinCm 78 = shortest setting of 'L 78–175'. Side rails not mentioned."
+    },
+    {
+      "id": "petsafe-happy-ride-teleskop-ptv17-16898",
+      "brand": "PetSafe",
+      "model": "Happy Ride Teleskop-Hunderampe",
+      "variant": "Art.-Nr. PTV17-16898",
+      "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/",
+      "specs": {
+        "lengthCm": {
+          "value": 183,
+          "verbatim": "Die Teleskoprampe misst 99–183 x 43 x 10 cm (L x B x H)",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        },
+        "lengthMinCm": {
+          "value": 99,
+          "verbatim": "Die Teleskoprampe misst 99–183 x 43 x 10 cm (L x B x H)",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        },
+        "widthCm": {
+          "value": 43,
+          "verbatim": "Die Teleskoprampe misst 99–183 x 43 x 10 cm (L x B x H)",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        },
+        "maxLoadKg": {
+          "value": 181,
+          "verbatim": "eignet sich für Haustiere bis 181 kg",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        },
+        "weightKg": {
+          "value": 6,
+          "verbatim": "Die Rampe wiegt nur 6 kg",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        },
+        "construction": {
+          "value": "teleskop",
+          "verbatim": "Schieben Sie die Rampe einfach zusammen, und verriegeln Sie sie mit der Verschlusslasche",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        },
+        "surface": {
+          "value": "rutschfest",
+          "verbatim": "Die rutschfeste Oberfläche und die seitlichen Führungen ermöglichen ein sicheres Ein- und Aussteigen.",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        },
+        "sideRails": {
+          "value": true,
+          "verbatim": "Die rutschfeste Oberfläche und die seitlichen Führungen ermöglichen ein sicheres Ein- und Aussteigen.",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        },
+        "material": {
+          "value": "Aluminium",
+          "verbatim": "Die aus strapazierfähigem, stabilem Aluminium gefertigte Rampe",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/"
+        }
+      },
+      "price": {
+        "retailer": "petsafe.com/de",
+        "priceEur": 165.99,
+        "label": "Happy Ride Teleskop-Hunderampe (Hersteller-Shop)",
+        "url": "https://www.petsafe.com/de/p/happy-ride-teleskop-hunderampe/PTV17-16898/",
+        "verbatim": "165,99 €"
+      },
+      "notes": "Width 43 cm is overall width (no separate walking width given). lengthMinCm 99 = shortest setting. Side rails = 'seitliche Führungen'. Shipping extra under 90 EUR."
+    },
+    {
+      "id": "petsafe-happy-ride-kompakt-ptv17-16878",
+      "brand": "PetSafe",
+      "model": "Happy Ride Kompakte Teleskop-Hunderampe",
+      "variant": "Art.-Nr. PTV17-16878",
+      "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/",
+      "specs": {
+        "lengthCm": {
+          "value": 178,
+          "verbatim": "Die Teleskoprampe misst 71–178 x 41 x 13 cm (L x B x H)",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        },
+        "lengthMinCm": {
+          "value": 71,
+          "verbatim": "Die Teleskoprampe misst 71–178 x 41 x 13 cm (L x B x H)",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        },
+        "widthCm": {
+          "value": 41,
+          "verbatim": "Die Teleskoprampe misst 71–178 x 41 x 13 cm (L x B x H)",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        },
+        "maxLoadKg": {
+          "value": 136,
+          "verbatim": "eignet sich für Haustiere bis 136 kg",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        },
+        "weightKg": {
+          "value": 6,
+          "verbatim": "Die Rampe wiegt nur 6 kg",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        },
+        "construction": {
+          "value": "teleskop",
+          "verbatim": "Die Rampe lässt sich auf eine kompaktere Länge als herkömmliche Teleskop-Hunderampen zusammenschieben",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        },
+        "surface": {
+          "value": "hohe Traktion",
+          "verbatim": "Oberfläche mit hoher Traktion und seitlichen Schienen",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        },
+        "sideRails": {
+          "value": true,
+          "verbatim": "Oberfläche mit hoher Traktion und seitlichen Schienen",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        },
+        "material": {
+          "value": "Aluminium",
+          "verbatim": "stabile, langlebige Aluminiumrampe",
+          "sourceUrl": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/"
+        }
+      },
+      "price": {
+        "retailer": "petsafe.com/de",
+        "priceEur": 187.99,
+        "label": "Happy Ride Kompakte Teleskop-Hunderampe (Hersteller-Shop)",
+        "url": "https://www.petsafe.com/de/p/happy-ride-kompakte-teleskop-hunderampe/PTV17-16878/",
+        "verbatim": "187,99 €"
+      },
+      "notes": "Same page states both 'bis zu 140 kg' (headline feature) and 'bis 136 kg' (product text/description); 136 kg (conservative) used. Page also says it 'lässt sich zusammenklappen' but construction is telescopic."
+    },
+    {
+      "id": "kerbl-hunderampe-klappbar-83059",
+      "brand": "Kerbl",
+      "model": "Hunderampe klappbar",
+      "variant": "Art.-Nr. 83059 · schwarz",
+      "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273",
+      "specs": {
+        "lengthCm": {
+          "value": 157,
+          "verbatim": "83059 black 157 cm 40.5 cm 60 kg",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        },
+        "lengthMinCm": {
+          "value": 80,
+          "verbatim": "dimensions when folded: 80 x 40.5 x 19 cm",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        },
+        "widthCm": {
+          "value": 40.5,
+          "verbatim": "83059 black 157 cm 40.5 cm 60 kg",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        },
+        "maxLoadKg": {
+          "value": 60,
+          "verbatim": "folding dog ramp for animals up to 60 kg",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        },
+        "weightKg": {
+          "value": null,
+          "verbatim": "",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        },
+        "construction": {
+          "value": "klappbar",
+          "verbatim": "can be folded for easy transport",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        },
+        "surface": {
+          "value": "profiliert, rutschhemmend (Gummi-Auflagepunkte)",
+          "verbatim": "profiled surface for good grip",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        },
+        "sideRails": {
+          "value": true,
+          "verbatim": "raised side edge for more safety",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        },
+        "material": {
+          "value": "Kunststoff",
+          "verbatim": "Material: Plastic",
+          "sourceUrl": "https://www.kerbl.com/en/product/dog-ramp-1040273"
+        }
+      },
+      "price": null,
+      "notes": "Kerbl English product page (German page is JS-only). Product weight not given -> null. Folded length = longest side of 'dimensions when folded: 80 x 40.5 x 19 cm'. No unit price in retrievable manufacturer text (page only says prices shown are RRP for Germany); no zooplus.de/fressnapf.de listing found -> price null."
+    }
+  ]
+}

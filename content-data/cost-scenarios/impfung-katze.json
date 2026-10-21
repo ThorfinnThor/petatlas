@@ -1,0 +1,26 @@
+{
+  "scenarioId": "impfung-katze",
+  "title": "Impfung bei der Katze",
+  "species": "cat",
+  "lines": [
+    {
+      "officialItemId": "16",
+      "quantity": 1,
+      "factor": 1
+    },
+    {
+      "officialItemId": "221",
+      "quantity": 1,
+      "factor": 1
+    }
+  ],
+  "exclusions": [
+    "Impfstoff",
+    "Impfbescheinigung (Nr. 87), falls gesondert ausgestellt",
+    "Arzneimittel und Verbrauchsmaterial",
+    "Wegegeld"
+  ],
+  "clinicalReview": "unreviewed",
+  "reviewedAt": null,
+  "reviewedBy": null
+}

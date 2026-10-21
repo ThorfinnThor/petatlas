@@ -127,6 +127,7 @@ describe('Verbotene Aussagen', () => {
       ...dateien('src/components', ['.astro']),
       ...dateien('src/pages', ['.astro']),
       ...dateien('src/features/commerce', ['.ts']),
+      ...dateien('src/features/products', ['.ts']),
     ];
     for (const datei of quellen) {
       const funde = verdaechtigeStellen(readFileSync(datei, 'utf8'));

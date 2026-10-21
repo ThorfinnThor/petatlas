@@ -1,4 +1,5 @@
 ---
+import PageIntro from '../ui/PageIntro.astro';
 import { amazonEnabled, amazonSearchUrl, AMAZON_SEARCHES } from '../../features/commerce/amazon.ts';
 import SavedProfileButton from '../tools/SavedProfileButton.astro';
 import Notice from '../Notice.astro';
@@ -6,6 +7,8 @@ import { merkmalLabel } from '../../features/care/attributes.ts';
 import { attributPruefung } from '../../features/care/attributes.ts';
 import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
 import RetailPartnerSection from '../RetailPartnerSection.astro';
+import FeedProductGrid from '../commerce/FeedProductGrid.astro';
+import { fressnapfKatalog, zooroyalKatalog } from '../../features/commerce/feed-catalog.ts';
 import type { MarketConfig } from '../../domain/market.ts';
 import { fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
 import { zooroyalAngebote } from '../../features/commerce/zooroyal-feed.ts';
@@ -35,15 +38,17 @@ const zooroyalProducts = Object.fromEntries(
 );
 ---
 
-<header class="page-intro">
-  <p class="eyebrow">Spielzeugfinder für Hunde und Katzen</p>
-  <h1>Spielzeug finden, das zu Ihrem Alltag passt</h1>
+<PageIntro
+  titel="Spielzeug finden, das zu deinem Alltag passt"
+  eyebrow="Spielzeugfinder für Hunde und Katzen"
+  bild="play-dog-alpine-lake"
+>
   <p>
-    Wählen Sie Tierart, Spielweise und belegbare Eigenschaften. Der Finder zeigt nur Produkte, deren
+    Wähl Tierart, Spielweise und belegbare Eigenschaften. Der Finder zeigt nur Produkte, deren
     hinterlegte Angaben zu den gewählten Filtern passen. Er vergibt keine erfundenen Sicherheits-
     oder Haltbarkeitsnoten.
   </p>
-</header>
+</PageIntro>
 
 {
   synthetisch && (
@@ -82,7 +87,7 @@ const zooroyalProducts = Object.fromEntries(
   >
     <div class="finder-basics">
       <div class="feld">
-        <label for="finder-tierart">Für wen suchen Sie?</label>
+        <label for="finder-tierart">Für wen suchst du?</label>
         <select id="finder-tierart">
           <option value="dog">Hund</option>
           <option value="cat">Katze</option>
@@ -168,9 +173,26 @@ const zooroyalProducts = Object.fromEntries(
 <section id="finder-ergebnis" class="finder-results" aria-label="Ergebnisse"></section>
 
 <p class="affiliate-note">
-  Händlerlinks sind Affiliate-Links. Bei einem Kauf kann eine Provision entstehen; Ihr Preis bleibt
+  Händlerlinks sind Affiliate-Links. Bei einem Kauf kann eine Provision entstehen; dein Preis bleibt
   unverändert.
 </p>
+
+<FeedProductGrid
+  offers={fressnapfKatalog()}
+  category="toy"
+  title="Mehr Spielzeug bei Fressnapf"
+  retailerLabel="Fressnapf"
+  filterbar
+  finderQuelle
+/>
+<FeedProductGrid
+  offers={zooroyalKatalog()}
+  category="toy"
+  title="Mehr Spielzeug bei ZooRoyal"
+  retailerLabel="ZooRoyal"
+  filterbar
+  finderQuelle
+/>
 
 <RetailPartnerSection market={market} page="spielzeug" />
 
@@ -190,7 +212,7 @@ const zooroyalProducts = Object.fromEntries(
     </article>
     <article>
       <strong>Aktuelle Händlerziele</strong>
-      <p>Preise, Varianten und Lieferbarkeit prüfen Sie immer direkt beim Händler.</p>
+      <p>Preise, Varianten und Lieferbarkeit prüfst du immer direkt beim Händler.</p>
     </article>
   </div>
 </section>
@@ -234,16 +256,6 @@ const zooroyalProducts = Object.fromEntries(
 </script>
 
 <style>
-  .page-intro {
-    max-inline-size: 54rem;
-    margin-block-end: var(--space-6);
-  }
-
-  .page-intro h1 {
-    max-inline-size: 17ch;
-    margin-block: var(--space-2) var(--space-3);
-  }
-
   .finder-shell {
     padding: clamp(var(--space-4), 4vw, var(--space-7));
     border: 1px solid var(--color-border);
@@ -318,6 +330,9 @@ const zooroyalProducts = Object.fromEntries(
     padding: var(--space-5) 0;
     border: 0;
     border-block-start: 1px solid var(--color-border);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
   }
 
   .filter-group__hint {
@@ -419,6 +434,16 @@ const zooroyalProducts = Object.fromEntries(
     margin-block: 0;
   }
 
+  .finder-results :global(.finder__katalog-verweis) {
+    margin-block-start: var(--space-1);
+    color: var(--color-text-muted);
+  }
+
+  /* Sprungziel unter dem festen Seitenkopf sichtbar halten. */
+  .finder-results :global(#finder-katalog-titel) {
+    scroll-margin-block-start: 6rem;
+  }
+
   .finder-results :global(.finder__result-head > p) {
     color: var(--color-text-muted);
     font-size: var(--text-small);
@@ -445,15 +470,20 @@ const zooroyalProducts = Object.fromEntries(
 
   .finder-results :global(.finder__bild) {
     position: relative;
+    display: grid;
+    place-items: center;
     margin: 0;
-    background: var(--color-surface-subtle);
+    padding: var(--space-4);
+    background: var(--color-surface);
   }
 
+  /* Produktbilder ruhig und gleich groß: begrenzte Höhe, ganzes Produkt sichtbar. */
   .finder-results :global(.finder__bild img) {
     display: block;
     inline-size: 100%;
-    aspect-ratio: 4 / 3;
+    block-size: 11rem;
     object-fit: contain;
+    border-radius: var(--radius-sm);
   }
 
   .finder-results :global(.finder__bild figcaption) {
@@ -497,11 +527,17 @@ const zooroyalProducts = Object.fromEntries(
     font-size: var(--text-small);
   }
 
+  /* Begründung als ruhige Zeile statt als Kasten: sie lautet auf vielen Karten ähnlich. */
   .finder-results :global(.finder__match) {
     margin-block: var(--space-3);
-    padding: var(--space-3);
-    border-radius: var(--radius-md);
-    background: var(--color-primary-soft);
+    padding: 0 0 0 var(--space-3);
+    border-inline-start: 3px solid var(--color-primary-border);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__match h4),
+  .finder-results :global(.finder__match strong:first-child) {
+    font-size: var(--text-small);
   }
 
   .finder-results :global(.finder__gruende) {
@@ -549,6 +585,24 @@ const zooroyalProducts = Object.fromEntries(
     border-color: var(--color-primary);
     background: var(--color-primary);
     color: white;
+  }
+
+  .finder-results :global(.finder__katalog) {
+    margin-block-start: var(--space-12);
+  }
+
+  .finder-results :global(.finder__katalog-hinweis) {
+    margin-block-start: var(--space-6);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-subtle);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__katalog-mehr) {
+    margin-block-start: var(--space-5);
+    text-align: center;
   }
 
   .finder-results :global(.finder__leer),
