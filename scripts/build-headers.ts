@@ -15,10 +15,10 @@ import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { TILES } from '../src/features/map/tiles.ts';
-import { fressnapfBildUrspruenge } from '../src/features/commerce/fressnapf-feed.ts';
+import { partnerBildUrspruenge } from '../src/features/commerce/feed-catalog.ts';
 
 const ZIEL_VERZEICHNIS = 'dist';
-const BILD_URSPRUENGE = [...TILES.hosts, ...fressnapfBildUrspruenge()];
+const BILD_URSPRUENGE = [...TILES.hosts, ...partnerBildUrspruenge()];
 export const CLOUDFLARE_WEB_ANALYTICS_SCRIPT =
   'https://static.cloudflareinsights.com/beacon.min.js';
 

@@ -229,6 +229,24 @@ export function haendlerZiel(url: URL, merchantHosts: ReadonlySet<string>): URL 
   return null;
 }
 
+/**
+ * Produktbild: bevorzugt über den Awin-Bildserver, weil CSP und Audit jeden
+ * Bildhost einzeln erlauben müssen; sonst das erste sichere Händlerbild.
+ */
+const AWIN_BILDHOST = 'images2.productserve.com';
+function produktbild(row: Record<string, string>): URL | null {
+  const kandidaten = [
+    'aw_image_url',
+    'large_image',
+    'large_image_url',
+    'merchant_image_url',
+    'image_url',
+  ]
+    .map((field) => sichereUrl(feld(row, field)))
+    .filter((url): url is URL => url !== null);
+  return kandidaten.find((url) => url.host === AWIN_BILDHOST) ?? kandidaten[0] ?? null;
+}
+
 function safeDecode(wert: string): string {
   try {
     return decodeURIComponent(wert);
@@ -406,9 +424,7 @@ export function katalogPruefung(
   if (!category) return 'Kategorie unklar';
   const species = katalogTierart(row);
   if (!species) return 'Tierart unklar';
-  const image = sichereUrl(
-    feld(row, 'large_image', 'large_image_url', 'merchant_image_url', 'aw_image_url', 'image_url'),
-  );
+  const image = produktbild(row);
   if (!image) return 'ohne Bild';
   const merchant = sichereUrl(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
@@ -542,7 +558,7 @@ export function produktAusZeileFuerPartner(
   if (target.required?.some((term) => !haystack.includes(normalisiere(term)))) return null;
   if (target.exclude?.some((term) => haystack.includes(normalisiere(term)))) return null;
 
-  const image = sichereUrl(feld(row, 'large_image', 'merchant_image_url', 'aw_image_url'));
+  const image = produktbild(row);
   const merchant = sichereUrl(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
