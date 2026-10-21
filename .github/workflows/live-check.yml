@@ -1,0 +1,66 @@
+# Prüft nach jedem Push auf main, ob Cloudflare den Stand ausliefert.
+#
+# Workers Builds startet einen Build mal nach einer, mal erst nach über
+# zwanzig Minuten, und einmal (#107) gar nicht. Ohne diese Prüfung fällt das
+# nur auf, wenn jemand zufällig nachsieht. Der Lauf fragt deshalb jede Minute
+# `/build-info.json` ab und wird grün, sobald der eigene Commit live ist oder
+# ein neuerer, der ihn enthält. Nach 45 Minuten ohne diesen Stand wird er rot;
+# GitHub meldet den Fehlschlag per E-Mail an die Person, die gemergt hat.
+#
+# Was dieser Lauf **nicht** tut: einen Build anstoßen. Er beobachtet nur.
+# Einen fehlenden Build holt man im Cloudflare-Dashboard nach (Workers Builds →
+# petatlas-de → Retry build) oder mit dem nächsten Merge.
+#
+# Kosten: keine. Das Repository ist öffentlich, Actions-Minuten sind frei.
+name: Auslieferung prüfen
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auslieferung-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  live:
+    name: Stand ist live
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    permissions:
+      contents: read
+    env:
+      SEITE: https://deinhaustierportal.de
+      WARTEZEIT_MINUTEN: '45'
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Auf den Cloudflare-Build warten
+        run: |
+          set -u
+          ziel="$GITHUB_SHA"
+          ende=$(( $(date +%s) + WARTEZEIT_MINUTEN * 60 ))
+          live=''
+          while [ "$(date +%s)" -lt "$ende" ]; do
+            live=$(curl -fsS --max-time 20 "$SEITE/build-info.json?pruefung=$(date +%s)" \
+              | jq -r '.gitCommit // empty' 2>/dev/null || true)
+            if [ "$live" = "$ziel" ]; then
+              echo "Live: $live ($(date -u +%H:%M:%SZ))."
+              exit 0
+            fi
+            if [ -n "$live" ]; then
+              # Ein neuerer Merge kann diesen Stand mitgebracht haben.
+              verhaeltnis=$(gh api "repos/$GITHUB_REPOSITORY/compare/$ziel...$live" \
+                --jq '.status' 2>/dev/null || true)
+              if [ "$verhaeltnis" = "ahead" ] || [ "$verhaeltnis" = "identical" ]; then
+                echo "Live ist $live und enthält $ziel ($(date -u +%H:%M:%SZ))."
+                exit 0
+              fi
+            fi
+            sleep 60
+          done
+          echo "::error title=Nicht ausgeliefert::$ziel ist nach $WARTEZEIT_MINUTEN Minuten nicht live (live: ${live:-unbekannt}). Cloudflare Workers Builds für petatlas-de prüfen und den Build nachholen."
+          exit 1
