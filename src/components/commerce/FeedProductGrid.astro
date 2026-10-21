@@ -14,6 +14,8 @@ interface Props {
   filterbar?: boolean;
   /** Mit `filterbar`: so viele Karten sind zunächst sichtbar. */
   startAnzahl?: number;
+  /** Der Spielzeugfinder übernimmt diese Karten in seine Ergebnisse (mit JavaScript). */
+  finderQuelle?: boolean;
 }
 
 const {
@@ -25,6 +27,7 @@ const {
   deduplicateVariants = false,
   filterbar = false,
   startAnzahl = 12,
+  finderQuelle = false,
 } = Astro.props;
 const allProducts = offers.filter((offer) => offer.category === category);
 
@@ -81,6 +84,7 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
       class="feed-catalog"
       aria-labelledby={sectionId}
       data-feed-catalog={filterbar ? String(startAnzahl) : undefined}
+      data-finder-katalog={finderQuelle ? retailerLabel : undefined}
     >
       <div class="feed-catalog__heading">
         <p class="eyebrow">{retailerLabel} · Sortiment</p>

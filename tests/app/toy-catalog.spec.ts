@@ -1,45 +1,46 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test.describe('Spielzeugkatalog aus den Händlerfeeds', () => {
-  test('zeigt zuerst zwölf Karten, filtert nach Tierart und lädt mehr nach', async ({ page }) => {
+test.describe('Händlerprodukte im Spielzeugfinder', () => {
+  test('zeigt ohne Merkmalsfilter geprüfte und Händlerprodukte, mit Filter nur geprüfte', async ({
+    page,
+  }) => {
     await page.goto('/de-de/spielzeug/');
-    const sektion = page.locator('.feed-catalog').first();
-    await expect(sektion).toBeVisible();
 
-    const karten = sektion.locator('.feed-catalog__card');
-    const gesamt = await karten.count();
-    expect(gesamt).toBeGreaterThan(12);
-    await expect(sektion.locator('.feed-catalog__card:not([hidden])')).toHaveCount(12);
+    // Mit JavaScript übernimmt der Finder die Händlerbereiche.
+    await expect(page.locator('[data-finder-katalog]').first()).toBeHidden();
+    const katalog = page.locator('.finder__katalog');
+    await expect(katalog).toBeVisible();
+    await expect(katalog.locator('.feed-catalog__card')).toHaveCount(12);
+    await expect(page.locator('#finder-status')).toContainText('weitere Händlerprodukte');
 
-    // Jede Karte führt gekennzeichnet zum Händler und zeigt ein echtes Produktbild.
-    await expect(karten.first().locator('a[rel~="sponsored"]').first()).toBeVisible();
-    await expect(karten.first().locator('img')).toHaveAttribute('src', /^https:\/\//);
-
-    const hunde = sektion.locator('[data-filter="art:dog"]');
-    if ((await hunde.count()) > 0) {
-      await hunde.click();
-      await expect(hunde).toHaveAttribute('aria-pressed', 'true');
-      for (const art of await sektion
-        .locator('.feed-catalog__card:not([hidden])')
-        .evaluateAll((els) => els.map((el) => (el as HTMLElement).dataset.art))) {
-        expect(art).toBe('dog');
-      }
-      await sektion.locator('[data-filter="alle"]').click();
+    // Nur Produkte der gewählten Tierart, mit echtem Bild und gekennzeichnetem Link.
+    for (const art of await katalog
+      .locator('.feed-catalog__card')
+      .evaluateAll((els) => els.map((el) => (el as HTMLElement).dataset.art))) {
+      expect(art).toBe('dog');
     }
+    const karte = katalog.locator('.feed-catalog__card').first();
+    await expect(karte.locator('img')).toHaveAttribute('src', /^https:\/\//);
+    await expect(karte.locator('a[rel~="sponsored"]').first()).toBeVisible();
 
-    await sektion.locator('[data-mehr]').click();
-    expect(await sektion.locator('.feed-catalog__card:not([hidden])').count()).toBe(
-      Math.min(24, gesamt),
-    );
+    await katalog.getByRole('button', { name: 'Mehr anzeigen' }).click();
+    await expect(page.locator('.finder__katalog .feed-catalog__card')).toHaveCount(24);
 
     expect(
       (
         await new AxeBuilder({ page })
-          .include('.feed-catalog')
+          .include('.finder__katalog')
           .withTags(['wcag2a', 'wcag2aa'])
           .analyze()
       ).violations,
     ).toEqual([]);
+
+    // Mit Spielweise gibt es keine ungeprüften Händlerprodukte, nur einen Hinweis.
+    await page.locator('.finder-shell').getByLabel('Kauen').check();
+    await expect(page.locator('.finder__katalog .feed-catalog__card')).toHaveCount(0);
+    await expect(page.locator('.finder__katalog-hinweis')).toContainText(
+      'keine geprüften Merkmale',
+    );
   });
 });
