@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   fressnapfFeeds,
+  haendlerZiel,
   katalogDiagnose,
   katalogProdukteAusZeilen,
   katalogProduktAusZeile,
@@ -215,5 +216,28 @@ describe('Katalogausbau 2026-10', () => {
       'Kategorie unklar': 1,
       'Tierart unklar': 1,
     });
+  });
+});
+
+describe('Händlerlink über fremde Weiterleitung', () => {
+  const zooroyal = new Set(['zooroyal.de', 'www.zooroyal.de']);
+
+  it('liest die Produktadresse aus dem Weiterleitungsparameter', () => {
+    const umweg = new URL(
+      'https://a.nonstoppartner.net/a/?i=click&client=zooroyal&l=de&nw=5&url=https%3A%2F%2Fwww.zooroyal.de%2Fkatze%2Fspielzeug%2Fball-123',
+    );
+    expect(haendlerZiel(umweg, zooroyal)?.toString()).toBe(
+      'https://www.zooroyal.de/katze/spielzeug/ball-123',
+    );
+  });
+
+  it('übernimmt nichts, wenn der Parameter woandershin zeigt', () => {
+    const umweg = new URL('https://a.nonstoppartner.net/a/?url=https%3A%2F%2Fevil.example%2Fx');
+    expect(haendlerZiel(umweg, zooroyal)).toBeNull();
+  });
+
+  it('lässt eine direkte Händleradresse unverändert', () => {
+    const direkt = new URL('https://www.zooroyal.de/hund/x');
+    expect(haendlerZiel(direkt, zooroyal)).toBe(direkt);
   });
 });

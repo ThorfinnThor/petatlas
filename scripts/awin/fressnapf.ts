@@ -211,6 +211,32 @@ function sichereUrl(raw: string | undefined): URL | null {
   }
 }
 
+/**
+ * Manche Händler liefern im Feld für den Händlerlink eine Weiterleitung über
+ * ein fremdes Trackingnetz (ZooRoyal: a.nonstoppartner.net). Die eigentliche
+ * Produktadresse steht dann als Parameter darin. Übernommen wird sie nur, wenn
+ * sie sicher ist und auf einen erlaubten Händlerhost zeigt; die Weiterleitung
+ * selbst wird nie veröffentlicht.
+ */
+export function haendlerZiel(url: URL, merchantHosts: ReadonlySet<string>): URL | null {
+  if (merchantHosts.has(url.host)) return url;
+  for (const wert of url.searchParams.values()) {
+    for (const kandidat of [wert, safeDecode(wert)]) {
+      const ziel = sichereUrl(kandidat);
+      if (ziel && merchantHosts.has(ziel.host)) return ziel;
+    }
+  }
+  return null;
+}
+
+function safeDecode(wert: string): string {
+  try {
+    return decodeURIComponent(wert);
+  } catch {
+    return wert;
+  }
+}
+
 const KATALOG_KATEGORIE_FELDER = [
   'merchant_category',
   'merchant category',
@@ -388,11 +414,12 @@ export function katalogPruefung(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
   if (!merchant) return 'ohne Händlerlink';
+  const ziel = haendlerZiel(merchant, merchantHosts);
   const affiliate = sichereUrl(feld(row, 'aw_deep_link', 'affiliate_url', 'tracking_url'));
   if (!affiliate) return 'ohne Partnerlink';
   if (category.category === 'care' && pflegeKategorieFuerProduktname(name) === null)
     return 'kein konkretes Pflegeprodukt';
-  if (!merchantHosts.has(merchant.host)) return 'fremder Händlerhost';
+  if (!ziel) return 'fremder Händlerhost';
   if (!AWIN_TRACKING_HOSTS.has(affiliate.host)) return 'fremder Trackinghost';
   const advertiser = affiliate.searchParams.get('m') ?? affiliate.searchParams.get('awinmid');
   const publisher = affiliate.searchParams.get('a') ?? affiliate.searchParams.get('awinaffid');
@@ -410,7 +437,7 @@ export function katalogPruefung(
     merchantProductId,
     imageUrl: image.toString(),
     affiliateUrl: affiliate.toString(),
-    merchantUrl: merchant.toString(),
+    merchantUrl: ziel.toString(),
   };
 }
 
@@ -520,7 +547,8 @@ export function produktAusZeileFuerPartner(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
   const affiliate = sichereUrl(feld(row, 'aw_deep_link', 'affiliate_url', 'tracking_url'));
-  if (!image || !merchant || !affiliate || !merchantHosts.has(merchant.host)) return null;
+  const ziel = merchant ? haendlerZiel(merchant, merchantHosts) : null;
+  if (!image || !ziel || !affiliate) return null;
   if (!AWIN_TRACKING_HOSTS.has(affiliate.host)) return null;
   const advertiser = affiliate.searchParams.get('m') ?? affiliate.searchParams.get('awinmid');
   const publisher = affiliate.searchParams.get('a') ?? affiliate.searchParams.get('awinaffid');
@@ -533,7 +561,7 @@ export function produktAusZeileFuerPartner(
       feld(row, 'merchant_product_id', 'merchant product id', 'aw_product_id') ?? null,
     imageUrl: image.toString(),
     affiliateUrl: affiliate.toString(),
-    merchantUrl: merchant.toString(),
+    merchantUrl: ziel.toString(),
   };
 }
 
