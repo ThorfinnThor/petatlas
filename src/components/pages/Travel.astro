@@ -127,18 +127,20 @@ const transit = umfang.transitCountries.map(name);
 
       <fieldset>
         <legend>Durchreise</legend>
-        {
-          umfang.transitCountries.map((code) => (
-            <label class="wahl">
-              <input type="checkbox" name="transit" value={code} />
-              {name(code)}
-            </label>
-          ))
-        }
-        <label class="wahl">
-          <input type="checkbox" name="transit" value="XX" />
-          anderes Land
-        </label>
+        <div class="wahl-raster">
+          {
+            umfang.transitCountries.map((code) => (
+              <label class="wahl">
+                <input type="checkbox" name="transit" value={code} />
+                {name(code)}
+              </label>
+            ))
+          }
+          <label class="wahl">
+            <input type="checkbox" name="transit" value="XX" />
+            anderes Land
+          </label>
+        </div>
       </fieldset>
 
       <div class="feld">
@@ -420,11 +422,41 @@ const transit = umfang.transitCountries.map(name);
     }
   }
 
+  /* „Schritt 1“ als kleine Marke vor der Überschrift statt als Zeile darüber. */
   .schritt__nummer {
-    display: block;
-    color: var(--color-text-muted);
+    display: inline-block;
+    margin-inline-end: var(--space-2);
+    padding: 0.15rem 0.65rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
     font-size: var(--text-small);
-    font-weight: var(--weight-label);
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  .schritt > legend {
+    font-size: var(--text-h4);
+  }
+
+  /* Länderlisten als Raster kleiner Auswahlkarten. */
+  .wahl-raster {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+    gap: var(--space-2);
+  }
+
+  .wahl-raster .wahl {
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .wahl-raster .wahl:has(input:checked) {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
   }
 
   .schritt--ergebnis {
@@ -436,30 +468,6 @@ const transit = umfang.transitCountries.map(name);
 
   .schritt--ergebnis h3 {
     margin-block-start: 0;
-  }
-
-  legend {
-    display: block;
-    font-weight: 600;
-    margin-bottom: var(--space-1);
-  }
-
-  input[type='date'],
-  input[type='number'],
-  select {
-    width: 100%;
-    max-width: 24rem;
-    padding: var(--space-2);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-  }
-
-  fieldset {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-    margin-block: var(--space-4);
   }
 
   .wahl {

@@ -341,30 +341,6 @@ const abdeckung = {
     margin-block: var(--space-4);
   }
 
-  .feld label,
-  legend {
-    display: block;
-    font-weight: 600;
-    margin-bottom: var(--space-1);
-  }
-
-  input[type='search'],
-  select {
-    width: 100%;
-    max-width: 24rem;
-    padding: var(--space-2);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-  }
-
-  fieldset {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-    margin-block: var(--space-4);
-  }
-
   .wahl {
     display: flex;
     gap: var(--space-2);
@@ -410,9 +386,11 @@ const abdeckung = {
 
   .treffer > li {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
     margin-block: var(--space-3);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
   }
 
   .treffer h3 {
@@ -472,7 +450,7 @@ const abdeckung = {
 <style>
   .map-workspace {
     display: grid;
-    grid-template-columns: 340px minmax(0, 1fr);
+    grid-template-columns: 380px minmax(0, 1fr);
     gap: var(--space-8);
     align-items: start;
     margin-block: var(--space-8);
@@ -526,13 +504,36 @@ const abdeckung = {
   .map-sidebar {
     min-width: 0;
   }
+  /* Vor dem Laden: angedeutete Karte statt leerer Fläche, die Erklärung als Karte darauf. */
   .map-output {
     position: sticky;
     top: 6rem;
-    background: var(--color-blue-100);
-    border-radius: var(--radius-xl);
+    display: grid;
+    align-items: center;
+    justify-items: center;
     padding: var(--space-6);
-    min-height: 520px;
+    min-height: 560px;
+    border: 1px solid var(--color-info-border);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 22% 30%, rgb(255 255 255 / 75%) 0 3.5rem, transparent 3.6rem),
+      radial-gradient(circle at 74% 66%, rgb(255 255 255 / 60%) 0 5rem, transparent 5.1rem),
+      linear-gradient(115deg, transparent 47%, rgb(255 255 255 / 85%) 47% 49%, transparent 49%),
+      linear-gradient(20deg, transparent 58%, rgb(255 255 255 / 70%) 58% 59.5%, transparent 59.5%),
+      repeating-linear-gradient(0deg, transparent 0 47px, rgb(64 155 245 / 10%) 47px 48px),
+      repeating-linear-gradient(90deg, transparent 0 47px, rgb(64 155 245 / 10%) 47px 48px),
+      var(--color-blue-100);
+  }
+  .map-panel {
+    max-inline-size: 30rem;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 94%);
+    box-shadow: var(--shadow-md);
+  }
+  .map-panel:has(#karte:not([hidden])) {
+    max-inline-size: none;
+    inline-size: 100%;
   }
   .map-panel h2 {
     margin-top: 0;

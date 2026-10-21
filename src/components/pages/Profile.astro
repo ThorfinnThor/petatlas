@@ -80,14 +80,16 @@ import { INTERESSEN } from '../../features/profile/state.ts';
 
   <fieldset>
     <legend>Was Sie interessiert</legend>
-    {
-      Object.entries(INTERESSEN).map(([schluessel, label]) => (
-        <label class="wahl">
-          <input type="checkbox" name="interesse" value={schluessel} />
-          {label}
-        </label>
-      ))
-    }
+    <div class="wahl-raster">
+      {
+        Object.entries(INTERESSEN).map(([schluessel, label]) => (
+          <label class="wahl">
+            <input type="checkbox" name="interesse" value={schluessel} />
+            {label}
+          </label>
+        ))
+      }
+    </div>
   </fieldset>
 
   <p id="profil-ohne-js" class="hilfe">
@@ -95,7 +97,7 @@ import { INTERESSEN } from '../../features/profile/state.ts';
     lesbar; das Formular hat dann keine Funktion.
   </p>
   <p class="knoepfe">
-    <button type="button" id="profil-speichern" hidden>Lokal speichern</button>
+    <button type="button" id="profil-speichern" class="primaer" hidden>Lokal speichern</button>
     <button type="button" id="profil-loeschen" hidden>Gespeichertes löschen</button>
     <button type="button" id="profil-leeren" hidden>Angaben verwerfen</button>
   </p>
@@ -162,36 +164,45 @@ import { INTERESSEN } from '../../features/profile/state.ts';
     margin-block: var(--space-4);
   }
 
-  .feld label,
-  legend {
-    display: block;
-    font-weight: 600;
-    margin-bottom: var(--space-1);
-  }
-
-  input[type='text'],
-  input[type='date'],
-  select {
-    width: 100%;
-    max-width: 24rem;
-    padding: var(--space-2);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-  }
-
-  fieldset {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-3) var(--space-4);
-  }
-
   .wahl {
     display: flex;
     gap: var(--space-2);
     align-items: center;
     font-weight: 400;
     margin-block: var(--space-1);
+  }
+
+  #profilform {
+    margin-block: var(--space-6);
+    padding: clamp(var(--space-5), 3vw, var(--space-8));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  #profilform fieldset {
+    background: var(--color-surface-subtle);
+    box-shadow: none;
+  }
+
+  .wahl-raster {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+    gap: var(--space-2);
+  }
+
+  .wahl-raster .wahl {
+    margin: 0;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .wahl-raster .wahl:has(input:checked) {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
   }
 
   .knoepfe {
