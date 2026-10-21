@@ -163,9 +163,16 @@ export async function merklisteStarten(): Promise<void> {
   const zeichne = async (): Promise<void> => {
     const liste = merklisteLesen();
     if (liste.entries.length === 0) {
+      // Leerer Zustand mit Wegweisern: Gemerkt werden Orte auf der Karte und Futter.
       bereich.innerHTML =
+        '<div class="merk__leer">' +
         '<p class="merk__kopf" data-leer="true">Deine Merkliste ist leer. Sie liegt nur auf ' +
-        'diesem Gerät und wird nirgends abgeglichen.</p>';
+        'diesem Gerät und wird nirgends abgeglichen.</p>' +
+        '<p>Mit „Merken“ legst du hier Tierarztpraxen, Hundewiesen und Futter ab, die du ' +
+        'wiederfinden willst.</p>' +
+        `<p class="merk__wege"><a href="${kartenPfad}">Orte auf der Karte finden →</a>` +
+        `<a href="${futterBasis}">Futter vergleichen →</a></p>` +
+        '</div>';
       return;
     }
 

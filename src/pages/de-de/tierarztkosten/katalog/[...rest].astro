@@ -1,4 +1,5 @@
 ---
+import PageIntro from '../../../../components/ui/PageIntro.astro';
 /**
  * M20-01 — Einstieg in den Gebührenkatalog.
  *
@@ -12,7 +13,7 @@ import DataStatus from '../../../../components/DataStatus.astro';
 import ReviewStatus from '../../../../components/ReviewStatus.astro';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../../config/build.ts';
-import { subroutePath } from '../../../../lib/routes.ts';
+import { routePath, subroutePath } from '../../../../lib/routes.ts';
 import { positionen, teile } from '../../../../features/costs/detail.ts';
 import { COST_CONFIG } from '../../../../features/costs/engine.ts';
 import snapshot from '../../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
@@ -45,30 +46,38 @@ const eigenerPfad = subroutePath(market, 'costs', 'katalog');
   description="Gebührenkatalog der GOT 2022: Tierarztleistungen, Grundbeträge und Bezugsgrößen mit Quellen und Datenstand."
   route="costs"
   canonicalPfad={eigenerPfad}
+  weit
 >
   <Breadcrumbs
     market={market}
     stufen={[{ label: 'Tierarztkosten', route: 'costs' }, { label: 'Gebührenkatalog' }]}
   />
 
-  <h1>Gebührenkatalog</h1>
-  <p>
-    Alle {anzahl} Positionen der Fassung {quelle.sourceVersion}, gegliedert wie die Verordnung
-    selbst. Jede Position hat eine eigene Seite mit Betrag, Gebührensätzen und Fundstelle.
-  </p>
+  <PageIntro titel="Gebührenkatalog" eyebrow="Tierarztkosten · GOT 2022" bild="health-dog-home">
+    <p>
+      Alle {anzahl} Positionen der Fassung {quelle.sourceVersion}, gegliedert wie die Verordnung
+      selbst. Jede Position hat eine eigene Seite mit Betrag, Gebührensätzen und Fundstelle.
+    </p>
+    <p>
+      Suchst du eine bestimmte Leistung? Im <a href={routePath(market, 'costs')}>Kostenrechner</a>
+      findest du sie per Suche.
+    </p>
+  </PageIntro>
 
   {
     gliederung.map((teil) => (
-      <section>
+      <section class="teil">
         <h2>{teil.name}</h2>
         <ul class="gruppen">
           {teil.gruppen.map((gruppe) => (
             <li>
-              <a href={subroutePath(market, 'costs', 'gruppe', gruppe.slug)}>{gruppe.name}</a>
-              <span class="gruppen__anzahl">
-                {gruppe.positionen.length}{' '}
-                {gruppe.positionen.length === 1 ? 'Position' : 'Positionen'}
-              </span>
+              <a href={subroutePath(market, 'costs', 'gruppe', gruppe.slug)}>
+                <span>{gruppe.name}</span>
+                <span class="gruppen__anzahl">
+                  {gruppe.positionen.length}{' '}
+                  {gruppe.positionen.length === 1 ? 'Position' : 'Positionen'}
+                </span>
+              </a>
             </li>
           ))}
         </ul>
@@ -99,41 +108,57 @@ const eigenerPfad = subroutePath(market, 'costs', 'katalog');
 </BaseLayout>
 
 <style>
-  .gruppen {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-1);
+  .teil {
+    margin-block: var(--space-8);
   }
 
-  @media (min-width: 640px) {
-    .gruppen {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-1) var(--space-6);
-    }
+  .teil h2 {
+    margin-block: 0 var(--space-4);
+  }
+
+  /* Flex statt Raster: Teile mit wenigen Gruppen lassen keine leeren Spalten. */
+  .gruppen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .gruppen li {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-4);
-    align-items: baseline;
-    margin: 0;
-    padding-block: var(--space-2);
-    border-block-end: 1px solid var(--color-border);
-    max-inline-size: none;
+    flex: 1 1 18rem;
     min-inline-size: 0;
+    margin: 0;
   }
 
   .gruppen a {
-    min-inline-size: 0;
-    overflow-wrap: anywhere;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    align-items: baseline;
+    block-size: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-weight: 600;
+    text-decoration: none;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    transition: border-color var(--transition-fast);
+  }
+
+  .gruppen a:hover {
+    border-color: var(--color-primary);
   }
 
   .gruppen__anzahl {
+    flex: none;
     color: var(--color-text-muted);
     font-size: var(--text-micro);
+    font-weight: 400;
     white-space: nowrap;
   }
 </style>
