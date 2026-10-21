@@ -7,6 +7,8 @@ import { merkmalLabel } from '../../features/care/attributes.ts';
 import { attributPruefung } from '../../features/care/attributes.ts';
 import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
 import RetailPartnerSection from '../RetailPartnerSection.astro';
+import FeedProductGrid from '../commerce/FeedProductGrid.astro';
+import { fressnapfKatalog, zooroyalKatalog } from '../../features/commerce/feed-catalog.ts';
 import type { MarketConfig } from '../../domain/market.ts';
 import { fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
 import { zooroyalAngebote } from '../../features/commerce/zooroyal-feed.ts';
@@ -174,6 +176,21 @@ const zooroyalProducts = Object.fromEntries(
   Händlerlinks sind Affiliate-Links. Bei einem Kauf kann eine Provision entstehen; Ihr Preis bleibt
   unverändert.
 </p>
+
+<FeedProductGrid
+  offers={fressnapfKatalog()}
+  category="toy"
+  title="Mehr Spielzeug bei Fressnapf"
+  retailerLabel="Fressnapf"
+  filterbar
+/>
+<FeedProductGrid
+  offers={zooroyalKatalog()}
+  category="toy"
+  title="Mehr Spielzeug bei ZooRoyal"
+  retailerLabel="ZooRoyal"
+  filterbar
+/>
 
 <RetailPartnerSection market={market} page="spielzeug" />
 
