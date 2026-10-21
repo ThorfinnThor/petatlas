@@ -10,6 +10,8 @@ import { allSources, pendingSources, verifiedSources } from '../../domain/source
 import { defaultMarket } from '../../domain/market.ts';
 import { routePath } from '../../lib/routes.ts';
 import Notice from '../Notice.astro';
+import PageIntro from '../ui/PageIntro.astro';
+import TransparencyNav from '../ui/TransparencyNav.astro';
 import { editorialSources } from '../../domain/editorial-sources.ts';
 
 const quellen = allSources();
@@ -17,6 +19,29 @@ const geprueft = verifiedSources();
 const offen = pendingSources();
 const markt = defaultMarket();
 const redaktionelleQuellen = editorialSources();
+const ARTEN: readonly { art: string; titel: string }[] = [
+  { art: 'redaktionelle Fachquelle', titel: 'Fachquellen' },
+  { art: 'Herstellerquelle', titel: 'Herstellerquellen' },
+  { art: 'externer Dienst', titel: 'Externe Dienste' },
+];
+const bekannteArten = new Set(ARTEN.map((eintrag) => eintrag.art));
+const gruppen = [
+  ...ARTEN.map(({ art, titel }) => ({
+    titel,
+    quellen: redaktionelleQuellen.filter((quelle) => quelle.category === art),
+  })),
+  {
+    titel: 'Weitere',
+    quellen: redaktionelleQuellen.filter((quelle) => !bekannteArten.has(quelle.category)),
+  },
+].filter((gruppe) => gruppe.quellen.length > 0);
+
+const statusMarke: Record<string, { text: string; art: string }> = {
+  pending: { text: 'ungeprüft', art: 'offen' },
+  verified: { text: 'geprüft', art: 'ok' },
+  rejected: { text: 'abgelehnt', art: 'gesperrt' },
+  expired: { text: 'abgelaufen', art: 'offen' },
+};
 
 const statusText: Record<string, string> = {
   pending: 'Rechte noch nicht geprüft',
@@ -26,17 +51,35 @@ const statusText: Record<string, string> = {
 };
 ---
 
-<h1>Quellen</h1>
-<p>
-  Jede fachliche Angabe auf dieser Website stammt aus einer benannten Quelle. Diese Liste kommt aus
-  derselben Konfiguration, aus der auch die Daten geladen werden.
-</p>
-<p>
-  Wie wir Quellen auswählen und Änderungen prüfen, steht in der
-  <a href={routePath(markt, 'method')}>Methodik</a>. Die Aktualität der ausgelieferten Daten zeigt
-  der
-  <a href={routePath(markt, 'dataStatus')}>Datenstand</a>.
-</p>
+<PageIntro titel="Quellen" eyebrow="Transparenz">
+  <p>
+    Jede fachliche Angabe auf dieser Website stammt aus einer benannten Quelle. Diese Liste kommt
+    aus derselben Konfiguration, aus der auch die Daten geladen werden.
+  </p>
+  <p>
+    Wie wir Quellen auswählen und Änderungen prüfen, steht in der{' '}
+    <a href={routePath(markt, 'method')}>Methodik</a>. Die Aktualität der ausgelieferten Daten zeigt
+    der{' '}
+    <a href={routePath(markt, 'dataStatus')}>Datenstand</a>.
+  </p>
+</PageIntro>
+
+<TransparencyNav aktuell="sources" />
+
+<dl class="kennzahlen">
+  <div>
+    <dt>Übernommene Datensätze</dt>
+    <dd>{quellen.length}</dd>
+  </div>
+  <div>
+    <dt>davon Rechte geprüft</dt>
+    <dd>{geprueft.length}</dd>
+  </div>
+  <div>
+    <dt>Fachquellen und Dienste</dt>
+    <dd>{redaktionelleQuellen.length}</dd>
+  </div>
+</dl>
 
 {
   geprueft.length === 0 && (
@@ -50,7 +93,7 @@ const statusText: Record<string, string> = {
   )
 }
 
-<h2>Erfasste Quellen ({quellen.length})</h2>
+<h2 id="datensaetze">Erfasste Quellen ({quellen.length})</h2>
 <p>
   Die folgenden Einträge sind übernommene <strong>Datensätze</strong>. Ihre Rechte werden je
   Ausgabeform geprüft.
@@ -59,7 +102,17 @@ const statusText: Record<string, string> = {
   {
     quellen.map((quelle) => (
       <li>
-        <h3>{quelle.resourceName}</h3>
+        <div class="quellen__kopf">
+          <h3>{quelle.resourceName}</h3>
+          <span
+            class:list={[
+              'quellen__status',
+              `quellen__status--${statusMarke[quelle.rights.status]?.art ?? 'offen'}`,
+            ]}
+          >
+            {statusMarke[quelle.rights.status]?.text ?? quelle.rights.status}
+          </span>
+        </div>
         <dl>
           <dt>Anbieter</dt>
           <dd>{quelle.publisher}</dd>
@@ -106,66 +159,134 @@ const statusText: Record<string, string> = {
   }
 </ul>
 
-<h2>Redaktionelle Fach-, Herstellerquellen und externe Dienste ({redaktionelleQuellen.length})</h2>
+<h2 id="fachquellen">
+  Redaktionelle Fach-, Herstellerquellen und externe Dienste ({redaktionelleQuellen.length})
+</h2>
 <p>
   Diese Quellen werden verlinkt oder in eigenen Worten ausgewertet. Ein Quellenlink ist keine
   Freigabe zur Übernahme von Bildern, Seitentexten, Preisen oder Bewertungen.
 </p>
-<ul class="quellen">
-  {
-    redaktionelleQuellen.map((quelle) => (
-      <li>
-        <p class="quellen__art">{quelle.category}</p>
-        <h3>{quelle.title}</h3>
-        <dl>
-          <dt>Herausgeber</dt>
-          <dd>{quelle.publisher}</dd>
-          <dt>Quelladresse</dt>
-          <dd>
-            <a href={quelle.url.replace('{z}/{x}/{y}.png', '')}>{quelle.url}</a>
-          </dd>
-          <dt>Verwendung</dt>
-          <dd>{quelle.usage}</dd>
-          <dt>Fassung</dt>
-          <dd>{quelle.version}</dd>
-          <dt>Letzte tatsächliche Prüfung</dt>
-          <dd>{quelle.checkedAt}</dd>
-          <dt>Rechtebasis</dt>
-          <dd>{quelle.rightsBasis}</dd>
-          <dt>Erlaubte Ausgabe</dt>
-          <dd>{quelle.allowedOutputs}</dd>
-          <dt>Prüfnachweis</dt>
-          <dd>
-            <code>{quelle.evidence}</code>
-          </dd>
-        </dl>
-      </li>
-    ))
-  }
-</ul>
+{
+  gruppen.map((gruppe) => (
+    <section class="fachgruppe">
+      <h3>
+        {gruppe.titel} <span class="fachgruppe__anzahl">({gruppe.quellen.length})</span>
+      </h3>
+      <ul class="fachquellen">
+        {gruppe.quellen.map((quelle) => (
+          <li>
+            <h4>{quelle.title}</h4>
+            <p class="fachquellen__herkunft">
+              {quelle.publisher} ·{' '}
+              <a href={quelle.url.replace('{z}/{x}/{y}.png', '')}>{quelle.url}</a>
+            </p>
+            <dl>
+              <div class="fachquellen__breit">
+                <dt>Verwendung</dt>
+                <dd>{quelle.usage}</dd>
+              </div>
+              <div>
+                <dt>Fassung</dt>
+                <dd>{quelle.version}</dd>
+              </div>
+              <div>
+                <dt>Letzte tatsächliche Prüfung</dt>
+                <dd>{quelle.checkedAt}</dd>
+              </div>
+              <div>
+                <dt>Rechtebasis</dt>
+                <dd>{quelle.rightsBasis}</dd>
+              </div>
+              <div>
+                <dt>Erlaubte Ausgabe</dt>
+                <dd>{quelle.allowedOutputs}</dd>
+              </div>
+              <div class="fachquellen__breit">
+                <dt>Prüfnachweis</dt>
+                <dd>
+                  <code>{quelle.evidence}</code>
+                </dd>
+              </div>
+            </dl>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))
+}
 
-<p>
+<p class="quellen__fazit">
   {offen.length} von {quellen.length} Quellen sind noch ungeprüft. Eine ungeprüfte Quelle darf weder im
-  HTML noch als Datei ausgegeben werden. Die Lizenzgrenzen je Datenklasse stehen in
+  HTML noch als Datei ausgegeben werden. Die Lizenzgrenzen je Datenklasse stehen in{' '}
   <code>licenses/README.md</code> im Repository.
 </p>
 
 <style>
+  .kennzahlen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: var(--space-3);
+    margin: 0 0 var(--space-10);
+  }
+
+  .kennzahlen > div {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-1);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-subtle);
+  }
+
+  .kennzahlen dt {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .kennzahlen dd {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
   .quellen {
-    list-style: none;
+    display: grid;
+    gap: var(--space-4);
+    margin-block: var(--space-6) var(--space-12);
     padding: 0;
+    list-style: none;
+  }
+
+  .quellen > li,
+  .fachquellen > li {
+    max-inline-size: none;
   }
 
   .quellen > li {
+    margin: 0;
+    padding: var(--space-5);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
-    margin-block: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .quellen__kopf {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-block-end: var(--space-4);
   }
 
   .quellen h3 {
-    margin-top: 0;
-    font-size: var(--text-body);
+    flex: 1 1 16rem;
+    min-inline-size: 0;
+    margin: 0;
+    font-size: var(--text-h4);
     /* Ressourcennamen enthalten Dateinamen und Adressen, die auf einem
      * schmalen Bildschirm sonst über den Rand hinauslaufen. */
     overflow-wrap: break-word;
@@ -173,24 +294,119 @@ const statusText: Record<string, string> = {
     hyphens: auto;
   }
 
-  .quellen__art {
-    color: var(--color-primary);
+  .quellen > li > h3 {
+    margin-block-end: var(--space-4);
+  }
+
+  .quellen__status {
+    flex: none;
+    padding: 0.15em 0.65em;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
     font-size: var(--text-small);
-    font-weight: 700;
+    font-weight: 600;
+  }
+
+  .quellen__status--ok {
+    border-color: var(--color-success-border);
+    background: var(--color-success-soft);
+    color: var(--color-success);
+  }
+
+  .quellen__status--offen {
+    border-color: var(--color-warning-border);
+    background: var(--color-warning-soft);
+    color: var(--color-warning);
+  }
+
+  .quellen__status--gesperrt {
+    border-color: var(--color-danger-border);
+    background: var(--color-danger-soft);
+    color: var(--color-danger);
+  }
+
+  .fachgruppe {
+    margin-block: var(--space-8) var(--space-10);
+  }
+
+  .fachgruppe h3 {
+    margin-block: 0 var(--space-4);
+  }
+
+  .fachgruppe__anzahl {
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  .fachquellen {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fachquellen > li {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .fachquellen h4 {
     margin: 0 0 var(--space-1);
+    font-size: var(--text-body);
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .fachquellen__herkunft {
+    margin: 0 0 var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    overflow-wrap: anywhere;
+  }
+
+  .fachquellen dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+    padding-block-start: var(--space-3);
+    border-block-start: 1px solid var(--color-border);
+    font-size: var(--text-small);
+  }
+
+  .fachquellen__breit {
+    grid-column: 1 / -1;
+  }
+
+  .fachquellen dt {
+    color: var(--color-text-muted);
+    font-size: var(--text-micro);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .fachquellen dd {
+    margin: 0;
+    overflow-wrap: anywhere;
   }
 
   .quellen dl {
-    margin: 0;
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-1);
+    margin: 0;
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--color-border);
   }
 
   .quellen dt {
-    font-weight: 600;
     color: var(--color-text-muted);
     font-size: var(--text-small);
+    font-weight: 600;
   }
 
   .quellen dd {
@@ -199,15 +415,25 @@ const statusText: Record<string, string> = {
   }
 
   .quellen__notizen {
-    margin: var(--space-2) 0 0;
-    padding-inline-start: var(--space-4);
-    font-size: var(--text-small);
+    margin: var(--space-3) 0 0;
+    padding: var(--space-3) var(--space-3) var(--space-3) var(--space-8);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-subtle);
     color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .quellen__fazit {
+    padding: var(--space-4) var(--space-5);
+    border-inline-start: 3px solid var(--color-primary);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-subtle);
   }
 
   @media (min-width: 32rem) {
     .quellen dl {
       grid-template-columns: minmax(9rem, auto) 1fr;
+      column-gap: var(--space-4);
     }
 
     .quellen dt {
