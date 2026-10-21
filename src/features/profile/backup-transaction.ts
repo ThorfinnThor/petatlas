@@ -113,7 +113,7 @@ export function offeneSicherungZuruecksetzen(speicher: Speicher | null): ErsatzE
     return {
       ok: false,
       meldung:
-        'Eine unterbrochene Übernahme konnte noch nicht vollständig zurückgesetzt werden. Bitte laden Sie die Seite erneut.',
+        'Eine unterbrochene Übernahme konnte noch nicht vollständig zurückgesetzt werden. Bitte lade die Seite erneut.',
     };
   }
 }

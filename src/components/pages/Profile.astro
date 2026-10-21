@@ -46,7 +46,7 @@ import { INTERESSEN } from '../../features/profile/state.ts';
   <div class="feld">
     <label for="profil-name">Rufname</label>
     <input id="profil-name" type="text" maxlength="40" autocomplete="off" />
-    <p class="hilfe">Nur für Ihre eigene Übersicht. Ein Spitzname genügt.</p>
+    <p class="hilfe">Nur für deine eigene Übersicht. Ein Spitzname genügt.</p>
   </div>
 
   <div class="feld">
@@ -73,13 +73,13 @@ import { INTERESSEN } from '../../features/profile/state.ts';
     <label for="profil-rasse">Rasse</label>
     <input id="profil-rasse" type="text" maxlength="60" autocomplete="off" />
     <p class="hilfe">
-      Freie Angabe für Ihre Übersicht. Sie löst keine Empfehlung aus: aus einer Rasse folgt hier
+      Freie Angabe für deine Übersicht. Sie löst keine Empfehlung aus: aus einer Rasse folgt hier
       nichts.
     </p>
   </div>
 
   <fieldset>
-    <legend>Was Sie interessiert</legend>
+    <legend>Was dich interessiert</legend>
     <div class="wahl-raster">
       {
         Object.entries(INTERESSEN).map(([schluessel, label]) => (
@@ -102,8 +102,8 @@ import { INTERESSEN } from '../../features/profile/state.ts';
     <button type="button" id="profil-leeren" hidden>Angaben verwerfen</button>
   </p>
   <p class="hilfe">
-    Gespeichert wird nur, wenn Sie es sagen — und nur in diesem Browser auf diesem Gerät. Es gibt
-    keinen automatischen Abgleich mit anderen Geräten. Eine Sicherungsdatei können Sie unten selbst
+    Gespeichert wird nur, wenn du es sagst — und nur in diesem Browser auf diesem Gerät. Es gibt
+    keinen automatischen Abgleich mit anderen Geräten. Eine Sicherungsdatei kannst du unten selbst
     erstellen. Wer den Browser-Speicher löscht, löscht auch diesen Stand.
   </p>
 </form>
@@ -113,8 +113,8 @@ import { INTERESSEN } from '../../features/profile/state.ts';
 
 <h2>Sicherung</h2>
 <p>
-  Sie können Ihre lokalen Daten als Datei speichern und auf einem anderen Gerät wieder einlesen. Die
-  Datei bleibt bei Ihnen: sie wird <strong>nicht hochgeladen</strong>, und es gibt keine Stelle, an
+  Du kannst deine lokalen Daten als Datei speichern und auf einem anderen Gerät wieder einlesen. Die
+  Datei bleibt bei dir: sie wird <strong>nicht hochgeladen</strong>, und es gibt keine Stelle, an
   die sie ginge.
 </p>
 <p class="hilfe">
@@ -145,7 +145,7 @@ import { INTERESSEN } from '../../features/profile/state.ts';
   <li><strong>Keine E-Mail-Adresse und kein Konto.</strong> Es gibt nichts anzumelden.</li>
   <li><strong>Keine Adresse und keine Telefonnummer.</strong> Sie werden für nichts gebraucht.</li>
   <li>
-    <strong>Kein Name des Halters.</strong> Der Rufname des Tieres ist eine Anzeige für Sie, keine Kennung.
+    <strong>Kein Name des Halters.</strong> Der Rufname des Tieres ist eine Anzeige für dich, keine Kennung.
   </li>
   <li>
     <strong>Keine Gesundheitsangaben.</strong> Beschwerden, Diagnosen und Medikamente gehören in die Praxis,

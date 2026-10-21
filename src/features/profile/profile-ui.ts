@@ -130,7 +130,7 @@ function zeige(): void {
       letzteMeldung === null
         ? entwurfUngespeichert
           ? 'Änderungen noch nicht gespeichert.'
-          : 'Diese Angaben liegen in diesem Tab. Gespeichert wird nur, wenn Sie es sagen; ' +
+          : 'Diese Angaben liegen in diesem Tab. Gespeichert wird nur, wenn du es sagst; ' +
             'übertragen wird nie etwas.'
         : letzteMeldung,
     )}</p>`,
@@ -231,7 +231,7 @@ export function profilStarten(): void {
     speichern.addEventListener('click', () => {
       entwurf = lies();
       if (gewichtsPruefung.status === 'ungueltig') {
-        letzteMeldung = 'Bitte korrigieren Sie das Gewicht. Es wurde nichts gespeichert.';
+        letzteMeldung = 'Bitte korrigiere das Gewicht. Es wurde nichts gespeichert.';
         zeige();
         document.querySelector<HTMLInputElement>('#profil-gewicht')?.focus();
         return;

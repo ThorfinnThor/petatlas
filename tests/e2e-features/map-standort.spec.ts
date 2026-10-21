@@ -37,10 +37,10 @@ test('verwendet einen freigegebenen Standort für die Suche', async ({ page, con
 
   await page.goto(KARTE);
   await page.click('#standort');
-  await expect(page.locator('#standort-status')).toContainText('Ihr ungefährer Standort', {
+  await expect(page.locator('#standort-status')).toContainText('deinen ungefähren Standort', {
     timeout: 20_000,
   });
-  await expect(page.locator('#treffer-status')).toContainText('Ihr ungefährer Standort', {
+  await expect(page.locator('#treffer-status')).toContainText('deinen ungefähren Standort', {
     timeout: 20_000,
   });
   await expect(page.locator('#trefferliste li').first()).toBeVisible();
@@ -58,7 +58,7 @@ test('bleibt nach einer Ablehnung bedienbar', async ({ page, context }) => {
 
   await page.click('#standort');
   await expect(page.locator('#standort-status')).toContainText('nicht freigegeben');
-  await expect(page.locator('#standort-status')).toContainText('geben Sie einen Ort ein');
+  await expect(page.locator('#standort-status')).toContainText('gib einen Ort ein');
   // Die Liste bleibt vollständig, und der Knopf ist wieder benutzbar.
   await expect(page.locator('#trefferliste li').first()).toBeVisible();
   await expect(page.locator('#standort')).toBeEnabled();
@@ -90,7 +90,7 @@ test('speichert den Standort nirgends und sendet ihn nirgendwohin', async ({ pag
 
   await page.goto(KARTE);
   await page.click('#standort');
-  await expect(page.locator('#standort-status')).toContainText('Ihr ungefährer Standort', {
+  await expect(page.locator('#standort-status')).toContainText('deinen ungefähren Standort', {
     timeout: 20_000,
   });
 

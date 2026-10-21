@@ -299,13 +299,13 @@ export function pruefeReise(auftrag: Pruefauftrag): ReiseErgebnis {
         // die niemand fachlich geprüft hat.
         gesamt = 'unknown';
         hinweise.push(
-          'Nach Ihren Angaben spricht in den vorbereiteten Regeln nichts dagegen. Ein Gesamtergebnis ' +
+          'Nach deinen Angaben spricht in den vorbereiteten Regeln nichts dagegen. Ein Gesamtergebnis ' +
             'gibt es trotzdem nicht: diese Regeln sind fachlich noch nicht geprüft, und eine ungeprüfte ' +
             'Unbedenklichkeit wäre keine.',
         );
       } else {
         hinweise.push(
-          'Alle geprüften Voraussetzungen sind nach Ihren Angaben erfüllt. Das ist keine Einreisegarantie: ' +
+          'Alle geprüften Voraussetzungen sind nach deinen Angaben erfüllt. Das ist keine Einreisegarantie: ' +
             'geprüft wurde nur, was hier hinterlegt ist, und die Entscheidung trifft die Grenzkontrolle.',
         );
       }

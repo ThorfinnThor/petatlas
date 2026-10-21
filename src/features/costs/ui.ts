@@ -367,7 +367,7 @@ export function rechnerStarten(): void {
         auswahlSteuern();
         neuRechnen();
         suche!.value = '';
-        sucheHinweis!.textContent = 'Position hinzugefügt. Sie können nach einer weiteren suchen.';
+        sucheHinweis!.textContent = 'Position hinzugefügt. Du kannst nach einer weiteren suchen.';
         trefferSichtbar(false);
         suche!.focus({ preventScroll: true });
       });
@@ -439,7 +439,7 @@ export function rechnerStarten(): void {
     ergebnis.replaceChildren();
     const drucken = element<HTMLButtonElement>('#drucken');
     if (drucken) drucken.disabled = true;
-    status.textContent = 'Bitte korrigieren Sie die markierten Eingaben.';
+    status.textContent = 'Bitte korrigiere die markierten Eingaben.';
   });
   form.addEventListener('formular:gueltig', () => {
     if (bearbeitet === null) return;
@@ -502,7 +502,7 @@ export function rechnerStarten(): void {
       // Ohne Katalog wird nichts gerechnet und nichts geschätzt.
       status!.textContent = 'Die Gebührendaten konnten nicht geladen werden.';
       sucheHinweis!.textContent =
-        'Die Suche steht gerade nicht zur Verfügung. Sie können das Laden erneut versuchen.';
+        'Die Suche steht gerade nicht zur Verfügung. Du kannst das Laden erneut versuchen.';
       if (katalogErneut) katalogErneut.hidden = false;
       console.error('Gebührendaten:', fehler);
     } finally {

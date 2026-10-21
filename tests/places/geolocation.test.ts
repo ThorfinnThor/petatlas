@@ -116,15 +116,15 @@ describe('Ablehnung und Ausfall sind normale Ergebnisse', () => {
       STANDORT_TEXTE.nichtVerfuegbar,
       STANDORT_TEXTE.zeitueberschreitung,
     ]) {
-      expect(text).toMatch(/geben Sie einen Ort ein|Geben Sie einen Ort ein/);
+      expect(text).toMatch(/gib einen Ort ein|Gib einen Ort ein/);
     }
   });
 });
 
 describe('Beschriftung', () => {
   it('nennt den Standort ungefähr, nicht als Gemeinde', () => {
-    expect(standortLabel(50)).toBe('Ihr ungefährer Standort (±50 m)');
-    expect(standortLabel(null)).toBe('Ihr ungefährer Standort');
+    expect(standortLabel(50)).toBe('deinen ungefähren Standort (±50 m)');
+    expect(standortLabel(null)).toBe('deinen ungefähren Standort');
   });
 
   it('sagt vorher, dass nichts gespeichert oder übertragen wird', () => {
