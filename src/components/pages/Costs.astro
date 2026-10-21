@@ -85,48 +85,51 @@ const kurztitel = (titel: string) => {
   </aside>
 </header>
 
-<ReviewStatus
-  status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
-  reviewedAt={COST_CONFIG.reviewedAt}
-  reviewedBy={COST_CONFIG.reviewedBy}
-  lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
-  responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
-  sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
-  compact
->
-  {
-    COST_CONFIG.clinicalReview === 'approved' ? (
-      <p>Die Rechenannahmen dieses Rechners wurden fachlich geprüft.</p>
-    ) : (
-      <p data-testid="ungeprueft">
-        Die Rechenannahmen dieses Rechners — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und
-        Rundung — sind <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Der
-        Rechner ist zum Ausprobieren freigeschaltet, nicht als Auskunft. Verlassen Sie sich nicht
-        auf die Beträge.
-      </p>
-    )
-  }
-</ReviewStatus>
+<div class="costs-meta">
+  <ReviewStatus
+    status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
+    reviewedAt={COST_CONFIG.reviewedAt}
+    reviewedBy={COST_CONFIG.reviewedBy}
+    lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
+    responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+    sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+    compact
+  >
+    {
+      COST_CONFIG.clinicalReview === 'approved' ? (
+        <p>Die Rechenannahmen dieses Rechners wurden fachlich geprüft.</p>
+      ) : (
+        <p data-testid="ungeprueft">
+          Die Rechenannahmen dieses Rechners — Faktorbereiche, Notdienstgebühr, Steuerbehandlung und
+          Rundung — sind <strong>von keiner fachlich geeigneten Person abgenommen</strong>. Der
+          Rechner ist zum Ausprobieren freigeschaltet, nicht als Auskunft. Verlassen Sie sich nicht
+          auf die Beträge.
+        </p>
+      )
+    }
+  </ReviewStatus>
 
-<DataStatus
-  stand={quelle.effectiveFrom}
-  quelle={`${quelle.sourceVersion} · ${quelle.legalBasis}`}
-  locale={market.locale}
-/>
+  <DataStatus
+    stand={quelle.effectiveFrom}
+    quelle={`${quelle.sourceVersion} · ${quelle.legalBasis}`}
+    locale={market.locale}
+  />
 
-<details class="rechner-grenzen">
-  <summary>Grenzen der Berechnung: Sonderfälle und enthaltene Leistungen</summary>
-  <p>
-    Standardmäßig werden ausgewählte Gebühren mit 19 % Umsatzsteuer berechnet. Für mit der Praxis
-    geklärte Sonderfälle können Sie abweichende Faktoren, Steuer und den Erlass der Notdienstgebühr
-    eingeben. Eine reguläre Sprechstunde am Abend oder Wochenende ist nicht automatisch Notdienst.
-  </p>
-  <p>
-    Der Rechner prüft nicht, ob eine Leistung bereits in einer anderen enthalten ist (§ 6 GOT). Die
-    Menge richtet sich nach der Einheit der gewählten Gebührenposition, etwa je Behandlung oder
-    Zeitabschnitt. Die Praxis muss die Auswahl und Kombination der Leistungen bestätigen.
-  </p>
-</details>
+  <details class="rechner-grenzen">
+    <summary>Grenzen der Berechnung: Sonderfälle und enthaltene Leistungen</summary>
+    <p>
+      Standardmäßig werden ausgewählte Gebühren mit 19 % Umsatzsteuer berechnet. Für mit der Praxis
+      geklärte Sonderfälle können Sie abweichende Faktoren, Steuer und den Erlass der
+      Notdienstgebühr eingeben. Eine reguläre Sprechstunde am Abend oder Wochenende ist nicht
+      automatisch Notdienst.
+    </p>
+    <p>
+      Der Rechner prüft nicht, ob eine Leistung bereits in einer anderen enthalten ist (§ 6 GOT).
+      Die Menge richtet sich nach der Einheit der gewählten Gebührenposition, etwa je Behandlung
+      oder Zeitabschnitt. Die Praxis muss die Auswahl und Kombination der Leistungen bestätigen.
+    </p>
+  </details>
+</div>
 
 <SavedProfileButton />
 <ToolShell
@@ -386,7 +389,8 @@ const kurztitel = (titel: string) => {
   }
   .costs-hero__aside {
     display: grid;
-    grid-template-columns: 7rem minmax(0, 1fr);
+    grid-template-columns: 9rem minmax(0, 1fr);
+    align-self: center;
     overflow: hidden;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
@@ -419,6 +423,20 @@ const kurztitel = (titel: string) => {
     color: var(--color-primary-hover);
     font-size: var(--text-small);
     font-weight: 600;
+  }
+  /* Quelle, Prüfstatus und Grenzen als ruhige Infozeile unter dem Kopf. */
+  .costs-meta {
+    display: grid;
+    gap: var(--space-2);
+    margin-block: 0 var(--space-6);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+  .costs-meta :global(p),
+  .costs-meta :global(details) {
+    margin-block: 0;
   }
   @media (min-width: 900px) {
     .costs-hero {
