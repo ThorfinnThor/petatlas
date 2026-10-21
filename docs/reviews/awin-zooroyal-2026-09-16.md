@@ -10,3 +10,8 @@ Die Produktkataloge verwenden bis zur dokumentierten Feed-Freigabe keine ZooRoya
 Preise oder Verfügbarkeitsangaben. Das Awin-Programmprofil weist auf einen möglichen CSV-Feed hin;
 der konkrete Feed-Zugang und die zulässige Bildnutzung werden vor einer automatischen
 Produktübernahme separat hinterlegt.
+
+**Nachtrag 21.10.2026:** Die Programmbedingungen von ZooRoyal DE (Stand 21.03.2025) wurden im
+Awin-Konto geprüft. Werbemittel einschließlich der Feedbilder dürfen im Rahmen des
+Partnerprogramms unverändert genutzt werden; Einzelheiten und der offene Punkt zur Ablage der
+Katalogdaten im öffentlichen Repository stehen in `awin-feedbilder-2026-10-21.md`.
