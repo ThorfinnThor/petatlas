@@ -434,6 +434,16 @@ const zooroyalProducts = Object.fromEntries(
     margin-block: 0;
   }
 
+  .finder-results :global(.finder__katalog-verweis) {
+    margin-block-start: var(--space-1);
+    color: var(--color-text-muted);
+  }
+
+  /* Sprungziel unter dem festen Seitenkopf sichtbar halten. */
+  .finder-results :global(#finder-katalog-titel) {
+    scroll-margin-block-start: 6rem;
+  }
+
   .finder-results :global(.finder__result-head > p) {
     color: var(--color-text-muted);
     font-size: var(--text-small);
