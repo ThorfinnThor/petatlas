@@ -22,6 +22,7 @@ const redaktionelleQuellen = editorialSources();
 const ARTEN: readonly { art: string; titel: string }[] = [
   { art: 'redaktionelle Fachquelle', titel: 'Fachquellen' },
   { art: 'Herstellerquelle', titel: 'Herstellerquellen' },
+  { art: 'Händlerfeed', titel: 'Händlerfeeds' },
   { art: 'externer Dienst', titel: 'Externe Dienste' },
 ];
 const bekannteArten = new Set(ARTEN.map((eintrag) => eintrag.art));
@@ -76,7 +77,7 @@ const statusText: Record<string, string> = {
     <dd>{geprueft.length}</dd>
   </div>
   <div>
-    <dt>Fachquellen und Dienste</dt>
+    <dt>weitere Quellen und Dienste</dt>
     <dd>{redaktionelleQuellen.length}</dd>
   </div>
 </dl>
@@ -160,7 +161,7 @@ const statusText: Record<string, string> = {
 </ul>
 
 <h2 id="fachquellen">
-  Redaktionelle Fach-, Herstellerquellen und externe Dienste ({redaktionelleQuellen.length})
+  Fach-, Hersteller- und Händlerquellen, externe Dienste ({redaktionelleQuellen.length})
 </h2>
 <p>
   Diese Quellen werden verlinkt oder in eigenen Worten ausgewertet. Ein Quellenlink ist keine

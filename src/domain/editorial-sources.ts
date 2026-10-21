@@ -4,7 +4,8 @@ import foods from '../../content-data/food/real-products.json' with { type: 'jso
 
 export interface EditorialSource {
   readonly id: string;
-  readonly category: 'redaktionelle Fachquelle' | 'externer Dienst' | 'Herstellerquelle';
+  readonly category:
+    'redaktionelle Fachquelle' | 'externer Dienst' | 'Herstellerquelle' | 'Händlerfeed';
   readonly title: string;
   readonly publisher: string;
   readonly url: string;

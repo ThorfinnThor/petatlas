@@ -90,8 +90,9 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
         <p class="eyebrow">{retailerLabel} · Sortiment</p>
         <h2 id={sectionId}>{title}</h2>
         <p>
-          Eine Auswahl realer Artikel aus dem freigegebenen Händlerfeed. Wir zeigen Produktname,
-          Tierart und Herstellerbild; Preise und Verfügbarkeit prüfst du direkt beim Händler.
+          Eine Auswahl realer Artikel aus dem {retailerLabel}-Produktfeed über Awin. Wir zeigen
+          Produktname, Tierart und das Produktbild aus dem Feed; Preise und Verfügbarkeit prüfst du
+          direkt beim Händler.
           {selectionIsLimited &&
             ` Sichtbar sind ${products.length} von ${allProducts.length} Feedartikeln.`}
         </p>
@@ -140,6 +141,9 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
                 decoding="async"
                 referrerpolicy="no-referrer"
               />
+              <span class="feed-catalog__bildquelle" aria-hidden="true">
+                Produktbild · {retailerLabel}-Feed
+              </span>
             </a>
             <div class="feed-catalog__body">
               <p class="feed-catalog__species">
@@ -238,10 +242,12 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
   }
 
   .feed-catalog__image-link {
+    position: relative;
     display: grid;
     place-items: center;
-    padding: var(--space-4);
-    background: var(--color-surface-subtle);
+    padding: var(--space-4) var(--space-4) var(--space-6);
+    border-block-end: 1px solid var(--color-border);
+    background: var(--color-surface);
   }
 
   /* Gleich hohe, ruhige Produktbilder statt quadratischer Riesenflächen. */
@@ -250,7 +256,19 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
     inline-size: 100%;
     block-size: 9.5rem;
     object-fit: contain;
-    mix-blend-mode: multiply;
+  }
+
+  /* Bildnachweis wie bei den redaktionellen Karten: wer das Bild liefert. */
+  .feed-catalog__bildquelle {
+    position: absolute;
+    inset-inline-end: var(--space-2);
+    inset-block-end: var(--space-2);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-pill);
+    background: rgb(255 255 255 / 92%);
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    line-height: 1.2;
   }
 
   .feed-catalog__body {
