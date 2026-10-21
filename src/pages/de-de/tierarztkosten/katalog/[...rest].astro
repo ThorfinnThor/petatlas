@@ -150,6 +150,12 @@ const eigenerPfad = subroutePath(market, 'costs', 'katalog');
     transition: border-color var(--transition-fast);
   }
 
+  /* Ohne min-inline-size: 0 bliebe ein langes Wort breiter als die Kachel,
+     wo der Browser keine deutsche Silbentrennung kennt. */
+  .gruppen a > span:first-child {
+    min-inline-size: 0;
+  }
+
   .gruppen a:hover {
     border-color: var(--color-primary);
   }
