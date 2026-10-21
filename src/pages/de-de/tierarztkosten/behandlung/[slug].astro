@@ -22,6 +22,7 @@ import { getScenario } from '../../../../features/costs/scenarios.ts';
 import { mayShowTotalEstimate } from '../../../../domain/schemas/costs.ts';
 import { NICHT_ENTHALTEN } from '../../../../features/costs/engine.ts';
 import { BEHANDLUNGEN, type Behandlungsseite } from '../../../../features/costs/treatments.ts';
+import PageIntro from '../../../../components/ui/PageIntro.astro';
 
 export function getStaticPaths() {
   const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
@@ -51,6 +52,8 @@ const stufenAnzahl = zeilen[0]?.stufen.length ?? 0;
 const kostenPfad = routePath(market, 'costs');
 const andere = BEHANDLUNGEN.filter((b) => b.slug !== seite.slug);
 const pfad = `/de-de/tierarztkosten/behandlung/${seite.slug}/`;
+const katze = /katze|kater/.test(seite.slug);
+const nichtEnthalten = [...new Set([...szenario.exclusions, ...NICHT_ENTHALTEN])];
 const quelle = snapshot.source as unknown as {
   effectiveFrom: string;
   sourceVersion: string;
@@ -83,184 +86,182 @@ const quelle = snapshot.source as unknown as {
     market={market}
     stufen={[{ label: 'Tierarztkosten', route: 'costs' }, { label: seite.titel }]}
   />
-  <article class="treatment">
-    <header class="treatment__head">
-      <p class="eyebrow">Tierarztkosten · GOT 2022</p>
-      <h1>{seite.titel}</h1>
-      <p class="treatment__lead">{seite.einleitung}</p>
-      {
-        !freigegeben && (
-          <p class="treatment__draft" role="note">
-            <strong>Entwurf:</strong> Die Zusammenstellung der Positionen wird gerade fachlich
-            geprüft. Bis dahin zeigen wir nur die einzelnen Positionen und keine Gesamtsumme.
-          </p>
-        )
-      }
-    </header>
-
+  <PageIntro
+    titel={seite.titel}
+    eyebrow="Tierarztkosten · GOT 2022"
+    bild={katze ? 'play-cat-home' : 'health-dog-home'}
+  >
+    <p>{seite.einleitung}</p>
     {
-      freigegeben && stufenAnzahl > 0 && (
-        <section class="treatment__total" aria-labelledby="summe-titel">
-          <p class="eyebrow">Kurzantwort</p>
-          <h2 id="summe-titel">
-            {euro(summe(0))} bis {euro(summe(stufenAnzahl - 1))} mit Umsatzsteuer
-          </h2>
-          <p>
-            Für die unten genannten Positionen im einfachen bis {stufenAnzahl}-fachen Satz, ohne
-            Arzneimittel und Material. Fachlich geprüft von {szenario.reviewedBy}.
-          </p>
-        </section>
+      !freigegeben && (
+        <p class="treatment__draft" role="note">
+          <strong>Entwurf:</strong> Die Zusammenstellung der Positionen wird gerade fachlich
+          geprüft. Bis dahin zeigen wir nur die einzelnen Positionen und keine Gesamtsumme.
+        </p>
       )
     }
+  </PageIntro>
 
-    <section class="treatment__lines" aria-labelledby="positionen-titel">
-      <h2 id="positionen-titel">Welche Positionen abgerechnet werden</h2>
-      <div class="table-scroll" tabindex="0" aria-label="Positionen, horizontal scrollbar">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">GOT-Nr.</th>
-              <th scope="col">Leistung</th>
-              {zeilen[0]?.stufen.map((s) => <th scope="col">{s.faktor}-fach</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {
-              zeilen.map((z) => (
-                <tr>
-                  <td>{z.eintrag.item.officialItemId}</td>
-                  <th scope="row">
-                    <a href={`/de-de/tierarztkosten/${z.eintrag.slug}/`}>
-                      {z.eintrag.item.originalLabel}
-                    </a>
-                    {z.linie.quantity > 1 && <span> × {z.linie.quantity}</span>}
-                  </th>
-                  {z.stufen.map((s) => (
-                    <td>{euro(s.bruttoMinor * z.linie.quantity)}</td>
-                  ))}
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-      <p class="treatment__note">Beträge mit 19 % Umsatzsteuer, je Position einzeln gerechnet.</p>
-      <DataStatus
-        stand={quelle.effectiveFrom}
-        quelle={quelle.sourceVersion}
-        locale={market.locale}
-      />
-    </section>
-
-    <section class="treatment__grid">
-      <div>
-        <h2>Was die Rechnung verändert</h2>
-        <ul>{seite.kostentreiber.map((t) => <li>{t}</li>)}</ul>
-      </div>
-      <div>
-        <h2>Nicht enthalten</h2>
-        <ul>
-          {[...new Set([...szenario.exclusions, ...NICHT_ENTHALTEN])].map((t) => <li>{t}</li>)}
-        </ul>
-      </div>
-    </section>
-
-    <section class="treatment__faq" aria-labelledby="fragen-titel">
-      <h2 id="fragen-titel">Häufige Fragen</h2>
+  <div class="treatment">
+    <article class="treatment__main">
       {
-        seite.fragen.map((f) => (
-          <details>
-            <summary>{f.frage}</summary>
-            <p>{f.antwort}</p>
-          </details>
-        ))
+        freigegeben && stufenAnzahl > 0 && (
+          <section class="treatment__total" aria-labelledby="summe-titel">
+            <p class="eyebrow">Kurzantwort</p>
+            <h2 id="summe-titel">
+              {euro(summe(0))} bis {euro(summe(stufenAnzahl - 1))} mit Umsatzsteuer
+            </h2>
+            <p>
+              Für die unten genannten Positionen im einfachen bis {stufenAnzahl}-fachen Satz, ohne
+              Arzneimittel und Material. Fachlich geprüft von {szenario.reviewedBy}.
+            </p>
+          </section>
+        )
       }
-      <p class="treatment__calc">
-        Eigene Positionen zusammenstellen: <a href={kostenPfad}>zum Tierarztkosten-Rechner</a>.
-      </p>
-    </section>
 
-    <ReviewStatus
-      status={freigegeben ? 'approved' : 'pending'}
-      reviewedAt={szenario.reviewedAt}
-      reviewedBy={szenario.reviewedBy}
-      lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
-      responsibility={freigegeben
-        ? `Fachlich geprüft von ${szenario.reviewedBy}`
-        : 'Fachliche Prüfung beauftragt, noch nicht abgeschlossen'}
-      sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
-    />
+      <section class="treatment__lines" aria-labelledby="positionen-titel">
+        <p class="eyebrow">Gebührenpositionen</p>
+        <h2 id="positionen-titel">Welche Positionen abgerechnet werden</h2>
+        <div class="table-scroll" tabindex="0" aria-label="Positionen, horizontal scrollbar">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">GOT-Nr.</th>
+                <th scope="col">Leistung</th>
+                {zeilen[0]?.stufen.map((s) => <th scope="col">{s.faktor}-fach</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {
+                zeilen.map((z) => (
+                  <tr>
+                    <td class="treatment__nr">{z.eintrag.item.officialItemId}</td>
+                    <th scope="row">
+                      <a href={`/de-de/tierarztkosten/${z.eintrag.slug}/`}>
+                        {z.eintrag.item.originalLabel}
+                      </a>
+                      {z.linie.quantity > 1 && <span> × {z.linie.quantity}</span>}
+                    </th>
+                    {z.stufen.map((s) => (
+                      <td class="treatment__betrag">{euro(s.bruttoMinor * z.linie.quantity)}</td>
+                    ))}
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="treatment__note">Beträge mit 19 % Umsatzsteuer, je Position einzeln gerechnet.</p>
+        <DataStatus
+          stand={quelle.effectiveFrom}
+          quelle={quelle.sourceVersion}
+          locale={market.locale}
+        />
+      </section>
 
-    <nav class="treatment__more" aria-label="Weitere Behandlungen">
-      <h2>Weitere Behandlungen</h2>
-      <ul>
+      <section class="treatment__grid">
+        <div class="treatment__liste treatment__liste--plus">
+          <h2>Was die Rechnung verändert</h2>
+          <ul>{seite.kostentreiber.map((t) => <li>{t}</li>)}</ul>
+        </div>
+        <div class="treatment__liste treatment__liste--minus">
+          <h2>Nicht enthalten</h2>
+          <ul>{nichtEnthalten.map((t) => <li>{t}</li>)}</ul>
+        </div>
+      </section>
+
+      <section class="treatment__faq" aria-labelledby="fragen-titel">
+        <h2 id="fragen-titel">Häufige Fragen</h2>
         {
-          andere.map((b) => (
-            <li>
-              <a href={`/de-de/tierarztkosten/behandlung/${b.slug}/`}>{b.titel}</a>
-            </li>
+          seite.fragen.map((f) => (
+            <details>
+              <summary>{f.frage}</summary>
+              <p>{f.antwort}</p>
+            </details>
           ))
         }
-      </ul>
-    </nav>
-  </article>
+      </section>
+
+      <ReviewStatus
+        status={freigegeben ? 'approved' : 'pending'}
+        reviewedAt={szenario.reviewedAt}
+        reviewedBy={szenario.reviewedBy}
+        lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
+        responsibility={freigegeben
+          ? `Fachlich geprüft von ${szenario.reviewedBy}`
+          : 'Fachliche Prüfung beauftragt, noch nicht abgeschlossen'}
+        sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+      />
+    </article>
+
+    <aside class="treatment__aside">
+      <div class="treatment__karte treatment__karte--rechner">
+        <p class="eyebrow">Selbst rechnen</p>
+        <p class="treatment__karte-titel">Eigene Rechnung zusammenstellen</p>
+        <p>
+          Positionen hinzufügen, Faktor anpassen und sehen, wie sich der Betrag ergibt – mit
+          Fundstelle je Position.
+        </p>
+        <a class="treatment__knopf" href={kostenPfad}>Zum Tierarztkosten-Rechner →</a>
+      </div>
+      <nav class="treatment__karte" aria-label="Weitere Behandlungen">
+        <p class="treatment__karte-titel">Weitere Behandlungen</p>
+        <ul class="treatment__more">
+          {
+            andere.map((b) => (
+              <li>
+                <a href={`/de-de/tierarztkosten/behandlung/${b.slug}/`}>{b.titel}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </aside>
+  </div>
 </BaseLayout>
 
 <style>
   .treatment {
     display: grid;
-    gap: clamp(2.5rem, 5vw, 4rem);
-    max-inline-size: 72rem;
-    padding-block: var(--space-3) var(--space-10);
+    gap: var(--space-8);
+    padding-block: 0 var(--space-10);
   }
-  .treatment > * {
+  .treatment__main {
+    display: grid;
+    gap: var(--space-10);
+    min-inline-size: 0;
+  }
+  .treatment__main > * {
     min-inline-size: 0;
   }
   .eyebrow {
-    margin: 0;
+    margin: 0 0 var(--space-2);
     color: var(--color-primary);
-    font-size: var(--text-micro);
-    font-weight: var(--weight-label);
-    letter-spacing: 0.09em;
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
-  .treatment__head {
-    padding: clamp(1.5rem, 4vw, 3rem);
-    border: 1px solid var(--color-primary-border);
-    border-radius: var(--radius-xl);
-    background: var(--color-primary-soft);
-  }
-  .treatment__head h1 {
-    max-inline-size: 22ch;
-    margin-block: var(--space-3) var(--space-4);
-    font-size: clamp(2rem, 4.2vw, 3.5rem);
-  }
-  .treatment__lead {
-    max-inline-size: 64ch;
-    color: var(--color-ink);
-    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  h2 {
+    margin-block: 0 var(--space-3);
   }
   .treatment__draft {
-    max-inline-size: 64ch;
-    margin-block-end: 0;
+    margin-block-start: var(--space-4);
     padding: var(--space-3) var(--space-4);
     border: 1px solid var(--color-warning-border);
     border-radius: var(--radius-md);
     background: var(--color-warning-soft);
     color: var(--color-ink);
+    font-size: var(--text-small);
   }
   .treatment__total {
-    padding: clamp(1.25rem, 3vw, 2rem);
+    padding: var(--space-6);
     border: 2px solid var(--color-primary);
     border-radius: var(--radius-xl);
-    background: var(--color-surface);
-  }
-  .treatment__total h2 {
-    margin-block: var(--space-2);
+    background: var(--color-primary-soft);
   }
   .treatment__total p:last-child {
-    max-inline-size: 64ch;
-    margin-block-end: 0;
+    margin: 0;
     color: var(--color-text-muted);
   }
   .table-scroll {
@@ -268,6 +269,7 @@ const quelle = snapshot.source as unknown as {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
   }
   table {
     inline-size: 100%;
@@ -282,48 +284,150 @@ const quelle = snapshot.source as unknown as {
   }
   thead th {
     background: var(--color-surface-subtle);
+    color: var(--color-ink);
+    font-size: var(--text-small);
     white-space: nowrap;
   }
-  tbody td {
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
+  tbody tr:last-child > * {
+    border-block-end: 0;
   }
   tbody th {
-    min-inline-size: 14rem;
     font-weight: 500;
   }
-  .treatment__note,
-  .treatment__calc {
+  .treatment__nr {
     color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .treatment__betrag {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .treatment__note {
+    margin-block: var(--space-3) 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
   }
   .treatment__grid {
     display: grid;
-    gap: var(--space-8);
+    gap: var(--space-4);
   }
-  .treatment__grid ul,
-  .treatment__more ul {
+  .treatment__liste {
+    padding: var(--space-5) var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+  .treatment__liste h2 {
+    font-size: var(--text-h4);
+  }
+  .treatment__liste ul {
     display: grid;
     gap: var(--space-2);
-    max-inline-size: 64ch;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
-  .treatment__faq {
-    max-inline-size: 64rem;
+  .treatment__liste li {
+    position: relative;
+    padding-inline-start: 1.75rem;
+  }
+  .treatment__liste li::before {
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.1rem;
+    display: grid;
+    place-items: center;
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .treatment__liste--plus li::before {
+    content: '+';
+    background: var(--color-warning-soft);
+    color: var(--color-warning);
+  }
+  .treatment__liste--minus li::before {
+    content: '–';
+    background: var(--color-surface-subtle);
+    color: var(--color-text-muted);
   }
   .treatment__faq details {
-    padding-block: var(--space-4);
+    padding-block: var(--space-3);
     border-block-end: 1px solid var(--color-border);
   }
   .treatment__faq summary {
     cursor: pointer;
-    color: var(--color-ink);
     font-weight: 600;
   }
   .treatment__faq details p {
-    max-inline-size: 64ch;
+    margin-block: var(--space-2) 0;
+  }
+  .treatment__aside {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+  .treatment__karte {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+  .treatment__karte--rechner {
+    border-color: var(--color-primary-border);
+    background: var(--color-primary-soft);
+  }
+  .treatment__karte-titel {
+    margin: 0 0 var(--space-2);
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+    font-weight: 700;
+  }
+  .treatment__knopf {
+    display: inline-block;
+    margin-block-start: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+    font-weight: var(--weight-button);
+    text-decoration: none;
+  }
+  .treatment__knopf:hover {
+    background: var(--color-primary-hover);
+  }
+  .treatment__more {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .treatment__more a {
+    display: block;
+    padding: var(--space-2) 0;
+    border-block-end: 1px solid var(--color-border);
+    font-weight: 600;
+  }
+  .treatment__more li:last-child a {
+    border-block-end: 0;
   }
   @media (min-width: 56rem) {
     .treatment__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 64rem) {
+    .treatment {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      align-items: start;
+    }
+    .treatment__aside {
+      position: sticky;
+      inset-block-start: calc(var(--header-height-desktop) + var(--space-4));
     }
   }
 </style>
