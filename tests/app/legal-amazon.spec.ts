@@ -180,7 +180,10 @@ for (const width of [390, 1440]) {
       await expect(link).toContainText('Werbung');
       await expect(link).toHaveAttribute('rel', /nofollow/);
     }
-    const fressnapfLinks = page.locator('#finder-ergebnis a[href*="awin1.com"][rel~="sponsored"]');
+    // Geprüfte Finderprodukte; die Händlerprodukte darunter haben eigene Partnerlinks.
+    const fressnapfLinks = page.locator(
+      '#finder-ergebnis .finder__liste a[href*="awin1.com"][rel~="sponsored"]',
+    );
     await expect(fressnapfLinks).toHaveCount(catToyFressnapfCount);
     expect(remote).toEqual([]);
   });

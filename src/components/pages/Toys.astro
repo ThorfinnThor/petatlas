@@ -183,6 +183,7 @@ const zooroyalProducts = Object.fromEntries(
   title="Mehr Spielzeug bei Fressnapf"
   retailerLabel="Fressnapf"
   filterbar
+  finderQuelle
 />
 <FeedProductGrid
   offers={zooroyalKatalog()}
@@ -190,6 +191,7 @@ const zooroyalProducts = Object.fromEntries(
   title="Mehr Spielzeug bei ZooRoyal"
   retailerLabel="ZooRoyal"
   filterbar
+  finderQuelle
 />
 
 <RetailPartnerSection market={market} page="spielzeug" />
@@ -574,6 +576,24 @@ const zooroyalProducts = Object.fromEntries(
     border-color: var(--color-primary);
     background: var(--color-primary);
     color: white;
+  }
+
+  .finder-results :global(.finder__katalog) {
+    margin-block-start: var(--space-12);
+  }
+
+  .finder-results :global(.finder__katalog-hinweis) {
+    margin-block-start: var(--space-6);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-subtle);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  .finder-results :global(.finder__katalog-mehr) {
+    margin-block-start: var(--space-5);
+    text-align: center;
   }
 
   .finder-results :global(.finder__leer),

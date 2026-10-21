@@ -93,7 +93,8 @@ for (const width of [390, 1280]) {
       const cats = editorial.products.filter(
         (p) => p.species === 'cat' && p.category === 'Spielzeug',
       );
-      await expect(page.locator('.finder__result-head')).toContainText(
+      // Erste Ergebnisüberschrift: die geprüften Produkte (danach folgen Händlerprodukte).
+      await expect(page.locator('.finder__result-head').first()).toContainText(
         `${cats.length} passende Optionen`,
       );
       await expect(page.locator('.finder__liste > li')).toHaveCount(cats.length);

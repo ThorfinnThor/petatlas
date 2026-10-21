@@ -185,6 +185,46 @@ function aktuelleFilter(bedarf: SpielzeugBedarf): string[] {
   return filter;
 }
 
+/** Ab hier: Händlerprodukte aus den Feeds im Finder (ohne geprüfte Merkmale). */
+const KATALOG_SCHRITT = 12;
+
+interface KatalogQuelle {
+  readonly karten: readonly HTMLElement[];
+  readonly vorlage: HTMLElement | null;
+}
+
+/**
+ * Die Katalogkarten stehen bereits als Händlerbereiche auf der Seite. Mit
+ * JavaScript übernimmt der Finder sie in seine Ergebnisse und blendet die
+ * Bereiche aus; ohne JavaScript bleiben sie, wo sie sind.
+ */
+function katalogQuelle(): KatalogQuelle {
+  const sektionen = [...document.querySelectorAll<HTMLElement>('[data-finder-katalog]')];
+  for (const sektion of sektionen) sektion.hidden = true;
+  // Händler im Wechsel, damit nicht erst alle Produkte eines Händlers kommen.
+  const jeHaendler = sektionen.map((sektion) => [
+    ...sektion.querySelectorAll<HTMLElement>('.feed-catalog__card'),
+  ]);
+  const laenge = Math.max(0, ...jeHaendler.map((liste) => liste.length));
+  const karten = Array.from({ length: laenge }, (_, i) =>
+    jeHaendler
+      .map((liste) => liste[i])
+      .filter((karte): karte is HTMLElement => karte !== undefined),
+  ).flat();
+  return {
+    karten,
+    vorlage: sektionen[0]?.querySelector<HTMLElement>('.feed-catalog__grid') ?? null,
+  };
+}
+
+function ohneMerkmalsfilter(bedarf: SpielzeugBedarf): boolean {
+  return (
+    (bedarf.playStyle ?? 'all') === 'all' &&
+    (bedarf.extras?.length ?? 0) === 0 &&
+    (bedarf.material ?? 'all') === 'all'
+  );
+}
+
 export function finderStarten(): void {
   const form = document.querySelector<HTMLFormElement>('#finder');
   const ausgabe = document.querySelector<HTMLElement>('#finder-ergebnis');
@@ -199,15 +239,56 @@ export function finderStarten(): void {
     speciesField.value = requestedSpecies;
   }
   document.querySelector<HTMLElement>('#finder-ohne-js')?.setAttribute('hidden', '');
+  const katalog = katalogQuelle();
+  let katalogSichtbar = KATALOG_SCHRITT;
+
+  const katalogAnhaengen = (karten: readonly HTMLElement[], vorhanden: number): void => {
+    const block = document.createElement('section');
+    block.className = 'finder__katalog';
+    block.setAttribute('aria-labelledby', 'finder-katalog-titel');
+    if (karten.length === 0) {
+      if (vorhanden > 0) {
+        block.innerHTML = `<p class="finder__katalog-hinweis">${vorhanden} weitere Händlerprodukte haben keine geprüften Merkmale und erscheinen nur, wenn keine Spielweise, kein Material und keine Extras gewählt sind.</p>`;
+        ausgabe.append(block);
+      }
+      return;
+    }
+    block.innerHTML = `<div class="finder__result-head"><div><p class="eyebrow">Bei Fressnapf und ZooRoyal</p><h2 id="finder-katalog-titel">${karten.length} weitere Spielzeuge bei Händlern</h2></div><p>Echte Produktbilder aus den Händlerfeeds. Spielweise, Material und Extras sind für diese Produkte nicht geprüft.</p></div>`;
+    const liste =
+      (katalog.vorlage?.cloneNode(false) as HTMLElement | undefined) ??
+      document.createElement('ul');
+    liste.classList.remove('feed-catalog__grid--wenige');
+    liste.classList.add('finder__katalog-liste');
+    for (const karte of karten.slice(0, katalogSichtbar)) {
+      const kopie = karte.cloneNode(true) as HTMLElement;
+      kopie.hidden = false;
+      liste.append(kopie);
+    }
+    block.append(liste);
+    if (karten.length > katalogSichtbar) {
+      const mehr = document.createElement('p');
+      mehr.className = 'finder__katalog-mehr';
+      mehr.innerHTML = '<button type="button">Mehr anzeigen</button>';
+      mehr.querySelector('button')?.addEventListener('click', () => {
+        katalogSichtbar += KATALOG_SCHRITT;
+        block.remove();
+        katalogAnhaengen(karten, vorhanden);
+      });
+      block.append(mehr);
+    }
+    ausgabe.append(block);
+  };
 
   const render = (): void => {
     const bedarf = bedarfLesen();
     const treffer = findeSpielzeug(attributPruefung().products, bedarf);
+    const katalogAlle = katalog.karten.filter((karte) => karte.dataset.art === bedarf.species);
+    const katalogTreffer = ohneMerkmalsfilter(bedarf) ? katalogAlle : [];
     if (status) {
       status.textContent =
-        treffer.length === 0
+        treffer.length === 0 && katalogTreffer.length === 0
           ? 'Keine belegte Kombination gefunden.'
-          : `${treffer.length} passende ${treffer.length === 1 ? 'Option' : 'Optionen'} gefunden.`;
+          : `${treffer.length} geprüfte ${treffer.length === 1 ? 'Option' : 'Optionen'}${katalogTreffer.length > 0 ? ` und ${katalogTreffer.length} weitere Händlerprodukte` : ''} gefunden.`;
     }
     const filter = aktuelleFilter(bedarf);
     const kopf =
@@ -217,6 +298,7 @@ export function finderStarten(): void {
     ausgabe.innerHTML = `${kopf}<ul class="finder__liste">${treffer
       .map((eintrag) => trefferMarkup(eintrag, fressnapfOffers, zooRoyalOffers))
       .join('')}</ul>`;
+    katalogAnhaengen(katalogTreffer, katalogAlle.length);
     ausgabe
       .querySelector<HTMLButtonElement>('[data-finder-reset]')
       ?.addEventListener('click', () => {
@@ -244,7 +326,10 @@ export function finderStarten(): void {
     render();
     ausgabe.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
-  form.addEventListener('change', render);
+  form.addEventListener('change', () => {
+    katalogSichtbar = KATALOG_SCHRITT;
+    render();
+  });
   document.querySelector<HTMLButtonElement>('#finder-reset')?.addEventListener('click', () => {
     form.reset();
     render();
