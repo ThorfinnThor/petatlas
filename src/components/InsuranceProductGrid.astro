@@ -12,8 +12,7 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
 
 <section class="insurance-products" aria-labelledby="insurance-products-title">
   <div class="insurance-products__intro">
-    <p class="eyebrow">Produktarten · HanseMerkur</p>
-    <h2 id="insurance-products-title">Welche Versicherungsarten es gibt</h2>
+    <h3 id="insurance-products-title">Welche Versicherungsarten HanseMerkur führt</h3>
     <p>
       Diese Übersicht nennt die Produktarten, die HanseMerkur für Hunde und Katzen führt. Sie ist
       kein Tarifvergleich und enthält keine Preis- oder Leistungsbewertung.
@@ -55,13 +54,13 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
     max-width: 48rem;
   }
 
-  .insurance-products__intro h2 {
+  .insurance-products__intro h3 {
     margin-block: var(--space-2) var(--space-3);
   }
 
   .insurance-products__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-4);
     padding: 0;
     margin: var(--space-5) 0 0;
@@ -71,17 +70,18 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
   .insurance-products__card {
     display: flex;
     flex-direction: column;
-    padding: var(--space-4);
+    padding: var(--space-5);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
     min-inline-size: 0;
   }
 
   .insurance-products__card h3 {
     margin-block: var(--space-2);
     max-inline-size: 100%;
-    font-size: clamp(1.125rem, 5.25vw, var(--text-h3));
+    font-size: clamp(1.05rem, 5.25vw, 1.2rem);
     text-wrap: pretty;
   }
 
@@ -108,5 +108,18 @@ const tierLabel = (species: 'dog' | 'cat') => (species === 'dog' ? 'Für Hunde' 
 
   .insurance-products__source a {
     white-space: nowrap;
+  }
+
+  /* Höchstens drei Spalten: lange Wörter wie „Hundekrankenversicherung“ brauchen Platz. */
+  @media (min-width: 640px) {
+    .insurance-products__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1040px) {
+    .insurance-products__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 </style>
