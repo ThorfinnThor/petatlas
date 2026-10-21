@@ -29,6 +29,8 @@ export interface CatalogFeedProduct {
   readonly species: CatalogSpecies;
   readonly category: CatalogCategory;
   readonly categoryLabel: string;
+  /** Feinere Rubrik des Händlers, z. B. „Kauspielzeug“; nur zur Anzeige und Filterung. */
+  readonly subcategoryLabel?: string;
   readonly merchantProductId: string;
   readonly imageUrl: string;
   readonly affiliateUrl: string;
@@ -61,13 +63,20 @@ export function normalisiere(value: string): string {
     .trim();
 }
 
+/**
+ * Erster nicht leerer Wert in der Reihenfolge der genannten Felder. Früher
+ * gewann die erste vorhandene Spalte, auch wenn sie leer war: Ein leeres
+ * `merchant_product_brand` verdeckte so ein gefülltes `brand_name`.
+ */
 function feld(row: Record<string, string>, ...names: string[]): string | undefined {
-  const wanted = new Set(names.map((name) => normalisiere(name).replaceAll(' ', '')));
-  const key = Object.keys(row).find((candidate) =>
-    wanted.has(normalisiere(candidate).replaceAll(' ', '')),
-  );
-  const value = key ? row[key]?.trim() : undefined;
-  return value || undefined;
+  const schluessel = (name: string) => normalisiere(name).replaceAll(' ', '');
+  const spalten = new Map(Object.keys(row).map((key) => [schluessel(key), key]));
+  for (const name of names) {
+    const key = spalten.get(schluessel(name));
+    const value = key ? row[key]?.trim() : undefined;
+    if (value) return value;
+  }
+  return undefined;
 }
 
 export function parseCsv(text: string, maxRows = 500_000): readonly Record<string, string>[] {
@@ -302,19 +311,62 @@ function katalogTierart(row: Record<string, string>): CatalogSpecies | null {
   return [...arten][0] as CatalogSpecies;
 }
 
+/** Warum eine Feedzeile nicht in den Katalog kommt; für das Sync-Protokoll. */
+export type KatalogAblehnung =
+  | 'ohne Name'
+  | 'ohne Händler-ID'
+  | 'Kategorie unklar'
+  | 'Tierart unklar'
+  | 'ohne Bild'
+  | 'ohne Händlerlink'
+  | 'ohne Partnerlink'
+  | 'kein konkretes Pflegeprodukt'
+  | 'fremder Händlerhost'
+  | 'fremder Trackinghost'
+  | 'falscher Advertiser oder Publisher';
+
+/** Letzter Abschnitt eines Kategoriepfads („Hund > Spielzeug > Kauspielzeug“ → „Kauspielzeug“). */
+function unterkategorie(row: Record<string, string>): string | undefined {
+  for (const field of [
+    'merchant_product_category_path',
+    'merchant_category',
+    'merchant_product_third_category',
+    'merchant_product_second_category',
+    'category_name',
+  ]) {
+    const wert = feld(row, field);
+    if (!wert) continue;
+    const teile = wert
+      .split(/\s*(?:>|\/|\|)\s*/)
+      .map((teil) => teil.trim())
+      .filter(Boolean);
+    const letzter = teile.at(-1);
+    if (letzter && teile.length > 1 && letzter.length <= 60) return letzter;
+  }
+  return undefined;
+}
+
 /**
- * Projiziert eine Feedzeile in einen sicheren, kleinen öffentlichen Katalog.
- * Preise, Verfügbarkeit und weitere Feedfelder werden bewusst verworfen.
+ * Projiziert eine Feedzeile in einen sicheren, kleinen öffentlichen Katalog –
+ * oder nennt den Grund, warum nicht. Preise, Verfügbarkeit und weitere
+ * Feedfelder werden bewusst verworfen.
  */
-export function katalogProduktAusZeile(
+export function katalogPruefung(
   row: Record<string, string>,
   advertiserId: string,
   merchantHosts: ReadonlySet<string>,
-): CatalogFeedProduct | null {
+): CatalogFeedProduct | KatalogAblehnung {
   const name = feld(row, 'product_name', 'product name', 'name', 'title');
   const brand =
-    feld(row, 'merchant_product_brand', 'product_brand', 'brand', 'manufacturer') ??
-    'Herstellerangabe nicht angegeben';
+    feld(
+      row,
+      'merchant_product_brand',
+      'product_brand',
+      'brand_name',
+      'brand name',
+      'brand',
+      'manufacturer',
+    ) ?? 'Herstellerangabe nicht angegeben';
   const merchantProductId = feld(
     row,
     'merchant_product_id',
@@ -322,36 +374,31 @@ export function katalogProduktAusZeile(
     'aw_product_id',
     'product_id',
   );
+  if (!name) return 'ohne Name';
+  if (!merchantProductId) return 'ohne Händler-ID';
   const category = katalogKategorie(row);
+  if (!category) return 'Kategorie unklar';
   const species = katalogTierart(row);
+  if (!species) return 'Tierart unklar';
   const image = sichereUrl(
     feld(row, 'large_image', 'large_image_url', 'merchant_image_url', 'aw_image_url', 'image_url'),
   );
+  if (!image) return 'ohne Bild';
   const merchant = sichereUrl(
     feld(row, 'merchant_deep_link', 'merchant_product_url', 'merchant_product_link', 'product_url'),
   );
+  if (!merchant) return 'ohne Händlerlink';
   const affiliate = sichereUrl(feld(row, 'aw_deep_link', 'affiliate_url', 'tracking_url'));
-  const istKonkretesPflegeprodukt =
-    category?.category !== 'care' ||
-    (name !== undefined && pflegeKategorieFuerProduktname(name) !== null);
-  if (
-    !name ||
-    !brand ||
-    !merchantProductId ||
-    !category ||
-    !species ||
-    !image ||
-    !merchant ||
-    !affiliate ||
-    !istKonkretesPflegeprodukt ||
-    !merchantHosts.has(merchant.host) ||
-    !AWIN_TRACKING_HOSTS.has(affiliate.host)
-  ) {
-    return null;
-  }
+  if (!affiliate) return 'ohne Partnerlink';
+  if (category.category === 'care' && pflegeKategorieFuerProduktname(name) === null)
+    return 'kein konkretes Pflegeprodukt';
+  if (!merchantHosts.has(merchant.host)) return 'fremder Händlerhost';
+  if (!AWIN_TRACKING_HOSTS.has(affiliate.host)) return 'fremder Trackinghost';
   const advertiser = affiliate.searchParams.get('m') ?? affiliate.searchParams.get('awinmid');
   const publisher = affiliate.searchParams.get('a') ?? affiliate.searchParams.get('awinaffid');
-  if (advertiser !== advertiserId || publisher !== '3037577') return null;
+  if (advertiser !== advertiserId || publisher !== '3037577')
+    return 'falscher Advertiser oder Publisher';
+  const sub = unterkategorie(row);
   return {
     productId: `${advertiserId}:${merchantProductId}`,
     productName: name,
@@ -359,6 +406,7 @@ export function katalogProduktAusZeile(
     species,
     category: category.category,
     categoryLabel: category.label,
+    ...(sub ? { subcategoryLabel: sub } : {}),
     merchantProductId,
     imageUrl: image.toString(),
     affiliateUrl: affiliate.toString(),
@@ -366,12 +414,40 @@ export function katalogProduktAusZeile(
   };
 }
 
-/** Deterministische, deduplizierte Auswahl aus einem Händlerfeed. */
+export function katalogProduktAusZeile(
+  row: Record<string, string>,
+  advertiserId: string,
+  merchantHosts: ReadonlySet<string>,
+): CatalogFeedProduct | null {
+  const ergebnis = katalogPruefung(row, advertiserId, merchantHosts);
+  return typeof ergebnis === 'string' ? null : ergebnis;
+}
+
+/** Zählt, warum Zeilen nicht in den Katalog kommen. Enthält keine Feedinhalte. */
+export function katalogDiagnose(
+  rows: readonly Record<string, string>[],
+  advertiserId: string,
+  merchantHosts: ReadonlySet<string>,
+): Readonly<Record<string, number>> {
+  const zaehler: Record<string, number> = {};
+  for (const row of rows) {
+    const ergebnis = katalogPruefung(row, advertiserId, merchantHosts);
+    const grund = typeof ergebnis === 'string' ? ergebnis : `übernommen (${ergebnis.category})`;
+    zaehler[grund] = (zaehler[grund] ?? 0) + 1;
+  }
+  return zaehler;
+}
+
+/**
+ * Deterministische, deduplizierte Auswahl aus einem Händlerfeed. Je Tierart
+ * und Kategorie wechseln sich die Marken ab, statt alphabetisch die ersten
+ * Treffer zu nehmen – sonst füllt eine Marke mit „A“ den ganzen Katalog.
+ */
 export function katalogProdukteAusZeilen(
   rows: readonly Record<string, string>[],
   advertiserId: string,
   merchantHosts: ReadonlySet<string>,
-  maxPerBucket = 24,
+  maxPerBucket = 60,
 ): readonly CatalogFeedProduct[] {
   const unique = new Map<string, CatalogFeedProduct>();
   for (const row of rows) {
@@ -379,20 +455,40 @@ export function katalogProdukteAusZeilen(
     if (product && !unique.has(product.merchantProductId))
       unique.set(product.merchantProductId, product);
   }
-  const sorted = [...unique.values()].sort((left, right) =>
-    `${left.category}:${left.species}:${left.brand}:${left.productName}:${left.merchantProductId}`.localeCompare(
-      `${right.category}:${right.species}:${right.brand}:${right.productName}:${right.merchantProductId}`,
+  const vergleich = (left: CatalogFeedProduct, right: CatalogFeedProduct) =>
+    `${left.productName}:${left.merchantProductId}`.localeCompare(
+      `${right.productName}:${right.merchantProductId}`,
       'de',
-    ),
-  );
-  const buckets = new Map<string, number>();
-  return sorted.filter((product) => {
+    );
+  const buckets = new Map<string, Map<string, CatalogFeedProduct[]>>();
+  for (const product of unique.values()) {
     const key = `${product.category}:${product.species}`;
-    const count = buckets.get(key) ?? 0;
-    if (count >= maxPerBucket) return false;
-    buckets.set(key, count + 1);
-    return true;
-  });
+    const marken = buckets.get(key) ?? new Map<string, CatalogFeedProduct[]>();
+    const liste = marken.get(product.brand) ?? [];
+    liste.push(product);
+    marken.set(product.brand, liste);
+    buckets.set(key, marken);
+  }
+  const ergebnis: CatalogFeedProduct[] = [];
+  for (const key of [...buckets.keys()].sort()) {
+    const marken = [...buckets.get(key)!.entries()]
+      .map(([marke, liste]) => [marke, liste.sort(vergleich)] as const)
+      .sort(([a], [b]) => a.localeCompare(b, 'de'));
+    const auswahl: CatalogFeedProduct[] = [];
+    for (let runde = 0; auswahl.length < maxPerBucket; runde += 1) {
+      let neu = false;
+      for (const [, liste] of marken) {
+        const produkt = liste[runde];
+        if (!produkt) continue;
+        neu = true;
+        auswahl.push(produkt);
+        if (auswahl.length >= maxPerBucket) break;
+      }
+      if (!neu) break;
+    }
+    ergebnis.push(...auswahl.sort(vergleich));
+  }
+  return ergebnis;
 }
 
 export function produktAusZeile(

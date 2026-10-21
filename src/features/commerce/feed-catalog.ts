@@ -9,6 +9,7 @@ export interface CatalogProductOffer {
   readonly species: CatalogSpecies;
   readonly category: CatalogCategory;
   readonly categoryLabel: string;
+  readonly subcategoryLabel?: string;
   readonly merchantProductId: string;
   readonly imageUrl: string;
   readonly affiliateUrl: string;
@@ -48,6 +49,10 @@ function validiere(
     ? (value.category as CatalogCategory)
     : null;
   const categoryLabel = typeof value.categoryLabel === 'string' ? value.categoryLabel : '';
+  const subcategoryLabel =
+    typeof value.subcategoryLabel === 'string' && value.subcategoryLabel.length <= 60
+      ? value.subcategoryLabel
+      : undefined;
   const image = httpsUrl(value.imageUrl);
   const affiliate = httpsUrl(value.affiliateUrl);
   const merchant = httpsUrl(value.merchantUrl);
@@ -76,6 +81,7 @@ function validiere(
     species,
     category,
     categoryLabel,
+    ...(subcategoryLabel ? { subcategoryLabel } : {}),
     merchantProductId,
     imageUrl: image.toString(),
     affiliateUrl: affiliate.toString(),

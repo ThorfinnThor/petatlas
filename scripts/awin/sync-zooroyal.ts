@@ -5,6 +5,7 @@ import editorial from '../../content-data/products/editorial.json' with { type: 
 import supplements from '../../content-data/products/supplements.json' with { type: 'json' };
 import {
   ladeCsv,
+  katalogDiagnose,
   katalogProdukteAusZeilen,
   ordneProdukteZuPartner,
   partnerFeeds,
@@ -54,6 +55,12 @@ async function main(): Promise<void> {
     ADVERTISER_ID,
     ZOOROYAL_HOSTS,
   );
+  const hosts = new Set(['zooroyal.de', 'www.zooroyal.de']);
+  const diagnose = Object.entries(katalogDiagnose(rows, ADVERTISER_ID, hosts))
+    .sort(([, a], [, b]) => b - a)
+    .map(([grund, anzahl]) => `${grund}: ${anzahl}`)
+    .join(' · ');
+  console.log(`Katalogprüfung je Grund: ${diagnose}`);
   const catalog = katalogProdukteAusZeilen(rows, ADVERTISER_ID, ZOOROYAL_HOSTS);
   const path = 'content-data/products/zooroyal-feed.json';
   const previous = JSON.parse(await readFile(path, 'utf8')) as Record<string, unknown>;

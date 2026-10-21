@@ -6,6 +6,7 @@ import supplements from '../../content-data/products/supplements.json' with { ty
 import {
   fressnapfFeeds,
   ladeCsv,
+  katalogDiagnose,
   katalogProdukteAusZeilen,
   ordneProdukteZu,
   pruefeFeedListenUrl,
@@ -44,6 +45,12 @@ async function main(): Promise<void> {
     [...editorial.products, ...supplements.products].map((product) => [product.id, product.name]),
   );
   const products = ordneProdukteZu(rows, matchesConfig.targets as readonly MatchTarget[], names);
+  const hosts = new Set(['fressnapf.de', 'www.fressnapf.de']);
+  const diagnose = Object.entries(katalogDiagnose(rows, '14757', hosts))
+    .sort(([, a], [, b]) => b - a)
+    .map(([grund, anzahl]) => `${grund}: ${anzahl}`)
+    .join(' · ');
+  console.log(`Katalogprüfung je Grund: ${diagnose}`);
   const catalog = katalogProdukteAusZeilen(
     rows,
     matchesConfig.advertiserId,

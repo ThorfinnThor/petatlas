@@ -61,6 +61,7 @@ const CATALOG_FEED_SCHEMA = z
           species: z.enum(['dog', 'cat']),
           category: z.enum(['toy', 'supplement', 'food', 'care']),
           categoryLabel: z.string().min(1),
+          subcategoryLabel: z.string().min(1).max(60).optional(),
           merchantProductId: z.string().min(1),
           imageUrl: z.url().refine((url) => url.startsWith('https://')),
           affiliateUrl: z.url().refine((url) => url.startsWith('https://')),
