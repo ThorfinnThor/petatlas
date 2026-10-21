@@ -106,9 +106,13 @@ const locale = 'de-DE';
             </td>
             <td>{eintrag.alterTage === null ? '—' : tageText(eintrag.alterTage)}</td>
             <td>
-              <span class:list={['marke', `marke--${eintrag.frische}`]}>
-                {BEWERTUNG_TEXT[eintrag.frische]}
-              </span>
+              {eintrag.ausgeliefert ? (
+                <span class:list={['marke', `marke--${eintrag.frische}`]}>
+                  {BEWERTUNG_TEXT[eintrag.frische]}
+                </span>
+              ) : (
+                <span class="marke">nicht ausgeliefert</span>
+              )}
               {eintrag.sperrt && <span class="staende__sperre">sperrt das Ergebnis</span>}
             </td>
             <td>
