@@ -2,11 +2,14 @@
 import { resolveBuildConfig } from '../../../config/build.ts';
 import { createSiteConfig } from '../../../config/site.ts';
 import Notice from '../Notice.astro';
+import PageIntro from '../ui/PageIntro.astro';
 const build = resolveBuildConfig();
 const betreiber = createSiteConfig(build.mode, process.env).operator;
 ---
 
-<h1>Impressum</h1>
+<PageIntro titel="Impressum" eyebrow="Rechtliches">
+  <p>Anbieterkennzeichnung und Kontakt.</p>
+</PageIntro>
 {
   betreiber.legalName === null ? (
     <Notice variante="warnung" titel="Betreiberangaben liegen nicht vor">
@@ -46,3 +49,11 @@ const betreiber = createSiteConfig(build.mode, process.env).operator;
     </>
   )
 }
+
+<style>
+  /* Rechtstexte gliedern, ohne zu rufen: Abschnittstitel eine Stufe kleiner. */
+  h2 {
+    margin-block-start: var(--space-10);
+    font-size: var(--text-h3);
+  }
+</style>

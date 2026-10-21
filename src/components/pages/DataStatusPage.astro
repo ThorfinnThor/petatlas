@@ -17,6 +17,8 @@ import { formatCalendarDate } from '../../domain/dates.ts';
 import { HEALTH_PFAD, baueHealthBericht } from '../../features/freshness/health.ts';
 import { tageText } from '../../features/freshness/policy.ts';
 import Notice from '../Notice.astro';
+import PageIntro from '../ui/PageIntro.astro';
+import TransparencyNav from '../ui/TransparencyNav.astro';
 import { aufzaehlung, vorschauBestand } from '../../features/freshness/preview-notice.ts';
 
 const build = resolveBuildConfig();
@@ -34,19 +36,22 @@ const BEWERTUNG_TEXT = {
 const locale = 'de-DE';
 ---
 
-<h1>Datenstand</h1>
-<p>
-  Diese Seite zeigt, welche Datensätze ausgeliefert werden, wie alt sie sind und ab wann ein Stand
-  als veraltet gilt. Dieselben Angaben stehen maschinenlesbar unter <a href={HEALTH_PFAD}
-    >{HEALTH_PFAD}</a
-  >.
-</p>
+<PageIntro titel="Datenstand" eyebrow="Transparenz">
+  <p>
+    Diese Seite zeigt, welche Datensätze ausgeliefert werden, wie alt sie sind und ab wann ein Stand
+    als veraltet gilt. Dieselben Angaben stehen maschinenlesbar unter <a href={HEALTH_PFAD}
+      >{HEALTH_PFAD}</a
+    >.
+  </p>
+</PageIntro>
+
+<TransparencyNav aktuell="dataStatus" />
 
 {
   build.dataSource === 'fixtures' && (
     <Notice variante="testdaten" titel="Dieser Build ist eine Vorschau">
       <p>
-        Der Build läuft im Modus <strong>{build.mode}</strong>. Die Stände in der Tabelle sind
+        Der Build läuft im Modus <strong>{build.mode}</strong>. Die Stände in der Tabelle sind{' '}
         <strong> gemessen</strong>, nicht erfunden: sie stammen aus den ausgelieferten Datenständen.
       </p>
       {bestand.synthetisch.length > 0 && (
@@ -118,7 +123,7 @@ const locale = 'de-DE';
 </div>
 
 <h2>Wie die Bewertung zustande kommt</h2>
-<ul>
+<ul class="begruendungen">
   {
     bericht.datensaetze.map((eintrag) => (
       <li>
@@ -137,9 +142,11 @@ const locale = 'de-DE';
 <style>
   .table-scroll {
     overflow-x: auto;
-    margin-block: var(--space-4);
+    margin-block: var(--space-6) var(--space-10);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-xs);
   }
   .staende {
     border-collapse: collapse;
@@ -147,16 +154,26 @@ const locale = 'de-DE';
     min-inline-size: 41rem;
   }
   .staende caption {
+    padding: var(--space-4) var(--space-4) var(--space-2);
+    font-size: var(--text-h4);
+    font-weight: 700;
     text-align: start;
+  }
+  .staende thead th {
+    background: var(--color-surface-subtle);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
     font-weight: 600;
-    margin-block-end: var(--space-2);
   }
   .staende th,
   .staende td {
+    padding: var(--space-3) var(--space-4);
     border-block-end: 1px solid var(--color-border);
-    padding: var(--space-2);
     text-align: start;
     vertical-align: top;
+  }
+  .staende tbody tr:last-child > * {
+    border-block-end: 0;
   }
   .staende th[scope='row'] {
     font-weight: 600;
@@ -165,22 +182,42 @@ const locale = 'de-DE';
   .staende__hinweis,
   .staende__sperre {
     display: block;
-    font-weight: 400;
-    font-size: var(--text-small);
-    color: var(--color-text-muted);
     margin-block-start: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    font-weight: 400;
   }
   .marke {
     display: inline-block;
-    padding: 0.1em 0.5em;
-    border-radius: var(--radius-md);
+    padding: 0.1em 0.6em;
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
     font-size: var(--text-small);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .marke--frisch {
+    border-color: var(--color-success-border);
+    background: var(--color-success-soft);
+    color: var(--color-success);
   }
   .marke--alternd,
   .marke--veraltet,
   .marke--unbekannt {
-    border-color: var(--color-warning);
+    border-color: var(--color-warning-border);
     background: var(--color-warning-soft);
+    color: var(--color-warning);
+  }
+  .begruendungen {
+    display: grid;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+  .begruendungen li {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-subtle);
   }
 </style>
