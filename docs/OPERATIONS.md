@@ -90,10 +90,10 @@ Der Lauf **committet nichts**. Würde er den Vergleichsstand selbst fortschreibe
 
 ### Automatischer Merge der Daten-PRs
 
-`ingest-open.yml` (kommunale Hundeflächen) und `sync-awin-fressnapf.yml` / `sync-awin-zooroyal.yml` öffnen ihre Pull Requests mit dem `GITHUB_TOKEN`; solche PRs starten keine Prüfungen. Seit dem 22.10.2026 stößt jeder Import nach dem Öffnen `daten-automerge.yml` an. Der Lauf
+`ingest-open.yml` (kommunale Hundeflächen) und `sync-awin-fressnapf.yml` / `sync-awin-zooroyal.yml` öffnen ihre Pull Requests mit dem `GITHUB_TOKEN`; deren Prüfläufe hält GitHub bis zu einer Freigabe an. Seit dem 22.10.2026 stößt jeder Import nach dem Öffnen `daten-automerge.yml` an. Der Lauf
 
 1. prüft mit `scripts/publish/daten-automerge.ts` Zweig, geänderte Dateien und Mengen: nur die Dateien des jeweiligen Imports, nie der Gebührenkatalog, kein Rückgang um mehr als ein Viertel;
-2. bringt den Zweig auf den Stand von main, startet CI, Security und Visual-QA darauf und wartet auf alle sechs Prüfungen;
+2. bringt den Zweig auf den Stand von main, gibt die angehaltenen Prüfläufe (CI, Security, Visual-QA) frei und wartet auf alle sechs Prüfungen;
 3. merged bei Grün per Squash und startet `live-check.yml`.
 
 Hält eine Regel oder Prüfung an, bleibt der PR offen, bekommt einen Kommentar mit dem Grund, und der Lauf wird rot (GitHub-Mail). Der Gebührenkatalog wird weiterhin von Hand übernommen.
