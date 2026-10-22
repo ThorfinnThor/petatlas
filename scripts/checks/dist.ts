@@ -82,6 +82,12 @@ export const ERLAUBTE_BILDER: readonly { readonly muster: RegExp; readonly grund
   },
   {
     muster:
+      /^images\/brand\/(dog-golden-living|travel-hike-sunrise|dog-lake-splash|cat-tabby-sofa|dog-small-meadow|cat-window|travel-hiker-panorama|dog-alpine-meadow|cat-scratching-post|dog-swimming|dog-cat-cuddle|dog-woman-beach|cat-tabby-couch|dog-person-dock|dog-collie-meadow|cat-longhair-tree)-(480|800|1200|1536)\.(avif|webp)$/,
+    grund:
+      'Vom Betreiber am 22.10.2026 bereitgestellte dekorative Fotos; Motive und Verwendung in design-assets/README.md, Prüfsummen in docs/reviews/asset-rights-inventory-2026-09-14.md. Keine Produktfotos.',
+  },
+  {
+    muster:
       /^images\/products\/symbol-(cat|chew|fetch|puzzle|supplements-cat|supplements-dog)\.avif$/,
     grund:
       'AI-generated, brand-neutral product-category symbols; prompts, hashes and display restrictions in docs/GENERATED_PRODUCT_SYMBOLS.md.',

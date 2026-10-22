@@ -25,7 +25,7 @@ relatedArticles:
   - "reise-vorbereiten"
   - "katze-transportbox"
 affiliateContext: "none"
-image: "travel-human-dog-sunset"
+image: "travel-hike-sunrise"
 editorialLinks:
   - "/de-de/reisecheck/"
   - "/de-de/tierarzt-karte/"

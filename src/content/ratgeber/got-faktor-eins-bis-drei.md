@@ -24,7 +24,7 @@ relatedArticles:
   - "tierarztrechnung-zusammensetzung"
   - "tierarztrechnung-verstehen"
 affiliateContext: "none"
-image: "health-dog-home"
+image: "dog-person-dock"
 editorialLinks:
   - "/de-de/tierarztkosten/"
   - "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"

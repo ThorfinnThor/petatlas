@@ -11,7 +11,7 @@ primaryIntent: "Alleinfuttermittel und Ergänzungsfuttermittel anhand der Packun
 animal: "both"
 topicCluster: "Ernährung"
 section: "blog"
-image: "hero-dog-cat-home"
+image: "dog-cat-cuddle"
 sourceIds:
   - "eu-feed-marketing-regulation-767-2009"
   - "nutrition-uk-pet-food-supplements"

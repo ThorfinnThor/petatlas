@@ -24,7 +24,7 @@ relatedArticles:
   - "katzen-beschaeftigen"
   - "eu-heimtierausweis-pruefen"
 affiliateContext: "none"
-image: "hero-dog-cat-home"
+image: "cat-tabby-couch"
 legacyRenderer: "cat-carrier"
 editorialLinks:
   - "/de-de/tierarzt-karte/"

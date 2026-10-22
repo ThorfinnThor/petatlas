@@ -19,3 +19,29 @@ Two additional original images were generated with the built-in OpenAI imagegen 
 - `play-cat-home.png`: tabby cat reaching toward a plain felt ball beside a scratching post, warm living room, correct natural anatomy, no text or branding. Used in the cat entry card and cat play guide.
 
 The generated originals were visually inspected. Responsive AVIF/WebP variants are generated with the existing image pipeline. These illustrative scenes do not depict the catalog products.
+
+## Weitere Fotos · 2026-10-22
+
+Sechzehn dekorative Fotos, vom Betreiber am 22.10.2026 bereitgestellt (`Haustierfotos_16_Bilder_NEU.zip`, je 1600 × 900 JPEG). Herkunft und Nutzungsrechte liegen beim Betreiber; Prüfsummen stehen in `docs/reviews/asset-rights-inventory-2026-09-14.md`. Die Bilder zeigen keine gelisteten Praxen, keine Katalogprodukte und keine Produkttests.
+
+`npm run design:images` schneidet sie für die Auslieferung auf 3:2 zu (Ausschnitt nach Bildinhalt), damit alle Markenbilder dasselbe Format haben.
+
+| Datei | Motiv | Verwendung |
+|---|---|---|
+| `dog-golden-living.jpg` | Golden Retriever im Wohnzimmer | Tierversicherung |
+| `travel-hike-sunrise.jpg` | Wanderer mit Hund über Bergsee bei Sonnenaufgang | Ratgeber EU-Heimtierausweis |
+| `dog-lake-splash.jpg` | Golden Retriever im flachen Bergsee | Tierarzt-Karte, Ratgeber Hundeorte |
+| `cat-tabby-sofa.jpg` | getigerte Katze auf hellem Sofa | Merkliste, Behandlungsseiten Katze, Ratgeber Rechnungszusammensetzung |
+| `dog-small-meadow.jpg` | kleiner Hund auf Wiese | Spielzeug |
+| `cat-window.jpg` | Katze am Fenster | Ratgeber Wohnungskatzen |
+| `travel-hiker-panorama.jpg` | Wanderin mit Hund vor Bergpanorama | Ratgeber Reise vorbereiten |
+| `dog-alpine-meadow.jpg` | Golden Retriever auf Alpenwiese | Ratgeber-Übersicht, Reisecheck Italien, Blog Allgemeine Untersuchung |
+| `cat-scratching-post.jpg` | Katze am Kratzbaum | Produktvergleiche |
+| `dog-swimming.jpg` | schwimmender Golden Retriever | Reisecheck Niederlande |
+| `dog-cat-cuddle.jpg` | Hund und Katze aneinandergekuschelt | Mein Tier, Blog Alleinfutter |
+| `dog-woman-beach.jpg` | Frau mit Hund am Strand bei Sonnenuntergang | Reisecheck Frankreich |
+| `cat-tabby-couch.jpg` | getigerte Katze auf grüner Couch | Ratgeber Transportbox |
+| `dog-person-dock.jpg` | Mensch und Hund auf einem Steg am See | Blog GOT-Faktor |
+| `dog-collie-meadow.jpg` | Border Collie auf Blumenwiese | Ratgeber Hundespielzeug |
+| `cat-longhair-tree.jpg` | Langhaarkatze am Kratzbaum | Ergänzungsfuttermittel |
+
