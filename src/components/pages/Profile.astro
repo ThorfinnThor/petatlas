@@ -212,8 +212,39 @@ import { INTERESSEN } from '../../features/profile/state.ts';
     align-items: center;
   }
 
+  /* Die Dateiauswahl als eigener Knopf: der Browserknopf trüge sonst je nach
+     Systemsprache „Choose File“ oder „Durchsuchen…“. Das Feld bleibt für
+     Tastatur und Screenreader bedienbar, es ist nur unsichtbar. */
   .datei {
-    font-weight: 400;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    padding: 0 var(--space-5);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .datei:hover {
+    border-color: var(--color-primary);
+  }
+
+  .datei:focus-within {
+    outline: 3px solid var(--color-focus, var(--color-primary));
+    outline-offset: 2px;
+  }
+
+  .datei input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .hilfe {

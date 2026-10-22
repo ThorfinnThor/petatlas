@@ -12,7 +12,7 @@ import { careGuide } from '../../../features/care/guides.ts';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
-import { pflegeTaxonomie } from '../../../features/care/taxonomy.ts';
+import { pflegePfad, pflegeTaxonomie } from '../../../features/care/taxonomy.ts';
 import { attributPruefung } from '../../../features/care/attributes.ts';
 import { commerceProgramme, partnerHinweisErlaubt } from '../../../features/commerce/partner.ts';
 import { PARTNER_LINK_ATTRIBUTE, partnerZiel } from '../../../features/commerce/links.ts';
@@ -27,7 +27,7 @@ export function getStaticPaths() {
   if (!isFeatureEnabled(markt, 'care')) return [];
 
   return pflegeTaxonomie().categories.map((kategorie) => ({
-    params: { kategorie: kategorie.categoryId },
+    params: { kategorie: pflegePfad(kategorie.categoryId) },
     props: { kategorie },
   }));
 }
@@ -40,7 +40,7 @@ if (guide === undefined) {
 
 const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const uebersicht = routePath(markt, 'care');
-const eigenerPfad = subroutePath(markt, 'care', kategorie.categoryId);
+const eigenerPfad = subroutePath(markt, 'care', pflegePfad(kategorie.categoryId));
 const produkte = attributPruefung().products.filter(
   (produkt) => produkt.categoryId === kategorie.categoryId,
 );

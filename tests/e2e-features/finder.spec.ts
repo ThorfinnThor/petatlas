@@ -59,7 +59,7 @@ test('führt jede Pflegekategorie zu einer eigenen Seite', async ({ page }) => {
     .evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).pathname));
   expect(new Set(ziele).size).toBe(5);
 
-  await page.goto(`${PFLEGE}dental-care/`);
+  await page.goto(`${PFLEGE}zahnpflege/`);
   await expect(page.locator('h1')).toHaveText('Zahnpflegezubehör');
   await expect(page.locator('.hero img')).toBeVisible();
   await expect(page.locator('.choice-card')).toHaveCount(4);
