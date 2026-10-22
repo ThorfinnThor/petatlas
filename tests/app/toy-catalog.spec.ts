@@ -27,6 +27,15 @@ test.describe('Händlerprodukte im Spielzeugfinder', () => {
     await katalog.getByRole('button', { name: 'Mehr anzeigen' }).click();
     await expect(page.locator('.finder__katalog .feed-catalog__card')).toHaveCount(24);
 
+    // Im HTML stehen nur 24 Startkarten (je Händler 12); alles Weitere kommt
+    // aus der nachgeladenen Datei und sieht genauso aus.
+    await page.locator('.finder__katalog').getByRole('button', { name: 'Mehr anzeigen' }).click();
+    const karten = page.locator('.finder__katalog .feed-catalog__card');
+    await expect(karten).toHaveCount(36);
+    await expect(karten.last().locator('img')).toHaveAttribute('src', /^https:\/\//);
+    await expect(karten.last().locator('a[rel~="sponsored"]').first()).toBeVisible();
+    await expect(karten.last().locator('.feed-catalog__bildquelle')).toContainText('-Feed');
+
     expect(
       (
         await new AxeBuilder({ page })
@@ -43,4 +52,24 @@ test.describe('Händlerprodukte im Spielzeugfinder', () => {
       'keine geprüften Merkmale',
     );
   });
+});
+
+test('liefert ohne JavaScript die Startauswahl, den Rest als Datei', async ({
+  browser,
+  request,
+}) => {
+  const kontext = await browser.newContext({ javaScriptEnabled: false });
+  const seite = await kontext.newPage();
+  await seite.goto('/de-de/spielzeug/');
+  await expect(seite.locator('[data-finder-katalog] .feed-catalog__card')).toHaveCount(24);
+  await kontext.close();
+
+  const antwort = await request.get('/data/v1/katalog/spielzeug.json');
+  expect(antwort.ok()).toBe(true);
+  const daten = (await antwort.json()) as { eintraege: { art: string; link: string }[] };
+  expect(daten.eintraege.length).toBeGreaterThan(24);
+  for (const eintrag of daten.eintraege) {
+    expect(['dog', 'cat']).toContain(eintrag.art);
+    expect(eintrag.link).toMatch(/^https:\/\/www\.awin1\.com\//);
+  }
 });

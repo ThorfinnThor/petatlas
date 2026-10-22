@@ -1,6 +1,7 @@
 import { productIdentity, merkmalLabel, attributPruefung } from '../care/attributes.ts';
 import { kategorie } from '../care/taxonomy.ts';
 import { amazonSearchUrl } from '../commerce/amazon.ts';
+import { karteAusVorlage, ladeKatalog } from '../commerce/katalog-nachladen.ts';
 import { PARTNER_LINK_ATTRIBUTE } from '../commerce/links.ts';
 import type { Treffer } from '../care/matching.ts';
 import {
@@ -188,33 +189,71 @@ function aktuelleFilter(bedarf: SpielzeugBedarf): string[] {
 /** Ab hier: Händlerprodukte aus den Feeds im Finder (ohne geprüfte Merkmale). */
 const KATALOG_SCHRITT = 12;
 
+interface KatalogKarte {
+  readonly art: string;
+  /** Eine frische, sichtbare Karte für die Ergebnisliste. */
+  readonly element: () => HTMLElement;
+}
+
 interface KatalogQuelle {
-  readonly karten: readonly HTMLElement[];
+  readonly karten: readonly KatalogKarte[];
   readonly vorlage: HTMLElement | null;
 }
 
+/** Händler im Wechsel, damit nicht erst alle Produkte eines Händlers kommen. */
+function imWechsel<T>(jeHaendler: readonly (readonly T[])[]): T[] {
+  const laenge = Math.max(0, ...jeHaendler.map((liste) => liste.length));
+  return Array.from({ length: laenge }, (_, i) =>
+    jeHaendler.map((liste) => liste[i]).filter((eintrag): eintrag is T => eintrag !== undefined),
+  ).flat();
+}
+
 /**
- * Die Katalogkarten stehen bereits als Händlerbereiche auf der Seite. Mit
- * JavaScript übernimmt der Finder sie in seine Ergebnisse und blendet die
+ * Die Startauswahl der Katalogkarten steht als Händlerbereiche auf der Seite.
+ * Mit JavaScript übernimmt der Finder sie in seine Ergebnisse und blendet die
  * Bereiche aus; ohne JavaScript bleiben sie, wo sie sind.
  */
-function katalogQuelle(): KatalogQuelle {
-  const sektionen = [...document.querySelectorAll<HTMLElement>('[data-finder-katalog]')];
+function katalogQuelle(sektionen: readonly HTMLElement[]): KatalogQuelle {
   for (const sektion of sektionen) sektion.hidden = true;
-  // Händler im Wechsel, damit nicht erst alle Produkte eines Händlers kommen.
-  const jeHaendler = sektionen.map((sektion) => [
-    ...sektion.querySelectorAll<HTMLElement>('.feed-catalog__card'),
-  ]);
-  const laenge = Math.max(0, ...jeHaendler.map((liste) => liste.length));
-  const karten = Array.from({ length: laenge }, (_, i) =>
-    jeHaendler
-      .map((liste) => liste[i])
-      .filter((karte): karte is HTMLElement => karte !== undefined),
-  ).flat();
+  const jeHaendler = sektionen.map((sektion) =>
+    [...sektion.querySelectorAll<HTMLElement>('.feed-catalog__card')].map((karte) => ({
+      art: karte.dataset.art ?? '',
+      element: () => {
+        const kopie = karte.cloneNode(true) as HTMLElement;
+        kopie.hidden = false;
+        return kopie;
+      },
+    })),
+  );
   return {
-    karten,
+    karten: imWechsel(jeHaendler),
     vorlage: sektionen[0]?.querySelector<HTMLElement>('.feed-catalog__grid') ?? null,
   };
+}
+
+/** Alle Händlerprodukte aus der nachgeladenen Datei, gebaut aus den Karten der Seite. */
+async function vollerKatalog(
+  sektionen: readonly HTMLElement[],
+  vorlage: HTMLElement | null,
+): Promise<KatalogQuelle | null> {
+  const pfad = sektionen.find((sektion) => sektion.dataset.katalogQuelle)?.dataset.katalogQuelle;
+  if (pfad === undefined) return null;
+  const vorlagen = new Map(
+    sektionen.map((sektion) => [
+      sektion.dataset.haendler ?? '',
+      sektion.querySelector<HTMLElement>('.feed-catalog__card'),
+    ]),
+  );
+  const eintraege = await ladeKatalog(pfad);
+  const jeHaendler = sektionen.map((sektion) => {
+    const karte = vorlagen.get(sektion.dataset.haendler ?? '');
+    if (!karte) return [];
+    return eintraege
+      .filter((eintrag) => eintrag.haendler === sektion.dataset.haendler)
+      .map((eintrag) => ({ art: eintrag.art, element: () => karteAusVorlage(karte, eintrag) }));
+  });
+  const karten = imWechsel(jeHaendler);
+  return karten.length === 0 ? null : { karten, vorlage };
 }
 
 function ohneMerkmalsfilter(bedarf: SpielzeugBedarf): boolean {
@@ -239,10 +278,11 @@ export function finderStarten(): void {
     speciesField.value = requestedSpecies;
   }
   document.querySelector<HTMLElement>('#finder-ohne-js')?.setAttribute('hidden', '');
-  const katalog = katalogQuelle();
+  const sektionen = [...document.querySelectorAll<HTMLElement>('[data-finder-katalog]')];
+  let katalog = katalogQuelle(sektionen);
   let katalogSichtbar = KATALOG_SCHRITT;
 
-  const katalogAnhaengen = (karten: readonly HTMLElement[], vorhanden: number): void => {
+  const katalogAnhaengen = (karten: readonly KatalogKarte[], vorhanden: number): void => {
     const block = document.createElement('section');
     block.className = 'finder__katalog';
     block.setAttribute('aria-labelledby', 'finder-katalog-titel');
@@ -259,11 +299,7 @@ export function finderStarten(): void {
       document.createElement('ul');
     liste.classList.remove('feed-catalog__grid--wenige');
     liste.classList.add('finder__katalog-liste');
-    for (const karte of karten.slice(0, katalogSichtbar)) {
-      const kopie = karte.cloneNode(true) as HTMLElement;
-      kopie.hidden = false;
-      liste.append(kopie);
-    }
+    for (const karte of karten.slice(0, katalogSichtbar)) liste.append(karte.element());
     block.append(liste);
     if (karten.length > katalogSichtbar) {
       const mehr = document.createElement('p');
@@ -282,7 +318,7 @@ export function finderStarten(): void {
   const render = (): void => {
     const bedarf = bedarfLesen();
     const treffer = findeSpielzeug(attributPruefung().products, bedarf);
-    const katalogAlle = katalog.karten.filter((karte) => karte.dataset.art === bedarf.species);
+    const katalogAlle = katalog.karten.filter((karte) => karte.art === bedarf.species);
     const katalogTreffer = ohneMerkmalsfilter(bedarf) ? katalogAlle : [];
     if (status) {
       status.textContent =
@@ -339,4 +375,15 @@ export function finderStarten(): void {
     render();
   });
   render();
+
+  // Im HTML steht nur die Startauswahl; die übrigen Händlerprodukte kommen nach.
+  vollerKatalog(sektionen, katalog.vorlage)
+    .then((voll) => {
+      if (voll === null) return;
+      katalog = voll;
+      render();
+    })
+    .catch(() => {
+      // Ohne Datei bleibt es bei der Startauswahl.
+    });
 }
