@@ -32,6 +32,7 @@ import snapshot from '../../../data-snapshots/places/places-de.json' with { type
 import { oeffentlicheProjektion } from '../../../scripts/publish/places.ts';
 import type { Place } from '../../domain/schemas/places.ts';
 import { applyDirectoryControls } from '../../features/map/directory-controls.ts';
+import { oeffnungszeitenLesbar } from '../../features/map/opening-hours.ts';
 
 const market = defaultMarket();
 const build = resolveBuildConfig();
@@ -216,7 +217,7 @@ const abdeckung = {
                 {treffer.punktBerechnet && ' · Position berechnet'}
               </p>
               {treffer.ort.openingHours !== null && (
-                <p>Öffnungszeiten: {treffer.ort.openingHours}</p>
+                <p>Öffnungszeiten: {oeffnungszeitenLesbar(treffer.ort.openingHours)}</p>
               )}
               {treffer.ort.openingHours === null && (
                 <p class="unbekannt">Öffnungszeiten nicht erfasst</p>

@@ -137,3 +137,64 @@ export function spaetesteWerktagszeit(plan: Wochenplan): number {
     ...(['Mo', 'Tu', 'We', 'Th', 'Fr'] as const).flatMap((tag) => plan[tag].map(([, bis]) => bis)),
   );
 }
+
+const ANZEIGE_WOERTER: Readonly<Record<string, string>> = {
+  Mo: 'Mo',
+  Tu: 'Di',
+  We: 'Mi',
+  Th: 'Do',
+  Fr: 'Fr',
+  Sa: 'Sa',
+  Su: 'So',
+  PH: 'Feiertage',
+  SH: 'Schulferien',
+  off: 'geschlossen',
+  closed: 'geschlossen',
+  open: 'geöffnet',
+  week: 'Woche',
+  sunrise: 'Sonnenaufgang',
+  sunset: 'Sonnenuntergang',
+  easter: 'Ostern',
+  days: 'Tage',
+  Jan: 'Jan.',
+  Feb: 'Feb.',
+  Mar: 'März',
+  Apr: 'Apr.',
+  May: 'Mai',
+  Jun: 'Juni',
+  Jul: 'Juli',
+  Aug: 'Aug.',
+  Sep: 'Sept.',
+  Oct: 'Okt.',
+  Nov: 'Nov.',
+  Dec: 'Dez.',
+};
+
+function anzeigeTeil(teil: string): string {
+  return teil
+    .replace(/24\/7/g, 'rund um die Uhr')
+    .replace(/\b[A-Za-z]+\b/g, (wort) => ANZEIGE_WOERTER[wort] ?? wort)
+    .replace(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/g, '$1–$2')
+    .replace(/\b(Mo|Di|Mi|Do|Fr|Sa|So)\s*-\s*(Mo|Di|Mi|Do|Fr|Sa|So)\b/g, '$1–$2')
+    .replace(/\s*,\s*/g, ', ')
+    .replace(/\s*;\s*/g, ' · ')
+    .replace(/\s{2,}/g, ' ');
+}
+
+/**
+ * Eine OSM-Öffnungszeit lesbar auf Deutsch, ohne etwas wegzulassen oder zu
+ * deuten: `Mo-Fr 09:00-18:00; Sa,PH off` → `Mo–Fr 09:00–18:00 · Sa, Feiertage
+ * geschlossen`. Übersetzt werden nur Kürzel und Schlüsselwörter; Kommentare in
+ * Anführungszeichen bleiben wörtlich stehen, nur ohne die Zeichen.
+ */
+export function oeffnungszeitenLesbar(angabe: string): string {
+  return angabe
+    .split(/("[^"]*")/)
+    .map((teil) =>
+      teil.startsWith('"') && teil.endsWith('"') ? teil.slice(1, -1) : anzeigeTeil(teil),
+    )
+    .join('')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/\s+·\s*$/, '')
+    .trim();
+}
