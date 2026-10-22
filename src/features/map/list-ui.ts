@@ -24,6 +24,7 @@ import { normalisiere, sucheOrte, type OrtsEintrag } from './place-search.ts';
 import { ladeManifest, ladeZellenUm, ortMitId } from './data.ts';
 import { darstellung } from './website.ts';
 import { verzeichnisKontaktLink } from './contact.ts';
+import { oeffnungszeitenLesbar } from './opening-hours.ts';
 
 let geladeneNamenCache: Map<string, readonly OrtsEintrag[]> | null = null;
 
@@ -88,7 +89,7 @@ function trefferMarkup(
       ${
         ort.openingHours === null
           ? '<p class="unbekannt">Öffnungszeiten nicht erfasst</p>'
-          : `<p>Öffnungszeiten: ${escape(ort.openingHours)}</p>`
+          : `<p>Öffnungszeiten: ${escape(oeffnungszeitenLesbar(ort.openingHours))}</p>`
       }
       ${ort.phone === null ? '' : `<p>Telefon: <a href="tel:${escape(ort.phone.replace(/\s/g, ''))}">${escape(ort.phone)}</a></p>`}
       ${webZeile(ort.website)}

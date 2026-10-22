@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  oeffnungszeitenLesbar,
   spaetesteWerktagszeit,
   sprechzeiten,
   wochenplan,
@@ -58,5 +59,22 @@ describe('Öffnungszeiten lesen', () => {
     const plan = wochenplan('Fr-Mo 10:00-12:00')!;
     expect(sprechzeiten(plan)).toMatchObject({ samstag: true, sonntag: true });
     expect(zeitenAm(plan, 'Tu')).toBe('');
+  });
+});
+
+describe('Öffnungszeiten lesbar anzeigen', () => {
+  it.each([
+    ['Mo-Fr 09:00-18:00; Sa,Su,PH off', 'Mo–Fr 09:00–18:00 · Sa, So, Feiertage geschlossen'],
+    [
+      'Mo-Th 09:00-12:00,14:00-18:00; Fr 09:00-12:00',
+      'Mo–Do 09:00–12:00, 14:00–18:00 · Fr 09:00–12:00',
+    ],
+    ['Mo-Fr 08:00-19:00, Sa 10:00 - 12:00', 'Mo–Fr 08:00–19:00, Sa 10:00–12:00'],
+    ['Tu,We 10:00-12:00; Sa closed', 'Di, Mi 10:00–12:00 · Sa geschlossen'],
+    ['24/7', 'rund um die Uhr'],
+    ['Mo-Fr 09:00-12:00; "nach Vereinbarung"', 'Mo–Fr 09:00–12:00 · nach Vereinbarung'],
+    ['Dec 24 off', 'Dez. 24 geschlossen'],
+  ])('%s', (angabe, erwartet) => {
+    expect(oeffnungszeitenLesbar(angabe)).toBe(erwartet);
   });
 });

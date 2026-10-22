@@ -32,6 +32,7 @@ import type { Place } from '../../../domain/schemas/places.ts';
 import { applyDirectoryControls } from '../../../features/map/directory-controls.ts';
 import { istIndexierbareStadtseite } from '../../../features/seo/index-quality.ts';
 import { stadtUebersicht } from '../../../features/map/city-summary.ts';
+import { oeffnungszeitenLesbar } from '../../../features/map/opening-hours.ts';
 import CityHours from '../../../components/city/CityHours.astro';
 import CityEmergency from '../../../components/city/CityEmergency.astro';
 import { notdienstFuer } from '../../../features/map/emergency.ts';
@@ -270,7 +271,7 @@ const kostenPfad = routeExists(kartenMarkt, 'costs')
                 {treffer.punktBerechnet && ' · Position berechnet'}
               </p>
               {treffer.ort.openingHours !== null ? (
-                <p>Öffnungszeiten: {treffer.ort.openingHours}</p>
+                <p>Öffnungszeiten: {oeffnungszeitenLesbar(treffer.ort.openingHours)}</p>
               ) : (
                 <p class="unbekannt">Öffnungszeiten nicht erfasst</p>
               )}
