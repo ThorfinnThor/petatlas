@@ -44,6 +44,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      # Zum Starten von daten-automerge.yml.
+      actions: write
     steps:
       - name: Repository auschecken
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -132,11 +134,14 @@ jobs:
           git add data-snapshots
           git commit -m "Snapshots erneuert (Lauf ${{ github.run_id }})"
           git push origin "$branch"
-          gh pr create \
+          pr_url=$(gh pr create \
             --base main \
             --head "$branch" \
             --title "Snapshots erneuert" \
-            --body "Automatischer Import der offenen Quellen. Bitte den Diff ansehen, bevor er nach main geht."
+            --body "Automatischer Import der offenen Quellen. daten-automerge.yml prüft die geänderten Dateien und Mengen, startet die Prüfkette und merged bei Grün; sonst bleibt der PR für einen Menschen offen.")
+          # Ein vom GITHUB_TOKEN geöffneter PR startet keine Prüfungen;
+          # daten-automerge.yml übernimmt Prüfkette und Merge.
+          gh workflow run daten-automerge.yml -f pr="${pr_url##*/}"
 
       - name: Zusammenfassung
         if: always()
