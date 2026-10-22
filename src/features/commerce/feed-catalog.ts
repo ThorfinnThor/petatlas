@@ -148,3 +148,96 @@ export function partnerBildUrspruenge(): readonly string[] {
     ]),
   ].sort();
 }
+
+const OHNE_MARKE = 'Herstellerangabe nicht angegeben';
+
+/** „Marke · Rubrik“ unter dem Produktnamen; eine unbekannte Marke entfällt. */
+export function katalogMeta(product: CatalogProductOffer): string {
+  return [
+    product.brand === OHNE_MARKE ? null : product.brand,
+    product.subcategoryLabel ?? product.categoryLabel,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+}
+
+function variantenSchluessel(product: CatalogProductOffer): string {
+  return `${product.species}:${product.brand}:${product.productName}`
+    .toLocaleLowerCase('de-DE')
+    .replace(/\b\d+\s*x\s*\d+(?:[.,]\d+)?\s*(?:kg|g|ml|l)\b/giu, '')
+    .replace(/\b\d+(?:[.,]\d+)?\s*(?:kg|g|ml|l)\b/giu, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Die Produkte einer Kategorie, wie sie eine Händlerliste zeigt. */
+export function katalogAuswahl(
+  offers: readonly CatalogProductOffer[],
+  category: CatalogCategory,
+  optionen: { readonly perSpeciesLimit?: number; readonly deduplicateVariants?: boolean } = {},
+): readonly CatalogProductOffer[] {
+  const alle = offers.filter((offer) => offer.category === category);
+  const einzeln = optionen.deduplicateVariants
+    ? alle.filter(
+        (product, index, liste) =>
+          liste.findIndex(
+            (kandidat) => variantenSchluessel(kandidat) === variantenSchluessel(product),
+          ) === index,
+      )
+    : alle;
+  const limit = optionen.perSpeciesLimit;
+  return limit === undefined
+    ? einzeln
+    : (['dog', 'cat'] as const).flatMap((species) =>
+        einzeln.filter((product) => product.species === species).slice(0, limit),
+      );
+}
+
+/** Die ersten `anzahl` Produkte, Hund und Katze im Wechsel. */
+export function startauswahl(
+  products: readonly CatalogProductOffer[],
+  anzahl: number,
+): readonly CatalogProductOffer[] {
+  const hunde = products.filter((product) => product.species === 'dog');
+  const katzen = products.filter((product) => product.species === 'cat');
+  const gemischt: CatalogProductOffer[] = [];
+  const laenge = Math.max(hunde.length, katzen.length);
+  for (let i = 0; i < laenge && gemischt.length < anzahl; i++) {
+    const hund = hunde[i];
+    const katze = katzen[i];
+    if (hund) gemischt.push(hund);
+    if (katze) gemischt.push(katze);
+  }
+  return gemischt.slice(0, anzahl);
+}
+
+/** Pfad der nachladbaren Spielzeug-Händlerprodukte (siehe Toys.astro). */
+export const SPIELZEUG_KATALOG_PFAD = '/data/v1/katalog/spielzeug.json';
+
+/** Ein Händlerprodukt, wie es nachgeladen und im Browser zur Karte wird. */
+export interface KatalogEintrag {
+  readonly id: string;
+  readonly haendler: string;
+  readonly art: CatalogSpecies;
+  readonly rubrik: string;
+  readonly name: string;
+  readonly meta: string;
+  readonly bild: string;
+  readonly link: string;
+}
+
+export function katalogEintraege(
+  products: readonly CatalogProductOffer[],
+  haendler: string,
+): readonly KatalogEintrag[] {
+  return products.map((product) => ({
+    id: product.productId,
+    haendler,
+    art: product.species,
+    rubrik: product.subcategoryLabel ?? '',
+    name: product.productName,
+    meta: katalogMeta(product),
+    bild: product.imageUrl,
+    link: product.affiliateUrl,
+  }));
+}

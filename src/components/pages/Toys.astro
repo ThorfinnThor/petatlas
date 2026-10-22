@@ -8,7 +8,11 @@ import { attributPruefung } from '../../features/care/attributes.ts';
 import { spielzeugTaxonomie } from '../../features/care/taxonomy.ts';
 import RetailPartnerSection from '../RetailPartnerSection.astro';
 import FeedProductGrid from '../commerce/FeedProductGrid.astro';
-import { fressnapfKatalog, zooroyalKatalog } from '../../features/commerce/feed-catalog.ts';
+import {
+  SPIELZEUG_KATALOG_PFAD,
+  fressnapfKatalog,
+  zooroyalKatalog,
+} from '../../features/commerce/feed-catalog.ts';
 import type { MarketConfig } from '../../domain/market.ts';
 import { fressnapfAngebote } from '../../features/commerce/fressnapf-feed.ts';
 import { zooroyalAngebote } from '../../features/commerce/zooroyal-feed.ts';
@@ -184,6 +188,7 @@ const zooroyalProducts = Object.fromEntries(
   retailerLabel="Fressnapf"
   filterbar
   finderQuelle
+  nachladen={SPIELZEUG_KATALOG_PFAD}
 />
 <FeedProductGrid
   offers={zooroyalKatalog()}
@@ -192,6 +197,7 @@ const zooroyalProducts = Object.fromEntries(
   retailerLabel="ZooRoyal"
   filterbar
   finderQuelle
+  nachladen={SPIELZEUG_KATALOG_PFAD}
 />
 
 <RetailPartnerSection market={market} page="spielzeug" />
