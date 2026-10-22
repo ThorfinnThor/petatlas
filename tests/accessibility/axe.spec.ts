@@ -32,6 +32,17 @@ const SEITEN = [
   '/de-de/blog/got-faktor-eins-bis-drei/',
   '/de-de/blog/allgemeine-untersuchung-hund-rechnung/',
   '/de-de/blog/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden/',
+  // Seit Oktober 2026 neu oder umgebaut.
+  '/de-de/ratgeber/',
+  '/de-de/produkte/',
+  '/de-de/produkte/katzentrinkbrunnen-vergleich/',
+  '/de-de/futter/vergleich/',
+  '/de-de/futter/royal-canin-indoor-2kg/',
+  '/de-de/pflege/zahnpflege/',
+  '/de-de/ergaenzungsfuttermittel/',
+  '/de-de/tierarzt-karte/koeln/',
+  '/de-de/tierarztkosten/katalog/',
+  '/de-de/tierarztkosten/16-allgemeine-untersuchung-mit-beratung-hund-katze-frettchen/',
 ];
 
 for (const pfad of SEITEN) {
