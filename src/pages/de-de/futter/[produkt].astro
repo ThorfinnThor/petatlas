@@ -6,12 +6,16 @@
  * benennt, was **nicht** deklariert ist. Sie rechnet keinen Nährwert um und
  * vergibt keine Punkte.
  *
- * Angebote erscheinen nur mit Anzeigeerlaubnis. Ohne Partnervertrag gibt es
- * keine, und dann steht der Preisvergleich als das da, was er ist: leer.
+ * Preise gibt es hier nicht. Ein zugeordnetes Händlerangebot fehlt, deshalb
+ * stehen unten nur die als Werbung gekennzeichneten Händlerkategorien der
+ * passenden Tierart.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/ui/Breadcrumbs.astro';
 import Notice from '../../../components/Notice.astro';
+import PageIntro from '../../../components/ui/PageIntro.astro';
+import RetailPartnerSection from '../../../components/RetailPartnerSection.astro';
+import { formatCalendarDate, parseCalendarDate } from '../../../domain/dates.ts';
 import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../domain/market.ts';
 import { devFeatureOverrides } from '../../../../config/build.ts';
 import { routePath, subroutePath } from '../../../lib/routes.ts';
@@ -76,6 +80,19 @@ const NAEHRWERT_TEXT: Record<string, string> = {
   phosphorus: 'Phosphor',
   energyKcal: 'Energie (kcal)',
 };
+const geprueftAm = (wert: string): string => {
+  try {
+    return formatCalendarDate(parseCalendarDate(wert.slice(0, 10)), 'de-DE');
+  } catch {
+    return wert;
+  }
+};
+const tierText =
+  produkt.species === 'dog'
+    ? 'Für Hunde'
+    : produkt.species === 'cat'
+      ? 'Für Katzen'
+      : 'Für Heimtiere';
 const deklariert = produkt.nutrients.filter((eintrag) => eintrag.value !== null);
 const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
 ---
@@ -95,7 +112,12 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
     ]}
   />
 
-  <h1>{produkt.brand} — {produkt.productName}</h1>
+  <PageIntro titel={`${produkt.brand} — ${produkt.productName}`} eyebrow={`Futter · ${tierText}`}>
+    <p>
+      Was auf dem Etikett steht, mit Fundstelle und Bezug. Kein Punktwert, keine Rangfolge: Die
+      Zahlen helfen beim Vergleichen, nicht beim Bewerten.
+    </p>
+  </PageIntro>
 
   {
     synthetisch && (
@@ -106,20 +128,30 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
   }
 
   <dl class="angaben">
-    <dt>Menge</dt>
-    <dd data-testid="menge">{mengenText(produkt) ?? 'nicht angegeben'}</dd>
-    <dt>Nummer</dt>
-    <dd>{produkt.gtin ?? 'nicht angegeben'}</dd>
-    <dt>Lebensphase</dt>
-    <dd data-testid="lebensphase">
-      {
-        produkt.lifeStage === null
-          ? 'nicht deklariert'
-          : (PHASE_TEXT[produkt.lifeStage] ?? produkt.lifeStage)
-      }
-    </dd>
-    <dt>Futterart</dt>
-    <dd>{produkt.kind === null ? 'nicht deklariert' : (ART_TEXT[produkt.kind] ?? produkt.kind)}</dd>
+    <div>
+      <dt>Menge</dt>
+      <dd data-testid="menge">{mengenText(produkt) ?? 'nicht angegeben'}</dd>
+    </div>
+    <div>
+      <dt>Lebensphase</dt>
+      <dd data-testid="lebensphase">
+        {
+          produkt.lifeStage === null
+            ? 'nicht deklariert'
+            : (PHASE_TEXT[produkt.lifeStage] ?? produkt.lifeStage)
+        }
+      </dd>
+    </div>
+    <div>
+      <dt>Futterart</dt>
+      <dd>
+        {produkt.kind === null ? 'nicht deklariert' : (ART_TEXT[produkt.kind] ?? produkt.kind)}
+      </dd>
+    </div>
+    <div>
+      <dt>Artikelnummer (GTIN)</dt>
+      <dd>{produkt.gtin ?? 'nicht angegeben'}</dd>
+    </div>
   </dl>
 
   <h2>Deklarierte Nährwerte</h2>
@@ -163,7 +195,9 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
                       {eintrag.sourceLabel}
                     </a>
                   )}
-                  {eintrag.checkedAt === null ? '' : `, geprüft am ${eintrag.checkedAt}`}
+                  {eintrag.checkedAt === null
+                    ? ''
+                    : `, geprüft am ${geprueftAm(eintrag.checkedAt)}`}
                 </td>
               </tr>
             ))}
@@ -200,11 +234,18 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
     )
   }
 
-  <h2>Angebote</h2>
-  <p data-testid="keine-angebote">
-    Für dieses Produkt liegt kein Angebot mit Anzeigeerlaubnis vor. Ohne freigegebenen
-    Partnervertrag wird keines gezeigt — das ist kein Fehler und keine Aussage über den Markt.
-  </p>
+  <section class="kaufen" aria-labelledby="kaufen-titel">
+    <h2 id="kaufen-titel">Wo du es kaufen kannst</h2>
+    <p data-testid="keine-angebote">
+      Für dieses Produkt gibt es hier kein zugeordnetes Händlerangebot und keinen Preis. Preise
+      vergleichen wir nicht; im Sortiment der Händler findest du es über die Suche.
+    </p>
+  </section>
+  <RetailPartnerSection
+    market={markt}
+    page="futter"
+    tierart={produkt.species === 'other' ? undefined : produkt.species}
+  />
 
   {
     varianten.length > 0 && (
@@ -220,7 +261,8 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
           ))}
         </ul>
         <p class="hilfe">
-          Verglichen wird über den Grundpreis je Kilogramm — sobald es Angebote gibt.
+          Beim Händler lohnt der Blick auf den Grundpreis je Kilogramm: Größere Säcke sind oft
+          günstiger, halten aber auch länger offen.
         </p>
       </>
     )
@@ -237,16 +279,31 @@ const offen = produkt.nutrients.filter((eintrag) => eintrag.value === null);
   <style>
     .angaben {
       display: grid;
-      grid-template-columns: max-content 1fr;
-      gap: var(--space-2) var(--space-4);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+      gap: var(--space-3);
+      margin: 0 0 var(--space-10);
+    }
+
+    .angaben > div {
+      padding: var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
     }
 
     .angaben dt {
-      font-weight: 600;
+      color: var(--color-text-muted);
+      font-size: var(--text-small);
     }
 
     .angaben dd {
-      margin: 0;
+      margin: var(--space-1) 0 0;
+      color: var(--color-ink);
+      font-weight: 600;
+    }
+
+    .kaufen {
+      margin-block-start: var(--space-10);
     }
 
     .naehrwerte-scroll {

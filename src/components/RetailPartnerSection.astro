@@ -8,9 +8,11 @@ import { zooroyalKategorie } from '../features/commerce/zooroyal.ts';
 interface Props {
   market: MarketConfig;
   page: 'spielzeug' | 'ergaenzungsfuttermittel' | 'futter';
+  /** Nur die Händlerkategorien dieser Tierart zeigen, etwa auf einer Produktseite. */
+  tierart?: 'dog' | 'cat';
 }
 
-const { market, page } = Astro.props;
+const { market, page, tierart } = Astro.props;
 const amazonAktiv = amazonEnabled(process.env);
 const programmes = commerceProgramme();
 const fressnapfProgramm = programmes.find((entry) => entry.programId === 'fressnapf-de');
@@ -89,29 +91,31 @@ const ziele =
           },
         ];
 
-const retailerLinks = ziele.map((ziel) => ({
-  ...ziel,
-  fressnapf:
-    fressnapfEntscheidung.erlaubt && fressnapfEntscheidung.programm !== null
-      ? partnerZiel(fressnapfEntscheidung.programm, {
-          verticalRef: 'commerce',
-          placementRef: 'neutral-list',
-          contentRef: ziel.id,
-          pageSlug: page,
-          destinationUrl: ziel.fressnapfUrl,
-        })
-      : null,
-  zooroyal:
-    zooroyalEntscheidung.erlaubt && zooroyalEntscheidung.programm !== null
-      ? partnerZiel(zooroyalEntscheidung.programm, {
-          verticalRef: 'commerce',
-          placementRef: 'neutral-list',
-          contentRef: ziel.id,
-          pageSlug: page,
-          destinationUrl: zooroyalKategorie(page, ziel.species),
-        })
-      : null,
-}));
+const retailerLinks = ziele
+  .filter((ziel) => tierart === undefined || ziel.species === tierart)
+  .map((ziel) => ({
+    ...ziel,
+    fressnapf:
+      fressnapfEntscheidung.erlaubt && fressnapfEntscheidung.programm !== null
+        ? partnerZiel(fressnapfEntscheidung.programm, {
+            verticalRef: 'commerce',
+            placementRef: 'neutral-list',
+            contentRef: ziel.id,
+            pageSlug: page,
+            destinationUrl: ziel.fressnapfUrl,
+          })
+        : null,
+    zooroyal:
+      zooroyalEntscheidung.erlaubt && zooroyalEntscheidung.programm !== null
+        ? partnerZiel(zooroyalEntscheidung.programm, {
+            verticalRef: 'commerce',
+            placementRef: 'neutral-list',
+            contentRef: ziel.id,
+            pageSlug: page,
+            destinationUrl: zooroyalKategorie(page, ziel.species),
+          })
+        : null,
+  }));
 
 const amazonZiele = new Map(
   page === 'spielzeug'
