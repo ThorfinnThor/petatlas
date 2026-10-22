@@ -21,7 +21,7 @@ relatedTools:
 relatedArticles:
   - "katzen-beschaeftigen"
 affiliateContext: "none"
-image: "play-dog-alpine-lake"
+image: "dog-lake-splash"
 editorialLinks:
   - "/de-de/tierarzt-karte/"
   - "/de-de/pflege/"

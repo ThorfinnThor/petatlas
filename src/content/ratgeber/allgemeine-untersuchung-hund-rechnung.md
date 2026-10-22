@@ -25,7 +25,7 @@ relatedArticles:
   - "tierarztrechnung-zusammensetzung"
   - "tierarztrechnung-verstehen"
 affiliateContext: "none"
-image: "health-dog-home"
+image: "dog-alpine-meadow"
 editorialLinks:
   - "/de-de/tierarztkosten/"
   - "/de-de/ratgeber/tierarztrechnung-zusammensetzung/"

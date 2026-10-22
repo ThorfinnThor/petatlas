@@ -25,7 +25,7 @@ relatedArticles:
   - "katzen-beschaeftigen"
   - "tierarztrechnung-zusammensetzung"
 affiliateContext: "none"
-image: "play-dog-alpine-lake"
+image: "dog-collie-meadow"
 editorialLinks:
   - "/de-de/spielzeug/"
   - "/de-de/pflege/"

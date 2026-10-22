@@ -23,7 +23,7 @@ relatedTools:
 relatedArticles:
   - "eu-heimtierausweis-pruefen"
 affiliateContext: "none"
-image: "travel-human-dog-sunset"
+image: "travel-hiker-panorama"
 editorialLinks:
   - "/de-de/reisecheck/"
   - "/de-de/tierarzt-karte/"

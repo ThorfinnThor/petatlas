@@ -24,7 +24,7 @@ relatedArticles:
   - "tierarztrechnung-verstehen"
   - "eu-heimtierausweis-pruefen"
 affiliateContext: "none"
-image: "health-dog-home"
+image: "cat-tabby-sofa"
 editorialLinks:
   - "/de-de/tierarztkosten/"
   - "/de-de/tierarzt-karte/"

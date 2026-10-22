@@ -24,7 +24,7 @@ relatedArticles:
   - "katze-transportbox"
   - "hundespielzeug-starke-kauer"
 affiliateContext: "none"
-image: "play-cat-home"
+image: "cat-window"
 legacyRenderer: "cat-enrichment"
 editorialLinks:
   - "/de-de/spielzeug/"
