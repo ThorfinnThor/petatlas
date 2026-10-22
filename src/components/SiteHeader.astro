@@ -32,8 +32,7 @@ const groups: { label: string; keys: RouteKey[] }[] = [
       class="kopf__menueknopf"
       type="button"
       aria-expanded="false"
-      aria-controls="hauptnavigation"
-      hidden>Menü <span aria-hidden="true">☰</span></button
+      aria-controls="hauptnavigation">Menü <span aria-hidden="true">☰</span></button
     >
     <nav aria-label="Hauptnavigation" class="kopf__nav" id="hauptnavigation">
       <ul class="kopf__liste">
@@ -280,10 +279,20 @@ const groups: { label: string; keys: RouteKey[] }[] = [
       min-height: 68px;
       padding-block: var(--space-2);
     }
+    /* Marke und Suche füllen die erste Zeile, der Menüknopf steht immer in
+       der zweiten – unabhängig davon, ob die Webschrift schon geladen ist.
+       Sonst passte er mit der schmaleren Ersatzschrift noch in Zeile eins und
+       rutschte nach dem Schriftwechsel nach unten (CLS). */
     .kopf__marke {
+      flex: 1 0 calc(100% - 44px - var(--space-2));
+      min-inline-size: 0;
       font-size: 1.375rem;
     }
-    .kopf__menueknopf:not([hidden]) {
+    /* Eingeklappt ist der Ausgangszustand, nicht erst das Ergebnis des
+       Skripts: sonst stünde auf langsamen Verbindungen erst die ganze Liste da,
+       und die Seite spränge beim Einklappen nach oben (CLS). Ohne JavaScript
+       stellt das noscript-Stylesheet in BaseLayout die offene Liste wieder her. */
+    .kopf__menueknopf {
       display: flex;
       gap: var(--space-2);
       align-items: center;
@@ -294,7 +303,7 @@ const groups: { label: string; keys: RouteKey[] }[] = [
       max-height: calc(100dvh - 90px);
       overflow: auto;
     }
-    .kopf__nav[data-eingeklappt='true'] {
+    .kopf__nav:not([data-eingeklappt='false']) {
       display: none;
     }
     .kopf__liste {
