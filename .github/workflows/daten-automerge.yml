@@ -1,0 +1,162 @@
+# Daten-PRs der wöchentlichen Importe automatisch prüfen und mergen.
+#
+# Kommunale Hundeflächen (ingest-open.yml) sowie die Awin-Feeds von Fressnapf
+# und ZooRoyal (sync-awin-*.yml) öffnen ihre Pull Requests mit dem
+# GITHUB_TOKEN. Solche PRs lösen bewusst keine pull_request-Läufe aus, und so
+# blieben sie bisher wochenlang liegen. Die Importe starten deshalb nach dem
+# Öffnen diesen Lauf (workflow_dispatch darf das GITHUB_TOKEN auslösen).
+#
+# Ablauf:
+#   1. scripts/publish/daten-automerge.ts prüft Zweig, geänderte Dateien und
+#      Mengen. Der Gebührenkatalog ist nie dabei; ein Einbruch um mehr als ein
+#      Viertel hält den PR an.
+#   2. Der Zweig wird auf den Stand von main gebracht (die Branch-Regeln
+#      verlangen das) und CI, Security und Visual-QA werden darauf gestartet.
+#   3. Sind alle Prüfungen grün, wird gesquasht gemergt und die
+#      Auslieferungsprüfung (live-check.yml) angestoßen.
+# Bei einem Nein oder einer roten Prüfung bleibt der PR offen, bekommt einen
+# Kommentar, und dieser Lauf wird rot.
+#
+# Warum keine Schleife entsteht: Merges mit dem GITHUB_TOKEN lösen keine
+# push-Läufe aus, und dieser Lauf öffnet keine PRs.
+name: Daten-PR automatisch mergen
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: 'Nummer des Daten-PRs'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+# Ein Merge nach dem anderen: zwei Feeds am selben Sonntag müssen
+# nacheinander auf den jeweils neuen Stand von main gebracht werden.
+concurrency:
+  group: daten-automerge
+  cancel-in-progress: false
+
+jobs:
+  mergen:
+    name: Prüfen und mergen
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+      checks: read
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR: ${{ inputs.pr }}
+    steps:
+      - name: PR einlesen
+        id: pr
+        run: |
+          set -euo pipefail
+          case "$PR" in ''|*[!0-9]*) echo "::error::Keine PR-Nummer: $PR"; exit 1;; esac
+          daten=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" \
+            --json state,headRefName,author,isCrossRepository,baseRefName)
+          echo "$daten" | jq .
+          [ "$(echo "$daten" | jq -r .state)" = "OPEN" ] || { echo "::error::PR #$PR ist nicht offen."; exit 1; }
+          [ "$(echo "$daten" | jq -r .baseRefName)" = "main" ] || { echo "::error::PR #$PR zielt nicht auf main."; exit 1; }
+          [ "$(echo "$daten" | jq -r .isCrossRepository)" = "false" ] || { echo "::error::PR #$PR kommt aus einem Fork."; exit 1; }
+          case "$(echo "$daten" | jq -r .author.login)" in
+            github-actions|app/github-actions) ;;
+            *) echo "::error::PR #$PR stammt nicht vom Import-Bot."; exit 1;;
+          esac
+          echo "zweig=$(echo "$daten" | jq -r .headRefName)" >> "$GITHUB_OUTPUT"
+
+      - name: Repository auschecken
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Dateien und Mengen prüfen
+        env:
+          ZWEIG: ${{ steps.pr.outputs.zweig }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main "$ZWEIG"
+          if ! node scripts/publish/daten-automerge.ts "$ZWEIG" origin/main "origin/$ZWEIG" 2> befund.txt; then
+            cat befund.txt
+            {
+              echo "Automatischer Merge angehalten: dieser Daten-PR braucht einen Blick von Hand."
+              echo
+              sed 's/^/- /' befund.txt
+            } > kommentar.md
+            gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body-file kommentar.md
+            echo "::error title=Daten-PR angehalten::$(tr '\n' ' ' < befund.txt)"
+            exit 1
+          fi
+
+      - name: Auf main bringen, prüfen, mergen
+        env:
+          ZWEIG: ${{ steps.pr.outputs.zweig }}
+        run: |
+          set -uo pipefail
+          noetig=(
+            'Lint, Typecheck, Tests, Fixture-Build'
+            'Browser-Smoke'
+            'Abhängigkeiten und Lockfile'
+            'Secret- und Fixture-Audit'
+            'Workflow-Härtung'
+            'Alle Seiten mobil, indexierbare Seiten in sechs Viewports'
+          )
+          anhalten() {
+            gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" \
+              --body "Automatischer Merge angehalten: $1 Der PR bleibt offen. Lauf: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" || true
+            echo "::error title=Daten-PR angehalten::$1"
+            exit 1
+          }
+          kopf() { gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json headRefOid --jq .headRefOid; }
+
+          for versuch in 1 2 3; do
+            echo "Versuch $versuch"
+            stand=$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json mergeStateStatus --jq .mergeStateStatus)
+            if [ "$stand" = "BEHIND" ] || [ "$stand" = "UNKNOWN" ]; then
+              gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$PR/update-branch" >/dev/null 2>&1 || true
+              sleep 10
+            fi
+            sha=$(kopf)
+            echo "Prüfe $sha"
+            for workflow in ci.yml security.yml visual-qa.yml; do
+              gh workflow run "$workflow" --repo "$GITHUB_REPOSITORY" --ref "$ZWEIG"
+            done
+
+            ende=$(( $(date +%s) + 60 * 60 ))
+            while :; do
+              sleep 30
+              [ "$(kopf)" = "$sha" ] || { echo "Neuer Stand im Zweig, von vorn."; continue 2; }
+              laeufe=$(gh api "repos/$GITHUB_REPOSITORY/commits/$sha/check-runs?per_page=100" --jq '.check_runs')
+              offen=0; rot=''
+              for name in "${noetig[@]}"; do
+                ergebnis=$(echo "$laeufe" | jq -r --arg n "$name" \
+                  '[.[] | select(.name == $n)] | sort_by(.started_at) | last | if . == null then "fehlt" elif .status != "completed" then "laeuft" else .conclusion end')
+                case "$ergebnis" in
+                  success) ;;
+                  fehlt|laeuft) offen=1 ;;
+                  *) rot="$rot $name ($ergebnis);" ;;
+                esac
+              done
+              [ -n "$rot" ] && anhalten "Prüfung nicht bestanden:$rot"
+              [ "$offen" -eq 0 ] && break
+              [ "$(date +%s)" -lt "$ende" ] || anhalten 'Die Prüfungen sind nach 60 Minuten nicht fertig.'
+            done
+
+            if gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch --match-head-commit "$sha"; then
+              echo "Gemergt: #$PR"
+              gh workflow run live-check.yml --repo "$GITHUB_REPOSITORY" --ref main || true
+              exit 0
+            fi
+            echo "Merge abgelehnt, vermutlich hat sich main bewegt."
+          done
+          anhalten 'Der Merge ist dreimal gescheitert.'

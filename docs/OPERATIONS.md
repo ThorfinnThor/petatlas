@@ -88,6 +88,16 @@ Zwei Quellen melden dauerhaft `nicht_pruefbar`, und das ist der ehrliche Befund:
 
 Der Lauf **committet nichts**. Würde er den Vergleichsstand selbst fortschreiben, wäre jede Änderung im selben Moment wieder „gesehen“, ohne dass sie jemand gesehen hat. Er ändert auch keine Regel und stößt keinen Build an: eine Reiseregel wird fachlich geprüft, bevor sie gilt.
 
+### Automatischer Merge der Daten-PRs
+
+`ingest-open.yml` (kommunale Hundeflächen) und `sync-awin-fressnapf.yml` / `sync-awin-zooroyal.yml` öffnen ihre Pull Requests mit dem `GITHUB_TOKEN`; solche PRs starten keine Prüfungen. Seit dem 22.10.2026 stößt jeder Import nach dem Öffnen `daten-automerge.yml` an. Der Lauf
+
+1. prüft mit `scripts/publish/daten-automerge.ts` Zweig, geänderte Dateien und Mengen: nur die Dateien des jeweiligen Imports, nie der Gebührenkatalog, kein Rückgang um mehr als ein Viertel;
+2. bringt den Zweig auf den Stand von main, startet CI, Security und Visual-QA darauf und wartet auf alle sechs Prüfungen;
+3. merged bei Grün per Squash und startet `live-check.yml`.
+
+Hält eine Regel oder Prüfung an, bleibt der PR offen, bekommt einen Kommentar mit dem Grund, und der Lauf wird rot (GitHub-Mail). Der Gebührenkatalog wird weiterhin von Hand übernommen.
+
 ## 6. Rebuilds für Produktpreise
 
 Zusätzlicher Workflow `rebuild-commerce.yml`: täglich, beispielsweise `43 4 * * *` UTC. Er enthält keine Händler-Secrets; er löst lediglich den vertrauenswürdigen Cloudflare-Build aus. Dort erfolgt der Feedabruf. Der Workflow wird erst aktiv, wenn mindestens ein Partner und seine Ausgaberechte freigegeben sind.
