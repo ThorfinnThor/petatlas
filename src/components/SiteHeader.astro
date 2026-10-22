@@ -69,7 +69,12 @@ const groups: { label: string; keys: RouteKey[] }[] = [
               </li>
             ))
         }
-        <li><a href={`${home}#ratgeber`}>Ratgeber</a></li>
+        <li>
+          <a
+            href="/de-de/ratgeber/"
+            aria-current={aktuellerPfad === '/de-de/ratgeber/' ? 'page' : undefined}>Ratgeber</a
+          >
+        </li>
         <li>
           <a
             href="/de-de/blog/"
