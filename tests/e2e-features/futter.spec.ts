@@ -30,7 +30,7 @@ test('displays exact declarations and primary source', async ({ page }) => {
   await expect(protein.locator('a')).toHaveAttribute('href', /^https:\/\/www.royalcanin.com\//);
   await expect(page.locator('[data-testid="menge"]')).toContainText('2 kg');
   await expect(page.locator('[data-testid="keine-angebote"]')).toContainText(
-    /[Oo]hne freigegebenen Partnervertrag/,
+    /kein zugeordnetes Händlerangebot/,
   );
 });
 test('does not conflate different pack sizes', async ({ page }) => {
