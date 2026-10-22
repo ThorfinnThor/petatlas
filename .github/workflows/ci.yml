@@ -9,9 +9,6 @@ on:
   pull_request:
   push:
     branches: [main]
-  # Für Daten-PRs des Bots: daten-automerge.yml startet die Prüfkette hier,
-  # weil ein vom GITHUB_TOKEN geöffneter PR keine pull_request-Läufe auslöst.
-  workflow_dispatch:
 
 # Standard ist Lesen. Einzelne Jobs erhöhen nur, was sie wirklich brauchen.
 permissions:

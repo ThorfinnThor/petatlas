@@ -2,8 +2,8 @@
 #
 # Kommunale Hundeflächen (ingest-open.yml) sowie die Awin-Feeds von Fressnapf
 # und ZooRoyal (sync-awin-*.yml) öffnen ihre Pull Requests mit dem
-# GITHUB_TOKEN. Solche PRs lösen bewusst keine pull_request-Läufe aus, und so
-# blieben sie bisher wochenlang liegen. Die Importe starten deshalb nach dem
+# GITHUB_TOKEN. Für solche PRs legt GitHub die pull_request-Läufe zwar an,
+# hält sie aber bis zu einer Freigabe an; so blieben sie wochenlang liegen. Die Importe starten deshalb nach dem
 # Öffnen diesen Lauf (workflow_dispatch darf das GITHUB_TOKEN auslösen).
 #
 # Ablauf:
@@ -11,7 +11,9 @@
 #      Mengen. Der Gebührenkatalog ist nie dabei; ein Einbruch um mehr als ein
 #      Viertel hält den PR an.
 #   2. Der Zweig wird auf den Stand von main gebracht (die Branch-Regeln
-#      verlangen das) und CI, Security und Visual-QA werden darauf gestartet.
+#      verlangen das). GitHub legt für den Bot-PR die pull_request-Läufe von
+#      CI, Security und Visual-QA an, hält sie aber bis zur Freigabe an; dieser
+#      Lauf gibt sie frei und wartet auf sie.
 #   3. Sind alle Prüfungen grün, wird gesquasht gemergt und die
 #      Auslieferungsprüfung (live-check.yml) angestoßen.
 # Bei einem Nein oder einer roten Prüfung bleibt der PR offen, bekommt einen
@@ -128,9 +130,28 @@ jobs:
             fi
             sha=$(kopf)
             echo "Prüfe $sha"
-            for workflow in ci.yml security.yml visual-qa.yml; do
-              gh workflow run "$workflow" --repo "$GITHUB_REPOSITORY" --ref "$ZWEIG"
+            # GitHub legt für Bot-PRs die pull_request-Läufe an, hält sie aber
+            # bis zu einer Freigabe an (action_required). Nur diese Läufe zählen
+            # für die Branch-Regeln; per Dispatch gestartete Läufe am selben
+            # Commit gelten nicht als Prüfungen des PRs. Deshalb freigeben.
+            freigegeben=0
+            for warte in $(seq 1 12); do
+              ids=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$sha&event=pull_request&per_page=50" \
+                --jq '[.workflow_runs[] | select(.status == "action_required" or .conclusion == "action_required") | .id] | .[]')
+              for id in $ids; do
+                if gh api -X POST "repos/$GITHUB_REPOSITORY/actions/runs/$id/approve" >/dev/null; then
+                  echo "Freigegeben: Lauf $id"
+                  freigegeben=$((freigegeben + 1))
+                else
+                  anhalten "Der wartende Prüflauf $id ließ sich nicht freigeben."
+                fi
+              done
+              laufend=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$sha&event=pull_request&per_page=50" \
+                --jq '[.workflow_runs[] | select(.status != "action_required" and .conclusion != "action_required")] | length')
+              [ "$laufend" -ge 3 ] && break
+              sleep 10
             done
+            echo "$freigegeben Läufe freigegeben."
 
             ende=$(( $(date +%s) + 60 * 60 ))
             while :; do
