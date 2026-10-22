@@ -1,0 +1,137 @@
+---
+/**
+ * Übersicht aller Ratgeber. Bisher führte der Menüpunkt „Ratgeber“ nur zu
+ * einem Abschnitt der Startseite, und /de-de/ratgeber/ selbst war eine 404.
+ */
+import { getCollection } from 'astro:content';
+
+import BrandImage from '../../../components/BrandImage.astro';
+import PageIntro from '../../../components/ui/PageIntro.astro';
+import { articlePath } from '../../../features/editorial/paths.ts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const ratgeber = (await getCollection('ratgeber'))
+  .filter((eintrag) => eintrag.data.section === 'guide' && eintrag.data.status === 'published')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'de'));
+
+const datum = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', year: 'numeric' });
+const stand = (eintrag: (typeof ratgeber)[number]): string => eintrag.data.updatedAt;
+---
+
+<BaseLayout
+  title="Ratgeber für Hund und Katze"
+  description="Alle Ratgeber von Dein Haustierportal: Tierarztrechnung, Reise mit Heimtierausweis, Transportbox, Beschäftigung und Spielzeug – mit Quellen und Datenstand."
+  canonicalPfad="/de-de/ratgeber/"
+  weit
+>
+  <PageIntro titel="Ratgeber" eyebrow="Wissen · Hund und Katze" bild="play-dog-alpine-lake">
+    <p>
+      Schritt für Schritt erklärt, mit Quellen und Datenstand: von der Tierarztrechnung über die
+      Reise ins Ausland bis zur Beschäftigung zu Hause.
+    </p>
+    <p>Neue, kürzere Beiträge stehen im <a href="/de-de/blog/">Blog</a>.</p>
+  </PageIntro>
+
+  <ul class="ratgeber" aria-label="Alle Ratgeber">
+    {
+      ratgeber.map((eintrag) => (
+        <li>
+          <a class="ratgeber__karte" href={articlePath(eintrag.data)}>
+            {eintrag.data.image && (
+              <BrandImage
+                name={eintrag.data.image}
+                class="ratgeber__bild"
+                sizes="(max-width: 767px) 100vw, 33vw"
+              />
+            )}
+            <span class="ratgeber__text">
+              <span class="ratgeber__thema">{eintrag.data.topicCluster}</span>
+              <span class="ratgeber__titel">{eintrag.data.title}</span>
+              <span class="ratgeber__beschreibung">{eintrag.data.description}</span>
+              <span class="ratgeber__stand">
+                Stand{' '}
+                <time datetime={stand(eintrag)}>
+                  {datum.format(new Date(`${stand(eintrag)}T00:00:00Z`))}
+                </time>
+              </span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .ratgeber {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-5);
+    margin: 0 0 var(--space-12);
+    padding: 0;
+    list-style: none;
+  }
+
+  .ratgeber li {
+    margin: 0;
+    max-inline-size: none;
+  }
+
+  .ratgeber__karte {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    text-decoration: none;
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .ratgeber__karte:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .ratgeber__karte :global(.ratgeber__bild img) {
+    display: block;
+    inline-size: 100%;
+    block-size: 11rem;
+    object-fit: cover;
+  }
+
+  .ratgeber__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5) var(--space-5);
+  }
+
+  .ratgeber__thema {
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+  }
+
+  .ratgeber__titel {
+    font-size: var(--text-h4);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .ratgeber__beschreibung {
+    color: var(--color-text);
+  }
+
+  .ratgeber__stand {
+    margin-block-start: auto;
+    padding-block-start: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+</style>

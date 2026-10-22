@@ -1,0 +1,99 @@
+---
+/**
+ * Übersicht der Futtervergleiche. /de-de/futter/vergleich/ war bisher eine
+ * 404, obwohl die vier Vergleiche darunter liegen.
+ */
+import PageIntro from '../../../../components/ui/PageIntro.astro';
+import { FUTTER_VERGLEICHE } from '../../../../features/food/comparison-pages.ts';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Futtervergleiche für Hund und Katze"
+  description="Trocken- und Nassfutter für Hund und Katze im Vergleich: Protein und Kosten pro Tag für ein Referenztier, aus deklarierten Herstellerangaben."
+  canonicalPfad="/de-de/futter/vergleich/"
+  weit
+>
+  <PageIntro titel="Futtervergleiche" eyebrow="Futter · Hund und Katze" bild="hero-dog-cat-home">
+    <p>
+      Vier Vergleiche, je mit einem Referenztier: Wie viel Protein und welche Kosten pro Tag ergeben
+      sich aus den deklarierten Angaben? Grundlage ist die <a href="/de-de/futter/">Futtersuche</a>.
+    </p>
+  </PageIntro>
+
+  <ul class="vergleiche" aria-label="Alle Futtervergleiche">
+    {
+      FUTTER_VERGLEICHE.map((seite) => (
+        <li>
+          <a class="vergleich" href={`/de-de/futter/vergleich/${seite.slug}/`}>
+            <span class="vergleich__eyebrow">
+              {seite.species === 'cat' ? 'Katze' : 'Hund'} ·{' '}
+              {seite.format === 'dry' ? 'Trockenfutter' : 'Nassfutter'}
+            </span>
+            <span class="vergleich__titel">{seite.titel.split(':')[0]}</span>
+            <span class="vergleich__frage">{seite.beschreibung}</span>
+            <span class="vergleich__meta">
+              Referenz: {seite.referenzLabel} <span aria-hidden="true">→</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .vergleiche {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-4);
+    margin: 0 0 var(--space-12);
+    padding: 0;
+    list-style: none;
+  }
+
+  .vergleiche li {
+    margin: 0;
+    max-inline-size: none;
+  }
+
+  .vergleich {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    block-size: 100%;
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .vergleich:hover {
+    border-color: var(--color-primary);
+  }
+
+  .vergleich__eyebrow {
+    color: var(--color-primary);
+    font-size: var(--text-small);
+    font-weight: 700;
+  }
+
+  .vergleich__titel {
+    font-size: var(--text-h4);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .vergleich__frage {
+    color: var(--color-text);
+  }
+
+  .vergleich__meta {
+    margin-block-start: auto;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+</style>
