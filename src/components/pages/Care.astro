@@ -14,7 +14,7 @@ import { defaultMarket, withEnabledFeatures } from '../../domain/market.ts';
 import { devFeatureOverrides } from '../../../config/build.ts';
 import { subroutePath } from '../../lib/routes.ts';
 import { careGuide } from '../../features/care/guides.ts';
-import { pflegeTaxonomie } from '../../features/care/taxonomy.ts';
+import { pflegePfad, pflegeTaxonomie } from '../../features/care/taxonomy.ts';
 
 const markt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const taxonomie = pflegeTaxonomie();
@@ -65,13 +65,18 @@ const taxonomie = pflegeTaxonomie();
         <div class="kategorie__inhalt">
           <p class="kategorie__kicker">{careGuide(kategorie.categoryId)?.kicker}</p>
           <h3>
-            <a href={subroutePath(markt, 'care', kategorie.categoryId)}>{kategorie.label}</a>
+            <a href={subroutePath(markt, 'care', pflegePfad(kategorie.categoryId))}>
+              {kategorie.label}
+            </a>
           </h3>
           <p>{kategorie.description}</p>
           <p class="hilfe">
             Auswahl nach: {kategorie.matchAttributes.map(merkmalLabel).join(', ')}.
           </p>
-          <a class="kategorie__aktion" href={subroutePath(markt, 'care', kategorie.categoryId)}>
+          <a
+            class="kategorie__aktion"
+            href={subroutePath(markt, 'care', pflegePfad(kategorie.categoryId))}
+          >
             Auswahlhilfe öffnen →
           </a>
         </div>

@@ -22,6 +22,25 @@ import type {
 const PFLEGE = care as unknown as Taxonomy;
 const SPIELZEUG = toys as unknown as Taxonomy;
 
+/**
+ * Deutsche Adressen der Pflegekategorien. Die Kategorie-IDs bleiben englisch,
+ * weil Daten, Zuordnungen und Partner-Tracking an ihnen hängen; nur der Pfad
+ * unter /de-de/pflege/ ist deutsch. Die alten Pfade leiten in public/_redirects
+ * dauerhaft (308) weiter.
+ */
+const PFLEGE_PFADE: Readonly<Record<string, string>> = {
+  'grooming-brush': 'buersten-kaemme',
+  'grooming-claw': 'krallenpflege',
+  'dental-care': 'zahnpflege',
+  'mobility-aid': 'mobilitaet',
+  'coat-care-textile': 'pflegetextilien',
+};
+
+/** Der Pfadteil einer Pflegekategorie unter /de-de/pflege/. */
+export function pflegePfad(categoryId: string): string {
+  return PFLEGE_PFADE[categoryId] ?? categoryId;
+}
+
 export function pflegeTaxonomie(): Taxonomy {
   return PFLEGE;
 }
