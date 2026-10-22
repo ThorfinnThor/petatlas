@@ -188,6 +188,10 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
       for (const karte of karten) karte.hidden = true;
       treffer.slice(0, sichtbar).forEach((karte) => (karte.hidden = false));
       if (mehrZeile) mehrZeile.hidden = treffer.length <= sichtbar;
+      if (mehr) {
+        const rest = treffer.length - sichtbar;
+        mehr.textContent = rest > 0 ? `Mehr anzeigen (${rest} weitere)` : 'Mehr anzeigen';
+      }
     };
     if (filterLeiste) {
       filterLeiste.hidden = false;
@@ -334,6 +338,7 @@ const hatBeideArten = new Set(products.map((p) => p.species)).size > 1;
   }
 
   .feed-catalog__mehr {
+    max-inline-size: none;
     margin-block: var(--space-5) 0;
     text-align: center;
   }
