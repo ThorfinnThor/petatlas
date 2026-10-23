@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runId": "2026-10-30-kosten-longtail",
   "createdAt": "2026-10-23T16:00:00.000Z",
-  "stage": "review",
+  "stage": "published",
   "candidates": [
     {
       "slug": "zahnreinigung-zahnstein-hund-katze-kosten",
@@ -14,7 +14,7 @@
         "content-data/cost-scenarios/zahnsteinentfernung-hund.json"
       ],
       "risk": "medium",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Google-Vorschläge: über 30 Varianten zu Zahnreinigung und Zahnsteinentfernung, oft „mit Narkose“; Search Console: „zahnreinigung hund braunschweig“; GOT 931 bis 933."
     },
     {
@@ -24,7 +24,7 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "medium",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Google-Vorschläge: „katze zahn ziehen narkose kosten“, „tierarztkosten zähne ziehen hund“; Search Console: „got 951“, „got 955“."
     },
     {
@@ -34,7 +34,7 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "medium",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Google-Vorschläge: „tierarztkosten sonntag“, „am wochenende“, „feiertag“, „notdienst“; Rechtsgrundlage § 2 Abs. 2 und § 4 GOT."
     },
     {
@@ -44,7 +44,7 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "low",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Google-Vorschläge: „röntgen katze kosten mit narkose“, „kosten röntgen hund bein“; Search Console: „katze röntgen kosten“; GOT 165 bis 168, 173."
     },
     {
@@ -54,7 +54,7 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "low",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Google-Vorschläge: „ultraschall katze kosten blase“, „herzultraschall hund kosten got“; GOT 180, 521, 650, 651."
     },
     {
@@ -67,7 +67,7 @@
         "content-data/cost-scenarios/blutbild-katze.json"
       ],
       "risk": "medium",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Google-Vorschläge: „blutbild katze kosten nierenwerte“, „großes blutbild hund kosten“; GOT 608 bis 627; Fremdlabor ausdrücklich ausgenommen."
     },
     {
@@ -77,7 +77,7 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "high",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Google-Vorschläge: „kreuzband op hund kosten“; Search Console: „meniskusresektion“; GOT 874 bis 876, OP-Verfahren über § 8 GOT eingeordnet."
     },
     {
@@ -87,21 +87,31 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "high",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Google-Vorschläge: „kaiserschnitt hund kosten notdienst“, „not kaiserschnitt katze kosten“; GOT 590, 591, 553, 554."
     }
   ],
   "checks": {
     "sources": "passed",
     "editorial": "passed",
-    "technical": "pending",
+    "technical": "passed",
     "indexBudget": "passed"
   },
-  "publishedSlugs": [],
+  "publishedSlugs": [
+    "zahnreinigung-zahnstein-hund-katze-kosten",
+    "zahn-ziehen-hund-katze-kosten",
+    "tierarzt-notdienst-wochenende-kosten",
+    "roentgen-hund-katze-kosten",
+    "ultraschall-hund-katze-kosten",
+    "blutbild-hund-katze-kosten",
+    "kreuzband-op-hund-kosten",
+    "kaiserschnitt-hund-katze-kosten"
+  ],
   "notes": [
     "Priorität A1 bis A8 aus docs/seo/longtail-analyse-2026-10-23.md (Search Console und Google-Autovervollständigung vom 23.10.2026).",
     "Alle Beträge per Skript aus data-snapshots/got/got-2022.json mit 19 Prozent Umsatzsteuer berechnet; Notdienst-Zeiträume aus § 2 Abs. 2 GOT, Notdienstgebühr aus § 4 GOT, Wegegeld aus § 10 GOT.",
     "Status review, indexable false: frühestens ab 30.10.2026 veröffentlichen (höchstens zehn neue Seiten pro Woche, docs/CONTENT_STANDARD.md) und nur nach Freigabe durch den Betreiber.",
-    "Querverweise zwischen diesen acht Artikeln werden bei der Veröffentlichung ergänzt, weil Links nur auf veröffentlichte Artikel zeigen dürfen."
+    "Querverweise zwischen den acht Artikeln und Einträge im Tabellen-Artikel wurden bei der Veröffentlichung ergänzt.",
+    "Betreiber hat am 23.10.2026 alle acht Artikel freigegeben (docs/reviews/editorial-2026-10-30-final-approval.md); Veröffentlichung am 30.10.2026."
   ]
 }

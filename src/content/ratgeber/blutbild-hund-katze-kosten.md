@@ -6,7 +6,7 @@ intro: "Bei einer Blutuntersuchung stehen auf der Tierarztrechnung oft mehrere P
 slug: "blutbild-hund-katze-kosten"
 publishedAt: "2026-10-30"
 updatedAt: "2026-10-30"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten eines Blutbilds oder einer Blutuntersuchung bei Hund oder Katze nach GOT einschätzen"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -18,12 +18,14 @@ dataFiles:
   - "data-snapshots/got/got-2022.json"
   - "content-data/cost-scenarios/blutbild-katze.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
+  - "zahnreinigung-zahnstein-hund-katze-kosten"
+  - "ultraschall-hund-katze-kosten"
   - "got-faktor-eins-bis-drei"
   - "tierarztrechnung-zusammensetzung"
 affiliateContext: "none"
@@ -77,7 +79,7 @@ Deshalb kann ein umfangreiches Profil aus dem Fremdlabor deutlich mehr kosten al
 
 ## Vor einer Narkose
 
-Vor Operationen oder einer Zahnreinigung schlagen viele Praxen eine Blutuntersuchung vor, um die Narkose besser planen zu können. Auf der Rechnung erscheint sie mit denselben Positionen wie oben.
+Vor Operationen oder einer [Zahnreinigung](/de-de/blog/zahnreinigung-zahnstein-hund-katze-kosten/) schlagen viele Praxen eine Blutuntersuchung vor, um die Narkose besser planen zu können. Auf der Rechnung erscheint sie mit denselben Positionen wie oben.
 
 ## So liest du die Rechnung
 

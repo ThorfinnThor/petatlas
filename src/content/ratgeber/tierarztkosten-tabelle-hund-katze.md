@@ -5,7 +5,7 @@ description: "Stand 2026: Untersuchung, Impfung, Röntgen, Narkose, Kastration, 
 intro: "Wer wissen will, was eine Leistung beim Tierarzt kostet, findet die Antwort in der Gebührenordnung für Tierärzte (GOT). Diese Tabelle zeigt die amtlichen Sätze von siebzehn Leistungen, die bei Hund und Katze häufig vorkommen, umgerechnet mit 19 Prozent Umsatzsteuer und im üblichen Rahmen vom einfachen bis zum dreifachen Satz. Darunter steht, was in diesen Beträgen nicht enthalten ist und wie der Notdienst rechnet."
 slug: "tierarztkosten-tabelle-hund-katze"
 publishedAt: "2026-10-23"
-updatedAt: "2026-10-23"
+updatedAt: "2026-10-30"
 status: "published"
 primaryIntent: "Die Kosten häufiger Tierarztleistungen für Hund und Katze in einer Tabelle nachschlagen und richtig lesen"
 animal: "both"
@@ -80,7 +80,7 @@ Die GOT ist keine Festpreisliste. Im regulären Betrieb rechnet die Praxis inner
 
 Im tierärztlichen Notdienst gilt ein anderer Rahmen: mindestens der zweifache und höchstens der vierfache Satz. Dazu kommt eine Notdienstgebühr von 50 Euro netto, mit Umsatzsteuer 59,50 Euro. Sie fällt einmal je Behandlungsanlass an, nicht je Tier.
 
-Für die allgemeine Untersuchung heißt das: Statt 28,11 bis 84,32 Euro stehen im Notdienst 56,22 bis 112,43 Euro für die Untersuchung auf der Rechnung, plus die Notdienstgebühr. Ob ein Besuch als Notdienst abgerechnet wird, hängt vom Zeitpunkt und der Situation ab; das sagt dir die Praxis.
+Welche Zeiten genau als Nacht, Wochenende und Feiertag gelten, erklärt der Artikel zum [Tierarzt-Notdienst](/de-de/blog/tierarzt-notdienst-wochenende-kosten/). Für die allgemeine Untersuchung heißt das: Statt 28,11 bis 84,32 Euro stehen im Notdienst 56,22 bis 112,43 Euro für die Untersuchung auf der Rechnung, plus die Notdienstgebühr. Ob ein Besuch als Notdienst abgerechnet wird, hängt vom Zeitpunkt und der Situation ab; das sagt dir die Praxis.
 
 ## Kosten einzelner Behandlungen
 
@@ -95,6 +95,14 @@ Für einige Behandlungen gibt es eigene Artikel mit allen Positionen, die auf de
 - [Unterkiefersymphysiolyse bei der Katze](/de-de/blog/unterkiefersymphysiolyse-katze-kosten/)
 - [Magendrehung beim Hund](/de-de/blog/magendrehung-hund-kosten/)
 - [Hund oder Katze einschläfern lassen](/de-de/blog/hund-katze-einschlaefern-kosten/)
+- [Zahnreinigung mit Narkose](/de-de/blog/zahnreinigung-zahnstein-hund-katze-kosten/)
+- [Zahn ziehen](/de-de/blog/zahn-ziehen-hund-katze-kosten/)
+- [Röntgen](/de-de/blog/roentgen-hund-katze-kosten/)
+- [Ultraschall und Herzultraschall](/de-de/blog/ultraschall-hund-katze-kosten/)
+- [Blutbild](/de-de/blog/blutbild-hund-katze-kosten/)
+- [Kreuzband-OP beim Hund](/de-de/blog/kreuzband-op-hund-kosten/)
+- [Kaiserschnitt bei Hündin und Katze](/de-de/blog/kaiserschnitt-hund-katze-kosten/)
+- [Tierarzt am Wochenende, nachts und an Feiertagen](/de-de/blog/tierarzt-notdienst-wochenende-kosten/)
 
 ## So rechnest du deine eigene Leistung aus
 

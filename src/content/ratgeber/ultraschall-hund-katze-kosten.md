@@ -6,7 +6,7 @@ intro: "Für Ultraschalluntersuchungen kennt die Gebührenordnung für Tierärzt
 slug: "ultraschall-hund-katze-kosten"
 publishedAt: "2026-10-30"
 updatedAt: "2026-10-30"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten einer Ultraschalluntersuchung bei Hund oder Katze nach GOT einschätzen, auch für Herz und Trächtigkeit"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,14 +17,16 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
+  - "roentgen-hund-katze-kosten"
+  - "blutbild-hund-katze-kosten"
   - "got-faktor-eins-bis-drei"
-  - "tierarztrechnung-zusammensetzung"
+  - "kaiserschnitt-hund-katze-kosten"
 affiliateContext: "none"
 image: "cat-window"
 editorialLinks:
@@ -65,7 +67,7 @@ Die allgemeine Untersuchung (Nr. 16) kostet 28,11 Euro bis 84,32 Euro. Ob eine U
 
 ## Ultraschall oder Röntgen: der Kostenvergleich
 
-Oft fragen sich Halter, ob Ultraschall oder Röntgen teurer ist. Nach GOT liegen beide nah beieinander: Ein Ultraschall nach Nr. 180 kostet 70,11 Euro bis 210,34 Euro, zwei Röntgenaufnahmen nach Nr. 166 zusammen 63,14 Euro bis 189,42 Euro. Welche Untersuchung sinnvoll ist, hängt von der Fragestellung ab, nicht vom Preis. Manchmal werden auch beide gemacht.
+Oft fragen sich Halter, ob Ultraschall oder [Röntgen](/de-de/blog/roentgen-hund-katze-kosten/) teurer ist. Nach GOT liegen beide nah beieinander: Ein Ultraschall nach Nr. 180 kostet 70,11 Euro bis 210,34 Euro, zwei Röntgenaufnahmen nach Nr. 166 zusammen 63,14 Euro bis 189,42 Euro. Welche Untersuchung sinnvoll ist, hängt von der Fragestellung ab, nicht vom Preis. Manchmal werden auch beide gemacht.
 
 ## Überweisung an eine Fachpraxis
 
@@ -73,7 +75,7 @@ Für Herzultraschall überweisen viele Praxen an Kolleginnen und Kollegen mit Sc
 
 ## Im Notdienst
 
-Im tierärztlichen Notdienst gilt der zweifache bis vierfache Satz plus eine Notdienstgebühr von 59,50 Euro mit Umsatzsteuer. Untersuchung und Ultraschall nach Nr. 180 kosten dann 255,95 Euro bis 452,39 Euro.
+Im [tierärztlichen Notdienst](/de-de/blog/tierarzt-notdienst-wochenende-kosten/) gilt der zweifache bis vierfache Satz plus eine Notdienstgebühr von 59,50 Euro mit Umsatzsteuer. Untersuchung und Ultraschall nach Nr. 180 kosten dann 255,95 Euro bis 452,39 Euro.
 
 ## So liest du die Rechnung
 

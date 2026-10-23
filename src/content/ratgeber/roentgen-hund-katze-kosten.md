@@ -6,7 +6,7 @@ intro: "Röntgenaufnahmen werden nach der Gebührenordnung für Tierärzte (GOT)
 slug: "roentgen-hund-katze-kosten"
 publishedAt: "2026-10-30"
 updatedAt: "2026-10-30"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten von Röntgenaufnahmen bei Hund oder Katze nach GOT einschätzen, auch mit Sedation"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,12 +17,14 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
+  - "ultraschall-hund-katze-kosten"
+  - "kreuzband-op-hund-kosten"
   - "got-faktor-eins-bis-drei"
   - "tierarztrechnung-zusammensetzung"
 affiliateContext: "none"
@@ -72,7 +74,7 @@ Für Aufnahmen des Magen-Darm-Trakts kann ein Kontrastmittel gegeben werden, dam
 
 ## Im Notdienst
 
-Nachts, am Wochenende oder an Feiertagen gilt im tierärztlichen Notdienst der zweifache bis vierfache Satz plus eine Notdienstgebühr von 59,50 Euro mit Umsatzsteuer. Untersuchung und zwei Aufnahmen kosten dann 242,00 Euro bis 424,49 Euro. Im [Tierarztkostenrechner](/de-de/tierarztkosten/) kannst du den Notdienst-Rahmen auswählen.
+Nachts, am Wochenende oder an Feiertagen gilt im [tierärztlichen Notdienst](/de-de/blog/tierarzt-notdienst-wochenende-kosten/) der zweifache bis vierfache Satz plus eine Notdienstgebühr von 59,50 Euro mit Umsatzsteuer. Untersuchung und zwei Aufnahmen kosten dann 242,00 Euro bis 424,49 Euro. Im [Tierarztkostenrechner](/de-de/tierarztkosten/) kannst du den Notdienst-Rahmen auswählen.
 
 ## Warum oft zwei Aufnahmen gemacht werden
 

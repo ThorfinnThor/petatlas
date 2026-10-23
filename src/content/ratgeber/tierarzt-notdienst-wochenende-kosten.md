@@ -6,7 +6,7 @@ intro: "Am Wochenende, nachts und an Feiertagen rechnen Tierärzte im Notdienst 
 slug: "tierarzt-notdienst-wochenende-kosten"
 publishedAt: "2026-10-30"
 updatedAt: "2026-10-30"
-status: "review"
+status: "published"
 primaryIntent: "Verstehen, wann der tierärztliche Notdienst gilt und was ein Tierarztbesuch am Wochenende, nachts oder an Feiertagen nach GOT kostet"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,7 +17,7 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
@@ -25,6 +25,7 @@ relatedTools:
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
   - "got-faktor-eins-bis-drei"
+  - "kaiserschnitt-hund-katze-kosten"
   - "magendrehung-hund-kosten"
   - "hund-katze-einschlaefern-kosten"
 affiliateContext: "none"
@@ -86,7 +87,7 @@ Kommt die Tierärztin oder der Tierarzt nachts zu dir nach Hause, kommt zum Haus
 
 ## Bei größeren Behandlungen
 
-Bei Operationen im Notdienst gilt der höhere Rahmen für jede einzelne Position. Bei mehreren Positionen kommen deshalb schnell große Beträge zusammen. Beispiele findest du in den Artikeln zur [Magendrehung beim Hund](/de-de/blog/magendrehung-hund-kosten/) und zum [Einschläfern von Hund oder Katze](/de-de/blog/hund-katze-einschlaefern-kosten/).
+Bei Operationen im Notdienst gilt der höhere Rahmen für jede einzelne Position. Bei mehreren Positionen kommen deshalb schnell große Beträge zusammen. Beispiele findest du in den Artikeln zum [Kaiserschnitt](/de-de/blog/kaiserschnitt-hund-katze-kosten/), zur [Magendrehung beim Hund](/de-de/blog/magendrehung-hund-kosten/) und zum [Einschläfern von Hund oder Katze](/de-de/blog/hund-katze-einschlaefern-kosten/).
 
 ## Was du tun kannst
 

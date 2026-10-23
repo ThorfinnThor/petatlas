@@ -6,7 +6,7 @@ intro: "Ein Kreuzbandriss gehört zu den häufigen Gründen für eine Operation 
 slug: "kreuzband-op-hund-kosten"
 publishedAt: "2026-10-30"
 updatedAt: "2026-10-30"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten einer Kreuzband-Operation beim Hund nach GOT einschätzen, auch mit Meniskusresektion"
 animal: "dog"
 topicCluster: "Tierarztkosten"
@@ -17,13 +17,15 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
   - "insurance"
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
+  - "roentgen-hund-katze-kosten"
+  - "blutbild-hund-katze-kosten"
   - "got-faktor-eins-bis-drei"
   - "tierarztrechnung-zusammensetzung"
 affiliateContext: "none"
@@ -62,7 +64,7 @@ Für die Kreuzband-OP beim Hund gibt es mehrere Verfahren. Die GOT nennt sie nic
 | 345 | Intubationsnarkose, endotracheale mit Spontanatmung | 87,49 € | 262,47 € |
 | 350 | Monitoring mit mehr als zwei Parametern | 70,42 € | 211,27 € |
 
-Die Nr. 166 wird je Aufnahme berechnet. Röntgenaufnahmen können zur Planung der Operation und zur Kontrolle danach gehören.
+Die Nr. 166 wird je Aufnahme berechnet. [Röntgenaufnahmen](/de-de/blog/roentgen-hund-katze-kosten/) können zur Planung der Operation und zur Kontrolle danach gehören.
 
 ## Drei Rechenbeispiele
 

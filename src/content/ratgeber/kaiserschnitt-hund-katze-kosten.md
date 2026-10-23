@@ -6,7 +6,7 @@ intro: "Ein Kaiserschnitt ist oft ein Notfall und findet dann nachts oder am Woc
 slug: "kaiserschnitt-hund-katze-kosten"
 publishedAt: "2026-10-30"
 updatedAt: "2026-10-30"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten eines Kaiserschnitts bei Hündin oder Katze nach GOT einschätzen, auch im Notdienst"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,14 +17,16 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
   - "insurance"
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
+  - "tierarzt-notdienst-wochenende-kosten"
   - "kastration-huendin-katze-ovariohysterektomie-kosten"
+  - "ultraschall-hund-katze-kosten"
   - "got-faktor-eins-bis-drei"
 affiliateContext: "none"
 image: "dog-cat-cuddle"
@@ -80,7 +82,7 @@ Beide Beispiele enthalten Untersuchung, eine Röntgenaufnahme, Inhalationsnarkos
 | Hündin (Nr. 590) | 1.077,65 € | 2.095,78 € |
 | Kätzin (Nr. 591) | 984,59 € | 1.909,67 € |
 
-Welche Zeiten als Notdienst gelten, regelt § 2 Absatz 2 GOT: nachts von 18 bis 8 Uhr, am Wochenende von Freitag 18 Uhr bis Montag 8 Uhr und ganztägig an Feiertagen.
+Welche Zeiten als [Notdienst](/de-de/blog/tierarzt-notdienst-wochenende-kosten/) gelten, regelt § 2 Absatz 2 GOT: nachts von 18 bis 8 Uhr, am Wochenende von Freitag 18 Uhr bis Montag 8 Uhr und ganztägig an Feiertagen.
 
 ## Geburtshilfe ohne Operation
 

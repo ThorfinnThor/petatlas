@@ -6,7 +6,7 @@ intro: "Für die Zahnsteinentfernung hat die Gebührenordnung für Tierärzte (G
 slug: "zahnreinigung-zahnstein-hund-katze-kosten"
 publishedAt: "2026-10-30"
 updatedAt: "2026-10-30"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten einer Zahnreinigung oder Zahnsteinentfernung bei Hund oder Katze mit Narkose nach GOT einschätzen"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -18,13 +18,15 @@ dataFiles:
   - "data-snapshots/got/got-2022.json"
   - "content-data/cost-scenarios/zahnsteinentfernung-hund.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
   - "insurance"
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
+  - "zahn-ziehen-hund-katze-kosten"
+  - "blutbild-hund-katze-kosten"
   - "got-faktor-eins-bis-drei"
   - "injektion-subkutan-intramuskulaer-hund-katze-kosten"
 affiliateContext: "none"
@@ -74,9 +76,9 @@ Die Beispiele sind Annahmen, keine Vorgabe der GOT. Eine Praxis kann andere Nark
 
 ## Was oft zusätzlich dazukommt
 
-- **Gezogene Zähne:** Muss ein Zahn entfernt werden, steht die Zahnextraktion als eigene Position auf der Rechnung, bei mehreren Zähnen gegebenenfalls mehrfach.
+- **Gezogene Zähne:** Muss ein Zahn entfernt werden, steht die Zahnextraktion als eigene Position auf der Rechnung, bei mehreren Zähnen gegebenenfalls mehrfach. Was das kostet, zeigt der Artikel [Zahn ziehen bei Hund oder Katze](/de-de/blog/zahn-ziehen-hund-katze-kosten/).
 - **Röntgen der Zähne:** Röntgenaufnahmen werden gesondert berechnet.
-- **Blutuntersuchung vor der Narkose:** Auch sie ist eine eigene Position.
+- **Blutuntersuchung vor der Narkose:** Auch sie ist eine eigene Position; die Beträge stehen im Artikel zum [Blutbild](/de-de/blog/blutbild-hund-katze-kosten/).
 - **Medikamente und Material:** Narkosemittel, Schmerzmittel und Verbrauchsmaterial stehen nicht in der GOT und werden zusätzlich berechnet.
 - **Venenzugang und Infusion,** wenn die Praxis sie einsetzt.
 

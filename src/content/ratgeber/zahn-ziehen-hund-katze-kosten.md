@@ -6,7 +6,7 @@ intro: "Für das Ziehen eines Zahns hat die Gebührenordnung für Tierärzte (GO
 slug: "zahn-ziehen-hund-katze-kosten"
 publishedAt: "2026-10-30"
 updatedAt: "2026-10-30"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten einer Zahnextraktion bei Hund oder Katze nach GOT einschätzen"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,13 +17,15 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
   - "insurance"
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
+  - "zahnreinigung-zahnstein-hund-katze-kosten"
+  - "blutbild-hund-katze-kosten"
   - "got-faktor-eins-bis-drei"
   - "tierarztrechnung-zusammensetzung"
 affiliateContext: "none"
@@ -68,7 +70,7 @@ Beide Beispiele enthalten Untersuchung, Inhalationsnarkose, Intubation und Monit
 | Ein Zahn, einfache Extraktion (Nr. 951) | 271,50 € | 814,49 € |
 | Reinigung und drei Zähne | 406,29 € | 1.218,86 € |
 
-Das zweite Beispiel enthält zusätzlich eine Zahnreinigung (Nr. 932), zwei einfache und eine komplizierte Extraktion (zweimal Nr. 951, Nr. 955). Es zeigt einen häufigen Ablauf: Während einer Zahnreinigung fällt auf, dass Zähne gezogen werden müssen. Die Narkose wird dann nur einmal berechnet, die Extraktionen kommen dazu.
+Das zweite Beispiel enthält zusätzlich eine [Zahnreinigung](/de-de/blog/zahnreinigung-zahnstein-hund-katze-kosten/) (Nr. 932), zwei einfache und eine komplizierte Extraktion (zweimal Nr. 951, Nr. 955). Es zeigt einen häufigen Ablauf: Während einer Zahnreinigung fällt auf, dass Zähne gezogen werden müssen. Die Narkose wird dann nur einmal berechnet, die Extraktionen kommen dazu.
 
 ## Erhalten statt ziehen
 
