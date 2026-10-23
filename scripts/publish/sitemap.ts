@@ -66,6 +66,42 @@ export function baueSitemap(seiten: readonly Seite[], baseUrl: string): string {
   ].join('\n');
 }
 
+/**
+ * Vorübergehende Sitemap für Seiten, die am 19.10.2026 auf `noindex` gesetzt
+ * wurden (docs/reviews/seo-index-concentration-2026-10-19.md). Google crawlt
+ * die Domain selten; ohne Anstoß blieben rund 1.100 dieser Seiten noch Wochen
+ * im Index. Eine Sitemap mit Änderungsdatum lässt Google sie gezielt erneut
+ * abrufen, das `noindex` sehen und sie entfernen. Sie steht nicht in
+ * robots.txt, wird in der Search Console eingereicht und entfällt, sobald die
+ * Seiten aus dem Index sind (`ENTFERNT_SITEMAP_AKTIV`).
+ */
+export const ENTFERNT_SITEMAP_AKTIV = true;
+export const NOINDEX_SEIT = '2026-10-19';
+const ENTFERNT_BEREICHE = ['/de-de/tierarztkosten/', '/de-de/tierarzt-karte/', '/de-de/futter/'];
+
+export function entfernteSeiten(seiten: readonly Seite[]): readonly Seite[] {
+  return seiten.filter(
+    (seite) =>
+      !seite.indexierbar &&
+      seite.pfad.endsWith('/') &&
+      ENTFERNT_BEREICHE.some((bereich) => seite.pfad.startsWith(bereich) && seite.pfad !== bereich),
+  );
+}
+
+export function baueEntferntSitemap(seiten: readonly Seite[], baseUrl: string): string {
+  const eintraege = entfernteSeiten(seiten).map(
+    (seite) =>
+      `  <url><loc>${new URL(seite.pfad, baseUrl).toString()}</loc><lastmod>${NOINDEX_SEIT}</lastmod></url>`,
+  );
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...eintraege,
+    '</urlset>',
+    '',
+  ].join('\n');
+}
+
 export function baueRobots(indexierbar: boolean, baseUrl: string): string {
   if (!indexierbar) {
     return [
@@ -134,6 +170,16 @@ function main(): number {
   }
 
   writeFileSync(join(OUT_DIR, 'sitemap.xml'), baueSitemap(seiten, build.baseUrl), 'utf8');
+  if (ENTFERNT_SITEMAP_AKTIV) {
+    writeFileSync(
+      join(OUT_DIR, 'sitemap-entfernt.xml'),
+      baueEntferntSitemap(seiten, build.baseUrl),
+      'utf8',
+    );
+    console.log(
+      `sitemap-entfernt.xml geschrieben: ${entfernteSeiten(seiten).length} Seiten mit noindex seit ${NOINDEX_SEIT}.`,
+    );
+  }
   console.log(
     `sitemap.xml geschrieben: ${indexierbare.length} von ${seiten.length} Seiten aufgenommen, ` +
       `${seiten.length - indexierbare.length} durch noindex ausgeschlossen.`,
