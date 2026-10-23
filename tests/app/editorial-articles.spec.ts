@@ -10,6 +10,10 @@ const BLOG_ARTICLES = [
   '/de-de/blog/got-faktor-eins-bis-drei/',
   '/de-de/blog/allgemeine-untersuchung-hund-rechnung/',
   '/de-de/blog/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden/',
+  '/de-de/blog/tierarztkosten-tabelle-hund-katze/',
+  '/de-de/blog/hund-katze-einschlaefern-kosten/',
+  '/de-de/blog/kater-kryptorchismus-kastration-kosten/',
+  '/de-de/blog/magendrehung-hund-kosten/',
 ] as const;
 
 for (const path of PILOTS) {
