@@ -243,6 +243,10 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
     '/de-de/blog/alleinfuttermittel-ergaenzungsfuttermittel-unterscheiden/',
     '/de-de/ratgeber/reise-vorbereiten/',
     '/de-de/ratgeber/eu-heimtierausweis-pruefen/',
+    '/de-de/blog/tierarztkosten-tabelle-hund-katze/',
+    '/de-de/blog/hund-katze-einschlaefern-kosten/',
+    '/de-de/blog/kater-kryptorchismus-kastration-kosten/',
+    '/de-de/blog/magendrehung-hund-kosten/',
   ].includes(pfad);
   const istErgaenzung = pfad === '/de-de/ergaenzungsfuttermittel/';
   const istProduktOderRatgeber = istRatgeber || /^\/de-de\/(?:futter|pflege)\/[^/]+\/$/.test(pfad);

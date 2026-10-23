@@ -277,4 +277,53 @@ const formatDate = (date: string): string =>
       columns: 1;
     }
   }
+
+  /* Kostentabellen mit mehreren Betragsspalten sind auf schmalen Handys breiter
+     als der Bildschirm. Dann scrollt nur die Tabelle, nie die Seite; Beträge
+     brechen nicht zwischen Zahl und Euro-Zeichen um. */
+  .article-body :global(table) {
+    display: block;
+    max-inline-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .article-body :global(.tabelle-scroll) {
+    max-inline-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .article-body :global(table.im-scrollbereich) {
+    display: table;
+    overflow: visible;
+  }
+
+  .article-body :global(td),
+  .article-body :global(th) {
+    white-space: nowrap;
+  }
+
+  .article-body :global(td:nth-child(2)),
+  .article-body :global(th:nth-child(2)) {
+    min-inline-size: 12rem;
+    white-space: normal;
+  }
 </style>
+
+<script>
+  // Überlaufende Tabellen in einen benannten, per Tastatur erreichbaren
+  // Scrollbereich legen (axe: scrollable-region-focusable). Die Tabelle selbst
+  // behält ihre Rolle; ohne Skript scrollt sie als Block.
+  for (const tabelle of document.querySelectorAll<HTMLTableElement>('.article-body table')) {
+    if (tabelle.scrollWidth <= tabelle.clientWidth + 1) continue;
+    const bereich = document.createElement('div');
+    bereich.className = 'tabelle-scroll';
+    bereich.tabIndex = 0;
+    bereich.setAttribute('role', 'region');
+    bereich.setAttribute('aria-label', 'Tabelle, waagerecht scrollbar');
+    tabelle.before(bereich);
+    bereich.append(tabelle);
+    tabelle.classList.add('im-scrollbereich');
+  }
+</script>

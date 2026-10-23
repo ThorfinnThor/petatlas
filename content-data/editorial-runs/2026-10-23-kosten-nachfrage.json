@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-10-23-kosten-nachfrage",
+  "createdAt": "2026-10-23T08:00:00.000Z",
+  "stage": "published",
+  "candidates": [
+    {
+      "slug": "tierarztkosten-tabelle-hund-katze",
+      "question": "Was kosten häufige Tierarztleistungen für Hund und Katze nach GOT, als Tabelle?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "medium",
+      "decision": "published",
+      "reason": "Search Console 22.09.–20.10.2026: „tierarztkosten hund tabelle“ und „tierarzt kosten katze tabelle“ mit Impressionen auf Position 90 bis 92; die Tabelle berechnet amtliche Sätze mit Umsatzsteuer."
+    },
+    {
+      "slug": "hund-katze-einschlaefern-kosten",
+      "question": "Welche Kosten entstehen nach GOT, wenn Hund oder Katze eingeschläfert werden?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "high",
+      "decision": "published",
+      "reason": "Search Console: „euthanasie hund kosten“ auf Position 4 bis dahin über eine Nutztier-GOT-Seite; eigener Artikel mit Position 208, Hausbesuch, Notdienst und klarer Grenze zur Einäscherung."
+    },
+    {
+      "slug": "kater-kryptorchismus-kastration-kosten",
+      "question": "Was kostet die Kastration eines kryptorchiden Katers im Vergleich zur normalen Kastration?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": [
+        "data-snapshots/got/got-2022.json",
+        "content-data/cost-scenarios/kastration-kater.json"
+      ],
+      "risk": "medium",
+      "decision": "published",
+      "reason": "Search Console: „kryptorchismus kater op kosten“ mit Impressionen auf Position 45; Vergleich der GOT-Positionen 378, 383 und 386 mit Rechenbeispielen."
+    },
+    {
+      "slug": "magendrehung-hund-kosten",
+      "question": "Was kostet eine Magendrehung-Operation beim Hund nach GOT, auch im Notdienst?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "high",
+      "decision": "published",
+      "reason": "Search Console: „magendrehung hund kosten“ mit Impressionen auf Position 90; Notdienst-Rechenbeispiel mit Position 470 und klar benannten Grenzen."
+    },
+    {
+      "slug": "mrt-hund-kosten",
+      "question": "Was kostet ein MRT beim Hund?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "high",
+      "decision": "blocked",
+      "reason": "Nachfrage vorhanden, aber eine MRT-Rechnung hängt stark von Narkose, Klinik und Befundung ab; ohne fachliche Prüfung keine belastbare Einordnung."
+    }
+  ],
+  "checks": {
+    "sources": "passed",
+    "editorial": "passed",
+    "technical": "passed",
+    "indexBudget": "passed"
+  },
+  "publishedSlugs": [
+    "tierarztkosten-tabelle-hund-katze",
+    "hund-katze-einschlaefern-kosten",
+    "kater-kryptorchismus-kastration-kosten",
+    "magendrehung-hund-kosten"
+  ],
+  "notes": [
+    "Kandidaten aus der Google Search Console (Domain-Property, 22.09.–20.10.2026), eingeschränkt auf Hund und Katze.",
+    "Alle Beträge per Skript aus data-snapshots/got/got-2022.json mit 19 Prozent Umsatzsteuer berechnet.",
+    "Status review, indexable false: Veröffentlichung erst nach Freigabe durch den Betreiber, höchstens zehn Seiten pro Woche (docs/CONTENT_STANDARD.md).",
+    "Betreiber hat am 23.10.2026 alle vier Artikel freigegeben (docs/reviews/editorial-2026-10-23-final-approval.md)."
+  ]
+}
