@@ -247,6 +247,12 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
     '/de-de/blog/hund-katze-einschlaefern-kosten/',
     '/de-de/blog/kater-kryptorchismus-kastration-kosten/',
     '/de-de/blog/magendrehung-hund-kosten/',
+    '/de-de/blog/injektion-subkutan-intramuskulaer-hund-katze-kosten/',
+    '/de-de/blog/rute-amputieren-hund-katze-kosten/',
+    '/de-de/blog/rektumprolaps-katze-hund-op-kosten/',
+    '/de-de/blog/unterkiefersymphysiolyse-katze-kosten/',
+    '/de-de/blog/kastration-huendin-katze-ovariohysterektomie-kosten/',
+    '/de-de/blog/abszess-spalten-hund-katze-kosten/',
   ].includes(pfad);
   const istErgaenzung = pfad === '/de-de/ergaenzungsfuttermittel/';
   const istProduktOderRatgeber = istRatgeber || /^\/de-de\/(?:futter|pflege)\/[^/]+\/$/.test(pfad);

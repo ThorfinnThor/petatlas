@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-10-23-kosten-nachfrage-2",
+  "createdAt": "2026-10-23T14:00:00.000Z",
+  "stage": "published",
+  "candidates": [
+    {
+      "slug": "injektion-subkutan-intramuskulaer-hund-katze-kosten",
+      "question": "Was bedeuten subkutan, intrakutan und intramuskulär, und was kostet eine Spritze beim Tierarzt nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": [
+        "data-snapshots/got/got-2022.json",
+        "content-data/cost-scenarios/impfung-hund.json"
+      ],
+      "risk": "low",
+      "decision": "published",
+      "reason": "Search Console 3 Monate: „injektion subkutan intrakutan intramuskulär hund“ (21 Impressionen, Position 7,7) plus Varianten für Katze, „intrakutan 221“ und „intraingluvial“; GOT-Positionen 221, 222, 224, 225."
+    },
+    {
+      "slug": "rute-amputieren-hund-katze-kosten",
+      "question": "Was kostet es nach GOT, die Rute eines Hundes oder einer Katze amputieren zu lassen?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "medium",
+      "decision": "published",
+      "reason": "Search Console: „rute amputieren hund kosten“ (12 Impressionen, Position 8,2); eigene GOT-Position 854 für Hund, Katze, Frettchen."
+    },
+    {
+      "slug": "rektumprolaps-katze-hund-op-kosten",
+      "question": "Was kostet die Behandlung oder Operation eines Rektumprolaps bei der Katze nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "medium",
+      "decision": "published",
+      "reason": "Search Console: „rektumprolaps katze op kosten“ (Position 2,2); GOT-Positionen 487 und 489."
+    },
+    {
+      "slug": "unterkiefersymphysiolyse-katze-kosten",
+      "question": "Was kostet die Behandlung einer Unterkiefersymphysiolyse bei der Katze nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "medium",
+      "decision": "published",
+      "reason": "Search Console: „unterkiefersymphysiolyse“ (Position 7,8); GOT-Positionen 972 und 973."
+    },
+    {
+      "slug": "kastration-huendin-katze-ovariohysterektomie-kosten",
+      "question": "Was kostet die Kastration von Hündin und Katze nach GOT, und was unterscheidet Ovarektomie von Ovariohysterektomie?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": [
+        "data-snapshots/got/got-2022.json",
+        "content-data/cost-scenarios/kastration-huendin.json",
+        "content-data/cost-scenarios/kastration-katze.json"
+      ],
+      "risk": "medium",
+      "decision": "published",
+      "reason": "Search Console: „ovariohysterektomie“ (Position 35); GOT-Positionen 600, 601, 604, 605 und die Szenarien des Kostenrechners."
+    },
+    {
+      "slug": "abszess-spalten-hund-katze-kosten",
+      "question": "Was kostet es nach GOT, einen Abszess bei Hund oder Katze spalten oder punktieren zu lassen?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "low",
+      "decision": "published",
+      "reason": "Search Console: „abszess spaltung“ und „abszessspaltung“ (Position 13 bis 16); GOT-Positionen 101, 102, 407, 408, 419, 423."
+    }
+  ],
+  "checks": {
+    "sources": "passed",
+    "editorial": "passed",
+    "technical": "passed",
+    "indexBudget": "passed"
+  },
+  "publishedSlugs": [
+    "injektion-subkutan-intramuskulaer-hund-katze-kosten",
+    "rute-amputieren-hund-katze-kosten",
+    "rektumprolaps-katze-hund-op-kosten",
+    "unterkiefersymphysiolyse-katze-kosten",
+    "kastration-huendin-katze-ovariohysterektomie-kosten",
+    "abszess-spalten-hund-katze-kosten"
+  ],
+  "notes": [
+    "Zweite Runde aus der Google Search Console (Domain-Property, 3 Monate bis 20.10.2026), eingeschränkt auf Hund und Katze und auf Themen mit eigener GOT-Position.",
+    "Alle Beträge per Skript aus data-snapshots/got/got-2022.json mit 19 Prozent Umsatzsteuer berechnet.",
+    "Status review, indexable false: Veröffentlichung erst nach Freigabe durch den Betreiber. Mit den vier Artikeln der ersten Runde sind es zehn neue Seiten in dieser Woche (docs/CONTENT_STANDARD.md).",
+    "Nicht aufgenommen: Ortssuchen (Kartenseiten sind noindex), MRT, CT und Strahlentherapie (keine GOT-Position), Versicherungsanbieter (keine belastbare Quelle).",
+    "Vorgemerkt für die Woche ab 30.10.2026: Kreuzband und Meniskus, Zahnreinigung und Zahnextraktion, Brachycephalensyndrom, Fremdkörper-OP am Magen, Biopsie, Femurkopfresektion, Röntgen, Perinealhernie.",
+    "Betreiber hat am 23.10.2026 alle sechs Artikel freigegeben (docs/reviews/editorial-2026-10-23-runde-2-final-approval.md)."
+  ]
+}

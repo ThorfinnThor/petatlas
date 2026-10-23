@@ -69,8 +69,9 @@ test.describe('Suche', () => {
   });
 
   test('meldet ein leeres Ergebnis, statt Treffer zu erfinden', async ({ page }) => {
+    // Pagefind wertet Wortteile aus; der Begriff darf keinem deutschen Wortstamm ähneln.
     await page.goto('/de-de/');
-    await page.getByLabel('Suchbegriff').fill('Zebrastreifenkatalog');
+    await page.getByLabel('Suchbegriff').fill('Qxjvwzrtplk');
     await expect(page.getByRole('status')).toContainText('Keine Treffer', { timeout: 10_000 });
   });
 
