@@ -104,4 +104,4 @@ Auf der Rechnung steht neben der GOT-Nummer meist ein Faktor, zum Beispiel 1,0 o
 2. Lass dir bei Folgeterminen sagen, ob jedes Mal eine Untersuchung berechnet wird.
 3. Rechne die Positionen selbst im [Tierarztkostenrechner](/de-de/tierarztkosten/) nach. Eine Praxis in deiner Nähe findest du auf der [Tierarzt-Karte](/de-de/tierarzt-karte/).
 
-Die Beträge beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag und keine Empfehlung für eine Behandlung.
+Die Beträge beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag und keine Empfehlung für eine Behandlung. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.

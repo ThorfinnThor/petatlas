@@ -1,7 +1,7 @@
 ---
 title: "Hund oder Katze einschläfern lassen: Welche Kosten nach GOT?"
 cardTitle: "Einschläfern lassen: Was die GOT dafür vorsieht."
-description: "Welche Positionen der Gebührenordnung beim Einschläfern von Hund oder Katze anfallen können, was ein Hausbesuch kostet und was nicht in der GOT steht."
+description: "Was das Einschläfern von Hund oder Katze nach GOT kostet, in der Praxis, zu Hause und im Notdienst, und was nicht in der GOT steht."
 intro: "Wenn ein Tier eingeschläfert werden muss, ist die Rechnung das Letzte, woran man denken möchte. Trotzdem hilft es vielen, vorher zu wissen, womit sie rechnen müssen. Dieser Artikel zeigt, welche Positionen der Gebührenordnung für Tierärzte (GOT) dabei auf einer Rechnung stehen können, was ein Hausbesuch ändert und welche Kosten außerhalb der GOT liegen."
 slug: "hund-katze-einschlaefern-kosten"
 publishedAt: "2026-10-23"
@@ -55,11 +55,11 @@ Fallen in der Praxis eine Untersuchung, eine Sedation und die Euthanasie an, erg
 
 Diese Summen zeigen nur den Rahmen, den die Gebührenordnung für diese Positionen vorsieht. Ob eine Sedation gegeben wird, ob eine Untersuchung berechnet wird und mit welchem Faktor, hängt vom Tier, von der Situation und von der Praxis ab.
 
-## Was ein Hausbesuch ändert
+## Einschläfern zu Hause: was der Hausbesuch ändert
 
 Viele möchten ihr Tier zu Hause in vertrauter Umgebung verabschieden. Die GOT sieht dafür die Position 40 vor. Dazu kann Wegegeld kommen, das sich nach der Entfernung richtet. Nicht jede Praxis bietet Hausbesuche an; frag am besten früh nach, ob und wann das möglich ist.
 
-## Im Notdienst
+## Einschläfern im Notdienst
 
 Muss ein Tier außerhalb der Sprechzeiten im Notdienst eingeschläfert werden, gilt ein anderer Rahmen: der zwei- bis vierfache Satz und zusätzlich eine Notdienstgebühr von 50 Euro netto, mit Umsatzsteuer 59,50 Euro, einmal je Behandlungsanlass. Allein die Position 208 liegt im Notdienst damit zwischen 73,26 und 146,51 Euro mit Umsatzsteuer.
 
@@ -86,4 +86,4 @@ Es ist in Ordnung, die Praxis vor dem Termin nach den Kosten zu fragen. Hilfreic
 3. Wie werden Medikamente berechnet?
 4. Welche Möglichkeiten gibt es danach, und was kosten sie?
 
-Die Beträge in diesem Artikel beschreiben, was die Gebührenordnung vorsieht. Sie sind kein Kostenvoranschlag. Den Rahmen für einzelne Positionen kannst du im [Tierarztkostenrechner](/de-de/tierarztkosten/) selbst ausrechnen.
+Die Beträge in diesem Artikel beschreiben, was die Gebührenordnung vorsieht. Sie sind kein Kostenvoranschlag. Den Rahmen für einzelne Positionen kannst du im [Tierarztkostenrechner](/de-de/tierarztkosten/) selbst ausrechnen. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.
