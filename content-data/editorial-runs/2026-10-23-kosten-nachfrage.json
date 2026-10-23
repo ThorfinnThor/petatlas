@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runId": "2026-10-23-kosten-nachfrage",
   "createdAt": "2026-10-23T08:00:00.000Z",
-  "stage": "review",
+  "stage": "published",
   "candidates": [
     {
       "slug": "tierarztkosten-tabelle-hund-katze",
@@ -11,7 +11,7 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "medium",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Search Console 22.09.–20.10.2026: „tierarztkosten hund tabelle“ und „tierarzt kosten katze tabelle“ mit Impressionen auf Position 90 bis 92; die Tabelle berechnet amtliche Sätze mit Umsatzsteuer."
     },
     {
@@ -21,7 +21,7 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "high",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Search Console: „euthanasie hund kosten“ auf Position 4 bis dahin über eine Nutztier-GOT-Seite; eigener Artikel mit Position 208, Hausbesuch, Notdienst und klarer Grenze zur Einäscherung."
     },
     {
@@ -34,7 +34,7 @@
         "content-data/cost-scenarios/kastration-kater.json"
       ],
       "risk": "medium",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Search Console: „kryptorchismus kater op kosten“ mit Impressionen auf Position 45; Vergleich der GOT-Positionen 378, 383 und 386 mit Rechenbeispielen."
     },
     {
@@ -44,7 +44,7 @@
       "sourceIds": ["got-2022-official", "btk-got-guidance"],
       "dataFiles": ["data-snapshots/got/got-2022.json"],
       "risk": "high",
-      "decision": "selected",
+      "decision": "published",
       "reason": "Search Console: „magendrehung hund kosten“ mit Impressionen auf Position 90; Notdienst-Rechenbeispiel mit Position 470 und klar benannten Grenzen."
     },
     {
@@ -60,14 +60,20 @@
   ],
   "checks": {
     "sources": "passed",
-    "editorial": "pending",
-    "technical": "pending",
-    "indexBudget": "pending"
+    "editorial": "passed",
+    "technical": "passed",
+    "indexBudget": "passed"
   },
-  "publishedSlugs": [],
+  "publishedSlugs": [
+    "tierarztkosten-tabelle-hund-katze",
+    "hund-katze-einschlaefern-kosten",
+    "kater-kryptorchismus-kastration-kosten",
+    "magendrehung-hund-kosten"
+  ],
   "notes": [
     "Kandidaten aus der Google Search Console (Domain-Property, 22.09.–20.10.2026), eingeschränkt auf Hund und Katze.",
     "Alle Beträge per Skript aus data-snapshots/got/got-2022.json mit 19 Prozent Umsatzsteuer berechnet.",
-    "Status review, indexable false: Veröffentlichung erst nach Freigabe durch den Betreiber, höchstens zehn Seiten pro Woche (docs/CONTENT_STANDARD.md)."
+    "Status review, indexable false: Veröffentlichung erst nach Freigabe durch den Betreiber, höchstens zehn Seiten pro Woche (docs/CONTENT_STANDARD.md).",
+    "Betreiber hat am 23.10.2026 alle vier Artikel freigegeben (docs/reviews/editorial-2026-10-23-final-approval.md)."
   ]
 }

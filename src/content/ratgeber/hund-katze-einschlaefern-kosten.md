@@ -6,7 +6,7 @@ intro: "Wenn ein Tier eingeschläfert werden muss, ist die Rechnung das Letzte, 
 slug: "hund-katze-einschlaefern-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Vor dem Einschläfern von Hund oder Katze verstehen, welche Kosten nach GOT entstehen können"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,7 +17,7 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
 relatedArticles:
@@ -60,6 +60,16 @@ Viele möchten ihr Tier zu Hause in vertrauter Umgebung verabschieden. Die GOT s
 ## Im Notdienst
 
 Muss ein Tier außerhalb der Sprechzeiten im Notdienst eingeschläfert werden, gilt ein anderer Rahmen: der zwei- bis vierfache Satz und zusätzlich eine Notdienstgebühr von 50 Euro netto, mit Umsatzsteuer 59,50 Euro, einmal je Behandlungsanlass. Allein die Position 208 liegt im Notdienst damit zwischen 73,26 und 146,51 Euro mit Umsatzsteuer.
+
+Fallen im Notdienst Untersuchung, Sedation und Euthanasie an, sieht die Rechnung ohne Medikamente so aus:
+
+| | 2-fach | 4-fach |
+| --- | ---: | ---: |
+| Untersuchung (16), Sedation (302), Euthanasie (208) | 176,56 € | 353,09 € |
+| Notdienstgebühr (50 € netto) | 59,50 € | 59,50 € |
+| **Zusammen** | **236,06 €** | **412,59 €** |
+
+Ob ein Termin in den Notdienst fällt, hängt vom Zeitpunkt und von der Situation ab. Wenn es sich einrichten lässt, kann ein Termin in der regulären Sprechzeit die Kosten deutlich senken; die Praxis sagt dir, was möglich ist.
 
 ## Was nicht in der GOT steht
 

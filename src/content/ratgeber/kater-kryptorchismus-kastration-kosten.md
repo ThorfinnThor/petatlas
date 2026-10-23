@@ -6,7 +6,7 @@ intro: "Bei einem Kryptorchiden ist mindestens ein Hoden nicht in den Hodensack 
 slug: "kater-kryptorchismus-kastration-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Verstehen, warum die Kastration eines kryptorchiden Katers mehr kostet und in welcher Spanne"
 animal: "cat"
 topicCluster: "Tierarztkosten"
@@ -18,7 +18,7 @@ dataFiles:
   - "data-snapshots/got/got-2022.json"
   - "content-data/cost-scenarios/kastration-kater.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
 relatedArticles:
@@ -75,6 +75,12 @@ Die linke Zahl ist jeweils der einfache, die rechte der dreifache Satz. Wird der
 ## Warum die Spanne so groß ist
 
 Die GOT gibt für jede Position einen Rahmen vom einfachen bis zum dreifachen Satz vor. Wo die Praxis sich darin bewegt, richtet sich nach Schwierigkeit, Zeitaufwand und weiteren Umständen des Einzelfalls. Bei einem Bauchhöhlenhoden, der schwer zu finden ist, kann der Aufwand höher sein als bei einem tastbaren Hoden im Leistenkanal. Im Notdienst gilt ein Rahmen vom zwei- bis vierfachen Satz plus 50 Euro Notdienstgebühr netto; eine geplante Kastration fällt aber selten in den Notdienst.
+
+## So liest du die Rechnung
+
+Auf der Rechnung steht zu jeder Leistung die laufende Nummer der GOT, die Bezeichnung, die Menge und der Faktor. Bei einem Kryptorchiden findest du statt oder neben der Nr. 378 die Nr. 383 oder 386. Prüf zuerst, welche dieser Nummern abgerechnet wurde, dann den Faktor: Steht dort zum Beispiel 2,0, ist der Betrag der Position doppelt so hoch wie der einfache Satz in der Tabelle oben.
+
+Danach folgen die übrigen Zeilen, etwa Untersuchung, Narkose und gegebenenfalls Ultraschall, und am Ende Medikamente und Material. Vergleiche Zeile für Zeile; der Endbetrag allein sagt wenig darüber, welche Leistungen enthalten sind. Ist eine Position unklar, frag in der Praxis nach, worauf sie sich bezieht.
 
 ## Vor dem Termin fragen
 

@@ -6,7 +6,7 @@ intro: "Wer wissen will, was eine Leistung beim Tierarzt kostet, findet die Antw
 slug: "tierarztkosten-tabelle-hund-katze"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten häufiger Tierarztleistungen für Hund und Katze in einer Tabelle nachschlagen und richtig lesen"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,7 +17,7 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
 relatedArticles:

@@ -6,7 +6,7 @@ intro: "Eine Magendrehung ist ein Notfall, und die Operation fällt oft in den t
 slug: "magendrehung-hund-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten einer Magendrehung-Operation beim Hund nach GOT einschätzen, auch im Notdienst"
 animal: "dog"
 topicCluster: "Tierarztkosten"
@@ -17,7 +17,7 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
