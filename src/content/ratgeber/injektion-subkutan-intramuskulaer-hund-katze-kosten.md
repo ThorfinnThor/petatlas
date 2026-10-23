@@ -6,7 +6,7 @@ intro: "Auf Tierarztrechnungen steht oft „Injektion subkutan, intrakutan, intr
 slug: "injektion-subkutan-intramuskulaer-hund-katze-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Verstehen, was subkutan, intrakutan und intramuskulär bedeuten und was eine Spritze beim Tierarzt nach GOT kostet"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -18,7 +18,7 @@ dataFiles:
   - "data-snapshots/got/got-2022.json"
   - "content-data/cost-scenarios/impfung-hund.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"

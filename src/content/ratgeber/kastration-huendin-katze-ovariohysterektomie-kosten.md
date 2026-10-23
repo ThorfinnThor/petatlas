@@ -6,7 +6,7 @@ intro: "Bei der Kastration einer Hündin oder einer Katze nennt die Gebührenord
 slug: "kastration-huendin-katze-ovariohysterektomie-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten der Kastration von Hündin und Katze nach GOT einschätzen und Ovarektomie von Ovariohysterektomie unterscheiden"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -19,7 +19,7 @@ dataFiles:
   - "content-data/cost-scenarios/kastration-huendin.json"
   - "content-data/cost-scenarios/kastration-katze.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"

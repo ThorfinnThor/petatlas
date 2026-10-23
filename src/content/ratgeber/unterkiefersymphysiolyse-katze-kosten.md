@@ -6,7 +6,7 @@ intro: "Bei einer Unterkiefersymphysiolyse lösen sich die beiden Hälften des U
 slug: "unterkiefersymphysiolyse-katze-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten der Behandlung einer Unterkiefersymphysiolyse bei der Katze nach GOT einschätzen"
 animal: "cat"
 topicCluster: "Tierarztkosten"
@@ -17,7 +17,7 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"

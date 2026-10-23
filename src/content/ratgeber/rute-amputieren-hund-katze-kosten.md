@@ -6,7 +6,7 @@ intro: "Muss die Rute eines Hundes oder der Schwanz einer Katze ganz oder teilwe
 slug: "rute-amputieren-hund-katze-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten einer Rutenamputation bei Hund oder Katze nach GOT einschätzen"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,7 +17,7 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"

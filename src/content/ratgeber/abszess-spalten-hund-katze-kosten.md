@@ -6,7 +6,7 @@ intro: "Ein Abszess ist eine abgekapselte Eiteransammlung, bei Katzen oft nach e
 slug: "abszess-spalten-hund-katze-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten einer Abszessspaltung oder -punktion bei Hund oder Katze nach GOT einschätzen"
 animal: "both"
 topicCluster: "Tierarztkosten"
@@ -17,7 +17,7 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"

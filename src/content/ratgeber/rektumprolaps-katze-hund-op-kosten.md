@@ -6,7 +6,7 @@ intro: "Bei einem Rektumprolaps tritt ein Teil des Enddarms aus dem After aus. D
 slug: "rektumprolaps-katze-hund-op-kosten"
 publishedAt: "2026-10-23"
 updatedAt: "2026-10-23"
-status: "review"
+status: "published"
 primaryIntent: "Die Kosten der Behandlung oder Operation eines Rektumprolaps bei Katze oder Hund nach GOT einschätzen"
 animal: "cat"
 topicCluster: "Tierarztkosten"
@@ -17,7 +17,7 @@ sourceIds:
 dataFiles:
   - "data-snapshots/got/got-2022.json"
 reviewLevel: "editorial"
-indexable: false
+indexable: true
 relatedTools:
   - "costs"
   - "map"
