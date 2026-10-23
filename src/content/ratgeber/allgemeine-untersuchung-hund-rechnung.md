@@ -5,7 +5,7 @@ description: "GOT-Position 16, Faktor und mögliche weitere Rechnungsbestandteil
 intro: "Die GOT nennt für die allgemeine Untersuchung mit Beratung bei Hund, Katze und Frettchen eine eigene Gebührenposition. Diese Position ist ein sinnvoller Ausgangspunkt für eine Beispielrechnung, aber kein Pauschalpreis für den gesamten Praxisbesuch: Befund, weitere Leistungen, Material und Medikamente können den tatsächlichen Umfang verändern."
 slug: "allgemeine-untersuchung-hund-rechnung"
 publishedAt: "2026-10-16"
-updatedAt: "2026-10-16"
+updatedAt: "2026-10-23"
 status: "published"
 primaryIntent: "Eine mögliche Rechnung für die allgemeine Untersuchung eines Hundes ohne falschen Pauschalpreis verstehen"
 animal: "dog"
@@ -88,4 +88,4 @@ Der Endbetrag allein ist für einen sinnvollen Vergleich ungeeignet. Zwei Termin
 4. Welche Arzneimittel, Materialien oder Laborleistungen könnten getrennt berechnet werden?
 5. Wen kann ich bei einer späteren Rückfrage zu einer einzelnen Rechnungsposition ansprechen?
 
-Eine Vorabinformation bleibt eine Schätzung, weil eine Untersuchung neue Befunde ergeben kann. Dieser Ratgeber bewertet keine medizinische Entscheidung und prüft keine konkrete Rechnung rechtlich. Maßgeblich sind die aktuelle GOT, die tatsächlich erbrachten Leistungen und die nachvollziehbare Abrechnung der Praxis.
+Eine Vorabinformation bleibt eine Schätzung, weil eine Untersuchung neue Befunde ergeben kann. Dieser Ratgeber bewertet keine medizinische Entscheidung und prüft keine konkrete Rechnung rechtlich. Maßgeblich sind die aktuelle GOT, die tatsächlich erbrachten Leistungen und die nachvollziehbare Abrechnung der Praxis. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.

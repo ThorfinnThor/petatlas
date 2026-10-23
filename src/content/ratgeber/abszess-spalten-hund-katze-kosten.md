@@ -94,4 +94,4 @@ Neben jeder GOT-Nummer steht meist ein Faktor, zum Beispiel 1,0 oder 2,0. Er zei
 2. Frag nach den Kosten für Medikamente, die du mit nach Hause bekommst.
 3. Stell die Positionen im [Tierarztkostenrechner](/de-de/tierarztkosten/) selbst zusammen. Praxen in deiner Nähe findest du auf der [Tierarzt-Karte](/de-de/tierarzt-karte/).
 
-Die Beträge beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag und keine Behandlungsempfehlung.
+Die Beträge beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag und keine Behandlungsempfehlung. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.

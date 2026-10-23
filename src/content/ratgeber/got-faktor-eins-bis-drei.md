@@ -5,7 +5,7 @@ description: "Verstehen, wie der GOT-Faktor den einfachen Gebührensatz verände
 intro: "Der Faktor in einer Tierarztrechnung ist ein Multiplikator für eine einzelne GOT-Gebührenposition. Er verändert nicht die Bezeichnung der Leistung und ist keine Bewertung ihrer Qualität. Entscheidend ist, welcher einfache Satz zur Position gehört, welcher Faktor verwendet wurde und welche weiteren Rechnungsbestandteile tatsächlich hinzukommen."
 slug: "got-faktor-eins-bis-drei"
 publishedAt: "2026-10-16"
-updatedAt: "2026-10-16"
+updatedAt: "2026-10-23"
 status: "published"
 primaryIntent: "Den Faktor einer tierärztlichen GOT-Gebührenposition rechnerisch und sachlich einordnen"
 animal: "both"
@@ -89,4 +89,4 @@ Der Rechenweg kann einen Übertragungs- oder Additionsfehler sichtbar machen. Er
 
 Für Leistungen im tierärztlichen Notdienst sieht § 4 GOT grundsätzlich mindestens den zweifachen und je nach Umständen bis zum vierfachen Satz vor. Daneben steht im Verordnungstext eine Notdienstgebühr. Auch schriftlich vereinbarte Abweichungen und weitere gesetzlich geregelte Fälle folgen eigenen Voraussetzungen. Eine Tabelle zum regulären Faktor 1 bis 3 darf diese Fälle daher nicht stillschweigend mit abdecken.
 
-Dieser Ratgeber erklärt den regulären Rechenmechanismus und bewertet keine konkrete Rechnung. Maßgeblich sind der aktuelle amtliche Verordnungstext, die tatsächlich berechneten Leistungen und die Erläuterung der abrechnenden Praxis.
+Dieser Ratgeber erklärt den regulären Rechenmechanismus und bewertet keine konkrete Rechnung. Maßgeblich sind der aktuelle amtliche Verordnungstext, die tatsächlich berechneten Leistungen und die Erläuterung der abrechnenden Praxis. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.

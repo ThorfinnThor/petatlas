@@ -1,7 +1,7 @@
 ---
 title: "Kastration von Hündin und Katze: Ovarektomie oder Ovariohysterektomie nach GOT"
 cardTitle: "Hündin und Katze kastrieren: Kosten nach GOT."
-description: "Was Ovarektomie und Ovariohysterektomie unterscheidet, welche GOT-Positionen bei der Kastration von Hündin und Katze anfallen und was sie kosten."
+description: "Kastration oder Sterilisation von Hündin und Katze: was Ovarektomie und Ovariohysterektomie unterscheidet und was sie nach GOT kosten."
 intro: "Bei der Kastration einer Hündin oder einer Katze nennt die Gebührenordnung für Tierärzte (GOT) zwei Verfahren: die Ovarektomie und die Ovariohysterektomie. Dieser Artikel erklärt den Unterschied, zeigt die Beträge im einfachen bis dreifachen Satz und rechnet die Kastration mit Untersuchung und Narkose durch."
 slug: "kastration-huendin-katze-ovariohysterektomie-kosten"
 publishedAt: "2026-10-23"
@@ -47,6 +47,15 @@ Für die Kastration weiblicher Tiere hat die GOT je Tierart zwei Positionen: die
 - **Ovariohysterektomie:** Eierstöcke und Gebärmutter werden entfernt.
 
 Welches Verfahren die Praxis wählt, hängt vom Tier, vom Befund und von der Arbeitsweise der Praxis ab. Ist die Gebärmutter zum Beispiel krankhaft verändert, wird sie meist mit entfernt. Frag in der Praxis, welches Verfahren geplant ist, denn danach richtet sich die Position auf der Rechnung.
+
+## Kastration oder Sterilisation?
+
+Im Alltag wird „Sterilisation“ oft gesagt, wenn die Kastration einer Hündin oder Katze gemeint ist. Fachlich ist das nicht dasselbe:
+
+- **Kastration:** Die Keimdrüsen werden entfernt, bei weiblichen Tieren also die Eierstöcke. Damit entfallen auch Läufigkeit und Rolligkeit.
+- **Sterilisation:** Eileiter oder Samenleiter werden unterbunden oder durchtrennt, die Keimdrüsen bleiben. Das Tier kann dann keinen Nachwuchs mehr bekommen, die Hormone wirken aber weiter.
+
+Auch die GOT nennt beide Begriffe getrennt. Eine eigene Position namens „Sterilisation“ für Hund und Katze enthält das Gebührenverzeichnis aber nicht. Für eine Leistung, die nicht aufgeführt ist, gilt nach § 8 GOT der Satz einer gleichwertigen Leistung. Wenn eine Praxis von Sterilisation spricht, frag nach, welcher Eingriff genau geplant ist.
 
 ## Die Positionen im Überblick
 
@@ -105,4 +114,4 @@ Neben jeder GOT-Nummer steht meist ein Faktor, zum Beispiel 1,0 oder 2,0. Er zei
 2. Prüfe in den Versicherungsbedingungen, ob und unter welchen Voraussetzungen deine Tierversicherung eine Kastration übernimmt. Die [Seite zur Tierversicherung](/de-de/tierversicherung/) erklärt, worauf es ankommt.
 3. Im [Tierarztkostenrechner](/de-de/tierarztkosten/) findest du die Kastration als fertiges Szenario und kannst den Faktor selbst wählen. Praxen in deiner Nähe zeigt die [Tierarzt-Karte](/de-de/tierarzt-karte/).
 
-Die Beträge beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag und keine Empfehlung für oder gegen eine Kastration.
+Die Beträge beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag und keine Empfehlung für oder gegen eine Kastration. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.
