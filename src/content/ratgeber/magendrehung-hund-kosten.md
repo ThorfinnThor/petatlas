@@ -88,4 +88,4 @@ Die Gebührenordnung gibt für jede Position einen Rahmen vor, keinen Festpreis.
 2. Frag nach einer groben Kostenschätzung, sobald das Tier versorgt ist, und ob eine Anzahlung nötig ist.
 3. Prüfe, ob eine Tierkrankenversicherung oder OP-Versicherung besteht und was sie erstattet. Die [Seite zur Tierversicherung](/de-de/tierversicherung/) erklärt, worauf es dabei ankommt.
 
-Die Beträge in diesem Artikel beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag. Im [Tierarztkostenrechner](/de-de/tierarztkosten/) kannst du die Positionen mit dem Notdienst-Rahmen selbst zusammenstellen.
+Die Beträge in diesem Artikel beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag. Im [Tierarztkostenrechner](/de-de/tierarztkosten/) kannst du die Positionen mit dem Notdienst-Rahmen selbst zusammenstellen. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.

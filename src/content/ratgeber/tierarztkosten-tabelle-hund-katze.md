@@ -1,7 +1,7 @@
 ---
-title: "Tierarztkosten für Hund und Katze: Tabelle häufiger Leistungen nach GOT"
+title: "Tierarztkosten 2026 für Hund und Katze: Tabelle häufiger Leistungen nach GOT"
 cardTitle: "Tierarztkosten als Tabelle: häufige Leistungen nach GOT."
-description: "Untersuchung, Impfung, Röntgen, Narkose, Kastration, Zahnreinigung: die GOT-Sätze häufiger Leistungen für Hund und Katze mit Umsatzsteuer, einfach bis dreifach."
+description: "Stand 2026: Untersuchung, Impfung, Röntgen, Narkose, Kastration, Zahnreinigung. GOT-Sätze häufiger Leistungen für Hund und Katze mit Umsatzsteuer."
 intro: "Wer wissen will, was eine Leistung beim Tierarzt kostet, findet die Antwort in der Gebührenordnung für Tierärzte (GOT). Diese Tabelle zeigt die amtlichen Sätze von siebzehn Leistungen, die bei Hund und Katze häufig vorkommen, umgerechnet mit 19 Prozent Umsatzsteuer und im üblichen Rahmen vom einfachen bis zum dreifachen Satz. Darunter steht, was in diesen Beträgen nicht enthalten ist und wie der Notdienst rechnet."
 slug: "tierarztkosten-tabelle-hund-katze"
 publishedAt: "2026-10-23"
@@ -37,6 +37,8 @@ editorialLinks:
 ## Kurz gesagt
 
 Eine allgemeine Untersuchung mit Beratung kostet bei Hund und Katze nach GOT 28,11 Euro im einfachen und 84,32 Euro im dreifachen Satz, jeweils mit Umsatzsteuer. Für fast jede andere Leistung gibt es eine eigene Position mit eigenem Satz. Was eine Rechnung am Ende ausmacht, sind die Zahl der Positionen, der gewählte Faktor sowie Medikamente und Material, die in der GOT nicht stehen.
+
+**Stand Oktober 2026:** Es gilt weiterhin die GOT 2022, zuletzt geändert im März 2023. Die Beträge in diesem Artikel sind deshalb auch 2026 aktuell. Eine neue Fassung ist nicht beschlossen.
 
 ## Die Tabelle
 
@@ -101,4 +103,4 @@ Für einige Behandlungen gibt es eigene Artikel mit allen Positionen, die auf de
 3. Wähle den Faktor oder rechne einmal mit dem einfachen und einmal mit dem dreifachen Satz, um die Spanne zu sehen.
 4. Plane Medikamente und Material zusätzlich ein. Frag im Zweifel vorab in der Praxis, mit welchem Rahmen sie rechnet.
 
-Die Tabelle ersetzt keinen Kostenvoranschlag. Sie zeigt, was die Gebührenordnung für eine einzelne Leistung vorsieht, und hilft, eine Rechnung nachzuvollziehen.
+Die Tabelle ersetzt keinen Kostenvoranschlag. Sie zeigt, was die Gebührenordnung für eine einzelne Leistung vorsieht, und hilft, eine Rechnung nachzuvollziehen. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.

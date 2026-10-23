@@ -91,4 +91,4 @@ Danach folgen die übrigen Zeilen, etwa Untersuchung, Narkose und gegebenenfalls
 3. Wird vorher ein Ultraschall gemacht?
 4. Mit welchem Faktor rechnet die Praxis voraussichtlich, und was kommt für Medikamente und Material hinzu?
 
-Im [Tierarztkostenrechner](/de-de/tierarztkosten/) kannst du die Positionen mit dem Faktor deiner Wahl selbst zusammenstellen.
+Im [Tierarztkostenrechner](/de-de/tierarztkosten/) kannst du die Positionen mit dem Faktor deiner Wahl selbst zusammenstellen. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.

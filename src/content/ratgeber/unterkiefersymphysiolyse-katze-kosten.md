@@ -91,4 +91,4 @@ Neben jeder GOT-Nummer steht meist ein Faktor, zum Beispiel 1,0, 2,0 oder 3,0. E
 2. Prüfe, ob eine Tierkrankenversicherung oder OP-Versicherung besteht. Die [Seite zur Tierversicherung](/de-de/tierversicherung/) erklärt, worauf es ankommt.
 3. Stell die Positionen im [Tierarztkostenrechner](/de-de/tierarztkosten/) selbst zusammen.
 
-Die Beträge beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag und keine Behandlungsempfehlung.
+Die Beträge beschreiben den Rahmen der Gebührenordnung für die genannten Positionen. Sie sind kein Kostenvoranschlag und keine Behandlungsempfehlung. Die GOT gilt für Tierarztpraxen in Deutschland; in Österreich und der Schweiz wird anders abgerechnet.
