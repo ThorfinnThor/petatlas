@@ -25,6 +25,9 @@ import {
   pfadAusDatei,
   pruefeIndexBudget,
   sammleSeiten,
+  baueEntferntSitemap,
+  entfernteSeiten,
+  NOINDEX_SEIT,
 } from '../../scripts/publish/sitemap.ts';
 
 const UMGEBUNG: Umgebung = {
@@ -437,5 +440,32 @@ describe('Seiten einsammeln', () => {
     expect(gefunden.map((eintrag) => eintrag.pfad).sort()).toEqual(['/404.html', '/de-de/']);
     expect(gefunden.find((eintrag) => eintrag.pfad === '/404.html')?.indexierbar).toBe(false);
     expect(nichtIndexierbar(leseKopf(seite()))).toBe(false);
+  });
+});
+
+describe('Vorübergehende Sitemap für entfernte Seiten', () => {
+  const seiten = [
+    { pfad: '/de-de/tierarztkosten/', datei: 'a', indexierbar: true },
+    { pfad: '/de-de/tierarztkosten/851-amputation-schwanz-rind/', datei: 'b', indexierbar: false },
+    { pfad: '/de-de/tierarztkosten/16-allgemeine-untersuchung/', datei: 'c', indexierbar: true },
+    { pfad: '/de-de/tierarzt-karte/aachen/', datei: 'd', indexierbar: false },
+    { pfad: '/de-de/mein-tier/', datei: 'e', indexierbar: false },
+    { pfad: '/de-de/tierarztkosten/', datei: 'f', indexierbar: false },
+  ];
+
+  it('nimmt nur noindex-Seiten der konzentrierten Bereiche auf', () => {
+    expect(entfernteSeiten(seiten).map((seite) => seite.pfad)).toEqual([
+      '/de-de/tierarztkosten/851-amputation-schwanz-rind/',
+      '/de-de/tierarzt-karte/aachen/',
+    ]);
+  });
+
+  it('trägt das Datum der Umstellung als lastmod', () => {
+    const xml = baueEntferntSitemap(seiten, UMGEBUNG.baseUrl);
+    expect(xml).toContain(
+      `<loc>https://petatlas.example/de-de/tierarzt-karte/aachen/</loc><lastmod>${NOINDEX_SEIT}</lastmod>`,
+    );
+    expect(xml).not.toContain('mein-tier');
+    expect(xml).not.toContain('16-allgemeine-untersuchung');
   });
 });

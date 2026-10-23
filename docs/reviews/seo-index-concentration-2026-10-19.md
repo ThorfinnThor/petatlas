@@ -38,3 +38,23 @@ Neue Seiten erst wieder freigeben, wenn sie redaktionell eigenständig sind
 (z. B. GOT-Seiten mit echten Fallbeispielen für Hund und Katze), nie als Block.
 Rückweg: `SEO_INDEX_BUDGET` in `index-quality.ts` auf die Werte vom 24.09.
 zurücksetzen.
+
+## Nachtrag 23.10.2026: Entfernen beschleunigen
+
+Search Console (Daten bis 20.10.): 1.080 Seiten indexiert, nur 15 als „Durch
+noindex ausgeschlossen“ erkannt. Google crawlt die Domain nach der Welle im
+September nur noch selten; ohne Anstoß blieben die rund 1.100 auf `noindex`
+gesetzten Seiten noch Wochen im Index. Keine manuelle Maßnahme, keine
+Sicherheitsprobleme, Host ohne Fehler.
+
+Deshalb erzeugt `scripts/publish/sitemap.ts` vorübergehend
+`/sitemap-entfernt.xml`: alle `noindex`-Seiten unter `tierarztkosten/`,
+`tierarzt-karte/` und `futter/` mit `lastmod` 2026-10-19 (1.138 Seiten). Sie ist
+in der Search Console eingereicht, steht nicht in robots.txt und wird über
+`ENTFERNT_SITEMAP_AKTIV` abgeschaltet, sobald der Bericht „Durch noindex
+ausgeschlossen“ die Seiten weitgehend zeigt. Danach auch in der Search Console
+entfernen.
+
+Die frühere Domain gehört dem Betreiber nicht mehr; eine Weiterleitung oder
+Adressänderung ist deshalb nicht möglich.
+
