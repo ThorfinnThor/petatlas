@@ -22,9 +22,10 @@ relatedTools:
   - "costs"
   - "map"
 relatedArticles:
-  - "tierarztrechnung-zusammensetzung"
-  - "got-faktor-eins-bis-drei"
   - "tierarztkosten-tabelle-hund-katze"
+  - "got-faktor-eins-bis-drei"
+  - "injektion-subkutan-intramuskulaer-hund-katze-kosten"
+  - "rute-amputieren-hund-katze-kosten"
 affiliateContext: "none"
 image: "travel-human-dog-sunset"
 editorialLinks:
@@ -65,7 +66,7 @@ Alle Beträge mit 19 Prozent Umsatzsteuer, im Rahmen vom einfachen bis dreifache
 
 ## Drei Rechenbeispiele
 
-Alle Beispiele beginnen mit der allgemeinen Untersuchung (Nr. 16). Bei der Spaltung kommt eine Spritze dazu (Nr. 221), bei der komplizierten Spaltung außerdem eine Injektionsnarkose (Nr. 310).
+Alle Beispiele beginnen mit der allgemeinen Untersuchung (Nr. 16). Bei der Spaltung kommt eine Spritze dazu (Nr. 221, mehr dazu im Artikel über [Spritzen beim Tierarzt](/de-de/blog/injektion-subkutan-intramuskulaer-hund-katze-kosten/)), bei der komplizierten Spaltung außerdem eine Injektionsnarkose (Nr. 310).
 
 | Beispiel | 1-fach | 3-fach |
 | --- | ---: | ---: |

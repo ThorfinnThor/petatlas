@@ -50,8 +50,14 @@ const formatDate = (date: string): string =>
   <p class="article-meta">
     {data.status === 'published' ? 'Veröffentlicht am' : 'Entwurf vom'}{' '}
     <time datetime={data.publishedAt}>{formatDate(data.publishedAt)}</time>
-    <span aria-hidden="true">·</span>
-    Aktualisiert am <time datetime={data.updatedAt}>{formatDate(data.updatedAt)}</time>
+    {
+      data.updatedAt !== data.publishedAt && (
+        <>
+          <span aria-hidden="true">·</span>
+          Aktualisiert am <time datetime={data.updatedAt}>{formatDate(data.updatedAt)}</time>
+        </>
+      )
+    }
   </p>
 
   {
@@ -304,19 +310,172 @@ const formatDate = (date: string): string =>
     white-space: nowrap;
   }
 
-  .article-body :global(td:nth-child(2)),
-  .article-body :global(th:nth-child(2)) {
-    min-inline-size: 12rem;
+  /* Die Leistungsbeschreibung steht in Tabellen mit vier Spalten an zweiter
+     Stelle; in Rechenbeispielen mit drei Spalten an erster. Nur diese Spalte
+     darf umbrechen. */
+  .article-body :global(table:has(tr > :nth-child(4)) td:nth-child(2)),
+  .article-body :global(table:has(tr > :nth-child(4)) th:nth-child(2)),
+  .article-body :global(table:not(:has(tr > :nth-child(4))) td:first-child) {
+    min-inline-size: 9rem;
     white-space: normal;
+  }
+
+  .article-body :global(.tabelle-hinweis) {
+    margin-block: var(--space-1) 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+  }
+
+  @media (max-width: 639px) {
+    .article-body :global(table.tabelle-gestapelt) {
+      position: relative;
+      display: block;
+      overflow: clip;
+      font-size: var(--text-body);
+    }
+
+    .article-body :global(.tabelle-gestapelt thead),
+    .article-body :global(.tabelle-gestapelt thead tr),
+    .article-body :global(.tabelle-gestapelt tbody) {
+      display: block;
+    }
+
+    /* Überschriften bleiben für Screenreader da, sichtbar stehen sie als
+       Beschriftung an jedem Betrag. */
+    .article-body :global(.tabelle-gestapelt th) {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .article-body :global(.tabelle-gestapelt tbody tr) {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: var(--space-1);
+      padding-block: var(--space-3);
+      border-block-end: 1px solid var(--color-border);
+    }
+
+    .article-body :global(.tabelle-gestapelt td) {
+      display: block;
+      min-inline-size: 0;
+      padding: 0;
+      border: 0;
+      white-space: normal;
+      text-align: start;
+    }
+
+    /* Nummer und Leistung füllen zusammen genau eine Zeile, damit die Beträge
+       immer darunter beginnen. */
+    .article-body :global(.tabelle-gestapelt td.nummer) {
+      flex: 0 0 4.5rem;
+      color: var(--color-text-muted);
+    }
+
+    .article-body :global(.tabelle-gestapelt td.nummer::before) {
+      content: 'Nr. ';
+    }
+
+    .article-body :global(.tabelle-gestapelt td.titel) {
+      flex: 1 1 100%;
+      font-weight: 600;
+    }
+
+    .article-body :global(.tabelle-gestapelt td.nummer + td.titel) {
+      flex-basis: calc(100% - 4.5rem);
+    }
+
+    .article-body :global(.tabelle-gestapelt td.wert) {
+      flex: 1 1 0;
+      padding-inline-end: var(--space-3);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .article-body :global(.tabelle-gestapelt td.wert:last-child) {
+      padding-inline-end: 0;
+    }
+
+    .article-body :global(.tabelle-gestapelt td.wert::before) {
+      content: attr(data-label);
+      display: block;
+      color: var(--color-text-muted);
+      font-size: var(--text-small);
+    }
+
+    .article-body :global(table:not(.tabelle-gestapelt)) {
+      font-size: var(--text-small);
+    }
+
+    .article-body :global(td),
+    .article-body :global(th) {
+      padding-inline: var(--space-2);
+    }
+
+    .article-body :global(td:first-child),
+    .article-body :global(th:first-child) {
+      padding-inline-start: 0;
+    }
+
+    .article-body :global(td:last-child),
+    .article-body :global(th:last-child) {
+      padding-inline-end: 0;
+    }
   }
 </style>
 
 <script>
-  // Überlaufende Tabellen in einen benannten, per Tastatur erreichbaren
-  // Scrollbereich legen (axe: scrollable-region-focusable). Die Tabelle selbst
-  // behält ihre Rolle; ohne Skript scrollt sie als Block.
+  // Auf schmalen Handys werden Kostentabellen gestapelt: Leistung oben, Beträge
+  // mit ihrer Spaltenüberschrift darunter. Damit die Tabellensemantik bei
+  // geänderter Darstellung erhalten bleibt, bekommen Zeilen und Zellen
+  // ausdrückliche Rollen. Was danach noch breiter ist als der Bildschirm, liegt
+  // in einem benannten, per Tastatur erreichbaren Scrollbereich
+  // (axe: scrollable-region-focusable).
+  const schmal = window.matchMedia('(max-width: 639px)').matches;
+  const istBetrag = (text: string): boolean => /€\s*$/.test(text.trim());
+
   for (const tabelle of document.querySelectorAll<HTMLTableElement>('.article-body table')) {
-    if (tabelle.scrollWidth <= tabelle.clientWidth + 1) continue;
+    const kopf = tabelle.tHead?.rows[0];
+    const spalten = kopf?.cells.length ?? 0;
+    const ueberlauf = tabelle.scrollWidth > tabelle.clientWidth + 1;
+    // Ab vier Spalten bliebe für die Leistung auf dem Handy auch ohne
+    // Überlauf nur eine sehr schmale Spalte.
+    if (!ueberlauf && !(schmal && spalten >= 4)) continue;
+
+    const koerper = [...tabelle.tBodies].flatMap((body) => [...body.rows]);
+    if (schmal && kopf && koerper.length > 0) {
+      const betragsspalten = [...Array(spalten).keys()].filter((index) =>
+        koerper.every((zeile) => istBetrag(zeile.cells[index]?.textContent ?? '')),
+      );
+      if (betragsspalten.length > 0) {
+        tabelle.classList.add('tabelle-gestapelt');
+        tabelle.setAttribute('role', 'table');
+        for (const zeile of tabelle.rows) zeile.setAttribute('role', 'row');
+        for (const zelle of kopf.cells) zelle.setAttribute('role', 'columnheader');
+        const mitNummer = /nr/i.test(kopf.cells[0]?.textContent ?? '');
+        for (const zeile of koerper) {
+          [...zeile.cells].forEach((zelle, index) => {
+            zelle.setAttribute('role', 'cell');
+            if (index === 0 && mitNummer) {
+              zelle.classList.add('nummer');
+            } else if (index === (mitNummer ? 1 : 0)) {
+              zelle.classList.add('titel');
+            } else {
+              zelle.classList.add('wert');
+              zelle.dataset.label = kopf.cells[index]?.textContent?.trim() ?? '';
+            }
+          });
+        }
+        continue;
+      }
+    }
+    if (!ueberlauf) continue;
+
     const bereich = document.createElement('div');
     bereich.className = 'tabelle-scroll';
     bereich.tabIndex = 0;
@@ -325,5 +484,10 @@ const formatDate = (date: string): string =>
     tabelle.before(bereich);
     bereich.append(tabelle);
     tabelle.classList.add('im-scrollbereich');
+    const hinweis = document.createElement('p');
+    hinweis.className = 'tabelle-hinweis';
+    hinweis.setAttribute('aria-hidden', 'true');
+    hinweis.textContent = 'Tabelle seitlich wischen, um alle Spalten zu sehen.';
+    bereich.before(hinweis);
   }
 </script>

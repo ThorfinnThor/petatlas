@@ -23,9 +23,11 @@ relatedTools:
   - "map"
   - "insurance"
 relatedArticles:
-  - "tierarztrechnung-zusammensetzung"
-  - "got-faktor-eins-bis-drei"
   - "tierarztkosten-tabelle-hund-katze"
+  - "got-faktor-eins-bis-drei"
+  - "abszess-spalten-hund-katze-kosten"
+  - "unterkiefersymphysiolyse-katze-kosten"
+  - "magendrehung-hund-kosten"
 affiliateContext: "none"
 image: "dog-swimming"
 editorialLinks:

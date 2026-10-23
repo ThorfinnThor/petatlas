@@ -24,6 +24,8 @@ relatedTools:
 relatedArticles:
   - "tierarztrechnung-zusammensetzung"
   - "tierarztrechnung-verstehen"
+  - "tierarztkosten-tabelle-hund-katze"
+  - "injektion-subkutan-intramuskulaer-hund-katze-kosten"
 affiliateContext: "none"
 image: "dog-alpine-meadow"
 editorialLinks:

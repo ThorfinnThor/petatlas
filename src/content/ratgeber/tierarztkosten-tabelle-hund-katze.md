@@ -23,6 +23,10 @@ relatedTools:
 relatedArticles:
   - "tierarztrechnung-zusammensetzung"
   - "got-faktor-eins-bis-drei"
+  - "allgemeine-untersuchung-hund-rechnung"
+  - "injektion-subkutan-intramuskulaer-hund-katze-kosten"
+  - "kastration-huendin-katze-ovariohysterektomie-kosten"
+  - "abszess-spalten-hund-katze-kosten"
 affiliateContext: "none"
 image: "dog-golden-living"
 editorialLinks:
@@ -75,6 +79,20 @@ Die GOT ist keine Festpreisliste. Im regulären Betrieb rechnet die Praxis inner
 Im tierärztlichen Notdienst gilt ein anderer Rahmen: mindestens der zweifache und höchstens der vierfache Satz. Dazu kommt eine Notdienstgebühr von 50 Euro netto, mit Umsatzsteuer 59,50 Euro. Sie fällt einmal je Behandlungsanlass an, nicht je Tier.
 
 Für die allgemeine Untersuchung heißt das: Statt 28,11 bis 84,32 Euro stehen im Notdienst 56,22 bis 112,43 Euro für die Untersuchung auf der Rechnung, plus die Notdienstgebühr. Ob ein Besuch als Notdienst abgerechnet wird, hängt vom Zeitpunkt und der Situation ab; das sagt dir die Praxis.
+
+## Kosten einzelner Behandlungen
+
+Für einige Behandlungen gibt es eigene Artikel mit allen Positionen, die auf der Rechnung stehen können, und durchgerechneten Beispielen:
+
+- [Spritze beim Tierarzt: subkutan, intrakutan, intramuskulär](/de-de/blog/injektion-subkutan-intramuskulaer-hund-katze-kosten/)
+- [Kastration von Hündin und Katze](/de-de/blog/kastration-huendin-katze-ovariohysterektomie-kosten/)
+- [Kastration beim Kater mit Kryptorchismus](/de-de/blog/kater-kryptorchismus-kastration-kosten/)
+- [Abszess spalten lassen](/de-de/blog/abszess-spalten-hund-katze-kosten/)
+- [Rute amputieren](/de-de/blog/rute-amputieren-hund-katze-kosten/)
+- [Rektumprolaps](/de-de/blog/rektumprolaps-katze-hund-op-kosten/)
+- [Unterkiefersymphysiolyse bei der Katze](/de-de/blog/unterkiefersymphysiolyse-katze-kosten/)
+- [Magendrehung beim Hund](/de-de/blog/magendrehung-hund-kosten/)
+- [Hund oder Katze einschläfern lassen](/de-de/blog/hund-katze-einschlaefern-kosten/)
 
 ## So rechnest du deine eigene Leistung aus
 
