@@ -23,9 +23,11 @@ relatedTools:
   - "map"
   - "insurance"
 relatedArticles:
-  - "tierarztrechnung-zusammensetzung"
-  - "got-faktor-eins-bis-drei"
   - "tierarztkosten-tabelle-hund-katze"
+  - "got-faktor-eins-bis-drei"
+  - "magendrehung-hund-kosten"
+  - "unterkiefersymphysiolyse-katze-kosten"
+  - "rute-amputieren-hund-katze-kosten"
 affiliateContext: "none"
 image: "cat-scratching-post"
 editorialLinks:
@@ -44,7 +46,7 @@ Die GOT kennt für den Rektumprolaps zwei Positionen: die Nr. 487 „Rektumprola
 
 Die GOT unterscheidet zwischen der Behandlung des Rektumprolaps (Nr. 487) und der Operation mit Rektopexie (Nr. 489). Bei einer Rektopexie wird der Darm im Körper befestigt, damit er nicht erneut vorfällt. Die Leistungsbezeichnung der Nr. 487 beschreibt die Maßnahme nicht im Einzelnen. Welche Behandlung im konkreten Fall nötig ist, entscheidet die Praxis nach dem Befund und nach der Ursache des Vorfalls.
 
-Die Positionen gelten nicht nur für Katzen. Für Hunde stehen dieselben Nummern im Verzeichnis. Für Schweine gibt es eine eigene, niedrigere Position, die für Haustiere nicht gilt.
+Die Positionen gelten nicht nur für Katzen. Für Hunde stehen dieselben Nummern im Verzeichnis.
 
 ## Positionen, die auf der Rechnung stehen können
 

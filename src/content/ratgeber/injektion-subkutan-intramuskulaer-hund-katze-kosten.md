@@ -25,7 +25,9 @@ relatedTools:
 relatedArticles:
   - "tierarztkosten-tabelle-hund-katze"
   - "got-faktor-eins-bis-drei"
-  - "tierarztrechnung-zusammensetzung"
+  - "abszess-spalten-hund-katze-kosten"
+  - "kastration-huendin-katze-ovariohysterektomie-kosten"
+  - "allgemeine-untersuchung-hund-rechnung"
 affiliateContext: "none"
 image: "dog-woman-beach"
 editorialLinks:

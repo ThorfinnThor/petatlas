@@ -22,8 +22,10 @@ indexable: true
 relatedTools:
   - "costs"
 relatedArticles:
-  - "tierarztrechnung-zusammensetzung"
+  - "tierarztkosten-tabelle-hund-katze"
   - "got-faktor-eins-bis-drei"
+  - "kastration-huendin-katze-ovariohysterektomie-kosten"
+  - "tierarztrechnung-zusammensetzung"
 affiliateContext: "none"
 image: "cat-longhair-tree"
 editorialLinks:

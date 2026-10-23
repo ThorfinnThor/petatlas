@@ -22,8 +22,11 @@ relatedTools:
   - "costs"
   - "map"
 relatedArticles:
-  - "tierarztrechnung-zusammensetzung"
+  - "tierarztkosten-tabelle-hund-katze"
   - "got-faktor-eins-bis-drei"
+  - "rektumprolaps-katze-hund-op-kosten"
+  - "rute-amputieren-hund-katze-kosten"
+  - "hund-katze-einschlaefern-kosten"
 affiliateContext: "none"
 image: "dog-small-meadow"
 editorialLinks:

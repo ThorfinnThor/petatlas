@@ -25,6 +25,8 @@ import { subroutePath } from '../../lib/routes.ts';
 import snapshot from '../../../data-snapshots/got/got-2022.json' with { type: 'json' };
 import BrandImage from '../BrandImage.astro';
 import { BEHANDLUNGEN } from '../../features/costs/treatments.ts';
+import { getCollection } from 'astro:content';
+import { articlePath } from '../../features/editorial/paths.ts';
 
 const market = defaultMarket();
 const quelle = snapshot.source as {
@@ -40,6 +42,19 @@ const quelle = snapshot.source as {
 const katalogMarkt = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
 const katalogPfad = subroutePath(katalogMarkt, 'costs', 'katalog');
 const beispiele = BEHANDLUNGEN.slice(0, 4);
+/** Veröffentlichte Kostenartikel, damit der Rechner auf die Erklärungen verweist. */
+const kostenartikel = (await getCollection('ratgeber'))
+  .filter(
+    (eintrag) =>
+      eintrag.data.status === 'published' &&
+      eintrag.data.indexable &&
+      eintrag.data.topicCluster === 'Tierarztkosten',
+  )
+  .map((eintrag) => ({
+    href: articlePath(eintrag.data),
+    titel: (eintrag.data.cardTitle ?? eintrag.data.title).replace(/\.$/, ''),
+  }))
+  .sort((a, b) => a.titel.localeCompare(b.titel, 'de'));
 /** „Was kostet eine Impfung beim Hund?“ → „Impfung beim Hund“ */
 const kurztitel = (titel: string) => {
   const kern = titel.replace(/^Was kostet (eine?|die|der|das) /, '').replace(/\?$/, '');
@@ -341,6 +356,25 @@ const kurztitel = (titel: string) => {
     nur die behandelnde Praxis beurteilen.
   </p>
 </Notice>
+
+{
+  kostenartikel.length > 0 && (
+    <section class="costs-articles" aria-labelledby="kostenartikel-titel">
+      <h2 id="kostenartikel-titel">Kosten einzelner Behandlungen erklärt</h2>
+      <p>
+        Diese Artikel zeigen, welche Positionen bei einer Behandlung auf der Rechnung stehen können,
+        und rechnen Beispiele durch.
+      </p>
+      <ul>
+        {kostenartikel.map((artikel) => (
+          <li>
+            <a href={artikel.href}>{artikel.titel}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
 
 <h2>Alle Positionen nachschlagen</h2>
 <p>

@@ -23,6 +23,7 @@ relatedTools:
 relatedArticles:
   - "tierarztrechnung-zusammensetzung"
   - "tierarztrechnung-verstehen"
+  - "tierarztkosten-tabelle-hund-katze"
 affiliateContext: "none"
 image: "dog-person-dock"
 editorialLinks:

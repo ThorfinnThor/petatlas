@@ -25,9 +25,10 @@ relatedTools:
   - "map"
   - "insurance"
 relatedArticles:
-  - "kater-kryptorchismus-kastration-kosten"
-  - "got-faktor-eins-bis-drei"
   - "tierarztkosten-tabelle-hund-katze"
+  - "got-faktor-eins-bis-drei"
+  - "kater-kryptorchismus-kastration-kosten"
+  - "injektion-subkutan-intramuskulaer-hund-katze-kosten"
 affiliateContext: "none"
 image: "play-dog-alpine-lake"
 editorialLinks:

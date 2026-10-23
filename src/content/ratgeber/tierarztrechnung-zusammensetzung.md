@@ -23,6 +23,8 @@ relatedTools:
 relatedArticles:
   - "tierarztrechnung-verstehen"
   - "eu-heimtierausweis-pruefen"
+  - "tierarztkosten-tabelle-hund-katze"
+  - "got-faktor-eins-bis-drei"
 affiliateContext: "none"
 image: "cat-tabby-sofa"
 editorialLinks:

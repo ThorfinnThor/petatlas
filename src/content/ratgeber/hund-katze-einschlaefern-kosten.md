@@ -21,8 +21,10 @@ indexable: true
 relatedTools:
   - "costs"
 relatedArticles:
+  - "tierarztkosten-tabelle-hund-katze"
   - "tierarztrechnung-zusammensetzung"
   - "got-faktor-eins-bis-drei"
+  - "magendrehung-hund-kosten"
 affiliateContext: "none"
 image: "hero-dog-alpine-lake"
 editorialLinks:
