@@ -421,17 +421,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/brit-vet-diet-cat-cans-struvite-6x200-g/1000108746/"
     },
     {
-      "productId": "14979:1000112127",
-      "productName": "Carnilove Cat Crunchy Snack - Salmon + Catnip 50g",
+      "productId": "14979:1000112126",
+      "productName": "Carnilove Cat Crunchy Snack - Duck with Raspberry 50g",
       "brand": "Carnilove",
       "species": "cat",
       "category": "food",
       "categoryLabel": "Futter",
       "subcategoryLabel": "Katzensnacks",
-      "merchantProductId": "1000112127",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fcarnilove-cat-crunch-V3ZFI-cl.jpg%3Fhost%3Dct&feedId=33481&k=7313abc2f8989faba4fa4faf0c0aa1d8f1097c1b",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45385810925&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/carnilove-cat-crunchy-snack-salmon-catnip-50g/1000112127/"
+      "merchantProductId": "1000112126",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fcarnilove-cat-crunch-jjHeYVku.jpg%3Fhost%3Dct&feedId=33481&k=a58a0c7d3fe0e413aa7e789e5d215b42fd573e6c",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45385810924&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/carnilove-cat-crunchy-snack-duck-with-raspberry-50g/1000112126/"
     },
     {
       "productId": "14979:1000087640",
@@ -549,6 +549,19 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fmy7kr1-5n8apST2.jpg%3Fhost%3Dct&feedId=33481&k=bc24e233d69dafd415d1a02645c429ef77098086",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=24284699961&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/farmina-n-d-ocean-hering-orange-1-5-kg/1000070904/"
+    },
+    {
+      "productId": "14979:1000110806",
+      "productName": "FELIWAY Happy Snack Huhn 6x15 g",
+      "brand": "FELIWAY",
+      "species": "cat",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "subcategoryLabel": "Katzensnacks",
+      "merchantProductId": "1000110806",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F94q065-QaghLDKg.jpg%3Fhost%3Dct&feedId=33481&k=0f063f206554eea9d64e75c082b8531a089c4774",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=43382825716&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/feliway-happy-snack-huhn-6x15-g/1000110806/"
     },
     {
       "productId": "14979:1000077399",
@@ -1004,19 +1017,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fp39vfz-FbwIW8Xv.jpg%3Fhost%3Dct&feedId=33481&k=98f05657c1c99be8f0241f0ec6e5ea1628339dcf",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=35922495535&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/strayz-bio-ente-suesskartoffel-14x85g/1000103002/"
-    },
-    {
-      "productId": "14979:1000103689",
-      "productName": "Terra Felis Famousse Huhn 12x200 g",
-      "brand": "Terra Felis",
-      "species": "cat",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "subcategoryLabel": "Katzen-Nassfutter",
-      "merchantProductId": "1000103689",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fypdnnu-hlEqNDBS.jpg%3Fhost%3Dct&feedId=33481&k=989706810976373303880fcd87e589ffe8d54e91",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=38756948821&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/terra-felis-famousse-huhn-12x200-g/1000103689/"
     },
     {
       "productId": "14979:1000043601",
@@ -1604,6 +1604,19 @@
       "merchantUrl": "https://www.zooroyal.de/p/haustierkost-barf-komfort-plus-huhn-12x500-g/1000110140/"
     },
     {
+      "productId": "14979:1000098600",
+      "productName": "Hill's Prescription Diet i/d mit Huhn 12kg",
+      "brand": "Hill's Prescription Diet",
+      "species": "dog",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "subcategoryLabel": "Gastrointestinal",
+      "merchantProductId": "1000098600",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fdvqpkf-pLZmNRuM.jpg%3Fhost%3Dct&feedId=33481&k=239725677bfd4d33b5527584448a873c9e54505a",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=46398599721&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/hill-s-prescription-diet-i-d-mit-huhn-12kg/1000098600/"
+    },
+    {
       "productId": "14979:1000105419",
       "productName": "JACKS Splitter Soft Hirsch und Pute 90g",
       "brand": "JACKS",
@@ -1771,19 +1784,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fwgfvk3-xi3BcvmA.jpg%3Fhost%3Dct&feedId=33481&k=b3684ef73c0c084b2a07520e02e7841d495f1b23",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=38311519706&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/mjamjam-gute-pute-an-gekochtem-reis-mit-gedaempfter-zucchini-6x200g/1000065567/"
-    },
-    {
-      "productId": "14979:1000102263",
-      "productName": "MOON Ranger Angus-Rind mit Süßkartoffeln 12x800g",
-      "brand": "MOON RANGER",
-      "species": "dog",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "subcategoryLabel": "Hunde-Nassfutter",
-      "merchantProductId": "1000102263",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fmbcrrm-VIQxFHM2.jpg%3Fhost%3Dct&feedId=33481&k=9357ecc77bbc776cca93b9624cb0d4a1e070c657",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=36440011820&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/moon-ranger-angus-rind-mit-suesskartoffeln-12x800g/1000102263/"
     },
     {
       "productId": "14979:1000112508",
@@ -2122,6 +2122,19 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F37275g-nJgAoBwk.jpg%3Fhost%3Dct&feedId=33481&k=cfea26c716442695e674b942b6a1a13674bffdc6",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=24021815687&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/grau-energy-booster-400-g/1000018122/"
+    },
+    {
+      "productId": "14979:1000058392",
+      "productName": "Grau Gemüsemix Mischung Nr. 2 1,2kg",
+      "brand": "Grau",
+      "species": "dog",
+      "category": "supplement",
+      "categoryLabel": "Ergänzungsfuttermittel",
+      "subcategoryLabel": "BARF & Frostfuttermittel",
+      "merchantProductId": "1000058392",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fflheh1-YfMR6U4C.jpg%3Fhost%3Dct&feedId=33481&k=5db61ab55cf69e958cea5608f621e72a5d07cd79",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=24021832519&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/grau-gemuesemix-mischung-nr-2-1-2kg/1000058392/"
     },
     {
       "productId": "14979:1000058367",
@@ -4061,5 +4074,5 @@
       "merchantUrl": "https://www.zooroyal.de/p/zooroyal-geburtstagsbox-hund/1000002014/"
     }
   ],
-  "generatedAt": "2026-10-21T09:10:44.766Z"
+  "generatedAt": "2026-10-25T08:46:33.198Z"
 }
