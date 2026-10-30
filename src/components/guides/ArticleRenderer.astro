@@ -397,6 +397,13 @@ const formatDate = (date: string): string =>
       font-variant-numeric: tabular-nums;
     }
 
+    /* Ab vier Beträgen je Zeile stehen je zwei nebeneinander, damit die
+       Beschriftungen nicht mitten im Wort umbrechen. */
+    .article-body
+      :global(.tabelle-gestapelt tr:has(> td.wert ~ td.wert ~ td.wert ~ td.wert) td.wert) {
+      flex-basis: 40%;
+    }
+
     .article-body :global(.tabelle-gestapelt td.wert:last-child) {
       padding-inline-end: 0;
     }

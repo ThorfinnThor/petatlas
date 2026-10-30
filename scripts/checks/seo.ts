@@ -253,6 +253,14 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
     '/de-de/blog/unterkiefersymphysiolyse-katze-kosten/',
     '/de-de/blog/kastration-huendin-katze-ovariohysterektomie-kosten/',
     '/de-de/blog/abszess-spalten-hund-katze-kosten/',
+    '/de-de/blog/zahnreinigung-zahnstein-hund-katze-kosten/',
+    '/de-de/blog/zahn-ziehen-hund-katze-kosten/',
+    '/de-de/blog/tierarzt-notdienst-wochenende-kosten/',
+    '/de-de/blog/roentgen-hund-katze-kosten/',
+    '/de-de/blog/ultraschall-hund-katze-kosten/',
+    '/de-de/blog/blutbild-hund-katze-kosten/',
+    '/de-de/blog/kreuzband-op-hund-kosten/',
+    '/de-de/blog/kaiserschnitt-hund-katze-kosten/',
   ].includes(pfad);
   const istErgaenzung = pfad === '/de-de/ergaenzungsfuttermittel/';
   const istProduktOderRatgeber = istRatgeber || /^\/de-de\/(?:futter|pflege)\/[^/]+\/$/.test(pfad);
