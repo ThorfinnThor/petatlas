@@ -42,6 +42,7 @@ const SEITEN = [
   '/de-de/ergaenzungsfuttermittel/',
   '/de-de/tierarzt-karte/koeln/',
   '/de-de/tierarztkosten/katalog/',
+  '/de-de/tierarztkosten/rechnung-pruefen/',
   '/de-de/tierarztkosten/16-allgemeine-untersuchung-mit-beratung-hund-katze-frettchen/',
 ];
 
