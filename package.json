@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Haustierplattform, Startmarkt Deutschland. Arbeitstitel, kein gepr\u00fcfter Markenname.",
+  "description": "Haustierplattform, Startmarkt Deutschland. Arbeitstitel, kein geprüfter Markenname.",
   "license": "UNLICENSED",
   "engines": {
     "node": ">=24.0.0 <25"
@@ -78,7 +78,7 @@
     "fflate": "0.8.3",
     "leaflet": "1.9.4",
     "osm-pbf-parser-node": "1.1.4",
-    "zod": "4.5.4"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
@@ -98,7 +98,7 @@
     "typescript": "6.0.3",
     "typescript-eslint": "8.69.0",
     "vitest": "5.0.0",
-    "wrangler": "4.148.0"
+    "wrangler": "4.156.0"
   },
   "overrides": {
     "sharp": "0.35.5"
