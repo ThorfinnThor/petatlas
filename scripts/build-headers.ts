@@ -21,6 +21,12 @@ const ZIEL_VERZEICHNIS = 'dist';
 const BILD_URSPRUENGE = [...TILES.hosts, ...partnerBildUrspruenge()];
 export const CLOUDFLARE_WEB_ANALYTICS_SCRIPT =
   'https://static.cloudflareinsights.com/beacon.min.js';
+/**
+ * Cloudflare liefert das Beacon inzwischen unter einem versionierten Pfad aus
+ * (`beacon.min.js/v…`). Eine CSP-Quelle mit abschließendem Schrägstrich
+ * erlaubt genau die Pfade darunter, nicht den ganzen Host.
+ */
+export const CLOUDFLARE_WEB_ANALYTICS_VERSIONIERT = `${CLOUDFLARE_WEB_ANALYTICS_SCRIPT}/`;
 
 /**
  * Content Security Policy.
@@ -34,13 +40,13 @@ export const CLOUDFLARE_WEB_ANALYTICS_SCRIPT =
  * `unsafe-inline` bleiben verboten.
  *
  * Cloudflare fügt das Web-Analytics-Beacon am Edge in gültige HTML-Seiten ein.
- * Die Policy erlaubt genau diese eine externe Skriptdatei. Das Beacon sendet
+ * Die Policy erlaubt genau diese externe Skriptdatei und ihre versionierten Pfade. Das Beacon sendet
  * bei der automatischen Einrichtung an `/cdn-cgi/rum` auf derselben Herkunft;
  * `connect-src 'self'` reicht deshalb aus.
  */
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' 'wasm-unsafe-eval' ${CLOUDFLARE_WEB_ANALYTICS_SCRIPT}`,
+  `script-src 'self' 'wasm-unsafe-eval' ${CLOUDFLARE_WEB_ANALYTICS_SCRIPT} ${CLOUDFLARE_WEB_ANALYTICS_VERSIONIERT}`,
   // Astro schreibt komponentenbezogene Styles in <style>-Elemente.
   "style-src 'self' 'unsafe-inline'",
   // Kartenkacheln kommen von einem fremden Host. Das ist eine bewusste

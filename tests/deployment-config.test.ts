@@ -3,7 +3,11 @@ import { readFileSync } from 'node:fs';
 
 import { describe, expect, it } from 'vitest';
 
-import { buildHeadersFile, CLOUDFLARE_WEB_ANALYTICS_SCRIPT } from '../scripts/build-headers.ts';
+import {
+  buildHeadersFile,
+  CLOUDFLARE_WEB_ANALYTICS_SCRIPT,
+  CLOUDFLARE_WEB_ANALYTICS_VERSIONIERT,
+} from '../scripts/build-headers.ts';
 import { fressnapfBildUrspruenge } from '../src/features/commerce/fressnapf-feed.ts';
 import { TILES } from '../src/features/map/tiles.ts';
 
@@ -65,7 +69,7 @@ describe('Header', () => {
   it('setzt eine Content Security Policy nur mit freigegebenen externen Ursprüngen', () => {
     expect(headers).toContain("default-src 'self'");
     expect(headers).toContain(
-      `script-src 'self' 'wasm-unsafe-eval' ${CLOUDFLARE_WEB_ANALYTICS_SCRIPT}`,
+      `script-src 'self' 'wasm-unsafe-eval' ${CLOUDFLARE_WEB_ANALYTICS_SCRIPT} ${CLOUDFLARE_WEB_ANALYTICS_VERSIONIERT}`,
     );
     expect(headers).toContain("connect-src 'self'");
     expect(headers).not.toMatch(/script-src[^;]*unsafe-inline/);
@@ -73,7 +77,12 @@ describe('Header', () => {
     const csp = headers.split('\n').find((line) => line.includes('Content-Security-Policy:')) ?? '';
     const origins = csp.match(/https:\/\/[^\s;]+/g) ?? [];
     expect(origins.sort()).toEqual(
-      [...TILES.hosts, ...fressnapfBildUrspruenge(), CLOUDFLARE_WEB_ANALYTICS_SCRIPT].sort(),
+      [
+        ...TILES.hosts,
+        ...fressnapfBildUrspruenge(),
+        CLOUDFLARE_WEB_ANALYTICS_SCRIPT,
+        CLOUDFLARE_WEB_ANALYTICS_VERSIONIERT,
+      ].sort(),
     );
   });
 
