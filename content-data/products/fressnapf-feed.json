@@ -36,14 +36,6 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-activity-snackboard-1907436/"
     },
     {
-      "productId": "anione-intelligenzspielzeug-ocean",
-      "productName": "Intelligenzspielzeug Ocean für Hunde",
-      "merchantProductId": "1823155",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Amedia.os.fressnapf.com%2Fproducts-v2%2F8%2F3%2F8%2F5%2F8385e152df4329a7cf4ed088f8da2a04d3a6d614_1823155_1_AO_H.png&feedId=44979&k=cf289371c2871a7e49b527df479db778dcb46398",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44972475639&a=3037577&m=14757",
-      "merchantUrl": "https://www.fressnapf.de/ul/p/anione-intelligenzspielzeug-ocean-fuer-hunde-25x25x3-cm-1823155/"
-    },
-    {
       "productId": "anione-intelligenzspielzeug-yin",
       "productName": "Intelligenzspielzeug Katze Yin",
       "merchantProductId": "1929132",
@@ -116,5 +108,5 @@
       "merchantUrl": "https://www.fressnapf.de/ul/p/kong-wobbler-l-1009436/"
     }
   ],
-  "generatedAt": "2026-10-21T09:38:34.233Z"
+  "generatedAt": "2026-11-01T10:41:22.162Z"
 }
