@@ -7,6 +7,10 @@
 # ein neuerer, der ihn enthält. Nach 45 Minuten ohne diesen Stand wird er rot;
 # GitHub meldet den Fehlschlag per E-Mail an die Person, die gemergt hat.
 #
+# Ist der Stand live, meldet der Lauf geänderte, indexierbare Artikel per
+# IndexNow an Bing (scripts/publish/indexnow.ts). Ein Fehlschlag dort macht
+# den Lauf nicht rot; die Auslieferung ist dann trotzdem in Ordnung.
+#
 # Was dieser Lauf **nicht** tut: einen Build anstoßen. Er beobachtet nur.
 # Einen fehlenden Build holt man im Cloudflare-Dashboard nach (Workers Builds →
 # petatlas-de → Retry build) oder mit dem nächsten Merge.
@@ -64,3 +68,21 @@ jobs:
           done
           echo "::error title=Nicht ausgeliefert::$ziel ist nach $WARTEZEIT_MINUTEN Minuten nicht live (live: ${live:-unbekannt}). Cloudflare Workers Builds für petatlas-de prüfen und den Build nachholen."
           exit 1
+
+      - name: Code für die IndexNow-Meldung holen
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Node einrichten
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Geänderte Artikel per IndexNow melden
+        continue-on-error: true
+        env:
+          VORHER: ${{ github.event.before }}
+          NACHHER: ${{ github.sha }}
+        run: node scripts/publish/indexnow.ts
