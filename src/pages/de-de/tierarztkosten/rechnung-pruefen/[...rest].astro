@@ -1,0 +1,272 @@
+---
+/**
+ * Rechnung prüfen: Plausibilitätsprüfung einer Tierarztrechnung nach GOT.
+ *
+ * Gerechnet wird ausschließlich im Browser mit dem öffentlichen
+ * Gebührenkatalog; eingegebene Rechnungsdaten verlassen das Gerät nicht.
+ * Als Restroute entsteht die Seite nur, wenn die Kostenfunktion im Markt an
+ * ist (siehe Gebührenkatalog).
+ */
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../../components/ui/Breadcrumbs.astro';
+import PageIntro from '../../../../components/ui/PageIntro.astro';
+import DataStatus from '../../../../components/DataStatus.astro';
+import ReviewStatus from '../../../../components/ReviewStatus.astro';
+import { COST_CONFIG } from '../../../../features/costs/engine.ts';
+import { defaultMarket, isFeatureEnabled, withEnabledFeatures } from '../../../../domain/market.ts';
+import { devFeatureOverrides } from '../../../../../config/build.ts';
+import { routePath, subroutePath } from '../../../../lib/routes.ts';
+import snapshot from '../../../../../data-snapshots/got/got-2022.json' with { type: 'json' };
+
+export function getStaticPaths() {
+  const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+  return isFeatureEnabled(market, 'costs') ? [{ params: { rest: undefined } }] : [];
+}
+
+const market = withEnabledFeatures(defaultMarket(), devFeatureOverrides());
+const quelle = snapshot.source as unknown as {
+  effectiveFrom: string;
+  sourceVersion: string;
+  retrievalDate: string;
+  url: string;
+};
+const eigenerPfad = subroutePath(market, 'costs', 'rechnung-pruefen');
+const zeilen = [0, 1, 2, 3, 4];
+---
+
+<BaseLayout
+  title="Tierarztrechnung prüfen"
+  description="Tierarztrechnung nach GOT prüfen: Nummern, Faktoren und Notdienstgebühr eingeben und sehen, was zum Gebührenverzeichnis passt und was du nachfragen solltest."
+  route="costs"
+  canonicalPfad={eigenerPfad}
+>
+  <Breadcrumbs
+    market={market}
+    stufen={[{ label: 'Tierarztkosten', route: 'costs' }, { label: 'Rechnung prüfen' }]}
+  />
+  <PageIntro
+    titel="Tierarztrechnung prüfen"
+    eyebrow="Tierarztkosten · GOT 2022"
+    bild="health-dog-home"
+  >
+    <p>
+      Übertrag die Zeilen deiner Rechnung: GOT-Nummer, Faktor und Menge. Die Prüfung zeigt dir, was
+      laut Gebührenordnung zu jeder Nummer gehört, wie hoch der Betrag sein müsste und wo du
+      nachfragen solltest.
+    </p>
+    <p>
+      Die Prüfung läuft nur in deinem Browser. Deine Eingaben werden nicht gesendet und nicht
+      gespeichert.
+    </p>
+  </PageIntro>
+
+  <form id="rechnungspruefung" class="pruefung" novalidate>
+    <fieldset>
+      <legend>Zur Behandlung</legend>
+      <p class="feld">
+        <label for="kontext">Wann wurde behandelt?</label>
+        <select id="kontext" name="kontext">
+          <option value="regular">Zu den regulären Sprechzeiten</option>
+          <option value="emergency"
+            >Im Notdienst (nachts, am Wochenende oder an einem Feiertag)</option
+          >
+        </select>
+      </p>
+      <p class="feld">
+        <label for="tierart">Tierart</label>
+        <select id="tierart" name="tierart">
+          <option value="dog">Hund</option>
+          <option value="cat">Katze</option>
+          <option value="">Andere Tierart</option>
+        </select>
+      </p>
+      <p class="feld">
+        <label for="notdienstgebuehren">Wie oft steht die Notdienstgebühr auf der Rechnung?</label>
+        <input
+          id="notdienstgebuehren"
+          name="notdienstgebuehren"
+          type="number"
+          inputmode="numeric"
+          min="0"
+          step="1"
+          value="0"
+        />
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Zeilen der Rechnung</legend>
+      <p class="hilfe">
+        Die GOT-Nummer steht meist in der ersten Spalte, der Faktor daneben (zum Beispiel 1,0 oder
+        2,3). Den Nettobetrag der Zeile kannst du angeben, wenn du ihn mitprüfen möchtest.
+        Medikamente und Material haben keine GOT-Nummer; lass sie weg.
+      </p>
+      <div class="zeilen" id="zeilen">
+        {
+          zeilen.map((index) => (
+            <div class="zeile" data-zeile>
+              <p class="feld">
+                <label for={`nummer-${index}`}>GOT-Nr.</label>
+                <input
+                  id={`nummer-${index}`}
+                  name="nummer"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+              </p>
+              <p class="feld">
+                <label for={`faktor-${index}`}>Faktor</label>
+                <input
+                  id={`faktor-${index}`}
+                  name="faktor"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="1,0"
+                />
+              </p>
+              <p class="feld">
+                <label for={`menge-${index}`}>Menge</label>
+                <input
+                  id={`menge-${index}`}
+                  name="menge"
+                  inputmode="numeric"
+                  autocomplete="off"
+                  placeholder="1"
+                />
+              </p>
+              <p class="feld">
+                <label for={`betrag-${index}`}>Betrag netto (optional)</label>
+                <input
+                  id={`betrag-${index}`}
+                  name="betrag"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="z. B. 28,11"
+                />
+              </p>
+            </div>
+          ))
+        }
+      </div>
+      <p>
+        <button type="button" id="zeile-hinzufuegen">Weitere Zeile</button>
+      </p>
+    </fieldset>
+
+    <p>
+      <button type="submit">Rechnung prüfen</button>
+    </p>
+    <p id="pruefung-status" class="hilfe" role="status" aria-live="polite"></p>
+  </form>
+
+  <section id="pruefung-ergebnis" aria-live="polite" tabindex="-1"></section>
+
+  <section>
+    <h2>Was die Prüfung kann und was nicht</h2>
+    <ul>
+      <li>
+        Sie vergleicht jede Nummer mit dem amtlichen Gebührenverzeichnis der GOT 2022 und rechnet
+        Grundbetrag × Faktor × Menge.
+      </li>
+      <li>
+        Sie prüft den Faktorrahmen (§ 2, § 4, § 5 GOT), die Notdienstgebühr (§ 4 GOT) und mehrfach
+        aufgeführte Nummern (§ 6 GOT).
+      </li>
+      <li>
+        Sie kann nicht beurteilen, ob eine Leistung medizinisch nötig war oder tatsächlich erbracht
+        wurde.
+      </li>
+      <li>
+        Ein Hinweis heißt nicht, dass die Rechnung falsch ist. Ein Faktor über dem Dreifachen ist
+        zum Beispiel zulässig, wenn er vorher in Textform vereinbart wurde. Frag im Zweifel
+        freundlich in der Praxis nach; sie muss die Rechnung auf Verlangen aufschlüsseln (§ 7 Abs. 4
+        GOT).
+      </li>
+    </ul>
+    <p>
+      Was auf einer Tierarztrechnung stehen muss, erklärt die
+      <a href="/de-de/ratgeber/tierarztrechnung-zusammensetzung/">Übersicht zur Tierarztrechnung</a
+      >. Den Faktor erklärt der Artikel <a href="/de-de/blog/got-faktor-eins-bis-drei/"
+        >GOT-Faktor 1 bis 3</a
+      >, den Notdienst der Artikel
+      <a href="/de-de/blog/tierarzt-notdienst-wochenende-kosten/"
+        >Tierarzt am Wochenende, nachts und an Feiertagen</a
+      >. Kosten vorab schätzen kannst du im <a href={routePath(market, 'costs')}
+        >Tierarztkostenrechner</a
+      >.
+    </p>
+    <p>Diese Prüfung ist keine Rechtsberatung.</p>
+  </section>
+
+  <ReviewStatus
+    status={COST_CONFIG.clinicalReview === 'approved' ? 'approved' : 'pending'}
+    reviewedAt={COST_CONFIG.reviewedAt}
+    reviewedBy={COST_CONFIG.reviewedBy}
+    lastVerifiedAt={quelle.retrievalDate.slice(0, 10)}
+    responsibility="Noch keiner fachlich prüfenden Person zugeordnet"
+    sources={[{ label: quelle.sourceVersion, url: quelle.url }]}
+  >
+    <p>
+      Die Prüfregeln stammen aus dem Verordnungstext (§§ 2, 4, 5, 6 und 7 GOT) und sind redaktionell
+      umgesetzt. Eine tierärztliche oder juristische Prüfung steht aus.
+    </p>
+  </ReviewStatus>
+
+  <DataStatus stand={quelle.effectiveFrom} quelle={quelle.sourceVersion} locale={market.locale} />
+</BaseLayout>
+
+<script>
+  import { pruefungStarten } from '../../../../features/costs/invoice-check-ui.ts';
+
+  pruefungStarten();
+</script>
+
+<style>
+  .pruefung fieldset {
+    margin-block-end: var(--space-5);
+  }
+
+  .feld {
+    display: grid;
+    gap: var(--space-1);
+    margin-block: var(--space-2);
+  }
+
+  .feld input,
+  .feld select {
+    max-inline-size: 100%;
+  }
+
+  .zeile {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 639px) {
+    .zeile {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  #pruefung-ergebnis :global(.befund--pruefen) {
+    border-inline-start: 4px solid var(--color-warning, #b45309);
+    padding-inline-start: var(--space-3);
+  }
+
+  #pruefung-ergebnis :global(.befund--hinweis) {
+    border-inline-start: 4px solid var(--color-primary);
+    padding-inline-start: var(--space-3);
+  }
+
+  #pruefung-ergebnis :global(.befund--ok) {
+    color: var(--color-text-muted);
+  }
+
+  #pruefung-ergebnis :global(.pruefzeile) {
+    padding-block: var(--space-3);
+    border-block-end: 1px solid var(--color-border);
+  }
+</style>
