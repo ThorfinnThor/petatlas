@@ -261,6 +261,16 @@ export function pruefeSensiblenInhalt(pfad: string, html: string): Beanstandung[
     '/de-de/blog/blutbild-hund-katze-kosten/',
     '/de-de/blog/kreuzband-op-hund-kosten/',
     '/de-de/blog/kaiserschnitt-hund-katze-kosten/',
+    '/de-de/blog/fremdkoerper-op-hund-katze-kosten/',
+    '/de-de/blog/tumor-entfernen-hund-katze-kosten/',
+    '/de-de/blog/bandscheiben-op-hund-kosten/',
+    '/de-de/blog/patellaluxation-op-hund-kosten/',
+    '/de-de/blog/nabelbruch-leistenbruch-hund-katze-kosten/',
+    '/de-de/blog/blasenstein-op-hund-katze-kosten/',
+    '/de-de/blog/ohrenentzuendung-othaematom-hund-katze-kosten/',
+    '/de-de/blog/kirschauge-hund-op-kosten/',
+    '/de-de/blog/analdruesen-krallen-tierarzt-kosten/',
+    '/de-de/blog/chippen-hund-katze-kosten/',
   ].includes(pfad);
   const istErgaenzung = pfad === '/de-de/ergaenzungsfuttermittel/';
   const istProduktOderRatgeber = istRatgeber || /^\/de-de\/(?:futter|pflege)\/[^/]+\/$/.test(pfad);
