@@ -109,19 +109,6 @@
       "merchantUrl": "https://www.zooroyal.de/p/trixie-krallenzange-14cm/1000014080/"
     },
     {
-      "productId": "14979:1000102721",
-      "productName": "Dirty Dog Shammy saugstarkes Hundehandtuch 80x35cm grau",
-      "brand": "Karlie",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "subcategoryLabel": "Fellpflege",
-      "merchantProductId": "1000102721",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Flzx72t-acpyJMK1.jpg%3Fhost%3Dct&feedId=33481&k=41d91f9a51c9a95b3e1b92f00f61c356dea14bff",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=41100441203&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/dirty-dog-shammy-saugstarkes-hundehandtuch-80x35cm-grau/1000102721/"
-    },
-    {
       "productId": "14979:1000074155",
       "productName": "FURminator Entfilzer für Hund und Katze",
       "brand": "FURminator",
@@ -198,19 +185,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F64r5it-IkEhABdS.jpg%3Fhost%3Dct&feedId=33481&k=b3673b3629a402ca6ee7e4172af7204d9ad0f215",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=38932486986&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/wahl-krallenzange/1000098050/"
-    },
-    {
-      "productId": "14979:1000098054",
-      "productName": "WAHL Mittelgroße Zupfbürste",
-      "brand": "Wahl",
-      "species": "dog",
-      "category": "care",
-      "categoryLabel": "Pflege",
-      "subcategoryLabel": "Fellpflege",
-      "merchantProductId": "1000098054",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F171lmr-aQwZK1IM.jpg%3Fhost%3Dct&feedId=33481&k=5f3824d277321268883eb72d0998cba41bcc1641",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45391629182&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/wahl-mittelgrosse-zupfbuerste/1000098054/"
     },
     {
       "productId": "14979:1000098056",
@@ -733,17 +707,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/kitekat-multipack-bunte-vielfalt-in-sauce-48x85g/1000103401/"
     },
     {
-      "productId": "14979:1000069639",
-      "productName": "Leonardo 96x200g Mixpaket",
+      "productId": "14979:1000106494",
+      "productName": "Leonardo Adult Complete 32/16 1,8kg",
       "brand": "Leonardo",
       "species": "cat",
       "category": "food",
       "categoryLabel": "Futter",
-      "subcategoryLabel": "Katzen-Nassfutter",
-      "merchantProductId": "1000069639",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Frwprd6-h5HOSOm-.jpg%3Fhost%3Dct&feedId=33481&k=99cb37540df39baa37739fc0c6fbf46682432819",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=24021843891&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/leonardo-96x200g-mixpaket/1000069639/"
+      "subcategoryLabel": "Katzen-Trockenfutter",
+      "merchantProductId": "1000106494",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fkq2240-2dkBKX_i.jpg%3Fhost%3Dct&feedId=33481&k=882088381c554e0f0b7d4262c3e0f6c0bbb43b38",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=38791755505&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/leonardo-adult-complete-32-16-1-8kg/1000106494/"
     },
     {
       "productId": "14979:1000105560",
@@ -863,17 +837,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/orijen-cat-fit-und-trim-1-8kg/1000077109/"
     },
     {
-      "productId": "14979:1000105048",
-      "productName": "Pawsome Adult Huhn Vorteilspack 4x85g",
+      "productId": "14979:1000105049",
+      "productName": "Pawsome Adult Ente Vorteilspack 4x85g",
       "brand": "Pawsome!",
       "species": "cat",
       "category": "food",
       "categoryLabel": "Futter",
       "subcategoryLabel": "Katzen-Nassfutter",
-      "merchantProductId": "1000105048",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fupiik5-8OU4yDfC.jpg%3Fhost%3Dct&feedId=33481&k=6cf94656ad27e3b290da88cddc41051283d4b828",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=37154302829&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/pawsome-adult-huhn-vorteilspack-4x85g/1000105048/"
+      "merchantProductId": "1000105049",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F8s98gs-is2hkuVP.jpg%3Fhost%3Dct&feedId=33481&k=12df9ee4b9675dd0a8c0d8b03f704377da2f2676",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=37182242813&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/pawsome-adult-ente-vorteilspack-4x85g/1000105049/"
     },
     {
       "productId": "14979:1000112960",
@@ -980,17 +954,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/schmusy-ragout-fuer-kitten-mit-pute-in-sauce-22x100g/1000077539/"
     },
     {
-      "productId": "14979:1000103002",
-      "productName": "STRAYZ Bio Ente und Süßkartoffel 14x85g",
+      "productId": "14979:1000103010",
+      "productName": "STRAYZ Bio Ente und Süßkartoffel 6x400g",
       "brand": "STRAYZ",
       "species": "cat",
       "category": "food",
       "categoryLabel": "Futter",
       "subcategoryLabel": "Katzen-Nassfutter",
-      "merchantProductId": "1000103002",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fp39vfz-FbwIW8Xv.jpg%3Fhost%3Dct&feedId=33481&k=98f05657c1c99be8f0241f0ec6e5ea1628339dcf",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=35922495535&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/strayz-bio-ente-suesskartoffel-14x85g/1000103002/"
+      "merchantProductId": "1000103010",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Ftdknmb-jeBqVfF4.jpg%3Fhost%3Dct&feedId=33481&k=52810cb9119dcca4e465c6aeae23b2e390d133a8",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=35922495539&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/strayz-bio-ente-suesskartoffel-6x400g/1000103010/"
     },
     {
       "productId": "14979:1000103689",
@@ -1071,6 +1045,19 @@
       "merchantUrl": "https://www.zooroyal.de/p/animonda-vom-feinsten-adult-feinschmecker-vielfalt-22x150g/1000081624/"
     },
     {
+      "productId": "14979:1000057272",
+      "productName": "beaphar Lachsöl Bonbons 245g",
+      "brand": "beaphar",
+      "species": "dog",
+      "category": "food",
+      "categoryLabel": "Futter",
+      "subcategoryLabel": "Hundesnacks",
+      "merchantProductId": "1000057272",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fny6z1l-H11JgW3l.jpg%3Fhost%3Dct&feedId=33481&k=96337ff54579ebce71d82df038e6fec54218dde8",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=33076117691&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/beaphar-lachsoel-bonbons-245g/1000057272/"
+    },
+    {
       "productId": "14979:1000075904",
       "productName": "Belcando Adult Active 12,5kg",
       "brand": "Belcando",
@@ -1097,17 +1084,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/belcando-vetline-gastro-1-8-kg/1000110813/"
     },
     {
-      "productId": "14979:1000081248",
-      "productName": "Beneful Tasty Grain Free getreidefrei Huhn 1,2kg",
+      "productId": "14979:1000102627",
+      "productName": "BENEFUL Glückliche Jahre 12kg + 300g AdVENTuROS-Paket gratis",
       "brand": "Beneful",
       "species": "dog",
       "category": "food",
       "categoryLabel": "Futter",
       "subcategoryLabel": "Hunde-Trockenfutter",
-      "merchantProductId": "1000081248",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fh6d716-FQRkPy_f.jpg%3Fhost%3Dct&feedId=33481&k=6e2127b0bd8063fe5fd7cc83cc856aa6efe4655a",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=35137540061&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/beneful-tasty-grain-free-getreidefrei-huhn-1-2kg/1000081248/"
+      "merchantProductId": "1000102627",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fn9dup-DaH-0h3p.jpg%3Fhost%3Dct&feedId=33481&k=b8c66a9378e4c72fa1c545274e7930031e814025",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=46738914912&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/beneful-glueckliche-jahre-12kg-300g-adventuros-paket-gratis/1000102627/"
     },
     {
       "productId": "14979:1000035942",
@@ -1123,17 +1110,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/bewi-dog-balance-hundefutter-12-5kg/1000035942/"
     },
     {
-      "productId": "14979:1000051694",
-      "productName": "Bosch Adult Lamm und Reis 15kg",
+      "productId": "14979:1000109985",
+      "productName": "Bosch Adult Lamm und Reis 15kg + 3kg GRATIS",
       "brand": "Bosch",
       "species": "dog",
       "category": "food",
       "categoryLabel": "Futter",
       "subcategoryLabel": "Hunde-Trockenfutter",
-      "merchantProductId": "1000051694",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fl256b7-mFbllgx4.jpg%3Fhost%3Dct&feedId=33481&k=9206cb72ec0bac0a641af91cba601de545ebecba",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=44673464525&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/bosch-adult-lamm-reis-15kg/1000051694/"
+      "merchantProductId": "1000109985",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fd30by0-Rq-JBeK6.jpg%3Fhost%3Dct&feedId=33481&k=ff19c4b38f770228b6bea960bf5efc1c518d08d6",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=46738915638&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/bosch-adult-lamm-reis-15kg-3kg-gratis/1000109985/"
     },
     {
       "productId": "14979:1000099712",
@@ -1344,17 +1331,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/dibo-aktiv-mix-3x2000-g/1000110226/"
     },
     {
-      "productId": "14979:1000069614",
-      "productName": "Dog's Love 24x800g Mixpaket",
+      "productId": "14979:1000080217",
+      "productName": "DOG'S LOVE ADULT Ente 12x800g",
       "brand": "Dog's Love",
       "species": "dog",
       "category": "food",
       "categoryLabel": "Futter",
       "subcategoryLabel": "Hunde-Nassfutter",
-      "merchantProductId": "1000069614",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fqhc43k-tKftUrLQ.jpg%3Fhost%3Dct&feedId=33481&k=4a9b1f779cbbee309681f361342c49a1fc44ce0d",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=24546944013&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/dog-s-love-24x800g-mixpaket/1000069614/"
+      "merchantProductId": "1000080217",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fyc83j-qSRMYKt8.jpg%3Fhost%3Dct&feedId=33481&k=16e73c83330acf517084b244e042d4e774dff9f1",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=29355158951&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/dog-s-love-adult-ente-12x800g/1000080217/"
     },
     {
       "productId": "14979:1000080615",
@@ -1422,17 +1409,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/escapure-bio-ente-bayrisch-24x400g/1000076928/"
     },
     {
-      "productId": "14979:1000104920",
-      "productName": "Escapure VET-Adipositas-Diät Hähnchen 6x400g",
+      "productId": "14979:1000104914",
+      "productName": "Escapure VET-Adipositas-Diät Hupferl Hähnchen 150g",
       "brand": "Escapure Vet",
       "species": "dog",
       "category": "food",
       "categoryLabel": "Futter",
-      "subcategoryLabel": "Hunde-Nassfutter",
-      "merchantProductId": "1000104920",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fcwsrme-2QRbNalz.jpg%3Fhost%3Dct&feedId=33481&k=1e432a2fd38e967039db90f68503625c2ed05b20",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45322025410&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/escapure-vet-adipositas-diaet-haehnchen-6x400g/1000104920/"
+      "subcategoryLabel": "Hundesnacks",
+      "merchantProductId": "1000104914",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F3kw4ii-3Rbk0JLd.jpg%3Fhost%3Dct&feedId=33481&k=efdf2252b4ea1d0309b8c2693833477efe81ab0d",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=37121596308&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/escapure-vet-adipositas-diaet-hupferl-haehnchen-150g/1000104914/"
     },
     {
       "productId": "14979:1000081031",
@@ -1708,17 +1695,17 @@
       "merchantUrl": "https://www.zooroyal.de/p/lily-s-kitchen-dog-casserole-huhn-truthahn-10x150g/1000105566/"
     },
     {
-      "productId": "14979:1000069606",
-      "productName": "MAC's Dog 24x400g Mixpaket",
+      "productId": "14979:1000100909",
+      "productName": "MAC's Dog Geflügel und Gemüse 12x400g",
       "brand": "MAC's Dog",
       "species": "dog",
       "category": "food",
       "categoryLabel": "Futter",
       "subcategoryLabel": "Hunde-Nassfutter",
-      "merchantProductId": "1000069606",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fiq19pn-7aruLHg5.jpg%3Fhost%3Dct&feedId=33481&k=4e4b3556f1e3452e502c87df801c5defd44b6f2f",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=37129822698&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/mac-s-dog-24x400g-mixpaket/1000069606/"
+      "merchantProductId": "1000100909",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fd11icl-NCJgQtkW.jpg%3Fhost%3Dct&feedId=33481&k=90edfbaa35c852ba891fc74396a5234e29f99a3a",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=36417780256&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/mac-s-dog-gefluegel-und-gemuese-12x400g/1000100909/"
     },
     {
       "productId": "14979:1000107508",
@@ -1758,19 +1745,6 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fmbcrrm-VIQxFHM2.jpg%3Fhost%3Dct&feedId=33481&k=9357ecc77bbc776cca93b9624cb0d4a1e070c657",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=36440011820&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/moon-ranger-angus-rind-mit-suesskartoffeln-12x800g/1000102263/"
-    },
-    {
-      "productId": "14979:1000112987",
-      "productName": "Nutriment Frischemenü Huhn 400g 20x400 g",
-      "brand": "Nutriment",
-      "species": "dog",
-      "category": "food",
-      "categoryLabel": "Futter",
-      "subcategoryLabel": "BARF & Frostfuttermittel",
-      "merchantProductId": "1000112987",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F1000112987-h2jYxSny.jpg%3Fhost%3Dct&feedId=33481&k=269685e096043662097f81d4bbc77b397087c10b",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=46433402313&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/nutriment-frischemenue-huhn-400g-20x400-g/1000112987/"
     },
     {
       "productId": "14979:1000112508",
@@ -2122,6 +2096,19 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fcfiden-ye3bfxvZ.jpg%3Fhost%3Dct&feedId=33481&k=720210be0745dfe4c83cc1951a624f4483aa24d7",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=45136713060&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/grau-black-cumin-seed-oil-250ml/1000058377/"
+    },
+    {
+      "productId": "14979:1000018122",
+      "productName": "GRAU Energy Booster 400 g",
+      "brand": "Grau",
+      "species": "dog",
+      "category": "supplement",
+      "categoryLabel": "Ergänzungsfuttermittel",
+      "subcategoryLabel": "BARF & Frostfuttermittel",
+      "merchantProductId": "1000018122",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F37275g-nJgAoBwk.jpg%3Fhost%3Dct&feedId=33481&k=cfea26c716442695e674b942b6a1a13674bffdc6",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=24021815687&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/grau-energy-booster-400-g/1000018122/"
     },
     {
       "productId": "14979:1000058392",
@@ -2566,19 +2553,6 @@
       "merchantUrl": "https://www.zooroyal.de/p/aumueller-alpaka-angie-katzenspielkissen-mit-baldrianwurzel-und-dinkelspelz/1000071100/"
     },
     {
-      "productId": "14979:1000044565",
-      "productName": "Aumüller Baldi-Willy Katzenspielkissen",
-      "brand": "Aumüller",
-      "species": "cat",
-      "category": "toy",
-      "categoryLabel": "Spielzeug",
-      "subcategoryLabel": "Baldrianspielzeug",
-      "merchantProductId": "1000044565",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fir1qh3-sqmT3JL9.jpg%3Fhost%3Dct&feedId=33481&k=086eecd44996880e11902592b73fe40113300a53",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=26889045085&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/aumueller-baldi-willy-katzenspielkissen/1000044565/"
-    },
-    {
       "productId": "14979:1000059326",
       "productName": "Aumüller Baldini Baldrian Katzenspielkissen",
       "brand": "Aumüller",
@@ -2590,6 +2564,19 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2F9a1j3y-O02AH_6R.jpg%3Fhost%3Dct&feedId=33481&k=a468ca85c585894c71328c42b589cfa68959f3ca",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=26772159999&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/aumueller-baldini-baldrian-katzenspielkissen/1000059326/"
+    },
+    {
+      "productId": "14979:1000109071",
+      "productName": "Aumüller Dentalspielzeug Matatabi Federfisch 2er Set",
+      "brand": "Aumüller",
+      "species": "cat",
+      "category": "toy",
+      "categoryLabel": "Spielzeug",
+      "subcategoryLabel": "Matatabispielzeug (Silver Vine)",
+      "merchantProductId": "1000109071",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fvyol5j-ZH-6V6Dc.jpg%3Fhost%3Dct&feedId=33481&k=72e6ecd232b6108c59867953484689083a72c32c",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=41666208803&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/aumueller-dentalspielzeug-matatabi-federfisch-2er-set/1000109071/"
     },
     {
       "productId": "14979:1000108958",
@@ -3203,19 +3190,6 @@
       "merchantUrl": "https://www.zooroyal.de/p/royal-canin-rascheltunnel-fuer-katzen/1000098073/"
     },
     {
-      "productId": "14979:1000111902",
-      "productName": "Stylecats Katzenspielzeug Curly",
-      "brand": "stylecats",
-      "species": "cat",
-      "category": "toy",
-      "categoryLabel": "Spielzeug",
-      "subcategoryLabel": "Katzenspielzeug",
-      "merchantProductId": "1000111902",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fweb_277042_2-KKbNscCR.jpg%3Fhost%3Dct&feedId=33481&k=c22b65f124ccb82536aaf778834cd4ee716ff374",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45390610338&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/stylecats-katzenspielzeug-curly/1000111902/"
-    },
-    {
       "productId": "14979:1000111905",
       "productName": "Stylecats Katzenspielzeug Eddi The Engerling",
       "brand": "stylecats",
@@ -3227,6 +3201,19 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fstylecats_engerling_-DCt5A1F0.jpg%3Fhost%3Dct&feedId=33481&k=a5eba04901555fb27ee853aaa0111fb04a46ce31",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=45390610341&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/stylecats-katzenspielzeug-eddi-the-engerling/1000111905/"
+    },
+    {
+      "productId": "14979:1000111903",
+      "productName": "Stylecats Katzenspielzeug Filzball",
+      "brand": "stylecats",
+      "species": "cat",
+      "category": "toy",
+      "categoryLabel": "Spielzeug",
+      "subcategoryLabel": "Katzenspielzeug",
+      "merchantProductId": "1000111903",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fstylecats_filzball_1-hs0SC5Qa.jpg%3Fhost%3Dct&feedId=33481&k=925b409573d15db06cbc52d65e82eb3a0a8b0a95",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=45390610339&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/stylecats-katzenspielzeug-filzball/1000111903/"
     },
     {
       "productId": "14979:1000110913",
@@ -3281,19 +3268,6 @@
       "merchantUrl": "https://www.zooroyal.de/p/zooroyal-geburtstagsbox-katze/1000002015/"
     },
     {
-      "productId": "14979:1000055996",
-      "productName": "8in1 Delights Hundesnack Kauknochen Chicken/Huhn Größe XS bis L XS 6x7 Stück",
-      "brand": "8in1",
-      "species": "dog",
-      "category": "toy",
-      "categoryLabel": "Spielzeug",
-      "subcategoryLabel": "Hundesnacks",
-      "merchantProductId": "1000055996",
-      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fhzzduq-Q4X2_i66.jpg%3Fhost%3Dct&feedId=33481&k=b4cbea0b92d83c85e423165edab4b762a8c145aa",
-      "affiliateUrl": "https://www.awin1.com/pclick.php?p=38607039630&a=3037577&m=14979",
-      "merchantUrl": "https://www.zooroyal.de/p/8in1-delights-hundesnack-kauknochen-chicken-huhn-groesse-xs-bis-l-xs-6x7-stueck/1000055996/"
-    },
-    {
       "productId": "14979:1000020549",
       "productName": "8in1 Delights Kauknochen Chicken/Huhn XS 7 Stück",
       "brand": "8in1",
@@ -3305,6 +3279,19 @@
       "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Fkrz4xj-QzGSc7wQ.jpg%3Fhost%3Dct&feedId=33481&k=a846e26c3a0f5940c454cf0d51ff485fb7731210",
       "affiliateUrl": "https://www.awin1.com/pclick.php?p=24021816245&a=3037577&m=14979",
       "merchantUrl": "https://www.zooroyal.de/p/8in1-delights-kauknochen-chicken-huhn-xs-7-stueck/1000020549/"
+    },
+    {
+      "productId": "14979:1000020557",
+      "productName": "8in1 Delights Kauknochen Huhn im Beutel XS 21 Stück",
+      "brand": "8in1",
+      "species": "dog",
+      "category": "toy",
+      "categoryLabel": "Spielzeug",
+      "subcategoryLabel": "Hundesnacks",
+      "merchantProductId": "1000020557",
+      "imageUrl": "https://images2.productserve.com/?w=200&h=200&bg=white&trim=5&t=letterbox&url=ssl%3Awww.zooroyal.de%2Fapi%2Fimage%2F48f20ab7-8172-4f6f-915e-02c589fad1d5%2Ftsgj6m-6pcKQ3ZO.jpg%3Fhost%3Dct&feedId=33481&k=2eb6dfafc78922232899dbce3fda3bd6b57bab42",
+      "affiliateUrl": "https://www.awin1.com/pclick.php?p=24021816257&a=3037577&m=14979",
+      "merchantUrl": "https://www.zooroyal.de/p/8in1-delights-kauknochen-huhn-im-beutel-xs-21-stueck/1000020557/"
     },
     {
       "productId": "14979:1000066214",
@@ -4061,5 +4048,5 @@
       "merchantUrl": "https://www.zooroyal.de/p/zooroyal-geburtstagsbox-hund/1000002014/"
     }
   ],
-  "generatedAt": "2026-11-08T10:49:36.254Z"
+  "generatedAt": "2026-11-15T11:34:06.772Z"
 }
