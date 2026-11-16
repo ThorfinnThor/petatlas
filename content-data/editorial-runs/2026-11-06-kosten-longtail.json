@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-06-kosten-longtail",
+  "createdAt": "2026-11-01T10:00:00.000Z",
+  "stage": "review",
+  "candidates": [
+    {
+      "slug": "fremdkoerper-op-hund-katze-kosten",
+      "question": "Was kostet eine Fremdkörper-OP an Magen oder Darm bei Hund oder Katze nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "high",
+      "decision": "selected",
+      "reason": "GSC „magen op hund fremdkörper kosten“; Google-Vorschläge „katze fremdkörper verschluckt op kosten“; GOT 468, 478, 480, 161."
+    },
+    {
+      "slug": "tumor-entfernen-hund-katze-kosten",
+      "question": "Was kostet es nach GOT, einen Tumor oder Knoten bei Hund oder Katze entfernen zu lassen?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "medium",
+      "decision": "selected",
+      "reason": "Google-Vorschläge „op kosten hund lipom entfernen“, „tumor entfernen katze kosten“; GOT 412, 413, 95 bis 97, 148."
+    },
+    {
+      "slug": "bandscheiben-op-hund-kosten",
+      "question": "Was kostet eine Bandscheiben-OP beim Hund nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "high",
+      "decision": "selected",
+      "reason": "GSC „hemilaminektomie“, „diskopathie“; Google-Vorschläge „bandscheiben op kleiner hund kosten“; GOT 739 bis 741; MRT/CT ohne Betrag über § 8."
+    },
+    {
+      "slug": "patellaluxation-op-hund-kosten",
+      "question": "Was kostet die Operation einer Patellaluxation beim Hund nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "medium",
+      "decision": "selected",
+      "reason": "Google-Vorschläge „patella luxation op hund kosten“; GOT 871 bis 873."
+    },
+    {
+      "slug": "nabelbruch-leistenbruch-hund-katze-kosten",
+      "question": "Was kostet die Operation eines Nabelbruchs oder Leistenbruchs bei Hund oder Katze nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "low",
+      "decision": "selected",
+      "reason": "Google-Vorschläge „nabelbruch welpe op kosten hund“, „leistenbruch op hund kosten“; GOT 494, 499."
+    },
+    {
+      "slug": "blasenstein-op-hund-katze-kosten",
+      "question": "Was kostet eine Blasenstein-OP bei Hund oder Katze nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "medium",
+      "decision": "selected",
+      "reason": "Google-Vorschläge „blasenstein op katze kosten“; GOT 996, 988, 989, 992 bis 995."
+    },
+    {
+      "slug": "ohrenentzuendung-othaematom-hund-katze-kosten",
+      "question": "Was kostet die Behandlung einer Ohrenentzündung oder eines Othämatoms bei Hund oder Katze nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "low",
+      "decision": "selected",
+      "reason": "Google-Vorschläge „ohrenentzündung hund kosten tierarzt“; GOT 662 bis 665, 676, 677."
+    },
+    {
+      "slug": "kirschauge-hund-op-kosten",
+      "question": "Was kostet die Kirschauge-OP beim Hund nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "low",
+      "decision": "selected",
+      "reason": "Google-Vorschläge „kirschauge hund op kosten“; GOT 792, 793, 752."
+    },
+    {
+      "slug": "analdruesen-krallen-tierarzt-kosten",
+      "question": "Was kosten Analdrüsen ausdrücken und Krallen schneiden beim Tierarzt nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "low",
+      "decision": "selected",
+      "reason": "Google-Vorschläge „krallen schneiden hund kosten tierarzt“, „tierarztkosten analdrüsen ausdrücken“; GOT 455, 456, 492, 427."
+    },
+    {
+      "slug": "chippen-hund-katze-kosten",
+      "question": "Was kostet das Chippen von Hund oder Katze beim Tierarzt nach GOT?",
+      "topicCluster": "Tierarztkosten",
+      "sourceIds": ["got-2022-official", "btk-got-guidance"],
+      "dataFiles": ["data-snapshots/got/got-2022.json"],
+      "risk": "low",
+      "decision": "selected",
+      "reason": "Google-Vorschläge „chippen und impfen kosten hund“, „tierarzt kosten chip“; GOT 238, 240."
+    }
+  ],
+  "checks": {
+    "sources": "passed",
+    "editorial": "passed",
+    "technical": "pending",
+    "indexBudget": "passed"
+  },
+  "publishedSlugs": [],
+  "notes": [
+    "Priorität A9 bis A18 aus docs/seo/longtail-analyse-2026-10-23.md.",
+    "Alle Beträge per Skript (.work/redaktion/render.py) aus data-snapshots/got/got-2022.json mit 19 Prozent Umsatzsteuer berechnet.",
+    "Status review, indexable false: frühestens ab 06.11.2026 veröffentlichen (höchstens zehn neue Seiten pro Woche) und nur nach Freigabe durch den Betreiber.",
+    "Mit diesen zehn Artikeln wären 149 Seiten indexierbar (Korridor 100–160)."
+  ]
+}
